@@ -1,5 +1,5 @@
 require './lib/provider'
 
-class Homestay < ActiveRecord::Base
+class Hotel < ActiveRecord::Base
   include Provider
 end
