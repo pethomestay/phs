@@ -66,5 +66,5 @@ PetHomestay::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Add default mailer URL
-  config.action_mailer.default_url_options = { :host => 'www.pethomestay.com' }
+  config.action_mailer.default_url_options = { :host => 'staging.pethomestay.com' }
 end
