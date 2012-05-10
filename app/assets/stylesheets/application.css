@@ -20,3 +20,16 @@
 .table .thumbnails{
 	margin-left: 0;
 }
+
+.span4 .thumbnails{
+  margin-left: 0;
+}
+
+.description{
+  margin-top: 20px;
+}
+
+.price{
+  padding-right: 15px;
+  text-align: right;
+}

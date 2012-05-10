@@ -1,5 +1,18 @@
-%h1= @hotel.title
-%p= @hotel.description
-%p Adding this feature
-
-%p Adding this other feature
+.row
+  .span8
+    .row
+      .span6
+        %h1= @hotel.title
+        %p= @hotel.location
+        %p= '******'
+        .btn.btn-success= 'Send an email'
+        .btn= '021 262 8832'
+      .span2
+        %h1.price= number_to_currency(@hotel.price)
+    .description
+      %p= @hotel.description
+      %p= @hotel.description
+      %p= @hotel.description
+  .span4  
+    %ul.thumbnails
+      %li.thumbnail= image_tag("http://placekitten.com/300/220")      
