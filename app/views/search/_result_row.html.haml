@@ -1,9 +1,14 @@
-%tr
-  %td
-    .thumbnails
+.listing{style: 'overflow: hidden; margin-bottom: 40px; border-bottom: '}
+  .span6
+    .row
+      .span4
+        %h1= homestay.title
       .span2
-        = link_to image_tag("http://placekitten.com/125/125"), hotel_path(homestay.id), class: "thumbnail"
-      %h1= homestay.title
-      %p= homestay.location
-      %p= number_to_currency(homestay.price)
-      %p= homestay.description
+        %h1= number_to_currency(homestay.price)
+        %p
+          %i= 'per night'
+    %p= homestay.location
+    %p= homestay.description
+  .span3
+    .thumbnail= link_to image_tag("http://placekitten.com/380/280")
+%hr
