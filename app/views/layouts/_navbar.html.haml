@@ -1,0 +1,21 @@
+%div.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      = link_to "Pet Homestay", root_path, class: "brand"
+      %ul.nav
+        - (1..4).each do |n|
+          %li
+            = link_to "Link", root_path
+      %ul.nav.pull-right
+        %li.login-dropdown
+          %a.dropdown-toggle{:href => '#', :'data-toggle' => 'dropdown'} Sign in
+          .dropdown-menu
+            = form_tag root_path, class: "well" do
+              = email_field_tag :email, '', :placeholder => 'Email'
+              = password_field_tag :password, '', :placeholder => 'Password'
+              %label.checkbox
+                = check_box_tag 'user[remember_me]'
+                Remember me
+              = submit_tag 'Sign in', :class => 'btn small primary'
+              .divider
+              = link_to "Forgot your password?", root_path
