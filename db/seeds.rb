@@ -1,4 +1,5 @@
 if Rails.env.development? || Rails.env.staging?
+  Homestay.destroy_all
   Homestay.create({
     title:        "My First Homestay",
     location:     "Wellington",
@@ -9,5 +10,11 @@ if Rails.env.development? || Rails.env.staging?
       consectetur purus sit amet fermentum. Cum sociis natoque penatibus et
       magnis dis parturient montes, nascetur ridiculus mus.
     eos
+  })
+  User.destroy_all
+  User.create({
+    email:                  "test@example.com",
+    password:               "test2010",
+    password_confirmation:  "test2010"
   })
 end
