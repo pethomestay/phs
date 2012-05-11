@@ -9,6 +9,7 @@
 <body>
 	<%= render partial: 'layouts/navbar' %>
 	<div class="container main">
+    <%= render "layouts/flash_messages", :locals => {:flash => flash} %>
     <%= yield %>
     <hr>
     <footer>
