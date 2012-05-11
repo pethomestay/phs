@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'unicorn'
 gem 'devise'
+gem 'less-rails-bootstrap'
 
 group :development do
   gem 'sqlite3'
@@ -19,7 +20,5 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer'
   gem 'less-rails'
-  gem 'less-rails-bootstrap'
-
   gem 'uglifier', '>= 1.0.3'
 end
