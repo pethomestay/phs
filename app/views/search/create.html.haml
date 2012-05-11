@@ -1,5 +1,15 @@
 .row
-	= render partial: 'search_box'
-	.span9.offset3
-		- @homestays.each do |homestay|
-			= render partial: 'result_row', locals: {homestay: homestay}
+  = render partial: 'search_box'
+  .span9.offset3
+    - @homestays.each do |homestay|
+      = render partial: 'result_row', locals: {homestay: homestay}
+    .pagination.pagination-centered
+      .ul
+        .li.active
+          %a= '1'
+        .li
+          %a= '2'
+        .li
+          %a= '3'
+        .li
+          %a= 'Next'
