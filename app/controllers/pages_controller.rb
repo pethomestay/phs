@@ -5,6 +5,9 @@ class PagesController < ApplicationController
   def how_it_works
   end
 
+  def why_pet_homestay
+  end
+
   def contact
   end
 

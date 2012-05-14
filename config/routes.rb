@@ -13,5 +13,7 @@ PetHomestay::Application.routes.draw do
   match '/contact', to: 'pages#contact'
   match '/terms-and-conditions',  to: 'pages#terms_and_conditions'
   match '/privacy-policy',  to: 'pages#privacy_policy'
+  get '/why-pet-homestay',      to: 'pages#why_pet_homestay', 
+                                as: 'why_pet_homestay'
   
 end
