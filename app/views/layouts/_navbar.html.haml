@@ -3,9 +3,8 @@
     .container
       = link_to "Pet Homestay", root_path, class: "brand"
       %ul.nav
-        - (1..4).each do |n|
-          %li
-            = link_to "Link", root_path
+        %li
+          = link_to "How it works", 'how-it-works'
       %ul.nav.pull-right
         - unless signed_in?
           %li.login-dropdown

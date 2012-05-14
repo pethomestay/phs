@@ -8,4 +8,10 @@ PetHomestay::Application.routes.draw do
   resources :search, only: [:create]
 
   root to: "pages#home"
+
+  match '/how-it-works',  to: 'pages#how_it_works'
+  match '/contact', to: 'pages#contact'
+  match '/terms-and-conditions',  to: 'pages#terms_and_conditions'
+  match '/privacy-policy',  to: 'pages#privacy_policy'
+  
 end
