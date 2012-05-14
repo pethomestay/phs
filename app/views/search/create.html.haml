@@ -4,12 +4,12 @@
     - @homestays.each do |homestay|
       = render partial: 'result_row', locals: {homestay: homestay}
     .pagination.pagination-centered
-      .ul
-        .li.active
+      %ul
+        %li.active
           %a= '1'
-        .li
+        %li
           %a= '2'
-        .li
+        %li
           %a= '3'
-        .li
+        %li
           %a= 'Next'
