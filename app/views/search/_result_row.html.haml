@@ -3,7 +3,7 @@
     .title
       %h1= link_to homestay.title, homestay_path(homestay)
       %p= homestay.location
-      %p= '*****'
+      - rating_stars 3
     .price
       %h1= number_to_currency(homestay.price)
       %p
