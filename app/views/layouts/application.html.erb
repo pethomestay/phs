@@ -12,9 +12,7 @@
     <%= render "layouts/flash_messages", :locals => {:flash => flash} %>
     <%= yield %>
     <hr>
-    <footer>
-      <p>© Pet Homestay 2012</p>
-    </footer>
+    <%= render partial: "layouts/footer" %>
   </div>
 </body>
 </html>
