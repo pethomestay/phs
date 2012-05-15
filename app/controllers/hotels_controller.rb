@@ -1,5 +1,5 @@
 class HotelsController < ApplicationController
   def show
-  	@hotel = Homestay.all.first
+    @hotel = Hotel.find(params[:id])
   end
 end
