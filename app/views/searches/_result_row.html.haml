@@ -1,18 +1,17 @@
 .listing
   .left-column
     .title
-      %h1= link_to homestay.title, homestay_path(homestay)
-      %p= homestay.location
+      %h1= link_to provider.title, provider
+      %p= provider.location
       - rating_stars 3
     .price
-      %h1= number_to_currency(homestay.price)
+      %h1= number_to_currency(provider.price)
       %p
         %i= 'per night'
     .clear
     .excerpt
-      %p= homestay.description
-      %p= homestay.description
+      %p= provider.description
+      %p= provider.description
   .right-column
-    .thumbnail= link_to image_tag("http://placekitten.com/380/280"), homestay_path(homestay) 
-    .btn.btn-large.btn-primary
-      = 'View more'
+    .thumbnail= link_to image_tag("http://placekitten.com/380/280"), provider
+    = link_to 'View more', provider, class: "btn btn-large btn-primary"
