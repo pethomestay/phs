@@ -1,7 +1,7 @@
 if Rails.env.development? || Rails.env.staging?
-  Homestay.destroy_all
+  Sitter.destroy_all
   4.times do
-    Homestay.create({
+    Sitter.create({
       title:        "My First Homestay",
       location:     "Wellington",
       price:        15,

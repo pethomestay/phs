@@ -1,6 +1,6 @@
 class CreateHotelsAndHomestays < ActiveRecord::Migration
   def change
-    %w{hotels homestays}.each do |table|
+    %w{hotels sitters}.each do |table|
       create_table table do |t|
         t.string :title
         t.string :location

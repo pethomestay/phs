@@ -1,23 +1,40 @@
 .hero-unit
-  %h1 Hello, world!
   %p
-    This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-  = link_to 'Sign up now', new_user_registration_path, class: "btn btn-large btn-primary"
+    This area would be used to demonstrate the relationship between pet owners, pet homestays and pet sitters.
+  %p This would be achieved through a graphic.
+.row
+  .span6
+    .well
+      %h2 Search
+      = form_for Search.new do |f|
+        %label Where are you?
+        = f.text_field :location, class: 'span2', placeholder: "Me and my pet live in..."
+        %label Your pet prefers to...
+        - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']]
+        = f.select :provider_type, options
+        / %select.span2{type: "select"}
+        /   %option{name: "sleep over"}
+        %button.btn.btn-large.btn-primary{type: "submit"} Search
+  .span6
+    .well
+      %h2 Sign up!
+      = link_to 'Sign up now', new_user_registration_path, class: "btn btn-large btn-primary pull-right"
+      .clear
 .row
   .span4
-    %h2 Heading
+    %h2 What is Pet Homestay?
+    %p
+      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+    %a.btn
+      Learn more »
+  .span4
+    %h2 How it works
     %p
       Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
     %a.btn
       View details »
   .span4
-    %h2 Heading
-    %p
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %a.btn
-      View details »
-  .span4
-    %h2 Heading
+    %h2 Random text!
     %p
       Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.'
     %a.btn

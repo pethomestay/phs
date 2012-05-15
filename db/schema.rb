@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20120510024559) do
 
-  create_table "homestays", :force => true do |t|
+  create_table "hotels", :force => true do |t|
     t.string   "title"
     t.string   "location"
     t.integer  "price"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120510024559) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "hotels", :force => true do |t|
+  create_table "sitters", :force => true do |t|
     t.string   "title"
     t.string   "location"
     t.integer  "price"
