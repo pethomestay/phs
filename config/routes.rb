@@ -2,7 +2,7 @@ PetHomestay::Application.routes.draw do
   devise_for :users
 
   resources :hotels
-  resources :homestays
+  resources :sitters
 
   get "search" => "search#create" # TODO: Remove this route
   resources :searches, only: [:create]
