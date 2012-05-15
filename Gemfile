@@ -5,7 +5,7 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'unicorn'
 gem 'devise'
-gem 'less-rails-bootstrap'
+gem 'twitter-bootstrap-rails'
 
 group :development do
   gem 'sqlite3'
