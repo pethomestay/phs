@@ -1,4 +1,18 @@
 PetHomestay::Application.routes.draw do
+  module UserIsNotProvider
+    def self.matches?(request)
+      user = request.env['warden'].user
+      !user.hotel && !user.sitter
+    end
+  end
+
+  module UserIsProvider
+    def self.matches?(request)
+      user = request.env['warden'].user
+      user.hotel || user.sitter
+    end
+  end
+
   devise_for :users
 
   resources :hotels
@@ -6,7 +20,14 @@ PetHomestay::Application.routes.draw do
 
   resources :searches, only: [:create]
 
-  root to: "pages#home"
+  authenticated do
+    root to: "pages#home", :constraints => UserIsNotProvider
+    root to: "pages#home", :constraints => UserIsProvider
+  end
+
+  unauthenticated do
+    root to: "pages#home"
+  end
 
   get '/how-it-works',          to: 'pages#how_it_works', as: 'how_it_works'
   get '/why-pet-homestay',      to: 'pages#why_pet_homestay', 
@@ -16,5 +37,4 @@ PetHomestay::Application.routes.draw do
                                 as: 'terms_and_conditions'
   get '/privacy-policy',        to: 'pages#privacy_policy',
                                 as: 'privacy_policy'
-  
 end
