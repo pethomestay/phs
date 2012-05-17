@@ -1,0 +1,35 @@
+@margins: 20px;
+
+.listing{
+  overflow: hidden; 
+  padding: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-radius: 10px;
+  &:nth-child(2n+1){
+    background: whitesmoke;
+  }
+  .btn{
+    display: table;
+    margin: auto;
+    margin-top: @margins * 2;
+  }
+}
+
+.left-column{
+  width: 420px;
+  float: left;
+  .title{
+    float: left;
+  }
+  .price{
+    float: right;
+  }
+}
+
+.right-column{
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-left: @margins * 2;
+}
