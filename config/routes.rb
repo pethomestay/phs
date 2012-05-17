@@ -1,15 +1,17 @@
 PetHomestay::Application.routes.draw do
   module UserIsNotProvider
     def self.matches?(request)
-      user = request.env['warden'].user
-      !user.hotel && !user.sitter
+      if user = request.env['warden'].user
+        !user.hotel && !user.sitter
+      end
     end
   end
 
   module UserIsProvider
     def self.matches?(request)
-      user = request.env['warden'].user
-      user.hotel || user.sitter
+      if user = request.env['warden'].user
+        user.hotel || user.sitter
+      end
     end
   end
 
