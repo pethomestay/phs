@@ -4,7 +4,6 @@ PetHomestay::Application.routes.draw do
   resources :hotels
   resources :sitters
 
-  get "search" => "search#create" # TODO: Remove this route
   resources :searches, only: [:create]
 
   root to: "pages#home"
