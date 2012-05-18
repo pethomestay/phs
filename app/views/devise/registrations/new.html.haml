@@ -8,16 +8,36 @@
   = devise_error_messages!
   %fieldset
     .control-group
-      = f.label :email, class: 'control-label'
+      = f.label :email, 'Email address', class: 'control-label'
       .controls
         = f.email_field :email
+        .help-inline we promise not to spam you
     .control-group
       = f.label :password, class: 'control-label'
       .controls
         = f.password_field :password
+        .help-inline keep it secret, keep it safe
     .control-group
       = f.label :password_confirmation, class: 'control-label'
       .controls
         = f.password_field :password_confirmation
+        .help-inline repeat your password here - just to be safe
+    %h3
+      Love pets and want to make some extra money?
+      %small Become a provider
+    .control-group
+      = f.label :i_can, class: 'control-label'
+      .controls
+        %label.checkbox
+          = f.check_box :wants_to_be_sitter
+          look after pets in their homes
+      .controls
+        %label.checkbox
+          = f.check_box :wants_to_be_hotel
+          look after pets at my house
+      .controls
+        %label.checkbox
+          = f.check_box :wants_to_be_hotel
+          look after pets at my cattery or kennel
     .form-actions
       %button.btn.btn-primary{type: "submit"} Create account
