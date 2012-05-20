@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'unicorn'
 gem 'devise'
+gem 'wicked'
 gem 'twitter-bootstrap-rails'
 
 group :development do

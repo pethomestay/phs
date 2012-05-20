@@ -16,6 +16,7 @@ PetHomestay::Application.routes.draw do
   end
 
   devise_for :users
+  resource :hotel_steps
 
   resources :hotels
   resources :sitters

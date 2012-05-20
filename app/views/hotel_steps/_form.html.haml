@@ -1,0 +1,6 @@
+- html = {class: 'form-horizontal'}
+= form_for @hotel, url: wizard_path, method: 'put', html: html do |f|
+  %fieldset
+    = yield f
+    .form-actions
+      %button.btn.btn-primary Continue
