@@ -3,20 +3,23 @@
     This area would be used to demonstrate the relationship between pet owners, pet homestays and pet sitters.
   %p This would be achieved through a graphic.
 .row
-  .span6
+  .span4
     .well.home-boxes
-      %h2 Search
+      %h2 Looking for pet care?
+      %p Start your search for a pet sitter or pet hotel here.
       = form_for Search.new do |f|
         %label Where are you?
         = f.text_field :location, class: 'span3', placeholder: "Me and my pet live in..."
         %label Your pet prefers to...
         - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']]
         = f.select :provider_type, options
-        .clear
-        %button.btn.btn-large.btn-primary{type: "submit"} Search
-  .span6
+        .clear.hello
+        %button.btn.btn-large.btn-primary.home-search{type: "submit"} Search
+  .span8
     .well.home-boxes
       %h2 Love pets?
+      %p Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+      %p Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit.
       %p Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
       %p Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit.
 
