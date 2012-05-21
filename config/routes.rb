@@ -32,12 +32,9 @@ PetHomestay::Application.routes.draw do
     root to: "pages#home"
   end
 
-  get '/how-it-works',          to: 'pages#how_it_works', as: 'how_it_works'
-  get '/why-pet-homestay',      to: 'pages#why_pet_homestay', 
-                                as: 'why_pet_homestay'
-  get '/contact',               to: 'pages#contact'
-  get '/terms-and-conditions',  to: 'pages#terms_and_conditions',
-                                as: 'terms_and_conditions'
-  get '/privacy-policy',        to: 'pages#privacy_policy',
-                                as: 'privacy_policy'
+  get '/how-it-works'         => 'pages#home', as: 'how_it_works'
+  get '/why-pet-homestay'     => 'pages#home', as: 'why_pet_homestay'
+  get '/contact'              => 'pages#home'
+  get '/terms-and-conditions' => 'pages#home', as: 'terms_and_conditions'
+  get '/privacy-policy'       => 'pages#home', as: 'privacy_policy'
 end
