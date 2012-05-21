@@ -16,9 +16,12 @@ PetHomestay::Application.routes.draw do
   end
 
   devise_for :users
-  resource :hotel_steps
 
-  resources :hotels
+  resources :hotels do
+    collection do
+      resource :hotel_steps, path: 'sign-up', only: [:show, :update, :create, :destroy]
+    end
+  end
   resources :sitters
 
   resource :searches, only: [:create]

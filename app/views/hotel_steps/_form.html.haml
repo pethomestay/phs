@@ -4,3 +4,5 @@
     = yield f
     .form-actions
       %button.btn.btn-primary Continue
+      - options = {class: 'btn', method: 'delete'}
+      = link_to "Cancel", hotel_steps_path, options
