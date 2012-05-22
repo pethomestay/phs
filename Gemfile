@@ -6,6 +6,7 @@ gem 'haml-rails'
 gem 'unicorn'
 gem 'devise'
 gem 'wicked'
+gem 'gmaps4rails'
 gem 'twitter-bootstrap-rails'
 
 group :development do

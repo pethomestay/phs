@@ -1,3 +1,8 @@
-%h3 Please check we've placed you on the map correctly
+%h2 Enter your pet hotel details
+%p Please check we've placed you on the map correctly
+.progress
+  .bar{style: "width: 33%"} 
 = render layout: 'form' do |f|
   .field
+    = gmaps4rails(@map_json)
+    = yield :scripts
