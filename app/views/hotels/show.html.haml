@@ -14,17 +14,12 @@
     .description
       %p= @hotel.description
       %p= @hotel.description
-      %p= @hotel.description  
-    .well.quick-contact
-      %h4 Enquire with this pet provider:
-      %form.quick-contact
-        %label Your name
-        %input.input-xlarge{type: "text"}
-        %label Email address
-        %input.input-xlarge{type: "email"}
-        %label Enquiry message
-        %textarea.input-xlarge{rows: "7"}
-        %button.btn.btn-primary.btn-large Send your message
+      %p= @hotel.description
+    - if signed_in?   
+      = render partial: 'providers/quick_contact'
+    - else
+      = render partial: 'providers/signed_out'
+    .clear
   .span5
     .slider  
       = link_to image_tag("http://placekitten.com/380/280"), hotel_path(@hotel.id), class: "thumbnail"
