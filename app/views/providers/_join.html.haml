@@ -1,0 +1,18 @@
+%div{ class: "join-us", name: "#join-us" }
+  %h4 Join us to talk with this provider
+  %p
+    Already a member?
+    = link_to('Sign in', '#sign-in').html_safe
+  = form_tag user_session_path, class: "form-vertical" do
+    .control-group
+      = email_field_tag 'user[email]', '', :placeholder => 'Email'
+    .control-group
+      = password_field_tag 'user[password]', '', :placeholder => 'Password'
+    .control-group
+      = password_field_tag 'user[password]', '', :placeholder => 'Password Confirmation'
+      %br/
+    .control-group 
+      = check_box_tag 'user[remember_me]'
+      Remember me
+    .control-group 
+      = submit_tag 'Sign in', :class => 'btn small primary'
