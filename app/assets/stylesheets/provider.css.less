@@ -10,6 +10,7 @@
 
 .description{
   margin-top: @margins;
+  margin-bottom: @margins * 2;
 }
 
 .row .pricing{
@@ -22,8 +23,30 @@
   margin-top: @margins;
 }
 
+.listing-form {
+  height: 250px;
+  position: relative;
+}
+
+.sign-in {
+  opacity: 1;
+  z-index: 1;
+}
+
+.sign-in, .join-us {
+  position: absolute;
+  h4{
+    margin-bottom: 10px;
+  }
+}
+
+.join-button {
+  position: relative;
+  left: 340px;
+  top: -176px;
+}
+
 .quick-contact{
-  margin-top: @margins;
   margin-bottom: 0;
   textarea{
     width: 488px;
