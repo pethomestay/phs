@@ -3,13 +3,4 @@
   .span9.offset3
     - @providers.each do |provider|
       = render partial: 'result_row', locals: {provider: provider}
-    .pagination.pagination-centered
-      %ul
-        %li.active
-          %a= '1'
-        %li
-          %a= '2'
-        %li
-          %a= '3'
-        %li
-          %a= 'Next'
+    = will_paginate @providers, class: 'pagination pagination-centered'

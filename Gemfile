@@ -7,6 +7,8 @@ gem 'unicorn'
 gem 'devise'
 gem 'wicked'
 gem 'gmaps4rails'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'twitter-bootstrap-rails'
 gem 'pg'
 

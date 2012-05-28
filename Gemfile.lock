@@ -30,6 +30,8 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-will_paginate (0.0.7)
+      will_paginate
     builder (3.0.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -137,11 +139,13 @@ GEM
     wicked (0.1.5)
       activesupport (>= 3.0.7)
       rails (>= 3.0.7)
+    will_paginate (3.0.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-will_paginate
   coffee-rails (~> 3.2.1)
   devise
   gmaps4rails
@@ -156,3 +160,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   wicked
+  will_paginate
