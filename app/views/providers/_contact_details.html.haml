@@ -1,0 +1,18 @@
+#contact-details
+  - if signed_in?
+    .well
+      .quick-contact
+        %h4 Enquire with this pet provider:
+        %form
+          %label Your name
+          %input.input-xlarge{type: "text"}
+          %label Email address
+          %input.input-xlarge{type: "email"}
+          %label Enquiry message
+          %textarea.input-xlarge{rows: "7"}
+          %br
+          %button.btn.btn-primary.btn-large Send your message
+  - else
+    .well.listing-form
+      = render partial: 'providers/contact_sign_in_form', locals: {provider: provider}
+      = render partial: 'providers/contact_sign_up_form', locals: {provider: provider}

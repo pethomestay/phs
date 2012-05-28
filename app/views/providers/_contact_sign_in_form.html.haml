@@ -1,0 +1,22 @@
+#sign-in
+  .left
+    %h4
+      Want to get in touch with [NAME]?
+    %p Sign into your Pet Homestay account to contact this provider.
+    = form_tag user_session_path, class: "form-vertical" do
+      %input{type: 'hidden', name: 'redirect_path', value: provider.path}
+      .control-group
+        = email_field_tag 'user[email]', '', :placeholder => 'Email'
+      .control-group
+        = password_field_tag 'user[password]', '', :placeholder => 'Password'
+        %br/
+      .control-group 
+        = check_box_tag 'user[remember_me]'
+        Remember me
+      .control-group 
+        = submit_tag 'Sign in', :class => 'btn small primary'
+      .control-group
+        = link_to "Forgot your password?", new_user_password_path
+  .right
+    = link_to_function 'Join us', 'showSignUp()', class: "join btn btn-large btn-primary"
+  .clear

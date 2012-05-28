@@ -23,27 +23,52 @@
   margin-top: @margins;
 }
 
-.listing-form {
-  height: 250px;
-  position: relative;
-}
-
-.sign-in {
-  opacity: 1;
-  z-index: 1;
-}
-
-.sign-in, .join-us {
-  position: absolute;
-  h4{
-    margin-bottom: 10px;
+#contact-details {
+  .listing-form {
+    height: 250px;
+    overflow: hidden;
   }
-}
-
-.join-button {
-  position: relative;
-  left: 340px;
-  top: -176px;
+  .left, .right {
+    width: 250px;
+    height: 250px;
+    float:left;
+  }
+  .left {
+    padding-right:20px;
+    border-right: 1px solid #ddd;
+    margin-right:-1px;
+    &:before {
+      content: "OR";
+      position: absolute;
+      left:270px;
+      margin-left:-15px;
+      width:30px;
+      height:30px;
+      background-color: #F5F5F5;
+      top:50%;
+      margin-top:-15px;
+      line-height:30px;
+      text-align:center;
+      color:#aaa;
+    }
+  }
+  #sign-in, #sign-up {
+    position: absolute;
+    width:100%;
+  }
+  #sign-up {
+    display: none;
+  }
+  .right .btn {
+    position: relative;
+    left:50%;
+    top:50%;
+    margin-top:-22px;
+    margin-left:-46px;
+    &.facebook {
+      margin-left:-96px;
+    }
+  }
 }
 
 .quick-contact{
