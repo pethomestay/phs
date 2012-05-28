@@ -1,6 +1,7 @@
 %div{ class: "sign-in", name: "#sign-in" }
   %h4 Sign in to talk with this provider
   = form_tag user_session_path, class: "form-vertical" do
+    %input{type: 'hidden', name: 'redirect_path', value: provider.path}
     .control-group
       = email_field_tag 'user[email]', '', :placeholder => 'Email'
     .control-group

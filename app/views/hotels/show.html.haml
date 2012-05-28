@@ -18,7 +18,7 @@
     - if signed_in?   
       = render partial: 'providers/quick_contact'
     - else
-      = render partial: 'providers/signed_out'
+      = render partial: 'providers/signed_out', locals: {provider: @hotel}
     .clear
   .span5
     .slider  
