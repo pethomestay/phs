@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521233820) do
+ActiveRecord::Schema.define(:version => 20120527225013) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -43,20 +43,28 @@ ActiveRecord::Schema.define(:version => 20120521233820) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                          :default => "", :null => false
+    t.string   "encrypted_password",             :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                  :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.boolean  "wants_to_be_sitter"
     t.boolean  "wants_to_be_hotel"
+    t.boolean  "wants_to_be_professional_hotel"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "address_suburb"
+    t.string   "address_city"
+    t.string   "address_postcode"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

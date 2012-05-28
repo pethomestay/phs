@@ -7,9 +7,14 @@ class Hotel < ActiveRecord::Base
 
   validates_presence_of :address_1, :address_suburb, :address_city
 
-  acts_as_gmappable check_process: false
+  geocoded_by :geocoding_address
+  after_validation :geocode
 
-  def gmaps4rails_address
-    "#{self.address_1}, #{self.address_city}"
+  def geocoding_address
+    if address_1.present? && address_city.present?
+      "#{address_1}, #{address_city}"
+    else
+      ""
+    end
   end
 end
