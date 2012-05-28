@@ -8,7 +8,7 @@ class Sitter < ActiveRecord::Base
                   :address_city, :address_postcode, :latitude, :longitude
 
   def self.near(*args)
-    ids = User.near(*args).map(&:ids)
-    self.where("user_id = ?", ids)
+    ids = User.near(*args).map(&:id)
+    self.where(user_id: ids)
   end
 end
