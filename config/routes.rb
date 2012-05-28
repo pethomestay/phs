@@ -35,6 +35,7 @@ PetHomestay::Application.routes.draw do
     root to: "pages#home"
   end
 
+  get '/searches/none'        => 'pages#home', as: 'no_results'
   get '/how-it-works'         => 'pages#home', as: 'how_it_works'
   get '/why-pet-homestay'     => 'pages#home', as: 'why_pet_homestay'
   get '/contact'              => 'pages#home'

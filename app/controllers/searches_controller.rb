@@ -4,7 +4,11 @@ class SearchesController < ApplicationController
     if @search.valid?
       klass = @search.provider_class
     	@providers = klass.near(@search.location)
-      @providers = @providers.paginate(page: params[:page], per_page: 10)
+      if @providers.present?
+        @providers = @providers.paginate(page: params[:page], per_page: 10)
+      else
+        redirect_to no_results_path(location: @search.location)
+      end
     else
       raise "Invalid search"
     end
