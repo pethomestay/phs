@@ -1,8 +1,9 @@
-.hero-unit
-  %p
-    This area would be used to demonstrate the relationship between pet owners, pet homestays and pet sitters.
-  %p This would be achieved through a graphic.
-.row
+.row.header-boxes
+  .span4.tagline
+    %h1
+      It's
+      %strong FREE
+      to use with NO commission on any services booked - so register a PetHomeStay today!
   .span4
     .well.home-boxes
       %h2 Looking for pet care?
@@ -15,32 +16,27 @@
         = f.select :provider_type, options
         .clear.hello
         %button.btn.btn-large.btn-primary.home-search{type: "submit"} Search
-  .span8
+  .span4
     .well.home-boxes
       %h2 Love pets?
-      %p Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-      %p Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit.
-      %p Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-      %p Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam id dolor id nibh ultricies vehicula ut id elit.
+      %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
+      %p You decide exactly what pets to look after, when, and set your own rates. Best of all, unlike other pet care services, PetHomeStay takes NO cut of any transaction!
 
-      = link_to 'Join now', new_user_registration_path, class: "btn btn-large btn-primary pull-right"
+      = link_to 'Get started today', new_user_registration_path, class: "btn btn-large btn-primary"
       .clear
-.row
+.row.footer-boxes
   .span4
     %h2 What is Pet Homestay?
-    %p
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+    %p PetHomeStay matches people who love looking after pets, with people who need their pets looking after! A new social community that complements traditional kennels or catteries, you can search for suitable people to help out with your pet when you need it most...
+    %a.btn
+      Who we are »
+  .span4
+    %h2 How does it work?
+    %p Build a profile of your pet, your PetHomeStay house, or your professional pet services. Once registered, people can search for what they specifically need for their pet. Every completed PetHomeStay interaction has a feedback rating, so you can tell who is a reliable, responsible service provider or pet owner.
     %a.btn
       Learn more »
   .span4
-    %h2 How does it work?
-    %p
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %a.btn
-      View details »
-  .span4
     %h2 Pet Homestay News
-    %p
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus accursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.'
+    %p Check out all the latest goings on, pet tips, and exclusive PetHomeStay offers on our blog!
     %a.btn
-      View details »
+      Visit blog »
