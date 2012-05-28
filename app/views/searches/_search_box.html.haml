@@ -1,5 +1,5 @@
 .span3.fixed
-  = form_for @search, html: {class: "well"} do |f|
+  = form_for @search, method: 'GET', html: {class: "well"} do |f|
     = f.label :location
     = f.text_field :location, placeholder: "Wellington", class: "span2"
     %label Your pet prefers to...

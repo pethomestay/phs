@@ -24,7 +24,7 @@ PetHomestay::Application.routes.draw do
   end
   resources :sitters
 
-  resource :searches, only: [:create]
+  get '/searches' => 'searches#create'
 
   authenticated do
     root to: "pages#home", :constraints => UserIsNotProvider

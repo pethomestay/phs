@@ -7,7 +7,7 @@
     .well.home-boxes
       %h2 Looking for pet care?
       %p Start your search for a pet sitter or pet hotel here.
-      = form_for Search.new do |f|
+      = form_for Search.new, method: 'GET' do |f|
         %label Where are you?
         = f.text_field :location, class: 'span3', placeholder: "Me and my pet live in..."
         %label Your pet prefers to...
