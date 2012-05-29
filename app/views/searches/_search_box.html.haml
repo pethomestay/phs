@@ -1,5 +1,7 @@
 .span3.fixed
   = form_for @search, method: 'GET', html: {class: "well"} do |f|
+    = f.hidden_field :latitude
+    = f.hidden_field :longitude
     = f.label :location
     = f.text_field :location, placeholder: "Wellington", class: "span2"
     %label Your pet prefers to...

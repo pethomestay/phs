@@ -3,7 +3,12 @@ class SearchesController < ApplicationController
     @search = Search.new params[:search]
     if @search.valid?
       klass = @search.provider_class
-    	@providers = klass.near(@search.location)
+      unless @search.latitude.present? && @search.longitude.present?
+        coords = Geocoder.coordinates(@search.location)
+        @search.latitude = coords.first
+        @search.longitude = coords.last
+      end
+    	@providers = klass.near([@search.latitude, @search.longitude])
       if @providers.present?
         @providers = @providers.paginate(page: params[:page], per_page: 10)
       else

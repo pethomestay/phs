@@ -6,7 +6,7 @@ class Search
 
   validates_inclusion_of :provider_type, :in => %w( hotel sitter )
 
-  attr_accessor :location, :provider_type
+  attr_accessor :location, :provider_type, :latitude, :longitude
   def initialize(attributes = {})
     attributes.each do |k,v|
       send "#{k}=", v if respond_to? "#{k}="
