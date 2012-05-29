@@ -16,6 +16,7 @@ PetHomestay::Application.routes.draw do
   end
 
   devise_for :users
+  resource :login_dropdown, only: [:show]
 
   resources :hotels do
     collection do

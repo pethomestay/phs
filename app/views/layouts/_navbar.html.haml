@@ -9,20 +9,4 @@
           = link_to "Why Pet Homestay", why_pet_homestay_path
         %li
           = link_to "Contact us", contact_path
-      %ul.nav.pull-right
-        - unless signed_in?
-          %li.login-dropdown
-            %a.dropdown-toggle{:href => '#', :'data-toggle' => 'dropdown'} Sign in
-            .dropdown-menu
-              = form_tag user_session_path, class: "well" do
-                = email_field_tag 'user[email]', '', :placeholder => 'Email'
-                = password_field_tag 'user[password]', '', :placeholder => 'Password'
-                %label.checkbox
-                  = check_box_tag 'user[remember_me]'
-                  Remember me
-                = submit_tag 'Sign in', :class => 'btn small primary'
-                .divider
-                = link_to "Forgot your password?", new_user_password_path
-        - else
-          %li
-            = link_to "Sign out", destroy_user_session_path, method: :delete
+      = render partial: 'layouts/navbar_login_dropdown'
