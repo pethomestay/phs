@@ -1,3 +1,5 @@
+require './app/models/search'
+
 class SearchesController < ApplicationController
   def create
     @search = Search.new params[:search]
