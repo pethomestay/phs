@@ -16,3 +16,6 @@
 
 # Ignore .rvmrc
 .rvmrc
+
+# Ignore .env
+.env
