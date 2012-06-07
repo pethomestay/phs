@@ -4,4 +4,7 @@
   .bar{style: "width: 66%"} 
 %h3 
 = render layout: 'form' do |f|
-  .field
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title
