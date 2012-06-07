@@ -7,10 +7,6 @@ class HotelStepsController < ApplicationController
   
   def show
     @hotel = get_hotel
-    if step == :map
-      @hotel.process_geocoding
-      @map_json = @hotel.to_gmaps4rails
-    end
     render_wizard
   end
   

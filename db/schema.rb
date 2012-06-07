@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527225013) do
+ActiveRecord::Schema.define(:version => 20120607020352) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20120527225013) do
     t.integer  "cost_per_night"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "address_country"
   end
 
   create_table "sitters", :force => true do |t|

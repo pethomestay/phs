@@ -4,5 +4,15 @@
   .bar{style: "width: 33%"} 
 = render layout: 'form' do |f|
   .field
-    = gmaps4rails(@map_json)
-    = yield :scripts
+    #map
+    %p
+      Click and drag the marker to reposition.
+      = link_to_function 'Reset', "setupDraggableMarker(#{@hotel.latitude}, #{@hotel.longitude});"
+    = f.hidden_field :latitude
+    = f.hidden_field :longitude
+    - map_js_src = "http://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true"
+    %script{type: "application/javascript", src: map_js_src}
+    %script{type: "application/javascript", src: "/assets/gmaps.js"}
+    :javascript
+      initMap(#{@hotel.latitude}, #{@hotel.longitude}, {zoom: 18})
+      setupDraggableMarker(#{@hotel.latitude}, #{@hotel.longitude})
