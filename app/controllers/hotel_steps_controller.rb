@@ -38,6 +38,6 @@ class HotelStepsController < ApplicationController
   end
 
   def redirect_to_finish_wizard
-    redirect_to root_url
+    redirect_to hotel_path(current_user.hotel), alert: "Your pet hotel page has been created!"
   end
 end
