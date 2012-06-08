@@ -1,4 +1,4 @@
-%h2 Enter your pet hotel details
+%h2 Great! You want to look after pets in your own space.
 %p We need to know some basic information about your pet hotel so we can put you in touch with eager pet owners.
 .progress
   .bar{style: "width: 0%"}
@@ -14,14 +14,13 @@
           = f.text_field :cost_per_night
           .add-on .00
   %h3
-    Pet hotel address
+    Your place
     %small Where are you?
   .control-group
-    = f.label :address_1, class: 'control-label'
+    = f.label :address_1, 'Street address', class: 'control-label'
     .controls
       = f.text_field :address_1
   .control-group
-    = f.label :address_2, class: 'control-label'
     .controls
       = f.text_field :address_2
   .control-group
