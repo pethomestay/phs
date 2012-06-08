@@ -13,12 +13,13 @@ if Rails.env.development? || Rails.env.staging?
       password_confirmation:  "test2010",
       address_1:              "94 Dixon Street",
       address_suburb:         "Te Aro",
-      address_city:           "Wellington"
+      address_city:           "Wellington",
+      address_country:        "New Zealand"
     })
     user.build_sitter({
-      title:        "My First Homestay",
-      price:        15,
-      description:  <<-eos
+      title:          "My First Homestay",
+      cost_per_night: 15,
+      description:    <<-eos
         Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Nulla vitae elit libero, a pharetra augue. Cras mattis
         consectetur purus sit amet fermentum. Cum sociis natoque penatibus et
@@ -27,14 +28,15 @@ if Rails.env.development? || Rails.env.staging?
     }).save
   end
   Hotel.destroy_all
-  50.times do
+  5.times do
     Hotel.create({
-      title:          "A Pet Hotel",
-      address_1:      "94 Dixon Street",
-      address_suburb: "Te Aro",
-      address_city:   "Wellington",
-      price:          15,
-      description:    <<-eos
+      title:            "Awesome Pet Hotel",
+      address_1:        "94 Dixon Street",
+      address_suburb:   "Te Aro",
+      address_city:     "Wellington",
+      address_country:  "New Zealand",
+      cost_per_night:   15,
+      description:      <<-eos
         Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Nulla vitae elit libero, a pharetra augue. Cras mattis
         consectetur purus sit amet fermentum. Cum sociis natoque penatibus et
