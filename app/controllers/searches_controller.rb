@@ -15,7 +15,7 @@ class SearchesController < ApplicationController
       if @providers.present?
         @providers = @providers.paginate(page: params[:page], per_page: 10)
       else
-        redirect_to no_results_path(location: @search.location)
+        redirect_to no_results_path(location: @search.location, provider_type: @search.provider_type)
       end
     else
       raise "Invalid search"
