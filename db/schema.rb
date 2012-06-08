@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607020352) do
+ActiveRecord::Schema.define(:version => 20120607233835) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20120607020352) do
     t.string   "address_postcode"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "address_country"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

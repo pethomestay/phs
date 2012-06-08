@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
                   :wants_to_be_sitter, :wants_to_be_hotel, \
                   :wants_to_be_professional_hotel, :address_1, :address_2, \
                   :address_suburb, :address_city, :address_postcode, :latitude, \
-                  :longitude
+                  :longitude, :address_country
   has_one :hotel
   has_one :sitter
 
