@@ -10,8 +10,7 @@
         %i= 'per night'
     .clear
     .excerpt
-      %p= provider.description
-      %p= provider.description
+      %p= truncate(provider.description, length: 100)
   .right-column
     .thumbnail= link_to image_tag("http://placekitten.com/380/280"), provider
     = link_to 'View more', provider, class: "btn btn-large btn-primary"
