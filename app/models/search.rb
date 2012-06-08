@@ -9,7 +9,7 @@ class Search
 
   validates_inclusion_of :provider_type, :in => Provider.type_strings
 
-  attr_accessor :location, :provider_type, :latitude, :longitude
+  attr_accessor :location, :provider_type, :latitude, :longitude, :within
   def initialize(attributes = {})
     attributes.each do |k,v|
       send "#{k}=", v if respond_to? "#{k}="
