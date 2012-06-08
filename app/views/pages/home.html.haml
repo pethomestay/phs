@@ -28,15 +28,13 @@
   .span4
     %h2 What is Pet Homestay?
     %p PetHomeStay matches people who love looking after pets, with people who need their pets looking after! A new social community that complements traditional kennels or catteries, you can search for suitable people to help out with your pet when you need it most...
-    %a.btn
-      Who we are »
+    = link_to "Who we are »", what_is_path, class: 'btn'
   .span4
     %h2 How does it work?
     %p Build a profile of your pet, your PetHomeStay house, or your professional pet services. Once registered, people can search for what they specifically need for their pet. Every completed PetHomeStay interaction has a feedback rating, so you can tell who is a reliable, responsible service provider or pet owner.
-    %a.btn
-      Learn more »
+    = link_to "Learn more »", how_does_it_work_path, class: 'btn'
+      
   .span4
     %h2 Pet Homestay News
     %p Check out all the latest goings on, pet tips, and exclusive PetHomeStay offers on our blog!
-    %a.btn
-      Visit blog »
+    = link_to "Visit blog »", news_path, class: 'btn'
