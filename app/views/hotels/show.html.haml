@@ -12,9 +12,7 @@
         %p
           %i per night
     .description
-      %p= @hotel.description
-      %p= @hotel.description
-      %p= @hotel.description
+      %p= simple_format @hotel.description
     = render partial: 'providers/contact_details', locals: {provider: @hotel}
     .clear
   .span5
