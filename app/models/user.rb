@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
                   :longitude, :address_country
   has_one :hotel
   has_one :sitter
+  has_many :ratings
 
   def wants_to_be_hotel?
     super || wants_to_be_professional_hotel?
