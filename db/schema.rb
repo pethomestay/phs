@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608033941) do
+ActiveRecord::Schema.define(:version => 20120611034609) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -39,6 +39,19 @@ ActiveRecord::Schema.define(:version => 20120608033941) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "stars"
+    t.text     "review"
+    t.integer  "user_id"
+    t.integer  "ratable_id"
+    t.string   "ratable_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "ratings", ["ratable_id", "ratable_type"], :name => "index_ratings_on_ratable_id_and_ratable_type"
+  add_index "ratings", ["user_id"], :name => "index_ratings_on_user_id"
 
   create_table "sitters", :force => true do |t|
     t.string   "title"
@@ -75,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20120608033941) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "address_country"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

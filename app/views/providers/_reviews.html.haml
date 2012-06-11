@@ -1,0 +1,8 @@
+%h2#reviews Recent Reviews
+%br
+- @reviewed_ratings.each do |rating|
+  .well
+    %p
+      - rating_stars rating.stars
+    %p= rating.review
+    %p= "- #{rating.user.first_name}"
