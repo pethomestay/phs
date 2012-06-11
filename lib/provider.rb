@@ -16,8 +16,12 @@ module Provider
   end
 
   def average_rating
-    ratings.inject(0) do |sum, rating|
-      sum += rating.stars
-    end / ratings.count
+    if ratings.present?
+      ratings.inject(0) do |sum, rating|
+        sum += rating.stars
+      end / ratings.count
+    else
+      0
+    end
   end
 end
