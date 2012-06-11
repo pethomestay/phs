@@ -1,6 +1,8 @@
 .row
   .span7
     .row
+      - if my_hotel?(@hotel)
+        = render partial: 'providers/edit_listing', locals: {provider: @hotel}
       .span5
         %h1= @hotel.title
         %p= @hotel.location
@@ -11,7 +13,8 @@
           %i per night
     .description
       %p= simple_format @hotel.description
-    = render partial: 'providers/contact_details', locals: {provider: @hotel}
+    - unless my_hotel?(@hotel)
+      = render partial: 'providers/contact_details', locals: {provider: @hotel}
     .clear
   .span5
     %ul.thumbnails
