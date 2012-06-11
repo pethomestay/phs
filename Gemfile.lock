@@ -46,6 +46,8 @@ GEM
       orm_adapter (~> 0.0.7)
       railties (~> 3.1)
       warden (~> 1.1.1)
+    dragonfly (0.9.12)
+      rack
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -149,12 +151,14 @@ DEPENDENCIES
   bootstrap-will_paginate
   coffee-rails (~> 3.2.1)
   devise
+  dragonfly
   geocoder
   gmaps4rails
   haml-rails
   jquery-rails
   less-rails
   pg
+  rack-cache
   rails
   sass-rails (~> 3.2.3)
   therubyracer

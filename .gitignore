@@ -19,3 +19,6 @@
 
 # Ignore .env
 .env
+
+# Ignore dragonfly images
+public/system/dragonfly

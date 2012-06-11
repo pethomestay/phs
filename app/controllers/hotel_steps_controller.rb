@@ -7,12 +7,18 @@ class HotelStepsController < ApplicationController
   
   def show
     @hotel = get_hotel
+    if step == :profile
+      @picture = @hotel.pictures.build
+    end
     render_wizard
   end
   
   def update
     @hotel = get_hotel
     @hotel.update_attributes(params[:hotel])
+    if picture = params[:picture]
+      @hotel.pictures.create(picture)
+    end
     render_wizard @hotel
   end
 

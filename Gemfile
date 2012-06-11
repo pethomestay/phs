@@ -12,6 +12,8 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'twitter-bootstrap-rails'
 gem 'pg'
+gem 'dragonfly'
+gem 'rack-cache'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

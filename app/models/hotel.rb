@@ -2,6 +2,8 @@ require './lib/provider'
 
 class Hotel < ActiveRecord::Base
   include Provider
+  has_many :pictures, as: 'picturable'
+  accepts_nested_attributes_for :pictures
 
   attr_accessible :address_1, :address_2, :address_suburb, :address_city, \
                   :address_postcode, :address_country, :latitude, :longitude
