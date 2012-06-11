@@ -14,6 +14,7 @@ gem 'twitter-bootstrap-rails'
 gem 'pg'
 gem 'dragonfly'
 gem 'rack-cache'
+gem 'fog'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
