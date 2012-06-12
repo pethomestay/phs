@@ -5,6 +5,9 @@ module Provider
     base.has_many :ratings, as: 'ratable'
     base.attr_accessible :title, :price, :location, :description, \
                          :cost_per_night
+    base.send :attr_accessor, :unfinished_signup
+    base.validates_presence_of :cost_per_night
+    base.validates_presence_of :title, :description, :unless => :unfinished_signup
   end
 
   def self.types

@@ -15,6 +15,7 @@ class HotelStepsController < ApplicationController
   
   def update
     @hotel = get_hotel
+    @hotel.unfinished_signup = true unless step == :profile
     @hotel.update_attributes(params[:hotel])
     if picture = params[:picture]
       @hotel.pictures.create(picture)
@@ -40,7 +41,7 @@ class HotelStepsController < ApplicationController
   end
 
   def create_hotel
-    current_user.build_hotel.save
+    current_user.build_hotel
   end
 
   def redirect_to_finish_wizard
