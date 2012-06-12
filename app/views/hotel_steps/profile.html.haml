@@ -4,16 +4,7 @@
   .bar{style: "width: 66%"} 
 %h3 
 = render layout: 'form' do |f|
-  .control-group
-    = f.label :title, class: 'control-label'
-    .controls
-      = f.text_field :title
-  .control-group
-    = f.label :description, class: 'control-label'
-    .controls
-      = f.text_area :description, class: 'span10', rows: 10
-  = fields_for @hotel.pictures.build do |f|
-    .control-group
-      = f.label :file, 'Photo upload', class: 'control-label'
-      .controls
-        = f.file_field :file
+  = f.text_field :title
+  = f.text_area :description, class: 'span8', rows: 10
+  = f.fields_for @hotel.pictures.build do |f|
+    = f.file_field :file

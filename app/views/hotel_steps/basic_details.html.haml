@@ -7,31 +7,17 @@
     Rate per night
     %small How much do you charge?
     .control-group
-      = f.label :cost_per_night, "Price (#{I18n.t('currency')})", class: 'control-label'
+      = label_tag :cost_per_night, "Price (#{I18n.t('currency')})", class: 'control-label'
       .controls
         .input-prepend.input-append
           .add-on $
-          = f.text_field :cost_per_night
+          = text_field :hotel, :cost_per_night
           .add-on .00
   %h3
     Your place
     %small Where are you?
-  .control-group
-    = f.label :address_1, 'Street address', class: 'control-label'
-    .controls
-      = f.text_field :address_1
-  .control-group
-    .controls
-      = f.text_field :address_2
-  .control-group
-    = f.label :address_suburb, 'Suburb', class: 'control-label'
-    .controls
-      = f.text_field :address_suburb
-  .control-group
-    = f.label :address_city, 'City', class: 'control-label'
-    .controls
-      = f.text_field :address_city
-  .control-group
-    = f.label :address_country, 'Country', class: 'control-label'
-    .controls
-      = f.text_field :address_country
+  = f.text_field :address_1
+  = f.text_field :address_2
+  = f.text_field :address_suburb
+  = f.text_field :address_city
+  = f.text_field :address_country
