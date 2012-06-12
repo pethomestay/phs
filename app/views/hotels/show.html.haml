@@ -2,7 +2,7 @@
   .span7
     .row
       - if my_hotel?(@hotel)
-        = render partial: 'providers/edit_listing', locals: {provider: @hotel}
+        .span7= render partial: 'providers/edit_listing', locals: {provider: @hotel}
       .span5
         %h1= @hotel.title
         %p= @hotel.location
