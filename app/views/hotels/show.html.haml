@@ -8,7 +8,10 @@
         %p= @hotel.location
         %p.rating
           - rating_stars @hotel.average_rating
-          %span= link_to "(Read reviews)", "#reviews"
+          - if @reviewed_ratings.present?
+            %span= link_to "(Read reviews)", "#reviews"
+          - else
+            %span (No reviews yet)
       .span2.pricing
         %h1= number_to_currency(@hotel.cost_per_night)
         %p
@@ -18,7 +21,8 @@
     - unless my_hotel?(@hotel)
       = render partial: 'providers/contact_details', locals: {provider: @hotel}
     .clear
-    = render partial: 'providers/reviews', locals: {provider: @hotel}
+    - if @reviewed_ratings.present?
+      = render partial: 'providers/reviews', locals: {provider: @hotel}
   .span5
     %ul.thumbnails
       - if @hotel.pictures.present?
