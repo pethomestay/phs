@@ -23,4 +23,12 @@ $ ->
     , ->
       $stars.removeClass("icon-star").addClass("icon-star-empty")
     $(this).click ->
-      $('#review-modal').modal('show')
+      url = "#{window.location.pathname}/rating"
+      $.post url, {_method: 'PUT', "rating[stars]": rating}, (response) ->
+        $('#review-modal').modal('show')
+
+  $('#review-modal .submit-review').click ->
+    url = "#{window.location.pathname}/rating"
+    review = $('.review-text').val()
+    $.post url, {_method: 'PUT', "rating[review]": review}, (response) ->
+      $('#review-modal').modal('hide')
