@@ -5,7 +5,7 @@
         .span7= render partial: 'providers/edit_listing', locals: {provider: @hotel}
       .span5
         %h1= @hotel.title
-        %p= @hotel.location
+        %p= "#{@hotel.address_suburb}, #{@hotel.address_city}"
         %p.rating
           - rating_stars @hotel.average_rating
           - if @reviewed_ratings.present?
