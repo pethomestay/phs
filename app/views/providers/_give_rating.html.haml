@@ -1,0 +1,14 @@
+.well
+  %h4 Have some feedback on this listing?
+  %p Give this provider a rating to let others know what you think.
+  .rater
+    - rating_stars 0
+.modal.hide.fade#review-modal
+  .modal-header
+    %button.close{type: "button", 'data-dismiss' => "modal"} ×
+    %h3 Have more to say? Submit a review!
+  .modal-body
+    %textarea{placeholder: "Type your review here...", rows: 6}
+  .modal-footer
+    %a.btn{href:"#", 'data-dismiss' => "modal"} No thanks
+    %a.btn.btn-primary{href:"#"} Send review
