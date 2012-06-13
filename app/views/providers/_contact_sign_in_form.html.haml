@@ -1,7 +1,7 @@
 #sign-in
   .left
     %h4
-      Want to get in touch with [NAME]?
+      Want to get in touch?
     %p Sign into your Pet Homestay account to contact this provider.
     = form_tag user_session_path, class: "form-vertical" do
       %input{type: 'hidden', name: 'redirect_path', value: provider.path}
