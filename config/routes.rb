@@ -22,6 +22,7 @@ PetHomestay::Application.routes.draw do
     collection do
       resource :hotel_steps, path: 'sign-up', only: [:show, :update, :create, :destroy]
     end
+    put 'rating' => 'ratings#update'
   end
   resources :sitters
 
