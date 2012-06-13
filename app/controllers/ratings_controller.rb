@@ -6,7 +6,7 @@ class RatingsController < ApplicationController
       @rating.update_attributes(params[:rating])
       render json: @rating.to_json
     else
-      render json:  {error: 'Not logged in'}
+      render nothing: true, status: 401
     end
   end
 end
