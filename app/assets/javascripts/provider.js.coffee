@@ -26,9 +26,15 @@ $ ->
       url = "#{window.location.pathname}/rating"
       $.post url, {_method: 'PUT', "rating[stars]": rating}, (response) ->
         $('#review-modal').modal('show')
+        setTimeout ->
+          $('.rater').parent().html('Thanks for giving your input.')
+        , 500
 
   $('#review-modal .submit-review').click ->
     url = "#{window.location.pathname}/rating"
     review = $('.review-text').val()
     $.post url, {_method: 'PUT', "rating[review]": review}, (response) ->
       $('#review-modal').modal('hide')
+      setTimeout ->
+        window.location.reload true
+      , 500

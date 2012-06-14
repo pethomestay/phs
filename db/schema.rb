@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120611034609) do
+ActiveRecord::Schema.define(:version => 20120614022954) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20120611034609) do
     t.datetime "updated_at",     :null => false
     t.integer  "user_id"
     t.integer  "cost_per_night"
+    t.integer  "distance"
   end
 
   create_table "users", :force => true do |t|

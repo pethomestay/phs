@@ -5,7 +5,7 @@
       %strong FREE
       to use with NO commission on any services booked - so register a PetHomeStay today!
   .span4
-    .well.home-boxes
+    .well
       %h2 Looking for pet care?
       %p Start your search for a pet sitter or pet hotel here.
       = form_for Search.new, method: 'GET' do |f|
@@ -14,16 +14,28 @@
         %label Your pet prefers to...
         - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']]
         = f.select :provider_type, options
-        .clear.hello
+        .clear
         %button.btn.btn-large.btn-primary.home-search{type: "submit"} Search
   .span4
-    .well.home-boxes
-      %h2 Love pets?
-      %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
-      %p You decide exactly what pets to look after, when, and set your own rates. Best of all, unlike other pet care services, PetHomeStay takes NO cut of any transaction!
+    - if current_user
+      .well.half
+        - if current_user.sitter
+          = link_to "Goto my sitter listing", sitter_path(current_user.sitter)
+        - else
+          = link_to "Become a sitter call-to-action!", sitter_steps_path, method: 'POST'
+      .well.half
+        - if current_user.hotel
+          = link_to "Goto my hotel listing", hotel_path(current_user.hotel)
+        - else
+          = link_to "Become a hotel call-to-action!", hotel_steps_path, method: 'POST'
+    - else
+      .well
+        %h2 Love pets?
+        %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
+        %p You decide exactly what pets to look after, when, and set your own rates. Best of all, unlike other pet care services, PetHomeStay takes NO cut of any transaction!
 
-      = link_to 'Get started today', new_user_registration_path, class: "btn btn-large btn-primary"
-      .clear
+        = link_to 'Get started today', new_user_registration_path, class: "btn btn-large btn-primary"
+        .clear
 .row.footer-boxes
   .span4
     %h2 What is Pet Homestay?

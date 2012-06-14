@@ -1,14 +1,35 @@
 .well
-  %h4 Have some feedback on this listing?
-  %p Give this provider a rating to let others know what you think.
+  - if my_rating
+    %h4 Want to change your rating on this listing?
+    %p
+      You've given this listing
+      = my_rating.stars
+      = 'star'.pluralize my_rating.stars
+      but you can change this below
+  - else
+    %h4 Have some feedback on this listing?
+    %p Give this provider a rating to let others know what you think.
   .rater
-    - rating_stars 0
+    - if my_rating
+      - rating_stars my_rating.stars
+    - else
+      - rating_stars 0
 .modal.hide.fade#review-modal
   .modal-header
     %button.close{type: "button", 'data-dismiss' => "modal"} ×
-    %h3 Have more to say? Submit a review!
+    %h3 
+      - if my_rating && my_rating.review.present?
+        Want to change your review too?
+      - else
+        Have more to say? Submit a review!
   .modal-body
     %textarea.review-text{placeholder: "Type your review here...", rows: 6}
+      - if my_rating
+        = my_rating.review
   .modal-footer
     %a.btn{href:"#", 'data-dismiss' => "modal"} No thanks
-    %a.btn.btn-primary.submit-review{href:"#"} Submit review
+    %a.btn.btn-primary.submit-review{href:"#"}
+      - if my_rating && my_rating.review.present?
+        Change review
+      - else
+        Submit review

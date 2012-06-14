@@ -1,0 +1,9 @@
+- html = {class: 'form-horizontal'}
+- html.merge!({multipart: true}) if step == :profile
+= twitter_bootstrap_form_for @sitter, url: wizard_path, method: 'put', html: html do |f|
+  = f.fieldset do
+    = yield f
+    = f.actions do
+      = f.submit "Continue"
+      - options = {class: 'btn', method: 'delete'}
+      = link_to "Cancel", sitter_steps_path, options

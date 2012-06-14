@@ -23,4 +23,5 @@ group :assets do
   gem 'therubyracer'
   gem 'less-rails'
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-ui-rails'
 end
