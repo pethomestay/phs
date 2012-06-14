@@ -12,8 +12,10 @@ class ApplicationController < ActionController::Base
 
   def ensure_signup_completed!
     return unless current_user
-    if current_user.wants_to_be_hotel? && current_user.hotel.nil?
+    if current_user.wants_to_be_hotel? && (current_user.hotel.nil? || !current_user.hotel.valid?)
       redirect_to hotel_steps_path
+    elsif current_user.wants_to_be_sitter? && (current_user.sitter.nil? || !current_user.sitter.valid?)
+      redirect_to sitter_steps_path
     end
   end
 
