@@ -1,16 +1,21 @@
-.listing
-  .left-column
-    .title
-      %h1= link_to provider.title, provider
-      %p= provider.location
-      - rating_stars 3
-    .price
-      %h1= number_to_currency(provider.cost_per_night)
-      %p
-        %i= 'per night'
-    .clear
-    .excerpt
-      %p= truncate(provider.description, length: 100)
-  .right-column
-    .thumbnail= link_to image_tag("http://placekitten.com/380/280"), provider
-    = link_to 'View more', provider, class: "btn btn-large btn-primary"
+%tr.listing
+  %td.image-cell
+    = link_to image_tag("http://placekitten.com/120/120"), provider
+    %p.rating
+      - if provider.ratings.present?
+        - rating_stars provider.average_rating
+      - else
+        (Not yet rated)
+  %td
+    %table
+      %tr
+        %td
+          %h2= link_to provider.title, provider
+        %td
+          %p.cost-per-night
+            %strong
+              = number_to_currency(provider.cost_per_night)
+              per night
+          %p.location= provider.location
+    %p.excerpt= truncate(provider.description, length: 300)
+    %p.view= link_to "View this listing", provider

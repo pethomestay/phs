@@ -26,8 +26,10 @@
     Your address
     %small This information will remain private
   = f.fields_for @sitter.user do |f|
-    = f.text_field :address_1
-    = f.text_field :address_2
-    = f.text_field :address_suburb
-    = f.text_field :address_city
-    = f.text_field :address_country
+    = f.text_field :address_1, 'Street'
+    .control-group
+      .controls
+        = text_field :hotel, :address_2
+    = f.text_field :address_suburb, 'Suburb'
+    = f.text_field :address_city, 'City'
+    = f.text_field :address_country, 'Country'

@@ -12,4 +12,8 @@ class Sitter < ActiveRecord::Base
     ids = User.near(*args).map(&:id)
     self.where(user_id: ids)
   end
+
+  def location
+    address_suburb
+  end
 end

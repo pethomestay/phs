@@ -1,18 +1,34 @@
 @margins: 20px;
 
 .listing{
-  overflow: hidden; 
-  padding: 20px;
-  margin-bottom: 40px;
-  padding-bottom: 40px;
-  border-radius: 10px;
-  &:nth-child(2n+1){
-    background: whitesmoke;
+  .image-cell {
+    width:120px;
+    height:142px;
+    .rating {
+      height:20px;
+      width:86px;
+      margin: 6px auto -4px;
+    }
   }
-  .btn{
-    display: table;
-    margin: auto;
-    margin-top: @margins * 2;
+  .excerpt {
+    height:72px;
+    font-size:14px;
+  }
+  .view {
+    text-align:right;
+    margin: 0;
+  }
+  table {
+    width: 100%;
+    td {
+      background: none !important;
+      border:0 !important;
+      padding: 0 0 4px 0 !important;
+    }
+    .cost-per-night, .location {
+      text-align:right;
+      margin-bottom: 2px;
+    }
   }
 }
 

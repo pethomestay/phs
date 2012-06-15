@@ -3,7 +3,7 @@ module Provider
     (@klasses ||= []) << base
     base.belongs_to :user
     base.has_many :ratings, as: 'ratable'
-    base.attr_accessible :title, :price, :location, :description, \
+    base.attr_accessible :title, :price, :description, \
                          :cost_per_night
     base.send :attr_accessor, :unfinished_signup
     base.validates_presence_of :cost_per_night
@@ -16,6 +16,10 @@ module Provider
 
   def self.type_strings
     @klasses.map(&:to_s).map(&:underscore)
+  end
+
+  def location
+    ''
   end
 
   def average_rating

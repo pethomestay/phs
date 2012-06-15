@@ -20,4 +20,8 @@ class Hotel < ActiveRecord::Base
   def geocoding_address
     "#{address_1}, #{address_city}, #{address_country}"
   end
+
+  def location
+    "#{address_1}, #{address_suburb}"
+  end
 end
