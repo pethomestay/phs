@@ -14,6 +14,6 @@ class Sitter < ActiveRecord::Base
   end
 
   def location
-    address_suburb
+    "#{address_suburb}, #{address_city}"
   end
 end

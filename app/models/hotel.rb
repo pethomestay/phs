@@ -22,6 +22,6 @@ class Hotel < ActiveRecord::Base
   end
 
   def location
-    "#{address_1}, #{address_suburb}"
+    "#{address_suburb}, #{address_city}"
   end
 end
