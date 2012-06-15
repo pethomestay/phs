@@ -15,11 +15,11 @@ class HotelStepsController < ApplicationController
   
   def update
     @hotel = get_hotel
+    if picture_params = params[:hotel].delete(:picture)
+      @hotel.pictures.create(picture_params)
+    end
     @hotel.unfinished_signup = true unless step == :profile
     @hotel.update_attributes(params[:hotel])
-    if picture = params[:picture]
-      @hotel.pictures.create(picture)
-    end
     render_wizard @hotel
   end
 
