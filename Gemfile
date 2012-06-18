@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rack', '~> 1.4.1'
 gem 'rails'
 gem 'jquery-rails'
 gem 'haml-rails'

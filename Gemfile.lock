@@ -191,6 +191,7 @@ DEPENDENCIES
   jquery-ui-rails
   less-rails
   pg
+  rack (~> 1.4.1)
   rack-cache
   rails
   sass-rails (~> 3.2.3)
