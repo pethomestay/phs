@@ -5,6 +5,6 @@ class PagesController < ApplicationController
   end
 
   def test
-    raise env.inspect
+    render text: request.ip
   end
 end
