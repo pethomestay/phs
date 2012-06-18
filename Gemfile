@@ -17,6 +17,7 @@ gem 'dragonfly'
 gem 'rack-cache'
 gem 'fog'
 gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstrap_form_for.git", branch: "bootstrap-2.0"
+gem 'carmen-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

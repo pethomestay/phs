@@ -22,4 +22,4 @@
       = text_field :hotel, :address_2
   = f.text_field :address_suburb, 'Suburb'
   = f.text_field :address_city, 'City'
-  = f.text_field :address_country, 'Country'
+  = f.country_select :address_country, 'Country', {priority: [request.location.country_code, 'AU', 'NZ']}
