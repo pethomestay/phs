@@ -19,6 +19,7 @@ if Rails.env.development? || Rails.env.staging?
     user.build_sitter({
       title:          "My First Homestay",
       cost_per_night: 15,
+      distance: 20,
       description:    <<-eos
         Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Nulla vitae elit libero, a pharetra augue. Cras mattis

@@ -1,4 +1,5 @@
 require './lib/provider'
+require 'will_paginate/array'
 
 class Sitter < ActiveRecord::Base
   extend Forwardable
@@ -9,8 +10,16 @@ class Sitter < ActiveRecord::Base
                   :address_city, :address_postcode, :latitude, :longitude
 
   def self.near(*args)
-    ids = User.near(*args).map(&:id)
-    self.where(user_id: ids)
+    users = User.near(*args)
+    ids = users.map(&:id)
+    sitters = self.where(user_id: ids)
+    sitters.select do |sitter|
+      sitter.distance >= users.find(sitter.user_id).distance.to_f
+    end
+  end
+
+  def self.default_within
+    100
   end
 
   def location

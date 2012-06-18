@@ -10,7 +10,7 @@ class SearchesController < ApplicationController
         @search.latitude = coords.first
         @search.longitude = coords.last
       end
-      within = @search.within || 20
+      within = @search.within || klass.default_within
     	@providers = klass.near([@search.latitude, @search.longitude], within, order: 'distance')
       if @providers.present?
         @providers = @providers.paginate(page: params[:page], per_page: 10)

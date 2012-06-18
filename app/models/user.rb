@@ -19,10 +19,6 @@ class User < ActiveRecord::Base
   after_validation :geocode
 
   def geocoding_address
-    if address_1.present? && address_city.present?
-      "#{address_1}, #{address_city}"
-    else
-      ""
-    end
+    "#{address_1}, #{address_city}, #{address_country}"
   end
 end

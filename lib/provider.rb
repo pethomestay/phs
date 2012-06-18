@@ -18,6 +18,10 @@ module Provider
     @klasses.map(&:to_s).map(&:underscore)
   end
 
+  def self.default_within
+    20
+  end
+
   def location
     ''
   end
