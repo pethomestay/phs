@@ -28,7 +28,7 @@
       - if @hotel.pictures.present?
         %li.span5
           .slider
-            = link_to image_tag(@hotel.pictures.first.file.thumb('380x').url), hotel_path(@hotel.id), class: "thumbnail"
+            = link_to image_tag(@hotel.pictures.first.file.thumb('380x').url), @hotel, class: "thumbnail"
       %li.span5
         #map.thumbnail
         - map_js_src = "http://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true"
