@@ -7,7 +7,8 @@ class PagesController < ApplicationController
   def test
     render json: {
       ip: request.ip,
-      forwardedFor: env['HTTP_X_FORWARDED_FOR']
+      forwardedFor: env['HTTP_X_FORWARDED_FOR'],
+      remoteAddr: env['REMOTE_ADDR']
     }
   end
 end
