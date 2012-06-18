@@ -13,10 +13,6 @@ class Hotel < ActiveRecord::Base
   geocoded_by :geocoding_address
   after_validation :geocode, unless: Proc.new {|hotel| hotel.latitude && hotel.longitude}
 
-  def path
-    "/hotels/#{id}"
-  end
-
   def geocoding_address
     "#{address_1}, #{address_city}, #{address_country}"
   end

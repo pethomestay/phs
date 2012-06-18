@@ -4,7 +4,7 @@
       Want to get in touch?
     %p Sign into your Pet Homestay account to contact this provider.
     = form_tag user_session_path, class: "form-vertical" do
-      %input{type: 'hidden', name: 'redirect_path', value: provider.path}
+      %input{type: 'hidden', name: 'redirect_path', value: url_for(provider)}
       .control-group
         = email_field_tag 'user[email]', '', :placeholder => 'Email'
       .control-group
