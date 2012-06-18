@@ -5,6 +5,9 @@ class PagesController < ApplicationController
   end
 
   def test
-    render text: request.ip
+    render json: {
+      ip: request.ip,
+      forwardedFor: env['HTTP_X_FORWARDED_FOR']
+    }
   end
 end
