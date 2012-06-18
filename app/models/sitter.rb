@@ -4,6 +4,8 @@ require 'will_paginate/array'
 class Sitter < ActiveRecord::Base
   extend Forwardable
   include Provider
+  has_many :pictures, as: 'picturable'
+  accepts_nested_attributes_for :pictures
 
   attr_accessible :distance
   def_delegators  :user, :address_1, :address_2, :address_suburb, \
