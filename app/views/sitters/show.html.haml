@@ -1,7 +1,7 @@
 .row
   .span7
     .row
-      - if my_hotel?(@sitter)
+      - if my_sitter?(@sitter)
         .span7= render partial: 'providers/edit_listing', locals: {provider: @sitter}
       .span5
         %h1= @sitter.title
@@ -18,7 +18,7 @@
           %i per night
     .description
       %p= simple_format @sitter.description
-    - unless my_hotel?(@sitter)
+    - unless my_sitter?(@sitter)
       = render partial: 'providers/contact_details', locals: {provider: @sitter}
     .clear
     - if @reviewed_ratings.present?
@@ -28,5 +28,5 @@
       - if @sitter.pictures.present?
         %li.span5
           .slider
-            = link_to image_tag(@sitter.pictures.first.file.thumb('380x').url), hotel_path(@sitter.id), class: "thumbnail"
+            = link_to image_tag(@sitter.pictures.first.file.thumb('380x').url), @sitter, class: "thumbnail"
         %li.span5= render partial: 'providers/give_rating', locals: {provider: @sitter, my_rating: @my_rating}
