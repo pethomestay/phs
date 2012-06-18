@@ -8,7 +8,8 @@ class PagesController < ApplicationController
     render json: {
       ip: request.ip,
       forwardedFor: env['HTTP_X_FORWARDED_FOR'],
-      remoteAddr: env['REMOTE_ADDR']
+      remoteAddr: env['REMOTE_ADDR'],
+      clientIP: env['HTTP_CLIENT_IP']
     }
   end
 end
