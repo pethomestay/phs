@@ -18,6 +18,8 @@ PetHomestay::Application.routes.draw do
   devise_for :users
   resource :login_dropdown, only: [:show]
 
+  get '/test' => 'pages#test'
+
   resources :hotels do
     collection do
       resource :hotel_steps, path: 'sign-up', only: [:show, :update, :create, :destroy]
