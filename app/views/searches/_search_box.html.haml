@@ -11,7 +11,4 @@
     %label.checkbox
       = f.check_box :sitter?, name: 'search[provider_types][sitter]'
       Stay at home?
-    / - options_options = {selected: @search.provider_type}
-    / - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']], options_options
-    / = f.select :provider_type, options, {}, class: 'span2'
     %button.btn{type: "submit"} Submit
