@@ -7,4 +7,5 @@
   = f.text_field :title
   = f.text_area :description, class: 'span8', rows: 10
   = f.fields_for @hotel.pictures.build do |f|
-    = f.file_field :file
+    = f.file_field :file, 'Photo upload' do
+      %span.help-inline You can add more photos later
