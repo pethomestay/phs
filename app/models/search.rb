@@ -7,9 +7,9 @@ class Search
   include ActiveModel::Serialization
   include ActiveModel::Conversion
 
-  validates_inclusion_of :provider_type, :in => Provider.type_strings
+  validates_presence_of :provider_types
 
-  attr_accessor :location, :provider_type, :latitude, :longitude, :within
+  attr_accessor :location, :provider_types, :latitude, :longitude, :within
   def initialize(attributes = {})
     attributes.each do |k,v|
       send "#{k}=", v if respond_to? "#{k}="
@@ -18,7 +18,17 @@ class Search
 
   def persisted?; false end
 
-  def provider_class
-    provider_type.capitalize.constantize
+  def hotel?
+    provider_types['hotel'] == '1'
+  end
+
+  def sitter?
+    provider_types['sitter'] == '1'
+  end
+
+  def provider_classes
+    provider_types.keep_if do |k,v|
+      v == '1'
+    end.keys.map(&:capitalize).map(&:constantize)
   end
 end

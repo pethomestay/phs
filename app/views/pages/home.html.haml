@@ -11,9 +11,8 @@
       = form_for Search.new, method: 'GET' do |f|
         %label Where are you?
         = f.text_field :location, class: 'span3', placeholder: "Me and my pet live in..."
-        %label Your pet prefers to...
-        - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']]
-        = f.select :provider_type, options
+        = f.hidden_field 'provider_types', name: 'search[provider_types][hotel]', value: 1
+        = f.hidden_field 'provider_types', name: 'search[provider_types][sitter]', value: 1 
         .clear
         %button.btn.btn-large.btn-primary.home-search{type: "submit"} Search
   .span4

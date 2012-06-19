@@ -1,11 +1,17 @@
-.span3.fixed
+.span4.fixed
   = form_for @search, method: 'GET', html: {class: "well"} do |f|
     = f.hidden_field :latitude
     = f.hidden_field :longitude
     = f.label :location
-    = f.text_field :location, placeholder: "Wellington", class: "span2"
+    = f.text_field :location, placeholder: "Wellington"
     %label Your pet prefers to...
-    - options_options = {selected: @search.provider_type}
-    - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']], options_options
-    = f.select :provider_type, options, {}, class: 'span2'
+    %label.checkbox
+      = f.check_box :hotel?, name: 'search[provider_types][hotel]'
+      Sleep over?
+    %label.checkbox
+      = f.check_box :sitter?, name: 'search[provider_types][sitter]'
+      Stay at home?
+    / - options_options = {selected: @search.provider_type}
+    / - options = options_for_select [['Sleep over', 'hotel'], ['Stay at home', 'sitter']], options_options
+    / = f.select :provider_type, options, {}, class: 'span2'
     %button.btn{type: "submit"} Submit
