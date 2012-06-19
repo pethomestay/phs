@@ -1,1 +1,19 @@
-%h2 Update your listing
+.page-header
+  %h2 Update Your Pet Hotel Listing
+
+%h3 Update Details
+- html = {class: 'form-horizontal'}
+= twitter_bootstrap_form_for @hotel, html: html do |f|
+  = f.fieldset do
+    = f.text_field :title
+    .control-group
+      = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+      .controls
+        .input-prepend.input-append
+          .add-on $
+          = text_field :hotel, :cost_per_night
+          .add-on .00
+    = f.text_area :description, class: 'span8', rows: 10
+    = f.actions do
+      = f.submit "Update listing"
+      = link_to "Return to listing", @hotel, class: 'return'
