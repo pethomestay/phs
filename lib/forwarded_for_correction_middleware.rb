@@ -9,7 +9,7 @@ class ForwardedForCorrectionMiddleware
   
   def _call(env)
     if env['HTTP_X_FORWARDED_FOR']
-      env['HTTP_X_FORWARDED_FOR'] = forwarded_for.split(',').first
+      env['HTTP_X_FORWARDED_FOR'] = env['HTTP_X_FORWARDED_FOR'].split(',').first
     end
     
     @app.call(env)
