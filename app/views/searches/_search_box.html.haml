@@ -1,14 +1,14 @@
-.span4.fixed
-  = form_for @search, method: 'GET', html: {class: "well"} do |f|
+.span4.fixed.sidebar-search
+  = twitter_bootstrap_form_for @search, method: 'GET' do |f|
     = f.hidden_field :latitude
     = f.hidden_field :longitude
-    = f.label :location
-    = f.text_field :location, placeholder: "Wellington"
-    %label Your pet prefers to...
-    %label.checkbox
-      = f.check_box :hotel?, name: 'search[provider_types][hotel]'
-      Sleep over?
-    %label.checkbox
-      = f.check_box :sitter?, name: 'search[provider_types][sitter]'
-      Stay at home?
-    %button.btn{type: "submit"} Submit
+    .well.form-well
+      = f.text_field :location, :add_on => :append do
+        %button.btn.btn-primary{type: "submit"} Search
+      = f.label 'Your pet prefers' do |controls|
+        = controls.check_box :hotel?, 'To sleep over?', name: 'search[provider_types][hotel]'
+        = controls.check_box :sitter?, 'To stay at home?', name: 'search[provider_types][sitter]'
+      = f.label 'Your pet is' do |controls|
+        = controls.check_box :hotel?, 'Small', name: 'search[sizes][small]'
+        = controls.check_box :hotel?, 'Medium', name: 'search[sizes][medium]'
+        = controls.check_box :hotel?, 'Large', name: 'search[sizes][large]'
