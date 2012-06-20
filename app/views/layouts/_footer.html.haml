@@ -1,6 +1,20 @@
 %footer
-  %p.pull-right &copy; Pet Homestay 2012
-  %ul.unstyled
-    %li= link_to "Privacy Policy", 'privacy-policy'
-    %li= link_to "Terms & Conditions", 'terms-and-conditions'
-    %li= link_to "Contact Us", contact_path
+  %ul.social-links.unstyled
+    %li.twitter
+      %a.twitter-follow-button{href: "https://twitter.com/pethomestay", 'data-show-count' => "false", 'data-lang' => "en", 'data-size' => "large"} Follow @pethomestay
+      :javascript
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    %li.facebook
+      .fb-like{'data-href' => "https://www.facebook.com/PetHomeStay", 'data-send' => "false", 'data-width' => "450", 'data-show-faces' => "false"}
+  .pull-right.span6
+    %ul.unstyled.footer-menu
+      %li= link_to "Contact Us", contact_path
+      %li= link_to "Terms & Conditions", 'terms-and-conditions'
+      %li= link_to "Privacy Policy", 'privacy-policy'
+    .clear
+    %p.copyright &copy; Pet Homestay 2012
+    %ul.unstyled.footer-menu.city-menu
+      %li
+        %a{href: '#'} Wellington Pet Sitter
+      %li
+        %a{href: '#'} Melbourne Pet Sitter

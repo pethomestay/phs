@@ -13,6 +13,7 @@
 */
 
 @margins: 20px;
+@orange:  #EA6E28;
 
 .main{
 	margin-top: @margins * 3;
@@ -32,14 +33,35 @@
 
 footer {
   overflow: hidden;
-  ul.unstyled {
-    margin-left: -8px;
-  }
-  li {
+  .social-links {
     float: left;
-    margin-right:5px;
-    &:before {
-      content: "| ";
+    li {
+      margin-bottom: 14px;
     }
   }
+  .pull-right {
+    text-align:right;
+  }
+  .city-menu {
+    margin-top: 10px;
+      a {
+      color: gray;
+      &:hover {
+        color: @orange;
+      }
+    }
+  }
+  .copyright {
+    margin-top: 8px;
+  }
+  .footer-menu {
+    margin-right: -9px;
+    li {
+    float: right;
+    margin-left:5px;
+    &:after {
+      content: " |";
+    }
+  }
+}
 }
