@@ -3,7 +3,7 @@
     - if provider.pictures.present?
       = link_to image_tag(provider.pictures.first.file.thumb('380x').url), provider
     - else
-      = link_to image_tag("http://placekitten.com/120/120"), provider
+      = link_to image_tag("/assets/results-placeholder.png"), provider
     %p.rating
       - if provider.ratings.present?
         - rating_stars provider.average_rating
