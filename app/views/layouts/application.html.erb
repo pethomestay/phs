@@ -8,6 +8,9 @@
 </head>
 <body>
 	<%= render partial: 'layouts/navbar' %>
+  <% if params[:action] == 'home' %>
+    <%= render partial: 'layouts/big_search' %>
+  <% end %>
 	<div class="container main">
     <%= render "layouts/flash_messages", :locals => {:flash => flash} %>
     <%= yield %>

@@ -1,51 +1,35 @@
-.row.header-boxes
-  .span4.tagline
-    %h1
-      It's
-      %strong FREE
-      to use with NO commission on any services booked - so register a PetHomeStay today!
-  .span4
-    .well
-      %h2 Looking for pet care?
-      %p Start your search for a pet sitter or pet hotel here.
-      = form_for Search.new, method: 'GET' do |f|
-        %label Where are you?
-        = f.text_field :location, class: 'span3', placeholder: "Me and my pet live in..."
-        = f.hidden_field 'provider_types', name: 'search[provider_types][hotel]', value: 1
-        = f.hidden_field 'provider_types', name: 'search[provider_types][sitter]', value: 1 
-        .clear
-        %button.btn.btn-large.btn-primary.home-search{type: "submit"} Search
-  .span4
-    - if current_user
-      .well.half
-        - if current_user.sitter
-          = link_to "Goto my sitter listing", sitter_path(current_user.sitter)
-        - else
-          = link_to "Become a sitter call-to-action!", sitter_steps_path, method: 'POST'
-      .well.half
-        - if current_user.hotel
-          = link_to "Goto my hotel listing", hotel_path(current_user.hotel)
-        - else
-          = link_to "Become a hotel call-to-action!", hotel_steps_path, method: 'POST'
-    - else
-      .well
-        %h2 Love pets?
-        %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
-        %p You decide exactly what pets to look after, when, and set your own rates. Best of all, unlike other pet care services, PetHomeStay takes NO cut of any transaction!
-
-        = link_to 'Get started today', new_user_registration_path, class: "btn btn-large btn-primary"
-        .clear
 .row.footer-boxes
-  .span4
-    %h2 What is Pet Homestay?
-    %p PetHomeStay matches people who love looking after pets, with people who need their pets looking after! A new social community that complements traditional kennels or catteries, you can search for suitable people to help out with your pet when you need it most...
-    = link_to "Who we are »", what_is_path, class: 'btn'
-  .span4
-    %h2 How does it work?
-    %p Build a profile of your pet, your PetHomeStay house, or your professional pet services. Once registered, people can search for what they specifically need for their pet. Every completed PetHomeStay interaction has a feedback rating, so you can tell who is a reliable, responsible service provider or pet owner.
-    = link_to "Learn more »", how_does_it_work_path, class: 'btn'
-      
-  .span4
-    %h2 Pet Homestay News
-    %p Check out all the latest goings on, pet tips, and exclusive PetHomeStay offers on our blog!
-    = link_to "Visit blog »", news_path, class: 'btn'
+  - if !current_user
+    .span4
+      %h2 What is Pet Homestay?
+      %p
+        Pet Homestay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
+        %br
+        %br
+        We match people who love looking after pets with people who need their pets looking after!
+      = link_to "Who we are", what_is_path, class: 'btn'
+    .span4
+      %h2 How does it work?
+      %p PetHomeStay is a free service that allows pet owners to find amazing local pet helpers & services in Australia and New Zealand. Simply register a profile of your pet, select the right pet service provider for their needs, and give feedback based on your experience.
+      = link_to "Learn more", how_does_it_work_path, class: 'btn'
+    .span4
+      %h2 Love pets?
+      %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
+      = link_to 'Get started today', new_user_registration_path, class: "btn btn-primary"
+  - else
+    .span4
+      %h2 What is Pet Homestay?
+      %p
+        Pet Homestay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
+        %br
+        %br
+        We match people who love looking after pets with people who need their pets looking after!
+      = link_to "Who we are", what_is_path, class: 'btn'
+    .span4
+      %h2 Become a sitter
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sodales fringilla libero eu scelerisque. Quisque consequat, orci quis condimentum mattis, turpis magna lobortis nibh, et sollicitudin lorem velit sed nisl. Curabitur et varius risus.
+      = link_to "Become a sitter", sitter_steps_path, method: 'POST', class: 'btn'
+    .span4
+      %h2 Start a pet hotel
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sodales fringilla libero eu scelerisque. Quisque consequat, orci quis condimentum mattis, turpis magna lobortis nibh, et sollicitudin lorem velit sed nisl. Curabitur et varius risus.
+      = link_to "Start a pet hotel", hotel_steps_path, method: 'POST', class: 'btn'
