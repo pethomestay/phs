@@ -19,7 +19,14 @@
     .description
       %p= simple_format @hotel.description
     - unless my_hotel?(@hotel)
-      = render partial: 'providers/contact_details', locals: {provider: @hotel}
+      - if signed_in?
+        .well.enquire-listing
+          = link_to "Enquire now", edit_hotel_path(@hotel), class: 'btn btn-primary btn-large'
+          Contact the owner of this listing now!
+      - else
+        .well.listing-form
+          = render partial: 'providers/contact_sign_in_form', locals: {provider: @hotel}
+          = render partial: 'providers/contact_sign_up_form', locals: {provider: @hotel}
     .clear
     = render partial: 'providers/reviews', locals: {provider: @hotel, reviews: @reviewed_ratings}
   .span5
