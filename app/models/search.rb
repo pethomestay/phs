@@ -32,6 +32,13 @@ class Search
     end.keys.map(&:capitalize).map(&:constantize)
   end
 
+  def provider_types
+    @provider_types ||= {
+      'hotel' => '1',
+      'sitter' => '1'
+    }
+  end
+
   def sort_by
     @sort_by ||= 'distance'
   end

@@ -34,7 +34,8 @@ PetHomestay::Application.routes.draw do
     put 'rating' => 'ratings#update'
   end
 
-  get '/searches' => 'searches#create'
+  get '/searches'       => 'searches#create'
+  get '/pet-care/:city' => 'searches#show'
 
   authenticated do
     root to: "pages#home", :constraints => UserIsNotProvider
