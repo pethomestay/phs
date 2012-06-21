@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_one :hotel
   has_one :sitter
   has_many :ratings
+  has_many :pets
 
   def wants_to_be_hotel?
     super || wants_to_be_professional_hotel?

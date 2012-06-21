@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614022954) do
+ActiveRecord::Schema.define(:version => 20120621003617) do
 
   create_table "hotels", :force => true do |t|
     t.string   "title"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(:version => 20120614022954) do
     t.float    "longitude"
     t.string   "address_country"
   end
+
+  create_table "pets", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "type"
+    t.string   "breed"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "pets", ["user_id"], :name => "index_pets_on_user_id"
 
   create_table "pictures", :force => true do |t|
     t.string   "file_uid"
