@@ -21,8 +21,7 @@
     - unless my_hotel?(@hotel)
       = render partial: 'providers/contact_details', locals: {provider: @hotel}
     .clear
-    - if @reviewed_ratings.present?
-      = render partial: 'providers/reviews', locals: {provider: @hotel}
+    = render partial: 'providers/reviews', locals: {provider: @hotel, reviews: @reviewed_ratings}
   .span5
     %ul.thumbnails
       - if @hotel.pictures.present?

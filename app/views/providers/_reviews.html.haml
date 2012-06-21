@@ -1,12 +1,15 @@
 %h2#reviews Recent Reviews
-%br
-- @reviewed_ratings.slice(0, 2).each do |rating|
-  .well
-    %p
-      - rating_stars rating.stars
-    %p= rating.review
-    %p= "- #{rating.user.first_name}"
-- more_reviews = @reviewed_ratings.slice(2, -1)
-- if more_reviews.present?
-  .well
-    %p Read more reviews
+- if @reviewed_ratings.present?
+  %br
+  - @reviewed_ratings.slice(0, 2).each do |rating|
+    .well
+      %p
+        - rating_stars rating.stars
+      %p= rating.review
+      %p= "- #{rating.user.first_name}"
+  - more_reviews = @reviewed_ratings.slice(2, -1)
+  - if more_reviews.present?
+    .well
+      %p Read more reviews
+- else
+  No reviews yet
