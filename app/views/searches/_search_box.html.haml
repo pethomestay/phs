@@ -5,6 +5,17 @@
     .well.form-well
       = f.text_field :location, :add_on => :append do
         %button.btn.btn-primary{type: "submit"} Search
+        %label.sort-by
+          Sort by
+          %label.radio.inline
+            = radio_button :search, :sort_by, 'distance'
+            Distance
+          %label.radio.inline
+            = radio_button :search, :sort_by, 'cost_per_night'
+            Cost
+          %label.radio.inline
+            = radio_button :search, :sort_by, 'average_rating'
+            Rating
       = f.label 'Your pet prefers' do |controls|
         = controls.check_box :hotel?, 'To sleep over?', name: 'search[provider_types][hotel]'
         = controls.check_box :sitter?, 'To stay at home?', name: 'search[provider_types][sitter]'

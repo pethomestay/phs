@@ -9,7 +9,7 @@ class Search
 
   validates_presence_of :provider_types
 
-  attr_accessor :location, :provider_types, :latitude, :longitude, :within
+  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by
   def initialize(attributes = {})
     attributes.each do |k,v|
       send "#{k}=", v if respond_to? "#{k}="
@@ -30,5 +30,9 @@ class Search
     provider_types.keep_if do |k,v|
       v == '1'
     end.keys.map(&:capitalize).map(&:constantize)
+  end
+
+  def sort_by
+    @sort_by ||= 'distance'
   end
 end

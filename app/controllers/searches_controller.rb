@@ -20,12 +20,24 @@ class SearchesController < ApplicationController
         longest = providers.pop
         @providers = longest.zip(*providers).flatten
         @providers.reject!(&:nil?)
+        sort_results
         @providers = @providers.paginate(page: params[:page], per_page: 10)
       else
         redirect_to no_results_path(location: @search.location, provider_type: @search.provider_types)
       end
     else
       raise "Invalid search"
+    end
+  end
+
+  def sort_results
+    if key = params[:search][:sort_by]
+      if key != 'distance'
+        @providers.sort_by! do |provider|
+          provider.send(key)
+        end
+        @providers.reverse! if key == 'average_rating'
+      end
     end
   end
 end
