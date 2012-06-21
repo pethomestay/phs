@@ -1,4 +1,11 @@
 module ApplicationHelper
+  def formatted_title
+    if @title
+      "#{@title} - Pet Homestay"
+    else
+      'Pet Homestay'
+    end
+  end
   def flash_class_for(type)
     case type
       when :alert

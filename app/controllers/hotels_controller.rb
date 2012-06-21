@@ -1,6 +1,7 @@
 class HotelsController < ApplicationController
   def show
     @hotel = Hotel.find(params[:id])
+    @title = @hotel.title
     @reviewed_ratings = @hotel.ratings.reviewed
     if current_user
       @my_rating = Rating.find_by_user_id_and_ratable_type_and_ratable_id(current_user.id, 'Hotel', params[:id])

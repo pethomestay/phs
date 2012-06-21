@@ -22,6 +22,7 @@ class SearchesController < ApplicationController
         @providers.reject!(&:nil?)
         sort_results
         @providers = @providers.paginate(page: params[:page], per_page: 10)
+        @title = "Pet care for #{@search.location}"
       else
         redirect_to no_results_path(location: @search.location, provider_type: @search.provider_types)
       end
