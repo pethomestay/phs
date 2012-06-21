@@ -13,7 +13,7 @@ class SearchesController < ApplicationController
   def show
     @search = Search.new({location: params[:city].capitalize})
     perform_search
-    render :create
+    render :create if @providers
   end
 
   def perform_search
