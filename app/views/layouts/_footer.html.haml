@@ -14,7 +14,5 @@
     .clear
     %p.copyright &copy; Pet Homestay 2012
     %ul.unstyled.footer-menu.city-menu
-      %li
-        %a{href: '#'} Wellington Pet Sitter
-      %li
-        %a{href: '#'} Melbourne Pet Sitter
+      %li= link_to "Wellington Pet Sitter", city_search_path('wellington')
+      %li= link_to "Melbourne Pet Sitter", city_search_path('melbourne')
