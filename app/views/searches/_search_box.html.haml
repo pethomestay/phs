@@ -17,8 +17,8 @@
             = radio_button :search, :sort_by, 'average_rating'
             Rating
       = f.label 'Your pet prefers' do |controls|
-        = controls.check_box :hotel?, 'To sleep over?', name: 'search[provider_types][hotel]'
-        = controls.check_box :sitter?, 'To stay at home?', name: 'search[provider_types][sitter]'
+        = controls.check_box :hotel?, 'To sleep over at a hotel', name: 'search[provider_types][hotel]'
+        = controls.check_box :sitter?, 'To stay at home with a sitter', name: 'search[provider_types][sitter]'
       = f.label 'Your pet is' do |controls|
         = controls.check_box :hotel?, 'Small', name: 'search[sizes][small]'
         = controls.check_box :hotel?, 'Medium', name: 'search[sizes][medium]'
