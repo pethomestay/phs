@@ -20,9 +20,7 @@
       %p= simple_format @hotel.description
     - unless my_hotel?(@hotel)
       - if signed_in?
-        .well.enquire-listing
-          = link_to "Enquire now", edit_hotel_path(@hotel), class: 'btn btn-primary btn-large'
-          Contact the owner of this listing now!
+        = render partial: 'providers/enquire', locals: {provider: @hotel}
       - else
         .well.listing-form
           = render partial: 'providers/contact_sign_in_form', locals: {provider: @hotel}

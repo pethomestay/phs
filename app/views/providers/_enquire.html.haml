@@ -1,0 +1,13 @@
+.well.enquire-listing
+  = link_to "Enquire now", "#enquire", class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
+  Contact the owner of this listing now!
+.modal.hide.fade#enquire
+  .modal-header
+    %button.close{type: "button", 'data-dismiss' => "modal"} ×
+    %h3 Enquire
+  .modal-body
+    = twitter_bootstrap_form_for @enquiry do |f|
+      = f.text_field :date
+  .modal-footer
+    %a.btn{href:"#", 'data-dismiss' => "modal"} Cancel
+    %a.btn.btn-primary.submit-review{href:"#"} Enquire

@@ -5,6 +5,7 @@ class Sitter < ActiveRecord::Base
   extend Forwardable
   include Provider
   has_many :pictures, as: 'picturable'
+  has_many :enquiries, as: 'provider'
   accepts_nested_attributes_for :pictures
 
   attr_accessible :distance

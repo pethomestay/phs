@@ -5,6 +5,12 @@ class HotelsController < ApplicationController
     @reviewed_ratings = @hotel.ratings.reviewed
     if current_user
       @my_rating = Rating.find_by_user_id_and_ratable_type_and_ratable_id(current_user.id, 'Hotel', params[:id])
+      @enquiry = Enquiry.new({
+        user: current_user,
+        pets: current_user.pets,
+        provider: @hotel,
+        date: Date.today
+      })
     end
   end
 

@@ -34,6 +34,8 @@ PetHomestay::Application.routes.draw do
     put 'rating' => 'ratings#update'
   end
 
+  resource :enquiries, only: [:create]
+
   get '/searches'       => 'searches#create'
   get '/pet-care/:city' => 'searches#show', as: 'city_search'
 
