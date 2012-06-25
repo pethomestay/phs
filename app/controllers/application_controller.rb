@@ -22,4 +22,8 @@ class ApplicationController < ActionController::Base
   def ensure_user!
     redirect_to new_user_registration_path unless current_user
   end
+
+  def error_404
+    render 'pages/404'
+  end
 end

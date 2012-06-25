@@ -20,6 +20,7 @@ if Rails.env.development? || Rails.env.staging?
       title:          "My First Homestay",
       cost_per_night: 15,
       distance: 20,
+      active: true,
       description:    <<-eos
         Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Nulla vitae elit libero, a pharetra augue. Cras mattis
@@ -37,6 +38,7 @@ if Rails.env.development? || Rails.env.staging?
       address_city:     "Wellington",
       address_country:  "New Zealand",
       cost_per_night:   15,
+      active:           true,
       description:      <<-eos
         Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Nulla vitae elit libero, a pharetra augue. Cras mattis

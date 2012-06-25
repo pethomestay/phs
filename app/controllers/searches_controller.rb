@@ -25,7 +25,7 @@ class SearchesController < ApplicationController
         @search.longitude = coords.last
       end
       within = @search.within || klass.default_within
-      provider = klass.near([@search.latitude, @search.longitude], within, order: 'distance')
+      provider = klass.active.near([@search.latitude, @search.longitude], within, order: 'distance')
       providers = providers << provider.to_a if provider.present?
     end
     if providers.present?

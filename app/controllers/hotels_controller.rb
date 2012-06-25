@@ -1,6 +1,8 @@
 class HotelsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, :with => :error_404
+  
   def show
-    @hotel = Hotel.find(params[:id])
+    @hotel = Hotel.active.find(params[:id])
     @title = @hotel.title
     @reviewed_ratings = @hotel.ratings.reviewed
     if current_user

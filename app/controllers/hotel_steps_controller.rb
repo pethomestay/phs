@@ -19,7 +19,9 @@ class HotelStepsController < ApplicationController
       @hotel.pictures.create(picture_params)
     end
     @hotel.unfinished_signup = true unless step == :profile
-    @hotel.update_attributes(params[:hotel])
+    if @hotel.update_attributes(params[:hotel])
+      @hotel.update_attribute(:active, true) if step == :profile
+    end
     render_wizard @hotel
   end
 

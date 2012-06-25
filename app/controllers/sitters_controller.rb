@@ -1,6 +1,8 @@
 class SittersController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, :with => :error_404
+
   def show
-    @sitter = Sitter.find(params[:id])
+    @sitter = Sitter.active.find(params[:id])
     @title = @sitter.title
     @reviewed_ratings = @sitter.ratings.reviewed
     if current_user

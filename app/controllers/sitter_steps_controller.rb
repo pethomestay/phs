@@ -23,6 +23,9 @@ class SitterStepsController < ApplicationController
     if picture = params[:picture]
       @sitter.pictures.create(picture)
     end
+    if @sitter.valid?
+      @sitter.update_attribute(:active, true) if step == :profile
+    end
     render_wizard @sitter
   end
 

@@ -4,10 +4,11 @@ module Provider
     base.belongs_to :user
     base.has_many :ratings, as: 'ratable'
     base.attr_accessible :title, :price, :description, \
-                         :cost_per_night
+                         :cost_per_night, :active
     base.send :attr_accessor, :unfinished_signup
     base.validates_presence_of :cost_per_night
     base.validates_presence_of :title, :description, :unless => :unfinished_signup
+    base.scope :active, base.where(active: true)
   end
 
   def self.types
