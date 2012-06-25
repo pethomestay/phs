@@ -1,5 +1,6 @@
 %ul.nav.pull-right
   - unless signed_in?
+    %li.cta= link_to "Become a host", new_user_registration_path, class: 'btn btn-mini btn-primary'
     %li.login-dropdown
       %a.dropdown-toggle{:href => '#', :'data-toggle' => 'dropdown'} Sign in
       .dropdown-menu
