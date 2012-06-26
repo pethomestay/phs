@@ -10,7 +10,6 @@ class HotelsController < ApplicationController
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,
-        provider: @hotel,
         date: Date.today
       })
     end

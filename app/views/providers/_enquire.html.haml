@@ -7,6 +7,8 @@
     %h3 Select date of stay
   = form_for @enquiry do |f|
     .modal-body
+      %input{type: 'hidden', value: provider.class.to_s, name: 'enquiry[provider_type]'}
+      %input{type: 'hidden', value: provider.id, name: 'enquiry[provider_id]'}
       = f.hidden_field :date
       %table.enquire-table
         %tbody
