@@ -4,10 +4,19 @@
 .modal.hide.fade#enquire
   .modal-header
     %button.close{type: "button", 'data-dismiss' => "modal"} ×
-    %h3 Enquire
-  .modal-body
-    = twitter_bootstrap_form_for @enquiry do |f|
-      = f.text_field :date
-  .modal-footer
-    %a.btn{href:"#", 'data-dismiss' => "modal"} Cancel
-    %a.btn.btn-primary.submit-review{href:"#"} Enquire
+    %h3 Select date of stay
+  = form_for @enquiry do |f|
+    .modal-body
+      = f.hidden_field :date
+      %table.enquire-table
+        %tbody
+          %tr
+            %td
+              .enquire-datepicker
+            %td
+              = f.label :max_number_of_days, "Length of stay"
+              - options = options_for_select([["1-2 days", 2], ["Up to 1 week", 7], ["Up to 2 weeks", 14], ["Long term", Infinity]])
+              = f.select :max_number_of_days, options
+    .modal-footer
+      %a.btn{href:"#", 'data-dismiss' => "modal"} Cancel
+      = f.submit 'Can you look after my pet?', class: 'btn btn-primary'

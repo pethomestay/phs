@@ -38,3 +38,9 @@ $ ->
       setTimeout ->
         window.location.reload true
       , 500
+
+  $('.enquire-datepicker').datepicker
+    dateFormat: "yy-mm-dd"
+    minDate: 0
+    onSelect: (dateText, inst) ->
+      $('#enquiry_date').val dateText

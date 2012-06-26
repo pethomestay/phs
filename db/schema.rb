@@ -11,15 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625045120) do
+ActiveRecord::Schema.define(:version => 20120626031200) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
     t.integer  "provider_id"
     t.string   "provider_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.date     "date"
+    t.string   "max_number_of_days"
   end
 
   add_index "enquiries", ["provider_id", "provider_type"], :name => "index_enquiries_on_provider_id_and_provider_type"
