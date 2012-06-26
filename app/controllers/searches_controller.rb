@@ -3,6 +3,7 @@ require './app/models/search'
 class SearchesController < ApplicationController
   def create
     if params[:search][:location].present?
+      params[:search][:location] = params[:search][:location].titleize
       @search = Search.new params[:search]
       if @search.valid?
         perform_search
