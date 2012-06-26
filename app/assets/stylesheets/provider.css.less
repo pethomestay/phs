@@ -1,4 +1,5 @@
 @margins: 20px;
+@orange:  #EA6E28;
 
 .table .thumbnails{
   margin-left: 0;
@@ -107,6 +108,13 @@
 .enquire-datepicker {
   margin: 0 auto -15px;
   width: 250px;
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background-image: -webkit-linear-gradient(top, #EA6E28, #EA8E28);
+    background-image: -o-linear-gradient(top, #EA6E28, #EA8E28);
+    background-image: linear-gradient(top, #EA6E28, #EA8E28);
+    border: 1px solid #aaa;
+    color: #fff;
+  }
 }
 
 .enquire-table {
