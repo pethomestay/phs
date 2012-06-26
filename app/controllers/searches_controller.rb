@@ -2,11 +2,15 @@ require './app/models/search'
 
 class SearchesController < ApplicationController
   def create
-    @search = Search.new params[:search]
-    if @search.valid?
-      perform_search
+    if params[:search][:location].present?
+      @search = Search.new params[:search]
+      if @search.valid?
+        perform_search
+      else
+        raise "Invalid search"
+      end
     else
-      raise "Invalid search"
+      redirect_to root_path
     end
   end
 
