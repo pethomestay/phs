@@ -1,0 +1,13 @@
+%h1 No providers in your area yet...
+%p Sorry. Pet sitters matching your needs aren't available in your region yet.
+- if current_user
+  - unless current_user.hotel
+    %hr
+    %h4= "Could you be one of the first pet sitters for #{@search.location}?"
+    %p Be the first to look after some awesome and adorable pets in your neighbourhood. You can earn some extra cash doing what you love!
+    = link_to "Start a pet hotel", hotel_steps_path, method: 'POST', class: 'btn btn-primary'
+- else
+  %hr
+  %h4= "Could you be one of the first pet sitters for #{@search.location}?"
+  %p Be the first to look after some awesome and adorable pets in your neighbourhood. You can earn some extra cash doing what you love!
+  = link_to 'Join now', new_user_registration_path, class: 'btn btn-primary'

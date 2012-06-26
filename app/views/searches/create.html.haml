@@ -1,8 +1,11 @@
 .row
   = render partial: 'search_box'
-  .span8.offset4
-    %table.table.table-bordered.table-striped
-      %tbody
-        - @providers.each do |provider|
-          = render partial: 'result_row', locals: {provider: provider}
-    = will_paginate @providers, class: 'pagination pagination-centered'
+  .span8.offset4.results
+    - if @providers
+      %table.table.table-bordered.table-striped
+        %tbody
+          - @providers.each do |provider|
+            = render partial: 'result_row', locals: {provider: provider}
+      = will_paginate @providers, class: 'pagination pagination-centered'
+    - else
+      = render partial: 'no_results'
