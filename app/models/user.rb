@@ -24,7 +24,23 @@ class User < ActiveRecord::Base
     "#{address_1}, #{address_city}, #{address_country}"
   end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def has_enquiries?
     (hotel.present? && hotel.enquiries.present?) || (sitter.present? && sitter.enquiries.present?)
+  end
+
+  def enquiries
+    if hotel.present? && !sitter.present?
+      hotel.enquiries
+    elsif sitter.present? && !hotel.present?
+      sitter.enquiries
+    elsif sitter.present? && hotel.present?
+      sitter.enquiries.concat hotel.enquiries
+    else
+      []
+    end
   end
 end
