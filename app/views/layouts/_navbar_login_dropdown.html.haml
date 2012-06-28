@@ -14,5 +14,12 @@
           .divider
           = link_to "Forgot your password?", new_user_password_path
   - else
+    - if current_user.has_enquiries?
+      %li.cta
+        %a.btn.btn-mini.btn-primary{href: my_account_path}
+          My Account
+          %span.notification{title: 'You have notifications waiting'} !
+    - else
+      %li.cta= link_to "My Account", my_account_path, class: 'btn btn-mini btn-primary'
     %li
       = link_to "Sign out", destroy_user_session_path, method: :delete

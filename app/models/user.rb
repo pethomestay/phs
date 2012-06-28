@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
   def geocoding_address
     "#{address_1}, #{address_city}, #{address_country}"
   end
+
+  def has_enquiries?
+    (hotel.present? && hotel.enquiries.present?) || (sitter.present? && sitter.enquiries.present?)
+  end
 end

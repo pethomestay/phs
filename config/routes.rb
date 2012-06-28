@@ -39,6 +39,8 @@ PetHomestay::Application.routes.draw do
   get '/searches'       => 'searches#create'
   get '/pet-care/:city' => 'searches#show', as: 'city_search'
 
+  get '/my-account'     => 'users#show', as: 'my_account'
+
   authenticated do
     root to: "pages#home", :constraints => UserIsNotProvider
     root to: "pages#home", :constraints => UserIsProvider
