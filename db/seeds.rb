@@ -3,7 +3,9 @@ if Rails.env.development? || Rails.env.staging?
   User.create({
     email:                  "test@example.com",
     password:               "test2010",
-    password_confirmation:  "test2010"
+    password_confirmation:  "test2010",
+    first_name:             "Testing",
+    last_name:              "Guy"
   })
   Sitter.destroy_all
   4.times do
