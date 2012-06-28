@@ -22,7 +22,8 @@
     %h2.page-header Notifications
     - if @user.enquiries.present?
       - @user.enquiries.each do |enquiry|
-        %p.pull-left= link_to "#{enquiry.provider_type} enquiry: #{enquiry.user.name}", enquiry
+        - provider_type = (enquiry.provider_type == 'Hotel' ? 'PetHomeStay' : enquiry.provider_type)
+        %p.pull-left= link_to "#{provider_type} enquiry: #{enquiry.user.name}", enquiry
         %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
         .clear
         %hr

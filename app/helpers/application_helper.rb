@@ -1,9 +1,9 @@
 module ApplicationHelper
   def formatted_title
     if @title
-      "#{@title} - Pet Homestay"
+      "#{@title} - PetHomeStay"
     else
-      'Pet Homestay'
+      'PetHomeStay'
     end
   end
   def flash_class_for(type)

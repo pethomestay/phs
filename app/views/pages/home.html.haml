@@ -1,9 +1,9 @@
 .row.footer-boxes
   - if !current_user
     .span4
-      %h2 What is Pet Homestay?
+      %h2 What is PetHomeStay?
       %p
-        Pet Homestay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
+        PetHomeStay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
         %br
         %br
         We match people who love looking after pets with people who need their pets looking after!
@@ -17,19 +17,15 @@
       %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
       = link_to 'Get started today', new_user_registration_path, class: "btn btn-primary"
   - else
-    .span4
-      %h2 What is Pet Homestay?
-      %p
-        Pet Homestay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
-        %br
-        %br
-        We match people who love looking after pets with people who need their pets looking after!
-      = link_to "Who we are", what_is_path, class: 'btn'
-    .span4
-      %h2 Become a sitter
-      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sodales fringilla libero eu scelerisque. Quisque consequat, orci quis condimentum mattis, turpis magna lobortis nibh, et sollicitudin lorem velit sed nisl. Curabitur et varius risus.
-      = link_to "Become a sitter", sitter_steps_path, method: 'POST', class: 'btn btn-primary'
-    .span4
-      %h2 Start a pet hotel
-      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sodales fringilla libero eu scelerisque. Quisque consequat, orci quis condimentum mattis, turpis magna lobortis nibh, et sollicitudin lorem velit sed nisl. Curabitur et varius risus.
-      = link_to "Start a pet hotel", hotel_steps_path, method: 'POST', class: 'btn btn-primary'
+    .span4.short
+      %h2 PetHomeStay News
+      %p Check out all the latest goings on, pet tips, and exclusive PetHomeStay offers on our blog!
+      = link_to "Vist our blog", blog_path, class: 'btn'
+    .span4.short
+      %h2 Become a Pet-sitter
+      %p Earn money looking after your neighbours homes and their adorable pets while they are away. It couldn't be easier!
+      = link_to "Become a pet-sitter", sitter_steps_path, method: 'POST', class: 'btn btn-primary'
+    .span4.short
+      %h2 Start a PetHomeStay
+      %p Start earning money doing what you love: spending time with awesome animals. All from the comfort of your own home!
+      = link_to "Start a PetHomeStay", hotel_steps_path, method: 'POST', class: 'btn btn-primary'
