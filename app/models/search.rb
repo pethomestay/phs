@@ -1,6 +1,3 @@
-require './app/models/sitter'
-require './app/models/hotel'
-
 class Search
   extend ActiveModel::Naming
   include ActiveModel::Validations
@@ -41,5 +38,9 @@ class Search
 
   def sort_by
     @sort_by ||= 'distance'
+  end
+
+  def within
+    @within || 20
   end
 end

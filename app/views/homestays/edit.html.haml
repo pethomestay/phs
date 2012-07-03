@@ -3,7 +3,7 @@
 
 %h3 Update Details
 - html = {class: 'form-horizontal'}
-= twitter_bootstrap_form_for @hotel, html: html do |f|
+= twitter_bootstrap_form_for @homestay, html: html do |f|
   = f.fieldset do
     = f.text_field :title
     .control-group
@@ -11,9 +11,9 @@
       .controls
         .input-prepend.input-append
           .add-on $
-          = text_field :hotel, :cost_per_night
+          = text_field :homestay, :cost_per_night
           .add-on .00
     = f.text_area :description, class: 'span8', rows: 10
     = f.actions do
       = f.submit "Update listing"
-      = link_to "Return to listing", @hotel, class: 'return'
+      = link_to "Return to listing", @homestay, class: 'return'

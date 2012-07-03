@@ -11,19 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626031200) do
+ActiveRecord::Schema.define(:version => 20120703020901) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "provider_id"
-    t.string   "provider_type"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.date     "date"
     t.string   "max_number_of_days"
+    t.integer  "homestay_id"
   end
 
-  add_index "enquiries", ["provider_id", "provider_type"], :name => "index_enquiries_on_provider_id_and_provider_type"
+  add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
   add_index "enquiries", ["user_id"], :name => "index_enquiries_on_user_id"
 
   create_table "enquiries_pets", :force => true do |t|
@@ -34,25 +33,25 @@ ActiveRecord::Schema.define(:version => 20120626031200) do
   add_index "enquiries_pets", ["enquiry_id"], :name => "index_enquiries_pets_on_enquiry_id"
   add_index "enquiries_pets", ["pet_id"], :name => "index_enquiries_pets_on_pet_id"
 
-  create_table "hotels", :force => true do |t|
+  create_table "homestays", :force => true do |t|
     t.string   "title"
-    t.string   "location"
-    t.integer  "price"
+    t.integer  "cost_per_night"
     t.text     "description"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
     t.integer  "user_id"
     t.string   "address_1"
     t.string   "address_2"
     t.string   "address_suburb"
     t.string   "address_city"
     t.string   "address_postcode"
-    t.integer  "cost_per_night"
+    t.string   "address_country"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "address_country"
     t.boolean  "active"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
+
+  add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
 
   create_table "pets", :force => true do |t|
     t.integer  "user_id"
@@ -86,43 +85,19 @@ ActiveRecord::Schema.define(:version => 20120626031200) do
   add_index "ratings", ["ratable_id", "ratable_type"], :name => "index_ratings_on_ratable_id_and_ratable_type"
   add_index "ratings", ["user_id"], :name => "index_ratings_on_user_id"
 
-  create_table "sitters", :force => true do |t|
-    t.string   "title"
-    t.string   "location"
-    t.integer  "price"
-    t.text     "description"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "user_id"
-    t.integer  "cost_per_night"
-    t.integer  "distance"
-    t.boolean  "active"
-  end
-
   create_table "users", :force => true do |t|
-    t.string   "email",                          :default => "", :null => false
-    t.string   "encrypted_password",             :default => "", :null => false
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                  :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
-    t.boolean  "wants_to_be_sitter"
-    t.boolean  "wants_to_be_hotel"
-    t.boolean  "wants_to_be_professional_hotel"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "address_suburb"
-    t.string   "address_city"
-    t.string   "address_postcode"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "address_country"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "first_name"
     t.string   "last_name"
   end

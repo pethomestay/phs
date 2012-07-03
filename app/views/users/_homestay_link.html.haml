@@ -1,16 +1,16 @@
-- if current_user.hotel && current_user.hotel.active?
+- if current_user.homestay && current_user.homestay.active?
   %h3 My PetHomeStay
   .row
     .span6
       %p
         Want to add more information to your awesome PetHomeStay profile? More info means more enquiries!
     .span2
-      = link_to "Edit listing", edit_hotel_path(current_user.hotel), class: 'btn'
+      = link_to "Edit listing", edit_homestay_path(current_user.homestay), class: 'btn'
 - else
   %h3 Create PetHomeStay listing
   .row
     .span6
       %p Start earning money doing what you love: spending time with awesome animals. All from the comfort of your own home!
     .span2
-      = link_to "Start PetHomeStay", hotel_steps_path, method: 'POST', class: 'btn btn-primary'
+      = link_to "Start PetHomeStay", new_homestay_path, class: 'btn btn-primary'
 %hr
