@@ -42,9 +42,9 @@
               %td.name {{name}}
               %td= link_to_function "Edit this pet", "switchPet({{index}});", class: 'btn btn-mini edit-pet'
           %hr.span5
-        - resource.pets.build
         - unless resource.pets.present?
           - pets_class = 'unactivated'
+        - resource.pets.build
         .span6.pets{class: pets_class}
           - resource.pets.each do |pet|
             .pet-fields.hide
