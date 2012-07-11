@@ -76,7 +76,7 @@
       - unless resource.homestay.present?
         - resource.build_homestay
         - homestay_class = 'unactivated'
-      .span6
+      .span6.divider
         %h3 Love pets and want to make some extra money?
         %p Fill out the form below to get listed on PetHomeStay!
         .span6.homestay-form{class: homestay_class}
@@ -97,5 +97,6 @@
             = f.country_select :address_country, 'Country', {priority: country_priority}
             = f.text_field :title
             = f.text_area :description, class: 'span4', rows: 10
+      .clearfix
     = f.actions do
       = f.submit 'Create my account'
