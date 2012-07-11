@@ -15,4 +15,5 @@
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
 //= require twitter/bootstrap
+//= require handlebars
 //= require_tree .

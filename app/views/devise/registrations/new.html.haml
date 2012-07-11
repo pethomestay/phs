@@ -4,50 +4,98 @@
     %small create an account to access all our cool features
 - html = {:class => 'form-horizontal'}
 - url = registration_path(resource_name)
-= form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
-  %p 
-    Required fields are shown in
-    %strong bold
-  = devise_error_messages!
-  %fieldset
-    .control-group.required
-      = f.label :email, 'Email address', class: 'control-label'
-      .controls
-        = f.email_field :email
-        .help-inline we promise not to spam you
-    .control-group.required
-      = f.label :password, class: 'control-label'
-      .controls
-        = f.password_field :password
-        .help-inline keep it secret, keep it safe
-    .control-group.required
-      = f.label :password_confirmation, 'Confirm password', class: 'control-label'
-      .controls
-        = f.password_field :password_confirmation
-        .help-inline enter your password once again
-    %h3
+= twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+  = f.fieldset do
+    = f.email_field :email, 'Email address' do
+      .help-inline we promise not to spam you
+    = f.password_field :password do
+      .help-inline keep it secret, keep it safe
+    = f.password_field :password_confirmation do
+      .help-inline enter your password once again
+    %h3{style: "margin-bottom: 10px;"}
       We'd love to get to know you!
       %small Tell us a little more about you
-    .control-group.required
-      = f.label :first_name, 'First name', class: 'control-label'
-      .controls
-        = f.text_field :first_name
-    .control-group.required
-      = f.label :last_name, 'Last name', class: 'control-label'
-      .controls
-        = f.text_field :last_name
-    %h3
-      Love pets and want to make some extra money?
-      %small Get listed on Pet Homestay
-    .control-group
-      = f.label :i_can, "I would like to", class: 'control-label'
-      .controls
-        %label.checkbox
-          = f.check_box :wants_to_be_sitter
-          look after pets in their homes
-      .controls
-        %label.checkbox
-          = f.check_box :wants_to_be_hotel
-          look after pets in my home or at my cattery or kennel
-    .form-actions
-      %button.btn.btn-primary{type: "submit"} Create account
+    = f.text_field :first_name
+    = f.text_field :last_name
+    = f.date_select :date_of_birth, order: [:day, :month, :year]
+    %hr
+    .row
+      .span6
+        %h3 Want to use one of our great PetHomeStays?
+        %p Enter some details about your pets to get started!
+        .existing-pets.hide{'data-count' => resource.pets.length}
+          %table
+            %tbody
+              - resource.pets.each_with_index do |pet, i|
+                - klass = pet.errors.present? ? 'errors' : ''
+                %tr{class: klass}
+                  - if pet.name.present?
+                    %td.name= pet.name
+                  - else
+                    %td.name Unnamed
+                  - if pet.errors.present?
+                    %td= link_to_function "Fix errors", "switchPet(#{i});", class: 'btn btn-mini edit-pet'
+                  - else
+                    %td= link_to_function "Edit this pet", "switchPet(#{i});", class: 'btn btn-mini edit-pet'
+          %script#existing-pet-template{type: 'text/x-handlebars-template'}
+            %tr
+              %td.name {{name}}
+              %td= link_to_function "Edit this pet", "switchPet({{index}});", class: 'btn btn-mini edit-pet'
+          %hr.span5
+        - resource.pets.build
+        - unless resource.pets.present?
+          - pets_class = 'unactivated'
+        .span6.pets{class: pets_class}
+          - resource.pets.each do |pet|
+            .pet-fields.hide
+              = f.fields_for :pets, pet do |f|
+                - options = options_for_select([['Select one', ''], ['Dog', :dog], ['Cat', :cat], ['Bird', :bird], ['Fish', :fish], ['Other', :other]], pet.type)
+                .pet-type
+                  = f.select :type, 'My pet is a', options
+                .name
+                  = f.text_field :name, "Pet's name"
+                = f.text_field :age, "Age (years)"
+                .specific.dog
+                  - options = options_for_select([['Small (0-15kg)', :small], ['Medium (16-30kg)', :medium], ['Large (31-45kg)', :large], ['Giant (46kg+)', :giant]])
+                  = f.select :size, "Size", options
+                .specific.dog.cat
+                  - options = options_for_select([['Male - desexed', :male_desexed], ['Female - desexed', :female_desexed], ['Male - entire', :male_entire], ['Female - entire', :female_entire]])
+                  = f.select :sex, "Sex", options
+                  = f.text_field :microchip_number, "Microchip #"
+                  = f.text_field :council_number, "Council #"
+                  = f.label "My pet doesn't like" do |controls|
+                    = controls.check_box :dislike_people, 'Other people'
+                    = controls.check_box :dislike_animals, 'Other animals'
+                    = controls.check_box :dislike_children, 'Children'
+                    = controls.check_box :dislike_loneliness, 'Being alone'
+                  = f.label "My pet has up-to-date" do |controls|
+                    = controls.check_box :dislike_people, 'Flea Treatment'
+                    = controls.check_box :dislike_animals, 'Vaccinations'
+                    = controls.check_box :dislike_children, 'House trained'
+          = link_to_function "Add another pet", "addPet()", class: 'btn add-pet'
+      - unless resource.homestay.present?
+        - resource.build_homestay
+        - homestay_class = 'unactivated'
+      .span6
+        %h3 Love pets and want to make some extra money?
+        %p Fill out the form below to get listed on PetHomeStay!
+        .span6.homestay-form{class: homestay_class}
+          = f.fields_for :homestay do |f|
+            .control-group
+              = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+              .controls
+                .input-prepend.input-append
+                  .add-on $
+                  %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+                  .add-on .00
+            = f.text_field :address_1, 'Street address'
+            .control-group
+              .controls
+                %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
+            = f.text_field :address_suburb, 'Suburb'
+            = f.text_field :address_city, 'City'
+            = f.country_select :address_country, 'Country', {priority: country_priority}
+            = f.text_field :title
+            = f.text_area :description, class: 'span4', rows: 10
+    = f.actions do
+      = f.submit 'Create my account'
