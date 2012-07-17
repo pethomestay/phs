@@ -4,7 +4,11 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
                   :first_name, :last_name, :pets_attributes, :homestay_attributes, \
-                  :date_of_birth
+                  :date_of_birth, :validate_first_step_only, :mobile_number, :phone_number,
+                  :address_1, :address_2, :address_suburb, :address_city, :address_country, \
+                  :address_postcode
+
+  attr_accessor   :validate_first_step_only, :completed_signup
   
   has_one :homestay
   has_many :ratings
@@ -12,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :enquiries
 
   validates_presence_of :first_name, :last_name, :date_of_birth
+  validates_presence_of :completed_signup, unless: :validate_first_step_only
 
   accepts_nested_attributes_for :pets, reject_if: proc { |attributes|
     attributes.all? do |(key, value)|
