@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   has_many :pets
   has_many :enquiries
 
-  validates_presence_of :first_name, :last_name, :date_of_birth
+  validates_presence_of :first_name, :last_name, :date_of_birth, :address_1, :address_suburb, \
+                        :address_city, :address_country
   validates_presence_of :completed_signup, unless: :validate_first_step_only
 
   accepts_nested_attributes_for :pets, reject_if: proc { |attributes|

@@ -11,9 +11,9 @@
   %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
   = f.fieldset do
     .row
-      .span6
+      .span6.pet-half
         %h3 Want to use one of our great PetHomeStays?
-        %p Enter some details about your pets to get started!
+        %p These details get sent to the PetHomeStay host when you request a booking so they can decide whether or not to accept your pet. Please fill out as much detail as you can.
         .existing-pets.hide{'data-count' => resource.pets.length}
           %table
             %tbody
@@ -36,7 +36,7 @@
         - unless resource.pets.present?
           - pets_class = 'unactivated'
         - resource.pets.build
-        .span6.pets{class: pets_class}
+        .pets{class: pets_class}
           - resource.pets.each do |pet|
             .pet-fields.hide
               = f.fields_for :pets, pet do |f|
@@ -52,13 +52,17 @@
                 .specific.dog.cat
                   - options = options_for_select([['Male - desexed', :male_desexed], ['Female - desexed', :female_desexed], ['Male - entire', :male_entire], ['Female - entire', :female_entire]])
                   = f.select :sex, "Sex", options
+                  %p Microchipping & council rego not mandatory, however in the event of a lost dog you understand it makes retrevial far easier. PetHomeStay recommends you complete this information as soon as possible.
                   = f.text_field :microchip_number, "Microchip #"
                   = f.text_field :council_number, "Council #"
-                  = f.label "My pet doesn't like" do |controls|
-                    = controls.check_box :dislike_people, 'Other people'
-                    = controls.check_box :dislike_animals, 'Other animals'
-                    = controls.check_box :dislike_children, 'Children'
-                    = controls.check_box :dislike_loneliness, 'Being alone'
+                  .dislikes
+                    = f.label "My pet doesn't like" do |controls|
+                      = controls.check_box :dislike_people, 'Other people'
+                      = controls.check_box :dislike_animals, 'Other animals'
+                      = controls.check_box :dislike_children, 'Children'
+                      = controls.check_box :dislike_loneliness, 'Being alone'
+                  .explain-dislikes.hide
+                    = f.text_area :explain_dislikes, 'Please explain', rows: 4
                   = f.label "My pet has up-to-date" do |controls|
                     = controls.check_box :dislike_people, 'Flea Treatment'
                     = controls.check_box :dislike_animals, 'Vaccinations'
@@ -69,9 +73,15 @@
         - homestay_class = 'unactivated'
       .span6.divider
         %h3 Love pets and want to make some extra money?
-        %p Fill out the form below to get listed on PetHomeStay!
+        %p Would you like to help your community with their pets? Maybe make some extra money? Get to know more people in your area? Fill out the form below to get listed on PetHomeStay!
         .span6.homestay-form{class: homestay_class}
           = f.fields_for :homestay do |f|
+            = f.label "I would like to make a listing for a (check all that apply)" do |controls|
+              = controls.check_box :is_homestay, 'PetHomeStay – you accept other peoples pets for day or overnight homestays at your personal house'
+              = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
+              = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
+            = f.text_field :title, 'Catchy listing title'
+            = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span4', rows: 8
             .control-group
               = label_tag :cost_per_night, "Cost per night", class: 'control-label'
               .controls
@@ -79,15 +89,16 @@
                   .add-on $
                   %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
                   .add-on .00
-            = f.text_field :address_1, 'Street address'
-            .control-group
-              .controls
-                %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
-            = f.text_field :address_suburb, 'Suburb'
-            = f.text_field :address_city, 'City'
-            = f.country_select :address_country, 'Country', {priority: country_priority}
-            = f.text_field :title
-            = f.text_area :description, class: 'span4', rows: 10
+            .specific.pethomestay
+              %h3{style: "margin-bottom: 10px;"}
+                Confirm your PetHomeStay address
+              = f.text_field :address_1, 'Street address', value: params[:user][:address_1]
+              .control-group
+                .controls
+                  %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]', value: params[:user][:address_2]}
+              = f.text_field :address_suburb, 'Suburb', value: params[:user][:address_suburb]
+              = f.text_field :address_city, 'City', value: params[:user][:address_city]
+              = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country]]}
       .clearfix
     = f.actions do
       = f.submit 'Create my account'

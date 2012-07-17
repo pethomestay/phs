@@ -5,7 +5,14 @@ $ ->
     $fields.find('.specific').hide()
     if pet_type
       $fields.find(".specific.#{pet_type}").show()
-  .change() 
+  .change()
+
+  $('.dislikes input').live 'change', ->
+    if $('.dislikes input:checked').length > 0
+      $('.explain-dislikes').removeClass 'hide'
+    else
+      $('.explain-dislikes').addClass 'hide'
+  .change()
 
   $('.unactivated').one 'click', ->
     $(this).removeClass('unactivated')
