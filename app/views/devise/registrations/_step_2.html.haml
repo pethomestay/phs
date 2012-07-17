@@ -5,8 +5,18 @@
 - html = {:class => 'form-horizontal'}
 - url = registration_path(resource_name)
 = twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+  = f.hidden_field :email
+  = f.hidden_field :address_1
+  = f.hidden_field :address_2
+  = f.hidden_field :address_suburb
+  = f.hidden_field :address_city
+  = f.hidden_field :address_country
+  = f.hidden_field :address_postcode
+  = f.hidden_field :date_of_birth
   = f.hidden_field :first_name
   = f.hidden_field :last_name
+  - resource.completed_signup = true
+  = f.hidden_field :completed_signup
   %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
   %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
   = f.fieldset do
