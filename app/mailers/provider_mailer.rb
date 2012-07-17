@@ -5,7 +5,7 @@ class ProviderMailer < ActionMailer::Base
     @enquiry = enquiry
     @user = @enquiry.user
     @pets = @user.pets
-    provider_user = enquiry.provider.user
+    provider_user = enquiry.homestay.user
     email_with_name = "#{provider_user.first_name} #{provider_user.last_name} <#{provider_user.email}>"
     mail(to: email_with_name, subject: "You've recieved an enquiry")
   end
