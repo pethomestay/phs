@@ -2,9 +2,17 @@ $ ->
   $('.pet-type select').live 'change', ->
     pet_type = $(this).val()
     $fields = $(this).parents('.pet-fields')
-    $fields.find('.specific').hide()
+    $fields.find('.pets .specific').hide()
     if pet_type
       $fields.find(".specific.#{pet_type}").show()
+  .change()
+
+  $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"]').change ->
+    console.log 'hello'
+    $('.homestay-form .specific').hide()
+    $(".specific.homestay").show() if $('[name="user[homestay_attributes][is_homestay]"]:checked').length > 0
+    $(".specific.sitter").show() if $('[name="user[homestay_attributes][is_sitter]"]:checked').length > 0
+    $(".specific.services").show() if $('[name="user[homestay_attributes][is_services]"]:checked').length > 0
   .change()
 
   $('.dislikes input').live 'change', ->
