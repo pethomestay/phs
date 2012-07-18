@@ -92,14 +92,23 @@
               = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
             = f.text_field :title, 'Catchy listing title'
             = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span4', rows: 8
-            .control-group
-              = label_tag :cost_per_night, "Cost per night", class: 'control-label'
-              .controls
-                .input-prepend.input-append
-                  .add-on $
-                  %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
-                  .add-on .00
+            = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
+            = f.label "I can provide" do |controls|
+              = controls.check_box :constant_supervision, '24/7 supervision'
+              = controls.check_box :emergency_transport, 'Emergency transport'
+            = f.label "I have" do |controls|
+              = controls.check_box :first_aid, 'Pet first-aid training'
+              = controls.check_box :insurance, 'Professional pet-insurance'
+              = controls.check_box :professional_qualification, 'A professional qualification'
             .specific.homestay
+              %h3{style: "margin-bottom: 10px;"}Homestay details
+              .control-group
+                = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+                .controls
+                  .input-prepend.input-append
+                    .add-on $
+                    %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+                    .add-on .00
               %h3{style: "margin-bottom: 10px;"}
                 Confirm your PetHomeStay address
               = f.text_field :address_1, 'Street address', value: params[:user][:address_1]
@@ -109,6 +118,25 @@
               = f.text_field :address_suburb, 'Suburb', value: params[:user][:address_suburb]
               = f.text_field :address_city, 'City', value: params[:user][:address_city]
               = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country]]}
+            .specific.sitter
+              %h3{style: "margin-bottom: 10px;"} Pet-sitting details
+              .control-group
+                = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+                .controls
+                  .input-prepend.input-append
+                    .add-on $
+                    %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+                    .add-on .00
+            .specific.homestay.sitter
+              %label.inline-checkbox
+                %input{type: 'checkbox', name: 'user[homestay_attributes][accept_house_rules]'}
+                I have read and agree to our
+                = link_to 'House Rules', '#'
+                for the benefit of the community
+            %label.inline-checkbox
+              %input{type: 'checkbox', name: 'user[homestay_attributes][accept_terms]'}
+              I have read and agree to the PetHomeStay
+              = link_to 'terms and conditions', '#'
       .clearfix
     = f.actions do
       = f.submit 'Create my account'
