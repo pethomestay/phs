@@ -22,5 +22,6 @@ PetHomestay::Application.routes.draw do
   get '/blog'                 => 'pages#home'
   get '/contact'              => 'pages#home'
   get '/terms-and-conditions' => 'pages#home', as: 'terms_and_conditions'
+  get '/house-rules'          => 'pages#home', as: 'house_rules'
   get '/privacy-policy'       => 'pages#home', as: 'privacy_policy'
 end

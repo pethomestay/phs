@@ -144,12 +144,12 @@
               %label.inline-checkbox
                 %input{type: 'checkbox', name: 'user[homestay_attributes][accept_house_rules]'}
                 I have read and agree to our
-                = link_to 'House Rules', '#'
+                = link_to 'House Rules', house_rules_path, target: '_new'
                 for the benefit of the community
             %label.inline-checkbox
               %input{type: 'checkbox', name: 'user[homestay_attributes][accept_terms]'}
               I have read and agree to the PetHomeStay
-              = link_to 'terms and conditions', '#'
+              = link_to 'terms and conditions', terms_and_conditions_path, target: '_new'
       .clearfix
     = f.actions do
       = f.submit 'Create my account'
