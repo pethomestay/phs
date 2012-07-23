@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :pets, reject_if: proc { |attributes|
     attributes.all? do |(key, value)|
-      value.blank? || key == 'pet_type' || key == 'sex' || key == 'size' || value == '0'
+      value.blank? || key == 'pet_type' || key == 'sex' || key == 'size' || value == '0' || key == 'pictures_attributes'
     end
   }
   accepts_nested_attributes_for :homestay, reject_if: proc { |attributes|
