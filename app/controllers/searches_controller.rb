@@ -25,7 +25,7 @@ class SearchesController < ApplicationController
 
   def perform_search
     perfrom_geocode
-    @homestays = Homestay.active.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by).paginate(page: params[:page], per_page: 10)
+    @homestays = Homestay.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by).paginate(page: params[:page], per_page: 10)
   end
 
   def perfrom_geocode

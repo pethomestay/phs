@@ -2,7 +2,7 @@ class HomestaysController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, :with => :error_404
 
   def show
-    @homestay = Homestay.active.find(params[:id])
+    @homestay = Homestay.find(params[:id])
     @title = @homestay.title
     @reviewed_ratings = @homestay.ratings.reviewed
     if current_user
