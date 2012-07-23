@@ -33,7 +33,7 @@
         .pets{class: pets_class, 'data-count' => resource.pets.length}
           = link_to_function "Add another pet", "addPet()", class: 'btn add-pet'
         - resource.pets.each_with_index do |pet, i|
-          - if pet.pictures[0]
+          - if pet.pictures[0].file
             :javascript
               current_image = "#{pet.pictures[0].file.thumb('100x100').url}";
               retained_file = "#{pet.pictures[0].retained_file}";
