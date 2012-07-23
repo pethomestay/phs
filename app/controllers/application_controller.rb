@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     if params[:redirect_path].present?
       params[:redirect_path]
     else
-      request.env['omniauth.origin'] || root_path
+      request.env['omniauth.origin'] || my_account_path
     end
   end
 
