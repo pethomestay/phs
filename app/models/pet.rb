@@ -9,7 +9,6 @@ class Pet < ActiveRecord::Base
                   :dislike_children, :dislike_loneliness, :explain_dislikes, \
                   :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
                   :other_pet_type
-  attr_accessor :sex, :age, :microchip_number, :council_number, :size, :explain_dislikes, :other_pet_type
 
   validates_presence_of :name, :age
   validates_inclusion_of :pet_type, :in => %w( dog cat bird fish other )

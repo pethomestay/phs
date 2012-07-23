@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723051208) do
+ActiveRecord::Schema.define(:version => 20120723225115) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(:version => 20120723051208) do
     t.boolean  "flea_treated"
     t.boolean  "vaccinated"
     t.boolean  "house_trained"
+    t.string   "sex"
+    t.string   "age"
+    t.string   "microchip_number"
+    t.string   "council_number"
+    t.string   "size"
+    t.text     "explain_dislikes"
+    t.string   "other_pet_type"
   end
 
   add_index "pets", ["user_id"], :name => "index_pets_on_user_id"
