@@ -2,7 +2,7 @@ class Homestay < ActiveRecord::Base
   has_many :enquiries
   has_many :ratings, as: 'ratable'
   has_many :pictures, as: 'picturable'
-  accepts_nested_attributes_for :pictures
+  accepts_nested_attributes_for :pictures, reject_if: :all_blank
   belongs_to :user
 
   attr_accessible :title, :description, :cost_per_night, :active, \
