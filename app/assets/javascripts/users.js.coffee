@@ -2,7 +2,7 @@ $ ->
   $('.pet-type select').live 'change', ->
     pet_type = $(this).val()
     $fields = $(this).parents('.pet-fields')
-    $fields.find('.pets .specific').hide()
+    $fields.find('.specific').hide()
     if pet_type
       $fields.find(".specific.#{pet_type}").show()
   .change()
