@@ -10,10 +10,12 @@ class Homestay < ActiveRecord::Base
                   :address_postcode, :address_country, :latitude, :longitude, \
                   :is_homestay, :is_sitter, :is_services, :years_looking_after_pets, \
                   :constant_supervision, :emergency_transport, :first_aid, \
-                  :insurance, :professional_qualification, :pictures_attributes
+                  :insurance, :professional_qualification, :pictures_attributes, \
+                  :website
   attr_accessor :unfinished_signup, :is_homestay, :is_sitter, :is_services, \
                 :constant_supervision, :emergency_transport, :first_aid, \
-                :insurance, :professional_qualification, :years_looking_after_pets
+                :insurance, :professional_qualification, :years_looking_after_pets, \
+                :website
 
   validates_presence_of :cost_per_night
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country
