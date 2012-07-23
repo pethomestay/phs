@@ -1,0 +1,39 @@
+.page-header
+  %h1= "#{@user.first_name} would like to make a booking"
+%table.table.table-striped.table-condensed
+  %tr
+    %td Start date
+    %td= @enquiry.formatted_date
+  %tr
+    %td Length of stay
+    %td= @enquiry.length_of_stay
+%h2 Pets
+- @pets.each do |pet|
+  .row
+    .span3
+      Pet image will go here
+    .span9
+      %table.table.table-striped.table-condensed
+        %tr
+          %td Name
+          %td= pet.name
+        %tr
+          %td Type
+          %td= pet.pet_type.capitalize
+        %tr
+          %td Age
+          %td= pet.age
+        %tr
+          %td Size
+          %td= pet.size
+        %tr
+          %td Sex
+          %td= pet.sex
+        %tr
+          %td Dislikes
+          %td= pet.dislikes
+        - unless pet.dislikes.blank?
+          %tr
+            %td More information about dislikes
+            %td= pet.explain_dislikes
+  .clearfix

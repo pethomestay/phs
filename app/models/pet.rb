@@ -16,4 +16,14 @@ class Pet < ActiveRecord::Base
   validates_inclusion_of :sex, :in => %w( male_desexed female_desexed male_entire female_entire )
   
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type == 'other'}
+
+  def dislikes
+    dislikes = []
+    dislikes << 'Dislikes children' if dislike_children
+    dislikes << 'Dislikes being left alone' if dislike_loneliness
+    dislikes << 'Dislikes strangers' if dislike_people
+    dislikes << 'Dislikes other animals' if dislike_animals
+
+    dislikes.join(', ')
+  end
 end

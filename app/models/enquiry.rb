@@ -8,4 +8,8 @@ class Enquiry < ActiveRecord::Base
   def formatted_date
     date.to_formatted_s
   end
+
+  def length_of_stay
+    "Up to #{max_number_of_days} days"
+  end
 end

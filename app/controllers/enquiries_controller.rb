@@ -8,4 +8,11 @@ class EnquiriesController < ApplicationController
       redirect_to @enquiry.homestay, error: "There was an issue with your request. Please contact support."
     end
   end
+
+  def show
+    @enquiry = Enquiry.find(params[:id])
+    @user = @enquiry.user
+    @pets = @user.pets
+    redirect_to my_account_path if @enquiry.homestay != current_user.homestay
+  end
 end
