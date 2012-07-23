@@ -1,0 +1,176 @@
+<div class='pet-fields'>
+  <h3>Pet {{number}}</h1>
+  <div class='pet-type'>
+    <div class="control-group" id="user_pets_attributes_{{index}}_pet_type_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_pet_type">My pet is a</label>
+      <div class="controls">
+        <span class="input">
+          <select id="user_pets_attributes_{{index}}_pet_type" name="user[pets_attributes][{{index}}][pet_type]">
+            <option value="dog" {{#if isDog}}selected="selected"{{/if}}>Dog</option>
+            <option value="cat" {{#if isCat}}selected="selected"{{/if}}>Cat</option>
+            <option value="bird" {{#if isBird}}selected="selected"{{/if}}>Bird</option>
+            <option value="fish" {{#if isFish}}selected="selected"{{/if}}>Fish</option>
+            <option value="other" {{#if isOther}}selected="selected"{{/if}}>Other</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class='name'>
+    <div class="control-group" id="user_pets_attributes_{{index}}_name_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_name">Pet's name</label>
+      <div class="controls">
+        <span class="input">
+          <input id="user_pets_attributes_{{index}}_name" name="user[pets_attributes][{{index}}][name]" size="30" type="text" value="{{name}}" /></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_age_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_age">Age (years)</label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_age" name="user[pets_attributes][{{index}}][age]" size="30" type="text" value="{{age}}" />
+      </span>
+    </div>
+  </div>
+
+  <div class='specific dog'>
+    <div class="control-group" id="user_pets_attributes_{{index}}_size_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_size">Size</label>
+      <div class="controls">
+        <span class="input">
+          <select id="user_pets_attributes_{{index}}_size" name="user[pets_attributes][{{index}}][size]">
+            <option value="small" {{#if isSmall}}selected="selected"{{/if}}>Small (0-15kg)</option>
+            <option value="medium" {{#if isMedium}}selected="selected"{{/if}}>Medium (16-30kg)</option>
+            <option value="large" {{#if isLarge}}selected="selected"{{/if}}>Large (31-45kg)</option>
+            <option value="giant" {{#if isGiant}}selected="selected"{{/if}}>Giant (46kg+)</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class='specific dog cat'>
+    <div class="control-group" id="user_pets_attributes_{{index}}_sex_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_sex">Sex</label>
+      <div class="controls">
+        <span class="input">
+          <select id="user_pets_attributes_{{index}}_sex" name="user[pets_attributes][{{index}}][sex]">
+            <option value="male_desexed" {{#if isMaleDesexed}}selected="selected"{{/if}}>Male - desexed</option>
+            <option value="female_desexed" {{#if isFemaleDesexed}}selected="selected"{{/if}}>Female - desexed</option>
+            <option value="male_entire" {{#if isMaleEntire}}selected="selected"{{/if}}>Male - entire</option>
+            <option value="female_entire" {{#if isFemaleEntire}}selected="selected"{{/if}}>Female - entire</option>
+          </select>
+        </span>
+      </div>
+    </div>
+    
+    <p>Microchipping &amp; council rego not mandatory, however in the event of a lost dog you understand it makes retrevial far easier. PetHomeStay recommends you complete this information as soon as possible.</p>
+
+    <div class="control-group" id="user_pets_attributes_{{index}}_microchip_number_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_microchip_number">Microchip #</label>
+      <div class="controls">
+        <span class="input">
+          <input id="user_pets_attributes_{{index}}_microchip_number" name="user[pets_attributes][{{index}}][microchip_number]" size="30" type="text" value="{{microchip_number}}" />
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group" id="user_pets_attributes_{{index}}_council_number_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_council_number">Council #</label>
+      <div class="controls">
+        <span class="input">
+          <input id="user_pets_attributes_{{index}}_council_number" name="user[pets_attributes][{{index}}][council_number]" size="30" type="text" value="{{council_number}}" />
+        </span>
+      </div>
+    </div>
+
+    <div class='dislikes'>
+      <div class="control-group">
+        <label class="control-label">My pet doesn't like</label>
+        <div class="controls">
+          <label class="checkbox" for="user_pets_attributes_{{index}}_dislike_people">
+            <input name="user[pets_attributes][{{index}}][dislike_people]" type="hidden" value="0" />
+            <input id="user_pets_attributes_{{index}}_dislike_people" name="user[pets_attributes][{{index}}][dislike_people]" type="checkbox" value="1" {{#if dislike_people}}checked="checked"{{/if}} />
+            Other people
+          </label>
+          <label class="checkbox" for="user_pets_attributes_{{index}}_dislike_animals">
+            <input name="user[pets_attributes][{{index}}][dislike_animals]" type="hidden" value="0" />
+            <input id="user_pets_attributes_{{index}}_dislike_animals" name="user[pets_attributes][{{index}}][dislike_animals]" type="checkbox" value="1" {{#if dislike_animals}}checked="checked"{{/if}} />
+            Other animals
+          </label>
+          <label class="checkbox" for="user_pets_attributes_{{index}}_dislike_children">
+            <input name="user[pets_attributes][{{index}}][dislike_children]" type="hidden" value="0" />
+            <input id="user_pets_attributes_{{index}}_dislike_children" name="user[pets_attributes][{{index}}][dislike_children]" type="checkbox" value="1" {{#if dislike_children}}checked="checked"{{/if}} />
+            Children
+          </label>
+          <label class="checkbox" for="user_pets_attributes_{{index}}_dislike_loneliness">
+            <input name="user[pets_attributes][{{index}}][dislike_loneliness]" type="hidden" value="0" />
+            <input id="user_pets_attributes_{{index}}_dislike_loneliness" name="user[pets_attributes][{{index}}][dislike_loneliness]" type="checkbox" value="1" {{#if dislike_loneliness}}checked="checked"{{/if}} />
+            Being alone
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <div class='explain-dislikes hide'>
+      <div class="control-group" id="user_pets_attributes_{{index}}_explain_dislikes_control_group">
+        <label class="control-label" for="user_pets_attributes_{{index}}_explain_dislikes">Please explain</label>
+        <div class="controls">
+          <span class="input">
+            <textarea cols="40" id="user_pets_attributes_{{index}}_explain_dislikes" name="user[pets_attributes][{{index}}][explain_dislikes]" rows="4"></textarea>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">My pet has up-to-date</label>
+      <div class="controls">
+        <label class="checkbox" for="user_pets_attributes_{{index}}_flea_treated">
+          <input name="user[pets_attributes][{{index}}][flea_treated]" type="hidden" value="0" />
+          <input id="user_pets_attributes_{{index}}_flea_treated" name="user[pets_attributes][{{index}}][flea_treated]" type="checkbox" value="1" />
+          Flea Treatment
+        </label>
+        <label class="checkbox" for="user_pets_attributes_{{index}}_vaccinated">
+          <input name="user[pets_attributes][{{index}}][vaccinated]" type="hidden" value="0" />
+          <input id="user_pets_attributes_{{index}}_vaccinated" name="user[pets_attributes][{{index}}][vaccinated]" type="checkbox" value="1" />
+          Vaccinations
+        </label>
+        <label class="checkbox" for="user_pets_attributes_{{index}}_house_trained">
+          <input name="user[pets_attributes][{{index}}][house_trained]" type="hidden" value="0" />
+          <input id="user_pets_attributes_{{index}}_house_trained" name="user[pets_attributes][{{index}}][house_trained]" type="checkbox" value="1" />
+          House trained
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  {{#if current_image}}
+  <div class='control-group'>
+    <label class='control-label'>Current image</label>
+    <div class='controls'>
+      <img src="{{current_image}}" />
+    </div>
+  </div>
+  {{/if}}
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_pictures_attributes_0_file_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_pictures_attributes_0_file">
+      {{#if current_image}}
+        Replace image
+      {{else}}
+        Upload image
+      {{/if}}
+    </label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_pictures_attributes_0_file" name="user[pets_attributes][{{index}}][pictures_attributes][0][file]" type="file" />
+        <span class='help-inline'>You can add more photos later</span>
+        </span>
+      </div>
+    </div>
+  <input id="user_pets_attributes_{{index}}_pictures_attributes_0_retained_file" name="user[pets_attributes][{{index}}][pictures_attributes][0][retained_file]" type="hidden" value="{{retained_file}}" />
+</div>

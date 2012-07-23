@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717020916) do
+ActiveRecord::Schema.define(:version => 20120723051208) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -56,10 +56,17 @@ ActiveRecord::Schema.define(:version => 20120717020916) do
   create_table "pets", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.string   "type"
+    t.string   "pet_type"
     t.string   "breed"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "dislike_loneliness"
+    t.boolean  "dislike_children"
+    t.boolean  "dislike_animals"
+    t.boolean  "dislike_people"
+    t.boolean  "flea_treated"
+    t.boolean  "vaccinated"
+    t.boolean  "house_trained"
   end
 
   add_index "pets", ["user_id"], :name => "index_pets_on_user_id"

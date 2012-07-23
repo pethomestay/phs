@@ -8,7 +8,6 @@ $ ->
   .change()
 
   $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"]').change ->
-    console.log 'hello'
     $('.homestay-form .specific').hide()
     $(".specific.homestay").show() if $('[name="user[homestay_attributes][is_homestay]"]:checked').length > 0
     $(".specific.sitter").show() if $('[name="user[homestay_attributes][is_sitter]"]:checked').length > 0
@@ -25,32 +24,11 @@ $ ->
   $('.unactivated').one 'click', ->
     $(this).removeClass('unactivated')
 
-  $.fn.reset = ->
-    $(this).find('input, select').val('')
-    $(this).find('.specific').hide()
-
-  exitingPetRowTemplate = Handlebars.compile($('#existing-pet-template').html())
-
   window.addPet = ->
-    $('.existing-pets').removeClass('hide')
-    newPetIndex = $('.existing-pets').data('count')
-    name = $('.pet-fields').last().find(".name input").val()
-    name = 'Unnamed' if name == ''
-    newRow = exitingPetRowTemplate
-      index: newPetIndex
-      name: name
-    $newFields = $('<div class="pet-fields">' + $('.pet-fields').first().html().replace(/attributes_0/g, "attributes_#{newPetIndex}").replace(/\[pets_attributes\]\[0\]/g, "[pets_attributes][#{newPetIndex}]") + '</div>')
-    $newFields.reset()
-    $('.existing-pets').data('count', newPetIndex + 1)
-    $('.add-pet').before($newFields)
-    $('.pet-fields').addClass('hide')
-    $('.pet-fields').last().removeClass('hide')
-    $('.existing-pets table').append newRow
+    numberOfPets = $('.pets').data('count')    
+    pet = petTemplate
+      index: numberOfPets
+      number: numberOfPets + 1
+    $('.pets').data('count', numberOfPets + 1)
+    $('.add-pet').before(pet)
     $('.pet-type select').change()
-  
-  $('.pet-fields').first().removeClass('hide')
-  $('.existing-pets').removeClass('hide') if $('.existing-pets').data('count') > 1
-
-  window.switchPet = (i) ->
-    $('.pet-fields').addClass('hide')
-    $(".pet-fields:eq(#{i})").removeClass('hide')

@@ -1,5 +1,6 @@
 if Rails.env.development? || Rails.env.staging?
   User.destroy_all
+  Pet.destroy_all
   Homestay.destroy_all
 
   User.create({

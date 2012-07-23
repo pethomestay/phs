@@ -21,12 +21,12 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :pets, reject_if: proc { |attributes|
     attributes.all? do |(key, value)|
-      value.blank? || key == 'type' || key == 'sex' || key == 'size' || value == '0'
+      value.blank? || key == 'pet_type' || key == 'sex' || key == 'size' || value == '0'
     end
   }
   accepts_nested_attributes_for :homestay, reject_if: proc { |attributes|
     attributes.all? do |(key, value)|
-      value.blank? || key == 'address_country' || key == 'address_1' || key == 'address_2' || \
+      value.blank? || value == "0" || key == 'address_country' || key == 'address_1' || key == 'address_2' || \
       key == 'address_suburb' || key == 'address_city' || key == 'address_postcode' || \
       key == 'is_homestay' || key == 'is_sitter' || key == 'is_services'
     end
