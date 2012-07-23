@@ -46,6 +46,7 @@ $ ->
     $('.pet-fields').addClass('hide')
     $('.pet-fields').last().removeClass('hide')
     $('.existing-pets table').append newRow
+    $('.pet-type select').change()
   
   $('.pet-fields').first().removeClass('hide')
   $('.existing-pets').removeClass('hide') if $('.existing-pets').data('count') > 1

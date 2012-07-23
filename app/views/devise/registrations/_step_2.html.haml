@@ -50,7 +50,7 @@
           - resource.pets.each do |pet|
             .pet-fields.hide
               = f.fields_for :pets, pet do |f|
-                - options = options_for_select([['Select one', ''], ['Dog', :dog], ['Cat', :cat], ['Bird', :bird], ['Fish', :fish], ['Other', :other]], pet.type)
+                - options = options_for_select([['Dog', :dog], ['Cat', :cat], ['Bird', :bird], ['Fish', :fish], ['Other', :other]], pet.type)
                 .pet-type
                   = f.select :type, 'My pet is a', options
                 .name
