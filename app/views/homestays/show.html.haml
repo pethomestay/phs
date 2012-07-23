@@ -35,8 +35,6 @@
             = link_to image_tag(@homestay.pictures.first.file.thumb('380x').url), @homestay, class: "thumbnail"
       %li.span5
         #map.thumbnail
-        - map_js_src = "http://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true"
-        %script{type: "application/javascript", src: map_js_src}
         %script{type: "application/javascript", src: "/assets/gmaps.js"}
         :javascript
           initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
