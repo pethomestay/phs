@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
   def determine_step
     if params[:controller] == "devise/registrations"
       if params[:user]
-        user = User.new(params[:user].merge({validate_first_step_only: true}))
+        user_params = params[:user].reject {|k,v| k[/_attributes/]}.merge({validate_first_step_only: true})
+        user = User.new(user_params)
         step = user.valid? ? 'second' : 'first'
       else
         step = 'first'
