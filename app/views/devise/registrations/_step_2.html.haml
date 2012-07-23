@@ -125,10 +125,10 @@
                 .controls
                   .input-prepend.input-append
                     .add-on $
-                    %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+                    %input.span1#user_homestay_sitter_cost_per_night{name: 'user[homestay_attributes][sitter_cost_per_night]'}
                     .add-on .00
             %h3 Photo
-            - if resource.homestay.pictures[0]
+            - if resource.homestay.pictures[0] && resource.homestay.pictures[0].file
               .control-group
                 %label.control-label Current image
                 .controls
