@@ -30,4 +30,4 @@ $ ->
       street_name = $("#street_name").val()
       street_number = $("#street_number").val()
       $('#user_address_1').val "#{street_number} #{street_name}"
-    , 1000
+    , 200
