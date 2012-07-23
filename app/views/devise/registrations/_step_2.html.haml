@@ -125,6 +125,21 @@
                     .add-on $
                     %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
                     .add-on .00
+            %h3 Photo
+            - if resource.homestay.pictures[0]
+              .control-group
+                %label.control-label Current image
+                .controls
+                  = image_tag(resource.homestay.pictures[0].file.thumb('100x100').url)
+            - replacing_image = true
+            - unless resource.homestay.pictures.present?
+              - resource.homestay.pictures.build
+              - replacing_image = false
+            = f.fields_for :pictures, resource.homestay.pictures[0] do |f|
+              - label = replacing_image ? 'Replace image' : 'Upload image'
+              = f.file_field :file, label do
+                %span.help-inline You can add more photos later
+              = f.hidden_field :retained_file
             .specific.homestay.sitter
               %label.inline-checkbox
                 %input{type: 'checkbox', name: 'user[homestay_attributes][accept_house_rules]'}
