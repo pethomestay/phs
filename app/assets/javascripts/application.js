@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
+//= require jquery.geocomplete
 //= require twitter/bootstrap
 //= require handlebars
 //= require_tree .

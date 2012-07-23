@@ -19,3 +19,15 @@ window.getLocation = (callback) ->
   getCoords (geolocation) ->
     coords = geolocation.coords
     coordsToLocation coords.latitude, coords.longitude, callback
+
+$ ->
+  $("#geocomplete").geocomplete
+    details: "form"
+    detailsAttribute: "data-geocomplete"
+
+  if $("#street_name, #street_number").length == 2
+    setInterval ->
+      street_name = $("#street_name").val()
+      street_number = $("#street_number").val()
+      $('#user_address_1').val "#{street_number} #{street_name}"
+    , 1000

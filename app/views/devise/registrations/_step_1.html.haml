@@ -21,13 +21,25 @@
     %h3{style: "margin-bottom: 10px;"}
       Your address
       %small Where are you from?
-    = f.text_field :address_1, 'Street address'
-    .control-group
-      .controls
-        %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
-    = f.text_field :address_suburb, 'Suburb'
-    = f.text_field :address_city, 'City'
-    = f.country_select :address_country, 'Country', {priority: country_priority}
+    - if request.get?
+      .control-group
+        = label_tag :geocomplete, 'Street address', class: 'control-label'
+        .controls
+          %input#geocomplete.span7
+      %input#street_name{type: 'hidden', 'data-geocomplete' => 'route'}
+      %input#street_number{type: 'hidden', 'data-geocomplete' => 'street_number'}
+      = f.hidden_field :address_1
+      = f.hidden_field :address_suburb, 'data-geocomplete' => 'sublocality'
+      = f.hidden_field :address_city, 'data-geocomplete' => 'locality'
+      = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
+    - else
+      = f.text_field :address_1, 'Street address'
+      .control-group
+        .controls
+          %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
+      = f.text_field :address_suburb, 'Suburb'
+      = f.text_field :address_city, 'City'
+      = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country], country_priority].flatten}
     %hr
     = f.actions do
       = f.submit 'Continue'

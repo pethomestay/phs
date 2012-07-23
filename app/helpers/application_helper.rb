@@ -37,4 +37,8 @@ module ApplicationHelper
 
     priority.uniq
   end
+
+  def google_maps_source_url
+    "http://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true&libraries=places"
+  end
 end
