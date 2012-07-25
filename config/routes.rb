@@ -19,6 +19,7 @@ PetHomestay::Application.routes.draw do
   get '/searches/none'        => 'pages#home', as: 'no_results'
   get '/how-does-it-work'     => 'pages#home', as: 'how_does_it_work'
   get '/what-is'              => 'pages#home', as: 'what_is'
+  get '/why-join-pethomestay' => 'pages#home', as: 'why_join'
   get '/blog'                 => 'pages#home'
   get '/contact'              => 'pages#home'
   get '/terms-and-conditions' => 'pages#home', as: 'terms_and_conditions'
