@@ -20,4 +20,7 @@ class HomestaysController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def new
+  end
 end
