@@ -1,0 +1,13 @@
+.page-header
+  .pull-left
+    %h1 My pets
+  .pull-right
+    = link_to 'Add new pet', new_pet_path, class: 'btn btn-primary'
+  .clearfix
+- if @pets.present?
+  %table.table
+    - @pets.each do |pet|
+      %tr
+        %td= pet.name
+        %td= link_to "Edit", edit_pet_path(pet)
+        %td= link_to "Remove", pet_path(pet), method: 'DELETE'
