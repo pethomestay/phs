@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_up_path_for(resource)
+    if params[:redirect_path].present?
+      params[:redirect_path]
+    else
+      my_account_path
+    end
+  end
+
   def ensure_user!
     redirect_to new_user_registration_path unless current_user
   end

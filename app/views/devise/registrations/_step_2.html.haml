@@ -5,6 +5,7 @@
 - html = {class: 'form-horizontal', multipart: true}
 - url = registration_path(resource_name)
 = twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+  %input{type: 'hidden', name: 'redirect_path', value: params[:redirect_path]}
   = f.hidden_field :email
   = f.hidden_field :address_1
   = f.hidden_field :address_2
