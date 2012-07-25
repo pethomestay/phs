@@ -43,4 +43,29 @@ class User < ActiveRecord::Base
   def enquiries
     homestay.present? ? homestay.enquiries : []
   end
+
+  def pets_by_type
+    pets.inject({}) do |hash, pet|
+      hash[pet.pet_type] ||= []
+      hash[pet.pet_type] << pet
+      hash
+    end
+  end
+
+  def pet_count_by_type
+    pets_by_type.inject({}) do |hash, (k,v)|
+      hash[k] = v.length
+      hash
+    end
+  end
+
+  def pet_count_summary
+    pet_count_by_type.map do |k,v|
+      "#{v} #{k.pluralize(v)}"
+    end.join(', ')
+  end
+
+  def pet_summary
+    "#{pets.length} #{'pet'.pluralize(pets.length)} (#{pet_count_summary})"
+  end
 end

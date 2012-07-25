@@ -2,6 +2,8 @@
   %head
     %meta{content: "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
   %body
-    %h1 You've recieved a new enquiry
-    %p TODO: This email needs copy
-    %p= link_to "View enquiry now", enquiry_url(@enquiry)
+    %p= "You have a new enquiry from #{@user.first_name} with #{@user.pet_summary}"
+    - if @enquiry.message.present?
+      %p= "#{@user.first_name} has attached the following message:"
+      %p= @enquiry.message
+    %p= link_to "View the details and respond to this enquiry now", enquiry_url(@enquiry)
