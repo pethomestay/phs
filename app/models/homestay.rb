@@ -23,6 +23,8 @@ class Homestay < ActiveRecord::Base
   validates_acceptance_of :is_homestay, accept: true, unless: Proc.new {|homestay| homestay.is_sitter || homestay.is_services}
   validates_acceptance_of :is_sitter, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_services}
   validates_acceptance_of :is_services, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
+
+  validates_acceptance_of :accept_house_rules, on: :create, if: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
   
   scope :active, where(active: true)
 
