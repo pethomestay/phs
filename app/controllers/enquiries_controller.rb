@@ -21,6 +21,7 @@ class EnquiriesController < ApplicationController
     if enquiry
       enquiry.update_attributes(params[:enquiry])
       if enquiry.accepted
+        ProviderMailer.contact_details_email(enquiry).deliver
         redirect_to my_account_path, alert: "Your contact details have been sent to #{enquiry.user.first_name}. Their details have also been emailed to you."
       else
         redirect_to my_account_path, alert: "We'll let #{enquiry.user.first_name} know you're not available at this time."
