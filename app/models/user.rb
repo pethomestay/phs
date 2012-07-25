@@ -36,8 +36,8 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def has_enquiries?
-    homestay.present? && homestay.enquiries.present?
+  def has_unanswered_enquiries?
+    homestay.present? && homestay.enquiries.unanswered.present?
   end
 
   def enquiries
