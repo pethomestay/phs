@@ -12,14 +12,17 @@ class Homestay < ActiveRecord::Base
                   :constant_supervision, :emergency_transport, :first_aid, \
                   :insurance, :professional_qualification, :pictures_attributes, \
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night
-  attr_accessor :unfinished_signup, :is_homestay, :is_sitter, :is_services, \
-                :constant_supervision, :emergency_transport, :first_aid, \
+  attr_accessor :unfinished_signup, :constant_supervision, :emergency_transport, :first_aid, \
                 :insurance, :professional_qualification, :years_looking_after_pets, \
                 :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night
 
   validates_presence_of :cost_per_night
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country
   validates_presence_of :title, :description, :unless => :unfinished_signup
+
+  validates_acceptance_of :is_homestay, accept: true, unless: Proc.new {|homestay| homestay.is_sitter || homestay.is_services}
+  validates_acceptance_of :is_sitter, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_services}
+  validates_acceptance_of :is_services, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
   
   scope :active, where(active: true)
 
