@@ -26,4 +26,25 @@ class Pet < ActiveRecord::Base
 
     dislikes.join(', ')
   end
+
+  def pretty_pet_type
+    if pet_type == 'other'
+      other_pet_type.capitalize
+    else
+      pet_type.capitalize
+    end
+  end
+
+  def pretty_sex
+    case sex
+      when 'male_desexed' then 'Male desexed'
+      when 'female_desexed' then 'Female desexed'
+      when 'male_entire' then 'Male entire'
+      when 'female_entire' then 'Female entire'
+    end
+  end
+
+  def pretty_size
+    size.capitalize
+  end
 end
