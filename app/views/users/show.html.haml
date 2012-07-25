@@ -19,8 +19,8 @@
         = link_to "Close account", edit_user_registration_path, class: 'btn btn-danger btn-mini'
   .span4.notifications
     %h2.page-header Notifications
-    - if @user.enquiries.present?
-      - @user.enquiries.each do |enquiry|
+    - if @user.unanswered_enquiries.present?
+      - @user.unanswered_enquiries.each do |enquiry|
         %p.pull-left= link_to "Enquiry: #{enquiry.user.name}", enquiry
         %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
         .clear

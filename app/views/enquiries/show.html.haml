@@ -45,10 +45,10 @@
   .clearfix
 .form-actions
   = form_for @enquiry, html: {class: 'form-button'} do |f|
-    = f.hidden_field :responded, val: true
-    = f.hidden_field :accepted, val: false
+    = f.hidden_field :responded, value: true
+    = f.hidden_field :accepted, value: false
     = f.submit "Can't do it", class: 'btn'
   = form_for @enquiry, html: {class: 'form-button'} do |f|
-    = f.hidden_field :responded, val: true
-    = f.hidden_field :accepted, val: true
+    = f.hidden_field :responded, value: true
+    = f.hidden_field :accepted, value: true
     = f.submit "I would like to contact #{@user.first_name}", class: 'btn btn-primary'

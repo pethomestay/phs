@@ -9,7 +9,7 @@
         %p.rating
           - rating_stars @homestay.average_rating
           - if @reviewed_ratings.present?
-            %span= link_to "(Read reviews)", "#reviews"
+            %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
           - else
             %span (No reviews yet)
       .span2.pricing

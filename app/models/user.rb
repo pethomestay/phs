@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     homestay.present? ? homestay.enquiries : []
   end
 
+  def unanswered_enquiries
+    homestay.present? ? homestay.enquiries.unanswered : []
+  end
+
   def pets_by_type
     pets.inject({}) do |hash, pet|
       hash[pet.pet_type] ||= []
