@@ -15,9 +15,12 @@
             %td
               .enquire-datepicker
             %td
-              = f.label :max_number_of_days, "Length of stay"
-              - options = options_for_select([["1-2 days", 2], ["Up to 1 week", 7], ["Up to 2 weeks", 14], ["Long term", Infinity]])
-              = f.select :max_number_of_days, options
+              = f.label :duration, "Arrange for"
+              - options = options_for_select([["Morning", 'morning'], ["Afternoon", 'afternoon'], ["Evening", 'evening'], ["Overnight", 'overnight'], ["2 Days", '2days'], ["3 Days", '3days'], ["4 Days", '4days'], ["5 Days", '5days'], ["6 Days", '6days'], ["7 Days", '7days'], ["Longer", 'longerthan7days']])
+              = f.select :duration, options
+          %tr
+            %td{colspan: 2}
+              = f.text_area :message, placeholder: 'Enter an optional personal message', class: 'span5', rows: 4
     .modal-footer
       %a.btn{href:"#", 'data-dismiss' => "modal"} Cancel
       = f.submit 'Can you look after my pet?', class: 'btn btn-primary'

@@ -11,15 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723225115) do
+ActiveRecord::Schema.define(:version => 20120725020919) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.date     "date"
-    t.string   "max_number_of_days"
+    t.string   "duration"
     t.integer  "homestay_id"
+    t.text     "message"
+    t.boolean  "responded"
+    t.boolean  "accepted"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"

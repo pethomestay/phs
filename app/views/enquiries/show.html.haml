@@ -5,13 +5,19 @@
     %td Start date
     %td= @enquiry.formatted_date
   %tr
-    %td Length of stay
-    %td= @enquiry.length_of_stay
+    %td Duration
+    %td= @enquiry.duration
+  %tr
+    %td Message
+    %td= @enquiry.message
 %h2 Pets
 - @pets.each do |pet|
   .row
     .span3
-      Pet image will go here
+      - if pet.pictures.present?
+        = image_tag(pet.pictures.first.file.thumb('220x').url)
+      - else
+        Pet has no images.. put a placeholder image here.
     .span9
       %table.table.table-striped.table-condensed
         %tr
@@ -37,7 +43,12 @@
             %td More information about dislikes
             %td= pet.explain_dislikes
   .clearfix
-.form-horizontal
-  .actions
-    = link_to 'Accept enquiry', '#', class: 'btn btn-primary'
-    = link_to "Can't do it", '#', class: 'btn'
+.form-actions
+  = form_for @enquiry, html: {class: 'form-button'} do |f|
+    = f.hidden_field :responded, val: true
+    = f.hidden_field :accepted, val: false
+    = f.submit "Can't do it", class: 'btn'
+  = form_for @enquiry, html: {class: 'form-button'} do |f|
+    = f.hidden_field :responded, val: true
+    = f.hidden_field :accepted, val: true
+    = f.submit "I would like to contact #{@user.first_name}", class: 'btn btn-primary'
