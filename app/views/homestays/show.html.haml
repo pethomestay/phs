@@ -24,7 +24,6 @@
       - else
         .well.listing-form
           = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}
-          = render partial: 'providers/contact_sign_up_form', locals: {provider: @homestay}
     .clear
     = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
   .span5
