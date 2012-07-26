@@ -1,0 +1,16 @@
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
+  %body
+    %p= "#{@provider.first_name} has indicated they may be available to look after your pet."
+    %p You can now contact them to work out the details:
+    %p
+      = "Name: #{@provider.name}"
+      %br
+      = "Email address: #{@provider.email}"
+    - if @provider.phone_number.present?
+      = "Home phone: #{@provider.phone_number}"
+      %br
+    - if @provider.mobile_number.present?
+      = "Mobile phone: #{@provider.mobile_number}"
+      %br

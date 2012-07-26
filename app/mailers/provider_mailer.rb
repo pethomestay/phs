@@ -9,12 +9,4 @@ class ProviderMailer < ActionMailer::Base
     email_with_name = "#{provider_user.first_name} #{provider_user.last_name} <#{provider_user.email}>"
     mail(to: email_with_name, subject: "You've recieved an enquiry")
   end
-
-  def contact_details_email(enquiry)
-    @enquiry = enquiry
-    @user = @enquiry.user
-    provider_user = enquiry.homestay.user
-    email_with_name = "#{provider_user.first_name} #{provider_user.last_name} <#{provider_user.email}>"
-    mail(to: email_with_name, subject: "Contact details for #{@user.first_name}")
-  end
 end
