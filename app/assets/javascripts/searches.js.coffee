@@ -1,3 +1,10 @@
+window.scrollToListing = (id) ->
+  $('.listing').removeClass 'highlight'
+  $element = $("[data-listing='#{id}']")
+  if $element.length > 0
+    $(window).scrollTop($element.offset().top)
+    $element.addClass 'highlight'
+
 $ ->
   if $('#search_location').length > 0
     if $('#search_location').attr('value') == ''

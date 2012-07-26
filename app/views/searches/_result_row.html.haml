@@ -1,4 +1,4 @@
-%tr.listing
+%tr.listing{'data-listing' => homestay.id}
   %td.image-cell
     - if homestay.pictures.present?
       = link_to image_tag(homestay.pictures.first.file.thumb('380x').url), homestay
@@ -9,7 +9,7 @@
         - rating_stars homestay.average_rating
       - else
         (Not yet rated)
-  %td
+  %td.main-info
     %table
       %tr
         %td

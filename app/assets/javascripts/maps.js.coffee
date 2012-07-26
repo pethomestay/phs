@@ -43,7 +43,7 @@ window.setupDraggableMarker = (lat, long, title = "Your place") ->
   $('#hotel_latitude').val(lat)
   $('#hotel_longitude').val(long)
 
-window.setupMarker = (lat, long, title = "Your place") ->
+window.setupMarker = (lat, long, title = "Homestay", click = undefined) ->
   map.addMarker
     lat: lat
     lng: long
@@ -51,3 +51,4 @@ window.setupMarker = (lat, long, title = "Your place") ->
     icon: markerImage()
     shadow: markerShadow()
     shape: markerShape()
+    click: click

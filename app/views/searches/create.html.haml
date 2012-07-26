@@ -4,8 +4,21 @@
     - if @homestays
       %table.table.table-bordered.table-striped
         %tbody
+          %tr
+            %td#map{colspan: 2}
           - @homestays.each do |homestay|
             = render partial: 'result_row', locals: {homestay: homestay}
       = will_paginate @homestays, class: 'pagination pagination-centered'
+      %script{type: "application/javascript", src: "/assets/gmaps.js"}
+      :javascript
+        initMap(#{@search.latitude}, #{@search.longitude}, {
+          zoom: 12,
+          mapTypeControl: false,
+          streetViewControl: false,
+          zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
+        }})
+      - @homestays.each do |homestay|
+        :javascript
+          setupMarker(#{homestay.latitude.round(3)}, #{homestay.longitude.round(3)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})
     - else
       = render partial: 'no_results'
