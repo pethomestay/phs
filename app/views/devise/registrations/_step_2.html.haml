@@ -34,6 +34,7 @@
         .pets{class: pets_class, 'data-count' => resource.pets.length}
           = link_to_function "Add another pet", "addPet()", class: 'btn add-pet'
         - resource.pets.each_with_index do |pet, i|
+          - errors = pet.errors.messages.inject({}) {|hash, (k,v)| hash["#{k}Error"] = v; hash}.to_json
           - if pet.pictures[0] && pet.pictures[0].file
             :javascript
               current_image = "#{pet.pictures[0].file.thumb('100x100').url}";
@@ -43,7 +44,7 @@
               current_image = false;
               retained_file = '';
           :javascript
-            petParams = {
+            petParams = $.extend({
               index: #{i},
               number: #{i + 1},
               name: "#{pet.name}",
@@ -57,7 +58,7 @@
               dislike_people: #{pet.dislike_people || false},
               retained_file: retained_file,
               current_image: current_image
-            }
+            }, #{errors})
 
             if("#{pet.pet_type}" == "dog") petParams.isDog = true;
             if("#{pet.pet_type}" == "cat") petParams.isCat = true;

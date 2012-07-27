@@ -18,7 +18,7 @@
   </div>
 
   <div class='specific other'>
-    <div class="control-group" id="user_pets_attributes_{{index}}_other_pet_type_control_group">
+    <div class="control-group {{#if other_pet_typeError}}error{{/if}}" id="user_pets_attributes_{{index}}_other_pet_type_control_group">
       <label class="control-label" for="user_pets_attributes_{{index}}_other_pet_type">Other pet type</label>
       <div class="controls">
         <span class="input">
@@ -28,7 +28,7 @@
   </div>
 
   <div class='name'>
-    <div class="control-group" id="user_pets_attributes_{{index}}_name_control_group">
+    <div class="control-group {{#if nameError}}error{{/if}}" id="user_pets_attributes_{{index}}_name_control_group">
       <label class="control-label" for="user_pets_attributes_{{index}}_name">Pet's name</label>
       <div class="controls">
         <span class="input">
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="control-group" id="user_pets_attributes_{{index}}_age_control_group">
+  <div class="control-group {{#if ageError}}error{{/if}}" id="user_pets_attributes_{{index}}_age_control_group">
     <label class="control-label" for="user_pets_attributes_{{index}}_age">Age (years)</label>
     <div class="controls">
       <span class="input">
