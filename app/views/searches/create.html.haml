@@ -1,7 +1,7 @@
 .row
   = render partial: 'search_box'
   .span8.offset4.results
-    - if @homestays
+    - if @homestays.present?
       %table.table.table-bordered.table-striped
         %tbody
           %tr
