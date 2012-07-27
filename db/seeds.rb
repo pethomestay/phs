@@ -22,6 +22,7 @@ if Rails.env.development? || Rails.env.staging?
       address_suburb:   "Te Aro",
       address_city:     "Wellington",
       address_country:  "New Zealand",
+      is_homestay:      true,
       cost_per_night:   15,
       active:           true,
       description:      <<-eos
