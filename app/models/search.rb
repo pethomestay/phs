@@ -15,15 +15,30 @@ class Search
   def persisted?; false end
 
   def is_homestay
-    @is_homestay ||= true
+    @is_homestay = true if @is_homestay.nil?
+    @is_homestay
+  end
+
+  def is_homestay=(val)
+    @is_homestay = val == '1' ? true : false
   end
 
   def is_sitter
-    @is_sitter ||= true
+    @is_sitter = true if @is_sitter.nil?
+    @is_sitter
+  end
+
+  def is_sitter=(val)
+    @is_sitter = val == '1' ? true : false
   end
 
   def is_services
-    @is_services ||= false
+    @is_services = true if @is_services.nil?
+    @is_services
+  end
+
+  def is_services=(val)
+    @is_services = val == '1' ? true : false
   end
 
   def sitter?
