@@ -33,7 +33,7 @@ class Search
   end
 
   def is_services
-    @is_services = true if @is_services.nil?
+    @is_services = false if @is_services.nil?
     @is_services
   end
 
