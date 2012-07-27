@@ -11,10 +11,9 @@ class Homestay < ActiveRecord::Base
                   :is_homestay, :is_sitter, :is_services, :years_looking_after_pets, \
                   :constant_supervision, :emergency_transport, :first_aid, \
                   :insurance, :professional_qualification, :pictures_attributes, \
-                  :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night
-  attr_accessor :unfinished_signup, :constant_supervision, :emergency_transport, :first_aid, \
-                :insurance, :professional_qualification, :years_looking_after_pets, \
-                :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night
+                  :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
+                  :pets_present
+  attr_accessor :unfinished_signup, :accept_house_rules, :accept_terms
 
   validates_presence_of :cost_per_night
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country

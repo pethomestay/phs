@@ -102,15 +102,24 @@
               = controls.check_box :insurance, 'Professional pet-insurance'
               = controls.check_box :professional_qualification, 'A professional qualification'
             = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
-            .specific.homestay
-              %h3{style: "margin-bottom: 10px;"}Homestay details
-              .control-group
+            .specific.homestay.sitter
+              %h3 Pet care nightly rates
+              - error_class = resource.homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
+              .control-group{class: error_class}
                 = label_tag :cost_per_night, "Cost per night", class: 'control-label'
                 .controls
                   .input-prepend.input-append
                     .add-on $
                     %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
                     .add-on .00
+            .specific.homestay
+              %h3 Own pets?
+              %p If you own pets of your own please enter them on the left side of this page.
+              .control-group
+                %label.inline-checkbox
+                  %input{type: 'hidden', name: 'user[homestay_attributes][pets_present]', value: '0'}
+                  %input{type: 'checkbox', name: 'user[homestay_attributes][pets_present]', value: '1'}
+                  My pets will be present at this address during PetHomeStay bookings.
               %h3{style: "margin-bottom: 10px;"}
                 Confirm your PetHomeStay address
               = f.text_field :address_1, 'Street address', value: params[:user][:address_1]
@@ -122,13 +131,7 @@
               = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country]]}
             .specific.sitter
               %h3{style: "margin-bottom: 10px;"} Pet-sitting details
-              .control-group
-                = label_tag :cost_per_night, "Cost per night", class: 'control-label'
-                .controls
-                  .input-prepend.input-append
-                    .add-on $
-                    %input.span1#user_homestay_sitter_cost_per_night{name: 'user[homestay_attributes][sitter_cost_per_night]'}
-                    .add-on .00
+              %p TODO: Fields here
             %h3 Photo
             - if resource.homestay.pictures[0] && resource.homestay.pictures[0].file
               .control-group
@@ -145,17 +148,21 @@
                 %span.help-inline You can add more photos later
               = f.hidden_field :retained_file
             .specific.homestay.sitter
+              - error_class = resource.homestay.errors.messages.has_key?(:accept_house_rules) ? 'error' : ''
+              .control-group{class: error_class}
+                %label.inline-checkbox
+                  %input{type: 'hidden', name: 'user[homestay_attributes][accept_house_rules]', value: '0'}
+                  = check_box_tag 'user[homestay_attributes][accept_house_rules]', '1', resource.homestay.accept_house_rules == '1'
+                  I have read and agree to our
+                  = link_to 'House Rules', house_rules_path, target: '_new'
+                  for the benefit of the community
+            - error_class = resource.homestay.errors.messages.has_key?(:accept_terms) ? 'error' : ''
+            .control-group{class: error_class}
               %label.inline-checkbox
-                %input{type: 'hidden', name: 'user[homestay_attributes][accept_house_rules]', value: '0'}
-                %input{type: 'checkbox', name: 'user[homestay_attributes][accept_house_rules]', value: '1'}
-                I have read and agree to our
-                = link_to 'House Rules', house_rules_path, target: '_new'
-                for the benefit of the community
-            %label.inline-checkbox
-              %input{type: 'hidden', name: 'user[homestay_attributes][accept_terms]', value: '0'}
-              %input{type: 'checkbox', name: 'user[homestay_attributes][accept_terms]', value: '1'}
-              I have read and agree to the PetHomeStay
-              = link_to 'terms and conditions', terms_and_conditions_path, target: '_new'
+                %input{type: 'hidden', name: 'user[homestay_attributes][accept_terms]', value: '0'}
+                = check_box_tag 'user[homestay_attributes][accept_terms]', '1', resource.homestay.accept_terms == '1'
+                I have read and agree to the PetHomeStay
+                = link_to 'terms and conditions', terms_and_conditions_path, target: '_new'
       .clearfix
     = f.actions do
       = f.submit 'Create my account'
