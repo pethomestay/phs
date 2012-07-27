@@ -6,7 +6,6 @@ class SearchesController < ApplicationController
       params[:search][:location] = params[:search][:location].titleize
       @search = Search.new params[:search]
       if @search.valid?
-        redirect_to root_path unless @search.provider_types.present?
         @title = "Pet care for #{@search.location}"
         perform_search
       else
