@@ -1,13 +1,13 @@
 .row.footer-boxes
   - if !current_user
     .span4
-      %h2 What is PetHomeStay?
+      %h2 The PetHomeStay Way
       %p
-        PetHomeStay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
+        PetHomeStay is an Australian & New Zealand community, that allows pet owners to easily find local friendly homestays or sitters for their pet. 
         %br
         %br
-        We match people who love looking after pets with people who need their pets looking after!
-      = link_to "Who we are", what_is_path, class: 'btn'
+        Simply register your pet, and search for friendly local people near you. It’s fun, easy & totally free to use.
+      = link_to "Discover more", what_is_path, class: 'btn'
     .span4
       %h2 How does it work?
       %p PetHomeStay is a free service that allows pet owners to find amazing local pet helpers & services in Australia and New Zealand. Simply register a profile of your pet, select the right pet service provider for their needs, and give feedback based on your experience.
@@ -17,10 +17,14 @@
       %p If you just love looking after animals then you can be a PetHomeStay service provider. From professional dog kennels and daycare, to casual walkers or overnight stays at your place, you can earn money doing what you love!
       = link_to 'Get started today', new_user_registration_path, class: "btn btn-primary"
   - else
-    .span4.short
-      %h2 What is PetHomeStay?
-      %p PetHomeStay is the first Australian and New Zealand community that allows pet owners to find local friendly homestays for their pet!
-      = link_to "Who we are", what_is_path, class: 'btn'
+    .span4
+      %h2 The PetHomeStay Way
+      %p
+        PetHomeStay is an Australian & New Zealand community, that allows pet owners to easily find local friendly homestays or sitters for their pet. 
+        %br
+        %br
+        Simply register your pet, and search for friendly local people near you. It’s fun, easy & totally free to use.
+      = link_to "Discover more", what_is_path, class: 'btn'
     .span4.short
       %h2 PetHomeStay News
       %p Check out all the latest goings on, pet tips, and exclusive PetHomeStay offers on our blog!
