@@ -1,7 +1,7 @@
 .page-header
   %h1
     Sign up
-    %small create an account to access all our cool features
+    %small now tell us about your pets or your PetHomeStay! (step 2 of 2)
 - html = {class: 'form-horizontal', multipart: true}
 - url = registration_path(resource_name)
 = twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
@@ -23,8 +23,10 @@
   = f.fieldset do
     .row
       .span6.pet-half
-        %h3 Want to use one of our great PetHomeStays?
-        %p These details get sent to the PetHomeStay host when you request a booking so they can decide whether or not to accept your pet. Please fill out as much detail as you can.
+        %h3 My Pet Profiles
+        %p In order to book a PetHomeStay, or another service, you need to tell the provider about your pet.
+        %p These details except emergency / medical information, council number and microchip number will be sent to the provider in order for them to make a decision on whether or not to acept your request.
+        %p As per our House Rules, please be honest and include as much information about your pet as possible.
         - unless resource.pets.present?
           - resource.pets.build
           - pets_class = 'unactivated'
@@ -83,8 +85,9 @@
         - resource.build_homestay
         - homestay_class = 'unactivated'
       .span6.divider
-        %h3 Love pets and want to make some extra money?
-        %p Would you like to help your community with their pets? Maybe make some extra money? Get to know more people in your area? Fill out the form below to get listed on PetHomeStay!
+        %h3 My PetHomeStay Listing
+        %p Would you like to: Help your community? Maybe make some extra money? Get to know other friendly local pet owners like you?
+        %p Complete the form below to get listed on PetHomeStay!
         .span6.homestay-form{class: homestay_class}
           = f.fields_for :homestay do |f|
             = f.label "I would like to make a listing for a (check all that apply)" do |controls|
@@ -92,15 +95,32 @@
               = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
               = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
             = f.text_field :title, 'Catchy listing title'
+            %h3 Information for Pet Owners
+            %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
+            %p Items to include could be:
+            %ul
+              %li Your style of pet care
+              %li Are you active? 2 walks per day, lots of fun and attention?
+              %li Are you quiet? Evenings in front of the fire?
+              %li Your history with pets.
+              %li Do you provide bedding, toys, treats?
+              %li Do you provide a pick up or drop off? Are you specific about certain times?
             = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span4', rows: 8
             = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
+            %h3 Tell us about your PetHomeStay
+            = f.label "Professional?" do |controls|
+              = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
             = f.label "I can provide" do |controls|
               = controls.check_box :constant_supervision, '24/7 supervision'
+              = controls.check_box :supervision_outside_work_hours, 'Supervision outside of work hours (6pm - 8am)'
               = controls.check_box :emergency_transport, 'Emergency transport'
             = f.label "I have" do |controls|
               = controls.check_box :first_aid, 'Pet first-aid training'
               = controls.check_box :insurance, 'Professional pet-insurance'
-              = controls.check_box :professional_qualification, 'A professional qualification'
+              .specific.homestay
+                = controls.check_box :fenced, 'A fully fenced back yard'
+              = controls.check_box :police_check, 'A current police check certificate'
+              = controls.check_box :professional_qualification, 'A professional pet qualification'
             = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
             .specific.homestay.sitter
               %h3 Pet care nightly rates
