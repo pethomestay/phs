@@ -13,8 +13,12 @@
         = f.email_field :email, 'Email address'
         = f.text_field :mobile_number
         = f.text_field :phone_number, 'Home phone number'
-        = f.password_field :password
-        = f.password_field :password_confirmation, 'Confirm your password'
+        - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation]
+          = f.password_field :password
+          = f.password_field :password_confirmation, 'Confirm your password'
+        - else
+          %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
+          %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
       .span4 Your email address, surname and contact details will not be publically viewable on PetHomeStay. Details are ONLY exchanged via email after a pet owner has confirmed a booking.
     %h3{style: "margin-bottom: 10px;"}
       We'd love to get to know you!
