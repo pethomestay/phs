@@ -21,9 +21,9 @@ gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstr
 gem 'carmen-rails'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'therubyracer', '0.11.0beta5'
+  gem 'libv8', '~> 3.11.8'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'therubyracer'
   gem 'less-rails'
   gem 'uglifier', '>= 1.0.3'
 end
