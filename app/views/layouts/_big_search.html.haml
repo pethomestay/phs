@@ -1,7 +1,6 @@
 .big-search
   .container
     .search-container
-      %h2 Taking a trip?
       %h2 Looking for pet care?
       %h3 Find trusted local people who love looking after pets!
       %h4 I’m looking for help with my pet in....
@@ -12,3 +11,4 @@
           = f.text_field :location, class: 'search-query input-xlarge'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
         .clear
+    .beta= link_to 'Now in beta', 'http://pethomestay.wordpress.com/2012/07/24/whats-all-this-beta-stuff-then-2/'

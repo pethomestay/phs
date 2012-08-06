@@ -17,6 +17,7 @@
 @orange:  #EA6E28;
 
 .navbar {
+  border-top: 3px solid @orange;
   .navbar-inner {
     min-height: 42px;
     .nav li a {
@@ -24,9 +25,17 @@
     }
   }
   .brand {
-    background: url('header-logo.png') 22px 0 no-repeat;
-    width: 135px;
+    background: url('header-logo.png') 22px 8px no-repeat;
+    width: 190px;
     text-indent: -9999px;
+    &.large {
+      background: url('header-logo-large.png') 22px 8px no-repeat;
+      height: 183px;
+      margin-bottom: -160px;
+      background: url('header-logo-large.png') 7px 0px no-repeat;
+      height: 183px;
+      margin-top: -5px;
+    }
   }
 }
 

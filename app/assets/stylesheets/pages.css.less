@@ -3,34 +3,49 @@
 .big-search {
   background: url('subtle.png');
   margin-top:40px;
-  height:380px;
-  margin-bottom: 60px;
+  height:351px;
+  margin-bottom: -40px;
   .container {
     background:url('hero.png');
-    height:417px;
+    height:351px;
   }
   .search-container {
+    position: relative;
+    z-index: 15;
     margin: 0 auto;
     width:500px;
     color: #fff;
-    margin-top:165px;
+    margin-top:70px;
     margin-left:420px;
     h2 {
       font-size: 36px;
-      margin-bottom: 6px;
+      margin-bottom: -6px;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
     }
     h3 {
-      margin-top: 20px;
-      font-style: italic;
+      margin-top: 10px;
       font-weight: normal;
-      margin-bottom: 39px;
+      margin-bottom: 67px;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
     }
     h4 {
       position: absolute;
       margin-top: -24px;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+    }
+  }
+  .beta {
+    z-index: 5;
+    background: url('beta.png');
+    width: 122px;
+    height: 123px;
+    position: absolute;
+    margin-top: -42px;
+    margin-left: 823px;
+    a {
+      width:100%;
+      height: 100%;
+      display:block;
     }
   }
   input {
