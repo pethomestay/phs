@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def pet_names
+    pets.map(&:name).to_sentence
+  end
+
   def has_unanswered_enquiries?
     homestay.present? && homestay.enquiries.unanswered.present?
   end

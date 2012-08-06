@@ -2,8 +2,32 @@
   %head
     %meta{content: "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
   %body
-    %p= "You have a new enquiry from #{@user.first_name} with #{@user.pet_summary}"
+    %h1 You have a new PetHomeStay enquiry!
+    %p= "Hello #{@provider.first_name}!"
+    %p= "#{@user.first_name} needs help with their #{'pet'.pluralize(@pets.length)}: #{@user.pet_names}. Are you available on #{@enquiry.date.to_formatted_s(:day_and_month)}?"
+    %p= link_to "Please view the details and indicate your availability on PetHomeStay", enquiry_url(@enquiry)
     - if @enquiry.message.present?
-      %p= "#{@user.first_name} has attached the following message:"
+      %p= "#{@user.first_name} has also included the following message:"
       %p= @enquiry.message
-    %p= link_to "View the details and respond to this enquiry now", enquiry_url(@enquiry)
+    %p You are not committing yourself at this stage, just the suitability of the dates and the pet in principle. You can accept as many enquiries as you like at a time.
+    %p If you indicate you can help, your email and contact phone number will be sent to the pet owner for them to follow up with you to discuss any further details they need.
+    %p If not, the pet owner will receive an email saying you are unavailable on the dates indicated. Your contact information will not be sent out in this case.
+    %h1 What happens next?
+    %h3 The pet owner will review their requests
+    %ul
+      %li Based on the indicated availability, they may also contact pet service providers to understand any further info they need.
+      %li  Be prepared to invite people round to see your PetHomeStay
+      %li Be upfront and honest about the type of help you can provide
+      %li Ensure both you and the pet owner have read and understand our House Rules
+
+    %h3 Pet owners will then confirm with one provider via PetHomeStay
+    %ul
+      %li If your listing is confirmed, their pet profile will be sent to you, including all the emergency and contact information you need.
+      %li Enjoy your time with someone’s pet!
+
+    %h3 Feedback after the experience to help the PetHomeStay community!
+
+    %p
+      Thanks!
+      %br
+      The PetHomeStay Team
