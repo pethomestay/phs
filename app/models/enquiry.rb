@@ -1,4 +1,18 @@
 class Enquiry < ActiveRecord::Base
+  DURATION_OPTIONS = {
+    'morning'           => "Morning",
+    'afternoon'         => "Afternoon",
+    'evening'           => "Evening",
+    'overnight'         => "Overnight",
+    '2nights'           => "2 nights",
+    '3nights'           => "3 nights",
+    '4nights'           => "4 nights",
+    '5nights'           => "5 nights",
+    '6nights'           => "6 nights",
+    '7nights'           => "7 nights",
+    'longerthan7nights' => "Longer"
+  }
+
   has_and_belongs_to_many :pets
   belongs_to              :user
   belongs_to              :homestay
@@ -7,25 +21,13 @@ class Enquiry < ActiveRecord::Base
 
   scope :unanswered, where(responded: false)
 
-  validates_inclusion_of :duration, :in => %w( morning afternoon evening overnight 2days 3days 4days 5days 6days 7days longerthan7days )
+  validates_inclusion_of :duration, :in => DURATION_OPTIONS.map(&:first)
 
   def formatted_date
     date.to_formatted_s
   end
 
   def pretty_duration
-    case duration
-      when 'morning' then 'Morning'
-      when 'afternoon' then 'Afternoon'
-      when 'evening' then 'Evening'
-      when 'overnight' then 'Overnight'
-      when '2days' then '2 days'
-      when '3days' then '3 days'
-      when '4days' then '4 days'
-      when '5days' then '5 days'
-      when '6days' then '6 days'
-      when '7days' then '7 days'
-      when 'longerthan7days' then 'Longer than 7 days'
-    end
+    DURATION_OPTIONS[duration] || 'Unspecified'
   end
 end

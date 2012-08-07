@@ -16,7 +16,7 @@
               .enquire-datepicker
             %td
               = f.label :duration, "Arrange for"
-              - options = options_for_select([["Morning", 'morning'], ["Afternoon", 'afternoon'], ["Evening", 'evening'], ["Overnight", 'overnight'], ["2 Days", '2days'], ["3 Days", '3days'], ["4 Days", '4days'], ["5 Days", '5days'], ["6 Days", '6days'], ["7 Days", '7days'], ["Longer", 'longerthan7days']])
+              - options = options_for_select(Enquiry::DURATION_OPTIONS.to_a.map(&:reverse))
               = f.select :duration, options
           %tr
             %td{colspan: 2}
