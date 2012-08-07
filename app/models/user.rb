@@ -60,6 +60,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def pet_name
+    if pets.length == 1
+      pets.first.name
+    else
+      "your pets"
+    end
+  end
+
   def pet_count_by_type
     pets_by_type.inject({}) do |hash, (k,v)|
       hash[k] = v.length
