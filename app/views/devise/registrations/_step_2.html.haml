@@ -96,6 +96,11 @@
             = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span4', rows: 8
             = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
             %h3 Tell us about your PetHomeStay
+            .specific.homestay
+              - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse))
+              = f.select :property_type, 'Property type', options
+              - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse))
+              = f.select :outdoor_area, 'Size of outdoor area', options
             = f.label "Professional?" do |controls|
               = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
             = f.label "I can provide" do |controls|

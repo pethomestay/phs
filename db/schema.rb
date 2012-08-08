@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807225524) do
+ActiveRecord::Schema.define(:version => 20120808002305) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20120807225524) do
     t.boolean  "supervision_outside_work_hours",    :default => false
     t.boolean  "police_check",                      :default => false
     t.boolean  "children_present",                  :default => false
+    t.string   "outdoor_area"
+    t.string   "property_type"
   end
 
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"

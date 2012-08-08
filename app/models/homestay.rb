@@ -1,4 +1,18 @@
 class Homestay < ActiveRecord::Base
+  PROPERTY_TYPE_OPTIONS = {
+    'house'     => 'House',
+    'apartment' => 'Apartment',
+    'farm'      => 'Farm',
+    'townhouse' => 'Townhouse',
+    'unit'      => 'Unit'
+  }
+
+  OUTDOOR_AREA_OPTIONS = {
+    'small'     => 'Small (up to 10sq m)',
+    'medium'    => 'Medium (up to 50sq m)',
+    'large'     => 'Small (50sq m+)'
+  }
+
   has_many :enquiries
   has_many :ratings, as: 'ratable'
   has_many :pictures, as: 'picturable'
@@ -12,7 +26,8 @@ class Homestay < ActiveRecord::Base
                   :constant_supervision, :emergency_transport, :first_aid, \
                   :insurance, :professional_qualification, :pictures_attributes, \
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
-                  :pets_present
+                  :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
+                  :fenced, :children_present, :police_check
   attr_accessor :unfinished_signup, :accept_house_rules, :accept_terms
 
   validates_presence_of :cost_per_night
@@ -24,6 +39,9 @@ class Homestay < ActiveRecord::Base
   validates_acceptance_of :is_services, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
 
   validates_acceptance_of :accept_house_rules, on: :create, if: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
+
+  validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first), if: :is_homestay?
+  validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first), if: :is_homestay?
   
   scope :active, where(active: true)
 
