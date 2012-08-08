@@ -4,7 +4,7 @@
 .modal.hide.fade#enquire
   .modal-header
     %button.close{type: "button", 'data-dismiss' => "modal"} ×
-    %h3 Select date of stay
+    %h3 Select start date of stay
   = form_for @enquiry do |f|
     .modal-body
       %input{type: 'hidden', value: provider.id, name: 'enquiry[homestay_id]'}
