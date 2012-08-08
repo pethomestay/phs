@@ -17,4 +17,5 @@
 //= require jquery.geocomplete
 //= require twitter/bootstrap
 //= require handlebars
+//= require handlebars.comparison
 //= require_tree .

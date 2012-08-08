@@ -50,7 +50,11 @@
               index: #{i},
               number: #{i + 1},
               name: "#{pet.name}",
+              breed: "#{pet.breed}",
               age: "#{pet.age}",
+              pet_type: "#{pet.pet_type}",
+              size: "#{pet.size}",
+              sex: "#{pet.sex}",
               other_pet_type: "#{pet.other_pet_type}",
               microchip_number: "#{pet.microchip_number}",
               council_number: "#{pet.council_number}",
@@ -61,22 +65,6 @@
               retained_file: retained_file,
               current_image: current_image
             }, #{errors})
-
-            if("#{pet.pet_type}" == "dog") petParams.isDog = true;
-            if("#{pet.pet_type}" == "cat") petParams.isCat = true;
-            if("#{pet.pet_type}" == "fish") petParams.isFish = true;
-            if("#{pet.pet_type}" == "bird") petParams.isBird = true;
-            if("#{pet.pet_type}" == "other") petParams.isOther = true;
-
-            if("#{pet.size}" == "small") petParams.isSmall = true;
-            if("#{pet.size}" == "medium") petParams.isMedium = true;
-            if("#{pet.size}" == "large") petParams.isLarge = true;
-            if("#{pet.size}" == "giant") petParams.isGiant = true;
-
-            if("#{pet.sex}" == "male_desexed") petParams.isMaleDesexed = true;
-            if("#{pet.sex}" == "female_desexed") petParams.isFemaleDesexed = true;
-            if("#{pet.sex}" == "male_entire") petParams.isMaleEntire = true;
-            if("#{pet.sex}" == "female_entire") petParams.isFemaleEntire = true;
 
             pet = petTemplate(petParams);
 

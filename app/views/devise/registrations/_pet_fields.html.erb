@@ -6,13 +6,38 @@
       <div class="controls">
         <span class="input">
           <select id="user_pets_attributes_{{index}}_pet_type" name="user[pets_attributes][{{index}}][pet_type]">
-            <option value="dog" {{#if isDog}}selected="selected"{{/if}}>Dog</option>
-            <option value="cat" {{#if isCat}}selected="selected"{{/if}}>Cat</option>
-            <option value="bird" {{#if isBird}}selected="selected"{{/if}}>Bird</option>
-            <option value="fish" {{#if isFish}}selected="selected"{{/if}}>Fish</option>
-            <option value="other" {{#if isOther}}selected="selected"{{/if}}>Other</option>
+            <option value="dog" {{#compare pet_type "dog"}}selected="selected"{{/compare}}>Dog</option>
+            <option value="cat" {{#compare pet_type "cat"}}selected="selected"{{/compare}}>Cat</option>
+            <option value="bird" {{#compare pet_type "bird"}}selected="selected"{{/compare}}>Bird</option>
+            <option value="fish" {{#compare pet_type "fish"}}selected="selected"{{/compare}}>Fish</option>
+            <option value="other" {{#compare pet_type "other"}}selected="selected"{{/compare}}>Other</option>
           </select>
         </span>
+      </div>
+    </div>
+  </div>
+
+  <div class='specific dog breed'>
+    <div class="control-group" id="user_pets_attributes_{{index}}_breed_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_breed">Breed</label>
+      <div class="controls">
+        <span class="input">
+          <select id="user_pets_attributes_{{index}}_breed" name="user[pets_attributes][{{index}}][breed]">
+          <% DOG_BREEDS.each do |breed| %>
+            <option value="<%= breed %>" {{#compare breed "<%= breed %>"}}selected="selected"{{/compare}}><%= breed %></option>
+          <% end %>
+          </select>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class='specific cat bird fish other breed'>
+    <div class="control-group {{#if breedError}}error{{/if}}" id="user_pets_attributes_{{index}}_breed_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_breed">Breed</label>
+      <div class="controls">
+        <span class="input">
+          <input id="user_pets_attributes_{{index}}_breed" name="user[pets_attributes][{{index}}][breed]" size="30" type="text" value="{{breed}}" /></span>
       </div>
     </div>
   </div>
@@ -52,10 +77,10 @@
       <div class="controls">
         <span class="input">
           <select id="user_pets_attributes_{{index}}_size" name="user[pets_attributes][{{index}}][size]">
-            <option value="small" {{#if isSmall}}selected="selected"{{/if}}>Small (0-15kg)</option>
-            <option value="medium" {{#if isMedium}}selected="selected"{{/if}}>Medium (16-30kg)</option>
-            <option value="large" {{#if isLarge}}selected="selected"{{/if}}>Large (31-45kg)</option>
-            <option value="giant" {{#if isGiant}}selected="selected"{{/if}}>Giant (46kg+)</option>
+            <option value="small" {{#compare size "small"}}selected="selected"{{/compare}}>Small (0-15kg)</option>
+            <option value="medium" {{#compare size "medium"}}selected="selected"{{/compare}}>Medium (16-30kg)</option>
+            <option value="large" {{#compare size "large"}}selected="selected"{{/compare}}>Large (31-45kg)</option>
+            <option value="giant" {{#compare size "giant"}}selected="selected"{{/compare}}>Giant (46kg+)</option>
           </select>
         </span>
       </div>
@@ -68,10 +93,10 @@
       <div class="controls">
         <span class="input">
           <select id="user_pets_attributes_{{index}}_sex" name="user[pets_attributes][{{index}}][sex]">
-            <option value="male_desexed" {{#if isMaleDesexed}}selected="selected"{{/if}}>Male - desexed</option>
-            <option value="female_desexed" {{#if isFemaleDesexed}}selected="selected"{{/if}}>Female - desexed</option>
-            <option value="male_entire" {{#if isMaleEntire}}selected="selected"{{/if}}>Male - entire</option>
-            <option value="female_entire" {{#if isFemaleEntire}}selected="selected"{{/if}}>Female - entire</option>
+            <option value="male_desexed" {{#compare sex "male_desexed"}}selected="selected"{{/compare}}>Male - desexed</option>
+            <option value="female_desexed" {{#compare sex "female_desexed"}}selected="selected"{{/compare}}>Female - desexed</option>
+            <option value="male_entire" {{#compare sex "male_entire"}}selected="selected"{{/compare}}>Male - entire</option>
+            <option value="female_entire" {{#compare sex "female_entire"}}selected="selected"{{/compare}}>Female - entire</option>
           </select>
         </span>
       </div>
