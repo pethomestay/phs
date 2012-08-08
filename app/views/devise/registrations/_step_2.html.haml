@@ -143,9 +143,13 @@
               = f.text_field :address_suburb, 'Suburb', value: params[:user][:address_suburb]
               = f.text_field :address_city, 'City', value: params[:user][:address_city]
               = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country]]}
-            .specific.sitter
-              %h3{style: "margin-bottom: 10px;"} Pet-sitting details
-              %p TODO: Fields here
+            .specific.services
+              %h3{style: "margin-bottom: 10px;"} Services offered
+              = f.label "I can offer" do |controls|
+                = controls.check_box :pet_feeding, 'pet feeding'
+                = controls.check_box :pet_grooming, 'pet grooming'
+                = controls.check_box :pet_training, 'pet training'
+                = controls.check_box :pet_walking, 'pet walking'
             %h3 Photo
             - if resource.homestay.pictures[0] && resource.homestay.pictures[0].file
               .control-group

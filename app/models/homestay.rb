@@ -27,7 +27,8 @@ class Homestay < ActiveRecord::Base
                   :insurance, :professional_qualification, :pictures_attributes, \
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
                   :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
-                  :fenced, :children_present, :police_check
+                  :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
+                  :pet_training, :pet_walking
   attr_accessor :unfinished_signup, :accept_house_rules, :accept_terms
 
   validates_presence_of :cost_per_night
