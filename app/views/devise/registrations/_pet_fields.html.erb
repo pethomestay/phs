@@ -182,6 +182,59 @@
       </div>
     </div>
   </div>
+
+  <p>Note: medical information and emergency contact details will only be sent to providers with whom you have confirmed a booking.</p>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_medication_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_medication">Does your pet need any medication?</label>
+    <div class="controls">
+      <span class="input">
+        <textarea cols="40" id="user_pets_attributes_{{index}}_medication" name="user[pets_attributes][{{index}}][medication]" rows="4"></textarea>
+      </span>
+    </div>
+  </div>
+
+  <h4 style="margin-bottom:10px;">Vet details</h4>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_vet_name_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_vet_name">Vet name</label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_vet_name" name="user[pets_attributes][{{index}}][vet_name]" size="30" type="text" value="{{vet_name}}" />
+      </span>
+    </div>
+  </div>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_vet_phone_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_vet_phone">Vet phone</label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_vet_phone" name="user[pets_attributes][{{index}}][vet_phone]" size="30" type="text" value="{{vet_phone}}" />
+      </span>
+    </div>
+  </div>
+
+  <h4 style="margin-bottom:10px;">Emergency contact details</h4>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_emergency_contact_name_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_emergency_contact_name">Contact name</label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_emergency_contact_name" name="user[pets_attributes][{{index}}][emergency_contact_name]" size="30" type="text" value="{{emergency_contact_name}}" />
+      </span>
+    </div>
+  </div>
+
+  <div class="control-group" id="user_pets_attributes_{{index}}_emergency_contact_phone_control_group">
+    <label class="control-label" for="user_pets_attributes_{{index}}_emergency_contact_phone">Contact phone</label>
+    <div class="controls">
+      <span class="input">
+        <input id="user_pets_attributes_{{index}}_emergency_contact_phone" name="user[pets_attributes][{{index}}][emergency_contact_phone]" size="30" type="text" value="{{emergency_contact_phone}}" />
+      </span>
+    </div>
+  </div>
+
+  <h4 style="margin-bottom:10px;">Photo</h4>
   
   {{#if current_image}}
   <div class='control-group'>
