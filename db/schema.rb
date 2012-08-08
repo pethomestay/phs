@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808002305) do
+ActiveRecord::Schema.define(:version => 20120808004933) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -70,6 +70,10 @@ ActiveRecord::Schema.define(:version => 20120808002305) do
     t.boolean  "children_present",                  :default => false
     t.string   "outdoor_area"
     t.string   "property_type"
+    t.boolean  "pet_feeding",                       :default => false
+    t.boolean  "pet_grooming",                      :default => false
+    t.boolean  "pet_training",                      :default => false
+    t.boolean  "pet_walking",                       :default => false
   end
 
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
