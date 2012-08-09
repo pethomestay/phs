@@ -10,7 +10,7 @@ class Homestay < ActiveRecord::Base
   OUTDOOR_AREA_OPTIONS = {
     'small'     => 'Small (up to 10sq m)',
     'medium'    => 'Medium (up to 50sq m)',
-    'large'     => 'Small (50sq m+)'
+    'large'     => 'Large (50sq m+)'
   }
 
   has_many :enquiries
