@@ -17,9 +17,21 @@ class Enquiry < ActiveRecord::Base
   belongs_to              :user
   belongs_to              :homestay
   attr_accessible         :pets, :user, :homestay_id, :formatted_date, \
-                          :date, :duration, :message, :responded, :accepted
+                          :date, :duration, :message, :responded, :accepted, \
+                          :confirmed, :owner_accepted
 
   scope :unanswered, where(responded: false)
+  scope :need_confirmation, where(responded: true, accepted: true, confirmed:false)
+
+  scope :unanswered, lambda { |user|
+    if user && user.homestay
+      where('(homestay_id = ? AND responded = FALSE) OR (user_id = ? AND responded = TRUE AND accepted = TRUE AND confirmed = FALSE)', user.homestay.id, user.id)
+    elsif user
+      where('user_id = ? AND responded = TRUE AND accepted = TRUE AND confirmed = FALSE', user.id)
+    elsif user.homestay
+      where('homestay_id = ? AND responded = FALSE', user.homestay.id)
+    end
+  }
 
   validates_inclusion_of :duration, :in => DURATION_OPTIONS.map(&:first)
 

@@ -41,15 +41,15 @@ class User < ActiveRecord::Base
   end
 
   def has_unanswered_enquiries?
-    homestay.present? && homestay.enquiries.unanswered.present?
-  end
-
-  def enquiries
-    homestay.present? ? homestay.enquiries : []
+    unanswered_enquiries.present?
   end
 
   def unanswered_enquiries
-    homestay.present? ? homestay.enquiries.unanswered : []
+    Enquiry.unanswered(self)
+  end
+
+  def homestay_id
+    homestay.present? ? homestay.id : nil
   end
 
   def pets_by_type

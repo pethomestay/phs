@@ -22,8 +22,12 @@
     %h2.page-header Notifications
     - if @user.unanswered_enquiries.present?
       - @user.unanswered_enquiries.each do |enquiry|
-        %p.pull-left= link_to "Enquiry: #{enquiry.user.first_name}", enquiry
-        %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        - if enquiry.user == current_user
+          %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        - elsif enquiry.homestay.user == current_user
+          %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
         .clear
         %hr
     - else
