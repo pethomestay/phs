@@ -80,7 +80,7 @@
           = f.fields_for :homestay do |f|
             = f.label "I would like to make a listing for a (check all that apply)" do |controls|
               = controls.check_box :is_homestay, 'PetHomeStay – you accept other peoples pets for day or overnight homestays at your personal house'
-              = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
+              / = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
               = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
             = f.text_field :title, 'Catchy listing title'
             %h3 Information for Pet Owners
