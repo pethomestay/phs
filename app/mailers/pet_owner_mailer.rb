@@ -1,4 +1,5 @@
 class PetOwnerMailer < ActionMailer::Base
+  layout 'mailer'
   default from: "Pet Homestay <admin@pethomestay.com>"
 
   def contact_details(enquiry)
@@ -10,7 +11,7 @@ class PetOwnerMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "Contact details for #{@provider.first_name}")
   end
 
-  def provider_unavailable
+  def provider_unavailable(enquiry)
     @enquiry = enquiry
     @owner = @enquiry.user
     @homestay = @enquiry.homestay
@@ -19,7 +20,7 @@ class PetOwnerMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
   end
 
-  def enquiry_reciept
+  def enquiry_reciept(enquiry)
     @enquiry = enquiry
     @owner = @enquiry.user
     @homestay = @enquiry.homestay

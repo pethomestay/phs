@@ -1,4 +1,5 @@
 class ProviderMailer < ActionMailer::Base
+  layout 'mailer'
   default from: "Pet Homestay <admin@pethomestay.com>"
 
   def enquiry(enquiry)

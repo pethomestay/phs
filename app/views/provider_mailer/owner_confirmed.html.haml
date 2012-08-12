@@ -1,16 +1,18 @@
-Fantastic! (pet owners first name) has confirmed their enquiry and are happy with you looking after (pet first name) on (date)!
+%p.article-title= "Fantastic! #{@user.first_name} has confirmed their enquiry"
+%p.article-content= "#{@user.first_name} has confirmed their enquiry and are happy with you looking after #{@user.pet_names} on #{@enquiry.date.to_formatted_s(:day_and_month)}!"
 
-All of the information we have is on the pet profile below. You should review this in full when the owner hand over their pet with you.
+%p.article-content All of the information we have is on the pet profile below. You should review this in full when the owner hand over their pet with you.
 
-Don’t forget the following points:-
-Follow the House Rules
-Confirm pick up times / dates?
-Money for looking after pet?
-Confirm medical & emergency contact info?
-Is there anything else on the pet profile you need to know?
+%p.article-content Don’t forget the following points:
+%ul
+  %li.article-content Follow the House Rules
+  %li.article-content Confirm pick up times / dates?
+  %li.article-content Money for looking after pet?
+  %li.article-content Confirm medical & emergency contact info?
+  %li.article-content Is there anything else on the pet profile you need to know?
 
-Pet Profile Information
+%p.article-title Pet Profile Information
+%p.article-content TODO: Put full pet profile here
 
-
-Thanks for helping out with PetHomeStay!
-The PetHomeStay Team
+%p.article-contentThanks for helping out with PetHomeStay!
+%p.article-contentThe PetHomeStay Team
