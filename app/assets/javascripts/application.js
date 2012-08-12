@@ -18,4 +18,5 @@
 //= require twitter/bootstrap
 //= require handlebars
 //= require handlebars.comparison
+//= require chosen-jquery
 //= require_tree .

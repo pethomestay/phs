@@ -7,6 +7,8 @@ $ ->
       $fields.find(".specific.#{pet_type}").show().find('input, select').removeAttr('disabled')
   .change()
 
+  $(".breed.dog select").chosen()
+
   $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"]').change ->
     $('.homestay-form .specific').hide()
     $(".specific.homestay").show() if $('[name="user[homestay_attributes][is_homestay]"]:checked').length > 0

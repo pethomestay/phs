@@ -22,3 +22,6 @@
 
 # Ignore dragonfly images
 public/system/dragonfly
+
+# Ignore sass cache
+*.sassc
