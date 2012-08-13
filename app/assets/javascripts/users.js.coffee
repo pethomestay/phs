@@ -35,4 +35,4 @@ $ ->
     $('.add-pet').before(pet)
     $('.pet-type select').change()
 
-  $('form').nestedFields();
+  $('form').nestedFields(containerSelector: '.homestay-pictures tbody');

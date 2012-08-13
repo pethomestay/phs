@@ -72,15 +72,20 @@
       = controls.check_box :pet_training, 'pet training'
       = controls.check_box :pet_walking, 'pet walking'
   %h3 Photo
-  .items
-    = f.nested_fields_for :pictures do |f|
-      .item
-        - if f.object.retained_file.present?
-          .control-group
-            %label.control-label Current image
-            .controls
-              = image_tag(f.object.file.thumb('100x100').url)
-        - label = f.object.retained_file.present? ? 'Replace image' : 'Upload image'
-        = f.file_field :file, label
-        = f.hidden_field :retained_file
-    = link_to 'Add new image', '#', class: 'add'
+  %table.table.homestay-pictures
+    %tbody
+      = f.nested_fields_for :pictures do |f|
+        %tr.item
+          %td
+            - if f.object.retained_file.present?
+              = image_tag(f.object.file.thumb('200x200').url)
+              = f.hidden_field :retained_file
+            - else
+              = f.file_field :file, 'Upload picture'
+          %td
+            = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
+            = f.hidden_field :id
+            = f.hidden_field :_destroy
+    %table.table#remove.new-picture
+      %tr
+        %td= link_to '+ Add new picture', '#', class: 'add'
