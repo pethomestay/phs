@@ -1,0 +1,86 @@
+.homestay-form
+  = f.label "I would like to make a listing for a (check all that apply)" do |controls|
+    = controls.check_box :is_homestay, 'PetHomeStay – you accept other peoples pets for day or overnight homestays at your personal house'
+    / = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
+    = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
+  = f.text_field :title, 'Catchy listing title'
+  %h3 Information for Pet Owners
+  %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
+  %p Items to include could be:
+  %ul
+    %li Your style of pet care
+    %li Are you active? 2 walks per day, lots of fun and attention?
+    %li Are you quiet? Evenings in front of the fire?
+    %li Your history with pets.
+    %li Do you provide bedding, toys, treats?
+    %li Do you provide a pick up or drop off? Are you specific about certain times?
+  = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span8', rows: 12
+  = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
+  %h3 Tell us about your PetHomeStay
+  .specific.homestay
+    - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse))
+    = f.select :property_type, 'Property type', options
+    - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse))
+    = f.select :outdoor_area, 'Size of outdoor area', options
+  = f.label "Professional?" do |controls|
+    = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
+  = f.label "I can provide" do |controls|
+    = controls.check_box :constant_supervision, '24/7 supervision'
+    = controls.check_box :supervision_outside_work_hours, 'Supervision outside of work hours (6pm - 8am)'
+    = controls.check_box :emergency_transport, 'Emergency transport'
+  = f.label "I have" do |controls|
+    = controls.check_box :first_aid, 'Pet first-aid training'
+    = controls.check_box :insurance, 'Professional pet-insurance'
+    .specific.homestay
+      = controls.check_box :fenced, 'A fully fenced back yard'
+      = controls.check_box :children_present, 'Children under 18 at the address?'
+    = controls.check_box :police_check, 'A current police check certificate'
+    = controls.check_box :professional_qualification, 'A professional pet qualification'
+  = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
+  .specific.homestay.sitter
+    %h3 Pet care nightly rates
+    - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
+    .control-group{class: error_class}
+      = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+      .controls
+        .input-prepend.input-append
+          .add-on $
+          %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+          .add-on .00
+  .specific.homestay
+    %h3 Own pets?
+    %p If you own pets of your own please enter them on the left side of this page.
+    .control-group
+      %label.inline-checkbox
+        %input{type: 'hidden', name: 'user[homestay_attributes][pets_present]', value: '0'}
+        %input{type: 'checkbox', name: 'user[homestay_attributes][pets_present]', value: '1'}
+        My pets will be present at this address during PetHomeStay bookings.
+    %h3{style: "margin-bottom: 10px;"}
+      Confirm your PetHomeStay address
+    = f.text_field :address_1, 'Street address'
+    .control-group
+      .controls
+        %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
+    = f.text_field :address_suburb, 'Suburb'
+    = f.text_field :address_city, 'City'
+    = f.country_select :address_country, 'Country', {priority: country_priority}
+  .specific.services
+    %h3{style: "margin-bottom: 10px;"} Services offered
+    = f.label "I can offer" do |controls|
+      = controls.check_box :pet_feeding, 'pet feeding'
+      = controls.check_box :pet_grooming, 'pet grooming'
+      = controls.check_box :pet_training, 'pet training'
+      = controls.check_box :pet_walking, 'pet walking'
+  %h3 Photo
+  .items
+    = f.nested_fields_for :pictures do |f|
+      .item
+        - if f.object.retained_file.present?
+          .control-group
+            %label.control-label Current image
+            .controls
+              = image_tag(f.object.file.thumb('100x100').url)
+        - label = f.object.retained_file.present? ? 'Replace image' : 'Upload image'
+        = f.file_field :file, label
+        = f.hidden_field :retained_file
+    = link_to 'Add new image', '#', class: 'add'

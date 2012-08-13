@@ -22,5 +22,23 @@ class HomestaysController < ApplicationController
   end
 
   def new
+    if current_user
+      @homestay = current_user.build_homestay
+    else
+      redirect_to root_path
+    end
+  end
+
+  def create
+    if current_user
+      @homestay = current_user.build_homestay(params[:homestay])
+      if @homestay.save
+        redirect_to @homestay
+      else
+        render :new
+      end
+    else
+      redirect_to root_path
+    end
   end
 end

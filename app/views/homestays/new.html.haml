@@ -1,1 +1,8 @@
-%p TODO: Copy homestay creation form into here once finalised in sign up process.
+.page-header
+  %h1
+    Create a PetHomeStay listing
+    %small just fill out this form to join our great community
+= twitter_bootstrap_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
+  = render partial: 'fields', locals: {f: f}
+  = f.actions do
+    = f.submit 'Create my listing'

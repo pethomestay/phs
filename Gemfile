@@ -21,6 +21,7 @@ gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstr
 gem 'carmen-rails'
 gem 'actionmailer_inline_css'
 gem 'chosen-rails'
+gem 'awesome_nested_fields'
 
 group :assets do
   gem 'therubyracer', '0.11.0beta5'

@@ -9,11 +9,11 @@ $ ->
 
   $(".breed.dog select").chosen()
 
-  $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"]').change ->
+  $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"], [name="homestay[is_homestay]"], [name="homestay[is_sitter]"], [name="homestay[is_services]"]').change ->
     $('.homestay-form .specific').hide()
-    $(".specific.homestay").show() if $('[name="user[homestay_attributes][is_homestay]"]:checked').length > 0
-    $(".specific.sitter").show() if $('[name="user[homestay_attributes][is_sitter]"]:checked').length > 0
-    $(".specific.services").show() if $('[name="user[homestay_attributes][is_services]"]:checked').length > 0
+    $(".specific.homestay").show() if $('[name="user[homestay_attributes][is_homestay]"]:checked, [name="homestay[is_homestay]"]:checked').length > 0
+    $(".specific.sitter").show() if $('[name="user[homestay_attributes][is_sitter]"]:checked, [name="homestay[is_sitter]"]:checked').length > 0
+    $(".specific.services").show() if $('[name="user[homestay_attributes][is_services]"]:checked, [name="homestay[is_services]"]:checked').length > 0
   .change()
 
   $('.dislikes input').live 'change', ->
@@ -34,3 +34,5 @@ $ ->
     $('.pets').data('count', numberOfPets + 1)
     $('.add-pet').before(pet)
     $('.pet-type select').change()
+
+  $('form').nestedFields();

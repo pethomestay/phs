@@ -18,5 +18,6 @@
 //= require twitter/bootstrap
 //= require handlebars
 //= require handlebars.comparison
+//= require jquery.nested-fields
 //= require chosen-jquery
 //= require_tree .
