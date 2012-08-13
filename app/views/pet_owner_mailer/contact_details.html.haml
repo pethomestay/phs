@@ -12,7 +12,7 @@
   - if @provider.mobile_number.present?
     = "Mobile phone: #{@provider.mobile_number}"
   %br
-  = link_to 'Provider listing', url_for(@homestay)
+  = link_to 'Provider listing', homestay_url(@homestay)
 %p.article-title Confirm the listing you want to use via PetHomeStay
 %p.article-content Once you have received a couple of responses, select the provider you want to use and accept via PetHomeStay. (A provider can cancel any indicated availability up to being confirmed, so don’t leave it too long!)
 %p.article-content Once confirmed, both you and the provider are committed to the booking.
