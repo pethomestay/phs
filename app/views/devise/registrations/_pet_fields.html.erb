@@ -166,17 +166,17 @@
       <div class="controls">
         <label class="checkbox" for="user_pets_attributes_{{index}}_flea_treated">
           <input name="user[pets_attributes][{{index}}][flea_treated]" type="hidden" value="0" />
-          <input id="user_pets_attributes_{{index}}_flea_treated" name="user[pets_attributes][{{index}}][flea_treated]" type="checkbox" value="1" />
+          <input id="user_pets_attributes_{{index}}_flea_treated" name="user[pets_attributes][{{index}}][flea_treated]" type="checkbox" value="1" {{#if flea_treated}}checked="checked"{{/if}} />
           Flea Treatment
         </label>
         <label class="checkbox" for="user_pets_attributes_{{index}}_vaccinated">
           <input name="user[pets_attributes][{{index}}][vaccinated]" type="hidden" value="0" />
-          <input id="user_pets_attributes_{{index}}_vaccinated" name="user[pets_attributes][{{index}}][vaccinated]" type="checkbox" value="1" />
+          <input id="user_pets_attributes_{{index}}_vaccinated" name="user[pets_attributes][{{index}}][vaccinated]" type="checkbox" value="1" {{#if vaccinated}}checked="checked"{{/if}} />
           Vaccinations
         </label>
         <label class="checkbox" for="user_pets_attributes_{{index}}_house_trained">
           <input name="user[pets_attributes][{{index}}][house_trained]" type="hidden" value="0" />
-          <input id="user_pets_attributes_{{index}}_house_trained" name="user[pets_attributes][{{index}}][house_trained]" type="checkbox" value="1" />
+          <input id="user_pets_attributes_{{index}}_house_trained" name="user[pets_attributes][{{index}}][house_trained]" type="checkbox" value="1" {{#if house_trained}}checked="checked"{{/if}} />
           House training
         </label>
       </div>
