@@ -1,9 +1,15 @@
-%p.article-title= "Hi #{@user.first_name}",
+%p.article-title= "Hi #{@owner.first_name},"
 %p.article-content Sorry, but this provider is unavailable on the dates you have requested, although they would be happy to be asked again later!
 
-%p.article-content= @provider.first_name
-%p.article-content= @homestay.title
-%p.article-content= @enquiry.date.to_formatted_s(:day_and_month)
+%p.article-content
+  Name:
+  = @provider.first_name
+  %br
+  Title:
+  = @homestay.title
+  %br
+  Date requested:
+  = @enquiry.date.to_formatted_s(:day_and_month)
 
 %p.article-content Try asking another couple of providers, or expanding your search to a wider area.
 

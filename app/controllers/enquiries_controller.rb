@@ -24,6 +24,7 @@ class EnquiriesController < ApplicationController
         PetOwnerMailer.contact_details(enquiry).deliver
         redirect_to my_account_path, alert: "Your contact details have been sent to #{enquiry.user.first_name}."
       else
+        PetOwnerMailer.provider_unavailable(enquiry).deliver
         redirect_to my_account_path, alert: "We'll let #{enquiry.user.first_name} know you're not available at this time."
       end
     else
