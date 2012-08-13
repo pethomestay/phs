@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
     attributes.all? do |(key, value)|
       value.blank? || value == "0" || key == 'address_country' || key == 'address_1' || key == 'address_2' || \
       key == 'address_suburb' || key == 'address_city' || key == 'address_postcode' || \
+      key == 'property_type' || key == 'outdoor_area' || \
       key == 'is_homestay' || key == 'is_sitter' || key == 'is_services' || key == 'pictures_attributes'
     end
   }
