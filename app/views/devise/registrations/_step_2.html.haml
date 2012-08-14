@@ -105,9 +105,9 @@
             = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
             %h3 Tell us about your PetHomeStay
             .specific.homestay
-              - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse))
+              - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
               = f.select :property_type, 'Property type', options
-              - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse))
+              - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
               = f.select :outdoor_area, 'Size of outdoor area', options
             = f.label "Professional?" do |controls|
               = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
@@ -132,7 +132,7 @@
                 .controls
                   .input-prepend.input-append
                     .add-on $
-                    %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+                    %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]', value: resource.homestay.cost_per_night}
                     .add-on .00
             .specific.homestay
               %h3 Own pets?

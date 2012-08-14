@@ -18,9 +18,9 @@
   = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
   %h3 Tell us about your PetHomeStay
   .specific.homestay
-    - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse))
+    - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
     = f.select :property_type, 'Property type', options
-    - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse))
+    - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
     = f.select :outdoor_area, 'Size of outdoor area', options
   = f.label "Professional?" do |controls|
     = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
@@ -45,25 +45,25 @@
       .controls
         .input-prepend.input-append
           .add-on $
-          %input.span1#user_homestay_cost_per_night{name: 'user[homestay_attributes][cost_per_night]'}
+          %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
           .add-on .00
   .specific.homestay
     %h3 Own pets?
     %p If you own pets of your own please enter them on the left side of this page.
     .control-group
       %label.inline-checkbox
-        %input{type: 'hidden', name: 'user[homestay_attributes][pets_present]', value: '0'}
-        %input{type: 'checkbox', name: 'user[homestay_attributes][pets_present]', value: '1'}
+        %input{type: 'hidden', name: 'homestay[pets_present]', value: '0'}
+        %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1'}
         My pets will be present at this address during PetHomeStay bookings.
     %h3{style: "margin-bottom: 10px;"}
       Confirm your PetHomeStay address
-    = f.text_field :address_1, 'Street address'
+    = f.text_field :address_1, 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
     .control-group
       .controls
-        %input#user_homestay_address_2{name: 'user[homestay_attributes][address_2]'}
-    = f.text_field :address_suburb, 'Suburb'
-    = f.text_field :address_city, 'City'
-    = f.country_select :address_country, 'Country', {priority: country_priority}
+        %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
+    = f.text_field :address_suburb, 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
+    = f.text_field :address_city, 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
+    = f.country_select :address_country, 'Country', {priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]}
   .specific.services
     %h3{style: "margin-bottom: 10px;"} Services offered
     = f.label "I can offer" do |controls|
@@ -77,11 +77,11 @@
       = f.nested_fields_for :pictures do |f|
         %tr.item
           %td
-            - if f.object.retained_file.present?
+            - if f.object.file.present?
               = image_tag(f.object.file.thumb('200x200').url)
-              = f.hidden_field :retained_file
             - else
               = f.file_field :file, 'Upload picture'
+            = f.hidden_field :retained_file
           %td
             = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
             = f.hidden_field :id

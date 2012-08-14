@@ -16,7 +16,19 @@ class HomestaysController < ApplicationController
   end
 
   def edit
-    unless @homestay = Homestay.find_by_user_id_and_id(current_user.id, params[:id])
+    unless current_user && @homestay = Homestay.find_by_user_id_and_id(current_user.id, params[:id])
+      redirect_to root_path
+    end
+  end
+
+  def update
+    if current_user && @homestay = Homestay.find_by_user_id_and_id(current_user.id, params[:id])
+      if @homestay.update_attributes(params[:homestay])
+        redirect_to my_account_path, alert: "Your listing has been updated."
+      else
+        render :new
+      end
+    else
       redirect_to root_path
     end
   end
