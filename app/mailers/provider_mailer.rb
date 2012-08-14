@@ -8,7 +8,7 @@ class ProviderMailer < ActionMailer::Base
     @pets = @user.pets
     @provider = enquiry.homestay.user
     email_with_name = "#{@provider.first_name} #{@provider.last_name} <#{@provider.email}>"
-    mail(to: email_with_name, subject: "You've recieved an enquiry")
+    mail(to: email_with_name, subject: "You've recieved an enquiry on PetHomeStay!")
   end
 
   def owner_confirmed(enquiry)
@@ -17,7 +17,7 @@ class ProviderMailer < ActionMailer::Base
     @pets = @user.pets
     @provider = enquiry.homestay.user
     email_with_name = "#{@provider.first_name} #{@provider.last_name} <#{@provider.email}>"
-    mail(to: email_with_name, subject: "#{@user.first_name} has confirmed their booking")
+    mail(to: email_with_name, subject: "#{@user.first_name} has confirmed their PetHomeStay booking with you!")
   end
 
   def owner_canceled(enquiry)

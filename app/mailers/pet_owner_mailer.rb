@@ -26,6 +26,6 @@ class PetOwnerMailer < ActionMailer::Base
     @homestay = @enquiry.homestay
     @provider = @homestay.user
     email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"
-    mail(to: email_with_name, subject: "Contact details for #{@provider.first_name}")
+    mail(to: email_with_name, subject: "You've confirmed a PetHomeStay booking!")
   end
 end

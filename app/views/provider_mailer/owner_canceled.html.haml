@@ -1,5 +1,6 @@
 %p.article-title= "Hi #{@provider.first_name}"
-%p.article-content This is just a quick note to say #{@user.first_name} has decided not to go ahead with their request for help.
+%p.article-content= "This is just a quick note to say #{@user.first_name} has decided not to go ahead with their request for help with their #{'pet'.pluralize(@user.pets.length)} #{@user.pet_names} on #{@enquiry.date.to_formatted_s(:day_and_month)} for #{@enquiry.natural_duration}."
 %p.article-content Thanks for offering to help out, the PetHomeStay commmunity really appreciates you helping to make owning a pet fun & easy again!
+%p.article-content Hopefully there will be some more enquiries for you soon!
 %p.article-content Kind Regards,
 %p.article-content The PetHomeStay Team

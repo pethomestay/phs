@@ -13,6 +13,20 @@ class Enquiry < ActiveRecord::Base
     'longerthan7nights' => "Longer"
   }
 
+  NATURAL_DURATION = {
+    'morning'           => "the morning",
+    'afternoon'         => "the afternoon",
+    'evening'           => "the evening",
+    'overnight'         => "an overnight visit",
+    '2nights'           => "2 nights",
+    '3nights'           => "3 nights",
+    '4nights'           => "4 nights",
+    '5nights'           => "5 nights",
+    '6nights'           => "6 nights",
+    '7nights'           => "7 nights",
+    'longerthan7nights' => "longer than 7 nights"
+  }
+
   has_and_belongs_to_many :pets
   belongs_to              :user
   belongs_to              :homestay
@@ -41,5 +55,9 @@ class Enquiry < ActiveRecord::Base
 
   def pretty_duration
     DURATION_OPTIONS[duration] || 'Unspecified'
+  end
+
+  def natural_duration
+    NATURAL_DURATION[duration] || 'unspecified'
   end
 end

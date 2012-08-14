@@ -1,14 +1,18 @@
-%p.article-title Brilliant! You've found and confirmed a PetHomeStay service near you! 
-%p.article-content Here is all of the contact details we have for (provider first name) so you have a record. 
-%p.article-content The next step is for you to handover your pet to the provider at the agreed place and time. Don’t forget to follow the House Rules.
-%p.article-content When you handover your pet, make sure you
+%p.article-title Brilliant! You've confirmed a great PetHomeStay service near you!
+%p.article-content= "Here is all of the contact details we have for #{@provider.first_name} so you have a record."
+%p.article-content The next step is simply for you to handover your pet to the provider at the agreed place and time.
+%p.article-content 
+  Don’t forget to follow the
+  = succeed '.' do
+    = link_to('House Rules', house_rules_url)
+%p.article-content When you handover your pet, make sure you:
 %ul
   %li.article-content Review pick up times & dates
   %li.article-content Review Emergency & contact details
   %li.article-content Payment for the service as agreed
-  %li.article-content Bring food for your pet (owners provides this!)
+  %li.article-content Bring food for your pet (owners provide this unless otherwise agreed!)
   %li.article-content Bring a favourite toy or bedding so they feel at home
-  %li.article-content Any special instructions such as feeding or walking. 
+  %li.article-content Any special instructions such as feeding or walking
 %p.article-title Pet Provider details
 %p.article-content TODO: Put details here
 %p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!

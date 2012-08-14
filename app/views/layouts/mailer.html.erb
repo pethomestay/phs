@@ -143,7 +143,17 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
             <td class="w30" width="30"></td>
             <td class="w580" width="360" valign="top">
             <span class="hide"><p id="permission-reminder" align="left" class="footer-content-left"></p></span>
-            <p align="left" class="footer-content-left">&copy; PetHomeStay 2012</p>
+            <table cellpadding="0" cellspacing="10" border="0" width="380">
+                <tbody>
+                    <tr>
+                        <td><p class="footer-content-left">&copy; PetHomeStay 2012</p></td>
+                        <td><p class="footer-content-left">|</p></td>
+                        <td><p class="footer-content-left"><%= link_to 'House Rules', house_rules_url %></p></td>
+                        <td><p class="footer-content-left">|</p></td>
+                        <td><p class="footer-content-left"><%= link_to 'Terms & Conditions', terms_and_conditions_url %></p></td>
+                    </tr>
+                </tbody>
+            </table>
             </td>
             <td class="hide w0" width="60"></td>
             <td class="hide w0" width="160" valign="top">
