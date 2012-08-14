@@ -5,6 +5,7 @@
     .well.form-well
       = f.text_field :location, :add_on => :append do
         %button.btn.btn-primary{type: "submit"} Search
+      .search-filters
         %label.sort-by
           Sort by
           %label.radio.inline
@@ -16,8 +17,8 @@
           %label.radio.inline
             = radio_button :search, :sort_by, 'average_rating'
             Rating
-      = f.label 'Your pet prefers' do |controls|
-        = controls.check_box :is_homestay, 'To sleep over at a homestay'
-        = controls.check_box :is_sitter, 'To stay at home with a sitter'
-      = f.label 'Grooming, walking, etc.' do |controls|
+      / = f.label 'Your pet prefers' do |controls|
+      /   = controls.check_box :is_homestay, 'To sleep over at a homestay'
+      /   = controls.check_box :is_sitter, 'To stay at home with a sitter'
+      = f.label 'Grooming, walking, training, feeding' do |controls|
         = controls.check_box :is_services, 'Show additional pet services listings'
