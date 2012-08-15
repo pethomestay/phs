@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     if params[:redirect_path].present?
       params[:redirect_path]
     else
-      if resource.homestay.present?
+      if resource_or_scope.homestay.present?
         my_account_path
       else
         root_path
