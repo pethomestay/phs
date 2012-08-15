@@ -6,7 +6,11 @@ class ApplicationController < ActionController::Base
     if params[:redirect_path].present?
       params[:redirect_path]
     else
-      request.env['omniauth.origin'] || my_account_path
+      if resource.homestay.present?
+        my_account_path
+      else
+        root_path
+      end
     end
   end
 
@@ -14,7 +18,11 @@ class ApplicationController < ActionController::Base
     if params[:redirect_path].present?
       params[:redirect_path]
     else
-      my_account_path
+      if resource.homestay.present?
+        my_account_path
+      else
+        root_path
+      end
     end
   end
 
