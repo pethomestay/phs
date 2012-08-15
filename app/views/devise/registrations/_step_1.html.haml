@@ -36,9 +36,12 @@
           %input#geocomplete.span7
       %input#street_name{type: 'hidden', 'data-geocomplete' => 'route'}
       %input#street_number{type: 'hidden', 'data-geocomplete' => 'street_number'}
+      %input#administrative_area_level_1{type: 'hidden', 'data-geocomplete' => 'administrative_area_level_1'}
+      %input#locality{type: 'hidden', 'data-geocomplete' => 'locality'}
+      %input#sublocality{type: 'hidden', 'data-geocomplete' => 'sublocality'}
       = f.hidden_field :address_1
-      = f.hidden_field :address_suburb, 'data-geocomplete' => 'sublocality'
-      = f.hidden_field :address_city, 'data-geocomplete' => 'locality'
+      = f.hidden_field :address_suburb
+      = f.hidden_field :address_city
       = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
     - else
       = f.text_field :address_1, 'Street address'

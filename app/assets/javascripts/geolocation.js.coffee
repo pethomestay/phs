@@ -25,9 +25,15 @@ $ ->
     details: "form"
     detailsAttribute: "data-geocomplete"
 
-  if $("#street_name, #street_number").length == 2
+  if $("#street_name, #street_number, #administrative_area_level_1, #locality, #sublocality").length == 5
     setInterval ->
       street_name = $("#street_name").val()
       street_number = $("#street_number").val()
       $('#user_address_1').val "#{street_number} #{street_name}"
+      if $('#sublocality').val().length > 0
+        $('#user_address_suburb').val $('#sublocality').val()
+        $('#user_address_city').val $('#locality').val()
+      else
+        $('#user_address_suburb').val $('#locality').val()
+        $('#user_address_city').val $('#administrative_area_level_1').val()
     , 200
