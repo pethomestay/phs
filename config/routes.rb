@@ -4,7 +4,7 @@ PetHomestay::Application.routes.draw do
 
   get '/test' => 'pages#test'
 
-  resources :pets, only: [:index, :edit, :update, :destroy, :new]
+  resources :pets, except: [:show]
   resources :homestays do
     put 'rating' => 'ratings#update'
   end

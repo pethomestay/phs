@@ -17,6 +17,16 @@
     </div>
   </div>
 
+  <div class='specific other'>
+    <div class="control-group {{#if other_pet_typeError}}error{{/if}}" id="user_pets_attributes_{{index}}_other_pet_type_control_group">
+      <label class="control-label" for="user_pets_attributes_{{index}}_other_pet_type">Other pet type</label>
+      <div class="controls">
+        <span class="input">
+          <input id="user_pets_attributes_{{index}}_other_pet_type" name="user[pets_attributes][{{index}}][other_pet_type]" size="30" type="text" value="{{other_pet_type}}" /></span>
+      </div>
+    </div>
+  </div>
+
   <div class='specific dog breed'>
     <div class="control-group" id="user_pets_attributes_{{index}}_breed_control_group">
       <label class="control-label" for="user_pets_attributes_{{index}}_breed">Breed</label>
@@ -38,16 +48,6 @@
       <div class="controls">
         <span class="input">
           <input id="user_pets_attributes_{{index}}_breed" name="user[pets_attributes][{{index}}][breed]" size="30" type="text" value="{{breed}}" /></span>
-      </div>
-    </div>
-  </div>
-
-  <div class='specific other'>
-    <div class="control-group {{#if other_pet_typeError}}error{{/if}}" id="user_pets_attributes_{{index}}_other_pet_type_control_group">
-      <label class="control-label" for="user_pets_attributes_{{index}}_other_pet_type">Other pet type</label>
-      <div class="controls">
-        <span class="input">
-          <input id="user_pets_attributes_{{index}}_other_pet_type" name="user[pets_attributes][{{index}}][other_pet_type]" size="30" type="text" value="{{other_pet_type}}" /></span>
       </div>
     </div>
   </div>

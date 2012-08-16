@@ -1,0 +1,57 @@
+.pet-fields
+  .pet-type
+    - options = options_for_select(Pet::PET_TYPE_OPTIONS.to_a.map(&:reverse), f.object.pet_type)
+    = f.select :pet_type, 'Pet type', options
+  .specific.other
+    = f.text_field :other_pet_type
+  .specific.dog.breed
+    - options = options_for_select(DOG_BREEDS, f.object.breed)
+    = f.select :breed, 'Breed', options
+  .specific.cat.bird.fish.other.breed
+    = f.text_field :breed
+  .name
+    = f.text_field :name, "Pet's name"
+  = f.text_field :age, "Age (years)"
+  .specific.dog
+    - options = options_for_select(Pet::SIZE_OPTIONS.to_a.map(&:reverse), f.object.size)
+    = f.select :size, 'Size', options
+  .specific.dog.cat
+    - options = options_for_select(Pet::SEX_OPTIONS.to_a.map(&:reverse), f.object.sex)
+    = f.select :sex, 'Sex', options
+  %p Microchipping & council rego not mandatory, however in the event of a lost pet it makes retrevial far easier. PetHomeStay recommends you complete this information as soon as possible.
+  = f.text_field :microchip_number, 'Microchip #'
+  = f.text_field :council_number, 'Council #'
+  .dislikes
+    = f.label "My pet doesn't like" do |controls|
+      = controls.check_box :dislike_people, 'Other people'
+      = controls.check_box :dislike_animals, 'Other animals'
+      = controls.check_box :dislike_children, 'Children'
+      = controls.check_box :dislike_loneliness, 'Being alone'
+  .explain-dislikes.hide
+    = f.text_area :explain_dislikes, 'Please explain', rows: 4
+  %p Note: medical information and emergency contact details will only be sent to providers with whom you have confirmed a booking.
+  = f.text_area :medication, 'Does your pet need any medication?', rows: 4
+  = f.fieldset 'Vet details' do
+    = f.text_field :vet_name
+    = f.text_field :vet_phone
+  = f.fieldset 'Emergency contact details' do
+    = f.text_field :emergency_contact_name, 'Contact name'
+    = f.text_field :emergency_contact_phone, 'Contact phone'
+  = f.fieldset 'Photos' do
+    %table.table.homestay-pictures
+      %tbody
+        = f.nested_fields_for :pictures do |f|
+          %tr.item
+            %td
+              - if f.object.file.present?
+                = image_tag(f.object.file.thumb('200x200').url)
+              - else
+                = f.file_field :file, 'Upload picture'
+              = f.hidden_field :retained_file
+            %td
+              = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
+              = f.hidden_field :id
+              = f.hidden_field :_destroy
+      %table.table#remove.new-picture
+        %tr
+          %td= link_to '+ Add new picture', '#', class: 'add'

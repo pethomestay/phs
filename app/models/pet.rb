@@ -1,4 +1,26 @@
 class Pet < ActiveRecord::Base
+  PET_TYPE_OPTIONS = {
+    'dog'   => 'Dog',
+    'cat'   => 'Cat',
+    'bird'  => 'Bird',
+    'fish'  => 'Fish',
+    'other' => 'Other'
+  }
+
+  SIZE_OPTIONS = {
+    'small'   => 'Small (0-15kg)',
+    'medium'   => 'Medium (16-30kg)',
+    'large'  => 'Large (31-45kg)',
+    'giant'  => 'Giant (46kg+)'
+  }
+
+  SEX_OPTIONS = {
+    'male_desexed'   => 'Male desexed',
+    'female_desexed'   => 'Female desexed',
+    'male_entire'  => 'Male entire',
+    'female_entire'  => 'Female entire'
+  }
+
   belongs_to :user
   has_and_belongs_to_many :enquiries
   has_many :pictures, as: 'picturable'
