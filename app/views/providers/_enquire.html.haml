@@ -1,5 +1,8 @@
 .well.enquire-listing
-  = link_to "Enquire now", "#enquire", class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
+  - if current_user.pets.present?
+    = link_to "Enquire now", "#enquire", class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
+  - else
+    = link_to "Enquire now", new_pet_path, class: 'btn btn-primary btn-large'
   Contact the owner of this listing now!
 .modal.hide.fade#enquire
   .modal-header
