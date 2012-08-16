@@ -24,16 +24,19 @@
     = f.select :sex, 'Sex', options
   %p Microchipping & council rego not mandatory, however in the event of a lost pet it makes retrevial far easier. PetHomeStay recommends you complete this information as soon as possible.
   .row
-    .span6= f.text_field :microchip_number, 'Microchip #'
-    .span6= f.text_field :council_number, 'Council #'
-  .dislikes
-    = f.label "My pet doesn't like" do |controls|
-      = controls.check_box :dislike_people, 'Other people'
-      = controls.check_box :dislike_animals, 'Other animals'
-      = controls.check_box :dislike_children, 'Children'
-      = controls.check_box :dislike_loneliness, 'Being alone'
-  .explain-dislikes.hide
-    = f.text_area :explain_dislikes, 'Please explain', rows: 4, class: 'span6'
+    .span5= f.text_field :microchip_number, 'Microchip #'
+    .span7= f.text_field :council_number, 'Council #'
+  .row
+    .span5
+      .dislikes
+        = f.label "My pet doesn't like" do |controls|
+          = controls.check_box :dislike_people, 'Other people'
+          = controls.check_box :dislike_animals, 'Other animals'
+          = controls.check_box :dislike_children, 'Children'
+          = controls.check_box :dislike_loneliness, 'Being alone'
+    .span7
+      .explain-dislikes.hide
+        = f.text_area :explain_dislikes, 'Please explain', rows: 4, class: 'span7'
   %p Note: medical information and emergency contact details will only be sent to providers with whom you have confirmed a booking.
   = f.text_area :medication, 'Does your pet need any medication?', rows: 4, class: 'span6'
   .row
