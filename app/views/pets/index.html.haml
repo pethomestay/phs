@@ -11,3 +11,8 @@
         %td= pet.name
         %td= link_to "Edit", edit_pet_path(pet)
         %td= link_to "Remove", pet_path(pet), method: 'DELETE', confirm: "Are you sure you want to remove #{pet.name}?"
+  - else
+    %p
+      You currently have no pets on your account.
+      = succeed '.' do
+        = link_to 'Add one now', new_pet_path
