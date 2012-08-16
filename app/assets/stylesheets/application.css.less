@@ -34,6 +34,15 @@
     background: url('header-logo.png') 22px 8px no-repeat;
     width: 190px;
     text-indent: -9999px;
+    &:after {
+      display: block;
+      background: url('beta-topbar.png');
+      width: 41px;
+      height: 36px;
+      content: '';
+      margin-top: -32px;
+      margin-left: 169px;
+    }
     &.large {
       background: url('header-logo-large.png') 22px 8px no-repeat;
       height: 183px;
@@ -41,6 +50,9 @@
       background: url('header-logo-large.png') 7px 0px no-repeat;
       height: 183px;
       margin-top: -5px;
+      &:after {
+        display:none;
+      }
     }
   }
 }
