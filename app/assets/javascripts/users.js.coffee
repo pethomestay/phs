@@ -23,16 +23,4 @@ $ ->
       $('.explain-dislikes').addClass 'hide'
   .change()
 
-  $('.unactivated').one 'click', ->
-    $(this).removeClass('unactivated')
-
-  window.addPet = ->
-    numberOfPets = $('.pets').data('count')    
-    pet = petTemplate
-      index: numberOfPets
-      number: numberOfPets + 1
-    $('.pets').data('count', numberOfPets + 1)
-    $('.add-pet').before(pet)
-    $('.pet-type select').change()
-
   $('form').nestedFields(containerSelector: '.homestay-pictures tbody');
