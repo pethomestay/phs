@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
     if params[:redirect_path].present?
       params[:redirect_path]
     elsif resource.homestay.blank? && resource.pets.blank?
-      welcome_path
+      if params[:signup_path].present?
+        welcome_path(signup_path: params[:signup_path])
+      else
+        welcome_path
+      end
     else
       my_account_path
     end
