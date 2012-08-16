@@ -11,8 +11,29 @@
   %li.article-content Confirm medical & emergency contact info?
   %li.article-content Is there anything else on the pet profile you need to know?
 
-%p.article-title Pet Profile Information
-%p.article-content TODO: Put full pet profile here
+- @pets.each do |pet|
+  - if pet.council_number.present? || pet.microchip_number.present? || pet.medication.present? || pet.emergency_contact_name.present? || pet.vet_name.present?
+    %p.article-title= "Emergency / medical details for #{pet.name}"
+    %p.article-content
+      - if pet.council_number.present?
+        = "Council #: #{pet.council_number}"
+        %br
+      - if pet.microchip_number.present?
+        = "Microchip #: #{pet.microchip_number}"
+        %br
+      - if pet.medication.present?
+        = "Medication: #{pet.medication}"
+        %br
+      - if pet.emergency_contact_name.present? && pet.emergency_contact_phone.present?
+        = "Emergency contact name: #{pet.emergency_contact_name}"
+        %br
+        = "Emergency contact phone: #{pet.emergency_contact_phone}"
+        %br
+      - if pet.vet_name.present? && pet.vet_phone.present?
+        = "Vet name: #{pet.vet_name}"
+        %br
+        = "Vet phone: #{pet.vet_phone}"
+        %br
 
 %p.article-content Thanks for helping out with PetHomeStay!
 %p.article-content The PetHomeStay Team

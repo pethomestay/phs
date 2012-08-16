@@ -13,7 +13,33 @@
   %li.article-content Bring food for your pet (owners provide this unless otherwise agreed!)
   %li.article-content Bring a favourite toy or bedding so they feel at home
   %li.article-content Any special instructions such as feeding or walking
-%p.article-title Pet Provider details
-%p.article-content TODO: Put details here
+%p.article-title Provider details for your records
+%p.article-content
+  Original listing:
+  = link_to 'View on PetHomeStay.com', homestay_url(@homestay)
+  %br
+  = "Listing title: #{@homestay.title}"
+  %br
+  = "Provider's name: #{@provider.name}"
+  %br
+  = "Provider's email: #{@provider.email}"
+  - if @provider.phone_number.present?
+    %br
+    = "Provider's phone: #{@provider.phone_number}"
+  - if @provider.mobile_number.present?
+    %br
+    = "Provider's mobile: #{@provider.mobile_number}"
+  %br
+  Address:
+  %br
+  = @homestay.address_1
+  - if @homestay.address_2.present?
+    %br
+    = @homestay.address_2 
+  %br
+  = @homestay.address_suburb
+  %br
+  = @homestay.address_city
+
 %p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
 %p.article-content The PetHomeStay Team
