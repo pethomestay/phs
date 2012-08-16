@@ -33,3 +33,5 @@ $ ->
     minDate: 0
     onSelect: (dateText, inst) ->
       $('#enquiry_date').val dateText
+
+  $('.carousel').carousel()

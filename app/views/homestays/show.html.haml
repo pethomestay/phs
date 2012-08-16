@@ -27,21 +27,22 @@
     .clear
     = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
   .span5
-    %ul.thumbnails
-      - if @homestay.pictures.present?
-        %li.span5
-          .slider
-            = link_to image_tag(@homestay.pictures.first.file.thumb('380x').url), @homestay, class: "thumbnail"
-      %li.span5
-        #map.thumbnail
-        %script{type: "application/javascript", src: "/assets/gmaps.js"}
-        :javascript
-          initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
-            zoom: 16,
-            mapTypeControl: false,
-            streetViewControl: false,
-            zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
-          }})
-          setupMarker(#{@homestay.latitude}, #{@homestay.longitude})
-      - if signed_in? && !my_homestay?(@homestay)
-        %li.span5= render partial: 'providers/give_rating', locals: {provider: @homestay, my_rating: @my_rating}
+    #homestay-carousel.carousel.slide.span5.thumbnail
+      .carousel-inner
+        - @homestay.pictures.each_with_index do |picture, i|
+          - klass = (i == 0 ? 'active' : '')
+          .item{class: klass}= image_tag(picture.file.thumb('380x300#').url)
+      = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
+      = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
+    #map.thumbnail.span5
+    %script{type: "application/javascript", src: "/assets/gmaps.js"}
+    :javascript
+      initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
+        zoom: 16,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
+      }})
+      setupMarker(#{@homestay.latitude}, #{@homestay.longitude})
+    - if signed_in? && !my_homestay?(@homestay)
+      %li.span5= render partial: 'providers/give_rating', locals: {provider: @homestay, my_rating: @my_rating}
