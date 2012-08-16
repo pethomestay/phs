@@ -4,6 +4,13 @@ class PagesController < ApplicationController
   def home
   end
 
+  def welcome
+    unless current_user
+      redirect_to root_path
+      return
+    end
+  end
+
   def test
     render json: {
       ip: request.ip,

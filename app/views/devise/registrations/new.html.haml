@@ -1,6 +1,56 @@
-%script{type: 'text/plain'}
-  = devise_error_messages!
-- if @step.first?
-  = render partial: 'devise/registrations/step_1'
-- elsif @step.second?
-  = render partial: 'devise/registrations/step_2'
+.page-header
+  %h1
+    Sign up
+    %small create an account to access all our cool features (step 1 of 2)
+- html = {:class => 'form-horizontal'}
+- url = registration_path(resource_name)
+= twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+  %input{type: 'hidden', name: 'redirect_path', value: params[:redirect_path]}
+  = f.fieldset do
+    %p Note: we do not pass your details on to any third party companies. We hate spam too :)
+    .row
+      .span5
+        = f.email_field :email, 'Email address'
+        = f.text_field :mobile_number
+        = f.text_field :phone_number, 'Home phone number'
+        - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation]
+          = f.password_field :password
+          = f.password_field :password_confirmation, 'Confirm your password'
+        - else
+          %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
+          %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
+      .span4 Your email address, surname and contact details will not be publically viewable on PetHomeStay. Details are ONLY exchanged via email after a pet owner has confirmed a booking.
+    %h3{style: "margin-bottom: 10px;"}
+      We'd love to get to know you!
+      %small Tell the community a bit more about you
+    = f.text_field :first_name
+    = f.text_field :last_name
+    = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 15, end_year: 1910
+    %h3{style: "margin-bottom: 10px;"}
+      Your address
+      %small Where are you from?
+    - if request.get?
+      .control-group
+        = label_tag :geocomplete, 'Street address', class: 'control-label'
+        .controls
+          %input#geocomplete.span7
+      %input#street_name{type: 'hidden', 'data-geocomplete' => 'route'}
+      %input#street_number{type: 'hidden', 'data-geocomplete' => 'street_number'}
+      %input#administrative_area_level_1{type: 'hidden', 'data-geocomplete' => 'administrative_area_level_1'}
+      %input#locality{type: 'hidden', 'data-geocomplete' => 'locality'}
+      %input#sublocality{type: 'hidden', 'data-geocomplete' => 'sublocality'}
+      = f.hidden_field :address_1
+      = f.hidden_field :address_suburb
+      = f.hidden_field :address_city
+      = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
+    - else
+      = f.text_field :address_1, 'Street address'
+      .control-group
+        .controls
+          %input#user_homestay_address_2{name: 'user[address_2]'}
+      = f.text_field :address_suburb, 'Suburb'
+      = f.text_field :address_city, 'City'
+      = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country], country_priority].flatten}
+    = render partial: 'devise/registrations/accept_terms', locals: {f: f}
+    = f.actions do
+      = f.submit 'Create an account'

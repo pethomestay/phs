@@ -1,28 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :determine_step
 
-  def after_sign_in_path_for(resource_or_scope)
+  def after_sign_in_path_for(resource)
     if params[:redirect_path].present?
       params[:redirect_path]
+    elsif resource.homestay.blank? && resource.pets.blank?
+      welcome_path
     else
-      if resource_or_scope.homestay.present?
-        my_account_path
-      else
-        root_path
-      end
-    end
-  end
-
-  def after_sign_up_path_for(resource)
-    if params[:redirect_path].present?
-      params[:redirect_path]
-    else
-      if resource.homestay.present?
-        my_account_path
-      else
-        root_path
-      end
+      my_account_path
     end
   end
 
@@ -32,18 +17,5 @@ class ApplicationController < ActionController::Base
 
   def error_404
     render 'pages/404'
-  end
-
-  def determine_step
-    if params[:controller] == "devise/registrations"
-      if params[:user]
-        user_params = params[:user].reject {|k,v| k[/_attributes/]}.merge({validate_first_step_only: true})
-        user = User.new(user_params)
-        step = user.valid? ? 'second' : 'first'
-      else
-        step = 'first'
-      end
-      @step = ActiveSupport::StringInquirer.new(step)
-    end
   end
 end

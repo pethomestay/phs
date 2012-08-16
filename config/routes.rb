@@ -3,6 +3,7 @@ PetHomestay::Application.routes.draw do
   resource :login_dropdown, only: [:show]
 
   get '/test' => 'pages#test'
+  get '/welcome' => 'pages#welcome'
 
   resources :pets, except: [:show]
   resources :homestays do
