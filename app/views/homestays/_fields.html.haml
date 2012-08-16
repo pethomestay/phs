@@ -23,7 +23,7 @@
     - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
     = f.select :outdoor_area, 'Size of outdoor area', options
   = f.label "Professional?" do |controls|
-    = controls.check_box :constant_supervision, 'I am a registered business with an ABN'
+    = controls.check_box :is_professional, 'I am a registered business with an ABN'
   = f.label "I can provide" do |controls|
     = controls.check_box :constant_supervision, '24/7 supervision'
     = controls.check_box :supervision_outside_work_hours, 'Supervision outside of work hours (6pm - 8am)'

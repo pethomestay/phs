@@ -28,8 +28,8 @@ class Homestay < ActiveRecord::Base
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
                   :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
                   :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
-                  :pet_training, :pet_walking
   attr_accessor :unfinished_signup, :accept_house_rules, :accept_terms
+                  :pet_training, :pet_walking, :is_professional
 
   validates_presence_of :cost_per_night
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country
