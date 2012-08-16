@@ -26,8 +26,8 @@
       = link_to "Start a PetHomeStay listing", new_homestay_path, class: 'btn btn-primary'
   - elsif current_user
     .span4
-      %h2 Keep your details up to date
-      %p Start earning money doing what you love: spending time with awesome animals. All from the comfort of your own home!
+      %h2 Update your listing
+      %p Want to add more information to your awesome PetHomeStay profile? More info means more enquiries!
       = link_to "Update PetHomeStay listing", edit_homestay_path(current_user.homestay), class: 'btn'
   - else
     .span4
