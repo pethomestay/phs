@@ -10,7 +10,11 @@ class PetsController < ApplicationController
   def create
     @pet = current_user.pets.build(params[:pet])
     if @pet.save
-      redirect_to pets_path, alert: "#{@pet.name} has been added to your list of pets."
+      if params[:redirect_path]
+        redirect_to params[:redirect_path], alert: "#{@pet.name} has been added to your list of pets."
+      else
+        redirect_to pets_path, alert: "#{@pet.name} has been added to your list of pets."
+      end
     else
       render :new
     end
