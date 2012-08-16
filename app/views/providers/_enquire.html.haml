@@ -1,9 +1,12 @@
 .well.enquire-listing
   - if current_user.pets.present?
     = link_to "Enquire now", "#enquire", class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
+    Contact the owner of this listing now!
   - else
-    = link_to "Enquire now", new_pet_path, class: 'btn btn-primary btn-large'
-  Contact the owner of this listing now!
+    = link_to "Enquire now", new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
+    You need to
+    = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
+    before you can make an enquiry
 .modal.hide.fade#enquire
   .modal-header
     %button.close{type: "button", 'data-dismiss' => "modal"} ×
