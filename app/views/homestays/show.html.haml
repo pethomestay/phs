@@ -16,6 +16,41 @@
         %h1= number_to_currency(@homestay.cost_per_night)
         %p
           %i per night
+    %table.table
+      %tbody
+        - if @homestay.is_professional?
+          %tr
+            %td{colspan: 2}
+              %strong This listing is for a professional pet-care business
+        %tr
+          %td
+            %strong My propery is a
+          %td= @homestay.pretty_property_type
+        %tr
+          %td
+            %strong My outdoor area is
+          %td= @homestay.pretty_outdoor_area
+        - if @homestay.fenced
+          %tr
+            %td{colspan: 2}
+              %strong My property is fenced
+        - if @homestay.has_services?
+          %tr
+            %td
+              %strong I also offer
+            %td= @homestay.pretty_services
+        - if @homestay.supervision?
+          %tr
+            %td{colspan: 2}
+              %strong= @homestay.pretty_supervision
+        - if @homestay.emergency_preparedness?
+          %tr
+            %td{colspan: 2}
+              %strong= @homestay.pretty_emergency_preparedness
+        - if @homestay.children_present?
+          %tr
+            %td{colspan: 2}
+              %strong I have children under the age of 18 at my house
     .description
       %p= simple_format @homestay.description
     - unless my_homestay?(@homestay)

@@ -50,6 +50,40 @@ class Homestay < ActiveRecord::Base
     "#{address_1}, #{address_city}, #{address_country}"
   end
 
+  def emergency_preparedness?
+    first_aid || emergency_transport
+  end
+
+  def supervision?
+    supervision_outside_work_hours || constant_supervision
+  end
+
+  def pretty_supervision
+    if constant_supervision
+      'I can provide 24/7 supervision for your pets'
+    elsif supervision_outside_work_hours
+      'I can provide supervision for your pets outside work hours (8am - 6pm)'
+    end
+  end
+
+  def pretty_emergency_preparedness
+    if first_aid && emergency_transport
+      'I know pet first-aid and can provide emergency transport'
+    elsif first_aid
+      'I know pet first-aid'
+    elsif emergency_transport
+      'I can provide emergency transport'
+    end
+  end
+
+  def pretty_property_type
+    PROPERTY_TYPE_OPTIONS[property_type]
+  end
+
+  def pretty_outdoor_area
+    OUTDOOR_AREA_OPTIONS[outdoor_area]
+  end
+
   def location
     "#{address_suburb}, #{address_city}"
   end
@@ -62,5 +96,18 @@ class Homestay < ActiveRecord::Base
     else
       0
     end
+  end
+
+  def has_services?
+    pet_feeding || pet_grooming || pet_training || pet_walking
+  end
+
+  def pretty_services
+    services = []
+    services << 'Pet feeding' if pet_feeding
+    services << 'Pet grooming' if pet_grooming
+    services << 'Pet training' if pet_training
+    services << 'Pet walking' if pet_walking
+    services.to_sentence.downcase.capitalize
   end
 end
