@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
                   :current_password, :accept_house_rules, :accept_terms
 
   attr_accessor   :current_password, :accept_house_rules, :accept_terms
-  
+
   has_one :homestay
   has_many :ratings
   has_many :pets

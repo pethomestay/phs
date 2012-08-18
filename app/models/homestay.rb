@@ -40,7 +40,7 @@ class Homestay < ActiveRecord::Base
 
   validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first), if: :is_homestay?
   validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first), if: :is_homestay?
-  
+
   scope :active, where(active: true)
 
   geocoded_by :geocoding_address

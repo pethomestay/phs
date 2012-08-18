@@ -4,7 +4,7 @@ class HotelStepsController < ApplicationController
 
   include Wicked::Wizard
   steps :basic_details, :map, :profile
-  
+
   def show
     @hotel = get_hotel
     if step == :profile
@@ -12,7 +12,7 @@ class HotelStepsController < ApplicationController
     end
     render_wizard
   end
-  
+
   def update
     @hotel = get_hotel
     if picture_params = params[:hotel].delete(:picture)
@@ -34,7 +34,7 @@ class HotelStepsController < ApplicationController
     current_user.update_attributes({wants_to_be_hotel: false})
     redirect_to root_path, alert: "Canceled desire to be a pet hotel."
   end
-  
+
   private
   def get_hotel
     create_hotel unless current_user.hotel

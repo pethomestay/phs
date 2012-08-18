@@ -4,7 +4,7 @@ class SitterStepsController < ApplicationController
 
   include Wicked::Wizard
   steps :basic_details, :map, :profile
-  
+
   def show
     @sitter = get_sitter
     if step == :profile
@@ -12,7 +12,7 @@ class SitterStepsController < ApplicationController
     end
     render_wizard
   end
-  
+
   def update
     if user_params = params[:sitter].delete(:user)
       current_user.update_attributes(user_params)
@@ -38,7 +38,7 @@ class SitterStepsController < ApplicationController
     current_user.update_attributes({wants_to_be_sitter: false})
     redirect_to root_path, alert: "Canceled desire to be a pet sitter."
   end
-  
+
   private
   def get_sitter
     create_sitter unless current_user.sitter
