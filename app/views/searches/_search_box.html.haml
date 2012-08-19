@@ -14,9 +14,9 @@
           %label.radio.inline
             = radio_button :search, :sort_by, 'cost_per_night'
             Cost
-          %label.radio.inline
-            = radio_button :search, :sort_by, 'average_rating'
-            Rating
+          / %label.radio.inline
+          /   = radio_button :search, :sort_by, 'average_rating'
+          /   Rating
       / = f.label 'Your pet prefers' do |controls|
       /   = controls.check_box :is_homestay, 'To sleep over at a homestay'
       /   = controls.check_box :is_sitter, 'To stay at home with a sitter'
