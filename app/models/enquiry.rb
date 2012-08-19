@@ -28,6 +28,7 @@ class Enquiry < ActiveRecord::Base
   }
 
   has_and_belongs_to_many :pets
+  has_many                :feedbacks
   belongs_to              :user
   belongs_to              :homestay
   attr_accessible         :pets, :user, :homestay_id, :formatted_date, \
@@ -61,6 +62,14 @@ class Enquiry < ActiveRecord::Base
 
   def formatted_date
     date.to_formatted_s
+  end
+
+  def feedback_for_owner
+    feedbacks.where('subject_id = ?', user.id).first
+  end
+
+  def feedback_for_homestay
+    feedbacks.where('subject_id = ?', homestay.user.id).first
   end
 
   def pretty_duration

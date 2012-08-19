@@ -12,7 +12,7 @@ PetHomestay::Application.routes.draw do
 
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
-    resource :rating
+    resource :feedback
   end
 
   get '/searches'       => 'searches#create'

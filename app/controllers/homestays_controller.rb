@@ -4,9 +4,8 @@ class HomestaysController < ApplicationController
   def show
     @homestay = Homestay.find(params[:id])
     @title = @homestay.title
-    @reviewed_ratings = @homestay.ratings.reviewed
+    @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
-      @my_rating = Rating.find_by_user_id_and_ratable_type_and_ratable_id(current_user.id, 'Homestay', params[:id])
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,

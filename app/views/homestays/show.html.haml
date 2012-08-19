@@ -80,5 +80,3 @@
         zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
       }})
       setupMarker(#{@homestay.latitude}, #{@homestay.longitude})
-    - if signed_in? && !my_homestay?(@homestay)
-      %li.span5= render partial: 'providers/give_rating', locals: {provider: @homestay, my_rating: @my_rating}

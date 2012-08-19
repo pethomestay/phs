@@ -5,7 +5,7 @@
     - else
       = link_to image_tag("/assets/results-placeholder.png"), homestay
     %p.rating
-      - if homestay.ratings.present?
+      - if homestay.user.received_feedbacks.present?
         - rating_stars homestay.average_rating
       - else
         (Not yet rated)

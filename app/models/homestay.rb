@@ -14,7 +14,6 @@ class Homestay < ActiveRecord::Base
   }
 
   has_many :enquiries
-  has_many :ratings, as: 'ratable'
   has_many :pictures, as: 'picturable'
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
   belongs_to :user
@@ -89,13 +88,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def average_rating
-    if ratings.present?
-      ratings.inject(0) do |sum, rating|
-        sum += rating.stars
-      end / ratings.count
-    else
-      0
-    end
+    user.average_rating
   end
 
   def has_services?

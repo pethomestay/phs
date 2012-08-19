@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   has_many :pets
   has_many :enquiries
 
+  has_many :given_feedbacks, class_name: 'Feedback'
+  has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
+
   validates_presence_of :first_name, :last_name, :date_of_birth, :address_1, :address_suburb, \
                         :address_city, :address_country
 
@@ -72,5 +75,15 @@ class User < ActiveRecord::Base
 
   def pet_summary
     "#{pets.length} #{'pet'.pluralize(pets.length)} (#{pet_count_summary})"
+  end
+
+  def average_rating
+    if received_feedbacks.present?
+      received_feedbacks.inject(0) do |sum, feedback|
+        sum += feedback.rating
+      end / received_feedbacks.count
+    else
+      0
+    end
   end
 end

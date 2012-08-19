@@ -12,12 +12,13 @@ $ ->
     , ->
       $stars.removeClass("icon-star").addClass("icon-star-empty")
     $(this).click ->
-      url = "#{window.location.pathname}/rating"
-      $.post url, {_method: 'PUT', "rating[stars]": rating}, (response) ->
-        $('#review-modal').modal('show')
-        setTimeout ->
-          $('.rater').parent().html('Thanks for giving your input.')
-        , 500
+      $('#feedback_rating').val(rating)
+      # url = "#{window.location.pathname}/rating"
+      # $.post url, {_method: 'PUT', "rating[stars]": rating}, (response) ->
+      #   $('#review-modal').modal('show')
+      #   setTimeout ->
+      #     $('.rater').parent().html('Thanks for giving your input.')
+      #   , 500
 
   $('#review-modal .submit-review').click ->
     url = "#{window.location.pathname}/rating"

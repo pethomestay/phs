@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819000841) do
+ActiveRecord::Schema.define(:version => 20120819055037) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -38,6 +38,20 @@ ActiveRecord::Schema.define(:version => 20120819000841) do
 
   add_index "enquiries_pets", ["enquiry_id"], :name => "index_enquiries_pets_on_enquiry_id"
   add_index "enquiries_pets", ["pet_id"], :name => "index_enquiries_pets_on_pet_id"
+
+  create_table "feedbacks", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "subject_id"
+    t.integer  "enquiry_id"
+    t.integer  "rating"
+    t.text     "review"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "feedbacks", ["enquiry_id"], :name => "index_feedbacks_on_enquiry_id"
+  add_index "feedbacks", ["subject_id"], :name => "index_feedbacks_on_subject_id"
+  add_index "feedbacks", ["user_id"], :name => "index_feedbacks_on_user_id"
 
   create_table "homestays", :force => true do |t|
     t.string   "title"
@@ -119,19 +133,6 @@ ActiveRecord::Schema.define(:version => 20120819000841) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
-
-  create_table "ratings", :force => true do |t|
-    t.integer  "stars"
-    t.text     "review"
-    t.integer  "user_id"
-    t.integer  "ratable_id"
-    t.string   "ratable_type"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "ratings", ["ratable_id", "ratable_type"], :name => "index_ratings_on_ratable_id_and_ratable_type"
-  add_index "ratings", ["user_id"], :name => "index_ratings_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
