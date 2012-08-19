@@ -9,7 +9,18 @@
     %td= @enquiry.pretty_duration
   %tr
     %td Message
-    %td= @enquiry.message
+    - if @enquiry.message.present?
+      %td= @enquiry.message
+    - else
+      %td No message...
+  %tr
+    %td Average rating for this user
+    - if @user.received_feedbacks.present?
+      %td
+        - rating_stars @user.average_rating
+        = "(#{@user.average_rating} #{'star'.pluralize(@user.average_rating)})"
+    - else
+      %td User has not been rated yet...
 %h2 Pets
 - @pets.each do |pet|
   .row
