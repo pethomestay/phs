@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation?
+    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback?
   end
 
   def unanswered_enquiries?
@@ -52,6 +52,24 @@ class User < ActiveRecord::Base
 
   def enquiries_needing_confirmation
     enquiries.need_confirmation
+  end
+
+  def owners_needing_feedback?
+    owners_needing_feedback.present?
+  end
+
+  def owners_needing_feedback
+    if homestay.present?
+      homestay.enquiries.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
+    end
+  end
+
+  def homestays_needing_feedback?
+    homestays_needing_feedback.present?
+  end
+
+  def homestays_needing_feedback
+    enquiries.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
   end
 
   def homestay_id
