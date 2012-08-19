@@ -17,15 +17,6 @@ $ ->
     $(this).click ->
       $('#feedback_rating').val(rating)
 
-  $('#review-modal .submit-review').click ->
-    url = "#{window.location.pathname}/rating"
-    review = $('.review-text').val()
-    $.post url, {_method: 'PUT', "rating[review]": review}, (response) ->
-      $('#review-modal').modal('hide')
-      setTimeout ->
-        window.location.reload true
-      , 500
-
   $('.enquire-datepicker').datepicker
     dateFormat: "yy-mm-dd"
     minDate: 0
