@@ -38,13 +38,13 @@ class Enquiry < ActiveRecord::Base
   scope :unanswered, where(responded: false)
   scope :need_confirmation, where(responded: true, accepted: true, confirmed:false)
 
-  scope :need_feedback, lambda { where("(date < ? AND (duration = 'morning' OR duration = 'afternoon' OR duration = 'evening' OR duration = 'overnight')) OR \
+  scope :need_feedback, lambda { where("owner_accepted = ? AND (date < ? AND (duration = 'morning' OR duration = 'afternoon' OR duration = 'evening' OR duration = 'overnight')) OR \
                                         (date < ? AND (duration = '2nights')) OR \
                                         (date < ? AND (duration = '3nights')) OR \
                                         (date < ? AND (duration = '4nights')) OR \
                                         (date < ? AND (duration = '5nights')) OR \
                                         (date < ? AND (duration = '6nights')) OR \
-                                        (date < ? AND (duration = 'longerthan7nights'))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
+                                        (date < ? AND (duration = 'longerthan7nights'))", true, 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
   scope :unsent_feedback_email, where(sent_feedback_email: false)
 
