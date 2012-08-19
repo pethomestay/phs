@@ -3,7 +3,7 @@
 = twitter_bootstrap_form_for @feedback, url: enquiry_feedback_path(@enquiry) do |f|
   .row
     .span6{style: 'padding-top:30px'}
-      = f.hidden_field :rating
+      = f.hidden_field :rating, value: f.object.rating || 0
       - if f.object.errors.present?
         %p.tc.red= "How would you rate the way #{@subject.first_name} handled this booking?"
       - else

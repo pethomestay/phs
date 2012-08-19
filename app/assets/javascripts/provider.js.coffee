@@ -10,15 +10,12 @@ $ ->
       $stars.slice(0, rating).addClass('icon-star')
       $stars.slice(rating).addClass('icon-star-empty')
     , ->
-      $stars.removeClass("icon-star").addClass("icon-star-empty")
+      $stars.removeClass("icon-star").removeClass("icon-star-empty")
+      current = $('#feedback_rating').val()
+      $stars.slice(0, current).addClass('icon-star')
+      $stars.slice(current).addClass('icon-star-empty')
     $(this).click ->
       $('#feedback_rating').val(rating)
-      # url = "#{window.location.pathname}/rating"
-      # $.post url, {_method: 'PUT', "rating[stars]": rating}, (response) ->
-      #   $('#review-modal').modal('show')
-      #   setTimeout ->
-      #     $('.rater').parent().html('Thanks for giving your input.')
-      #   , 500
 
   $('#review-modal .submit-review').click ->
     url = "#{window.location.pathname}/rating"
