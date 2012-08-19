@@ -1,0 +1,6 @@
+%p.article-title= "#{@subject.first_name} would love some feedback!"
+%p.article-content= "You recently completed a booking with #{@subject.first_name}. We'd really appriciate if you left a rating on how you think they handled everything."
+%p.article-content PetHomeStay is a community built on trust so any feedback is valuable to other users in making booking desicions.
+%p.article-content= link_to "Leave feedback for #{@subject.first_name} now!", enquiry_feedback_url(@enquiry)
+%p.article-content Thanks!
+%p.article-content The PetHomeStay Team
