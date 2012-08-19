@@ -32,12 +32,26 @@ class User < ActiveRecord::Base
     pets.map(&:name).to_sentence
   end
 
-  def has_unanswered_enquiries?
+  def notifications?
+    unanswered_enquiries? || enquiries_needing_confirmation?
+  end
+
+  def unanswered_enquiries?
     unanswered_enquiries.present?
   end
 
   def unanswered_enquiries
-    Enquiry.unanswered(self)
+    if homestay.present?
+      homestay.enquiries.unanswered
+    end
+  end
+
+  def enquiries_needing_confirmation?
+    enquiries_needing_confirmation.present?
+  end
+
+  def enquiries_needing_confirmation
+    enquiries.need_confirmation
   end
 
   def homestay_id

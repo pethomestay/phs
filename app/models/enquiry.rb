@@ -48,16 +48,6 @@ class Enquiry < ActiveRecord::Base
 
   scope :unsent_feedback_email, where(sent_feedback_email: false)
 
-  scope :unanswered, lambda { |user|
-    if user && user.homestay
-      where('(homestay_id = ? AND responded = FALSE) OR (user_id = ? AND responded = TRUE AND accepted = TRUE AND confirmed = FALSE)', user.homestay.id, user.id)
-    elsif user
-      where('user_id = ? AND responded = TRUE AND accepted = TRUE AND confirmed = FALSE', user.id)
-    elsif user.homestay
-      where('homestay_id = ? AND responded = FALSE', user.homestay.id)
-    end
-  }
-
   validates_inclusion_of :duration, :in => DURATION_OPTIONS.map(&:first)
 
   def formatted_date

@@ -19,14 +19,19 @@
       .span2.pull-right
         = link_to "Close account", edit_user_registration_path, class: 'btn btn-danger btn-mini'
   .span4.notifications
-    %h2.page-header Notifications
-    - if @user.unanswered_enquiries.present?
-      - @user.unanswered_enquiries.each do |enquiry|
-        - if enquiry.user == current_user
-          %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
-          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-        - elsif enquiry.homestay.user == current_user
+    %h2.page-header Inbox
+    - if @user.notifications?
+      - if @user.unanswered_enquiries?
+        %h4 Enquiries for your PetHomeStay
+        - @user.unanswered_enquiries.each do |enquiry|
           %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        .clear
+        %hr
+      - if @user.enquiries_needing_confirmation?
+        %h4 Bookings to confirm
+        - @user.enquiries_needing_confirmation.each do |enquiry|
+          %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
         .clear
         %hr

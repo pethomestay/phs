@@ -14,7 +14,7 @@
           .divider
           = link_to "Forgot your password?", new_user_password_path
   - else
-    - if current_user.has_unanswered_enquiries?
+    - if current_user.notifications?
       %li.cta
         %a.btn.btn-mini.btn-primary{href: my_account_path}
           My Account
