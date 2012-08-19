@@ -1,7 +1,11 @@
 .page-header
-  %h1
-    Create a PetHomeStay listing
-    %small just fill out this form to join our great community
+  .pull-left
+    %h1
+      Create a PetHomeStay listing
+      %small just fill out this form to join our great community
+  .pull-right
+    = link_to 'Back to My Account', my_account_path, class: 'btn'
+  .clear
 = twitter_bootstrap_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
   = render partial: 'fields', locals: {f: f}
   = f.actions do

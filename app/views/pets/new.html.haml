@@ -1,6 +1,10 @@
 .page-header
-  %h1
-    Add a Pet Profile
+  .pull-left
+    %h1
+      Add a Pet Profile
+  .pull-right
+    = link_to 'Back to My Pets', pets_path, class: 'btn'
+  .clear
 = twitter_bootstrap_form_for @pet, html: {class: 'form-horizontal', multipart: true} do |f|
   = render partial: 'fields', locals: {f: f}
   = f.actions do
