@@ -49,6 +49,7 @@
         = f.text_field :emergency_contact_name, 'Contact name'
         = f.text_field :emergency_contact_phone, 'Contact phone'
   = f.fieldset 'Photos' do
+    %p Please include at least one photo of you with your pet so people know what you and your pet look like.
     %table.table.homestay-pictures
       %tbody
         = f.nested_fields_for :pictures do |f|
