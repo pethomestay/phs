@@ -26,28 +26,28 @@
         - @user.unanswered_enquiries.each do |enquiry|
           %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-        .clear
+          .clear
         %hr
       - if @user.enquiries_needing_confirmation?
         %h4 Bookings to confirm
         - @user.enquiries_needing_confirmation.each do |enquiry|
           %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-        .clear
+          .clear
         %hr
       - if @user.owners_needing_feedback?
         %h4 Owners needing feedback
         - @user.owners_needing_feedback.each do |enquiry|
           %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-        .clear
+          .clear
         %hr
       - if @user.homestays_needing_feedback?
         %h4 PetHomeStay's needing feedback
         - @user.homestays_needing_feedback.each do |enquiry|
           %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-        .clear
+          .clear
         %hr
     - else
       You have no new notifications!
