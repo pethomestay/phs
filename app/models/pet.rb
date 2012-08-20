@@ -33,7 +33,7 @@ class Pet < ActiveRecord::Base
                   :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
                   :vet_phone, :medication
 
-  validates_presence_of :name, :age
+  validates_presence_of :name, :age, :emergency_contact_name, :emergency_contact_phone
   validates_inclusion_of :pet_type, :in => %w( dog cat bird fish other )
   validates_inclusion_of :size, :in => %w( small medium large giant ), if: Proc.new {|pet| pet.pet_type == 'dog'}
   validates_inclusion_of :sex, :in => %w( male_desexed female_desexed male_entire female_entire ), if: Proc.new {|pet| ['cat', 'dog'].include?(pet.pet_type)}
