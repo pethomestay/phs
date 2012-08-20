@@ -29,18 +29,18 @@
   - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
   = f.select :outdoor_area, 'Size of outdoor area', options
   = f.label "Professional?" do |controls|
-    = controls.check_box :is_professional, 'I am a registered business with an ABN'
+    = controls.check_box :is_professional, 'I am a registered business'
+    = controls.check_box :insurance, 'Professional pet-insurance'
+    = controls.check_box :first_aid, 'Pet first-aid training'
+    = controls.check_box :professional_qualification, 'A professional pet qualification'
   = f.label "I can provide" do |controls|
     = controls.check_box :constant_supervision, '24/7 supervision'
     = controls.check_box :supervision_outside_work_hours, 'Supervision outside of work hours (6pm - 8am)'
     = controls.check_box :emergency_transport, 'Emergency transport'
   = f.label "I have" do |controls|
-    = controls.check_box :first_aid, 'Pet first-aid training'
-    = controls.check_box :insurance, 'Professional pet-insurance'
     = controls.check_box :fenced, 'A fully fenced back yard'
     = controls.check_box :children_present, 'Children under 18 at the address?'
     = controls.check_box :police_check, 'A current police check certificate'
-    = controls.check_box :professional_qualification, 'A professional pet qualification'
   = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
   %h3
     Do you own pets?
