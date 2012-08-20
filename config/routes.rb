@@ -19,6 +19,7 @@ PetHomestay::Application.routes.draw do
   get '/pet-care/:city' => 'searches#show', as: 'city_search'
 
   get '/my-account'     => 'users#show', as: 'my_account'
+  get '/my-account'     => 'users#show', as: 'user_root'
   root to: "pages#home"
 
   get '/searches/none'        => 'pages#home', as: 'no_results'
