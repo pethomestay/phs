@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819055037) do
+ActiveRecord::Schema.define(:version => 20120820005428) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -69,9 +69,6 @@ ActiveRecord::Schema.define(:version => 20120819055037) do
     t.boolean  "active"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
-    t.boolean  "is_homestay",                       :default => false
-    t.boolean  "is_sitter",                         :default => false
-    t.boolean  "is_services",                       :default => false
     t.boolean  "constant_supervision",              :default => false
     t.boolean  "emergency_transport",               :default => false
     t.boolean  "first_aid",                         :default => false

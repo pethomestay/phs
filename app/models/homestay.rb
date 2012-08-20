@@ -21,9 +21,8 @@ class Homestay < ActiveRecord::Base
   attr_accessible :title, :description, :cost_per_night, :active, \
                   :address_1, :address_2, :address_suburb, :address_city, \
                   :address_postcode, :address_country, :latitude, :longitude, \
-                  :is_homestay, :is_sitter, :is_services, :years_looking_after_pets, \
-                  :constant_supervision, :emergency_transport, :first_aid, \
-                  :insurance, :professional_qualification, :pictures_attributes, \
+                  :years_looking_after_pets, :constant_supervision, :emergency_transport, \
+                  :first_aid, :insurance, :professional_qualification, :pictures_attributes, \
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
                   :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
                   :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
@@ -33,12 +32,7 @@ class Homestay < ActiveRecord::Base
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country
   validates_presence_of :title, :description
 
-  validates_acceptance_of :is_homestay, accept: true, unless: Proc.new {|homestay| homestay.is_sitter || homestay.is_services}
-  validates_acceptance_of :is_sitter, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_services}
-  validates_acceptance_of :is_services, accept: true, unless: Proc.new {|homestay| homestay.is_homestay || homestay.is_sitter}
 
-  validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first), if: :is_homestay?
-  validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first), if: :is_homestay?
 
   scope :active, where(active: true)
 

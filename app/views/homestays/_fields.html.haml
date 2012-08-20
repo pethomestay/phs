@@ -1,11 +1,7 @@
 .homestay-form
-  = f.label "I would like to make a listing for a (check all that apply)" do |controls|
-    = controls.check_box :is_homestay, 'PetHomeStay – you accept other peoples pets for day or overnight homestays at your personal house'
-    / = controls.check_box :is_sitter, 'Pet Sitting – you are willing to go to other peoples houses and stay there to look after their pets, house & other aspects as needed'
-    = controls.check_box :is_services, 'Pet Services – you provide walking, grooming, professional day-care, or other individual or professional pet services except as specified above'
-  = f.text_field :title, 'Catchy listing title'
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
+  = f.text_field :title, 'Catchy listing title'
   .row
     .span7
       = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span5', rows: 12
@@ -19,13 +15,19 @@
         %li Do you provide bedding, toys, treats?
         %li Do you provide a pick up or drop off?
         %li Are you specific about certain times?
-  = f.text_field :years_looking_after_pets, 'Years owning/looking after pets'
+  - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
+  .control-group{class: error_class}
+    = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+    .controls
+      .input-prepend.input-append
+        .add-on $
+        %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
+        .add-on .00
   %h3 Tell us about your PetHomeStay
-  .specific.homestay
-    - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
-    = f.select :property_type, 'Property type', options
-    - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
-    = f.select :outdoor_area, 'Size of outdoor area', options
+  - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
+  = f.select :property_type, 'Property type', options
+  - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
+  = f.select :outdoor_area, 'Size of outdoor area', options
   = f.label "Professional?" do |controls|
     = controls.check_box :is_professional, 'I am a registered business with an ABN'
   = f.label "I can provide" do |controls|
@@ -35,47 +37,38 @@
   = f.label "I have" do |controls|
     = controls.check_box :first_aid, 'Pet first-aid training'
     = controls.check_box :insurance, 'Professional pet-insurance'
-    .specific.homestay
       = controls.check_box :fenced, 'A fully fenced back yard'
-      = controls.check_box :children_present, 'Children under 18 at the address?'
+    = controls.check_box :fenced, 'A fully fenced back yard'
+    = controls.check_box :children_present, 'Children under 18 at the address?'
     = controls.check_box :police_check, 'A current police check certificate'
     = controls.check_box :professional_qualification, 'A professional pet qualification'
   = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
-  .specific.homestay.sitter
-    %h3 Pet care nightly rates
-    - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
+  %h3
+    Do you own pets?
+    %small Please complete a pet profile after creating your listing
+  .control-group
+    %label.inline-checkbox
+      %input{type: 'hidden', name: 'homestay[pets_present]', value: '0'}
+      %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1'}
+      My pets will be present at this address during PetHomeStay bookings.
+  %h3{style: "margin-bottom: 10px;"}
+    Your PetHomeStay address
+    %small this will be used to place your listing on the map
+  = f.text_field :address_1, 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
+  .control-group
+    .controls
+      %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
+  = f.text_field :address_suburb, 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
+  = f.text_field :address_city, 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
+  = f.country_select :address_country, 'Country', {priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]}
+  %h3{style: "margin-bottom: 10px;"} Other services offered
+  = f.label "I can also offer" do |controls|
+    = controls.check_box :pet_feeding, 'pet feeding'
+    = controls.check_box :pet_grooming, 'pet grooming'
+    = controls.check_box :pet_training, 'pet training'
+    = controls.check_box :pet_walking, 'pet walking'
     .control-group{class: error_class}
-      = label_tag :cost_per_night, "Cost per night", class: 'control-label'
-      .controls
-        .input-prepend.input-append
-          .add-on $
-          %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
-          .add-on .00
-  .specific.homestay
-    %h3 Do you own pets?
-    %p If you own pets please complete a pet profile after creating your listing.
-    .control-group
       %label.inline-checkbox
-        %input{type: 'hidden', name: 'homestay[pets_present]', value: '0'}
-        %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1'}
-        My pets will be present at this address during PetHomeStay bookings.
-    %h3{style: "margin-bottom: 10px;"}
-      Your PetHomeStay address
-      %small this will be used to place your listing on the map
-    = f.text_field :address_1, 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
-    .control-group
-      .controls
-        %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
-    = f.text_field :address_suburb, 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
-    = f.text_field :address_city, 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
-    = f.country_select :address_country, 'Country', {priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]}
-  .specific.services
-    %h3{style: "margin-bottom: 10px;"} Services offered
-    = f.label "I can offer" do |controls|
-      = controls.check_box :pet_feeding, 'pet feeding'
-      = controls.check_box :pet_grooming, 'pet grooming'
-      = controls.check_box :pet_training, 'pet training'
-      = controls.check_box :pet_walking, 'pet walking'
   %h3 Photo
   %table.table.homestay-pictures
     %tbody
