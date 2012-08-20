@@ -25,16 +25,7 @@ class SearchesController < ApplicationController
   def perform_search
     perfrom_geocode
     @homestays = Homestay.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by)
-                         .where(type_query)
                          .paginate(page: params[:page], per_page: 10)
-  end
-
-  def type_query
-    interested_types = []
-    interested_types << 'is_homestay = true' if @search.is_homestay
-    interested_types << 'is_sitter = true' if @search.is_sitter
-    interested_types << 'is_services = true' if @search.is_services
-    interested_types.join(' OR ')
   end
 
   def perfrom_geocode
