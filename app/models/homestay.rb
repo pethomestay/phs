@@ -33,6 +33,8 @@ class Homestay < ActiveRecord::Base
   validates_presence_of :title, :description
 
 
+  validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first)
+  validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first)
 
   scope :active, where(active: true)
 
