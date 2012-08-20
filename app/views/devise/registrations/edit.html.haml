@@ -17,7 +17,7 @@
   = f.password_field :password do
     %span.help-inline leave blank if you don't want to change it
   = f.password_field :password_confirmation, 'Confirm your password'
-  = f.password_field :current_password, 'Current password' do
-    %span.help-inline We need your current password to confirm your changes
+  .well.current-password
+    = f.password_field :current_password, 'We need your current password to confirm your changes'
   = f.actions do
     = f.submit 'Update account'
