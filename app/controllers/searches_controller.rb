@@ -1,4 +1,5 @@
 require './app/models/search'
+require 'will_paginate/array'
 
 class SearchesController < ApplicationController
   def create
@@ -24,8 +25,14 @@ class SearchesController < ApplicationController
 
   def perform_search
     perfrom_geocode
-    @homestays = Homestay.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by)
-                         .paginate(page: params[:page], per_page: 10)
+    unless @search.sort_by == 'average_rating'
+      @homestays = Homestay.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by)
+                           .paginate(page: params[:page], per_page: 10)
+    else
+      ids = Homestay.near([@search.latitude, @search.longitude], @search.within, order: 'distance').pluck(:id)
+      homestays_with_feedbacks = Homestay.where(id: ids).includes(user: :received_feedbacks)
+      @homestays = homestays_with_feedbacks.sort_by!{|h| h.average_rating}.reverse.paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def perfrom_geocode
