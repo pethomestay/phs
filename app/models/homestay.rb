@@ -26,14 +26,15 @@ class Homestay < ActiveRecord::Base
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
                   :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
                   :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
-                  :pet_training, :pet_walking, :is_professional, :parental_consent
+                  :pet_training, :pet_walking, :is_professional, :parental_consent, :accept_liability
 
-  attr_accessor :parental_consent
+  attr_accessor :parental_consent, :accept_liability
 
   validates_presence_of :cost_per_night
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country
   validates_presence_of :title, :description
 
+  validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
   validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first)

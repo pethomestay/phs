@@ -78,6 +78,14 @@
         %input{type: 'hidden', name: 'homestay[parental_consent]', value: '0'}
         = check_box_tag 'homestay[parental_consent]', '1', (f.object.parental_consent == '1' || !f.object.new_record?)
         I have parental consent to look after pets in my home.
+  - if f.object.new_record?
+    %h3 Acknowlegement
+    - error_class = f.object.errors.messages.has_key?(:accept_terms) ? 'error' : ''
+    .control-group{class: error_class}
+      %label.inline-checkbox
+        %input{type: 'hidden', name: 'homestay[accept_liability]', value: '0'}
+        = check_box_tag 'homestay[accept_liability]', '1', f.object.accept_liability == '1'
+        I understand that as by creating this listing, depending my home state or council laws, I may liable for any damages or 3rd party events which may happen while I am in control of others pets. I accept these risks or have suitable insurance to cover these events.
   %h3 Photo
   %table.table.homestay-pictures
     %tbody
