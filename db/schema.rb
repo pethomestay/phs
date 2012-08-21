@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820005428) do
+ActiveRecord::Schema.define(:version => 20120821015109) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20120820005428) do
     t.string   "address_country"
     t.float    "latitude"
     t.float    "longitude"
-    t.boolean  "active"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.boolean  "constant_supervision",              :default => false
@@ -89,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120820005428) do
     t.boolean  "pet_training",                      :default => false
     t.boolean  "pet_walking",                       :default => false
     t.boolean  "is_professional",                   :default => false
+    t.boolean  "active",                            :default => true
   end
 
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(:version => 20120820005428) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",   :null => false
+    t.string   "encrypted_password",     :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(:version => 20120820005428) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.date     "date_of_birth"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20120820005428) do
     t.string   "address_city"
     t.string   "address_postcode"
     t.string   "address_country"
+    t.boolean  "active",                 :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

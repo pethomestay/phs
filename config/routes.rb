@@ -1,5 +1,5 @@
 PetHomestay::Application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {registrations: "registrations"}
   resource :login_dropdown, only: [:show]
 
   get '/test' => 'pages#test'

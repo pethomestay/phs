@@ -17,7 +17,7 @@
       .span6
         %h4 Close my PetHomeStay account
       .span2.pull-right
-        = link_to "Close account", edit_user_registration_path, class: 'btn btn-danger btn-mini'
+        = link_to "Close account", user_registration_path, class: 'btn btn-mini', method: 'delete', confirm: 'Are you sure you wish to close your PetHomeStay account?'
   .span4.notifications
     %h2.page-header Inbox
     - if @user.notifications?
