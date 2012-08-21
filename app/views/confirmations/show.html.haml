@@ -24,6 +24,14 @@
     %tr
       %td Mobile number
       %td= @provider.mobile_number
+  %tr
+    %td Average rating for this provider
+    - if @provider.received_feedbacks.present?
+      %td
+        - rating_stars @provider.average_rating
+        = "(#{@provider.average_rating} #{'star'.pluralize(@provider.average_rating)})"
+    - else
+      %td User has not been rated yet...
 .form-actions
   = form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
     = f.hidden_field :confirmed, value: true
