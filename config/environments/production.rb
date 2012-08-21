@@ -81,5 +81,5 @@ PetHomestay::Application.configure do
   config.action_mailer.asset_host = "http://#{ENV['HOST']}"
 
   # Use SSL
-  # config.force_ssl = true
+  config.force_ssl = true
 end
