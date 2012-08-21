@@ -15,14 +15,18 @@
         %li Do you provide bedding, toys, treats?
         %li Do you provide a pick up or drop off?
         %li Are you specific about certain times?
-  - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
-  .control-group{class: error_class}
-    = label_tag :cost_per_night, "Cost per night", class: 'control-label'
-    .controls
-      .input-prepend.input-append
-        .add-on $
-        %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
-        .add-on .00
+  .row
+    .span7
+      - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
+      .control-group{class: error_class}
+        = label_tag :cost_per_night, "Cost per night", class: 'control-label'
+        .controls
+          .input-prepend.input-append
+            .add-on $
+            %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
+            .add-on .00
+    .span5
+      %p The cost is up to you, however we would guide this to be between $15-40 per night depending on your particular PetHomeStay. You can also enter zero dollars and operate a reciprocal agreement with your community - you look after their pets, they will look after yours!
   %h3 Tell us about your PetHomeStay
   - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
   = f.select :property_type, 'Property type', options
