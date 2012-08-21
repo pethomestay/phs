@@ -22,6 +22,7 @@ gem 'carmen-rails'
 gem 'actionmailer_inline_css'
 gem 'chosen-rails'
 gem 'awesome_nested_fields'
+gem 'newrelic_rpm'
 
 group :assets do
   gem 'therubyracer', '0.11.0beta5'
