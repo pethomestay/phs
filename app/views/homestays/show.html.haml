@@ -68,8 +68,9 @@
           - @homestay.pictures.each_with_index do |picture, i|
             - klass = (i == 0 ? 'active' : '')
             .item{class: klass}= image_tag(picture.file.thumb('380x300#').url)
-        = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
-        = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
+        - if @homestay.pictures.count > 1
+          = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
+          = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
     #map.thumbnail.span5
     %script{type: "application/javascript", src: "/assets/gmaps.js"}
     :javascript
