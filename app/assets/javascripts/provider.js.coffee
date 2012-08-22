@@ -24,3 +24,8 @@ $ ->
       $('#enquiry_date').val dateText
 
   $('.carousel').carousel()
+
+  $(':file').live 'change', ->
+    if this.files[0].size >= (1024 * 500)
+      alert "Please only upload files of 500KB and under."
+      $(this).replaceWith($(this).parent().html())
