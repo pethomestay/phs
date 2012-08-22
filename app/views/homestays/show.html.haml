@@ -80,4 +80,4 @@
         streetViewControl: false,
         zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
       }})
-      setupMarker(#{@homestay.latitude}, #{@homestay.longitude})
+      setupMarker(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)})

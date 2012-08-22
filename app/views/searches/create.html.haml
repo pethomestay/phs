@@ -19,6 +19,6 @@
         }})
       - @homestays.each do |homestay|
         :javascript
-          setupMarker(#{homestay.latitude.round(2)}, #{homestay.longitude.round(2)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})
+          setupMarker(#{homestay.latitude.round(3)}, #{homestay.longitude.round(3)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})
     - else
       = render partial: 'no_results'
