@@ -45,6 +45,14 @@ class Homestay < ActiveRecord::Base
   geocoded_by :geocoding_address
   after_validation :geocode, unless: Proc.new {|hotel| hotel.latitude && hotel.longitude}
 
+  before_validation :titleize_attributes
+
+  def titleize_attributes
+    %w{title address_suburb address_city}.each do |attribute|
+      send "#{attribute}=", send(attribute).titleize
+    end
+  end
+
   def geocoding_address
     "#{address_1}, #{address_city}, #{address_country}"
   end
