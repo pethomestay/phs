@@ -1,7 +1,7 @@
 %tr.listing{'data-listing' => homestay.id}
   %td.image-cell
     - if homestay.pictures.present?
-      = link_to image_tag(homestay.pictures.first.file.thumb('120x').url), homestay
+      = link_to image_tag(homestay.pictures.first.file.thumb('120x120#').url), homestay
     - else
       = link_to image_tag("/assets/results-placeholder.png"), homestay
     %p.rating
