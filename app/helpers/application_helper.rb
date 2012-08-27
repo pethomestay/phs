@@ -33,7 +33,11 @@ module ApplicationHelper
 
   def country_priority
     important_countries = %w{AU NZ}
-    priority = [request.location.country_code].concat(important_countries)
+    if request.location
+      priority = [request.location.country_code].concat(important_countries)
+    else
+      priority = important_countries
+    end
 
     priority.uniq
   end
