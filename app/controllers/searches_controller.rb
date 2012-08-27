@@ -5,9 +5,6 @@ class SearchesController < ApplicationController
   def create
     if params[:search][:location].present?
       params[:search][:location] = params[:search][:location].titleize
-      if request.location && request.location.country != 'Reserved'
-        params[:search][:location] = "#{params[:search][:location]}, #{request.location.country}"
-      end
       @search = Search.new params[:search]
       if @search.valid?
         @title = "Pet care for #{@search.location}"
@@ -40,7 +37,11 @@ class SearchesController < ApplicationController
 
   def perfrom_geocode
     unless @search.latitude.present? && @search.longitude.present?
-      coords = Geocoder.coordinates(@search.location)
+      if request.location && request.location.country != 'Reserved'
+        coords = Geocoder.coordinates("#{@search.location}, #{request.location.country}")
+      else
+        coords = Geocoder.coordinates(@search.location)
+      end
       @search.latitude = coords.first
       @search.longitude = coords.last
     end
