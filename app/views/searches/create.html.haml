@@ -5,7 +5,8 @@
       %table.table.table-bordered.table-striped
         %tbody
           %tr
-            %td#map{colspan: 2}
+            %td{colspan: 2, style: 'padding: 0;'}
+              #map
           - @homestays.each do |homestay|
             = render partial: 'result_row', locals: {homestay: homestay}
       = will_paginate @homestays, class: 'pagination pagination-centered'
