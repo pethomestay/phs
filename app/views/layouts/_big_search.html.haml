@@ -5,8 +5,6 @@
       %h3 Find trusted local people who love looking after pets!
       %h4 I’m looking for help with my pet in....
       = form_for Search.new, method: 'GET', html: {class: 'form-search'} do |f|
-        = f.hidden_field 'provider_types', name: 'search[provider_types][hotel]', value: 1
-        = f.hidden_field 'provider_types', name: 'search[provider_types][sitter]', value: 1 
         .input-append
           = f.text_field :location, class: 'search-query input-xlarge'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
