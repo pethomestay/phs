@@ -5,6 +5,9 @@ class SearchesController < ApplicationController
   def create
     if params[:search][:location].present?
       params[:search][:location] = params[:search][:location].titleize
+      unless request.location.country == 'Reserved'
+        params[:search][:location] = "params[:search][:location], #{request.location.country}"
+      end
       @search = Search.new params[:search]
       if @search.valid?
         @title = "Pet care for #{@search.location}"
