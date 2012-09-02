@@ -37,7 +37,9 @@ class SearchesController < ApplicationController
 
   def perfrom_geocode
     unless @search.latitude.present? && @search.longitude.present?
-      if request.location && request.location.country != 'Reserved'
+      if request.location && request.location.country != 'Reserved' && request.state
+        coords = Geocoder.coordinates("#{@search.location}, #{request.state}, #{request.location.country}")
+      elsif request.location && request.location.country != 'Reserved'
         coords = Geocoder.coordinates("#{@search.location}, #{request.location.country}")
       else
         coords = Geocoder.coordinates(@search.location)
