@@ -54,6 +54,7 @@
             %td More information about dislikes
             %td= pet.explain_dislikes
   .clearfix
+%p Accepting this request does not confirm a booking, it just lets the Pet Owner know that you are available on the dates requested for their pet. The next step is for the Owner to contact the Host and confirm a booking if they wish to proceed.
 .form-actions
   = form_for @enquiry, html: {class: 'form-button'} do |f|
     = f.hidden_field :responded, value: true
@@ -62,4 +63,4 @@
   = form_for @enquiry, html: {class: 'form-button'} do |f|
     = f.hidden_field :responded, value: true
     = f.hidden_field :accepted, value: true
-    = f.submit "I would like to contact #{@user.first_name}", class: 'btn btn-primary'
+    = f.submit "Yes, I am available to look after the pet", class: 'btn btn-primary'
