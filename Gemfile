@@ -23,6 +23,7 @@ gem 'actionmailer_inline_css'
 gem 'chosen-rails'
 gem 'awesome_nested_fields'
 gem 'newrelic_rpm'
+gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
 
 group :assets do
   gem 'therubyracer', '0.11.0beta5'
