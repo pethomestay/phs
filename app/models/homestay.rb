@@ -43,7 +43,7 @@ class Homestay < ActiveRecord::Base
   scope :active, where(active: true)
 
   geocoded_by :geocoding_address
-  after_validation :geocode, unless: Proc.new {|hotel| hotel.latitude && hotel.longitude}
+  after_validation :geocode
 
   before_validation :titleize_attributes
 
