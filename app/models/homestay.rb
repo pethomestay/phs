@@ -54,7 +54,11 @@ class Homestay < ActiveRecord::Base
   end
 
   def geocoding_address
-    "#{address_1}, #{address_city}, #{address_country}"
+    if address_suburb.present?
+      "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
+    else
+      "#{address_1}, #{address_city}, #{address_country}"
+    end
   end
 
   def need_parental_consent?
