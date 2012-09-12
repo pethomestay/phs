@@ -20,7 +20,6 @@ class SearchesController < ApplicationController
   def show
     @search = Search.new({location: params[:city].capitalize})
     perform_search
-    perform_unscoped_search if @homestays.blank?
     render :create if @homestays
   end
 
@@ -34,6 +33,7 @@ class SearchesController < ApplicationController
       homestays_with_feedbacks = Homestay.active.where(id: ids).includes(user: :received_feedbacks)
       @homestays = homestays_with_feedbacks.sort_by!{|h| h.average_rating}.reverse.paginate(page: params[:page], per_page: 10)
     end
+    perform_unscoped_search if @homestays.blank?
   end
 
   def perform_unscoped_search
