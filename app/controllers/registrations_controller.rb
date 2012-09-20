@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_filter :authenticate_user!
+
   def destroy
     current_user.update_attribute :active, false
     if current_user.homestay.present?

@@ -1,4 +1,6 @@
 class EnquiriesController < ApplicationController
+  before_filter :authenticate_user!
+
 	def create
     @enquiry = Enquiry.new(params[:enquiry])
     @enquiry.user = current_user

@@ -1,4 +1,6 @@
 class PetsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @pets = current_user.pets
   end

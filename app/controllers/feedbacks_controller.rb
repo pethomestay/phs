@@ -1,4 +1,6 @@
 class FeedbacksController < ApplicationController
+  before_filter :authenticate_user!
+
   def create
     @enquiry = Enquiry.find_by_id_and_owner_accepted(params[:enquiry_id], true)
     @subject = subject(@enquiry)

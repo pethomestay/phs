@@ -1,4 +1,6 @@
 class ConfirmationsController < ApplicationController
+  before_filter :authenticate_user!
+
   def show
     @enquiry = Enquiry.find(params[:enquiry_id])
     @homestay = @enquiry.homestay
