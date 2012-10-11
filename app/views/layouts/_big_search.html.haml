@@ -3,10 +3,13 @@
     .search-container
       %h2 Looking for pet care?
       %h3 Find trusted local people who love looking after pets!
-      %h4 I’m looking for help with my pet in....
+      %h4
+        Enter your postcode
+        %br
+        I’m looking for help with my pet in....
       = form_for Search.new, method: 'GET', html: {class: 'form-search'} do |f|
         .input-append
-          = f.text_field :location, class: 'search-query input-xlarge'
+          = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'e.g. 3000'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
         .clear
     .beta= link_to 'Now in beta', 'http://pethomestay.wordpress.com/2012/07/24/whats-all-this-beta-stuff-then-2/'
