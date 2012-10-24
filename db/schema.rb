@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821015109) do
+ActiveRecord::Schema.define(:version => 20121024211306) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20120821015109) do
     t.boolean  "pet_walking",                       :default => false
     t.boolean  "is_professional",                   :default => false
     t.boolean  "active",                            :default => true
+    t.string   "slug"
   end
 
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
