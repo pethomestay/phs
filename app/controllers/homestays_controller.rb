@@ -4,7 +4,7 @@ class HomestaysController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, :with => :error_404
 
   def show
-    @homestay = Homestay.find(params[:id])
+    @homestay = Homestay.find_by_slug(params[:id])
 
     if !@homestay.active?
       redirect_to root_path, alert: "This listing no longer exists."
@@ -23,13 +23,13 @@ class HomestaysController < ApplicationController
   end
 
   def edit
-    unless current_user && @homestay = Homestay.find_by_user_id_and_id(current_user.id, params[:id])
+    unless current_user && @homestay = Homestay.find_by_user_id_and_slug(current_user.id, params[:id])
       redirect_to root_path
     end
   end
 
   def update
-    if current_user && @homestay = Homestay.find_by_user_id_and_id(current_user.id, params[:id])
+    if current_user && @homestay = Homestay.find_by_user_id_and_slug(current_user.id, params[:id])
       if @homestay.update_attributes(params[:homestay])
         redirect_to my_account_path, alert: "Your listing has been updated."
       else
