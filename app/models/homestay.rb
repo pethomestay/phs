@@ -39,6 +39,7 @@ class Homestay < ActiveRecord::Base
 
   validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first)
   validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first)
+  validates_uniqueness_of :slug
 
   scope :active, where(active: true)
 
@@ -46,6 +47,12 @@ class Homestay < ActiveRecord::Base
   after_validation :geocode
 
   before_validation :titleize_attributes
+
+  before_create :create_slug
+
+  def create_slug
+    self.slug = self.title.parameterize
+  end
 
   def titleize_attributes
     %w{title address_suburb address_city}.each do |attribute|
