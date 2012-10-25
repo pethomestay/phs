@@ -1,4 +1,6 @@
 class Homestay < ActiveRecord::Base
+  include ActionView::Helpers
+
   PROPERTY_TYPE_OPTIONS = {
     'house'     => 'House',
     'apartment' => 'Apartment',
@@ -49,6 +51,7 @@ class Homestay < ActiveRecord::Base
   before_validation :titleize_attributes
 
   before_create :create_slug
+  before_save :sanitize_description
 
   def to_param
     self.slug
@@ -56,6 +59,10 @@ class Homestay < ActiveRecord::Base
 
   def create_slug
     self.slug = self.title.parameterize
+  end
+
+  def sanitize_description
+    self.description = strip_tags(self.description) if self.description.present?
   end
 
   def titleize_attributes
