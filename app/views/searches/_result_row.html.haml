@@ -13,7 +13,7 @@
     %table
       %tr
         %td
-          %h2= link_to homestay.title, homestay
+          %h2= link_to truncate(homestay.title, length: 50, separator: ' '), homestay
         %td
           %p.cost-per-night
             %strong
