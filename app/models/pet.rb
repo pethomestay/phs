@@ -31,7 +31,7 @@ class Pet < ActiveRecord::Base
                   :dislike_children, :dislike_loneliness, :explain_dislikes, \
                   :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
                   :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
-                  :vet_phone, :medication
+                  :vet_phone, :medication, :date_of_birth
 
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
   validates_inclusion_of :pet_type, :in => %w( dog cat bird fish other )
