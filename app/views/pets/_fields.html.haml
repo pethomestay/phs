@@ -15,7 +15,7 @@
     = f.text_field :breed
   .name
     = f.text_field :name, "Pet's name"
-  = f.text_field :age, "Age (years)"
+  = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year, end_year: 1980
   .specific.dog
     - options = options_for_select(Pet::SIZE_OPTIONS.to_a.map(&:reverse), f.object.size)
     = f.select :size, 'Size', options
