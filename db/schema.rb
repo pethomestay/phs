@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024211306) do
+ActiveRecord::Schema.define(:version => 20121026021848) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20121024211306) do
     t.string   "vet_name"
     t.string   "vet_phone"
     t.text     "medication"
+    t.date     "date_of_birth"
   end
 
   add_index "pets", ["user_id"], :name => "index_pets_on_user_id"
