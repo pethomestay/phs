@@ -84,7 +84,8 @@
 - content_for :open_graph_tags do
   %meta{property: 'og:title', content: @homestay.title}
   %meta{property: 'og:type', content: 'hotel'}
-  %meta{property: 'og:image', content: @homestay.pictures.first.file.thumb('380x300#').url(host: 'https://www.pethomestay.com')}
+  - if @homestay.pictures.present?
+    %meta{property: 'og:image', content: @homestay.pictures.first.file.thumb('380x300#').url(host: 'https://www.pethomestay.com')}
   %meta{property: 'og:url', content: homestay_url(@homestay, protocol: 'https')}
   %meta{property: 'og:site_name', content: 'PetHomeStay.com'}
   %meta{property: 'fb:app_id', content: '435407969825366'}
