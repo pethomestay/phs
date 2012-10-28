@@ -81,3 +81,11 @@
         zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
       }})
       setupMarker(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)})
+- content_for :open_graph_tags do
+  %meta{property: 'og:title', content: @homestay.title}
+  %meta{property: 'og:type', content: 'hotel'}
+  %meta{property: 'og:image', content: @homestay.pictures.first.file.thumb('380x300#').url}
+  %meta{property: 'og:url', content: homestay_url(@homestay)}
+  %meta{property: 'og:site_name', content: 'PetHomeStay.com'}
+  %meta{property: 'fb:admins', content: '1181472083'}
+  %meta{property: 'og:description', content: @homestay.description.truncate(160)}
