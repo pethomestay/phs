@@ -52,7 +52,10 @@
   .control-group
     %label.inline-checkbox
       %input{type: 'hidden', name: 'homestay[pets_present]', value: '0'}
-      %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1'}
+      - if f.object.pets_present?
+        %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1', checked: 'checked'}
+      - else
+        %input{type: 'checkbox', name: 'homestay[pets_present]', value: '1'}
       My pets will be present at this address during PetHomeStay bookings.
   %h3{style: "margin-bottom: 10px;"}
     Your PetHomeStay address
