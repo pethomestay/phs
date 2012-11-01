@@ -12,6 +12,11 @@
             %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
           - else
             %span (No reviews yet)
+        .homestay-share-buttons.top
+          .twitter-share
+            %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
+          .facebook-share
+            .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '290', 'data-show-faces' => 'false'}
       .span2.pricing
         %h1= number_to_currency(@homestay.cost_per_night)
         %p
@@ -53,6 +58,12 @@
               %strong I have children under the age of 18 at my house
     .description
       %p= simple_format @homestay.description
+    .homestay-share-buttons
+      .twitter-share
+        %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
+      .facebook-share
+        .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
+      .clearfix
     - unless my_homestay?(@homestay)
       - if signed_in?
         = render partial: 'providers/enquire', locals: {provider: @homestay}
