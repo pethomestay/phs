@@ -1,4 +1,6 @@
 $ ->
+  $('#new_homestay_modal').modal('show');
+
   $stars = $('.rater i')
   $stars.each ->
     rating = $(this).index() + 1

@@ -1,3 +1,15 @@
+- if flash[:new_homestay]
+  .modal#new_homestay_modal.fade
+    .modal-header
+      %h3 Share your PetHomeStay
+    .modal-body
+      .homestay-share-buttons
+        .twitter-share
+          %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
+        .facebook-share
+          .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
+    .modal-footer
+      %a.btn{href:"#", 'data-dismiss' => "modal"} I'm done sharing
 .row
   .span7
     .row

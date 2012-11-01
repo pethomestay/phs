@@ -52,6 +52,7 @@ class HomestaysController < ApplicationController
     if current_user
       @homestay = current_user.build_homestay(params[:homestay])
       if @homestay.save
+        flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
         redirect_to @homestay
       else
         render :new
