@@ -27,9 +27,8 @@
     .span3
       - if pet.pictures.present?
         = image_tag(pet.pictures.first.file.thumb('220x').url)
-      - else
-        Pet has no images.. put a placeholder image here.
-    .span9
+    - width_class = pet.pictures.present? ? 'span9' : 'span12'
+    %div{class: width_class}
       %table.table.table-striped.table-condensed
         %tr
           %td Name
