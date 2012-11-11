@@ -59,7 +59,7 @@
       My pets will be present at this address during PetHomeStay bookings.
   %h3{style: "margin-bottom: 10px;"}
     Your PetHomeStay address
-    %small this will be used to place your listing on the map
+    %small This will be used to place your listing on the map
   = f.text_field :address_1, 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
   .control-group
     .controls
