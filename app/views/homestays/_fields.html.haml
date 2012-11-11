@@ -90,6 +90,7 @@
         = check_box_tag 'homestay[accept_liability]', '1', f.object.accept_liability == '1'
         I understand that as by creating this listing, depending my home state or council laws, I may liable for any damages or 3rd party events which may happen while I am in control of others pets. I accept these risks or have suitable insurance to cover these events.
   %h3 Photo
+  %p Please include at least one photo of yourself and any pets you have.
   %table.table.homestay-pictures
     %tbody
       = f.nested_fields_for :pictures do |f|
