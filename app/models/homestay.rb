@@ -43,6 +43,8 @@ class Homestay < ActiveRecord::Base
   validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first)
   validates_uniqueness_of :slug
 
+  validates_length_of :title, maximum: 50
+
   scope :active, where(active: true)
 
   geocoded_by :geocoding_address
