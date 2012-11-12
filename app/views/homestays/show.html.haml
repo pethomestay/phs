@@ -112,4 +112,4 @@
   %meta{property: 'og:url', content: homestay_url(@homestay, protocol: 'https')}
   %meta{property: 'og:site_name', content: 'PetHomeStay.com'}
   %meta{property: 'fb:app_id', content: '435407969825366'}
-  %meta{property: 'og:description', content: @homestay.description.truncate(160)}
+  %meta{property: 'og:description', content: "Check out #{@homestay.user.first_name}'s new pet care service on PetHomeStay.com! Get your pet looked after for only #{number_to_currency(@homestay.cost_per_night)} per night, based in #{@homestay.address_suburb}!"}
