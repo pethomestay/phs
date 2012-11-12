@@ -90,7 +90,9 @@
         = check_box_tag 'homestay[accept_liability]', '1', f.object.accept_liability == '1'
         I understand that as by creating this listing, depending my home state or council laws, I may liable for any damages or 3rd party events which may happen while I am in control of others pets. I accept these risks or have suitable insurance to cover these events.
   %h3 Photo
-  %p Please include at least one photo of yourself and any pets you have.
+  %p Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
+  %p When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
+  %p No photos = no enquiries!!
   %table.table.homestay-pictures
     %tbody
       = f.nested_fields_for :pictures do |f|
