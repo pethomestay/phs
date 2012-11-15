@@ -12,8 +12,11 @@
   - if @provider.mobile_number.present?
     = "Mobile phone: #{@provider.mobile_number}"
   %br
-  = link_to 'Provider listing', homestay_url(@homestay)
-%p.article-title Confirm the listing you want to use via PetHomeStay
+  Listing:
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%p.article-title Next steps
 %p.article-content Once you have received a couple of responses, select the provider you want to use and accept via PetHomeStay. (A provider can cancel any indicated availability up to being confirmed, so don’t leave it too long!)
 %p.article-content Once confirmed, both you and the provider are committed to the booking.
 %p.article-content Your entire pets profile details will be sent to the Provider, including emergency contact details. 
