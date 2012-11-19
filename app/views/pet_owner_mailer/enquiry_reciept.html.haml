@@ -13,12 +13,15 @@
   %li.article-content Bring food for your pet (owners provide this unless otherwise agreed!)
   %li.article-content Bring a favourite toy or bedding so they feel at home
   %li.article-content Any special instructions such as feeding or walking
+%p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
+%p.article-content The PetHomeStay Team
+
 %p.article-title Provider details for your records
 %p.article-content
-  Original listing:
-  = link_to 'View on PetHomeStay.com', homestay_url(@homestay)
-  %br
-  = "Listing title: #{@homestay.title}"
+  Listing:
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
   %br
   = "Provider's name: #{@provider.name}"
   %br
@@ -35,11 +38,8 @@
   = @homestay.address_1
   - if @homestay.address_2.present?
     %br
-    = @homestay.address_2 
+    = @homestay.address_2
   %br
   = @homestay.address_suburb
   %br
   = @homestay.address_city
-
-%p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
-%p.article-content The PetHomeStay Team
