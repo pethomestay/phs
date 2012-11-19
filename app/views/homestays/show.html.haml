@@ -24,15 +24,17 @@
             %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
           - else
             %span (No reviews yet)
+      .span2.pricing
+        %h1= number_to_currency(@homestay.cost_per_night)
+        %p
+          %i per night
+      .clear
+      .span7
         .homestay-share-buttons.top
           .twitter-share
             %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
           .facebook-share
             .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '290', 'data-show-faces' => 'false'}
-      .span2.pricing
-        %h1= number_to_currency(@homestay.cost_per_night)
-        %p
-          %i per night
     %table.table
       %tbody
         - if @homestay.is_professional?
