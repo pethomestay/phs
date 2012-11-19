@@ -13,6 +13,22 @@
   %li.article-content Is there anything else on the pet profile you need to know?
 
 - @pets.each do |pet|
+  %p.article-title= "Details for #{pet.name}"
+  - if pet.pictures.present?
+    %p.article-content= image_tag(pet.pictures.first.file.thumb('190x150#').url)
+  %p.article-content
+    = "Type: #{pet.pretty_pet_type}"
+    %br
+    = "Age: #{pet.age}"
+    %br
+    = "Size: #{pet.pretty_size}"
+    %br
+    = "Sex: #{pet.pretty_sex}"
+    %br
+    = "Dislikes: #{pet.dislikes}"
+    %br
+  - if pet.dislikes.present?
+    %p.article-content= "More information about dislikes: #{pet.explain_dislikes}"
   - if pet.council_number.present? || pet.microchip_number.present? || pet.medication.present? || pet.emergency_contact_name.present? || pet.vet_name.present?
     %p.article-title= "Emergency / medical details for #{pet.name}"
     %p.article-content
