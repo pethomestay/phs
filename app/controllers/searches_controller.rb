@@ -58,6 +58,7 @@ class SearchesController < ApplicationController
       else
         coords = Geocoder.coordinates(@search.location)
       end
+      return unless coords.present?
       @search.latitude = coords.first
       @search.longitude = coords.last
     end
