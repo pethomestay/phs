@@ -38,6 +38,7 @@ class SearchesController < ApplicationController
 
   def perform_unscoped_search
     coords = Geocoder.coordinates(@search.location)
+    return unless coords.present?
     @search.latitude = coords.first
     @search.longitude = coords.last
     unless @search.sort_by == 'average_rating'
