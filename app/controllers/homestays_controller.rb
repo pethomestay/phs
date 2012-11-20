@@ -6,11 +6,11 @@ class HomestaysController < ApplicationController
   def show
     @homestay = Homestay.find_by_slug(params[:id])
 
-    if !@homestay.active?
-      redirect_to root_path, alert: "This listing no longer exists."
+    if !@homestay || !@homestay.active?
+      redirect_to root_path, alert: "This listing does not exist."
       return
     end
-    
+
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
