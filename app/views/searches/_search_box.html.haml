@@ -22,4 +22,5 @@
       /   = controls.check_box :is_sitter, 'To stay at home with a sitter'
       / = f.label 'Grooming, walking, training, feeding' do |controls|
       /   = controls.check_box :is_services, 'Show additional pet services listings'
-  .well#map
+  - if @homestays.present?
+    .well#map
