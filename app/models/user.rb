@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
 
   def owners_needing_feedback
     if homestay.present?
-      homestay.enquiries.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
+      homestay.enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
     end
   end
 
@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def homestays_needing_feedback
-    enquiries.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
+    enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
   end
 
   def homestay_id
