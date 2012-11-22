@@ -2,7 +2,7 @@ desc "This task sends feedback reminders to those who need them"
 task :send_feedback_reminder_emails => :environment do
     puts "Beginning to send feedback reminder emails"
 
-    Enquiry.need_feedback.unsent_feedback_email.each do |enquiry|
+    Enquiry.owner_accepted.need_feedback.unsent_feedback_email.each do |enquiry|
       unless enquiry.feedback_for_owner
         UserMailer.leave_feedback(enquiry.homestay.user, enquiry.user, enquiry).deliver
       end
