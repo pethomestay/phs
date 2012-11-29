@@ -1,7 +1,9 @@
 .homestay-form
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
-  = f.text_field :title, 'Catchy listing title', maxlength: 50
+  .row
+    .span7= f.text_field :title, 'Catchy listing title', maxlength: 50
+    .span5 Limit of 50 characters
   .row
     .span7
       = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span5', rows: 12
