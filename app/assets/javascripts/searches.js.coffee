@@ -2,7 +2,7 @@ window.scrollToListing = (id) ->
   $('.listing').removeClass 'highlight'
   $element = $("[data-listing='#{id}']")
   if $element.length > 0
-    $(window).scrollTop($element.offset().top)
+    $(window).scrollTop($element.offset().top - 47)
     $element.addClass 'highlight'
 
 $ ->
