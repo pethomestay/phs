@@ -22,24 +22,51 @@
   = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
-  %br
-  = "Provider's name: #{@provider.name}"
-  %br
-  = "Provider's email: #{@provider.email}"
-  - if @provider.phone_number.present?
+  %p.article-content
+    = "Provider's name: #{@provider.name}"
     %br
-    = "Provider's phone: #{@provider.phone_number}"
-  - if @provider.mobile_number.present?
+    = "Provider's email: #{@provider.email}"
+    - if @provider.phone_number.present?
+      %br
+      = "Provider's phone: #{@provider.phone_number}"
+    - if @provider.mobile_number.present?
+      %br
+      = "Provider's mobile: #{@provider.mobile_number}"
     %br
-    = "Provider's mobile: #{@provider.mobile_number}"
-  %br
-  Address:
-  %br
-  = @homestay.address_1
-  - if @homestay.address_2.present?
+    Address:
     %br
-    = @homestay.address_2
-  %br
-  = @homestay.address_suburb
-  %br
-  = @homestay.address_city
+    = @homestay.address_1
+    - if @homestay.address_2.present?
+      %br
+      = @homestay.address_2
+    %br
+    = @homestay.address_suburb
+    %br
+    = @homestay.address_city
+    %br
+    Professional?:
+    - if @homestay.is_professional?
+      Yes
+    - else
+      No
+    %br
+    Property type:
+    = @homestay.pretty_property_type
+    %br
+    Outdoor area:
+    = @homestay.pretty_outdoor_area
+    %br
+    Fenced?:
+    - if @homestay.fenced
+      Yes
+    - else
+      No
+    %br
+    - if @homestay.supervision?
+      Supervision?:
+      = @homestay.pretty_supervision
+      %br
+    - if @homestay.emergency_preparedness?
+      Emergency preparedness?:
+      = @homestay.pretty_emergency_preparedness
+      %br
