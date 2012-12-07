@@ -12,6 +12,29 @@
   %li.article-content Confirm medical & emergency contact info?
   %li.article-content Is there anything else on the pet profile you need to know?
 
+%p.article-title= "Details for #{@user.first_name}"
+%p.article-content
+  = "Full name: #{@user.name}"
+  %br
+  = "Email: #{@user.email}"
+  - if @user.phone_number.present?
+    %br
+    = "Phone: #{@user.phone_number}"
+  - if @user.mobile_number.present?
+    %br
+    = "Mobile: #{@user.mobile_number}"
+  %br
+  Address:
+  %br
+  = @user.address_1
+  - if @user.address_2.present?
+    %br
+    = @user.address_2
+  %br
+  = @user.address_suburb
+  %br
+  = @user.address_city
+
 - @pets.each do |pet|
   %p.article-title= "Details for #{pet.name}"
   - if pet.pictures.present?
