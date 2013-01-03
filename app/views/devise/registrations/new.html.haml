@@ -13,7 +13,7 @@
         = f.email_field :email, 'Email address'
         = f.text_field :mobile_number
         = f.text_field :phone_number, 'Home phone number'
-        - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation]
+        - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
           = f.password_field :password
           = f.password_field :password_confirmation, 'Confirm your password'
         - else
