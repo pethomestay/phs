@@ -29,7 +29,7 @@ class SearchesController < ApplicationController
       @homestays = Homestay.active.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by)
                            .paginate(page: params[:page], per_page: 10)
     else
-      ids = Homestay.near([@search.latitude, @search.longitude], @search.within, order: 'distance').pluck(:id)
+      ids = Homestay.active.near([@search.latitude, @search.longitude], @search.within, order: 'distance').pluck(:id)
       homestays_with_feedbacks = Homestay.active.where(id: ids).includes(user: :received_feedbacks)
       @homestays = homestays_with_feedbacks.sort_by!{|h| h.average_rating}.reverse.paginate(page: params[:page], per_page: 10)
     end
@@ -45,7 +45,7 @@ class SearchesController < ApplicationController
       @homestays = Homestay.active.near([@search.latitude, @search.longitude], @search.within, order: @search.sort_by)
                            .paginate(page: params[:page], per_page: 10)
     else
-      ids = Homestay.near([@search.latitude, @search.longitude], @search.within, order: 'distance').pluck(:id)
+      ids = Homestay.active.near([@search.latitude, @search.longitude], @search.within, order: 'distance').pluck(:id)
       homestays_with_feedbacks = Homestay.active.where(id: ids).includes(user: :received_feedbacks)
       @homestays = homestays_with_feedbacks.sort_by!{|h| h.average_rating}.reverse.paginate(page: params[:page], per_page: 10)
     end
