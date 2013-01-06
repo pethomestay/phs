@@ -24,11 +24,13 @@ gem 'chosen-rails'
 gem 'awesome_nested_fields'
 gem 'newrelic_rpm'
 gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
+gem 'activeadmin'
 
 group :assets do
   gem 'therubyracer', '0.11.0beta5'
   gem 'libv8', '~> 3.11.8'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'less-rails'
+  gem 'sass-rails'
   gem 'uglifier', '>= 1.0.3'
 end

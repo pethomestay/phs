@@ -33,6 +33,13 @@ class Pet < ActiveRecord::Base
                   :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
                   :vet_phone, :medication, :date_of_birth
 
+  attr_accessible :breed, :name, :age, :pet_type, :size, :sex, :microchip_number, \
+                  :council_number, :dislike_people, :dislike_animals, \
+                  :dislike_children, :dislike_loneliness, :explain_dislikes, \
+                  :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
+                  :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
+                  :vet_phone, :medication, :date_of_birth, :user_id, as: :admin
+
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
   validates_inclusion_of :pet_type, :in => %w( dog cat bird fish other )
   validates_inclusion_of :size, :in => %w( small medium large giant ), if: Proc.new {|pet| pet.pet_type == 'dog'}

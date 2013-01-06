@@ -30,6 +30,17 @@ class Homestay < ActiveRecord::Base
                   :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
                   :pet_training, :pet_walking, :is_professional, :parental_consent, :accept_liability
 
+  attr_accessible :title, :description, :cost_per_night, :active, \
+                  :address_1, :address_2, :address_suburb, :address_city, \
+                  :address_postcode, :address_country, :latitude, :longitude, \
+                  :years_looking_after_pets, :constant_supervision, :emergency_transport, \
+                  :first_aid, :insurance, :professional_qualification, :pictures_attributes, \
+                  :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, \
+                  :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, \
+                  :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, \
+                  :pet_training, :pet_walking, :is_professional, :parental_consent, :accept_liability,
+                  :user_id, :slug, as: :admin
+
   attr_accessor :parental_consent, :accept_liability
 
   validates_presence_of :cost_per_night
