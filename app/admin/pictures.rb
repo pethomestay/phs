@@ -3,6 +3,8 @@ ActiveAdmin.register Picture do
     link_to(image_tag(picture.file.thumb('200x200#').url), admin_picture_path(picture))
   end
 
+  config.per_page = 8
+
   filter :created_at
 
   actions :all, :except => [:new, :create, :edit, :update]
