@@ -35,6 +35,10 @@ class Enquiry < ActiveRecord::Base
                           :date, :duration, :message, :responded, :accepted, \
                           :confirmed, :owner_accepted
 
+  attr_accessible         :pets, :user, :homestay_id, :formatted_date, \
+                          :date, :duration, :message, :responded, :accepted, \
+                          :confirmed, :owner_accepted, as: :admin
+
   scope :unanswered, where(responded: false)
   scope :need_confirmation, where(responded: true, accepted: true, confirmed:false)
 

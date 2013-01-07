@@ -2,6 +2,7 @@ class Feedback < ActiveRecord::Base
   belongs_to :user
   belongs_to :enquiry
   attr_accessible :rating, :review
+  attr_accessible :rating, :review, as: :admin
 
   validates_presence_of :rating
   validates_numericality_of :rating
