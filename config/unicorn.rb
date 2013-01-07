@@ -1,5 +1,5 @@
 if ENV['RAILS_ENV'] == 'production'
-  worker_processes 3
+  worker_processes 2
 else
   worker_processes 1
 end
