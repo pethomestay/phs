@@ -79,7 +79,7 @@
         .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
       .clearfix
     - unless my_homestay?(@homestay)
-      - if signed_in?
+      - if user_signed_in?
         = render partial: 'providers/enquire', locals: {provider: @homestay}
       - else
         .well.listing-form
