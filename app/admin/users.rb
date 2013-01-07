@@ -10,6 +10,7 @@ ActiveAdmin.register User do
   filter :email
   filter :first_name
   filter :last_name
+  filter :active, as: :select
 
   actions :all, :except => [:new, :create]
   config.batch_actions = false
