@@ -1,5 +1,5 @@
 ActiveAdmin.register Picture do
-  index as: :grid, columns: 6 do |picture|
+  index as: :grid, columns: 4 do |picture|
     link_to(image_tag(picture.file.thumb('200x200#').url), admin_picture_path(picture))
   end
 

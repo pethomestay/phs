@@ -1,5 +1,6 @@
 ActiveAdmin.register Pet do
   index do
+    column :created_at
     column :name
     column 'Pet Type', :pretty_pet_type
     column :breed

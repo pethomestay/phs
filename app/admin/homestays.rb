@@ -6,9 +6,9 @@ ActiveAdmin.register Homestay do
   end
 
   index title: 'PetHomeStays' do
+    column :created_at
     column :title
     column 'Suburb', :address_suburb
-    column :created_at
     default_actions
   end
 

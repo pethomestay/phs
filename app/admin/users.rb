@@ -1,9 +1,9 @@
 ActiveAdmin.register User do
   index do
+    column :created_at
     column :email
     column :name
     column :address_suburb
-    column :created_at
     default_actions
   end
 
