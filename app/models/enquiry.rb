@@ -71,4 +71,8 @@ class Enquiry < ActiveRecord::Base
   def natural_duration
     NATURAL_DURATION[duration] || 'unspecified'
   end
+
+  def title
+    "Enquiry for #{homestay.title}"
+  end
 end

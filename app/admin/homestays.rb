@@ -1,14 +1,20 @@
 ActiveAdmin.register Homestay do
+  menu label: 'PetHomeStays'
+
   controller do
     defaults :finder => :find_by_slug
   end
 
-  index do
+  index title: 'PetHomeStays' do
     column :title
     column 'Suburb', :address_suburb
     column :created_at
     default_actions
   end
+
+  filter :title
+  filter :address_suburb
+  filter :active, as: :select
 
   form do |f|
     f.inputs do
