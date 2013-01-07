@@ -86,6 +86,6 @@ class Pet < ActiveRecord::Base
   end
 
   def pretty_size
-    size.capitalize
+    size.capitalize if size.present?
   end
 end
