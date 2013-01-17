@@ -20,7 +20,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :first_name
       f.input :last_name
-      f.input :date_of_birth
+      f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 18, end_year: 1910
       f.input :phone_number
       f.input :mobile_number
       f.input :address_1
