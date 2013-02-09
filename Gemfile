@@ -28,7 +28,7 @@ gem 'newrelic_rpm'
 gem 'activeadmin'
 
 group :assets do
-  gem 'therubyracer', '0.11.0beta5'
+  gem 'therubyracer'
   gem 'libv8', '~> 3.11.8'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'less-rails'
