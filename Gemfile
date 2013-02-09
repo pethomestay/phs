@@ -1,29 +1,30 @@
 source 'https://rubygems.org'
 
-gem 'rack', '~> 1.4.1'
-gem 'rails'
+gem 'rails', '3.2.11'
+gem 'pg'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'haml-rails'
-gem 'unicorn'
 gem 'devise'
 gem 'wicked'
+
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
+gem 'carmen-rails'
+
 gem 'will_paginate'
+
 gem 'bootstrap-will_paginate'
 gem 'twitter-bootstrap-rails', '2.0.6'
-gem 'jquery-ui-rails'
-gem 'pg'
+gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstrap_form_for.git", branch: "bootstrap-2.0"
+gem 'awesome_nested_fields'
+
 gem 'dragonfly'
 gem 'rack-cache'
 gem 'fog'
-gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstrap_form_for.git", branch: "bootstrap-2.0"
-gem 'carmen-rails'
 gem 'actionmailer_inline_css'
 gem 'chosen-rails'
-gem 'awesome_nested_fields'
 gem 'newrelic_rpm'
-gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
 gem 'activeadmin'
 
 group :assets do
