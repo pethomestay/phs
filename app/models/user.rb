@@ -2,17 +2,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, \
-                  :first_name, :last_name, :date_of_birth, :validate_first_step_only, \
-                  :mobile_number, :phone_number, :address_1, :address_2, :address_suburb, \
-                  :address_city, :address_country, :address_postcode, :completed_signup, \
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
+                  :first_name, :last_name, :date_of_birth, :validate_first_step_only, 
+                  :mobile_number, :phone_number, :address_1, :address_2, :address_suburb, 
+                  :address_city, :address_country, :address_postcode, :completed_signup,
                   :current_password, :accept_house_rules, :accept_terms
-
-  attr_accessible :email, :password, :password_confirmation, :remember_me, \
-                  :first_name, :last_name, :date_of_birth, :validate_first_step_only, \
-                  :mobile_number, :phone_number, :address_1, :address_2, :address_suburb, \
-                  :address_city, :address_country, :address_postcode, :completed_signup, \
-                  :current_password, :accept_house_rules, :accept_terms, :active, as: :admin
 
   attr_accessor   :current_password, :accept_house_rules, :accept_terms
 
