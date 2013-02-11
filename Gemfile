@@ -10,7 +10,7 @@ gem 'wicked'
 
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
-gem 'carmen-rails'
+gem 'carmen-rails' #Country select
 
 gem 'will_paginate'
 
@@ -23,9 +23,8 @@ gem 'dragonfly'
 gem 'rack-cache'
 gem 'fog'
 gem 'actionmailer_inline_css'
-gem 'chosen-rails'
+gem 'chosen-rails' #Integrates chosen checkbox stuff
 gem 'newrelic_rpm'
-gem 'activeadmin'
 
 group :test, :development do
   gem 'rspec-rails'
