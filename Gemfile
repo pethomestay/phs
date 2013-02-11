@@ -27,6 +27,13 @@ gem 'chosen-rails'
 gem 'newrelic_rpm'
 gem 'activeadmin'
 
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'webrat'
+  gem 'simplecov', :require => false
+  gem 'shoulda-matchers'
+end
+
 group :assets do
   gem 'therubyracer'
   gem 'libv8', '~> 3.11.8'

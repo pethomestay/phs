@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   attr_accessor   :current_password, :accept_house_rules, :accept_terms
 
   has_one :homestay
-  has_many :ratings
   has_many :pets
   has_many :enquiries
 
