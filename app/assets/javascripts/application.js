@@ -15,7 +15,10 @@
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
 //= require jquery.geocomplete
-//= require twitter/bootstrap
+//= require bootstrap-transition
+//= require bootstrap-modal
+//= require bootstrap-dropdown
+//= require bootstrap-carousel
 //= require handlebars
 //= require handlebars.comparison
 //= require jquery.nested-fields

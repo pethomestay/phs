@@ -10,13 +10,13 @@ gem 'wicked'
 
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
-gem 'carmen-rails' #Country select
+gem 'country_select' #Country select
 
 gem 'will_paginate'
 
-gem 'bootstrap-will_paginate'
-gem 'twitter-bootstrap-rails', '2.0.6'
-gem 'twitter_bootstrap_form_for', git: "git://github.com/stouset/twitter_bootstrap_form_for.git", branch: "bootstrap-2.0"
+gem 'bootstrap-sass'
+
+gem 'simple_form'
 gem 'awesome_nested_fields'
 
 gem 'dragonfly'

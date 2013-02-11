@@ -4,18 +4,18 @@
     %small Create an account to access all our cool features
 - html = {:class => 'form-horizontal'}
 - url = registration_path(resource_name)
-= twitter_bootstrap_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+= simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
   %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
-  = f.fieldset do
+  = field_set_tag do
     %p Note: we do not pass your details on to any third party companies. We hate spam too :)
     .row
       .span5
-        = f.email_field :email, 'Email address'
-        = f.text_field :mobile_number
-        = f.text_field :phone_number, 'Home phone number'
+        = f.input :email, label: 'Email address'
+        = f.input :mobile_number
+        = f.input :phone_number, label: 'Home phone number'
         - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
-          = f.password_field :password
-          = f.password_field :password_confirmation, 'Confirm your password'
+          = f.input :password
+          = f.input :password_confirmation, label: 'Confirm your password'
         - else
           %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
           %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
@@ -23,9 +23,9 @@
     %h3{style: "margin-bottom: 10px;"}
       We'd love to get to know you!
       %small Tell the community a bit more about you
-    = f.text_field :first_name
-    = f.text_field :last_name
-    = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 18, end_year: 1910
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 18, end_year: 1910
     %h3{style: "margin-bottom: 10px;"}
       Your address
       %small Where are you from?
@@ -44,13 +44,13 @@
       = f.hidden_field :address_city
       = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
     - else
-      = f.text_field :address_1, 'Street address'
+      = f.input :address_1, label: 'Street address'
       .control-group
         .controls
           %input#user_homestay_address_2{name: 'user[address_2]'}
-      = f.text_field :address_suburb, 'Suburb'
-      = f.text_field :address_city, 'City'
-      = f.country_select :address_country, 'Country', {priority: [params[:user][:address_country], country_priority].flatten}
+      = f.input :address_suburb, label: 'Suburb'
+      = f.input :address_city, label: 'City'
+      = f.input :address_country, label: 'Country', priority: ['Australia']
     = render partial: 'devise/registrations/accept_terms', locals: {f: f}
-    = f.actions do
-      = f.submit 'Create an account'
+    .form-actions
+      = f.submit 'Create an account', class: 'btn btn-primary'
