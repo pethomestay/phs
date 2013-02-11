@@ -66,7 +66,5 @@ module PetHomestay
 
     # Adding dragonfly middleware
     config.middleware.insert 1, 'Dragonfly::Middleware', :images
-
-    config.middleware.insert 1, 'ForwardedForCorrectionMiddleware'
   end
 end
