@@ -27,10 +27,11 @@ class Enquiry < ActiveRecord::Base
     'longerthan7nights' => "longer than 7 nights"
   }
 
-  has_and_belongs_to_many :pets
-  has_many                :feedbacks
   belongs_to              :user
   belongs_to              :homestay
+  has_many                :feedbacks
+  has_and_belongs_to_many :pets
+  
   attr_accessible         :pets, :user, :homestay_id, :formatted_date, \
                           :date, :duration, :message, :responded, :accepted, \
                           :confirmed, :owner_accepted

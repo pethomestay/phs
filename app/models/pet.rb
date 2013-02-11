@@ -22,8 +22,9 @@ class Pet < ActiveRecord::Base
   }
 
   belongs_to :user
-  has_and_belongs_to_many :enquiries
   has_many :pictures, as: 'picturable'
+  has_and_belongs_to_many :enquiries
+  
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
   attr_accessible :breed, :name, :age, :pet_type, :size, :sex, :microchip_number, \

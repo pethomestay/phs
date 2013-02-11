@@ -19,3 +19,5 @@ public/system/dragonfly
 
 # Ignore sass cache
 .sass-cache/
+
+coverage/
