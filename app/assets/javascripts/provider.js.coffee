@@ -1,5 +1,6 @@
 $ ->
   $('#new_homestay_modal').modal('show');
+  $('.login-dropdown').popup()
 
   $stars = $('.rater i')
   $stars.each ->

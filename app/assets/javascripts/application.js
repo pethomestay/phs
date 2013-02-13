@@ -17,7 +17,6 @@
 //= require jquery.geocomplete
 //= require bootstrap-transition
 //= require bootstrap-modal
-//= require bootstrap-dropdown
 //= require bootstrap-carousel
 //= require handlebars
 //= require handlebars.comparison
