@@ -6,7 +6,7 @@
   .pull-right
     = link_to 'Back to My Account', my_account_path, class: 'btn'
   .clear
-= twitter_bootstrap_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
+= simple_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
   = render partial: 'fields', locals: {f: f}
-  = f.actions do
-    = f.submit 'Create my listing'
+  .form-actions
+    = f.submit 'Create my listing', class: 'btn btn-primary'

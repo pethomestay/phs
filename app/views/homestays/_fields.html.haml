@@ -2,11 +2,11 @@
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
   .row
-    .span7= f.text_field :title, 'Catchy listing title', maxlength: 50
+    .span7= f.input :title, label: 'Catchy listing title', maxlength: 50
     .span5 Limit of 50 characters
   .row
     .span7
-      = f.text_area :description, 'What do you want to tell pet owners about yourself?', class: 'span5', rows: 12
+      = f.input :description, label: 'What do you want to tell pet owners about yourself?', input_html: {class: 'span5', rows: 12}
     .span5
       %p Items to include could be:
       %ul
@@ -30,24 +30,22 @@
     .span5
       %p The cost is up to you, however we would guide this to be between $15-40 per night depending on your particular PetHomeStay. You can also enter zero dollars and operate a reciprocal agreement with your community - you look after their pets, they will look after yours!
   %h3 Tell us about your PetHomeStay
-  - options = options_for_select(Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), f.object.property_type)
-  = f.select :property_type, 'Property type', options
-  - options = options_for_select(Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), f.object.outdoor_area)
-  = f.select :outdoor_area, 'Size of outdoor area', options
-  = f.label "Professional?" do |controls|
-    = controls.check_box :is_professional, 'I am a registered business'
-    = controls.check_box :insurance, 'Professional pet-insurance'
-    = controls.check_box :first_aid, 'Pet first-aid training'
-    = controls.check_box :professional_qualification, 'A professional pet qualification'
-  = f.label "I can provide" do |controls|
-    = controls.check_box :constant_supervision, '24/7 supervision'
-    = controls.check_box :supervision_outside_work_hours, 'Supervision outside of work hours (6pm - 8am)'
-    = controls.check_box :emergency_transport, 'Emergency transport'
-  = f.label "I have" do |controls|
-    = controls.check_box :fenced, 'A fully fenced back yard'
-    = controls.check_box :children_present, 'Children under 18 at the address'
-    = controls.check_box :police_check, 'A current police check certificate'
-  = f.text_field :website, 'Facebook page or website about your service', class: 'span4'
+  = f.input :property_type, label: 'Property type', collection: Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse)
+  = f.input :outdoor_area, label: 'Size of outdoor area', collection: Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse)
+  = label_tag "Professional?", nil, class: 'for-group'
+  = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
+  = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
+  = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
+  = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
+  = label_tag "I can provide" , nil, class: 'for-group'
+  = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
+  = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
+  = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+  = label_tag "I have", nil, class: 'for-group'
+  = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
+  = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
+  = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
+  = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
   %h3
     Do you own pets?
     %small Please complete a pet profile after creating your listing
@@ -62,19 +60,19 @@
   %h3{style: "margin-bottom: 10px;"}
     Your PetHomeStay address
     %small This will be used to place your listing on the map
-  = f.text_field :address_1, 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
+  = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
   .control-group
     .controls
       %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
-  = f.text_field :address_suburb, 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
-  = f.text_field :address_city, 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
-  = f.country_select :address_country, 'Country', {priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]}
+  = f.input :address_suburb, label: 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
+  = f.input :address_city, label: 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
+  = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
   %h3{style: "margin-bottom: 10px;"} Other services offered
-  = f.label "I can also offer" do |controls|
-    = controls.check_box :pet_feeding, 'pet feeding'
-    = controls.check_box :pet_grooming, 'pet grooming'
-    = controls.check_box :pet_training, 'pet training'
-    = controls.check_box :pet_walking, 'pet walking'
+  = label_tag "I can also offer", nil, class: 'for-group'
+  = f.input :pet_feeding, as: :boolean, inline_label: 'pet feeding', label: false
+  = f.input :pet_grooming, as: :boolean, inline_label: 'pet grooming', label: false
+  = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
+  = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
   - if current_user.date_of_birth > 18.years.ago.to_date
     %h3 As you are under 18 years old please confirm
     - error_class = f.object.errors.messages.has_key?(:parental_consent) ? 'error' : ''
@@ -103,7 +101,7 @@
             - if f.object.file.present?
               = image_tag(f.object.file.thumb('200x200').url)
             - else
-              = f.file_field :file, 'Upload picture'
+              = f.input :file, label: 'Upload picture'
             = f.hidden_field :retained_file
           %td
             = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
