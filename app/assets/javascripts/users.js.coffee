@@ -1,5 +1,5 @@
 $ ->
-  $('.pet-type select').live 'change', ->
+  $(document).on 'change', '.pet-type select', ->
     pet_type = $(this).val()
     $fields = $(this).parents('.pet-fields')
     $fields.find('.specific').hide().find('input, select').attr('disabled', 'disabled')
@@ -16,7 +16,7 @@ $ ->
     $(".specific.services").show() if $('[name="user[homestay_attributes][is_services]"]:checked, [name="homestay[is_services]"]:checked').length > 0
   .change()
 
-  $('.dislikes input').live 'change', ->
+  $(document).on 'change', '.dislikes input', ->
     if $('.dislikes input:checked').length > 0
       $('.explain-dislikes').removeClass 'hide'
     else
