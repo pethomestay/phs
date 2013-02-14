@@ -15,9 +15,9 @@
     = f.input :name, label: "Pet's name"
   = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year, end_year: 1980
   .specific.dog
-    = f.select :size, label: 'Size', collection: Pet::SIZE_OPTIONS.to_a.map(&:reverse)
+    = f.input :size, label: 'Size', collection: Pet::SIZE_OPTIONS.to_a.map(&:reverse)
   .specific.dog.cat
-    = f.select :sex, label: 'Sex', collection: Pet::SEX_OPTIONS.to_a.map(&:reverse)
+    = f.input :sex, label: 'Sex', collection: Pet::SEX_OPTIONS.to_a.map(&:reverse)
   %p Microchipping & council rego not mandatory, however in the event of a lost pet it makes retrevial far easier. PetHomeStay recommends you complete this information as soon as possible.
   .row
     .span5= f.input :microchip_number, label: 'Microchip #'
