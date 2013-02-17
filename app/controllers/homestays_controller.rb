@@ -1,8 +1,6 @@
 class HomestaysController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :error_404
-
   def show
     @homestay = Homestay.find_by_slug(params[:id])
 
