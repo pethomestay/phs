@@ -3,14 +3,13 @@ ENV["RAILS_ENV"] ||= 'test'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'simplecov'
 
 SimpleCov.start 'rails' do
   #Going to have to keep ratcheting up the coverage as we get this app more tested.
   at_exit do
     SimpleCov.result.format!
-    if SimpleCov.result.covered_percent < 60
+    if SimpleCov.result.covered_percent < 50
       $stderr.puts "Coverage not 60%, build failed."
       exit 1
     end
@@ -30,6 +29,7 @@ RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+  config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
