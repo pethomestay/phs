@@ -31,6 +31,10 @@ group :test, :development do
   gem 'webrat'
   gem 'simplecov', :require => false
   gem 'shoulda-matchers'
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 end
 
 group :assets do
