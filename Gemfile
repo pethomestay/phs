@@ -6,24 +6,21 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'haml-rails'
 gem 'devise'
-gem 'wicked'
 
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
-gem 'country_select' #Country select
 
 gem 'will_paginate'
-
 gem 'bootstrap-sass'
-
 gem 'simple_form'
+gem 'country_select' #Country select
 gem 'awesome_nested_fields'
+gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
 
 gem 'dragonfly'
 gem 'rack-cache'
 gem 'fog'
 gem 'actionmailer_inline_css'
-gem 'chosen-rails' #Integrates chosen checkbox stuff
 gem 'newrelic_rpm'
 
 group :test, :development do
