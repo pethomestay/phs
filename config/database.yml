@@ -14,7 +14,7 @@ test:
 
 production:
   adapter: postgresql
-  database: pet_homestay_test
+  database: pet_homestay
   pool: 5
   timeout: 5000
   host: localhost
