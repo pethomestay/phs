@@ -1,10 +1,11 @@
 .span4.fixed.sidebar-search
-  = twitter_bootstrap_form_for @search, method: 'GET' do |f|
+  = simple_form_for @search, method: 'GET' do |f|
     = f.hidden_field :latitude
     = f.hidden_field :longitude
     .well.form-well
-      = f.text_field :location, :add_on => :append do
-        %button.btn.btn-primary{type: "submit"} Search
+      = f.input :location, wrapper: :append do
+        = f.input_field :location
+        = f.submit('Search',class: 'btn btn-primary')
       .search-filters
         %label.sort-by
           Sort by
