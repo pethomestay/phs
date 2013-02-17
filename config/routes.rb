@@ -6,9 +6,7 @@ PetHomestay::Application.routes.draw do
   get '/welcome' => 'pages#welcome'
 
   resources :pets, except: [:show]
-  resources :homestays do
-    put 'rating' => 'ratings#update'
-  end
+  resources :homestays
 
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
