@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
-  validates_presence_of :first_name, :last_name, :date_of_birth, :address_1, :address_suburb, \
+  validates_presence_of :first_name, :last_name, :date_of_birth, :address_1, :address_suburb,
                         :address_city, :address_country
 
   validates_acceptance_of :accept_house_rules, on: :create
