@@ -1,5 +1,6 @@
 class PetsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_pet, except: [:index, :new, :create]
 
   def index
     @pets = current_user.pets
@@ -23,22 +24,10 @@ class PetsController < ApplicationController
   end
 
   def edit
-    @pet = Pet.find_by_user_id_and_id(current_user.id, params[:id])
 
-    unless @pet
-      redirect_to my_account_path
-      return
-    end
   end
 
   def update
-    @pet = Pet.find_by_user_id_and_id(current_user.id, params[:id])
-
-    unless @pet
-      redirect_to my_account_path
-      return
-    end
-
     if @pet.update_attributes(params[:pet])
       redirect_to pets_path, alert: "#{@pet.name}'s info has been updated."
     else
@@ -47,15 +36,13 @@ class PetsController < ApplicationController
   end
 
   def destroy
-    @pet = Pet.find_by_user_id_and_id(current_user.id, params[:id])
-
-    unless @pet
-      redirect_to my_account_path
-      return
-    end
-
     pet_name = @pet.name
     @pet.destroy
     redirect_to pets_path, alert: "#{pet_name} has been removed from your list of pets."
+  end
+
+  private
+  def find_pet
+    @pet = current_user.pets.find(params[:id])
   end
 end
