@@ -1,13 +1,10 @@
 class HomestaysController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
+  before_filter :find_homestay, only: [:edit, :update]
 
   def show
     @homestay = Homestay.find_by_slug(params[:id])
-
-    if !@homestay || !@homestay.active?
-      redirect_to root_path, alert: "This listing does not exist."
-      return
-    end
+    raise ActiveRecord::RecordNotFound unless @homestay && @homestay.active?
 
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
@@ -21,42 +18,34 @@ class HomestaysController < ApplicationController
   end
 
   def edit
-    unless current_user && @homestay = Homestay.find_by_user_id_and_slug(current_user.id, params[:id])
-      redirect_to root_path
-    end
+
   end
 
   def update
-    if current_user && @homestay = Homestay.find_by_user_id_and_slug(current_user.id, params[:id])
-      if @homestay.update_attributes(params[:homestay])
-        redirect_to my_account_path, alert: "Your listing has been updated."
-      else
-        render :new
-      end
+    if @homestay.update_attributes(params[:homestay])
+      redirect_to my_account_path, alert: "Your listing has been updated."
     else
-      redirect_to root_path
+      render :edit
     end
   end
 
   def new
-    if current_user
-      @homestay = current_user.build_homestay
-    else
-      redirect_to root_path
-    end
+    @homestay = current_user.build_homestay
   end
 
   def create
-    if current_user
-      @homestay = current_user.build_homestay(params[:homestay])
-      if @homestay.save
-        flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
-        redirect_to @homestay
-      else
-        render :new
-      end
+    @homestay = current_user.build_homestay(params[:homestay])
+    if @homestay.save
+      flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
+      redirect_to @homestay
     else
-      redirect_to root_path
+      render :new
     end
+  end
+
+  private
+  def find_homestay
+    @homestay = current_user.homestay
+    raise ActiveRecord::RecordNotFound unless @homestay.slug == params[:id]
   end
 end

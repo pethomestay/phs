@@ -32,9 +32,7 @@ class Homestay < ActiveRecord::Base
 
   attr_accessor :parental_consent, :accept_liability
 
-  validates_presence_of :cost_per_night
-  validates_presence_of :address_1, :address_suburb, :address_city, :address_country
-  validates_presence_of :title, :description
+  validates_presence_of :cost_per_night, :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?

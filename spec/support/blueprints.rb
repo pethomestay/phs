@@ -1,5 +1,22 @@
 require 'machinist/active_record'
 
+Homestay.blueprint do
+  cost_per_night { 0 } 
+  address_1 { Faker::Address.street_address }
+  address_suburb {'Collingwood'  }
+  address_city { 'Melbourne'  }
+  address_country { 'AU' }
+  title { Faker::Company.name }
+  description { Faker::Lorem.paragraph }
+  property_type { 'house' }
+  outdoor_area { 'medium' }
+  slug { "slug-title-#{sn}" }
+  user
+
+  accept_liability { '1' }
+  parental_consent { '1' }
+end
+
 Pet.blueprint do
   name { Faker::Name.first_name }
   date_of_birth { DateTime.now - 5.years }
@@ -9,6 +26,7 @@ Pet.blueprint do
   size { 'large' }
   sex { 'female_desexed' }
 end
+
 User.blueprint do
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
