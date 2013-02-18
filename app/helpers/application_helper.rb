@@ -1,11 +1,8 @@
 module ApplicationHelper
-  def formatted_title
-    if @title
-      "#{@title} - PetHomeStay"
-    else
-      'PetHomeStay'
-    end
+  def formatted_title(title)
+    title.present? ? "#{title} - PetHomeStay" : 'PetHomeStay'
   end
+
   def flash_class_for(type)
     case type
       when :alert
