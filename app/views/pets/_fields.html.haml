@@ -24,12 +24,13 @@
     .span7= f.input :council_number, label: 'Council Pet Tag Reg. #'
   .row
     .span5
-      .dislikes
-        = label_tag "My pet doesn't like", nil, class: 'for-group'
-        = f.input :dislike_people, as: :boolean, inline_label: 'Other people', label: false
-        = f.input :dislike_animals, as: :boolean, inline_label: 'Other animals', label: false
-        = f.input :dislike_children, as: :boolean, inline_label: 'Children', label: false
-        = f.input :dislike_loneliness, as: :boolean, inline_label: 'Being alone', label: false
+      .grouped-checkboxes
+        .dislikes
+          = label_tag "My pet doesn't like", nil, class: 'for-group'
+          = f.input :dislike_people, as: :boolean, inline_label: 'Other people', label: false
+          = f.input :dislike_animals, as: :boolean, inline_label: 'Other animals', label: false
+          = f.input :dislike_children, as: :boolean, inline_label: 'Children', label: false
+          = f.input :dislike_loneliness, as: :boolean, inline_label: 'Being alone', label: false
     .span7
       .explain-dislikes.hide
         = f.input :explain_dislikes, label: 'Please explain', input_html: {rows: 4, class: 'span7'}
