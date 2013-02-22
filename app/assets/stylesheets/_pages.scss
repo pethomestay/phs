@@ -1,4 +1,3 @@
-@orange:  #EA6E28;
 
 .big-search {
   background: url('subtle.png');
@@ -74,7 +73,7 @@
       font-weight:100;
       line-height:36px;
       strong {
-        color: @orange;
+        color: $orange;
       }
     }
   }

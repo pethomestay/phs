@@ -19,33 +19,32 @@
       %p Please do not place your phone numbers or alternative website addresses inside your listing. This encourages people to go outside PetHomeStay, which undermines the community as no feedback or trust will be left to help others.
   .row
     .span7
-      - error_class = @homestay.errors.messages.has_key?(:cost_per_night) ? 'error' : ''
-      .control-group{class: error_class}
-        = label_tag :cost_per_night, "Cost per night", class: 'control-label'
-        .controls
-          .input-prepend.input-append
-            .add-on $
-            %input.span1#user_homestay_cost_per_night{name: 'homestay[cost_per_night]', value: f.object.cost_per_night}
-            .add-on .00
+      = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
+        .add-on $
+        = f.input_field :cost_per_night, class: 'span1'
+        .add-on .00
     .span5
       %p The cost is up to you, however we would guide this to be between $15-40 per night depending on your particular PetHomeStay. You can also enter zero dollars and operate a reciprocal agreement with your community - you look after their pets, they will look after yours!
   %h3 Tell us about your PetHomeStay
   = f.input :property_type, label: 'Property type', collection: Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse)
   = f.input :outdoor_area, label: 'Size of outdoor area', collection: Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse)
-  = label_tag "Professional?", nil, class: 'for-group'
-  = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
-  = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
-  = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
-  = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
-  = label_tag "I can provide" , nil, class: 'for-group'
-  = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
-  = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
-  = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
-  = label_tag "I have", nil, class: 'for-group'
-  = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
-  = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
-  = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
-  = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
+  .grouped-checkboxes
+    = label_tag "Professional?", nil, class: 'for-group'
+    = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
+    = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
+    = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
+    = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
+  .grouped-checkboxes
+    = label_tag "I can provide" , nil, class: 'for-group'
+    = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
+    = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
+    = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+  .grouped-checkboxes
+    = label_tag "I have", nil, class: 'for-group'
+    = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
+    = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
+    = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
+    = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
   %h3
     Do you own pets?
     %small Please complete a pet profile after creating your listing
@@ -68,11 +67,12 @@
   = f.input :address_city, label: 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
   = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
   %h3{style: "margin-bottom: 10px;"} Other services offered
-  = label_tag "I can also offer", nil, class: 'for-group'
-  = f.input :pet_feeding, as: :boolean, inline_label: 'pet feeding', label: false
-  = f.input :pet_grooming, as: :boolean, inline_label: 'pet grooming', label: false
-  = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
-  = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
+  .grouped-checkboxes
+    = label_tag "I can also offer", nil, class: 'for-group'
+    = f.input :pet_feeding, as: :boolean, inline_label: 'pet feeding', label: false
+    = f.input :pet_grooming, as: :boolean, inline_label: 'pet grooming', label: false
+    = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
+    = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
   - if current_user.date_of_birth > 18.years.ago.to_date
     %h3 As you are under 18 years old please confirm
     - error_class = f.object.errors.messages.has_key?(:parental_consent) ? 'error' : ''

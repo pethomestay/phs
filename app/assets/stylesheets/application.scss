@@ -1,21 +1,18 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *= require_self
- *= require jquery.ui.slider
- *= require jquery.ui.datepicker
- *= require chosen
- *= require_tree .
-*/
 
-@margins: 20px;
-@orange:  #EA6E28;
+@import "bootstrap_overrides";
+@import "bootstrap";
+@import "feedback";
+@import "forms";
+@import "homestays";
+@import "maps";
+@import "navigation";
+@import "pages";
+@import "popup";
+@import "provider";
+@import "search";
+@import "users";
+@import "gmaps4rails";
+@import "chosen";
 
 .tl { text-align: left }
 .tr { text-align: right }
@@ -25,7 +22,7 @@
 .red {color: red;}
 
 .navbar {
-  border-top: 3px solid @orange;
+  border-top: 3px solid $orange;
   .navbar-inner {
     min-height: 42px;
     .nav li a {
@@ -69,7 +66,7 @@
 }
 
 .main{
-	margin-top: @margins * 3;
+	margin-top: $margins * 3;
 }
 
 .fixed{
@@ -101,7 +98,7 @@ footer {
       a {
       color: gray;
       &:hover {
-        color: @orange;
+        color: $orange;
       }
     }
   }

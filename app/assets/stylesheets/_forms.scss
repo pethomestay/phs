@@ -1,12 +1,13 @@
+.grouped-checkboxes {
+  margin-bottom:10px;
+  .control-group {
+    margin-bottom: 0;
+  }
+}
 label.for-group{
   float:left;
   margin-left:26px;
 }
-
-.input-append input.btn {
-  margin-top: -9px;
-}
-
 
 .form-well {
   .control-group{

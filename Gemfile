@@ -40,7 +40,6 @@ group :assets do
   gem 'therubyracer'
   gem 'libv8', '~> 3.11.8'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'less-rails'
   gem 'sass-rails'
   gem 'uglifier', '>= 1.0.3'
 end

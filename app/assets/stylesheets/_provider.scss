@@ -1,5 +1,5 @@
-@margins: 20px;
-@orange:  #EA6E28;
+$margins: 20px;
+$orange:  #EA6E28;
 
 .table .thumbnails{
   margin-left: 0;
@@ -10,7 +10,7 @@
 }
 
 .description{
-  margin-top: @margins;
+  margin-top: $margins;
   margin-bottom: 20px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .map{
-  margin-top: @margins;
+  margin-top: $margins;
 }
 
 .listing-form {

@@ -16,8 +16,8 @@
   = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 15, end_year: 1910
   = f.password_field :password do
     %span.help-inline leave blank if you don't want to change it
-  = f.password_field :password_confirmation, 'Confirm your password'
+  = f.password_field :password_confirmation, hint: 'Confirm your password'
   .well.current-password
-    = f.password_field :current_password, 'We need your current password to confirm your changes'
+    = f.password_field :current_password, hint: 'We need your current password to confirm your changes'
   .form-actions
     = f.submit 'Update account', class: 'btn btn-primary'
