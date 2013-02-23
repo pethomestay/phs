@@ -26,25 +26,29 @@
     .span5
       %p The cost is up to you, however we would guide this to be between $15-40 per night depending on your particular PetHomeStay. You can also enter zero dollars and operate a reciprocal agreement with your community - you look after their pets, they will look after yours!
   %h3 Tell us about your PetHomeStay
-  = f.input :property_type, label: 'Property type', collection: Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse)
-  = f.input :outdoor_area, label: 'Size of outdoor area', collection: Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse)
+  = f.input :property_type, collection: Homestay::PROPERTY_TYPE_OPTIONS.to_a.map(&:reverse), include_blank: false
+  = f.input :outdoor_area, label: 'Size of outdoor area', collection: Homestay::OUTDOOR_AREA_OPTIONS.to_a.map(&:reverse), include_blank: false
+  
   .grouped-checkboxes
     = label_tag "Professional?", nil, class: 'for-group'
     = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
     = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
     = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
     = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
+  
   .grouped-checkboxes
     = label_tag "I can provide" , nil, class: 'for-group'
     = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
     = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
     = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+  
   .grouped-checkboxes
     = label_tag "I have", nil, class: 'for-group'
     = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
     = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
     = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
     = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
+  
   %h3
     Do you own pets?
     %small Please complete a pet profile after creating your listing
