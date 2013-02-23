@@ -12,27 +12,65 @@
 
 .open .dropdown-menu { display: block; }
 
-.navbar .navbar-inner .nav .cta {
-  margin-top: 1px;
-  margin-right: 10px;
-  a {
-    line-height: 9px;
-    font-size: 13px;
-    &:hover {
-      background-color: inherit;
-      background-position: 0;
+.navbar {
+  border-top: 3px solid $orange;
+  .navbar-inner {
+    min-height: 42px;
+    .nav {
+      .cta {
+        margin-top: 1px;
+        margin-right: 10px;
+        a {
+          line-height: 9px;
+          font-size: 13px;
+          &:hover {
+            background-color: inherit;
+            background-position: 0;
+          }
+          .notification {
+            background: rgba(0,0,0,0.4);
+            width: 12px;
+            height: 12px;
+            border: 2px solid #fff;
+            border-radius: 12px;
+            display: block;
+            position: absolute;
+            top: 2px;
+            left: 81px;
+            font-weight: bold;
+          }
+        }
+      }
+      li a {
+        line-height: 22px;
+      }
     }
-    .notification {
-      background: rgba(0,0,0,0.4);
-      width: 12px;
-      height: 12px;
-      border: 2px solid #fff;
-      border-radius: 12px;
+  }
+  .brand {
+    background: url('header-logo.png') 22px 8px no-repeat;
+    width: 190px;
+    text-indent: -9999px;
+    &:after {
       display: block;
-      position: absolute;
-      top: 2px;
-      left: 81px;
-      font-weight: bold;
+      background: url('beta-topbar.png');
+      width: 41px;
+      height: 36px;
+      content: '';
+      margin-top: -32px;
+      margin-left: 169px;
+    }
+    &.large {
+      background: url('header-logo-large.png') 22px 8px no-repeat;
+      height: 183px;
+      margin-bottom: -160px;
+      background: url('header-logo-large.png') 7px 0px no-repeat;
+      height: 183px;
+      margin-top: -5px;
+      position: relative;
+      z-index:9999999;
+      &:after {
+        display:none;
+      }
     }
   }
 }

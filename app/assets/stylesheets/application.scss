@@ -21,43 +21,6 @@
 
 .red {color: red;}
 
-.navbar {
-  border-top: 3px solid $orange;
-  .navbar-inner {
-    min-height: 42px;
-    .nav li a {
-      line-height: 22px;
-    }
-  }
-  .brand {
-    background: url('header-logo.png') 22px 8px no-repeat;
-    width: 190px;
-    text-indent: -9999px;
-    &:after {
-      display: block;
-      background: url('beta-topbar.png');
-      width: 41px;
-      height: 36px;
-      content: '';
-      margin-top: -32px;
-      margin-left: 169px;
-    }
-    &.large {
-      background: url('header-logo-large.png') 22px 8px no-repeat;
-      height: 183px;
-      margin-bottom: -160px;
-      background: url('header-logo-large.png') 7px 0px no-repeat;
-      height: 183px;
-      margin-top: -5px;
-      position: relative;
-      z-index:9999999;
-      &:after {
-        display:none;
-      }
-    }
-  }
-}
-
 .alert.info {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
   background-image: -webkit-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
@@ -81,9 +44,16 @@
   margin-top: 10px;
 }
 
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+}
+
 footer {
   overflow: hidden;
   padding-bottom: 180px;
+  width:940px;
+  margin:auto;
   .social-links {
     float: left;
     li {
