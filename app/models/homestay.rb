@@ -44,6 +44,7 @@ class Homestay < ActiveRecord::Base
   validates_length_of :title, maximum: 50
 
   scope :active, where(active: true)
+  scope :last_five, order('created_at DESC').limit(5) 
 
   geocoded_by :geocoding_address
   after_validation :geocode

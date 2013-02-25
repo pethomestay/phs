@@ -13,6 +13,10 @@ PetHomestay::Application.routes.draw do
     resource :feedback
   end
 
+  namespace :admin do
+    match '/dashboard' => 'admin#dashboard', as: :admin_dashboard
+  end
+
   get '/searches'       => 'searches#create'
   get '/pet-care/:city' => 'searches#show', as: 'city_search'
 

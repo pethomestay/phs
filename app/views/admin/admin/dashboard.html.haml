@@ -1,0 +1,44 @@
+.main.container
+  .row
+    .span6
+      %table.table.table-striped
+        %caption Recent Signups
+        %thead
+          %tr
+            %th name
+            %th signed up
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td 
+                = user.name
+              %td 
+                = "#{time_ago_in_words user.created_at} ago"
+
+      %table.table.table-striped
+        %caption Recent Homestays
+        %thead
+          %tr
+            %th title
+            %th signed up
+        %tbody
+          - @homestays.each do |homestay|
+            %tr
+              %td 
+                = homestay.title
+              %td 
+                = "#{time_ago_in_words homestay.created_at} ago"
+    .span6
+      %table.table.table-striped
+        %caption summary stats
+        %thead
+          %tr
+            %th type
+            %th count
+        %tbody
+          - @stats.each do |key, value|
+            %tr
+              %td 
+                = key.to_s.titleize
+              %td 
+                = value

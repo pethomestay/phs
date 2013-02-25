@@ -21,7 +21,7 @@ PetHomestay::Application.configure do
   config.action_mailer.asset_host = 'http://localhost:5000'
 
   # Add action mails delivery settings
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :test
   config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
   # Print deprecation notices to the Rails logger

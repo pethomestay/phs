@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
 
+  scope :last_five, order('created_at DESC').limit(5) 
+
   def name
     "#{first_name} #{last_name}"
   end
