@@ -7,7 +7,7 @@
       %td= @enquiry.formatted_date
     %tr
       %td Duration
-      %td= @enquiry.pretty_duration
+      %td= @enquiry.duration.title
     %tr
       %td Message
       - if @enquiry.message.present?
