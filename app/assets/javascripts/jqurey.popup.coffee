@@ -31,7 +31,9 @@
   Popup:: =
     showPopup: (event) ->
       @holder.addClass "active-popup"
-      @popup.slideDown 100
+      holder = @holder
+      @popup.slideDown 100, ->
+        holder.trigger('popup:open')
       event.stopImmediatePropagation()
       $(document).click $.proxy(@hidePopup, this)
       $(document).keyup $.proxy(@hidePopupOnEscape, this)
