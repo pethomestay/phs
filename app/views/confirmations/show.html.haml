@@ -1,44 +1,43 @@
-.main.container
-  .page-header
-    %h1= "#{@homestay.user.first_name} has indicated they are available"
-  %p Please contact all of the providers you are interested in and decide who you will use.
-  %p Before you confirm a booking, ALWAYS meet the person and check out their PetHomeStay. Remember, PetHomeStay don’t have any control over the people, owners, hosts, services or pets who are listed, nor do we take any responsibility for their actions. We don’t vouch for them, screen them, or approve them in any way.
-  %br
-  %table.table.table-striped.table-condensed
+.page-header
+  %h1= "#{@homestay.user.first_name} has indicated they are available"
+%p Please contact all of the providers you are interested in and decide who you will use.
+%p Before you confirm a booking, ALWAYS meet the person and check out their PetHomeStay. Remember, PetHomeStay don’t have any control over the people, owners, hosts, services or pets who are listed, nor do we take any responsibility for their actions. We don’t vouch for them, screen them, or approve them in any way.
+%br
+%table.table.table-striped.table-condensed
+  %tr
+    %td Start date
+    %td= @enquiry.formatted_date
+  %tr
+    %td Duration
+    %td= @enquiry.duration.title
+  %tr
+    %td Provider name
+    %td= @provider.name
+  %tr
+    %td Provider email
+    %td= @provider.email
+  - if @provider.phone_number
     %tr
-      %td Start date
-      %td= @enquiry.formatted_date
+      %td Phone number
+      %td= @provider.phone_number
+  - if @provider.mobile_number
     %tr
-      %td Duration
-      %td= @enquiry.duration.title
-    %tr
-      %td Provider name
-      %td= @provider.name
-    %tr
-      %td Provider email
-      %td= @provider.email
-    - if @provider.phone_number
-      %tr
-        %td Phone number
-        %td= @provider.phone_number
-    - if @provider.mobile_number
-      %tr
-        %td Mobile number
-        %td= @provider.mobile_number
-    %tr
-      %td Average rating for this provider
-      - if @provider.received_feedbacks.present?
-        %td
-          - rating_stars @provider.average_rating
-          = "(#{@provider.average_rating} #{'star'.pluralize(@provider.average_rating)})"
-      - else
-        %td User has not been rated yet...
-  .form-actions
-    = form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
-      = f.hidden_field :confirmed, value: true
-      = f.hidden_field :owner_accepted, value: false
-      = f.submit "I've decided to go with a different option", class: 'btn'
-    = form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
-      = f.hidden_field :confirmed, value: true
-      = f.hidden_field :owner_accepted, value: true
-      = f.submit "I would like to use #{@homestay.user.first_name} for this booking", class: 'btn btn-primary'
+      %td Mobile number
+      %td= @provider.mobile_number
+  %tr
+    %td Average rating for this provider
+    - if @provider.received_feedbacks.present?
+      %td
+        - rating_stars @provider.average_rating
+        = "(#{@provider.average_rating} #{'star'.pluralize(@provider.average_rating)})"
+    - else
+      %td User has not been rated yet...
+.form-actions
+  = form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
+    = f.hidden_field :confirmed, value: true
+    = f.hidden_field :owner_accepted, value: false
+    = f.submit "I've decided to go with a different option", class: 'btn'
+  = form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
+    = f.hidden_field :confirmed, value: true
+    = f.hidden_field :owner_accepted, value: true
+    = f.submit "I would like to use #{@homestay.user.first_name} for this booking", class: 'btn btn-primary'

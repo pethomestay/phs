@@ -1,118 +1,117 @@
-.main.container
-  - if flash[:new_homestay]
-    .modal#new_homestay_modal.fade
-      .modal-header
-        %h3 Share your PetHomeStay
-      .modal-body
-        .homestay-share-buttons
-          .twitter-share
-            %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
-          .facebook-share
-            .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
-      .modal-footer
-        %a.btn{href:"#", 'data-dismiss' => "modal"} I'm done sharing
-  .row
-    .span7
-      .row
-        - if my_homestay?(@homestay)
-          .span7= render partial: 'providers/edit_listing', locals: {provider: @homestay}
-        .span5
-          %h1= @homestay.title
-          %p= "#{@homestay.address_suburb}, #{@homestay.address_city}"
-          %p.rating
-            - rating_stars @homestay.average_rating
-            - if @reviewed_ratings.present?
-              %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
-            - else
-              %span (No reviews yet)
-        .span2.pricing
-          %h1= number_to_currency(@homestay.cost_per_night)
-          %p
-            %i per night
-        .clear
-        .span7
-          .homestay-share-buttons.top
-            .twitter-share
-              %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
-            .facebook-share
-              .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '290', 'data-show-faces' => 'false'}
-      %table.table
-        %tbody
-          - if @homestay.is_professional?
-            %tr
-              %td{colspan: 2}
-                %strong This listing is for a professional pet-care business
-          %tr
-            %td
-              %strong My property is a
-            %td= @homestay.pretty_property_type
-          %tr
-            %td
-              %strong My outdoor area is
-            %td= @homestay.pretty_outdoor_area
-          - if @homestay.fenced
-            %tr
-              %td{colspan: 2}
-                %strong My property is fenced
-          - if @homestay.has_services?
-            %tr
-              %td
-                %strong I also offer
-              %td= @homestay.pretty_services
-          - if @homestay.supervision?
-            %tr
-              %td{colspan: 2}
-                %strong= @homestay.pretty_supervision
-          - if @homestay.emergency_preparedness?
-            %tr
-              %td{colspan: 2}
-                %strong= @homestay.pretty_emergency_preparedness
-          - if @homestay.children_present?
-            %tr
-              %td{colspan: 2}
-                %strong I have children under the age of 18 at my house
-      .description
-        %p= simple_format @homestay.description
+- if flash[:new_homestay]
+  .modal#new_homestay_modal.fade
+    .modal-header
+      %h3 Share your PetHomeStay
+    .modal-body
       .homestay-share-buttons
         .twitter-share
           %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
         .facebook-share
           .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
-        .clearfix
-      - unless my_homestay?(@homestay)
-        - if user_signed_in?
-          = render partial: 'providers/enquire', locals: {provider: @homestay}
-        - else
-          .well.listing-form
-            = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}
+    .modal-footer
+      %a.btn{href:"#", 'data-dismiss' => "modal"} I'm done sharing
+.row
+  .span7
+    .row
+      - if my_homestay?(@homestay)
+        .span7= render partial: 'providers/edit_listing', locals: {provider: @homestay}
+      .span5
+        %h1= @homestay.title
+        %p= "#{@homestay.address_suburb}, #{@homestay.address_city}"
+        %p.rating
+          - rating_stars @homestay.average_rating
+          - if @reviewed_ratings.present?
+            %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
+          - else
+            %span (No reviews yet)
+      .span2.pricing
+        %h1= number_to_currency(@homestay.cost_per_night)
+        %p
+          %i per night
       .clear
-      = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
-    .span5
-      - if @homestay.pictures.present?
-        #homestay-carousel.carousel.slide.span5.thumbnail
-          .carousel-inner
-            - @homestay.pictures.each_with_index do |picture, i|
-              - klass = (i == 0 ? 'active' : '')
-              .item{class: klass}= image_tag(picture.file.thumb('380x300#').url)
-          - if @homestay.pictures.count > 1
-            = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
-            = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
-      #map.thumbnail.span5
-      %script{type: "application/javascript", src: "/assets/gmaps.js"}
-      :javascript
-        initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
-          zoom: 16,
-          mapTypeControl: false,
-          streetViewControl: false,
-          zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
-        }})
-        setupMarker(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)})
-  - content_for :open_graph_tags do
-    %meta{property: 'og:title', content: @homestay.title}
-    %meta{property: 'og:type', content: 'hotel'}
+      .span7
+        .homestay-share-buttons.top
+          .twitter-share
+            %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
+          .facebook-share
+            .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '290', 'data-show-faces' => 'false'}
+    %table.table
+      %tbody
+        - if @homestay.is_professional?
+          %tr
+            %td{colspan: 2}
+              %strong This listing is for a professional pet-care business
+        %tr
+          %td
+            %strong My property is a
+          %td= @homestay.pretty_property_type
+        %tr
+          %td
+            %strong My outdoor area is
+          %td= @homestay.pretty_outdoor_area
+        - if @homestay.fenced
+          %tr
+            %td{colspan: 2}
+              %strong My property is fenced
+        - if @homestay.has_services?
+          %tr
+            %td
+              %strong I also offer
+            %td= @homestay.pretty_services
+        - if @homestay.supervision?
+          %tr
+            %td{colspan: 2}
+              %strong= @homestay.pretty_supervision
+        - if @homestay.emergency_preparedness?
+          %tr
+            %td{colspan: 2}
+              %strong= @homestay.pretty_emergency_preparedness
+        - if @homestay.children_present?
+          %tr
+            %td{colspan: 2}
+              %strong I have children under the age of 18 at my house
+    .description
+      %p= simple_format @homestay.description
+    .homestay-share-buttons
+      .twitter-share
+        %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
+      .facebook-share
+        .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
+      .clearfix
+    - unless my_homestay?(@homestay)
+      - if user_signed_in?
+        = render partial: 'providers/enquire', locals: {provider: @homestay}
+      - else
+        .well.listing-form
+          = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}
+    .clear
+    = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
+  .span5
     - if @homestay.pictures.present?
-      %meta{property: 'og:image', content: @homestay.pictures.first.file.thumb('380x300#').url(host: 'https://www.pethomestay.com')}
-    %meta{property: 'og:url', content: homestay_url(@homestay, protocol: 'https')}
-    %meta{property: 'og:site_name', content: 'PetHomeStay.com'}
-    %meta{property: 'fb:app_id', content: '435407969825366'}
-    %meta{property: 'og:description', content: "Check out #{@homestay.user.first_name}'s new pet care service on PetHomeStay.com! Get your pet looked after for only #{number_to_currency(@homestay.cost_per_night)} per night, based in #{@homestay.address_suburb}!"}
+      #homestay-carousel.carousel.slide.span5.thumbnail
+        .carousel-inner
+          - @homestay.pictures.each_with_index do |picture, i|
+            - klass = (i == 0 ? 'active' : '')
+            .item{class: klass}= image_tag(picture.file.thumb('380x300#').url)
+        - if @homestay.pictures.count > 1
+          = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
+          = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
+    #map.thumbnail.span5
+    %script{type: "application/javascript", src: "/assets/gmaps.js"}
+    :javascript
+      initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
+        zoom: 16,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
+      }})
+      setupMarker(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)})
+- content_for :open_graph_tags do
+  %meta{property: 'og:title', content: @homestay.title}
+  %meta{property: 'og:type', content: 'hotel'}
+  - if @homestay.pictures.present?
+    %meta{property: 'og:image', content: @homestay.pictures.first.file.thumb('380x300#').url(host: 'https://www.pethomestay.com')}
+  %meta{property: 'og:url', content: homestay_url(@homestay, protocol: 'https')}
+  %meta{property: 'og:site_name', content: 'PetHomeStay.com'}
+  %meta{property: 'fb:app_id', content: '435407969825366'}
+  %meta{property: 'og:description', content: "Check out #{@homestay.user.first_name}'s new pet care service on PetHomeStay.com! Get your pet looked after for only #{number_to_currency(@homestay.cost_per_night)} per night, based in #{@homestay.address_suburb}!"}

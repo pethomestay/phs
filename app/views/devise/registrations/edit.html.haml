@@ -1,24 +1,23 @@
-.main.container
-  = devise_error_messages!
-  .page-header
-    .pull-left
-      %h1 Update account
-    .pull-right
-      = link_to 'Back to My Account', my_account_path, class: 'btn'
-    .clear
-  - html = {:class => 'form-horizontal'}
-  - url = registration_path(resource_name)
-  = simple_form_for resource, {as: resource_name, url: url, html: html} do |f|
-    = f.input :email, label: 'Email address'
-    = f.input :mobile_number
-    = f.input :phone_number, label: 'Home phone number'
-    = f.input :first_name
-    = f.input :last_name
-    = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 15, end_year: 1910
-    = f.password_field :password do
-      %span.help-inline leave blank if you don't want to change it
-    = f.password_field :password_confirmation, hint: 'Confirm your password'
-    .well.current-password
-      = f.password_field :current_password, hint: 'We need your current password to confirm your changes'
-    .form-actions
-      = f.submit 'Update account', class: 'btn btn-primary'
+= devise_error_messages!
+.page-header
+  .pull-left
+    %h1 Update account
+  .pull-right
+    = link_to 'Back to My Account', my_account_path, class: 'btn'
+  .clear
+- html = {:class => 'form-horizontal'}
+- url = registration_path(resource_name)
+= simple_form_for resource, {as: resource_name, url: url, html: html} do |f|
+  = f.input :email, label: 'Email address'
+  = f.input :mobile_number
+  = f.input :phone_number, label: 'Home phone number'
+  = f.input :first_name
+  = f.input :last_name
+  = f.date_select :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 15, end_year: 1910
+  = f.password_field :password do
+    %span.help-inline leave blank if you don't want to change it
+  = f.password_field :password_confirmation, hint: 'Confirm your password'
+  .well.current-password
+    = f.password_field :current_password, hint: 'We need your current password to confirm your changes'
+  .form-actions
+    = f.submit 'Update account', class: 'btn btn-primary'

@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %title formatted_title(@title)
+    = stylesheet_link_tag 'application'
+    %script{type: 'text/javascript', src: 'https://use.typekit.com/tfa5abi.js'}
+    %script{type: 'text/javascript'}
+      try{Typekit.load();}catch(e){}
+    = javascript_include_tag google_maps_source_url
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = render partial: 'layouts/google_analytics' if Rails.env.production?
+    = yield :open_graph_tags
+  %body
+    = render partial: 'layouts/facebook_tag' 
+    = render partial: 'layouts/navbar' 
+    .container.main
+      = render "layouts/flash_messages", :locals => {:flash => flash} 
+      = yield 
+      %hr
+      = render partial: "layouts/footer"
+      = render partial: "layouts/feedbackify"

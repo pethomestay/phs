@@ -1,54 +1,53 @@
-.container.main
-  .row.my-account
-    .span8
-      %h1.page-header My Account
-      %h3 Manage details
-      .row
-        .span6
-          %p
-            Had a change of email or name? Want to change your password?
-            %br
-            Update these here!
-        .span2.pull-right
-          = link_to "Update details", edit_user_registration_path, class: 'btn'
-      %hr
-      = render partial: 'pets_link'
-      = render partial: 'homestay_link'
-      .row
-        .span6
-          %h4 Close my PetHomeStay account
-        .span2.pull-right
-          = link_to "Close account", user_registration_path, class: 'btn btn-mini', method: 'delete', confirm: 'Are you sure you wish to close your PetHomeStay account?'
-    .span4.notifications
-      %h2.page-header Inbox
-      - if @user.notifications?
-        - if @user.unanswered_enquiries?
-          %h4 Enquiries for your PetHomeStay
-          - @user.unanswered_enquiries.each do |enquiry|
-            %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
-            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-            .clear
-          %hr
-        - if @user.enquiries_needing_confirmation?
-          %h4 Bookings to confirm
-          - @user.enquiries_needing_confirmation.each do |enquiry|
-            %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
-            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-            .clear
-          %hr
-        - if @user.owners_needing_feedback?
-          %h4 Owners needing feedback
-          - @user.owners_needing_feedback.each do |enquiry|
-            %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
-            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-            .clear
-          %hr
-        - if @user.homestays_needing_feedback?
-          %h4 PetHomeStay's needing feedback
-          - @user.homestays_needing_feedback.each do |enquiry|
-            %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
-            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-            .clear
-          %hr
-      - else
-        You have no new notifications!
+.row.my-account
+  .span8
+    %h1.page-header My Account
+    %h3 Manage details
+    .row
+      .span6
+        %p
+          Had a change of email or name? Want to change your password?
+          %br
+          Update these here!
+      .span2.pull-right
+        = link_to "Update details", edit_user_registration_path, class: 'btn'
+    %hr
+    = render partial: 'pets_link'
+    = render partial: 'homestay_link'
+    .row
+      .span6
+        %h4 Close my PetHomeStay account
+      .span2.pull-right
+        = link_to "Close account", user_registration_path, class: 'btn btn-mini', method: 'delete', confirm: 'Are you sure you wish to close your PetHomeStay account?'
+  .span4.notifications
+    %h2.page-header Inbox
+    - if @user.notifications?
+      - if @user.unanswered_enquiries?
+        %h4 Enquiries for your PetHomeStay
+        - @user.unanswered_enquiries.each do |enquiry|
+          %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.enquiries_needing_confirmation?
+        %h4 Bookings to confirm
+        - @user.enquiries_needing_confirmation.each do |enquiry|
+          %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.owners_needing_feedback?
+        %h4 Owners needing feedback
+        - @user.owners_needing_feedback.each do |enquiry|
+          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.homestays_needing_feedback?
+        %h4 PetHomeStay's needing feedback
+        - @user.homestays_needing_feedback.each do |enquiry|
+          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+    - else
+      You have no new notifications!
