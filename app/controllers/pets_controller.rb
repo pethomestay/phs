@@ -1,13 +1,14 @@
 class PetsController < ApplicationController
+  respond_to :html
   before_filter :authenticate_user!
   before_filter :find_pet, except: [:index, :new, :create]
 
   def index
-    @pets = current_user.pets
+    respond_with @pets = current_user.pets
   end
 
   def new
-    @pet = current_user.pets.build
+    respond_with @pet = current_user.pets.build
   end
 
   def create
@@ -24,12 +25,13 @@ class PetsController < ApplicationController
   end
 
   def edit
-
+    respond_with @pet
   end
 
   def update
     if @pet.update_attributes(params[:pet])
-      redirect_to pets_path, alert: "#{@pet.name}'s info has been updated."
+      flash[:notice] = "#{@pet.name}'s info has been updated."
+      redirect_to pets_path
     else
       render :edit
     end
