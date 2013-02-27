@@ -10,18 +10,9 @@
       @popupClicked = true
     $("body").append @popup
     holderOffset = @holder.offset()
-    
-    #This detection method relies on the browser type specific style being applied in the layout-ie7.css file
-    if @popup.css("z-index") is "5"
-      
-      #IE7
-      @popup.offset holderOffset
-    else
-      
-      #All other browsers
-      @popup.offset
-        left: holderOffset.left - (@popup.width()/ 2)
-        top: holderOffset.top + 40
+    @popup.offset
+      left: holderOffset.left - (@popup.width()/ 2)
+      top: holderOffset.top + 40
 
   $.fn.popup = (options) ->
     @each ->
