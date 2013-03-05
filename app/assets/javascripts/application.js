@@ -18,6 +18,7 @@
 //= require bootstrap-transition
 //= require bootstrap-modal
 //= require bootstrap-carousel
+//= require bootstrap-tooltip
 //= require handlebars
 //= require handlebars.comparison
 //= require jquery.nested-fields

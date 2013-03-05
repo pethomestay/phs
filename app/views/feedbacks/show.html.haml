@@ -1,6 +1,6 @@
 .page-header
   %h1= "Leave feedback for #{@subject.first_name}"
-= twitter_bootstrap_form_for @feedback, url: enquiry_feedback_path(@enquiry) do |f|
+= simple_form_for @feedback, url: enquiry_feedback_path(@enquiry) do |f|
   .row
     .span6{style: 'padding-top:30px'}
       = f.hidden_field :rating, value: f.object.rating || 0
@@ -13,5 +13,5 @@
     .span6
       %textarea.review-text.span6{placeholder: "Type your review here...", rows: 6, name: "feedback[review]"}
         = f.object.review
-  = f.actions do
-    = f.submit 'Submit feedback'
+  .form-actions
+    = f.submit 'Submit feedback', class: 'btn btn-primary'
