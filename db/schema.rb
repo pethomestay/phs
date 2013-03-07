@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307214552) do
+ActiveRecord::Schema.define(:version => 20130307220431) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -115,7 +115,6 @@ ActiveRecord::Schema.define(:version => 20130307214552) do
     t.boolean  "police_check",                      :default => false
     t.boolean  "children_present",                  :default => false
     t.string   "outdoor_area"
-    t.string   "property_type"
     t.boolean  "pet_feeding",                       :default => false
     t.boolean  "pet_grooming",                      :default => false
     t.boolean  "pet_training",                      :default => false
@@ -123,8 +122,10 @@ ActiveRecord::Schema.define(:version => 20130307214552) do
     t.boolean  "is_professional",                   :default => false
     t.boolean  "active",                            :default => true
     t.string   "slug"
+    t.integer  "property_type_id"
   end
 
+  add_index "homestays", ["property_type_id"], :name => "index_homestays_on_property_type_id"
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
 
   create_table "pets", :force => true do |t|

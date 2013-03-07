@@ -1,14 +1,6 @@
 class Homestay < ActiveRecord::Base
   include ActionView::Helpers
 
-  PROPERTY_TYPE_OPTIONS = {
-    'house'     => 'House',
-    'apartment' => 'Apartment',
-    'farm'      => 'Farm',
-    'townhouse' => 'Townhouse',
-    'unit'      => 'Unit'
-  }
-
   OUTDOOR_AREA_OPTIONS = {
     'small'     => 'Small (up to 10sq m)',
     'medium'    => 'Medium (up to 50sq m)',
@@ -20,14 +12,14 @@ class Homestay < ActiveRecord::Base
   has_many :pictures, as: 'picturable'
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
-  attr_accessible :title, :description, :cost_per_night, :active, 
-                  :address_1, :address_2, :address_suburb, :address_city, 
-                  :address_postcode, :address_country, :latitude, :longitude, 
-                  :years_looking_after_pets, :constant_supervision, :emergency_transport, 
-                  :first_aid, :insurance, :professional_qualification, :pictures_attributes, 
-                  :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night, 
-                  :pets_present, :outdoor_area, :property_type, :supervision_outside_work_hours, 
-                  :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming, 
+  attr_accessible :title, :description, :cost_per_night, :active,
+                  :address_1, :address_2, :address_suburb, :address_city,
+                  :address_postcode, :address_country, :latitude, :longitude,
+                  :years_looking_after_pets, :constant_supervision, :emergency_transport,
+                  :first_aid, :insurance, :professional_qualification, :pictures_attributes,
+                  :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night,
+                  :pets_present, :outdoor_area, :property_type_id, :supervision_outside_work_hours,
+                  :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming,
                   :pet_training, :pet_walking, :is_professional, :parental_consent, :accept_liability
 
   attr_accessor :parental_consent, :accept_liability
@@ -37,14 +29,14 @@ class Homestay < ActiveRecord::Base
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
-  validates_inclusion_of :property_type, :in => PROPERTY_TYPE_OPTIONS.map(&:first)
+  validates_inclusion_of :property_type_id, :in => ReferenceData::PropertyType.all.map(&:id)
   validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first)
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
 
   scope :active, where(active: true)
-  scope :last_five, order('created_at DESC').limit(5) 
+  scope :last_five, order('created_at DESC').limit(5)
 
   geocoded_by :geocoding_address
   after_validation :geocode
@@ -110,8 +102,12 @@ class Homestay < ActiveRecord::Base
     end
   end
 
-  def pretty_property_type
-    PROPERTY_TYPE_OPTIONS[property_type]
+  def property_type
+    ReferenceData::PropertyType.find(property_type_id) if property_type_id
+  end
+
+  def property_type_name
+    property_type.name if property_type_id
   end
 
   def pretty_outdoor_area

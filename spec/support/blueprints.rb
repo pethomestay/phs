@@ -8,7 +8,7 @@ Homestay.blueprint do
   address_country { 'AU' }
   title { Faker::Company.name }
   description { Faker::Lorem.paragraph }
-  property_type { 'house' }
+  property_type_id { 1 }
   outdoor_area { 'medium' }
   slug { "slug-title-#{sn}" }
   user

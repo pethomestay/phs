@@ -14,7 +14,7 @@ describe HomestaysController do
       address_country: 'AU',
       title: Faker::Company.name,
       description: Faker::Lorem.paragraph,
-      property_type: 'farm',
+      property_type_id: '3',
       outdoor_area: 'large',
       accept_liability: '1',
       parental_consent: '1',
@@ -36,7 +36,7 @@ describe HomestaysController do
 
     it 'should make a new homestay object available to views' do
       subject
-      assigns(:homestay).should == 'New Homestay' 
+      assigns(:homestay).should == 'New Homestay'
     end
 
     it 'should render the new template' do
