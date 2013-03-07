@@ -1,19 +1,11 @@
 class Pet < ActiveRecord::Base
-
-  SIZE_OPTIONS = {
-    'small'   => 'Small (0-15kg)',
-    'medium'   => 'Medium (16-30kg)',
-    'large'  => 'Large (31-45kg)',
-    'giant'  => 'Giant (46kg+)'
-  }
-
   belongs_to :user
   has_many :pictures, as: 'picturable'
   has_and_belongs_to_many :enquiries
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
-  attr_accessible :breed, :name, :age, :pet_type_id, :size, :sex_id, :microchip_number,
+  attr_accessible :breed, :name, :age, :pet_type_id, :size_id, :sex_id, :microchip_number,
                   :council_number, :dislike_people, :dislike_animals,
                   :dislike_children, :dislike_loneliness, :explain_dislikes,
                   :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained,
@@ -57,7 +49,7 @@ class Pet < ActiveRecord::Base
     ReferenceData::Sex.find(sex_id) if sex_id
   end
 
-  def pretty_size
-    size.capitalize if size.present?
+  def size
+    ReferenceData::Size.find(size_id) if size_id
   end
 end

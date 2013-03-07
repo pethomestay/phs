@@ -7,7 +7,7 @@ describe PetsController do
 
   def valid_attributes(override_or_add={})
     { name: 'fred', date_of_birth: '2012-12-12', emergency_contact_name: 'owner 1',
-      emergency_contact_phone: '1234', pet_type_id: '1', size: 'small', sex_id: '1' }.merge(override_or_add)
+      emergency_contact_phone: '1234', pet_type_id: '1', size_id: '1', sex_id: '1' }.merge(override_or_add)
   end
 
   describe 'GET #index' do
