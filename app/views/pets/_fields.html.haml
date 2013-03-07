@@ -3,13 +3,13 @@
   .row
     .span6
       .pet-type
-        = f.input :pet_type, label: 'Pet type', collection: Pet::PET_TYPE_OPTIONS.to_a.map(&:reverse), include_blank: false
+        = f.input :pet_type_id, label: 'Pet type', collection: ReferenceData::PetType.all, include_blank: false
     .span6
       .specific.other
         = f.input :other_pet_type
-  .specific.dog.breed
+  .specific.1.breed
     = f.input :breed, collection: DOG_BREEDS
-  .specific.cat.bird.fish.other.breed
+  .specific.2.3.4.5.breed
     = f.input :breed
   .name
     = f.input :name, label: "Pet's name"

@@ -1,7 +1,7 @@
 require 'machinist/active_record'
 
 Homestay.blueprint do
-  cost_per_night { 0 } 
+  cost_per_night { 0 }
   address_1 { Faker::Address.street_address }
   address_suburb {'Collingwood'  }
   address_city { 'Melbourne'  }
@@ -22,7 +22,7 @@ Pet.blueprint do
   date_of_birth { DateTime.now - 5.years }
   emergency_contact_name { Faker::Name.first_name }
   emergency_contact_phone { '1234' }
-  pet_type { 'dog' }
+  pet_type_id { 1 }
   size { 'large' }
   sex { 'female_desexed' }
 end

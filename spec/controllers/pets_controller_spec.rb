@@ -6,8 +6,8 @@ describe PetsController do
   end
 
   def valid_attributes(override_or_add={})
-    { name: 'fred', date_of_birth: '2012-12-12', emergency_contact_name: 'owner 1', 
-      emergency_contact_phone: '1234', pet_type: 'dog', size: 'small', sex: 'male_desexed' }.merge(override_or_add)
+    { name: 'fred', date_of_birth: '2012-12-12', emergency_contact_name: 'owner 1',
+      emergency_contact_phone: '1234', pet_type_id: '1', size: 'small', sex: 'male_desexed' }.merge(override_or_add)
   end
 
   describe 'GET #index' do
@@ -25,7 +25,7 @@ describe PetsController do
 
     it 'should make a new pet object available to views' do
       subject
-      assigns(:pet).should == 'New Pet' 
+      assigns(:pet).should == 'New Pet'
     end
 
     it 'should render the new template' do

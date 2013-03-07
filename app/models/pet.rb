@@ -1,11 +1,4 @@
 class Pet < ActiveRecord::Base
-  PET_TYPE_OPTIONS = {
-    'dog'   => 'Dog',
-    'cat'   => 'Cat',
-    'bird'  => 'Bird',
-    'fish'  => 'Fish',
-    'other' => 'Other'
-  }
 
   SIZE_OPTIONS = {
     'small'   => 'Small (0-15kg)',
@@ -24,10 +17,10 @@ class Pet < ActiveRecord::Base
   belongs_to :user
   has_many :pictures, as: 'picturable'
   has_and_belongs_to_many :enquiries
-  
+
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
-  attr_accessible :breed, :name, :age, :pet_type, :size, :sex, :microchip_number, \
+  attr_accessible :breed, :name, :age, :pet_type_id, :size, :sex, :microchip_number, \
                   :council_number, :dislike_people, :dislike_animals, \
                   :dislike_children, :dislike_loneliness, :explain_dislikes, \
                   :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
@@ -42,10 +35,10 @@ class Pet < ActiveRecord::Base
                   :vet_phone, :medication, :date_of_birth, :user_id, as: :admin
 
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
-  validates_inclusion_of :pet_type, :in => %w( dog cat bird fish other )
+  validates_inclusion_of :pet_type_id, :in => [1,2,3,4,5]
   validates_inclusion_of :size, :in => %w( small medium large giant ), if: Proc.new {|pet| pet.pet_type == 'dog'}
   validates_inclusion_of :sex, :in => %w( male_desexed female_desexed male_entire female_entire ), if: Proc.new {|pet| ['cat', 'dog'].include?(pet.pet_type)}
-  
+
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type == 'other'}
 
   def dislikes
@@ -69,12 +62,8 @@ class Pet < ActiveRecord::Base
     end
   end
 
-  def pretty_pet_type
-    if pet_type == 'other'
-      other_pet_type.capitalize
-    else
-      pet_type.capitalize
-    end
+  def pet_type
+    ReferenceData::PetType.find(pet_type_id) if pet_type_id
   end
 
   def pretty_sex

@@ -12,10 +12,10 @@ $ ->
       $('.explain-dislikes').removeClass 'hide'
     else
       $('.explain-dislikes').addClass 'hide'
-      
+
   $('.dislikes input').trigger('change')
   $('.pet-type select').trigger('change')
-  $(".breed.dog select").chosen()
+  $(".breed.1 select").chosen()
 
   $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"], [name="homestay[is_homestay]"], [name="homestay[is_sitter]"], [name="homestay[is_services]"]').change ->
     $('.homestay-form .specific').hide()
@@ -23,6 +23,6 @@ $ ->
     $(".specific.sitter").show() if $('[name="user[homestay_attributes][is_sitter]"]:checked, [name="homestay[is_sitter]"]:checked').length > 0
     $(".specific.services").show() if $('[name="user[homestay_attributes][is_services]"]:checked, [name="homestay[is_services]"]:checked').length > 0
 
-  $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"], [name="homestay[is_homestay]"], [name="homestay[is_sitter]"], [name="homestay[is_services]"]').trigger('change')  
+  $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"], [name="homestay[is_homestay]"], [name="homestay[is_sitter]"], [name="homestay[is_services]"]').trigger('change')
 
   $('form').nestedFields(containerSelector: '.homestay-pictures tbody');

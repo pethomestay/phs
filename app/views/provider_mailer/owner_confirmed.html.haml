@@ -40,7 +40,7 @@
   - if pet.pictures.present?
     %p.article-content= image_tag(pet.pictures.first.file.thumb('190x150#').url)
   %p.article-content
-    = "Type: #{pet.pretty_pet_type}"
+    = "Type: #{pet.pet_type.name}"
     %br
     = "Age: #{pet.age}"
     %br
