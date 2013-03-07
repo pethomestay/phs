@@ -1,7 +1,8 @@
 !!!
 %html
   %head
-    %title formatted_title(@title)
+    %title
+      = formatted_title(@title)
     = stylesheet_link_tag 'application'
     %script{type: 'text/javascript', src: 'https://use.typekit.com/tfa5abi.js'}
     %script{type: 'text/javascript'}
@@ -12,11 +13,11 @@
     = render partial: 'layouts/google_analytics' if Rails.env.production?
     = yield :open_graph_tags
   %body
-    = render partial: 'layouts/facebook_tag' 
-    = render partial: 'layouts/navbar' 
+    = render partial: 'layouts/facebook_tag'
+    = render partial: 'layouts/navbar'
     .container.main
-      = render "layouts/flash_messages", :locals => {:flash => flash} 
-      = yield 
+      = render "layouts/flash_messages", :locals => {:flash => flash}
+      = yield
       %hr
       = render partial: "layouts/footer"
       = render partial: "layouts/feedbackify"
