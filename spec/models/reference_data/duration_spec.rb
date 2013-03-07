@@ -9,7 +9,7 @@ describe ReferenceData::Duration do
 
   describe '#find' do
     it 'should return the duration with the id provided' do
-      ReferenceData::Duration.find(5).id.should == 5
+      ReferenceData::Duration.find(11).id.should == 11
     end
 
     it 'should raise RecordNotFound id there is no duration with the id provided' do

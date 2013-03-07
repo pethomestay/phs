@@ -12,12 +12,12 @@ class ReferenceData::Duration
   end
 
   def self.find(id)
-    raise ActiveRecord::RecordNotFound.new unless id <  all.length
+    raise ActiveRecord::RecordNotFound.new unless id <=  all.length
     all[id - 1]
   end
 
   def self.find_by_id(id)
-    return nil unless id < all.length
+    return nil unless id <= all.length
     all[id - 1]
   end
 
