@@ -7,6 +7,7 @@ class MovePetTypeToEnum < ActiveRecord::Migration
     execute "update pets set pet_type_id = 4 where pet_type = 'fish'"
     execute "update pets set pet_type_id = 5 where pet_type = 'other'"
     remove_column :pets, :pet_type
+    add_index :pets, :pet_type_id
   end
 
   def down

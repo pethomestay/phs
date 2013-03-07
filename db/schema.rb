@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307070858) do
+ActiveRecord::Schema.define(:version => 20130307083251) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20130307070858) do
     t.integer  "pet_type_id"
   end
 
+  add_index "pets", ["pet_type_id"], :name => "index_pets_on_pet_type_id"
   add_index "pets", ["user_id"], :name => "index_pets_on_user_id"
 
   create_table "pictures", :force => true do |t|
