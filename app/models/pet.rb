@@ -7,32 +7,19 @@ class Pet < ActiveRecord::Base
     'giant'  => 'Giant (46kg+)'
   }
 
-  SEX_OPTIONS = {
-    'male_desexed'   => 'Male desexed',
-    'female_desexed'   => 'Female desexed',
-    'male_entire'  => 'Male entire',
-    'female_entire'  => 'Female entire'
-  }
-
   belongs_to :user
   has_many :pictures, as: 'picturable'
   has_and_belongs_to_many :enquiries
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
-  attr_accessible :breed, :name, :age, :pet_type_id, :size, :sex, :microchip_number, \
-                  :council_number, :dislike_people, :dislike_animals, \
-                  :dislike_children, :dislike_loneliness, :explain_dislikes, \
-                  :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
-                  :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
+  attr_accessible :breed, :name, :age, :pet_type_id, :size, :sex_id, :microchip_number,
+                  :council_number, :dislike_people, :dislike_animals,
+                  :dislike_children, :dislike_loneliness, :explain_dislikes,
+                  :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained,
+                  :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name,
                   :vet_phone, :medication, :date_of_birth
 
-  attr_accessible :breed, :name, :age, :pet_type, :size, :sex, :microchip_number, \
-                  :council_number, :dislike_people, :dislike_animals, \
-                  :dislike_children, :dislike_loneliness, :explain_dislikes, \
-                  :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained, \
-                  :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name, \
-                  :vet_phone, :medication, :date_of_birth, :user_id, as: :admin
 
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
   validates_inclusion_of :pet_type_id, :in => [1,2,3,4,5]
@@ -66,13 +53,8 @@ class Pet < ActiveRecord::Base
     ReferenceData::PetType.find(pet_type_id) if pet_type_id
   end
 
-  def pretty_sex
-    case sex
-      when 'male_desexed' then 'Male desexed'
-      when 'female_desexed' then 'Female desexed'
-      when 'male_entire' then 'Male entire'
-      when 'female_entire' then 'Female entire'
-    end
+  def sex
+    ReferenceData::Sex.find(sex_id) if sex_id
   end
 
   def pretty_size

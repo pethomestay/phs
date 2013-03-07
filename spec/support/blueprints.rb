@@ -24,7 +24,7 @@ Pet.blueprint do
   emergency_contact_phone { '1234' }
   pet_type_id { 1 }
   size { 'large' }
-  sex { 'female_desexed' }
+  sex_id { 2 }
 end
 
 User.blueprint do

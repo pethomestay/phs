@@ -140,7 +140,6 @@ ActiveRecord::Schema.define(:version => 20130307083251) do
     t.boolean  "flea_treated",            :default => false
     t.boolean  "vaccinated",              :default => false
     t.boolean  "house_trained",           :default => false
-    t.string   "sex"
     t.string   "age"
     t.string   "microchip_number"
     t.string   "council_number"
@@ -154,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20130307083251) do
     t.text     "medication"
     t.date     "date_of_birth"
     t.integer  "pet_type_id"
+    t.integer  "sex_id"
   end
 
   add_index "pets", ["pet_type_id"], :name => "index_pets_on_pet_type_id"
