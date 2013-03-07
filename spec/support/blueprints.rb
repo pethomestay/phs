@@ -9,7 +9,7 @@ Homestay.blueprint do
   title { Faker::Company.name }
   description { Faker::Lorem.paragraph }
   property_type_id { 1 }
-  outdoor_area { 'medium' }
+  outdoor_area_id { 2 }
   slug { "slug-title-#{sn}" }
   user
 

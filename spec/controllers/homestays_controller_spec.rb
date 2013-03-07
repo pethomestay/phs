@@ -15,7 +15,7 @@ describe HomestaysController do
       title: Faker::Company.name,
       description: Faker::Lorem.paragraph,
       property_type_id: '3',
-      outdoor_area: 'large',
+      outdoor_area_id: '3',
       accept_liability: '1',
       parental_consent: '1',
     }.merge(override_or_add)

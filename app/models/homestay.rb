@@ -1,12 +1,6 @@
 class Homestay < ActiveRecord::Base
   include ActionView::Helpers
 
-  OUTDOOR_AREA_OPTIONS = {
-    'small'     => 'Small (up to 10sq m)',
-    'medium'    => 'Medium (up to 50sq m)',
-    'large'     => 'Large (50sq m+)'
-  }
-
   belongs_to :user
   has_many :enquiries
   has_many :pictures, as: 'picturable'
@@ -18,7 +12,7 @@ class Homestay < ActiveRecord::Base
                   :years_looking_after_pets, :constant_supervision, :emergency_transport,
                   :first_aid, :insurance, :professional_qualification, :pictures_attributes,
                   :website, :accept_house_rules, :accept_terms, :sitter_cost_per_night,
-                  :pets_present, :outdoor_area, :property_type_id, :supervision_outside_work_hours,
+                  :pets_present, :outdoor_area_id, :property_type_id, :supervision_outside_work_hours,
                   :fenced, :children_present, :police_check, :pet_feeding, :pet_grooming,
                   :pet_training, :pet_walking, :is_professional, :parental_consent, :accept_liability
 
@@ -30,7 +24,7 @@ class Homestay < ActiveRecord::Base
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
   validates_inclusion_of :property_type_id, :in => ReferenceData::PropertyType.all.map(&:id)
-  validates_inclusion_of :outdoor_area, :in => OUTDOOR_AREA_OPTIONS.map(&:first)
+  validates_inclusion_of :outdoor_area_id, :in => ReferenceData::OutdoorArea.all.map(&:id)
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
@@ -110,8 +104,12 @@ class Homestay < ActiveRecord::Base
     property_type.name if property_type_id
   end
 
-  def pretty_outdoor_area
-    OUTDOOR_AREA_OPTIONS[outdoor_area]
+  def outdoor_area
+    ReferenceData::OutdoorArea.find(outdoor_area_id) if outdoor_area_id
+  end
+
+  def outdoor_area_name
+    outdoor_area.name if outdoor_area_id
   end
 
   def location
