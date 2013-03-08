@@ -35,18 +35,18 @@
           %td= pet.name
         %tr
           %td Type
-          %td= pet.pet_type.name
+          %td= pet.pet_type_name
         %tr
           %td Age
           %td= pet.age
         - if pet.size
           %tr
             %td Size
-            %td= pet.size.name
+            %td= pet.size_name
         - if pet.sex
           %tr
             %td Sex
-            %td= pet.sex.name
+            %td= pet.sex_name
         %tr
           %td Dislikes
           %td= pet.dislikes

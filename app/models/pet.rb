@@ -12,13 +12,12 @@ class Pet < ActiveRecord::Base
                   :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name,
                   :vet_phone, :medication, :date_of_birth
 
-
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
+  validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 4}
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
 
-  validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 4}
 
   def dislikes
     dislikes = []
@@ -45,11 +44,23 @@ class Pet < ActiveRecord::Base
     ReferenceData::PetType.find(pet_type_id) if pet_type_id
   end
 
+  def pet_type_name
+    pet_type.name if pet_type_id
+  end
+
   def sex
     ReferenceData::Sex.find(sex_id) if sex_id
   end
 
+  def sex_name
+    sex.name if sex_id
+  end
+
   def size
     ReferenceData::Size.find(size_id) if size_id
+  end
+
+  def size_name
+    size.name if size_id
   end
 end
