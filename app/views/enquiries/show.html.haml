@@ -22,7 +22,7 @@
     - else
       %td User has not been rated yet...
 %h2 Pets
-- @pets.each do |pet|
+- @user.pets.each do |pet|
   .row
     .span3
       - if pet.pictures.present?
