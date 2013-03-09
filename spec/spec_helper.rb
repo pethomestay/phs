@@ -1,22 +1,21 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-
-require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
-require 'ffaker'
 require 'simplecov'
-
 SimpleCov.start 'rails' do
-  #Going to have to keep ratcheting up the coverage as we get this app more tested.
+  # bug: changing the coverage_dir here breaks coverage recording.
+  add_filter "/app/uploaders"
   at_exit do
     SimpleCov.result.format!
-    if SimpleCov.result.covered_percent < 50
+    if SimpleCov.result.covered_percent < 60
       $stderr.puts "Coverage not 60%, build failed."
       exit 1
     end
   end
 end
 
+require File.expand_path("../../config/environment", __FILE__)
+require 'rspec/rails'
+require 'ffaker'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
