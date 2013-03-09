@@ -101,7 +101,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def property_type_name
-    property_type.name if property_type_id
+    property_type.title if property_type_id
   end
 
   def outdoor_area
@@ -109,7 +109,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def outdoor_area_name
-    outdoor_area.name if outdoor_area_id
+    outdoor_area.title if outdoor_area_id
   end
 
   def location

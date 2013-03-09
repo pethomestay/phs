@@ -45,7 +45,7 @@ class Pet < ActiveRecord::Base
   end
 
   def pet_type_name
-    pet_type.name if pet_type_id
+    pet_type.title if pet_type_id
   end
 
   def sex
@@ -53,7 +53,7 @@ class Pet < ActiveRecord::Base
   end
 
   def sex_name
-    sex.name if sex_id
+    sex.title if sex_id
   end
 
   def size
@@ -61,6 +61,6 @@ class Pet < ActiveRecord::Base
   end
 
   def size_name
-    size.name if size_id
+    size.title if size_id
   end
 end
