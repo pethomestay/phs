@@ -1,5 +1,9 @@
 %p.article-title= "Hi #{@owner.first_name},"
 %p.article-content Sorry, but this provider is unavailable on the dates you have requested, although they would be happy to be asked again later!
+- if @enquiry.response_message.present?
+  %p.article-content= "#{@provider.first_name} has also included the following message:"
+  %p.article-content
+    %strong= @enquiry.response_message
 
 %p.article-content
   Name:

@@ -19,10 +19,13 @@ class EnquiriesController < ApplicationController
   end
 
   def update
-    @enquiry.update_attributes(params[:enquiry])
-    flash[:alert] = @enquiry.accepted ? "Your contact details have been sent to #{@enquiry.user.first_name}." :
-                                        "We'll let #{@enquiry.user.first_name} know you're not available at this time."
-    redirect_to my_account_path
+    if @enquiry.update_attributes(params[:enquiry])
+      redirect_to my_account_path, alert: "Your response has been sent to #{@enquiry.user.first_name}"
+    else
+      flash[:alert] = "Please fill in a response message if your are not answering yes or no"
+      @user = @enquiry.user
+      render :show
+    end
   end
 
   private

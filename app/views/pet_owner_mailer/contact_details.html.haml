@@ -1,5 +1,9 @@
-%p.article-title Great news! 
+%p.article-title Great news!
 %p.article-content= "#{@provider.first_name} has indicated they are available to look after #{@owner.pet_name} on #{@enquiry.date.to_formatted_s(:day_and_month)}!"
+- if @enquiry.response_message.present?
+  %p.article-content= "#{@provider.first_name} has also included the following message:"
+  %p.article-content
+    %strong= @enquiry.response_message
 %p.article-title What happens next
 %p.article-content= "Contact #{@provider.first_name} to work out any additional details you want to know. Make sure you are fully confident of leaving your pet in their care - see our guidelines below if you have not used PetHomeStay before!"
 %p.article-content
@@ -19,7 +23,7 @@
 %p.article-title Next steps
 %p.article-content Once you have received a couple of responses, select the provider you want to use and accept via PetHomeStay. (A provider can cancel any indicated availability up to being confirmed, so don’t leave it too long!)
 %p.article-content Once confirmed, both you and the provider are committed to the booking.
-%p.article-content Your entire pets profile details will be sent to the Provider, including emergency contact details. 
+%p.article-content Your entire pets profile details will be sent to the Provider, including emergency contact details.
 %p.article-content Any cancellations after this stage will incur the providers cancellation policy, if any, and the likelihood of negative feedback from the community!
 %p= link_to "Please confirm or cancel this booking on PetHomeStay", enquiry_confirmation_url(@enquiry), class: 'btn'
 %p.article-title If you have not user a provider before

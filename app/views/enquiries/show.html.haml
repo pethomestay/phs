@@ -3,10 +3,10 @@
 %table.table.table-striped.table-condensed
   %tr
     %td Start date
-    %td= @enquiry.formatted_date
+    %td= @enquiry.date
   %tr
     %td Duration
-    %td= @enquiry.duration.title
+    %td= @enquiry.duration_name
   %tr
     %td Message
     - if @enquiry.message.present?
@@ -56,12 +56,13 @@
             %td= pet.explain_dislikes
   .clearfix
 %p Accepting this request does not confirm a booking, it just lets the Pet Owner know that you are available on the dates requested for their pet. The next step is for the Owner to contact the Host and confirm a booking if they wish to proceed.
-.form-actions
-  = form_for @enquiry, html: {class: 'form-button'} do |f|
-    = f.hidden_field :responded, value: true
-    = f.hidden_field :accepted, value: false
-    = f.submit "Can't do it", class: 'btn'
-  = form_for @enquiry, html: {class: 'form-button'} do |f|
-    = f.hidden_field :responded, value: true
-    = f.hidden_field :accepted, value: true
-    = f.submit "Yes, I am available to look after the pet", class: 'btn btn-primary'
+= simple_form_for @enquiry, html: {class: 'form-button'} do |f|
+  .row
+    .span5
+      = f.input :response_id, required: true, as: :radio_buttons, label_method: :description,
+                collection: ReferenceData::Response.all.reject{|response| response == ReferenceData::Response::NONE}
+    .span7
+      = f.input :response_message, input_html: {rows: 5, class: 'input-xxlarge'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information"
+
+  .form-actions
+    =f.submit 'Send Response', class: 'btn btn-primary'

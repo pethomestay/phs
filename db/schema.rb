@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307224107) do
+ActiveRecord::Schema.define(:version => 20130310043424) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -53,15 +53,16 @@ ActiveRecord::Schema.define(:version => 20130307224107) do
     t.date     "date"
     t.integer  "homestay_id"
     t.text     "message"
-    t.boolean  "responded",           :default => false
-    t.boolean  "accepted",            :default => false
     t.boolean  "confirmed",           :default => false
     t.boolean  "owner_accepted",      :default => false
     t.boolean  "sent_feedback_email", :default => false
     t.integer  "duration_id"
+    t.text     "response_message"
+    t.integer  "response_id",         :default => 0
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
+  add_index "enquiries", ["response_id"], :name => "index_enquiries_on_response_id"
   add_index "enquiries", ["user_id"], :name => "index_enquiries_on_user_id"
 
   create_table "enquiries_pets", :force => true do |t|

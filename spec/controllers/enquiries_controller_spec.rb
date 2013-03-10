@@ -65,7 +65,7 @@ describe EnquiriesController do
     let(:enquiry) { Enquiry.make! }
 
     context 'when the homestay owner can look after the pet' do
-      let(:attributes) { {accepted: true, responded: true} }
+      let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id} }
       before { PetOwnerMailer.stub(:contact_details).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
         PetOwnerMailer.should_receive(:contact_details)
@@ -74,10 +74,19 @@ describe EnquiriesController do
     end
 
     context 'when the homestay owner cannot look after the pet' do
-      let(:attributes) { {accepted: false, responded: true} }
+      let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id} }
       before { PetOwnerMailer.stub(:provider_unavailable).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
         PetOwnerMailer.should_receive(:provider_unavailable)
+        subject
+      end
+    end
+
+    context 'when the homestay owner is unsure if they can look after the pet' do
+      let(:attributes) { {response_id: ReferenceData::Response::UNDECIDED.id, response_message: 'something'} }
+      before { PetOwnerMailer.stub(:provider_undecided).and_return mock(:mail, deliver: true) }
+      it 'should send an email to get more information from the requester' do
+        PetOwnerMailer.should_receive(:provider_undecided)
         subject
       end
     end
