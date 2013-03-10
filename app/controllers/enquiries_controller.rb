@@ -4,13 +4,13 @@ class EnquiriesController < ApplicationController
   before_filter :find_enquiry, only: [:show, :update]
 
 	def create
-    @enquiry = Enquiry.new(params[:enquiry])
-    @enquiry.user = current_user
-    if @enquiry.save && ProviderMailer.enquiry(@enquiry).deliver
-      redirect_to @enquiry.homestay, alert: "Your enquiry has been sent to this provider. They will respond with their availability soon."
+    @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
+    if @enquiry.valid?
+      flash[:alert] = "Your enquiry has been sent to this provider. They will respond with their availability soon."
     else
-      redirect_to @enquiry.homestay, error: "There was an issue with your request. Please contact support."
+      flash[:error] = "There was an issue with your request. Please contact support."
     end
+    redirect_to @enquiry.homestay
   end
 
   def show
@@ -20,13 +20,9 @@ class EnquiriesController < ApplicationController
 
   def update
     @enquiry.update_attributes(params[:enquiry])
-    if @enquiry.accepted
-      PetOwnerMailer.contact_details(@enquiry).deliver
-      redirect_to my_account_path, alert: "Your contact details have been sent to #{enquiry.user.first_name}."
-    else
-      PetOwnerMailer.provider_unavailable(@enquiry).deliver
-      redirect_to my_account_path, alert: "We'll let #{enquiry.user.first_name} know you're not available at this time."
-    end
+    flash[:alert] = @enquiry.accepted ? "Your contact details have been sent to #{@enquiry.user.first_name}." :
+                                        "We'll let #{@enquiry.user.first_name} know you're not available at this time."
+    redirect_to my_account_path
   end
 
   private

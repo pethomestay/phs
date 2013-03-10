@@ -1,5 +1,11 @@
 require 'machinist/active_record'
 
+Enquiry.blueprint do
+  user
+  homestay
+  duration_id { 1 }
+end
+
 Homestay.blueprint do
   cost_per_night { 0 }
   address_1 { Faker::Address.street_address }

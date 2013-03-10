@@ -27,4 +27,59 @@ describe EnquiriesController do
       end
     end
   end
+
+  describe 'POST #create' do
+    subject { post :create, attributes }
+    let(:user) { User.make! }
+    let(:homestay) { Homestay.make! }
+    before do
+      controller.stub(:current_user).and_return user
+      ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
+    end
+
+    context 'with valid attributes' do
+      let(:attributes) { {enquiry:{'homestay_id' => homestay.id, 'duration_id' => '3'}} }
+      it 'should create an enquiry' do
+        expect{ subject }.to change(Enquiry, :count).by(1)
+      end
+      it 'should set the current user as the person making the enquiry' do
+        subject
+        assigns(:enquiry).user.should == user
+      end
+      it 'should redirect back to the homestay' do
+        subject
+        response.should redirect_to assigns(:enquiry).homestay
+      end
+    end
+
+    context 'with invalid attributes'
+  end
+
+  describe 'PUT #update' do
+    subject { put :update, id: enquiry.id, enquiry: attributes }
+    before do
+      ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
+      controller.stub_chain(:current_user, :homestay, :id).and_return 2
+      Enquiry.stub(:find_by_homestay_id_and_id!).and_return enquiry
+    end
+    let(:enquiry) { Enquiry.make! }
+
+    context 'when the homestay owner can look after the pet' do
+      let(:attributes) { {accepted: true, responded: true} }
+      before { PetOwnerMailer.stub(:contact_details).and_return mock(:mail, deliver: true) }
+      it 'should send an email to inform the requester' do
+        PetOwnerMailer.should_receive(:contact_details)
+        subject
+      end
+    end
+
+    context 'when the homestay owner cannot look after the pet' do
+      let(:attributes) { {accepted: false, responded: true} }
+      before { PetOwnerMailer.stub(:provider_unavailable).and_return mock(:mail, deliver: true) }
+      it 'should send an email to inform the requester' do
+        PetOwnerMailer.should_receive(:provider_unavailable)
+        subject
+      end
+    end
+  end
 end

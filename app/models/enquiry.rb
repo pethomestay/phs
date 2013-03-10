@@ -3,7 +3,7 @@ class Enquiry < ActiveRecord::Base
   belongs_to :homestay
   has_many :feedbacks
   has_and_belongs_to_many :pets
-  
+
   attr_accessible :pets, :user, :homestay_id, :formatted_date, :date, :duration_id, :message, :responded, :accepted,
                   :confirmed, :owner_accepted
 
@@ -19,12 +19,15 @@ class Enquiry < ActiveRecord::Base
                                         (date < ? AND (duration_id = 9)) OR \
                                         (date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
-  validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length) 
+  validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
+
+  after_create :send_new_enquiry_notifications
+  after_update :send_enquiry_update_notifications
 
   def duration
     ReferenceData::Duration.find_by_id(duration_id) if duration_id
   end
-  
+
   def formatted_date
     date.to_formatted_s
   end
@@ -39,5 +42,19 @@ class Enquiry < ActiveRecord::Base
 
   def title
     "Enquiry for #{homestay.title}"
+  end
+
+  private
+  def send_new_enquiry_notifications
+    ProviderMailer.enquiry(self).deliver
+  end
+
+  def send_enquiry_update_notifications
+    return unless responded_changed?
+    if accepted
+      PetOwnerMailer.contact_details(self).deliver
+    else
+      PetOwnerMailer.provider_unavailable(self).deliver
+    end
   end
 end
