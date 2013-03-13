@@ -1,0 +1,26 @@
+%p#notice= notice
+
+%dl.dl-horizontal
+  %dt Name
+  %dd= @user.name
+  %dt Joined
+  %dd= @user.created_at
+  %dt Email
+  %dd= @user.email
+  %dt Homestay
+  %dd= @user.homestay.present? ? @user.homestay.title : 'no homestay'
+  %dt Pets
+  %dd= @user.pets.count
+  %dt Phone
+  %dd= @user.phone_number
+  %dt Mobile
+  %dd= @user.mobile_number
+  %dt Address
+  %dd
+    = @user.address_1
+    = @user.address_2
+    %br
+    = "#{@user.address_suburb}, #{@user.address_postcode}"
+
+= link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-primary'
+= link_to 'Back', admin_users_path, class: 'btn'

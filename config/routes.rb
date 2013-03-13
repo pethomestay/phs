@@ -1,4 +1,5 @@
 PetHomestay::Application.routes.draw do
+
   devise_for :users, controllers: {registrations: "registrations"}
   resource :login_dropdown, only: [:show]
 
@@ -15,6 +16,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :admin_dashboard
+    resources :users
   end
 
   get '/searches'       => 'searches#create'
