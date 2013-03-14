@@ -1,0 +1,18 @@
+= link_to 'New Pet', new_admin_pet_path, class: 'btn btn-primary pull-right'
+%h1 Listing Pets
+%table.table
+  %tr
+    %th Name
+    %th Type
+    %th Created
+    %th Actions
+
+  - @pets.each do |pet|
+    %tr
+      %td= pet.name
+      %td= pet.pet_type_name
+      %td= "#{time_ago_in_words pet.created_at} ago"
+      %td
+        =link_to 'Show', admin_pet_path(pet)
+        =link_to 'Edit', edit_admin_pet_path(pet)
+        =link_to 'Destroy', admin_pet_path(pet), :method => :delete, :data => { :confirm => 'Are you sure?' }

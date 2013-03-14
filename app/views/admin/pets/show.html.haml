@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%dl.dl-horizontal
+  %dt Name
+  %dd= @pet.name
+  %dt Created
+  %dd= @pet.created_at
+  %dt Type
+  %dd= @pet.pet_type_name
+  %dt Breed
+  %dd= @pet.breed
+  %dt Date of birth
+  %dd= @pet.date_of_birth
+  %dt Sex
+  %dd= @pet.sex_name
+  %dt Size
+  %dd= @pet.size_name
+
+
+= link_to 'Edit', edit_admin_pet_path(@pet), class: 'btn btn-primary'
+= link_to 'Back', admin_pets_path, class: 'btn'

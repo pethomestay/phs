@@ -6,16 +6,17 @@ PetHomestay::Application.routes.draw do
   get '/test' => 'pages#test'
   get '/welcome' => 'pages#welcome'
 
-  resources :pets, except: [:show]
-  resources :homestays
-
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedback
   end
+  resources :homestays
+  resources :pets, except: [:show]
+
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :admin_dashboard
+    resources :pets
     resources :users
   end
 
