@@ -4,7 +4,7 @@ class Enquiry < ActiveRecord::Base
   has_many :feedbacks
   has_and_belongs_to_many :pets
 
-  attr_accessible :pets, :user, :homestay_id, :formatted_date, :date, :duration_id, :message, :response_id,
+  attr_accessible :pets, :user, :user_id, :homestay_id, :formatted_date, :date, :duration_id, :message, :response_id,
                   :confirmed, :owner_accepted, :response_message
 
   scope :unanswered, where(response_id: ReferenceData::Response::NONE.id)
