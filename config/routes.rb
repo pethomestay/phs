@@ -16,6 +16,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :admin_dashboard
+    resources :enquiries
     resources :pets
     resources :users
   end
@@ -28,13 +29,13 @@ PetHomestay::Application.routes.draw do
   root to: "pages#home"
 
   get '/searches/none'        => 'pages#home', as: 'no_results'
-  get '/how-does-it-work'     => 'pages#home', as: 'how_does_it_work'
-  get '/what-is'              => 'pages#home', as: 'what_is'
-  get '/why-join-pethomestay' => 'pages#home', as: 'why_join'
+  get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
+  get '/what-is'              => 'pages#about_us', as: 'what_is'
+  get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   get '/blog'                 => 'pages#home'
   get '/contact'              => 'pages#home'
-  get '/terms-and-conditions' => 'pages#home', as: 'terms_and_conditions'
-  get '/house-rules'          => 'pages#home', as: 'house_rules'
-  get '/privacy-policy'       => 'pages#home', as: 'privacy_policy'
-  get '/faqs'                 => 'pages#home', as: 'faqs'
+  get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
+  get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
+  get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'
+  get '/faqs'                 => 'pages#faqs', as: 'faqs'
 end
