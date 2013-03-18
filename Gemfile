@@ -34,6 +34,7 @@ group :test, :development do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
+  gem 'capistrano'
 end
 
 group :assets do

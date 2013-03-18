@@ -69,4 +69,8 @@ class Enquiry < ActiveRecord::Base
   def require_respsonse_message
     response_id == ReferenceData::Response::UNDECIDED.id
   end
+
+  def strip_phone_numbers(string)
+    string.gsub /\d+[\s|\d]+/, ''
+  end
 end
