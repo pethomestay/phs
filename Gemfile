@@ -22,6 +22,7 @@ gem 'rack-cache'
 gem 'fog'
 gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
+gem 'net-scp', '1.0.6'
 
 group :test, :development do
   gem 'rspec-rails'

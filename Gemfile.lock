@@ -267,6 +267,7 @@ DEPENDENCIES
   jquery-ui-rails
   libv8 (~> 3.11.8)
   machinist (>= 2.0.0.beta2)
+  net-scp (= 1.0.6)
   newrelic_rpm
   pg
   pry
