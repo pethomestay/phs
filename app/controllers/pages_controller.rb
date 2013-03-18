@@ -1,7 +1,6 @@
 require './app/models/search'
 
 class PagesController < ApplicationController
-  caches_page :index, :why_join_pethomestay, :how_does_it_work, :about_us, :faqs, :house_rules, :privacy_policy, :terms_and_conditions
 
   def home
   end
