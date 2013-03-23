@@ -3,9 +3,8 @@ PetHomestay::Application.routes.draw do
   devise_for :users, controllers: {registrations: "registrations"}
   resource :login_dropdown, only: [:show]
 
-  get '/test' => 'pages#test'
   get '/welcome' => 'pages#welcome'
-
+  resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedback
@@ -33,7 +32,6 @@ PetHomestay::Application.routes.draw do
   get '/what-is'              => 'pages#about_us', as: 'what_is'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   get '/blog'                 => 'pages#home'
-  get '/contact'              => 'pages#home'
   get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
   get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
   get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'
