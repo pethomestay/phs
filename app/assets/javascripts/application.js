@@ -16,6 +16,7 @@
 //= require jquery.ui.datepicker
 //= require jquery.geocomplete
 //= require bootstrap-transition
+//= require bootstrap-alert
 //= require bootstrap-modal
 //= require bootstrap-carousel
 //= require bootstrap-tooltip
