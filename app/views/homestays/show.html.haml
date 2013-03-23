@@ -97,7 +97,6 @@
           = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
           = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
     #map.thumbnail.span5
-    %script{type: "application/javascript", src: "/assets/gmaps.js"}
     :javascript
       initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
         zoom: 16,
