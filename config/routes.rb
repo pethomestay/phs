@@ -1,9 +1,7 @@
 PetHomestay::Application.routes.draw do
 
   devise_for :users, controllers: {registrations: "registrations"}
-  resource :login_dropdown, only: [:show]
 
-  get '/welcome' => 'pages#welcome'
   resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
