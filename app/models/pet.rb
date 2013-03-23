@@ -5,13 +5,6 @@ class Pet < ActiveRecord::Base
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
-  attr_accessible :breed, :name, :age, :pet_type_id, :size_id, :sex_id, :microchip_number,
-                  :council_number, :dislike_people, :dislike_animals,
-                  :dislike_children, :dislike_loneliness, :explain_dislikes,
-                  :pictures, :pictures_attributes, :flea_treated, :vaccinated, :house_trained,
-                  :other_pet_type, :emergency_contact_name, :emergency_contact_phone, :vet_name,
-                  :vet_phone, :medication, :date_of_birth
-
   validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 4}
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)

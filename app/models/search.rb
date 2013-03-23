@@ -4,7 +4,7 @@ class Search
   include ActiveModel::Serialization
   include ActiveModel::Conversion
 
-  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by, \
+  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by,
                 :is_sitter, :is_homestay, :is_services
   def initialize(attributes = {})
     attributes.each do |k,v|
