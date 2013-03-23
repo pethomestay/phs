@@ -19,6 +19,6 @@ class Contact
   end
 
   def send_email
-    #send email here
+    ContactMailer.new_customer_contact(self).deliver
   end
 end
