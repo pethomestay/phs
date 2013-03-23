@@ -25,3 +25,4 @@
 //= require jquery.nested-fields
 //= require chosen-jquery
 //= require_tree .
+//= require_tree ../../../vendor/assets/javascripts/.
