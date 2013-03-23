@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe EnquiriesController do
-  before { controller.stub(:authenticate_user!).and_return true }
+  before do
+    controller.stub(:authenticate_user!).and_return true
+    Homestay.any_instance.stub(:geocode).and_return true
+  end
   describe 'GET #show' do
     subject { get :show, id: 12 }
     let(:enquiry) { stub_model(Enquiry, user: stub_model(User)) }

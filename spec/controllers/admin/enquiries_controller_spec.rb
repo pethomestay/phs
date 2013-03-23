@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe Admin::EnquiriesController do
-  let!(:homestay) { Homestay.make! }
-  let!(:user) { User.make! }
+  let(:homestay) { Homestay.make! }
+  let(:user) { User.make! }
+  before { Homestay.any_instance.stub(:geocode).and_return true }
 
   def valid_attributes
     { homestay_id: homestay.id,
@@ -17,16 +18,18 @@ describe Admin::EnquiriesController do
   end
 
   describe "GET index" do
+    let(:enquiry) { stub_model(Enquiry) }
     it "assigns all enquiries as @enquiries" do
-      enquiry = Enquiry.create! valid_attributes
+      Enquiry.stub(:all).and_return([enquiry])
       get :index, {}, valid_session
       assigns(:enquiries).should eq([enquiry])
     end
   end
 
   describe "GET show" do
+    let(:enquiry) { stub_model(Enquiry) }
     it "assigns the requested enquiry as @enquiry" do
-      enquiry = Enquiry.create! valid_attributes
+      Enquiry.stub(:find).with(enquiry.to_param).and_return enquiry
       get :show, {:id => enquiry.to_param}, valid_session
       assigns(:enquiry).should eq(enquiry)
     end
@@ -40,8 +43,9 @@ describe Admin::EnquiriesController do
   end
 
   describe "GET edit" do
+    let(:enquiry) { stub_model(Enquiry) }
     it "assigns the requested enquiry as @enquiry" do
-      enquiry = Enquiry.create! valid_attributes
+      Enquiry.stub(:find).with(enquiry.to_param).and_return enquiry
       get :edit, {:id => enquiry.to_param}, valid_session
       assigns(:enquiry).should eq(enquiry)
     end
@@ -114,14 +118,16 @@ describe Admin::EnquiriesController do
 
   describe "DELETE destroy" do
     subject { delete :destroy, {:id => enquiry.to_param}, valid_session }
-    let!(:enquiry) { Enquiry.create! valid_attributes }
+    let(:enquiry) { stub_model(Enquiry, destroy: true) }
+    before { Enquiry.stub(:find).and_return enquiry}
     it "destroys the requested enquiry" do
-      expect { subject }.to change(Enquiry, :count).by(-1)
+      enquiry.should_receive :destroy
+      subject
     end
 
     it "redirects to the enquiries list" do
       subject
-      response.should redirect_to(admin_enquiries_url)
+      response.should redirect_to(admin_enquiry_url(enquiry))
     end
   end
 

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe HomestaysController do
   before do
     controller.stub(:authenticate_user!).and_return true
+    Homestay.any_instance.stub(:geocode).and_return true
   end
 
   def valid_attributes(override_or_add={})
