@@ -9,10 +9,12 @@ PetHomestay::Application.routes.draw do
   end
   resources :homestays
   resources :pets, except: [:show]
+  get '/welcome' => 'pages#welcome'
+
 
 
   namespace :admin do
-    match '/dashboard' => 'admin#dashboard', as: :admin_dashboard
+    match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
     resources :pets
     resources :users
