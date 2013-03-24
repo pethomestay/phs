@@ -4,7 +4,7 @@ class ContactMailer < ActionMailer::Base
 
   def new_customer_contact(contact)
     @contact = contact
-    mail(to: 'contacts@pethomestay.com' , subject: "Contact us from #{@contact.name}")
+    mail(to: 'adam.boas@gmail.com' , subject: "Contact us from #{@contact.name}")
   end
 
 end
