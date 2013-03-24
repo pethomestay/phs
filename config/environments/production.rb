@@ -67,18 +67,18 @@ PetHomestay::Application.configure do
 
   # Use mailgun for ActionMailer
   ActionMailer::Base.smtp_settings = {
-    :port           => ENV['MAILGUN_SMTP_PORT'], 
+    :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => ENV['HOST'],
+    :domain         => 'www.pethomsetay.com',
     :authentication => :plain,
   }
   ActionMailer::Base.delivery_method = :smtp
 
   # Add default mailer URL
-  config.action_mailer.default_url_options = { :host => ENV['HOST'] }
-  config.action_mailer.asset_host = "http://#{ENV['HOST']}"
+  config.action_mailer.default_url_options = { :host => 'www.pethomestay.com' }
+  config.action_mailer.asset_host = "http://www.pethomestay.com"
 
   # Use SSL
   # config.force_ssl = true
