@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Admin::PetsController do
+  before do
+    controller.stub(:authenticate_user!).and_return true
+    controller.stub(:require_admin!).and_return true
+  end
 
   def valid_attributes
     { name: Faker::Name.first_name,

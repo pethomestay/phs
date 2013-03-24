@@ -1,9 +1,13 @@
 require 'spec_helper'
 
 describe Admin::EnquiriesController do
+  before do
+    controller.stub(:authenticate_user!).and_return true
+    controller.stub(:require_admin!).and_return true
+    Homestay.any_instance.stub(:geocode).and_return true
+  end
   let(:homestay) { Homestay.make! }
   let(:user) { User.make! }
-  before { Homestay.any_instance.stub(:geocode).and_return true }
 
   def valid_attributes
     { homestay_id: homestay.id,

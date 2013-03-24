@@ -2,7 +2,7 @@ class Admin::EnquiriesController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @enquiries = Enquiry.all)
+    respond_with(:admin, @enquiries = Enquiry.includes([{homestay: :user}, :user]))
   end
 
   def show

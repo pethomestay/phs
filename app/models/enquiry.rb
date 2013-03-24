@@ -35,7 +35,7 @@ class Enquiry < ActiveRecord::Base
   end
 
   def response_name
-    response.title id response_id
+    response.title if response_id
   end
 
   def feedback_for_owner

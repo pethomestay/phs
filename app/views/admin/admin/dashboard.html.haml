@@ -1,7 +1,9 @@
 .row
   .span6
     %table.table.table-striped
-      %caption Recent Signups
+      %caption
+        Recent Signups
+        =link_to 'view all', admin_users_path, class: 'admin'
       %thead
         %tr
           %th name
@@ -9,13 +11,15 @@
       %tbody
         - @users.each do |user|
           %tr
-            %td 
+            %td
               = user.name
-            %td 
+            %td
               = "#{time_ago_in_words user.created_at} ago"
 
     %table.table.table-striped
-      %caption Recent Homestays
+      %caption
+        Recent Homestays
+        =link_to 'view all', '#', class: 'admin'
       %thead
         %tr
           %th title
@@ -23,9 +27,9 @@
       %tbody
         - @homestays.each do |homestay|
           %tr
-            %td 
+            %td
               = homestay.title
-            %td 
+            %td
               = "#{time_ago_in_words homestay.created_at} ago"
   .span6
     %table.table.table-striped
@@ -37,7 +41,7 @@
       %tbody
         - @stats.each do |key, value|
           %tr
-            %td 
+            %td
               = key.to_s.titleize
-            %td 
+            %td
               = value

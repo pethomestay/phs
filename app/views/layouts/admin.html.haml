@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %title
+      = formatted_title(@title)
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Ubuntu:400,700'
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag google_maps_source_url
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = render partial: 'layouts/google_analytics' if Rails.env.production?
+    = yield :open_graph_tags
+  %body
+    = render partial: 'layouts/facebook_tag'
+    %div.navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = link_to "Pet Homestay", root_path, class: "brand"
+          %ul.nav
+            %li= link_to "Admin Dashboard", admin_dashboard_path
+            %li= link_to "Users", admin_users_path
+            %li= link_to "Pets", admin_pets_path
+            %li= link_to "Enquiries", admin_enquiries_path
+
+    .container.main
+      = render "layouts/flash_messages", :locals => {:flash => flash}
+      = yield
+      %hr
+      = render partial: "layouts/footer"
+      = render partial: "layouts/feedbackify"
