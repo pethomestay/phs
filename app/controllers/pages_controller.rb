@@ -1,15 +1,9 @@
-require './app/models/search'
-
 class PagesController < ApplicationController
-
+  before_filter :authenticate_user!, only: [:welcome]
   def home
   end
 
   def welcome
-    unless current_user
-      redirect_to root_path
-      return
-    end
   end
 
   def why_join_pethomestay
