@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323232946) do
+ActiveRecord::Schema.define(:version => 20130324230458) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -196,9 +196,11 @@ ActiveRecord::Schema.define(:version => 20130323232946) do
     t.string   "address_country"
     t.boolean  "active",                 :default => true
     t.boolean  "admin",                  :default => false
+    t.integer  "average_rating"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
+  add_index "users", ["average_rating"], :name => "index_users_on_average_rating"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
