@@ -57,13 +57,13 @@ class Search
   end
 
   def within
-    @within || 20
+    @within ||= 20
   end
 
   def perform
     perfrom_geocode unless @latitude.present? && @longitude.present?
-    unless @sort_by == 'average_rating'
-      homestays = Homestay.active.near([@latitude, @longitude], within, order: @sort_by)
+    unless sort_by == 'average_rating'
+      homestays = Homestay.active.near([@latitude, @longitude], within, order: sort_by)
     else
       homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC').includes(:user)
     end
