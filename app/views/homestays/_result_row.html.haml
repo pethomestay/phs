@@ -1,0 +1,24 @@
+%tr.listing{'data-listing' => homestay.id}
+  %td.image-cell
+    - if homestay.pictures.any?
+      = link_to image_tag(homestay.pictures.first.file.thumb('120x120#').url, alt: homestay.title), homestay
+    - else
+      = link_to image_tag("/assets/results-placeholder.png"), homestay
+    %p.rating
+      - if homestay.user.received_feedbacks.present?
+        - rating_stars homestay.average_rating
+      - else
+        (Not yet rated)
+  %td.main-info
+    %table
+      %tr
+        %td
+          %h2= link_to truncate(homestay.title, length: 50, separator: ' '), homestay
+        %td
+          %p.cost-per-night
+            %strong
+              = number_to_currency(homestay.cost_per_night)
+              per night
+          %p.location= homestay.location
+    %p.excerpt= truncate(homestay.description, length: 300)
+    %p.view= link_to "View this listing", homestay

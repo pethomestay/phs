@@ -1,6 +1,17 @@
 class HomestaysController < ApplicationController
-  before_filter :authenticate_user!, except: [:show]
+  respond_to :html
+  before_filter :authenticate_user!, except: [:show, :index]
   before_filter :find_homestay, only: [:edit, :update]
+
+  SEARCH_RADIUS = 20
+
+  #This is the action that results from a search
+  def index
+    @search = Search.new(params[:search])
+    @search.country = request.location.country if request.location
+    @title = "Pet care for #{@search.location}"
+    respond_with @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
+  end
 
   def show
     @homestay = Homestay.find_by_slug(params[:id])

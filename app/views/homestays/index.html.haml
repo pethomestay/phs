@@ -1,0 +1,17 @@
+.row
+  = render partial: 'search_box'
+  .span8.offset4.results
+    - if @homestays.present?
+      .well
+        %p
+          %strong Here are the top PetHomeStays for the postcode you requested!
+        %p The pins do not represent exact locations of the PetHomeStays, they are roughly to within 100 metres. To make an enquiry with a PetHomeStay, click on their pin on the map to be taken to their listing, then click  ‘View this listing’.
+        %p If you like the PetHomeStay, click the Enquire Now button inside the listing. Don’t forget to enquire with at least two listings, in case one cannot make it!
+        %p If your enquiry is accepted, the next step is to meet up and ensure you are both comfortable with both the pet and the HomeStay, as per our House Rules. The Owner then confirms with their preferred HomeStay!
+      %table.table.table-bordered.table-striped
+        %tbody
+          - @homestays.each do |homestay|
+            = render partial: 'result_row', locals: {homestay: homestay}
+      = will_paginate @homestays, class: 'pagination pagination-centered'
+    - else
+      = render partial: 'no_results'
