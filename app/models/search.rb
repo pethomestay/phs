@@ -4,15 +4,22 @@ class Search
   include ActiveModel::Serialization
   include ActiveModel::Conversion
 
-  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by,
+  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by, :country,
                 :is_sitter, :is_homestay, :is_services
+
   def initialize(attributes = {})
-    attributes.each do |k,v|
-      send "#{k}=", v if respond_to? "#{k}="
+    attributes.each do |key, value|
+      send("#{key}=", value) if respond_to? "#{key}="
     end
   end
 
-  def persisted?; false end
+  def persisted?
+    false
+  end
+
+  def location=(value)
+    @location = value.titleize
+  end
 
   def is_homestay
     @is_homestay = true if @is_homestay.nil?
@@ -51,5 +58,24 @@ class Search
 
   def within
     @within || 20
+  end
+
+  def perform
+    perfrom_geocode unless @latitude.present? && @longitude.present?
+    unless @sort_by == 'average_rating'
+      homestays = Homestay.active.near([@latitude, @longitude], within, order: @sort_by)
+    else
+      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC').includes(:user)
+    end
+    homestays
+  end
+
+  def perfrom_geocode
+    coords = @country && @country != 'Reserved' ? Geocoder.coordinates("#{@location}, #{@country}") :
+                                                  Geocoder.coordinates(@location)
+    if coords.any?
+      @latitude = coords.first
+      @longitude = coords.last
+    end
   end
 end
