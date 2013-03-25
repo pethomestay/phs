@@ -9,8 +9,8 @@ class Contact
   validates_format_of :email, :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i
 
   def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
+    attributes.each do |key, value|
+      send("#{key}=", value) if respond_to? "#{key}="
     end
   end
 
