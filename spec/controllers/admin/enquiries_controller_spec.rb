@@ -24,7 +24,7 @@ describe Admin::EnquiriesController do
   describe "GET index" do
     let(:enquiry) { stub_model(Enquiry) }
     it "assigns all enquiries as @enquiries" do
-      Enquiry.stub(:all).and_return([enquiry])
+      Enquiry.stub(:includes).and_return([enquiry])
       get :index, {}, valid_session
       assigns(:enquiries).should eq([enquiry])
     end
