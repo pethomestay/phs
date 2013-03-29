@@ -31,11 +31,11 @@ class Enquiry < ActiveRecord::Base
   end
 
   def response
-    ReferenceData::Response.find(response_id) if response_id
+    ReferenceData::Response.find(response_id) if response_id && response_id > 0
   end
 
   def response_name
-    response.title if response_id
+    response.title if response_id && response_id > 0
   end
 
   def feedback_for_owner
