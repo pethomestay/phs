@@ -28,7 +28,6 @@ describe Enquiry do
     context 'when the Enquiry has no response' do
       let(:enquiry) { Enquiry.new()}
       it 'should return nil' do
-        puts "RES:#{enquiry.response_id}"
         subject.should be_nil
       end
     end
