@@ -1,0 +1,17 @@
+%h1 Listing Pets
+%table.table
+  %tr
+    %th Title
+    %th Suburb
+    %th Created
+    %th Actions
+
+  - @homestays.each do |homestay|
+    %tr
+      %td= homestay.title
+      %td= homestay.address_suburb
+      %td= "#{time_ago_in_words homestay.created_at} ago"
+      %td
+        =link_to 'Show', admin_homestay_path(homestay)
+        =link_to 'Edit', edit_admin_homestay_path(homestay)
+        =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }

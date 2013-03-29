@@ -1,0 +1,47 @@
+%h1 Editing Pet
+
+= simple_form_for([:admin, @homestay], html: {class: 'form-horizontal', multipart: true}) do |f|
+  = f.error_notification
+
+  = f.input :title
+  = f.input :slug
+  = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
+    .add-on $
+    = f.input_field :cost_per_night, class: 'span1'
+    .add-on .00
+  = f.input :is_professional
+  = f.input :description, input_html: {class: 'input-xxlarge'}
+  = f.input :property_type_id, collection: ReferenceData::PropertyType.all, include_blank: false
+  = f.input :outdoor_area_id, label: 'Size of outdoor area', collection: ReferenceData::OutdoorArea.all, include_blank: false
+  %h3 Address
+  = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
+  .control-group
+    .controls
+      %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
+  = f.input :address_suburb, label: 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
+  = f.input :address_city, label: 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
+  = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
+  .grouped-checkboxes
+    = label_tag "Professional?", nil, class: 'for-group'
+    = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
+    = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
+    = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
+    = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
+
+  .grouped-checkboxes
+    = label_tag "I can provide" , nil, class: 'for-group'
+    = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
+    = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
+    = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+
+  .grouped-checkboxes
+    = label_tag "I have", nil, class: 'for-group'
+    = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
+    = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
+    = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
+    = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'
+    = link_to 'Cancel', admin_homestays_path, class: 'btn'
+
