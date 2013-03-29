@@ -25,21 +25,21 @@ gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
 
 group :test, :development do
-  gem 'thin'
-  gem 'rspec-rails'
+  gem 'capistrano'
   gem 'pry'
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
-  gem 'capistrano'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', '~> 1.4.2'
+  gem 'thin'
 end
 
 group :test do
-  gem 'webrat'
-  gem 'simplecov', :require => false
-  gem 'shoulda-matchers', '~> 1.4.2'
-  gem 'machinist', '>= 2.0.0.beta2'
   gem 'ffaker'
+  gem 'machinist', '>= 2.0.0.beta2'
+  gem 'simplecov', :require => false
+  gem 'webrat'
 end
 
 group :assets do
