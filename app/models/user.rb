@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessor   :current_password, :accept_house_rules, :accept_terms
 
@@ -104,13 +103,8 @@ class User < ActiveRecord::Base
     "#{pets.length} #{'pet'.pluralize(pets.length)} (#{pet_count_summary})"
   end
 
-  def average_rating
-    if received_feedbacks.present?
-      received_feedbacks.inject(0) do |sum, feedback|
-        sum += feedback.rating
-      end / received_feedbacks.count
-    else
-      0
-    end
+  def update_average_rating
+    rating = received_feedbacks.count == 0 ? 0 : received_feedbacks.sum('rating') / received_feedbacks.count
+    update_attribute :average_rating, rating
   end
 end

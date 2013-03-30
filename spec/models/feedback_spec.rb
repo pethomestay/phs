@@ -23,4 +23,14 @@ describe Feedback do
       end
     end
   end
+
+  describe 'creation' do
+    subject { Feedback.create!(enquiry: enquiry, user: user, rating: 3)}
+    let(:user) { stub_model(User)}
+    let(:enquiry) { stub_model(Enquiry)}
+    it 'should call update_average_rating on its user' do
+      user.should_receive(:update_average_rating)
+      subject
+    end
+  end
 end
