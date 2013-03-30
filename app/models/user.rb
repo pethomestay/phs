@@ -31,17 +31,15 @@ class User < ActiveRecord::Base
   end
 
   def unanswered_enquiries?
-    unanswered_enquiries.present?
+    unanswered_enquiries.any?
   end
 
   def unanswered_enquiries
-    if homestay.present?
-      homestay.enquiries.unanswered
-    end
+    homestay.present? ? homestay.enquiries.unanswered : []
   end
 
   def enquiries_needing_confirmation?
-    enquiries_needing_confirmation.present?
+    enquiries_needing_confirmation.any?
   end
 
   def enquiries_needing_confirmation
