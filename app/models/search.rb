@@ -43,7 +43,7 @@ class Search
   def perform_geocode
     coords = @country && @country != 'Reserved' ? Geocoder.coordinates("#{@location}, #{@country}") :
                                                   Geocoder.coordinates(@location)
-    if coords.any?
+    if coords && coords.any?
       @latitude = coords.first
       @longitude = coords.last
     end
