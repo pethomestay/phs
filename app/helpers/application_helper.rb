@@ -20,23 +20,8 @@ module ApplicationHelper
 
   def rating_stars(rating)
     5.times.collect do |star|
-      if star < rating
-        haml_tag :i, class: 'icon-star'
-      else
-        haml_tag :i, class: 'icon-star-empty'
-      end
+       haml_tag(:i, class: "icon-star#{'-empty' if star >= rating}")
     end
-  end
-
-  def country_priority
-    important_countries = %w{AU NZ}
-    if request.location
-      priority = [request.location.country_code].concat(important_countries)
-    else
-      priority = important_countries
-    end
-
-    priority.uniq
   end
 
   def google_maps_source_url
