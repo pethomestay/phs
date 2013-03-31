@@ -1,42 +1,33 @@
 class FeedbacksController < ApplicationController
+  respond_to :html
   before_filter :authenticate_user!
 
   def create
-    @enquiry = Enquiry.find_by_id_and_owner_accepted(params[:enquiry_id], true)
-    @subject = subject(@enquiry)
-    @feedback = Feedback.find_or_create_by_user_id_and_enquiry_id_and_subject_id(current_user.id, @enquiry.id, @subject.id)
-    if @feedback.update_attributes(params[:feedback])
+    @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
+    @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
+    if @feedback.valid?
       redirect_to my_account_path, alert: 'Thanks for your feedback!'
     else
-      render :show
+      render :new
     end
   end
 
-  def show
-    @enquiry = Enquiry.find_by_id_and_owner_accepted(params[:enquiry_id], true)
-
-    unless @enquiry
-      redirect_to my_account_path
-      return
-    end
-
-    if @enquiry.user == current_user
-      @subject = @enquiry.homestay.user
-    elsif @enquiry.homestay.user == current_user
-      @subject = @enquiry.user
+  def new
+    @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
+    if involved_party(@enquiry)
+      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry))
     else
-      redirect_to my_account_path
-      return
+      render file: "#{Rails.root}/public/404", format: :html, status: 404
     end
-
-    @feedback = Feedback.find_or_create_by_user_id_and_enquiry_id_and_subject_id(current_user.id, @enquiry.id, @subject.id)
   end
+
+  private
 
   def subject(enquiry)
-    if enquiry.user == current_user
-      @subject = enquiry.homestay.user
-    elsif enquiry.homestay.user == current_user
-      @subject = enquiry.user
-    end
+    enquiry.user == current_user ? enquiry.homestay.user : enquiry.user
+  end
+
+  def involved_party(enquiry)
+    enquiry.user == current_user || enquiry.homestay.user == current_user
   end
 end

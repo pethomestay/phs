@@ -5,7 +5,7 @@ PetHomestay::Application.routes.draw do
   resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
-    resource :feedback
+    resource :feedbacks, only: [:new, :create]
   end
   resources :homestays
   resources :pets, except: [:show]

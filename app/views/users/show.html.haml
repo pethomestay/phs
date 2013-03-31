@@ -38,14 +38,14 @@
       - if @user.owners_needing_feedback?
         %h4 Owners needing feedback
         - @user.owners_needing_feedback.each do |enquiry|
-          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
+          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.homestays_needing_feedback?
         %h4 PetHomeStay's needing feedback
         - @user.homestays_needing_feedback.each do |enquiry|
-          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", enquiry_feedback_path(enquiry)
+          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
