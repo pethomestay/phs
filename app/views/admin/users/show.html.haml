@@ -12,9 +12,9 @@
   %dt Pets
   %dd= @user.pets.count
   %dt Phone
-  %dd= @user.phone_number
+  %dd= @user.phone_number.present? ? @user.phone_number : '-'
   %dt Mobile
-  %dd= @user.mobile_number
+  %dd= @user.mobile_number.present? ? @user.mobile_number : '-'
   %dt Address
   %dd
     = @user.address_1
