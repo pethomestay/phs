@@ -12,7 +12,7 @@
       %tr
         %td= enquiry.user.name
         %td= enquiry.homestay.user.name
-        %td= enquiry.created_at.to_formatted_s(:day_month_year)
+        %td= enquiry.created_at.to_formatted_s(:year_month_day)
         %td
           =link_to 'Show', admin_enquiry_path(enquiry)
           =link_to 'Edit', edit_admin_enquiry_path(enquiry)

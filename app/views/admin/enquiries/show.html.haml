@@ -1,12 +1,12 @@
 %p#notice= notice
 
 %dl.dl-horizontal
-  %dt About
-  %dd= @enquiry.homestay.title
+  %dt Homestay
+  %dd= link_to @enquiry.homestay.title, admin_homestay_path(@enquiry.homestay)
   %dt From
-  %dd= @enquiry.user.name
+  %dd= link_to @enquiry.user.name, admin_user_path(@enquiry.user)
   %dt Created
-  %dd= @enquiry.created_at
+  %dd= @enquiry.created_at.to_formatted_s(:year_month_day)
   %dt Duration
   %dd= @enquiry.duration_name
   %dt Response
@@ -15,6 +15,8 @@
   %dd= @enquiry.confirmed?
   %dt Owner Accepted
   %dd= @enquiry.owner_accepted?
+  %dt Response
+  %dd= @enquiry.response_name
   %dt Message
   %dd= @enquiry.message
 

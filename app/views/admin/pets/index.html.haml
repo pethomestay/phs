@@ -12,7 +12,7 @@
       %tr
         %td= pet.name
         %td= pet.pet_type_name
-        %td= pet.created_at.to_formatted_s(:day_month_year)
+        %td= pet.created_at.to_formatted_s(:year_month_day)
         %td
           =link_to 'Show', admin_pet_path(pet)
           =link_to 'Edit', edit_admin_pet_path(pet)

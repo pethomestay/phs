@@ -11,7 +11,7 @@
       %tr
         %td= homestay.title
         %td= homestay.address_suburb
-        %td= homestay.created_at.to_formatted_s(:day_month_year)
+        %td= homestay.created_at.to_formatted_s(:year_month_day)
         %td
           =link_to 'Show', admin_homestay_path(homestay)
           =link_to 'Edit', edit_admin_homestay_path(homestay)
