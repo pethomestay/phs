@@ -2,7 +2,7 @@ class Admin::HomestaysController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @homestays = Homestay.all)
+    respond_with(:admin, @homestays = Homestay.order('created_at DESC'))
   end
 
   def show

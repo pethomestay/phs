@@ -2,7 +2,7 @@ class Admin::PetsController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @pets = Pet.all)
+    respond_with(:admin, @pets = Pet.order('created_at DESC'))
   end
 
   def show

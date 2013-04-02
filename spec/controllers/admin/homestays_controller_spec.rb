@@ -27,7 +27,7 @@ describe Admin::HomestaysController do
 
   describe "GET index" do
     it "assigns all homestays as @homestays" do
-      Homestay.stub(:all).and_return 'all homestays'
+      Homestay.stub(:order).and_return 'all homestays'
       get :index, {}, valid_session
       assigns(:homestays).should eq('all homestays')
     end

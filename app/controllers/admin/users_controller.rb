@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @users = User.all)
+    respond_with(:admin, @users = User.order('created_at DESC'))
   end
 
   def show

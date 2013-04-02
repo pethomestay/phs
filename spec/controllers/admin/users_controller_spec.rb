@@ -24,7 +24,7 @@ describe Admin::UsersController do
 
   describe "GET index" do
     it "assigns all users as @users" do
-      User.stub(:all).and_return 'all users'
+      User.stub(:order).and_return 'all users'
       get :index, {}, valid_session
       assigns(:users).should eq('all users')
     end
