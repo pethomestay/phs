@@ -3,22 +3,25 @@
 %table.table.tablesorter
   %thead
     %tr
-      %th Name
+      %th  Name
       %th Email
       %th Joined
+      %th Homestay
+      %th Active
       %th Actions
   %tbody
     - @users.each do |user|
       %tr
-        %td= user.name
+        %td= link_to user.name, admin_user_path(user)
         %td= user.email
         %td= user.created_at.to_formatted_s(:year_month_day)
+        %td= user.homestay.present? ? 'Yes' : 'No'
+        %td= user.active
         %td
-          =link_to 'Show', admin_user_path(user)
           =link_to 'Edit', edit_admin_user_path(user)
           =link_to 'Destroy', admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 :javascript
   $(document).ready(function(){
-    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+    $('table.tablesorter').tablesorter({headers:{5:{sorter:false}}});
   });
