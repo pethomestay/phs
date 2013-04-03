@@ -64,10 +64,6 @@ class User < ActiveRecord::Base
     enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
   end
 
-  def homestay_id
-    homestay.present? ? homestay.id : nil
-  end
-
   def pets_by_type
     pets.inject({}) do |hash, pet|
       hash[pet.pet_type] ||= []
