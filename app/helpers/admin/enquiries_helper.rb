@@ -13,7 +13,7 @@ module Admin::EnquiriesHelper
       rating_stars(enquiry.feedback_for_homestay.rating)
     else
       haml_tag :span, 'none'
-      haml_concat(link_to 'Provide Feedback to homestay',
+      haml_concat(link_to 'Provide feedback to homestay',
                   new_admin_feedback_path(homestay_feedback_params(@enquiry)),
                   class: 'btn btn-primary')
     end
@@ -24,7 +24,7 @@ module Admin::EnquiriesHelper
       rating_stars(enquiry.feedback_for_owner.rating)
     else
       haml_tag :span, 'none'
-      haml_concat(link_to 'Provide Feedback to pet owner',
+      haml_concat(link_to 'Provide feedback to pet owner',
                   new_admin_feedback_path(owner_feedback_params(@enquiry)),
                   class: 'btn btn-primary')
     end
