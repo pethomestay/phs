@@ -1,0 +1,24 @@
+%h1 Listing Feedback
+%table.table.tablesorter
+  %thead
+    %tr
+      %th From
+      %th About
+      %th Rating
+      %th Created
+      %th Actions
+  %tbody
+    - @feedbacks.each do |feedback|
+      %tr
+        %td= link_to feedback.user.name, admin_feedback_path(feedback)
+        %td= link_to feedback.subject.name, admin_feedback_path(feedback)
+        %td= feedback.rating
+        %td= feedback.created_at.to_formatted_s(:year_month_day)
+        %td
+          =link_to 'Edit', edit_admin_feedback_path(feedback)
+          =link_to 'Destroy', admin_feedback_path(feedback), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{4:{sorter:false}}});
+  });

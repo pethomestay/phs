@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%dl.dl-horizontal
+  %dt From
+  %dd= @feedback.user.name
+  %dt About
+  %dd= @feedback.subject.name
+  %dt Homestay
+  %dd= @feedback.enquiry.homestay.title
+  %dt Rating
+  %dd
+    - rating_stars @feedback.rating
+  %dt Review
+  %dd= @feedback.review
+
+
+= link_to 'Edit', edit_admin_feedback_path(@feedback), class: 'btn btn-primary'
+= link_to 'Back to feedback list', admin_feedbacks_path, class: 'btn'
+= link_to 'view enquiry', admin_enquiry_path(@feedback.enquiry)
