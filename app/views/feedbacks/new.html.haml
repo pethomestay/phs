@@ -11,7 +11,6 @@
       .rater
         - rating_stars 0
     .span6
-      %textarea.review-text.span6{placeholder: "Type your review here...", rows: 6, name: "feedback[review]"}
-        = f.object.review
+      =f.input :review, placeholder: "Type your review here...", input_html: {rows: 6, class: 'review-text span6'}
   .form-actions
     = f.submit 'Submit feedback', class: 'btn btn-primary'

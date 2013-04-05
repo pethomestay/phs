@@ -1,6 +1,6 @@
 %p#notice= notice
 
-%dl.dl-horizontal
+%dl.dl-horizontal.enquiry
   %dt Homestay
   %dd= link_to @enquiry.homestay.title, admin_homestay_path(@enquiry.homestay)
   %dt From
@@ -17,9 +17,15 @@
   %dd= @enquiry.owner_accepted?
   %dt Response
   %dd= @enquiry.response_name
+  %dt Feedback for owner
+  %dd
+    - feedback_for_owner_label(@enquiry)
+  %dt Feedback for homestay
+  %dd
+    - feedback_for_homestay_label(@enquiry)
   %dt Message
   %dd= @enquiry.message
 
 
 = link_to 'Edit', edit_admin_enquiry_path(@enquiry), class: 'btn btn-primary'
-= link_to 'Back', admin_enquiries_path, class: 'btn'
+= link_to 'Back to enquiry list', admin_enquiries_path, class: 'btn'
