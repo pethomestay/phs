@@ -13,6 +13,6 @@ class Feedback < ActiveRecord::Base
 
   private
   def update_user_average_rating
-    user.update_average_rating
+    subject.update_average_rating
   end
 end
