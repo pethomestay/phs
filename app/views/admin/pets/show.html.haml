@@ -16,6 +16,13 @@
   %dt Size
   %dd= @pet.size_name
 
+%table.pictures
+  %caption Picutres
+  - @pet.pictures.each_slice(2) do |pictures|
+    %tr
+    - pictures.each do |picture|
+      %td
+        = image_tag(picture.file.thumb('380x300#').url)
 
 = link_to 'Edit', edit_admin_pet_path(@pet), class: 'btn btn-primary'
 = link_to 'Back to pet list', admin_pets_path, class: 'btn'
