@@ -39,11 +39,19 @@ class Enquiry < ActiveRecord::Base
   end
 
   def feedback_for_owner
-    feedbacks.where('subject_id = ?', user.id).first
+    feedbacks.where(subject_id: user.id).first
+  end
+
+  def feedback_for_owner?
+    feedback_for_owner.present?
   end
 
   def feedback_for_homestay
-    feedbacks.where('subject_id = ?', homestay.user.id).first
+    feedbacks.where(subject_id: homestay.user.id).first
+  end
+
+  def feedback_for_homestay?
+    feedback_for_homestay.present?
   end
 
   private
