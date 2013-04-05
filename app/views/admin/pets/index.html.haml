@@ -10,11 +10,10 @@
   %tbody
     - @pets.each do |pet|
       %tr
-        %td= pet.name
+        %td= link_to pet.name, admin_pet_path(pet)
         %td= pet.pet_type_name
         %td= pet.created_at.to_formatted_s(:year_month_day)
         %td
-          =link_to 'Show', admin_pet_path(pet)
           =link_to 'Edit', edit_admin_pet_path(pet)
           =link_to 'Destroy', admin_pet_path(pet), :method => :delete, :data => { :confirm => 'Are you sure?' }
 

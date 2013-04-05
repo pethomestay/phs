@@ -9,11 +9,10 @@
   %tbody
     - @homestays.each do |homestay|
       %tr
-        %td= homestay.title
+        %td= link_to homestay.title, admin_homestay_path(homestay)
         %td= homestay.address_suburb
         %td= homestay.created_at.to_formatted_s(:year_month_day)
         %td
-          =link_to 'Show', admin_homestay_path(homestay)
           =link_to 'Edit', edit_admin_homestay_path(homestay)
           =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
 

@@ -10,11 +10,10 @@
   %tbody
     - @enquiries.each do |enquiry|
       %tr
-        %td= enquiry.user.name
-        %td= enquiry.homestay.user.name
+        %td= link_to enquiry.user.name, admin_enquiry_path(enquiry)
+        %td= link_to enquiry.homestay.user.name, admin_enquiry_path(enquiry)
         %td= enquiry.created_at.to_formatted_s(:year_month_day)
         %td
-          =link_to 'Show', admin_enquiry_path(enquiry)
           =link_to 'Edit', edit_admin_enquiry_path(enquiry)
           =link_to 'Destroy', admin_enquiry_path(enquiry), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
