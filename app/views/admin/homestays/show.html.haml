@@ -16,6 +16,10 @@
   %dt Address
   %dd= @homestay.address_1
 
+.pictures
+  - @homestay.pictures.each do |picture|
+    = image_tag(picture.file.thumb('380x300#').url)
 
-= link_to 'Edit', edit_admin_homestay_path(@homestay), class: 'btn btn-primary'
-= link_to 'Back to homestay list', admin_homestays_path, class: 'btn'
+.form-actions
+  = link_to 'Edit', edit_admin_homestay_path(@homestay), class: 'btn btn-primary'
+  = link_to 'Back to homestay list', admin_homestays_path, class: 'btn'
