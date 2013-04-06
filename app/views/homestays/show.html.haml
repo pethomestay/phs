@@ -99,7 +99,8 @@
     #map.thumbnail.span5
     :javascript
       initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
-        zoom: 16,
+        zoom: 12,
+        maxZoom: 12,
         mapTypeControl: false,
         streetViewControl: false,
         zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
