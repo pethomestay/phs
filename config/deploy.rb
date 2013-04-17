@@ -33,7 +33,7 @@ end
 task :production do
   set :stage, 'production'
   set :rails_env, 'production'
-  server 'ec2-54-253-4-48.ap-southeast-2.compute.amazonaws.com', :app, :db, :web, :primary => true
+  server '54.253.121.55', :app, :db, :web, :primary => true
   set :server_name, 'pet_homestay'
 end
 
