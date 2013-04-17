@@ -12,6 +12,6 @@
         %tbody
           - @homestays.each do |homestay|
             = render partial: 'result_row', locals: {homestay: homestay}
-      = will_paginate @homestays, class: 'pagination pagination-centered'
+      = will_paginate @homestays, renderer: BootstrapLinkRenderer
     - else
       = render partial: 'no_results'
