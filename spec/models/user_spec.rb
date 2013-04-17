@@ -15,4 +15,19 @@ describe User do
       User.new(first_name: 'Van', last_name: 'Halen').name.should == 'Van Halen'
     end
   end
+
+  describe '#pet_name' do
+    subject { user.pet_name }
+    let(:user) { User.new }
+    context 'when the user has multiple pets' do
+      before { 2.times{user.pets << Pet.new(name: 'fred')} }
+      it { should == 'your pets'}
+    end
+    context 'when the user has one pet' do
+      before { user.pets << Pet.new(name: 'fred') }
+      it 'should return the pets name' do
+        subject.should == 'fred'
+      end
+    end
+  end
 end

@@ -22,10 +22,6 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def pet_names
-    pets.map(&:name).to_sentence
-  end
-
   def notifications?
     unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback?
   end
@@ -64,14 +60,6 @@ class User < ActiveRecord::Base
     enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
   end
 
-  def pets_by_type
-    pets.inject({}) do |hash, pet|
-      hash[pet.pet_type] ||= []
-      hash[pet.pet_type] << pet
-      hash
-    end
-  end
-
   def pet_name
     if pets.length == 1
       pets.first.name
@@ -80,21 +68,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def pet_count_by_type
-    pets_by_type.inject({}) do |hash, (k,v)|
-      hash[k] = v.length
-      hash
-    end
-  end
-
-  def pet_count_summary
-    pet_count_by_type.map do |k,v|
-      "#{v} #{k.pluralize(v)}"
-    end.join(', ')
-  end
-
-  def pet_summary
-    "#{pets.length} #{'pet'.pluralize(pets.length)} (#{pet_count_summary})"
+  def pet_names
+    pets.map(&:name).to_sentence
   end
 
   def update_average_rating
