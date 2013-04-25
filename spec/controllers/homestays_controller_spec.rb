@@ -24,7 +24,7 @@ describe HomestaysController do
 
   describe 'GET #show' do
     subject { get :show, id: homestay.slug }
-    let(:homestay) { Homestay.make! }
+    let(:homestay) { FactoryGirl.create :homestay }
     it 'should make homestay to the pets variable' do
       subject
       assigns(:homestay).should == homestay
@@ -48,7 +48,7 @@ describe HomestaysController do
 
   describe 'POST #create' do
     subject { post :create, homestay: attributes }
-    let(:user) { User.make! }
+    let(:user) { FactoryGirl.create :user }
     before do
       controller.stub(:current_user).and_return user
     end
@@ -97,8 +97,8 @@ describe HomestaysController do
 
   describe 'PUT #update' do
     subject { put :update, id: homestay.slug, homestay: attributes }
-    let(:user) { User.make!(homestay: homestay) }
-    let(:homestay) { Homestay.make! }
+    let(:user) { FactoryGirl.create(:user, homestay: homestay) }
+    let(:homestay) { FactoryGirl.create :homestay }
     before do
       controller.stub(:current_user).and_return user
     end

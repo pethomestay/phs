@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::FeedbacksController do
-  let(:user) { User.make! }
+  let(:user) { FactoryGirl.create :user }
   before do
     controller.stub(:authenticate_user!).and_return true
     controller.stub(:require_admin!).and_return true

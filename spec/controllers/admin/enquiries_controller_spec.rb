@@ -6,8 +6,8 @@ describe Admin::EnquiriesController do
     controller.stub(:require_admin!).and_return true
     Homestay.any_instance.stub(:geocode).and_return true
   end
-  let(:homestay) { Homestay.make! }
-  let(:user) { User.make! }
+  let(:homestay) { FactoryGirl.create :homestay }
+  let(:user) { FactoryGirl.create :user}
 
   def valid_attributes
     { homestay_id: homestay.id,

@@ -38,7 +38,7 @@ end
 group :test do
   gem 'ffaker'
   gem 'timecop'
-  gem 'machinist', '>= 2.0.0.beta2'
+  gem 'factory_girl_rails'
   gem 'simplecov', :require => false
   gem 'webrat'
 end

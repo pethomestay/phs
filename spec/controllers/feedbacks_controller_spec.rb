@@ -40,7 +40,7 @@ describe FeedbacksController do
     subject { post :create, enquiry_id: enquiry.id, feedback: feedback_params }
     context 'with valid params' do
       let(:feedback_params) { {'rating' => '3', 'review' => 'something' } }
-      let(:enquiry) { Enquiry.make! }
+      let(:enquiry) { FactoryGirl.create :enquiry }
 
       it 'should create a new feedback' do
         expect { subject }.to change(Feedback, :count).by(1)

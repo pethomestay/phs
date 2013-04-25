@@ -36,7 +36,7 @@ describe PetsController do
 
   describe 'POST #create' do
     subject { post :create, pet: attributes }
-    let(:user) { User.make! }
+    let(:user) { FactoryGirl.create :user }
     before do
       controller.stub(:current_user).and_return user
     end
@@ -83,8 +83,8 @@ describe PetsController do
 
   describe 'PUT #update' do
     subject { put :update, id: pet.id, pet: attributes }
-    let(:user) { User.make! }
-    let(:pet) { Pet.make! }
+    let(:user) { FactoryGirl.create :user }
+    let(:pet) { FactoryGirl.create :pet }
     before do
       controller.stub(:current_user).and_return user
       user.pets << pet
@@ -119,8 +119,8 @@ describe PetsController do
 
   describe 'DELETE #destroy' do
     subject { delete :destroy, id: pet.id}
-    let(:user) { User.make! }
-    let(:pet) { Pet.make! }
+    let(:user) { FactoryGirl.create :user }
+    let(:pet) { FactoryGirl.create :pet }
     before do
       controller.stub(:current_user).and_return user
       user.pets << pet

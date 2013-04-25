@@ -33,8 +33,8 @@ describe EnquiriesController do
 
   describe 'POST #create' do
     subject { post :create, attributes }
-    let(:user) { User.make! }
-    let(:homestay) { Homestay.make! }
+    let(:user) { FactoryGirl.create :user }
+    let(:homestay) { FactoryGirl.create :homestay }
     before do
       controller.stub(:current_user).and_return user
       ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
@@ -65,7 +65,7 @@ describe EnquiriesController do
       controller.stub_chain(:current_user, :homestay, :id).and_return 2
       Enquiry.stub(:find_by_homestay_id_and_id!).and_return enquiry
     end
-    let(:enquiry) { Enquiry.make! }
+    let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when the homestay owner can look after the pet' do
       let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id} }

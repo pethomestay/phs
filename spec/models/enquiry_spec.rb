@@ -45,7 +45,7 @@ describe Enquiry do
 
   describe '#feedback_for_owner' do
     subject { enquiry.feedback_for_owner }
-    let(:enquiry) { Enquiry.make! }
+    let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when feedback has been provided for the owner' do
       let!(:feedback) { enquiry.feedbacks.create!(user: enquiry.homestay.user, subject: enquiry.user, rating: 2)}
@@ -63,7 +63,7 @@ describe Enquiry do
 
   describe '#feedback_for_owner?' do
     subject { enquiry.feedback_for_owner? }
-    let(:enquiry) { Enquiry.make! }
+    let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when feedback has been provided for the owner' do
       let!(:feedback) { enquiry.feedbacks.create!(user: enquiry.homestay.user, subject: enquiry.user, rating: 2)}
@@ -77,7 +77,7 @@ describe Enquiry do
 
   describe '#feedback_for_homestay' do
     subject { enquiry.feedback_for_homestay }
-    let(:enquiry) { Enquiry.make! }
+    let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when feedback has been provided for the owner' do
       let!(:feedback) { enquiry.feedbacks.create!(user: enquiry.user, subject: enquiry.homestay.user, rating: 2)}
@@ -95,7 +95,7 @@ describe Enquiry do
 
   describe '#feedback_for_homestay?' do
     subject { enquiry.feedback_for_homestay? }
-    let(:enquiry) { Enquiry.make! }
+    let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when feedback has been provided for the owner' do
       let!(:feedback) { enquiry.feedbacks.create!(user: enquiry.user, subject: enquiry.homestay.user, rating: 2)}
