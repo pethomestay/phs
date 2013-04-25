@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.slider
 //= require jquery.ui.datepicker
 //= require geolocation
 //= require bootstrap-transition
@@ -24,5 +23,10 @@
 //= require handlebars.comparison
 //= require jquery.nested-fields
 //= require chosen-jquery
-//= require_tree gmaps4rails
+//= require_tree ./gmaps4rails
+//= require jquery.popup
+//= require maps
+//= require searches
+//= require users
+//= require provider
 //= require_tree ../../../vendor/assets/javascripts/.
