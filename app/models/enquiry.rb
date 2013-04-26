@@ -19,6 +19,7 @@ class Enquiry < ActiveRecord::Base
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
 
+  before_save :set_response, on: :create
   after_create :send_new_enquiry_notifications
   after_update :send_enquiry_update_notifications
 
@@ -77,5 +78,9 @@ class Enquiry < ActiveRecord::Base
 
   def strip_phone_numbers(string)
     string.gsub /\d+[\s|\d]+/, ''
+  end
+
+  def set_response
+    self.response_id = ReferenceData::Response::NONE.id unless response_id > 0
   end
 end
