@@ -125,14 +125,20 @@ $orange:  #EA6E28;
       width: 100%;
       &>td {
         width: 50%;
-        text-align: center;
+        vertical-align: top;
+        label {
+          font-weight: bold;
+        }
+        &.message {
+          text-align: center;
+          padding-top:10px;
+        }
       }
     }
   }
   textarea {
-    margin-top: 34px;
+    margin-top: 10px;
     margin-bottom: -10px;
-    width: 509px;
   }
 }
 

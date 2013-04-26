@@ -21,10 +21,10 @@
             %td
               .enquire-datepicker
             %td
-              = f.input :duration_id, label: "Arrange for", collection: ReferenceData::Duration.all
+              = f.input :duration_id, label: "Arrange for", collection: ReferenceData::Duration.all, include_blank: false
           %tr
-            %td{colspan: 2}
-              = f.input :message, placeholder: 'Enter an optional personal message', input_html: {class: 'span5', rows: 4}
+            %td.message{colspan: 2}
+              = f.input :message, placeholder: 'Enter an optional personal message', input_html: {class: 'span7', rows: 4}
     .modal-footer
       %a.btn{href:"#", 'data-dismiss' => "modal"} Cancel
       = f.submit 'Can you look after my pet?', class: 'btn btn-primary'
