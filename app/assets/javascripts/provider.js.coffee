@@ -22,11 +22,8 @@ $ ->
     $(this).click ->
       $('#feedback_rating').val(rating)
 
-  $('.enquire-datepicker').datepicker
-    dateFormat: "yy-mm-dd"
-    minDate: 0
-    onSelect: (dateText, inst) ->
-      $('#enquiry_date').val dateText
+  $('.enquire-datepicker').datepicker({startDate: new Date(),date: new Date()}).on 'changeDate', (event) ->
+    $('#enquiry_date').val new XDate(event.date).toString('yyyy-MM-dd')
 
   $('.carousel').carousel()
 
