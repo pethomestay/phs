@@ -39,4 +39,6 @@ PetHomestay::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.middleware.use('StubIp', '203.206.102.165')
 end
