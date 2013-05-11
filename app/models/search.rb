@@ -6,7 +6,8 @@ class Search
 
   DEFAULT_RADIUS = 20
 
-  attr_accessor :location, :provider_types, :latitude, :longitude, :within, :sort_by, :country
+  attr_accessor :provider_types, :within, :sort_by, :country
+  attr_reader :location, :latitude, :longitude
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -20,6 +21,14 @@ class Search
 
   def location=(value)
     @location = value.titleize
+  end
+
+  def latitude=(value)
+    @latitude = value unless value.blank?
+  end
+
+  def longitude=(value)
+    @longitude = value unless value.blank?
   end
 
   def sort_by
