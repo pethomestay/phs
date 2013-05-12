@@ -107,7 +107,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def average_rating
-    user.average_rating
+    user.average_rating || 0
   end
 
   def has_services?

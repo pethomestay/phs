@@ -62,7 +62,7 @@
       = f.input :response_id, required: true, as: :radio_buttons, label_method: :description,
                 collection: ReferenceData::Response.all.reject{|response| response == ReferenceData::Response::NONE}
     .span7
-      = f.input :response_message, input_html: {rows: 5, class: 'input-xxlarge'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information"
+      = f.input :response_message, input_html: {rows: 5, class: 'input-xxlarge'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
 
   .form-actions
     =f.submit 'Send Response', class: 'btn btn-primary'
