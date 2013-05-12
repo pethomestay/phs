@@ -8,7 +8,8 @@ class HomestaysController < ApplicationController
   #This is the action that results from a search
   def index
     @search = Search.new(params[:search])
-    @search.country = request.location.country_code if request.location
+    #We are only doing australia, not sure why we are doing the country detect
+    @search.country =  'AU' #request.location.country_code if request.location
     @title = "Pet care for #{@search.location}"
     respond_with @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
   end
