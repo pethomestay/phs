@@ -15,16 +15,16 @@
   %dd= @enquiry.confirmed?
   %dt Owner Accepted
   %dd= @enquiry.owner_accepted?
-  %dt Response
-  %dd= @enquiry.response_name
   %dt Feedback for owner
   %dd
     - feedback_for_owner_label(@enquiry)
   %dt Feedback for homestay
   %dd
     - feedback_for_homestay_label(@enquiry)
-  %dt Message
-  %dd= @enquiry.message
+  %dt Message from Pet Owner
+  %dd= @enquiry.message ||'No message'
+  %dt Reply from Homestay
+  %dd= @enquiry.response_message || 'No Reply message'
 
 
 = link_to 'Edit', edit_admin_enquiry_path(@enquiry), class: 'btn btn-primary'
