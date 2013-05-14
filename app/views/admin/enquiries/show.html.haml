@@ -2,9 +2,13 @@
 
 %dl.dl-horizontal.enquiry
   %dt Homestay
-  %dd= link_to @enquiry.homestay.title, admin_homestay_path(@enquiry.homestay)
+  %dd
+    = link_to @enquiry.homestay.title, admin_homestay_path(@enquiry.homestay)
+    = "(#{@enquiry.homestay.user.mobile_number || @enquiry.homestay.user.phone_number})"
   %dt From
-  %dd= link_to @enquiry.user.name, admin_user_path(@enquiry.user)
+  %dd
+    = link_to @enquiry.user.name, admin_user_path(@enquiry.user)
+    = "(#{@enquiry.user.mobile_number || @enquiry.user.phone_number})"
   %dt Created
   %dd= @enquiry.created_at.to_formatted_s(:year_month_day)
   %dt Duration
