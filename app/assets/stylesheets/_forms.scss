@@ -9,6 +9,11 @@ label.for-group{
   margin-left:26px;
 }
 
+input[type=file] {
+  line-height: 16px;
+  margin: 8px 0 -8px;
+}
+
 .form-well {
   .control-group{
     border-top:solid 1px #cbdcde;

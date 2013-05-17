@@ -105,7 +105,7 @@
             - if f.object.file.present?
               = image_tag(f.object.file.thumb('200x200').url)
             - else
-              = f.input :file, label: 'Upload picture'
+              = f.input :file, as: :file, label: 'Upload picture'
             = f.hidden_field :retained_file
           %td
             = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
