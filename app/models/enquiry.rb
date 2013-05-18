@@ -23,6 +23,8 @@ class Enquiry < ActiveRecord::Base
   after_create :send_new_enquiry_notifications
   after_update :send_enquiry_update_notifications
 
+  scope :last_five, order('created_at DESC').limit(5)
+
   def duration
     ReferenceData::Duration.find_by_id(duration_id) if duration_id
   end
