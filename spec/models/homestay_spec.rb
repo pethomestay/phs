@@ -8,6 +8,15 @@ describe Homestay do
 
   it { should accept_nested_attributes_for :pictures }
 
+  it { should validate_presence_of :cost_per_night }
+  it { should validate_presence_of :address_1}
+  it { should validate_presence_of :address_suburb}
+  it { should validate_presence_of :address_city}
+  it { should validate_presence_of :address_country}
+  it { should validate_presence_of :title}
+  it { should validate_presence_of :description}
+  it { should validate_uniqueness_of :slug }
+
   describe '#property_type_name' do
     subject { homestay.property_type_name }
     context 'when the Homestay has no property_type' do

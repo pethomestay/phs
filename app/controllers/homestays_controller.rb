@@ -51,6 +51,7 @@ class HomestaysController < ApplicationController
       flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
       redirect_to @homestay
     else
+      flash[:notice] = "That title is not unique" if @homestay.errors[:slug].present?
       render :new
     end
   end

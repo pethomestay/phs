@@ -25,9 +25,9 @@ class Homestay < ActiveRecord::Base
   geocoded_by :geocoding_address
   after_validation :geocode
 
-  before_validation :titleize_attributes
+  before_validation :titleize_attributes, :create_slug
+  after_validation :copy_slug_errors_to_title
 
-  before_create :create_slug
   before_save :sanitize_description
 
   def to_param
@@ -35,7 +35,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def create_slug
-    self.slug = self.title.parameterize
+    self.slug = title.parameterize if title
   end
 
   def sanitize_description
@@ -44,7 +44,8 @@ class Homestay < ActiveRecord::Base
 
   def titleize_attributes
     %w{title address_suburb address_city}.each do |attribute|
-      send "#{attribute}=", send(attribute).titleize
+      current = send(attribute)
+      send "#{attribute}=", current.titleize if current
     end
   end
 
@@ -57,7 +58,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def need_parental_consent?
-    user.date_of_birth > 18.years.ago.to_date
+    user && user.date_of_birth > 18.years.ago.to_date
   end
 
   def emergency_preparedness?
@@ -121,5 +122,10 @@ class Homestay < ActiveRecord::Base
     services << 'Pet training' if pet_training
     services << 'Pet walking' if pet_walking
     services.to_sentence.downcase.capitalize
+  end
+
+  private
+  def copy_slug_errors_to_title
+    errors.add(:title, errors.get(:slug)[0]) if errors.get(:slug)
   end
 end
