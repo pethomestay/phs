@@ -43,7 +43,6 @@
     margin: 0;
   }
   table {
-    width: 100%;
     td {
       background: none !important;
       border:0 !important;
@@ -57,25 +56,16 @@
 }
 
 .sidebar-search {
-  #search_location {
-    width: 190px;
-    margin-right: -4px;
+  .control-group {
+    margin-bottom: 5px;
   }
   .sort-by {
-    margin-top:10px;
     .radio {
-      margin-left:10px;
-      margin-top:-8px;
+      margin-left:12px;
     }
-  }
-  .input-append {
-    button {
-      margin-top: -8px;
+    label {
+      vertical-align: bottom;
     }
-  }
-  .search-filters {
-    margin-top: -20px;
-    margin-bottom: 10px;
   }
 }
 
