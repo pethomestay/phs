@@ -4,13 +4,15 @@
   %dt Name
   %dd= @user.name
   %dt Joined
-  %dd= @user.created_at
+  %dd= l @user.created_at
   %dt Email
   %dd= @user.email
   %dt Homestay
   %dd= @user.homestay.present? ? @user.homestay.title : 'no homestay'
   %dt Pets
   %dd= @user.pets.count
+  %dt Date of birth
+  %dd= l @user.date_of_birth
   %dt Phone
   %dd= @user.phone_number.present? ? @user.phone_number : '-'
   %dt Mobile

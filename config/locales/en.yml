@@ -3,3 +3,11 @@
 
 en:
   currency: "AUD"
+  date:
+    formats:
+      default: "%d-%m-%Y"
+  time:
+    formats:
+      default: "%e %b, %Y %H:%M"
+
+

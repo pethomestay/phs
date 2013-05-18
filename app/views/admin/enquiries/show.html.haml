@@ -10,7 +10,7 @@
     = link_to @enquiry.user.name, admin_user_path(@enquiry.user)
     = "(#{@enquiry.user.mobile_number || @enquiry.user.phone_number})"
   %dt Created
-  %dd= @enquiry.created_at.to_formatted_s(:year_month_day)
+  %dd= l @enquiry.created_at
   %dt Duration
   %dd= @enquiry.duration_name
   %dt Response
