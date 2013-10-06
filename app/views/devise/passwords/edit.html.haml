@@ -1,5 +1,5 @@
 %h1 Change your password
-= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-horizontal' }) do |f|
+= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-horizontal', method: :put }) do |f|
   = f.input :password, label: "New password"
   = f.input :password_confirmation, label: "Confirm new password"
   = f.hidden_field :reset_password_token
