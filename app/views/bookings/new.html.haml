@@ -1,0 +1,66 @@
+.page-header
+  .pull-left
+    %h1 Confirm your reservation
+  .pull-right
+    = link_to 'Back to My Account', my_account_path, class: 'btn'
+  .clear
+
+%form.form-horizontal{ "method" => "post", "action" => "" }
+  - no_of_nights = 2
+  - rate_per_night = 30
+
+  = form_text_field name: "reservation[guest_name]", label: "Guest name", value: current_user.name, type: "text"
+  = form_text_field name: "reservation[pet_name]", label: "Pet name", value: '', type: "text"
+  = form_text_field name: "reservation[message]", label: "Message", value: "", type: "textarea", rows: 3
+
+  %hr
+  = form_text_field name: "reservation[checkin_time]", label: "Check-in", value: "12/21/2012", type: "text",
+  class: "datepicker span2", datetime: true
+
+  = form_text_field name: "reservation[checkout_time]", label: "Check-out", value: "12/21/2012", type: "text",
+  class: "datepicker span2", datetime: true
+
+  = form_text_field name: "reservation[number_of_nights]", label: "Number of nights", value: no_of_nights, type: "text",
+  disabled: true
+
+  %hr
+  = render partial: "shared/currency_field", object: { name: "reservation[rate_per_night]", value: rate_per_night, label: "Rate per night" }
+  = render partial: "shared/currency_field", object: { name: "reservation[subtotal]", value: rate_per_night * no_of_nights, label: "Subtotal" }
+  = render partial: "shared/currency_field", object: { name: "reservation[fee]", value: SYSTEM_FEE, label: "Fee" }
+  = render partial: "shared/currency_field", object: { name: "reservation[total]", value: (rate_per_night * no_of_nights) + SYSTEM_FEE, label: "Total" }
+
+%hr
+%form.form-horizontal.payment_form{ "method" => "post", "action" => "https://api.securepay.com.au/test/directpost/authorise" }
+  %input{ "type" => "hidden", "name" => "EPS_MERCHANT", "value" => MERCHANT_ID }
+  %input{ "type" => "hidden", "name" => "EPS_TXNTYPE", "value" => "1" }
+  - test_reference = "Test Reference"
+  %input{ "type" => "hidden", "name" => "EPS_REFERENCEID", "value" => test_reference }
+  - payment_amount = "109.00"
+  %input{ "type" => "hidden", "name" => "EPS_AMOUNT", "value" => payment_amount }
+  %input{ "type" => "hidden", "id" => "EPS_RESULTURL", "name" => "EPS_RESULTURL", "value" => root_url + TRANSACTION_RESULT_URL }
+  %input{ "type" => "hidden", "name" => "EPS_REDIRECT", "value" => "TRUE" }
+  - time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
+  %input{ "type" => "hidden", "name" => "EPS_TIMESTAMP", "value" => time_stamp }
+  - fingerprint_string = "#{MERCHANT_ID}|#{TRANSACTION_PASSWORD}|1|#{test_reference}|#{payment_amount}|#{time_stamp}"
+  - require 'digest/sha1'
+  %input{ "type" => "hidden", "name" => "EPS_FINGERPRINT", "value" => Digest::SHA1.hexdigest(fingerprint_string) }
+
+  .control-group.string
+    %label.string.control-label
+      Credit Card fields
+
+  = render partial: "shared/form_text_field", object: { name: "EPS_CARDNUMBER", value: "", label: "Card number", required: true }
+  = render partial: "shared/form_text_field", object: { name: "EPS_CCV", value: "", label: "CVV", required: true }
+
+  .control-group.date.required
+    %label.string.required.control-label
+      %abbr{ "title" => "required" }*
+      Expiry date
+    .controls
+      %select.required.date#user_date_of_birth_3i{ "name" => "EPS_EXPIRYMONTH" }
+        = options_for_select((01..12).inject([]) { |res, val| res << [val, val] })
+      %select.required.date#user_date_of_birth_1i{ "name" => "EPS_EXPIRYYEAR" }
+        = options_for_select((2013..2030).inject([]) { |res, val| res << [val, val] })
+
+  .form-actions
+    %input.btn.btn-primary{ "type" => "submit", "value" => "Submit" }

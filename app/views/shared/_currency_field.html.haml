@@ -1,0 +1,8 @@
+.control-group.string
+  %label.string.control-label
+    = currency_field[:label]
+  .controls
+    .input-prepend.input-append
+      %span.add-on $
+      %input.span1{ "type" => "text", "name" => currency_field[:name], "value" => currency_field[:value], "disabled" => "disabled" }
+      %span.add-on .00

@@ -26,4 +26,7 @@ class PagesController < ApplicationController
 
   def terms_and_conditions
   end
+
+  def post_to_securepay
+  end
 end

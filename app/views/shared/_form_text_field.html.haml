@@ -1,0 +1,12 @@
+.control-group.string{ class: form_text_field[:required] ? "required" : "" }
+  %label.string.control-label{ class: form_text_field[:required] ? "required" : "" }
+    - if form_text_field[:required]
+      %abbr{ "title" => "required" }*
+    = form_text_field[:label]
+  .controls
+    %div{ class: form_text_field[:datetime] ? "input-append date time" : "" }
+      %input.required.string{ "type" => "text", "name" => form_text_field[:name], "value" => form_text_field[:value],
+      disabled: form_text_field[:disabled] ? "disabled" : false, class: form_text_field[:class] }
+      - if form_text_field[:datetime]
+        %span.add-on
+          %i.icon-calendar
