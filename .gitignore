@@ -21,3 +21,4 @@ public/system/dragonfly
 .sass-cache/
 
 coverage/
+.idea/
