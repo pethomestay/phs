@@ -24,6 +24,7 @@ gem 'fog'
 gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
+gem 'thin'
 
 group :test, :development do
   gem 'capistrano'
@@ -33,7 +34,7 @@ group :test, :development do
   gem 'pry-debugger'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 1.4.2'
-  gem 'thin'
+  #gem 'thin'
 end
 
 group :test do
