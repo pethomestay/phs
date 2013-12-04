@@ -1,0 +1,9 @@
+.control-group.date.required
+  %label.string.required.control-label
+    %abbr{ "title" => "required" }*
+    Expiry date
+  .controls
+    %select.required.date#user_date_of_birth_3i{ "name" => "EPS_EXPIRYMONTH" }
+      = options_for_select((01..12).inject([]) { |res, val| res << [val, val] })
+    %select.required.date#user_date_of_birth_1i{ "name" => "EPS_EXPIRYYEAR" }
+      = options_for_select((2013..2030).inject([]) { |res, val| res << [val, val] })

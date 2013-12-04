@@ -1,7 +1,6 @@
 
 $ ->
   # Pet stuff
-  console.log("here i am")
   $(".payment_form").validate
     rules:
       EPS_CCV:
@@ -13,6 +12,7 @@ $ ->
         maxlength: 16,
         digits: true
 
-  $('.datepicker').datepicker()
+  $('.icon-calendar').datepicker({startDate: new Date(),date: new Date()}).on 'changeDate', (event) ->
+    $(this).parent().siblings(".datepicker").val new XDate(event.date).toString('dd/MM/yyyy')
 
   $("#EPS_RESULTURL").val($("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content"))
