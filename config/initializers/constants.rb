@@ -13,7 +13,7 @@ else
 	ENV['TRANSACTION_PASSWORD'] = 'zggiztda'
 	ENV['TRANSACTION_RESULT_URL'] = 'bookings/transaction_result?authenticity_token='
 	ENV['TRANSACTION_POST_ACTION'] = 'https://api.securepay.com.au/test/directpost/authorise'
-	ENV['TRANSACTION_RESPONSE_METHOD'] = 'FALSE' # POST method will be used
+	ENV['TRANSACTION_RESPONSE_METHOD'] = 'TRUE' # false for POST method
 
 	# live credentials
 	#

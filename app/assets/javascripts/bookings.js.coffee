@@ -1,4 +1,3 @@
-
 $ ->
   # Pet stuff
   $(".payment_form").validate

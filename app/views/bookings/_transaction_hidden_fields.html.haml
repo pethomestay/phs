@@ -2,7 +2,7 @@
 %input{ type: 'hidden', name: 'EPS_TXNTYPE', value: '1' }
 %input{ type: 'hidden', name: 'EPS_REFERENCEID', value: @transaction_payload[:transaction_reference] }
 %input{ type: 'hidden', name: 'EPS_AMOUNT', value: @transaction_payload[:actual_amount] }
-%input{ type: 'hidden', name: 'EPS_RESULTURL', value: root_url + ENV['TRANSACTION_RESULT_URL'], 'id' => 'EPS_RESULTURL' }
+%input{ type: 'hidden', name: 'EPS_RESULTURL', value: root_url + ENV['TRANSACTION_RESULT_URL'], id: 'EPS_RESULTURL' }
 %input{ type: 'hidden', name: 'EPS_REDIRECT', value: ENV['TRANSACTION_RESPONSE_METHOD'] }
 %input{ type: 'hidden', name: 'EPS_TIMESTAMP', value: @transaction_payload[:time_stamp] }
 %input{ type: 'hidden', name: 'EPS_FINGERPRINT', value: @transaction_payload[:merchant_fingerprint] }
