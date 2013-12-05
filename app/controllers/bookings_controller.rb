@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, except: :transaction_result
 
 	def new
 		# TODO: turn required_params to actual params or actual host information
