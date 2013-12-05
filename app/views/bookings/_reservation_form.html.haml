@@ -1,0 +1,22 @@
+%form.form-horizontal{ method: 'post', action: '' }
+
+  = form_text_field name: 'reservation[guest_name]', label: 'Guest name', value: current_user.name, type: 'text'
+  = form_text_field name: 'reservation[pet_name]', label: 'Pet name', value: '', type: 'text'
+  = form_text_field name: 'reservation[message]', label: 'Message', value: '', type: 'textarea', rows: 3
+
+  %hr
+  = render partial: 'shared/datetime_field', object: { name: 'reservation[checkin_time]', label: 'Check-in',
+                                                       value: '21/12/2013', readonly: true }
+  = render partial: 'shared/datetime_field', object: { name: 'reservation[checkout_time]', label: 'Check-out',
+                                                       value: '21/12/2013', readonly: true }
+  = form_text_field name: 'reservation[number_of_nights]', label: 'Number of nights', value: @transaction_payload[:no_of_nights] , type: 'text',
+                                                       disabled: true
+
+  %hr
+  = render partial: 'shared/currency_field', object: { name: 'reservation[rate_per_night ]', value: @transaction_payload[:rate_per_night] ,
+                                                       label: 'Rate per night' }
+  = render partial: 'shared/currency_field', object: { name: 'reservation[subtotal]', value: (@transaction_payload[:rate_per_night] * @transaction_payload[:no_of_nights]),
+                                                       label: 'Subtotal' }
+  = render partial: 'shared/currency_field', object: { name: 'reservation[fee]', value: TRANSACTION_FEE, label: 'Fee' }
+  = render partial: 'shared/currency_field', object: { name: 'reservation[total]', value: @transaction_payload[:amount],
+                                                       label: 'Total' }

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :homestay
   has_many :pets
   has_many :enquiries
+  has_many :transactions
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -76,4 +77,21 @@ class User < ActiveRecord::Base
     rating = received_feedbacks.count == 0 ? 0 : received_feedbacks.sum('rating') / received_feedbacks.count
     update_attribute :average_rating, rating
   end
+
+	def continue_or_start_new_transaction(options)
+		unfinished_transactions = self.transactions.where(status: TRANSACTION_STATUS_UNFINISHED)
+		transaction = unfinished_transactions.blank? ? self.transactions.create! : unfinished_transactions.first
+
+		transaction_reference = "transaction_id=#{transaction.id}"
+
+		transaction.amount = ((options[:rate_per_night] * options[:no_of_nights]) + TRANSACTION_FEE)
+		transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
+		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|1|#{transaction_reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
+		require 'digest/sha1'
+		transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
+
+		transaction.save!
+		options.merge(merchant_fingerprint: transaction.merchant_fingerprint, transaction_reference: transaction_reference,
+		              actual_amount: transaction.actual_amount, amount: transaction.amount.to_i, time_stamp: transaction.time_stamp)
+	end
 end

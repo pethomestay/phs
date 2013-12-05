@@ -5,37 +5,15 @@
     = link_to 'Back to My Account', my_account_path, class: 'btn'
   .clear
 
-%form.form-horizontal{ "method" => "post", "action" => "" }
-  - no_of_nights = 2
-  - rate_per_night = 30
-
-  = form_text_field name: "reservation[guest_name]", label: "Guest name", value: current_user.name, type: "text"
-  = form_text_field name: "reservation[pet_name]", label: "Pet name", value: '', type: "text"
-  = form_text_field name: "reservation[message]", label: "Message", value: "", type: "textarea", rows: 3
-
-  %hr
-  = render partial: "shared/datetime_field", object: { name: "reservation[checkin_time]", label: "Check-in",
-                                                      value: "12/21/2012", readonly: true }
-  = render partial: "shared/datetime_field", object: { name: "reservation[checkout_time]", label: "Check-out",
-                                                      value: "12/21/2012", readonly: true }
-  = form_text_field name: "reservation[number_of_nights]", label: "Number of nights", value: no_of_nights, type: "text",
-                                                      disabled: true
-
-  %hr
-  = render partial: "shared/currency_field", object: { name: "reservation[rate_per_night]", value: rate_per_night,
-                                                      label: "Rate per night" }
-  = render partial: "shared/currency_field", object: { name: "reservation[subtotal]", value: rate_per_night * no_of_nights,
-                                                      label: "Subtotal" }
-  = render partial: "shared/currency_field", object: { name: "reservation[fee]", value: SYSTEM_FEE, label: "Fee" }
-  = render partial: "shared/currency_field", object: { name: "reservation[total]", value: (rate_per_night * no_of_nights) + SYSTEM_FEE,
-                                                      label: "Total" }
+= render 'reservation_form'
 
 %hr
-%form.form-horizontal.payment_form{ "method" => "post", "action" => "https://api.securepay.com.au/test/directpost/authorise" }
-  = render "transaction_hidden_fields"
-  = render partial: "shared/form_text_field", object: { name: "EPS_CARDNUMBER", value: "", label: "Card number", required: true }
-  = render partial: "shared/form_text_field", object: { name: "EPS_CCV", value: "", label: "CVV", required: true }
-  = render "transaction_month_year_fields"
+%form.form-horizontal.payment_form{ method: 'post', action: ENV['TRANSACTION_POST_ACTION'] }
+  = render 'transaction_hidden_fields'
+  = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number', required: true }
+  = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true, class: 'span1',
+                                                        tooltip: true, message: 'CVV: 3-4 digit number, written on back side of your card.' }
+  = render 'transaction_month_year_fields'
 
   .form-actions
-    %input.btn.btn-primary{ "type" => "submit", "value" => "Submit" }
+    %input.btn.btn-primary{ type: 'submit', value: 'Submit' }

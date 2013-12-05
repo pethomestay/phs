@@ -1,12 +1,18 @@
-.control-group.string{ class: form_text_field[:required] ? "required" : "" }
-  %label.string.control-label{ class: form_text_field[:required] ? "required" : "" }
+- required_class = form_text_field[:required] ? 'required' : ''
+.control-group.string{ class: required_class }
+  %label.string.control-label{ class: required_class }
     - if form_text_field[:required]
-      %abbr{ "title" => "required" }*
+      %abbr{ title: 'required' }*
     = form_text_field[:label]
   .controls
-    %div{ class: form_text_field[:datetime] ? "input-append date time" : "" }
-      %input.required.string{ "type" => "text", "name" => form_text_field[:name], "value" => form_text_field[:value],
-      disabled: form_text_field[:disabled] ? "disabled" : false, class: form_text_field[:class] }
+    %div{ class: form_text_field[:datetime] ? 'input-append date time' : '' }
+      %input.string{ type: 'text', name: form_text_field[:name], value: form_text_field[:value],
+                    disabled: form_text_field[:disabled] ? 'disabled' : false, class: "#{form_text_field[:class]} #{required_class}" }
       - if form_text_field[:datetime]
         %span.add-on
           %i.icon-calendar
+
+      - if form_text_field[:tooltip]
+        %span.badge.badge-warning#booking-tooltip{ 'data-toggle' => 'tooltip', 'data-placement' => 'right',
+            'data-original-title' => form_text_field[:message], style: 'font-weight: lighter;' }
+          ?

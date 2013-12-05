@@ -9,8 +9,8 @@
 %form.form-horizontal{ "method" => "post", "action" => "" }
 
   = render partial: "shared/form_text_field", object: { name: "transaction[id]", label: "Transaction id",
-  value: params["txnid"], disabled: true }
+                                                        value: params["txnid"], disabled: true }
   = render partial: "shared/form_text_field", object: { name: "transaction[preauthid]", label: "Preauthorisation id",
-  value: params["preauthid"], disabled: true }
+                                                        value: params["preauthid"], disabled: true }
   = render partial: "shared/form_text_field", object: { name: "transaction[result]", label: "Result",
-  value: params["restext"], disabled: true }
+                                                        value: params["restext"], disabled: true }

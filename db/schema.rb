@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324230458) do
+ActiveRecord::Schema.define(:version => 20131204175513) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -135,6 +135,20 @@ ActiveRecord::Schema.define(:version => 20130324230458) do
     t.string   "picturable_type"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "t_id"
+    t.string   "time_stamp"
+    t.string   "merchant_fingerprint"
+    t.string   "preauthid"
+    t.string   "restext"
+    t.string   "status",                 :default => "unfinished"
+    t.float    "amount"
+    t.string   "secure_pay_fingerprint"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "users", :force => true do |t|
