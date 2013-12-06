@@ -12,7 +12,7 @@
   = render 'transaction_hidden_fields'
   = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number', required: true }
   = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true, class: 'span1',
-                                                        tooltip: true, message: 'CVV: 3-4 digit number, written on back side of your card.' }
+                                                        tooltip: true, message: 'CVV: 3-4 digit number, written on back of the card.' }
   = render 'transaction_month_year_fields'
 
   .form-actions

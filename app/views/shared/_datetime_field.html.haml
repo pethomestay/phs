@@ -4,6 +4,6 @@
   .controls
     .input-append.datepicker.date{ 'data-date-format' => 'dd-mm-yyyy' }
       %input.string.span2{ type: 'text', name: datetime_field[:name], class: datetime_field[:class],
-        value: datetime_field[:value], readonly: datetime_field[:readonly] }
+        value: datetime_field[:value], readonly: datetime_field[:readonly], style: datetime_field[:readonly] ? 'cursor:pointer;' : '' }
       %span.add-on
         %i.icon-calendar
