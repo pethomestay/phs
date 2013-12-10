@@ -11,13 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131204175513) do
+ActiveRecord::Schema.define(:version => 20131210162951) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.date     "date"
     t.integer  "homestay_id"
     t.text     "message"
     t.boolean  "confirmed",           :default => false
@@ -26,6 +25,10 @@ ActiveRecord::Schema.define(:version => 20131204175513) do
     t.integer  "duration_id"
     t.text     "response_message"
     t.integer  "response_id",         :default => 0
+    t.date     "check_in_date"
+    t.time     "check_in_time"
+    t.date     "check_out_date"
+    t.time     "check_out_time"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"

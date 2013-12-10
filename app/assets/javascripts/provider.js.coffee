@@ -22,9 +22,6 @@ $ ->
     $(this).click ->
       $('#feedback_rating').val(rating)
 
-  $('.enquire-datepicker').datepicker({startDate: new Date(),date: new Date()}).on 'changeDate', (event) ->
-    $('#enquiry_date').val new XDate(event.date).toString('yyyy-MM-dd')
-
   $('.carousel').carousel()
 
   $(document).on 'change', ':file', ->

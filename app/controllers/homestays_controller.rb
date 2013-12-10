@@ -24,7 +24,8 @@ class HomestaysController < ApplicationController
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,
-        date: Date.today
+        check_in_date: Date.today,
+        check_out_date: Date.today
       })
     end
   end

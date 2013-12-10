@@ -18,7 +18,6 @@
 //= require bootstrap-modal
 //= require bootstrap-carousel
 //= require bootstrap-tooltip
-//= require bootstrap-datepicker-core
 //= require handlebars
 //= require handlebars.comparison
 //= require jquery.nested-fields
@@ -29,6 +28,5 @@
 //= require searches
 //= require users
 //= require bookings
-//= require jquery.validate.min
 //= require provider
 //= require_tree ../../../vendor/assets/javascripts/.

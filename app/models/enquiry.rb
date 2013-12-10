@@ -8,13 +8,13 @@ class Enquiry < ActiveRecord::Base
   scope :unsent_feedback_email, where(sent_feedback_email: false)
   scope :need_confirmation, where(response_id: ReferenceData::Response::ACCEPTED.id, confirmed:false)
   scope :owner_accepted, where(owner_accepted: true)
-  scope :need_feedback, lambda { where("owner_accepted IS NOT FALSE AND (date < ? AND (duration_id = 1 OR duration_id = 2 OR duration_id = 3 OR duration_id = 4)) OR \
-                                        (date < ? AND (duration_id = 5)) OR \
-                                        (date < ? AND (duration_id = 6)) OR \
-                                        (date < ? AND (duration_id = 7)) OR \
-                                        (date < ? AND (duration_id = 8)) OR \
-                                        (date < ? AND (duration_id = 9)) OR \
-                                        (date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
+  scope :need_feedback, lambda { where("owner_accepted IS NOT FALSE AND (check_in_date < ? AND (duration_id = 1 OR duration_id = 2 OR duration_id = 3 OR duration_id = 4)) OR \
+                                        (check_in_date < ? AND (duration_id = 5)) OR \
+                                        (check_in_date < ? AND (duration_id = 6)) OR \
+                                        (check_in_date < ? AND (duration_id = 7)) OR \
+                                        (check_in_date < ? AND (duration_id = 8)) OR \
+                                        (check_in_date < ? AND (duration_id = 9)) OR \
+                                        (check_in_date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)

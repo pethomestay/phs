@@ -6,11 +6,11 @@
     = link_to 'Retry Transaction', new_booking_path, class: 'btn btn-primary'
   .clear
 
-%form.form-horizontal{ "method" => "post", "action" => "" }
+%form.form-horizontal{ method: 'post', action: '' }
 
-  = render partial: "shared/form_text_field", object: { name: "transaction[id]", label: "Transaction id",
-                                                        value: params["txnid"], disabled: true }
-  = render partial: "shared/form_text_field", object: { name: "transaction[preauthid]", label: "Preauthorisation id",
-                                                        value: params["preauthid"], disabled: true }
-  = render partial: "shared/form_text_field", object: { name: "transaction[result]", label: "Result",
-                                                        value: params["restext"], disabled: true }
+  = render partial: 'shared/form_text_field', object: { name: 'transaction[id]', label: 'Transaction id',
+                                                        value: params['txnid'], disabled: true }
+  = render partial: 'shared/form_text_field', object: { name: 'transaction[preauthid]', label: 'Pre-authorisation id',
+                                                        value: params['preauthid'], disabled: true }
+  = render partial: 'shared/form_text_field', object: { name: 'transaction[result]', label: 'Result',
+                                                        value: params['restext'], disabled: true }

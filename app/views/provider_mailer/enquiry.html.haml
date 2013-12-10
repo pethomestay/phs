@@ -1,6 +1,6 @@
 %p.article-title You have a new PetHomeStay enquiry!
 %p.article-content= "Hello #{@provider.first_name}!"
-%p.article-content= "#{@user.first_name} needs help with their #{'pet'.pluralize(@pets.length)} #{@user.pet_names}. Are you available on #{@enquiry.date.to_formatted_s(:day_and_month)} for #{@enquiry.duration.natural}?"
+%p.article-content= "#{@user.first_name} needs help with their #{'pet'.pluralize(@pets.length)} #{@user.pet_names}. Are you available on #{@enquiry.check_in_date.to_formatted_s(:day_and_month)} for #{@enquiry.duration.natural}?"
 %p.article-content= link_to "Please view the details and indicate your availability on PetHomeStay", enquiry_url(@enquiry)
 - if @enquiry.message.present?
   %p.article-content= "#{@user.first_name} has also included the following message:"

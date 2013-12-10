@@ -97,15 +97,17 @@
           = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
           = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
     #map.thumbnail.span5
+    - homestay_latitude = @homestay.latitude.blank? ? -33.874 : @homestay.latitude.round(3)
+    - homestay_longitude = @homestay.longitude.blank? ? 151.210 : @homestay.longitude.round(3)
     :javascript
-      initMap(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)}, {
+      initMap(#{homestay_latitude}, #{homestay_longitude}, {
         zoom: 12,
         maxZoom: 12,
         mapTypeControl: false,
         streetViewControl: false,
         zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
       }})
-      setupMarker(#{@homestay.latitude.round(3)}, #{@homestay.longitude.round(3)})
+      setupMarker(#{homestay_latitude}, #{homestay_longitude})
 - content_for :open_graph_tags do
   %meta{property: 'og:title', content: @homestay.title}
   %meta{property: 'og:type', content: 'hotel'}

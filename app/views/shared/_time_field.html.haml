@@ -1,0 +1,12 @@
+.control-group.string
+  %label.string.control-label
+    = time_field[:label]
+  .controls
+    .input-append.timepicker
+      %input.string.span2{ type: 'text', name: time_field[:name], class: time_field[:class],
+        value: time_field[:value], readonly: time_field[:readonly], style: time_field[:readonly] ? 'cursor:pointer;' : '',
+        "data-format" => "hh:mm" }
+      %span.add-on
+        %i{ "data-time-icon" => "icon-time", "data-date-icon" => "icon-calendar"}
+
+

@@ -14,14 +14,26 @@
   = simple_form_for @enquiry do |f|
     .modal-body
       %input{type: 'hidden', value: provider.id, name: 'enquiry[homestay_id]'}
-      = f.hidden_field :date
+      -#= f.hidden_field :date
       %table.enquire-table
         %tbody
           %tr
             %td
-              .enquire-datepicker
-            %td
               = f.input :duration_id, label: "Arrange for", collection: ReferenceData::Duration.all, include_blank: false
+          %tr
+            %td
+              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_in_date]', label: 'Check-in date',
+                                                                   value: '21/12/2013', readonly: true }
+            %td
+              = render partial: 'shared/time_field', object: { name: 'enquiry[check_in_time]', label: 'Check-in time',
+                                                                   value: '12:00', readonly: true }
+          %tr
+            %td
+              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_out_date]', label: 'Check-in date',
+                                                                   value: '21/12/2013', readonly: true }
+            %td
+              = render partial: 'shared/time_field', object: { name: 'enquiry[check_out_time]', label: 'Check-in time',
+                                                                   value: '12:00', readonly: true }
           %tr
             %td.message{colspan: 2}
               = f.input :message, placeholder: 'Enter an optional personal message', input_html: {class: 'span7', rows: 4}

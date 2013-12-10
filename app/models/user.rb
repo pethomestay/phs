@@ -83,15 +83,16 @@ class User < ActiveRecord::Base
 		transaction = unfinished_transactions.blank? ? self.transactions.create! : unfinished_transactions.first
 
 		transaction_reference = "transaction_id=#{transaction.id}"
-
+		transaction_type = 1 # preauth type is 1, simple transaction type is 0
 		transaction.amount = ((options[:rate_per_night] * options[:no_of_nights]) + TRANSACTION_FEE)
 		transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
-		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|1|#{transaction_reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
+
+		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction_type}|#{transaction_reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
 		require 'digest/sha1'
 		transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
 
 		transaction.save!
-		options.merge(merchant_fingerprint: transaction.merchant_fingerprint, transaction_reference: transaction_reference,
+		options.merge(merchant_fingerprint: transaction.merchant_fingerprint, reference: transaction_reference, type: transaction_type,
 		              actual_amount: transaction.actual_amount, amount: transaction.amount.to_i, time_stamp: transaction.time_stamp)
 	end
 end
