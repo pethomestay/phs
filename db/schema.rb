@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20131210162951) do
 
   create_table "transactions", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "enquiry_id"
     t.string   "t_id"
     t.string   "time_stamp"
     t.string   "merchant_fingerprint"

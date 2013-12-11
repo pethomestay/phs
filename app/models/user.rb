@@ -78,7 +78,10 @@ class User < ActiveRecord::Base
     update_attribute :average_rating, rating
   end
 
-	def continue_or_start_new_transaction(options)
+	def continue_or_start_new_transaction(enquiry)
+		options = { no_of_nights: 1, rate_per_night: enquiry.homestay.cost_per_night,
+		  check_in_date: enquiry.check_in_date, check_out_date: enquiry.check_out_date }
+
 		unfinished_transactions = self.transactions.where(status: TRANSACTION_STATUS_UNFINISHED)
 		transaction = unfinished_transactions.blank? ? self.transactions.create! : unfinished_transactions.first
 
@@ -86,6 +89,7 @@ class User < ActiveRecord::Base
 		transaction_type = 1 # preauth type is 1, simple transaction type is 0
 		transaction.amount = ((options[:rate_per_night] * options[:no_of_nights]) + TRANSACTION_FEE)
 		transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
+		transaction.enquiry = enquiry
 
 		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction_type}|#{transaction_reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
 		require 'digest/sha1'

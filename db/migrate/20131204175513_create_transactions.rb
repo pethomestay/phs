@@ -2,6 +2,7 @@ class CreateTransactions < ActiveRecord::Migration
   def up
 	  create_table :transactions do |t|
 		  t.references :user
+		  t.references :enquiry
 		  t.string :t_id
 		  t.string :time_stamp
 		  t.string :merchant_fingerprint

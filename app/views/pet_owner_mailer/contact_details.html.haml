@@ -1,5 +1,5 @@
 %p.article-title Great news!
-%p.article-content= "#{@provider.first_name} has indicated they are available to look after #{@owner.pet_name} on #{@enquiry.date.to_formatted_s(:day_and_month)}!"
+%p.article-content= "#{@provider.first_name} has indicated they are available to look after #{@owner.pet_name} on #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}!"
 - if @enquiry.response_message.present?
   %p.article-content= "#{@provider.first_name} has also included the following message:"
   %p.article-content

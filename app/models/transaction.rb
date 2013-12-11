@@ -1,5 +1,6 @@
 class Transaction < ActiveRecord::Base
 	belongs_to :user
+	belongs_to :enquiry
 
 	def actual_amount
 		self.amount.to_i.to_s + '.00'
@@ -20,6 +21,9 @@ class Transaction < ActiveRecord::Base
 			self.preauthid = params['preauthid']
 			self.restext = params['restext']
 			self.status = TRANSACTION_STATUS_APPROVED
+			self.enquiry.owner_accepted = true
+			self.enquiry.confirmed = true
+			self.enquiry.save
 			self.save(validate: false)
 		else
 			self.errors.add(:restext, params['restext'])

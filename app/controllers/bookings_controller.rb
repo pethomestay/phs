@@ -3,11 +3,7 @@ class BookingsController < ApplicationController
 	before_filter :enquiry_required, only: :new
 
 	def new
-		enquiry = Enquiry.find(params[:enquiry_id])
-		enquiry.homestay.cost_per_night
-		required_params = { no_of_nights: 1, rate_per_night: enquiry.homestay.cost_per_night,
-		                    check_in_date: enquiry.check_in_date, check_out_date: enquiry.check_out_date }
-		@transaction_payload = current_user.continue_or_start_new_transaction(required_params)
+		@transaction_payload = current_user.continue_or_start_new_transaction(@enquiry)
 	end
 
 	def transaction_result
@@ -18,7 +14,7 @@ class BookingsController < ApplicationController
 
 		unless @transaction.errors.blank?
 			flash[:error] = @transaction.error_messages
-			return redirect_to new_booking_path
+			return redirect_to new_booking_path(enquiry_id: @transaction.enquiry.id)
 		end
 	end
 
@@ -27,6 +23,11 @@ class BookingsController < ApplicationController
 	def enquiry_required
 		if params[:enquiry_id].blank?
 			flash[:error] = "You are not authorised to make this request!"
+			return redirect_to my_account_path
+		end
+		@enquiry = Enquiry.find(params[:enquiry_id])
+		if @enquiry.owner_accepted == true
+			flash[:error] = "You have already accepted this host"
 			return redirect_to my_account_path
 		end
 	end

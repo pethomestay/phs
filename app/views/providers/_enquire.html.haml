@@ -22,17 +22,17 @@
               = f.input :duration_id, label: "Arrange for", collection: ReferenceData::Duration.all, include_blank: false
           %tr
             %td
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_in_date]', label: 'Check-in date',
+              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_in_date]', label: 'Check in date',
                                                                    value: '21/12/2013', readonly: true }
             %td
-              = render partial: 'shared/time_field', object: { name: 'enquiry[check_in_time]', label: 'Check-in time',
+              = render partial: 'shared/time_field', object: { name: 'enquiry[check_in_time]', label: 'Check in time',
                                                                    value: '12:00', readonly: true }
           %tr
             %td
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_out_date]', label: 'Check-in date',
+              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_out_date]', label: 'Check out date',
                                                                    value: '21/12/2013', readonly: true }
             %td
-              = render partial: 'shared/time_field', object: { name: 'enquiry[check_out_time]', label: 'Check-in time',
+              = render partial: 'shared/time_field', object: { name: 'enquiry[check_out_time]', label: 'Check out time',
                                                                    value: '12:00', readonly: true }
           %tr
             %td.message{colspan: 2}

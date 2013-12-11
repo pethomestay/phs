@@ -3,6 +3,7 @@ class Enquiry < ActiveRecord::Base
   belongs_to :homestay
   has_many :feedbacks
   has_and_belongs_to_many :pets
+  has_one :transaction
 
   scope :unanswered, where(response_id: ReferenceData::Response::NONE.id)
   scope :unsent_feedback_email, where(sent_feedback_email: false)

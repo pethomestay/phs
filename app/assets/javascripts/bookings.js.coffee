@@ -14,7 +14,13 @@ $ ->
   $('.datepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' }).on 'changeDate', (event) ->
     $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
 
+  $('input', 'div.datepicker').on 'click', ->
+    $(this).siblings("span").click()
+
   $('.timepicker').datetimepicker({ language: 'en', pickSeconds: false, pickDate: false, pick12HourFormat: true })
+
+  $('input', 'div.timepicker').on 'click', ->
+    $(this).siblings("span").click()
 
   $("#EPS_RESULTURL").val($("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content"))
 

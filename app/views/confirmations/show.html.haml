@@ -6,7 +6,7 @@
 %table.table.table-striped.table-condensed
   %tr
     %td Start date
-    %td= @enquiry.date
+    %td= @enquiry.check_in_date
   %tr
     %td Duration
     %td= @enquiry.duration.title
@@ -39,7 +39,3 @@
     = f.submit "I've decided to go with a different option", class: 'btn'
 
   = link_to "I would like to use #{@homestay.user.first_name} for this booking", new_booking_path(enquiry_id: @enquiry.id), class: 'btn btn-primary'
-    -#= form_for @enquiry, html: {class: 'form-button'}, url: enquiry_confirmation_path(@enquiry) do |f|
-    -#= f.hidden_field :confirmed, value: true
-    -#= f.hidden_field :owner_accepted, value: true
-    -#= f.submit "I would like to use #{@homestay.user.first_name} for this booking", class: 'btn btn-primary'

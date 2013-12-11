@@ -5,10 +5,10 @@
   = form_text_field name: 'reservation[message]', label: 'Message', value: '', type: 'textarea', rows: 3
 
   %hr
-  = render partial: 'shared/datetime_field', object: { name: 'reservation[check_in_time]', label: 'Check in',
-                                                       value: @transaction_payload[:check_in_date], readonly: true }
-  = render partial: 'shared/datetime_field', object: { name: 'reservation[check_out_time]', label: 'Check out',
-                                                       value: @transaction_payload[:check_out_date], readonly: true }
+  = render partial: 'shared/form_text_field', object: { name: 'reservation[check_in_time]', label: 'Check in',
+                                                       value: @transaction_payload[:check_in_date].strftime("%d/%m/%Y"), disabled: true }
+  = render partial: 'shared/form_text_field', object: { name: 'reservation[check_out_time]', label: 'Check out',
+                                                       value: @transaction_payload[:check_out_date].strftime("%d/%m/%Y"), disabled: true }
   = form_text_field name: 'reservation[number_of_nights]', label: 'Number of nights', value: @transaction_payload[:no_of_nights] , type: 'text',
                                                        disabled: true
 
