@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :pets
   has_many :enquiries
   has_many :transactions
+  has_many :bookings
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback?
+    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation?
   end
 
   def unanswered_enquiries?
@@ -37,6 +38,14 @@ class User < ActiveRecord::Base
 
   def enquiries_needing_confirmation?
     enquiries_needing_confirmation.any?
+  end
+
+  def booking_needing_confirmation?
+	  booking_needing_confirmation.any?
+  end
+
+  def booking_needing_confirmation
+	  homestay.enquiries.needing_host_confirmation
   end
 
   def enquiries_needing_confirmation

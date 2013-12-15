@@ -16,6 +16,9 @@ PetHomestay::Application.routes.draw do
 		  post 'transaction_result'
 		  get 'transaction_result'
 	  end
+	  member do
+		  get 'host_confirm'
+	  end
   end
 
 

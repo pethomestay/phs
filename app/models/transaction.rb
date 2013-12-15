@@ -16,15 +16,15 @@ class Transaction < ActiveRecord::Base
 			self.errors.add(:secure_pay_fingerprint, 'Transaction was not secured.')
 		end
 
-		if ['00', '08', '11'].include?(params['rescode'])
+		if ['00', '08', '11'].include?(params['rescode']) && self.errors.blank?
 			self.t_id = params['txnid']
 			self.preauthid = params['preauthid']
 			self.restext = params['restext']
 			self.status = TRANSACTION_STATUS_APPROVED
 			self.enquiry.owner_accepted = true
 			self.enquiry.confirmed = true
-			self.enquiry.save
-			self.save(validate: false)
+			self.enquiry.save!
+			self.save!
 		else
 			self.errors.add(:restext, params['restext'])
 		end
@@ -32,5 +32,21 @@ class Transaction < ActiveRecord::Base
 
 	def error_messages
 		self.errors.messages.values.inject('') { |a,b| a = "#{a} #{b.first}" }.strip
+	end
+
+	def confirmed_by_host
+		self.enquiry.host_accepted = true
+		self.enquiry.save!
+		{
+				check_in_date: self.enquiry.check_in_date.blank? ? Time.now : self.enquiry.check_in_date,
+				check_out_date: self.enquiry.check_out_date.blank? ? Time.now : self.enquiry.check_in_date,
+				no_of_nights: 1,
+				rate_per_night: self.enquiry.homestay.cost_per_night,
+				amount: self.amount.to_i
+		}
+	end
+
+	def host_view?
+		self.enquiry.host_accepted
 	end
 end

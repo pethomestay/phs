@@ -16,6 +16,7 @@ class Enquiry < ActiveRecord::Base
                                         (check_in_date < ? AND (duration_id = 8)) OR \
                                         (check_in_date < ? AND (duration_id = 9)) OR \
                                         (check_in_date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
+  scope :needing_host_confirmation, where(owner_accepted: true, confirmed: true, host_accepted: false)
 
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)

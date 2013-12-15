@@ -1,19 +1,13 @@
 class Booking < ActiveRecord::Base
 	{
-			# guest will enter the following information
-			"guest_name" => "Ali",
-	    "pet_name" => "Catty Perry",
-	    "message" => "",
-
-	    # host will enter the following information
-	    "check_in" => "time n date",
-	    "check_out" => "time n date",
-	    "no_of_nights" => "#_of_nights",
-	    "rate_per_night" => "get from guest",
-
-	    # calculations
-	    "subtotal" => "#_of_nights * rate_per_night",
-	    "fee" => "from where?",
-	    "total" => "subtotal + fee"
+			booker: "the person who initiate a booking",
+	    bookee: "the person being hired by booker",
+	    confirmed: "either confirmed or unconfirmed by bookee",
+	    message: "message",
+	    pet_name: "pet name"
 	}
+	belongs_to :booker, :class_name => "User", :foreign_key => :booker_id
+	belongs_to :bookee, :class_name => "User", :foreign_key => :bookee_id
+
+	scope :need_confirmation, where(confirmed: false)
 end
