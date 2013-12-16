@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessor   :current_password, :accept_house_rules, :accept_terms
+  attr_accessor :current_password, :accept_house_rules, :accept_terms
 
   has_one :homestay
   has_many :pets
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def booking_needing_confirmation
-	  homestay.enquiries.needing_host_confirmation
+	  homestay.blank? ? [] : homestay.enquiries.needing_host_confirmation
   end
 
   def enquiries_needing_confirmation
