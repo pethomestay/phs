@@ -1,0 +1,20 @@
+= simple_form_for @booking, url: bookings_path, html: { class: 'form-horizontal' } do |f|
+  = f.input :guest_name, input_html: { value: current_user.name }
+  = f.input :pet_name
+  = f.input :message, as: :text, input_html: { rows: 3 }
+
+  %hr
+  = render partial: 'shared/form_text_field', object: { name: 'booking[check_in_time]', label: 'Check in', disabled: true,
+                                                        value: @booking.check_in_date.strftime("%d/%m/%Y") }
+  = render partial: 'shared/form_text_field', object: { name: 'booking[check_out_time]', label: 'Check out', disabled: true,
+                                                        value: @booking.check_out_date.strftime("%d/%m/%Y") }
+  = render partial: 'shared/form_text_field', object: { name: 'booking[number_of_nights]', label: 'Number of nights',
+                                                        disabled: true, value: @booking.number_of_nights }
+
+  %hr
+  = render partial: 'shared/currency_field', object: { name: 'booking[rate_per_night ]', label: 'Rate per night',
+                                                       value: @booking.cost_per_night }
+  = render partial: 'shared/currency_field', object: { name: 'booking[subtotal]', label: 'Subtotal',
+                                                       value: @booking.subtotal }
+  = render partial: 'shared/currency_field', object: { name: 'booking[fee]', value: TRANSACTION_FEE, label: 'Fee' }
+  = render partial: 'shared/currency_field', object: { name: 'booking[total]', value: @booking.amount, label: 'Total' }

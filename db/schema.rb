@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131215184755) do
+ActiveRecord::Schema.define(:version => 20131217175743) do
+
+  create_table "bookings", :force => true do |t|
+    t.integer  "booker_id"
+    t.integer  "bookee_id"
+    t.text     "message"
+    t.string   "pet_name"
+    t.string   "guest_name"
+    t.integer  "enquiry_id"
+    t.integer  "homestay_id"
+    t.date     "check_in_date"
+    t.time     "check_in_time"
+    t.date     "check_out_date"
+    t.time     "check_out_time"
+    t.integer  "number_of_nights", :default => 1
+    t.integer  "cost_per_night",   :default => 1
+    t.integer  "subtotal",         :default => 1
+    t.integer  "amount",           :default => 1
+    t.boolean  "host_accepted",    :default => false
+    t.boolean  "owner_accepted",   :default => false
+    t.string   "status",           :default => "unfinished"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -29,7 +52,6 @@ ActiveRecord::Schema.define(:version => 20131215184755) do
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
-    t.boolean  "host_accepted",       :default => false
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
@@ -142,18 +164,18 @@ ActiveRecord::Schema.define(:version => 20131215184755) do
   end
 
   create_table "transactions", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "enquiry_id"
-    t.string   "t_id"
+    t.integer  "booking_id"
+    t.string   "transaction_id"
     t.string   "time_stamp"
     t.string   "merchant_fingerprint"
-    t.string   "preauthid"
-    t.string   "restext"
-    t.string   "status",                 :default => "unfinished"
-    t.float    "amount"
+    t.string   "pre_authorisation_id"
+    t.string   "response_text"
+    t.integer  "amount"
     t.string   "secure_pay_fingerprint"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.string   "reference"
+    t.string   "type_code"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "users", :force => true do |t|

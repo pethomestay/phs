@@ -11,11 +11,11 @@ class ProviderMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "You've received an enquiry on PetHomeStay!")
   end
 
-  def owner_confirmed(enquiry)
-    @enquiry = enquiry
-    @user = @enquiry.user
+  def owner_confirmed(booking)
+    @booking = booking
+    @user = @booking.booker
     @pets = @user.pets
-    @provider = enquiry.homestay.user
+    @provider = @booking.bookee
     email_with_name = "#{@provider.first_name} #{@provider.last_name} <#{@provider.email}>"
     mail(to: email_with_name, subject: "#{@user.first_name} has confirmed their PetHomeStay booking with you!")
   end

@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
   has_one :homestay
   has_many :pets
   has_many :enquiries
-  has_many :transactions
-  has_many :bookings
+  has_many :bookers, class_name: 'Booking', foreign_key: :booker_id
+  has_many :bookees, class_name: 'Booking', foreign_key: :bookee_id
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -87,25 +87,53 @@ class User < ActiveRecord::Base
     update_attribute :average_rating, rating
   end
 
-	def continue_or_start_new_transaction(enquiry)
-		options = { no_of_nights: 1, rate_per_night: enquiry.homestay.cost_per_night,
-		  check_in_date: enquiry.check_in_date, check_out_date: enquiry.check_out_date }
+  def find_or_create_booking_by(params)
+	  unfinished_bookings = self.bookers.unfinished
+	  booking = unfinished_bookings.blank? ? self.bookers.create! : unfinished_bookings.first
 
-		unfinished_transactions = self.transactions.where(status: TRANSACTION_STATUS_UNFINISHED)
-		transaction = unfinished_transactions.blank? ? self.transactions.create! : unfinished_transactions.first
+	  homestay = nil
 
-		transaction_reference = "transaction_id=#{transaction.id}"
-		transaction_type = 1 # preauth type is 1, simple transaction type is 0
-		transaction.amount = ((options[:rate_per_night] * options[:no_of_nights]) + TRANSACTION_FEE)
+		unless params[:enquiry_id].blank?
+			enquiry = Enquiry.find(params[:enquiry_id])
+			booking.enquiry = enquiry
+			homestay = enquiry.homestay
+		end
+
+	  homestay = Homestay.find(params[:homestay_id]) unless params[:homestay_id].blank?
+
+	  booking.homestay = homestay
+	  booking.bookee = homestay.user
+	  booking.cost_per_night = homestay.cost_per_night
+
+	  date_time_now = DateTime.now
+	  time_now = Time.now
+
+	  booking.check_in_date = enquiry.blank? ? date_time_now : enquiry.check_in_date
+	  booking.check_in_time = enquiry.blank? ? time_now : enquiry.check_in_time
+	  booking.check_out_date = enquiry.blank? ? date_time_now : enquiry.check_out_date
+	  booking.check_out_time = enquiry.blank? ? time_now : enquiry.check_out_time
+
+	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
+	  booking.amount = booking.subtotal + TRANSACTION_FEE
+
+	  booking.save!
+	  booking
+  end
+
+	def find_or_create_transaction_by(booking)
+		transaction = booking.transaction.blank? ? Transaction.find_or_create_by_booking_id(booking.id) : booking.transaction
+
+		transaction.reference = "transaction_id=#{transaction.id}"
+		transaction.type_code = 1 # preauth type is 1, simple transaction type is 0
+		transaction.amount = booking.amount
 		transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
-		transaction.enquiry = enquiry
 
-		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction_type}|#{transaction_reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
+		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction.type_code}|#{transaction.
+				reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
 		require 'digest/sha1'
 		transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
 
 		transaction.save!
-		options.merge(merchant_fingerprint: transaction.merchant_fingerprint, reference: transaction_reference, type: transaction_type,
-		              actual_amount: transaction.actual_amount, amount: transaction.amount.to_i, time_stamp: transaction.time_stamp)
+		transaction
 	end
 end

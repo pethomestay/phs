@@ -3,6 +3,7 @@ class Homestay < ActiveRecord::Base
 
   belongs_to :user
   has_many :enquiries
+  has_many :bookings
   has_many :pictures, as: 'picturable'
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
