@@ -20,7 +20,6 @@ class Transaction < ActiveRecord::Base
 			self.transaction_id = params['txnid']
 			self.pre_authorisation_id = params['preauthid']
 			self.response_text = params['restext']
-			self.status = BOOKING_STATUS_FINISHED
 			self.booking.owner_accepted = true
 			self.booking.status = BOOKING_STATUS_FINISHED
 			self.booking.save!
