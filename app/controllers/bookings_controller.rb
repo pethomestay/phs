@@ -21,6 +21,10 @@ class BookingsController < ApplicationController
 		end
 	end
 
+	def show
+		@booking = Booking.find(params[:id])
+	end
+
 	def result
 		transaction_id = params['refid'].split('=')[1]
 		@transaction = Transaction.find(transaction_id)

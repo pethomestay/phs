@@ -30,6 +30,20 @@
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
+      - if @user.booking_declined_by_host?
+        %h4 Declined bookings!
+        - @user.booking_declined_by_host.each do |booking|
+          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", booking
+          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.booking_required_response?
+        %h4 Bookings need further response!
+        - @user.booking_required_response.each do |booking|
+          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", booking
+          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
       - if @user.enquiries_needing_confirmation?
         %h4 Bookings to confirm
         - @user.enquiries_needing_confirmation.each do |enquiry|
