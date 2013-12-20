@@ -32,4 +32,9 @@ class Booking < ActiveRecord::Base
 		end
 		self.save!
 	end
+
+	def remove_notification
+		self.response_id = 1
+		self.save!
+	end
 end
