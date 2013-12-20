@@ -22,7 +22,8 @@ class BookingsController < ApplicationController
 	end
 
 	def show
-		@booking = Booking.find(params[:id]).remove_notification
+		@booking = Booking.find(params[:id])
+		@booking.remove_notification
 	end
 
 	def result
