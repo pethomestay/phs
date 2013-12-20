@@ -1,9 +1,9 @@
 class RemoveHostAcceptedFromEnquiries < ActiveRecord::Migration
-  def self.up
+  def up
 	  remove_column :enquiries, :host_accepted
   end
 
-  def self.down
+  def down
 	  add_column :enquiries, :host_accepted, :boolean, default: false
   end
 end

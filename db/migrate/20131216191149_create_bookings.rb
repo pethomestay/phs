@@ -1,5 +1,5 @@
 class CreateBookings < ActiveRecord::Migration
-	def self.up
+	def up
 		create_table :bookings do |t|
 			t.integer :booker_id
 			t.integer :bookee_id
@@ -26,7 +26,7 @@ class CreateBookings < ActiveRecord::Migration
 		end
 	end
 
-	def self.down
+	def down
 		drop_table :bookings
 	end
 end

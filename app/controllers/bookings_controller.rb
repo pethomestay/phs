@@ -36,7 +36,6 @@ class BookingsController < ApplicationController
 
 	def host_confirm
 		@booking = Booking.find(params[:id])
-		#.confirmed_by_host
 	end
 
 	private
