@@ -39,9 +39,9 @@
         %hr
       - if @user.booking_needing_confirmation?
         %h4 Reservations To View
-        - @user.booking_needing_confirmation.each do |enquiry|
-          %p.pull-left= link_to "You have been selected by #{enquiry.transaction.user.first_name}", host_confirm_booking_path(enquiry.transaction)
-          %p.pull-right #{enquiry.transaction.created_at.to_formatted_s(:day_and_month)}
+        - @user.booking_needing_confirmation.each do |booking|
+          %p.pull-left= link_to "You have been selected by #{booking.booker.first_name}", host_confirm_booking_path(booking)
+          %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.owners_needing_feedback?

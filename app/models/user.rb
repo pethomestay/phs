@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def booking_needing_confirmation
-	  homestay.blank? ? [] : homestay.enquiries.needing_host_confirmation
+	  homestay.blank? ? [] : homestay.bookings.needing_host_confirmation
   end
 
   def enquiries_needing_confirmation
@@ -112,6 +112,9 @@ class User < ActiveRecord::Base
 	  booking.check_in_time = enquiry.blank? ? time_now : enquiry.check_in_time
 	  booking.check_out_date = enquiry.blank? ? date_time_now : enquiry.check_out_date
 	  booking.check_out_time = enquiry.blank? ? time_now : enquiry.check_out_time
+
+	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
+		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
 	  booking.amount = booking.subtotal + TRANSACTION_FEE

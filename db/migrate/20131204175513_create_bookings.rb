@@ -19,6 +19,8 @@ class CreateBookings < ActiveRecord::Migration
 			t.boolean :host_accepted, default: false
 			t.boolean :owner_accepted, default: false
 			t.string :status, default: BOOKING_STATUS_UNFINISHED
+			t.text :response_message
+			t.integer  :response_id, :default => 0
 
 			t.timestamps
 		end

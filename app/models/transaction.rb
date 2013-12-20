@@ -22,6 +22,11 @@ class Transaction < ActiveRecord::Base
 			self.response_text = params['restext']
 			self.booking.owner_accepted = true
 			self.booking.status = BOOKING_STATUS_FINISHED
+			enquiry = self.booking.enquiry
+			unless enquiry.blank?
+				enquiry.confirmed = true
+				enquiry.save!
+			end
 			self.booking.save!
 			self.save!
 		else
@@ -37,9 +42,5 @@ class Transaction < ActiveRecord::Base
 		self.booking.host_accepted = true
 		self.booking.save!
 		self.booking
-	end
-
-	def host_view?
-		self.booking.host_accepted
 	end
 end
