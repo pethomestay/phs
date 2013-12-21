@@ -47,6 +47,9 @@ $ ->
   $('input', 'div.datepicker').on 'click', ->
     $(this).siblings("span").click()
 
+  $('input', 'div.datepicker').css('cursor', 'default')
+  $('input', 'div.timepicker').css('cursor', 'default')
+
   $('.timepicker').datetimepicker({ language: 'en', pickSeconds: false, pickDate: false, pick12HourFormat: true })
 
   $('input', 'div.timepicker').on 'click', ->
