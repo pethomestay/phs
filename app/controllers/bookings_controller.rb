@@ -48,6 +48,11 @@ class BookingsController < ApplicationController
 		return render json: transaction_payload
 	end
 
+	def update_booking
+		Booking.find(params[:booking_id]).update_booking_by(params)
+		render nothing: true
+	end
+
 	private
 
 	def enquiry_required

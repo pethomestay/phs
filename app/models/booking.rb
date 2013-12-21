@@ -28,6 +28,7 @@ class Booking < ActiveRecord::Base
 		if [6, 7].include?(self.response_id)
 			self.host_accepted = false
 		else
+			self.response_id = 5
 			self.host_accepted = true
 		end
 		self.save!
@@ -38,8 +39,10 @@ class Booking < ActiveRecord::Base
 		self.save!
 	end
 
-	def update_transaction_by params
-		self.number_of_nights = params["number_of_nights"].to_i
+	def update_transaction_by(params)
+		self.number_of_nights = params['number_of_nights'].to_i
+		self.check_in_date = params['check_in_date']
+		self.check_out_date = params['check_out_date']
 		self.subtotal = self.number_of_nights * self.cost_per_night
 		self.amount = self.subtotal + TRANSACTION_FEE
 		self.save!
@@ -59,5 +62,10 @@ class Booking < ActiveRecord::Base
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
 		}
+	end
+
+	def update_booking_by(params)
+		self.message = params['message']
+		self.save!
 	end
 end

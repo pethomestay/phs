@@ -17,6 +17,8 @@ $ ->
       data:
         number_of_nights: number_of_nights_input.val(),
         booking_id: $('[name="booking[id]"]').val(),
+        check_in_date: $('[name="booking[check_in_date]"]').val(),
+        check_out_date: $('[name="booking[check_out_date]"]').val(),
       success: (data) ->
         $('[name="booking[subtotal]"]').val(data["booking_subtotal"])
         $('[name="booking[amount]"]').val(data["booking_amount"])
@@ -39,7 +41,7 @@ $ ->
 
   $('.datepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' }).on 'changeDate', (event) ->
     $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
-    if $('[name="booking[number_of_nights]"]') != undefined
+    if $('[name="booking[number_of_nights]"]').val() != undefined
       set_number_of_nights()
 
   $('input', 'div.datepicker').on 'click', ->
@@ -53,3 +55,14 @@ $ ->
   $("#EPS_RESULTURL").val($("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content"))
 
   $('#booking-tooltip').tooltip()
+
+  $('[type="submit"]').on 'click', (e) ->
+    if $('[name="booking[id]"]').val() != undefined
+      e.preventDefault()
+      url = window.location.origin + "/bookings/update_booking"
+      $.ajax url,
+        data:
+          booking_id: $('[name="booking[id]"]').val(),
+          message: $('[name="booking[message]"]').val()
+        success: (data) ->
+          $(".payment_form").submit()

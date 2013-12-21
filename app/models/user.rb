@@ -105,7 +105,12 @@ class User < ActiveRecord::Base
 
   def find_or_create_booking_by(params)
 	  unfinished_bookings = self.bookers.unfinished
-	  booking = unfinished_bookings.blank? ? self.bookers.create! : unfinished_bookings.first
+	  booking = nil
+	  if unfinished_bookings.blank?
+		  booking = self.bookers.create!
+	  else
+			return unfinished_bookings.first
+	  end
 
 	  homestay = nil
 
