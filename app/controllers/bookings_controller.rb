@@ -43,6 +43,11 @@ class BookingsController < ApplicationController
 		@booking = Booking.find(params[:id])
 	end
 
+	def update_transaction
+		transaction_payload = Booking.find(params[:booking_id]).update_transaction_by(params)
+		return render json: transaction_payload
+	end
+
 	private
 
 	def enquiry_required

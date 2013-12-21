@@ -37,4 +37,27 @@ class Booking < ActiveRecord::Base
 		self.response_id = 1
 		self.save!
 	end
+
+	def update_transaction_by params
+		self.number_of_nights = params["number_of_nights"].to_i
+		self.subtotal = self.number_of_nights * self.cost_per_night
+		self.amount = self.subtotal + TRANSACTION_FEE
+		self.save!
+
+		self.transaction.amount = self.amount
+		self.transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
+		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{self.transaction.type_code}|#{self.transaction.
+				reference}|#{self.transaction.actual_amount}|#{self.transaction.time_stamp}"
+		require 'digest/sha1'
+		self.transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
+		self.transaction.save!
+
+		{
+		    booking_subtotal: self.subtotal,
+		    booking_amount: self.amount,
+		    transaction_actual_amount: self.transaction.actual_amount,
+		    transaction_time_stamp: self.transaction.time_stamp,
+		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
+		}
+	end
 end
