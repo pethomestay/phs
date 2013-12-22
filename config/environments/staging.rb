@@ -85,7 +85,7 @@ PetHomestay::Application.configure do
 	config.action_mailer.raise_delivery_errors = false
 
 	# Add default mailer URL
-	config.action_mailer.default_url_options = { :host => 'pethomestay.herokuapp.com' }
-	config.action_mailer.asset_host = 'http://pethomestay.herokuapp.com'
-	config.action_mailer.delivery_method = :test
+	#config.action_mailer.default_url_options = { :host => 'pethomestay.herokuapp.com' }
+	#config.action_mailer.asset_host = 'http://pethomestay.herokuapp.com'
+	#config.action_mailer.delivery_method = :test
 end
