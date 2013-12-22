@@ -1,5 +1,5 @@
 class AddCheckInCheckOutToEnquiries < ActiveRecord::Migration
-  def self.up
+  def up
 		remove_column :enquiries, :date
 		add_column :enquiries, :check_in_date, :date
 		add_column :enquiries, :check_in_time, :time
@@ -7,8 +7,7 @@ class AddCheckInCheckOutToEnquiries < ActiveRecord::Migration
 		add_column :enquiries, :check_out_time, :time
   end
 
-  def self.down
-
+  def down
 	  remove_column :enquiries, :check_in_date
 	  remove_column :enquiries, :check_in_time
 	  remove_column :enquiries, :check_out_date

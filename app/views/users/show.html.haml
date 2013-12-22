@@ -30,6 +30,27 @@
           %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
+      - if @user.booking_accepted_by_host?
+        %h4 Accepted bookings
+        - @user.booking_accepted_by_host.each do |booking|
+          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking
+          %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.booking_declined_by_host?
+        %h4 Declined bookings
+        - @user.booking_declined_by_host.each do |booking|
+          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", booking
+          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
+      - if @user.booking_required_response?
+        %h4 Bookings needed further response
+        - @user.booking_required_response.each do |booking|
+          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", booking
+          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+          .clear
+        %hr
       - if @user.enquiries_needing_confirmation?
         %h4 Bookings to confirm
         - @user.enquiries_needing_confirmation.each do |enquiry|
@@ -38,10 +59,10 @@
           .clear
         %hr
       - if @user.booking_needing_confirmation?
-        %h4 Reservations To View
-        - @user.booking_needing_confirmation.each do |enquiry|
-          %p.pull-left= link_to "You have been selected by #{enquiry.transaction.user.first_name}", host_confirm_booking_path(enquiry.transaction)
-          %p.pull-right #{enquiry.transaction.created_at.to_formatted_s(:day_and_month)}
+        %h4 Selection invites
+        - @user.booking_needing_confirmation.each do |booking|
+          %p.pull-left= link_to "You have been selected by #{booking.booker.first_name}", host_confirm_booking_path(booking)
+          %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.owners_needing_feedback?

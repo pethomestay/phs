@@ -1,20 +1,47 @@
-= simple_form_for @booking, url: bookings_path, html: { class: 'form-horizontal' } do |f|
-  = f.input :guest_name, input_html: { value: current_user.name }
-  = f.input :pet_name
-  = f.input :message, as: :text, input_html: { rows: 3 }
+= simple_form_for @booking, html: { class: 'form-horizontal' } do |f|
+  - host_view = @booking.host_view?(current_user)
+  - user_name = host_view ? @booking.booker.name : current_user.name
+  - pet_name = host_view ? @booking.booker.pet_name : current_user.pet_name
+  = f.input :guest_name, input_html: { value: user_name }, readonly: host_view
+  = f.input :pet_name, input_html: { value: pet_name }, readonly: host_view
+  = f.input :message, as: :text, input_html: { rows: 3 }, readonly: host_view
 
   %hr
-  = render partial: 'shared/form_text_field', object: { name: 'booking[check_in_time]', label: 'Check in', disabled: true,
-                                                        value: @booking.check_in_date.strftime("%d/%m/%Y") }
-  = render partial: 'shared/form_text_field', object: { name: 'booking[check_out_time]', label: 'Check out', disabled: true,
-                                                        value: @booking.check_out_date.strftime("%d/%m/%Y") }
-  = render partial: 'shared/form_text_field', object: { name: 'booking[number_of_nights]', label: 'Number of nights',
-                                                        disabled: true, value: @booking.number_of_nights }
+  - booking_editable = @booking.editable_datetime?(current_user)
+  - date_class = booking_editable ? 'datepicker' : ''
+  - time_class = booking_editable ? 'timepicker' : ''
+  - unless host_view
+    = f.input :id, as: :hidden
+  = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true, input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
+  = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+  %br
+  = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true, input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
+  = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+  = f.input :number_of_nights, readonly: true, as: :string
 
   %hr
-  = render partial: 'shared/currency_field', object: { name: 'booking[rate_per_night ]', label: 'Rate per night',
-                                                       value: @booking.cost_per_night }
-  = render partial: 'shared/currency_field', object: { name: 'booking[subtotal]', label: 'Subtotal',
-                                                       value: @booking.subtotal }
-  = render partial: 'shared/currency_field', object: { name: 'booking[fee]', value: TRANSACTION_FEE, label: 'Fee' }
-  = render partial: 'shared/currency_field', object: { name: 'booking[total]', value: @booking.amount, label: 'Total' }
+  - wrapper_class = "input-prepend input-append"
+  = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per night', readonly: true
+  %br
+  = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
+  %br
+  = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: TRANSACTION_FEE }, readonly: true
+  %br
+  = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Total', readonly: true
+
+  - if host_view
+    %hr
+    .control-group.string
+      %label.string.control-label
+        Payment method
+    = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
+
+  - if @booking.enquiry.blank? && host_view
+    %hr
+    = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
+                    collection: ReferenceData::Response.find_by_ids([5, 6, 7])
+    = f.input :response_message, input_html: {rows: 5, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions' a question is required to explain to the pet owner what you mean. For 'available' or 'unavailable' answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
+
+  - if host_view
+    .form-actions
+      = f.submit 'Confirm booking', class: 'btn btn-primary'

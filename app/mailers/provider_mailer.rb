@@ -13,7 +13,8 @@ class ProviderMailer < ActionMailer::Base
 
   def owner_confirmed(booking)
     @booking = booking
-    @user = @booking.booker
+    @enquiry = @booking.enquiry
+		@user = @booking.booker
     @pets = @user.pets
     @provider = @booking.bookee
     email_with_name = "#{@provider.first_name} #{@provider.last_name} <#{@provider.email}>"

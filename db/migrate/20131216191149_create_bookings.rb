@@ -1,5 +1,5 @@
 class CreateBookings < ActiveRecord::Migration
-	def self.up
+	def up
 		create_table :bookings do |t|
 			t.integer :booker_id
 			t.integer :bookee_id
@@ -19,12 +19,14 @@ class CreateBookings < ActiveRecord::Migration
 			t.boolean :host_accepted, default: false
 			t.boolean :owner_accepted, default: false
 			t.string :status, default: BOOKING_STATUS_UNFINISHED
+			t.text :response_message
+			t.integer  :response_id, :default => 0
 
 			t.timestamps
 		end
 	end
 
-	def self.down
+	def down
 		drop_table :bookings
 	end
 end

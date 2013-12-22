@@ -1,5 +1,5 @@
 %p.article-title= "Fantastic! #{@user.first_name} has confirmed their enquiry"
-%p.article-content= "#{@user.first_name} has confirmed their enquiry and is happy with you looking after #{@user.pet_names} on #{@enquiry.check_in_date.to_formatted_s(:day_and_month)} for #{@enquiry.duration.natural}!"
+%p.article-content= "#{@user.first_name} has confirmed their enquiry and is happy with you looking after #{@user.pet_names} on #{@booking.check_in_date.to_formatted_s(:day_and_month)} for #{@booking.number_of_nights}!"
 
 %p.article-content= "All of the information we have about #{@user.pet_names} is on the pet profile below. You should review this in full when the owner hands over their #{'pet'.pluralize(@user.pets.length)} with you."
 

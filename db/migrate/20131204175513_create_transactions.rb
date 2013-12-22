@@ -1,5 +1,5 @@
 class CreateTransactions < ActiveRecord::Migration
-	def self.up
+	def up
 		create_table :transactions do |t|
 			t.references :booking
 			t.string :transaction_id
@@ -16,7 +16,7 @@ class CreateTransactions < ActiveRecord::Migration
 		end
 	end
 
-	def self.down
+	def down
 		drop_table :transactions
 	end
 end
