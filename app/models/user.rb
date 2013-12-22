@@ -25,7 +25,15 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host?
+    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+  end
+
+  def booking_accepted_by_host?
+	  booking_accepted_by_host.any?
+  end
+
+  def booking_accepted_by_host
+		self.bookers.accepted_by_host
   end
 
   def booking_declined_by_host?
