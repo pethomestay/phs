@@ -14,12 +14,31 @@ PetHomestay::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Add default mailer URL
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.asset_host = 'http://localhost:3000'
-  config.action_mailer.delivery_method = :test
+  #config.action_mailer.delivery_method = :test
+  # Use mailgun for ActionMailer
+  ActionMailer::Base.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'], 
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => ENV['HOST'],
+    :authentication => :plain,
+  }
+  #  ActionMailer::Base.smtp_settings = {
+  #  :address              => "smtp.gmail.com",
+  #  :port                 => 587,
+  #  :domain               => ENV['GMAIL_DOMAIN'],
+  #  :user_name            => ENV['GMAIL_USERNAME'],
+  #  :password             => ENV['GMAIL_PASSWORD'],
+  #  :authentication       => "plain",
+  #  :enable_starttls_auto => true
+  #  }
+  #ActionMailer::Base.delivery_method = :smtp
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
