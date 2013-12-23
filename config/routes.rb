@@ -27,6 +27,8 @@ PetHomestay::Application.routes.draw do
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
+    resources :bookings
+    resources :transactions
     resources :feedbacks
     resources :homestays, except:[:new, :create]
     resources :pets

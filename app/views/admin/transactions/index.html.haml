@@ -1,0 +1,27 @@
+%h1 Listing Transactions
+%table.table.tablesorter
+  %thead
+    %tr
+      %th User Name
+      %th Id
+      %th time_stamp
+      %th pre_authorisation_id
+      %th response_text
+      %th amount
+      %th reference
+
+  %tbody
+    - @transactions.each do |transaction|
+      %tr
+        %td= transaction.booking.booker.name
+        %td= transaction.transaction_id
+        %td= transaction.time_stamp.to_formatted_s(:year_month_day)
+        %td= transaction.pre_authorisation_id
+        %td= transaction.response_text
+        %td= transaction.amount
+        %td= transaction.reference
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+  });
