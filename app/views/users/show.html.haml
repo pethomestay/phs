@@ -1,6 +1,17 @@
 .row.my-account
   .span8
     %h1.page-header My Account
+    - if current_user.admin?
+      %h3 Admin Dashboard
+      .row
+        .span6
+          %p
+            You can go to admin dashboard and view several statistics and
+            %br
+            perform several operation based on them!
+        .span2.pull-right
+          = link_to "Admin Dashboard", admin_dashboard_path, class: 'btn'
+      %hr
     %h3 Manage details
     .row
       .span6

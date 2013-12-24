@@ -1,27 +1,31 @@
+= link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Listing Transactions
 %table.table.tablesorter
   %thead
     %tr
       %th User Name
       %th Id
-      %th time_stamp
-      %th pre_authorisation_id
-      %th response_text
-      %th amount
-      %th reference
+      %th Date
+      %th Pre-authorisation Id
+      %th Response Text
+      %th Amount
+      %th Status
 
   %tbody
     - @transactions.each do |transaction|
-      %tr
+      - booking_status = transaction.booking_status
+      %tr{ class: booking_status == 'ready to be completed' ? 'completed' : '' }
         %td= transaction.booking.booker.name
         %td= transaction.transaction_id
-        %td= transaction.time_stamp.to_formatted_s(:year_month_day)
+        %td= transaction.updated_at.to_formatted_s(:year_month_day)
         %td= transaction.pre_authorisation_id
         %td= transaction.response_text
         %td= transaction.amount
-        %td= transaction.reference
+        %td= booking_status
 
 :javascript
   $(document).ready(function(){
     $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
   });
+
+

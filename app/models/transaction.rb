@@ -43,4 +43,10 @@ class Transaction < ActiveRecord::Base
 		self.booking.save!
 		self.booking
 	end
+
+	def booking_status
+		b = self.booking
+		b_status = b.status
+		b_status == BOOKING_STATUS_UNFINISHED ? BOOKING_STATUS_UNFINISHED : (b.host_accepted ? 'ready to be completed' : 'awaiting host response')
+	end
 end
