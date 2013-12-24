@@ -34,6 +34,13 @@ class Booking < ActiveRecord::Base
 			self.host_accepted = true
 		end
 		self.save!
+		if self.response_id == 5
+			PetOwnerMailer.booking_receipt(self).deliver
+		elsif self.response_id == 6
+			PetOwnerMailer.provider_unavailable(self).deliver
+		elsif self.response_id == 7
+			PetOwnerMailer.provider_undecided(self).deliver
+		end
 	end
 
 	def remove_notification

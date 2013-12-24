@@ -1,0 +1,19 @@
+%p.article-title= "Hi #{@owner.first_name},"
+%p.article-content Cool, this provider is available on the dates you have requested!
+- if @enquiry.response_message.present?
+  %p.article-content= "#{@provider.first_name} has also included the following message:"
+  %p.article-content
+    %strong= @enquiry.response_message
+
+%p.article-content
+  Name:
+  = @provider.first_name
+  %br
+  Title:
+  = @homestay.title
+  %br
+  Date requested:
+  = @enquiry.check_in_time.to_formatted_s(:day_and_month)
+
+%p.article-content Good Luck!
+%p.article-content The PetHomeStay Team

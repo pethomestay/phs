@@ -33,7 +33,6 @@ class BookingsController < ApplicationController
 
 		if @transaction.errors.blank?
 			ProviderMailer.owner_confirmed(@transaction.booking).deliver
-			PetOwnerMailer.enquiry_receipt(@transaction.booking).deliver
 		else
 			return redirect_to(new_booking_path(homestay_id: @transaction.booking.homestay.id), alert: @transaction.error_messages)
 		end
@@ -57,7 +56,7 @@ class BookingsController < ApplicationController
 
 	def enquiry_required
 		if params[:enquiry_id].blank? && params[:homestay_id].blank?
-			return redirect_to my_account_path, alert: "You are not authorised to make this request!"
+			return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
 		end
 	end
 end
