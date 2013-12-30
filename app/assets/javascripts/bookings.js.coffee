@@ -32,7 +32,7 @@ $ ->
     check_out_date = new Date($('input.checkout', 'div.datepicker').val().split("/").reverse().join("-"))
     time_difference = Math.abs(check_out_date.getTime() - check_in_date.getTime())
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
-    if (number_of_nights <= 0)
+    if parseInt(number_of_nights) <= 0
       number_of_nights = 1
     if parseInt(number_of_nights_input.val()) != parseInt(number_of_nights)
       number_of_nights_input.val(number_of_nights)

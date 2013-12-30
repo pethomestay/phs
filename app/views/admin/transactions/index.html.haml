@@ -16,7 +16,7 @@
       - booking_status = transaction.booking_status
       %tr{ class: booking_status == 'ready to be completed' ? 'completed' : '' }
         %td= transaction.booking.booker.name
-        %td= transaction.transaction_id
+        %td= "transaction_id=#{transaction.id}"
         %td= transaction.updated_at.to_formatted_s(:year_month_day)
         %td= transaction.pre_authorisation_id
         %td= transaction.response_text
