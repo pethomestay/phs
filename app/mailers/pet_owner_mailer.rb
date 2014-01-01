@@ -29,6 +29,24 @@ class PetOwnerMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
   end
 
+  def provider_not_available(booking)
+	  @booking = booking
+	  @owner = booking.booker
+	  @homestay = booking.homestay
+	  @provider = booking.bookee
+	  email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"
+	  mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
+  end
+
+  def provider_has_question(booking)
+	  @booking = booking
+	  @owner = booking.booker
+	  @homestay = booking.homestay
+	  @provider = booking.bookee
+	  email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"
+	  mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
+  end
+
   def provider_undecided(enquiry)
     @enquiry = enquiry
     @owner = @enquiry.user

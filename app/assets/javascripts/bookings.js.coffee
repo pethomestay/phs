@@ -69,3 +69,16 @@ $ ->
           message: $('[name="booking[message]"]').val()
         success: (data) ->
           $(".payment_form").submit()
+
+  $('[name="transaction[save_card]"]').on 'change', ->
+    if $(this).prop('checked') == true
+      $('[name="EPS_STORE"]').removeAttr('disabled')
+      $('[name="EPS_STORETYPE"]').removeAttr('disabled')
+      $('[name="EPS_PAYOR"]').removeAttr('disabled')
+    else
+      $('[name="EPS_STORE"]').attr('disabled', 'disabled')
+      $('[name="EPS_STORETYPE"]').attr('disabled', 'disabled')
+      $('[name="EPS_PAYOR"]').attr('disabled', 'disabled')
+
+  $('[name="transaction[use_saved_card]"]').on 'change', ->
+    $('div.credit_card_fields').slideToggle()

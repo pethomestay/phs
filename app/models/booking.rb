@@ -22,8 +22,12 @@ class Booking < ActiveRecord::Base
 		self.owner_accepted && self.status = BOOKING_STATUS_FINISHED && self.host_accepted == false && user == self.bookee
 	end
 
+	def owner_view?(user)
+		user == self.booker
+	end
+
 	def editable_datetime?(user)
-		self.enquiry.blank? && !self.host_view?(user)
+		self.enquiry.blank? && !self.host_view?(user) && !self.owner_accepted
 	end
 
 	def confirmed_by_host
@@ -37,9 +41,9 @@ class Booking < ActiveRecord::Base
 		if self.response_id == 5
 			PetOwnerMailer.booking_receipt(self).deliver
 		elsif self.response_id == 6
-			PetOwnerMailer.provider_unavailable(self).deliver
+			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
-			PetOwnerMailer.provider_undecided(self).deliver
+			PetOwnerMailer.provider_has_question(self).deliver
 		end
 	end
 

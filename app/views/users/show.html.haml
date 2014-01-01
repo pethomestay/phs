@@ -44,14 +44,14 @@
       - if @user.booking_accepted_by_host?
         %h4 Accepted bookings
         - @user.booking_accepted_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking_path(booking)
           %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.booking_declined_by_host?
         %h4 Declined bookings
         - @user.booking_declined_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", host_message_booking_path(booking)
           %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
           .clear
         %hr

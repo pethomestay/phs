@@ -286,6 +286,7 @@ DEPENDENCIES
   libv8 (~> 3.11.8)
   net-scp (= 1.0.4)
   newrelic_rpm
+  nokogiri (= 1.5.6)
   pg
   pry
   pry-debugger

@@ -26,6 +26,7 @@ gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
 gem 'unicorn'
 gem 'rest-client', '1.6.7'
+gem 'nokogiri', '1.5.6'
 
 group :test, :development do
   gem 'capistrano'

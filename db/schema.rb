@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219151130) do
+ActiveRecord::Schema.define(:version => 20140101123206) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
@@ -178,6 +178,8 @@ ActiveRecord::Schema.define(:version => 20131219151130) do
     t.string   "type_code"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.string   "storage_text"
+    t.string   "status"
   end
 
   create_table "users", :force => true do |t|
@@ -211,6 +213,7 @@ ActiveRecord::Schema.define(:version => 20131219151130) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
