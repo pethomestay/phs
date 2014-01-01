@@ -24,7 +24,7 @@ class Transaction < ActiveRecord::Base
 		puts
 		puts
 		# TODO: '346' will only work for Heroku staging and development environment
-		if ['800', '346'].include?(params['strescode'])
+		if ['800', '346', '00'].include?(params['strescode'])
 			owner = self.booking.booker
 			puts 'owner user becoming payor'
 			puts owner.inspect
