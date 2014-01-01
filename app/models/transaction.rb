@@ -97,9 +97,9 @@ class Transaction < ActiveRecord::Base
 				doc = Nokogiri::XML(response)
 				if doc.xpath('//responseCode').text == "00"
 					self.transaction_id = doc.xpath('//txnID').text
-					self.reference = doc.xpath('//receipt').text
+					self.reference = doc.xpath('//ponum').text
 					self.response_text = doc.xpath('//responseText').text
-					doc.xpath('//ponum').text
+					doc.xpath('//receipt').text
 					doc.xpath('//currency').text
 					return self.save!
 				else

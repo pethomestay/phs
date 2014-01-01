@@ -15,7 +15,7 @@
     - @transactions.each do |transaction|
       - booking_status = transaction.booking_status
       %tr{ class: booking_status == 'ready to be completed' ? 'completed' : '' }
-        %td= transaction.booking.booker.name
+        %td= transaction.booking.booker.blank? ? 'none' : transaction.booking.booker.name
         %td= transaction.reference
         %td= transaction.updated_at.to_formatted_s(:year_month_day)
         %td= transaction.pre_authorisation_id
