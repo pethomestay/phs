@@ -58,7 +58,7 @@
       - if @user.booking_required_response?
         %h4 Bookings needed further response
         - @user.booking_required_response.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", host_message_booking_path(booking)
           %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
