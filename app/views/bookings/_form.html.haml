@@ -4,12 +4,11 @@
   - user_name = host_view ? @booking.booker.name : current_user.name
   - pet_name = host_view ? @booking.booker.pet_name : current_user.pet_name
 
-  = f.input :guest_name, input_html: { value: user_name }, readonly: host_view || !booking_editable
-  = f.input :pet_name, input_html: { value: pet_name }, readonly: host_view || !booking_editable
-  = f.input :message, as: :text, input_html: { rows: 3 }, readonly: host_view || !booking_editable
+  = f.input :guest_name, input_html: { value: user_name }, readonly: true
+  = f.input :pet_name, input_html: { value: pet_name }, readonly: true
+  = f.input :message, as: :text, input_html: { rows: 3 }, readonly: host_view
 
   %hr
-
   - date_class = booking_editable ? 'datepicker' : ''
   - time_class = booking_editable ? 'timepicker' : ''
   - unless host_view
@@ -31,7 +30,7 @@
   %br
   = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Total', readonly: true
 
-  - if host_view || !booking_editable
+  - if host_view
     %hr
     .control-group.string
       %label.string.control-label
@@ -42,6 +41,7 @@
     %hr
     = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
                     collection: ReferenceData::Response.find_by_ids([5, 6, 7])
+  - if host_view
     = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
 
   - if host_view

@@ -117,7 +117,8 @@ class User < ActiveRecord::Base
 	  if unfinished_bookings.blank?
 		  booking = self.bookers.create!
 	  else
-			return unfinished_bookings.first
+			booking = unfinished_bookings.first
+			return booking if params[:enquiry_id].blank?
 	  end
 
 	  homestay = nil
