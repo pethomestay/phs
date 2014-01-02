@@ -55,7 +55,10 @@ $ ->
   $('input', 'div.timepicker').on 'click', ->
     $(this).siblings("span").click()
 
-  $("#EPS_RESULTURL").val($("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content"))
+  if $("#EPS_RESULTURL").val() != undefined
+    string = $("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content")
+    $("#EPS_RESULTURL").val("")
+    $("#EPS_RESULTURL").val(string)
 
   $('#booking-tooltip').tooltip()
 
@@ -79,6 +82,20 @@ $ ->
       $('[name="EPS_STORE"]').attr('disabled', 'disabled')
       $('[name="EPS_STORETYPE"]').attr('disabled', 'disabled')
       $('[name="EPS_PAYOR"]').attr('disabled', 'disabled')
+  if $('[name="transaction[store_card]"]').prop('checked') == true
+    $('[name="EPS_STORE"]').removeAttr('disabled')
+    $('[name="EPS_STORETYPE"]').removeAttr('disabled')
+    $('[name="EPS_PAYOR"]').removeAttr('disabled')
+  else
+    $('[name="EPS_STORE"]').attr('disabled', 'disabled')
+    $('[name="EPS_STORETYPE"]').attr('disabled', 'disabled')
+    $('[name="EPS_PAYOR"]').attr('disabled', 'disabled')
 
+  if $('[name="stored_card_transaction_action"]').val() != undefined
+    $('[name="stored_card_transaction_action"]').val($(".payment_form").attr("action"))
   $('[name="transaction[use_stored_card]"]').on 'change', ->
     $('div.credit_card_fields').slideToggle()
+    if $(this).prop('checked') == true
+      $(".payment_form").attr("action", $('[name="stored_card_transaction_action"]').val())
+    else
+      $(".payment_form").attr("action", $('[name="securepay_transaction_action"]').val())

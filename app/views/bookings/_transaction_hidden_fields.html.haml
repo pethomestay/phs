@@ -11,6 +11,6 @@
 %input{ type: 'hidden', name: 'EPS_STORETYPE', value: 'PAYOR' }
 %input{ type: 'hidden', name: 'EPS_PAYOR', value: current_user.id }
 
-.control-group.string
-  %label.string.control-label
-    Credit Card fields
+%input{ type: 'hidden', name: 'securepay_transaction_action', value: ENV['TRANSACTION_POST_ACTION'] }
+%input{ type: 'hidden', name: 'stored_card_transaction_action', value: '' }
+
