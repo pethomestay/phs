@@ -14,8 +14,8 @@ class BookingsController < ApplicationController
 	def update
 		@booking = Booking.find(params[:id])
 		if @booking.update_attributes!(params[:booking])
-			message = @booking.confirmed_by_host
-			return redirect_to booking_path(@booking), alert: message
+			message = @booking.confirmed_by_host(current_user)
+			return redirect_to my_account_path, alert: message
 		else
 			return redirect_to host_confirm_booking_path(@booking)
 		end
@@ -23,8 +23,9 @@ class BookingsController < ApplicationController
 
 	def show
 		@booking = Booking.find(params[:id])
-		result = @booking.complete_transaction(current_user)
-		return redirect_to my_account_path, alert: "Transaction failed due to \"#{result}\", try again later!" if result.class == String
+		@booking.remove_notification if @booking.host_accepted? && @booking.owner_view?(current_user)
+		#result = @booking.complete_transaction(current_user)
+		#return redirect_to my_account_path, alert: "Transaction failed due to \"#{result}\", try again later!" if result.class == String
 	end
 
 	def result

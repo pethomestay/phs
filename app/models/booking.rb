@@ -30,17 +30,18 @@ class Booking < ActiveRecord::Base
 		self.enquiry.blank? && !self.host_view?(user) && !self.owner_accepted
 	end
 
-	def confirmed_by_host
+	def confirmed_by_host(current_user)
 		message = nil
 		if [6, 7].include?(self.response_id)
 			self.host_accepted = false
 		else
 			self.response_id = 5
 			self.host_accepted = true
-			message = 'You have confirmed the booking'
+
 		end
 		self.save!
 		if self.response_id == 5
+			message = 'You have confirmed the booking'
 			PetOwnerMailer.booking_receipt(self).deliver
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
@@ -49,6 +50,7 @@ class Booking < ActiveRecord::Base
 			message = 'Your question has been sent to guest'
 			PetOwnerMailer.provider_has_question(self).deliver
 		end
+		self.complete_transaction(current_user)
 		message
 	end
 
