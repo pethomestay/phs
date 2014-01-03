@@ -85,7 +85,7 @@ class Transaction < ActiveRecord::Base
 <apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
 <password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Periodic</RequestType>
 <Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType>
-<clientID>#{self.card.token}</clientID><amount>#{self.amount * 100}</amount><currency>AUD</currency>
+<clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{self.amount * 100}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
 
 				puts
