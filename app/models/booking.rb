@@ -19,7 +19,7 @@ class Booking < ActiveRecord::Base
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
 	def host_view?(user)
-		self.owner_accepted && self.status = BOOKING_STATUS_FINISHED && self.host_accepted == false && user == self.bookee
+		self.owner_accepted && self.status = BOOKING_STATUS_FINISHED && user == self.bookee
 	end
 
 	def owner_view?(user)
@@ -80,5 +80,24 @@ class Booking < ActiveRecord::Base
 	def update_booking_by(params)
 		self.message = params['message']
 		self.save!
+	end
+
+	def complete_transaction(current_user)
+		puts
+		puts "booking show and transaction completion"
+		puts
+		puts  self.host_accepted?.inspect
+		puts
+		puts  self.host_view?(current_user).inspect
+		puts
+		puts
+		if self.host_accepted?
+			if self.host_view?(current_user)
+				return self.transaction.complete_payment
+			end
+			if self.owner_view?(current_user)
+				self.remove_notification
+			end
+		end
 	end
 end

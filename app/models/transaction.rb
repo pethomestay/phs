@@ -113,6 +113,7 @@ class Transaction < ActiveRecord::Base
 					self.response_text = doc.xpath('//responseText').text
 					doc.xpath('//receipt').text
 					doc.xpath('//currency').text
+					self.status = TRANSACTION_FINISHED
 					return self.save!
 				else
 					return doc.xpath('//responseText').text
@@ -155,6 +156,7 @@ class Transaction < ActiveRecord::Base
 					self.response_text = doc.xpath('//responseText').text
 					doc.xpath('//receipt').text
 					doc.xpath('//currency').text
+					self.status = TRANSACTION_FINISHED
 					return self.save!
 				else
 					return doc.xpath('//responseText').text
