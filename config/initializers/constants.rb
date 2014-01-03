@@ -15,6 +15,7 @@ if ['development', 'test'].include?(Rails.env)
 	ENV['TRANSACTION_POST_ACTION'] = 'https://api.securepay.com.au/test/directpost/authorise'
 	ENV['TRANSACTION_RESPONSE_METHOD'] = 'TRUE' # GET method will be used
 	ENV['TRANSACTION_XML_API'] = 'https://test.securepay.com.au/xmlapi/periodic'
+	ENV['TRANSACTION_PRE_AUTH_COMPLETE'] = 'https://test.securepay.com.au/xmlapi/payment'
 else
 	ENV['MERCHANT_ID'] = 'EHY0047'
 	ENV['TRANSACTION_PASSWORD'] = 'zggiztda'
@@ -22,6 +23,7 @@ else
 	ENV['TRANSACTION_POST_ACTION'] = 'https://api.securepay.com.au/test/directpost/authorise'
 	ENV['TRANSACTION_RESPONSE_METHOD'] = 'TRUE' # false for POST method
 	ENV['TRANSACTION_XML_API'] = 'https://test.securepay.com.au/xmlapi/periodic'
+	ENV['TRANSACTION_PRE_AUTH_COMPLETE'] = 'https://test.securepay.com.au/xmlapi/payment'
 
 	# live credentials
 	#
@@ -29,4 +31,5 @@ else
 	# ENV['TRANSACTION_PASSWORD']     = 'wyj85zzc'
 	# ENV['TRANSACTION_POST_ACTION']  = 'https://api.securepay.com.au/live/directpost/authorise'
 	# ENV['TRANSACTION_XML_API'] = 'https://api.securepay.com.au/xmlapi/periodic'
+	# ENV['TRANSACTION_PRE_AUTH_COMPLETE'] = 'https://api.securepay.com.au/xmlapi/payment'
 end

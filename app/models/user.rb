@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :enquiries
   has_many :bookers, class_name: 'Booking', foreign_key: :booker_id
   has_many :bookees, class_name: 'Booking', foreign_key: :bookee_id
+  has_many :cards
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -168,5 +169,15 @@ class User < ActiveRecord::Base
 
 		transaction.save!
 		transaction
+	end
+
+	def find_stored_card_id(params)
+		if params[:transaction][:select_stored_card].blank?
+			if params[:transaction][:use_stored_card].to_s == '1' && self.cards.size >= 1
+				return self.cards.first.id
+			end
+		else
+			return params[:transaction][:select_stored_card]
+		end
 	end
 end

@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
 	def update
 		@transaction = Transaction.find params[:id]
 
-		if @transaction.update_status
+		if @transaction.update_status(current_user.find_stored_card_id(params))
 			ProviderMailer.owner_confirmed(@transaction.booking).deliver
 			return redirect_to booking_path(@transaction.booking)
 		else
