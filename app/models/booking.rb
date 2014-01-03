@@ -31,20 +31,25 @@ class Booking < ActiveRecord::Base
 	end
 
 	def confirmed_by_host
+		message = nil
 		if [6, 7].include?(self.response_id)
 			self.host_accepted = false
 		else
 			self.response_id = 5
 			self.host_accepted = true
+			message = 'You have confirmed the booking'
 		end
 		self.save!
 		if self.response_id == 5
 			PetOwnerMailer.booking_receipt(self).deliver
 		elsif self.response_id == 6
+			message = 'Guest will be informed of your unavailability'
 			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
+			message = 'Your question has been sent to guest'
 			PetOwnerMailer.provider_has_question(self).deliver
 		end
+		message
 	end
 
 	def remove_notification

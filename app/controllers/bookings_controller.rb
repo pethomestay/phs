@@ -14,8 +14,8 @@ class BookingsController < ApplicationController
 	def update
 		@booking = Booking.find(params[:id])
 		if @booking.update_attributes!(params[:booking])
-			@booking.confirmed_by_host
-			return redirect_to booking_path(@booking), alert: 'You have confirmed the booking'
+			message = @booking.confirmed_by_host
+			return redirect_to booking_path(@booking), alert: message
 		else
 			return redirect_to host_confirm_booking_path(@booking)
 		end
