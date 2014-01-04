@@ -4,9 +4,10 @@
   %tr
     %td Start date
     %td= @enquiry.check_in_date.strftime("%d/%m/%Y")
-  %tr
-    %td Check out date
-    %td= @enquiry.check_out_date.strftime("%d/%m/%Y")
+  - unless @enquiry.check_out_date.blank?
+    %tr
+      %td Check out date
+      %td= @enquiry.check_out_date.strftime("%d/%m/%Y")
   %tr
     %td Duration
     %td= @enquiry.duration_name
