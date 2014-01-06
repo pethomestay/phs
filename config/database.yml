@@ -1,22 +1,27 @@
-development:
+default: &default
   adapter: postgresql
-  database: pet_homestay_development
   pool: 5
   timeout: 5000
   host: localhost
+
+local: &local
+  username: <%= ENV['DB_USERNAME_LOCAL'] %>
+  password: <%= ENV['DB_PASSWORD_LOCAL'] %>
+  port: <%= ENV['DB_PORT_LOCAL'] %>
+  encoding: utf8
+
+development:
+  <<: *default
+  database: pet_homestay_development
+  <<: *local
 
 test:
-  adapter: postgresql
+  <<: *default
   database: pet_homestay_test
-  pool: 5
-  timeout: 5000
-  host: localhost
+  <<: *local
 
 production:
-  adapter: postgresql
+  <<: *default
   database: pet_homestay
   username:  <%= ENV['DB_USERNAME'] %>
   password:  <%= ENV['DB_PASSWORD'] %>
-  pool: 5
-  timeout: 5000
-  host: localhost
