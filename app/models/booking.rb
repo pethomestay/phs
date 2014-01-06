@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 class Booking < ActiveRecord::Base
 
 	belongs_to :booker, class_name: 'User', foreign_key: :booker_id
@@ -71,7 +73,7 @@ class Booking < ActiveRecord::Base
 		self.transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
 		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{self.transaction.type_code}|#{self.transaction.
 				reference}|#{self.transaction.actual_amount}|#{self.transaction.time_stamp}"
-		require 'digest/sha1'
+
 		self.transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
 		self.transaction.save!
 

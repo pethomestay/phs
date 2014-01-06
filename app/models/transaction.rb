@@ -1,3 +1,7 @@
+require 'digest/sha1'
+require 'rest_client'
+require 'nokogiri'
+
 class Transaction < ActiveRecord::Base
 
 	belongs_to :booking
@@ -13,7 +17,7 @@ class Transaction < ActiveRecord::Base
 	def update_by_response(params)
 		secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{params['refid']}|#{self.
 				actual_amount}|#{params['timestamp']}|#{params['summarycode']}"
-		require 'digest/sha1'
+
 		self.secure_pay_fingerprint = Digest::SHA1.hexdigest(secure_pay_fingerprint_string)
 
 		unless self.secure_pay_fingerprint == params['fingerprint']
@@ -73,8 +77,6 @@ class Transaction < ActiveRecord::Base
 	end
 
 	def complete_payment
-		require 'rest_client'
-		require 'nokogiri'
 		message_id = SecureRandom.hex(15)
 		time_stamp = Time.now.strftime("%Y%m%dT%H%M%S%L%z")
 		if self.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED

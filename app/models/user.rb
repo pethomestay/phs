@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable
 
@@ -164,7 +166,7 @@ class User < ActiveRecord::Base
 
 		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction.type_code}|#{transaction.
 				reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
-		require 'digest/sha1'
+
 		transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
 
 		transaction.save!
