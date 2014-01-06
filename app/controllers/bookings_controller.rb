@@ -24,8 +24,6 @@ class BookingsController < ApplicationController
 	def show
 		@booking = Booking.find(params[:id])
 		@booking.remove_notification if @booking.host_accepted? && @booking.owner_view?(current_user)
-		#result = @booking.complete_transaction(current_user)
-		#return redirect_to my_account_path, alert: "Transaction failed due to \"#{result}\", try again later!" if result.class == String
 	end
 
 	def result
