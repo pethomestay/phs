@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-	before_filter :authenticate_user!, except: :result
+	before_filter :authenticate_user!
 	before_filter :enquiry_required, only: :new
 
 	def new

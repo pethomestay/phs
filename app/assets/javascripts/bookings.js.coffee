@@ -55,10 +55,11 @@ $ ->
   $('input', 'div.timepicker').on 'click', ->
     $(this).siblings("span").click()
 
-  if $("#EPS_RESULTURL").val() != undefined
-    string = $("#EPS_RESULTURL").val() + $('[name="csrf-token"]').attr("content")
-    $("#EPS_RESULTURL").val("")
-    $("#EPS_RESULTURL").val(string)
+  set_eps_result_url = ->
+    if $("#EPS_RESULTURL").val() != undefined
+      string = $("#EPS_RESULTURL").val().split("=")[0] + "=" + $('[name="csrf-token"]').attr("content")
+      $("#EPS_RESULTURL").val("")
+      $("#EPS_RESULTURL").val(string)
 
   $('#booking-tooltip').tooltip()
 
@@ -71,6 +72,7 @@ $ ->
           booking_id: $('[name="booking[id]"]').val(),
           message: $('[name="booking[message]"]').val()
         success: (data) ->
+          set_eps_result_url()
           $(".payment_form").submit()
 
   $('[name="transaction[store_card]"]').on 'change', ->
