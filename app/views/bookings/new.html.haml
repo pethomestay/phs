@@ -9,23 +9,4 @@
 
 %hr
 
-= simple_form_for @transaction, url: (current_user.payor? ? @transaction : ENV['TRANSACTION_POST_ACTION']), html: { class: 'form-horizontal payment_form' } do |f|
-  = render 'transaction_hidden_fields'
-  .control-group.string
-    %label.string.control-label
-      Credit Card fields
-  - if current_user.payor?
-    = f.input :use_stored_card, as: :boolean, input_html: { checked: true }
-
-  .credit_card_fields{ style: current_user.payor? ? 'display:none;' : '' }
-    - if !current_user.payor?
-      = f.input :store_card, as: :boolean, label: 'Store this card'
-    = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number',
-                                                          required: true }
-    = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true,
-                                                          class: 'span1', tooltip: true,
-                                                          message: 'CVV: 3-4 digit number, written on back of the card.' }
-    = render 'transaction_month_year_fields'
-
-  .form-actions
-    %input.btn.btn-primary{ type: 'submit', value: 'Book Reservation' }
+= render 'transaction_form'

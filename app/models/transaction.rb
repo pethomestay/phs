@@ -8,7 +8,7 @@ class Transaction < ActiveRecord::Base
 
 	belongs_to :card
 
-	attr_accessor :store_card, :use_stored_card, :select_stored_card
+	attr_accessor :store_card, :use_stored_card, :select_stored_card, :eps_redirect, :eps_merchant
 
 	def actual_amount
 		self.amount.to_i.to_s + '.00'

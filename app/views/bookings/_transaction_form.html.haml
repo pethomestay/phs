@@ -1,0 +1,36 @@
+- url = current_user.payor? ? @transaction : ENV['TRANSACTION_POST_ACTION']
+= simple_form_for @transaction, url: url, html: { class: 'form-horizontal payment_form' } do |f|
+  = f.input_field :eps_merchant, type: :hidden, name: 'EPS_MERCHANT', value: ENV['MERCHANT_ID']
+  = f.input_field :type_code, type: :hidden, name: 'EPS_TXNTYPE'
+  = f.input_field :reference, type: :hidden, name: 'EPS_REFERENCEID'
+  = f.input_field :actual_amount, type: :hidden, name: 'EPS_AMOUNT'
+  = f.input_field :eps_result_url, type: :hidden, name: 'EPS_RESULTURL', value: root_url + ENV['TRANSACTION_RESULT_URL'], id: 'EPS_RESULTURL'
+  = f.input_field :eps_redirect, type: :hidden, name: 'EPS_REDIRECT', value: ENV['TRANSACTION_RESPONSE_METHOD']
+  = f.input_field :time_stamp, type: :hidden, name: 'EPS_TIMESTAMP'
+  = f.input_field :merchant_fingerprint, type: :hidden, name: 'EPS_FINGERPRINT'
+
+  = f.input_field :eps_store, type: :hidden, name: 'EPS_STORE', value: 'TRUE'
+  = f.input_field :eps_storetype, type: :hidden, name: 'EPS_STORETYPE', value: 'PAYOR'
+  = f.input_field :eps_payor, type: :hidden, name: 'EPS_PAYOR', value: current_user.id
+
+  %input{ type: 'hidden', name: 'securepay_transaction_action', value: ENV['TRANSACTION_POST_ACTION'] }
+  %input{ type: 'hidden', name: 'stored_card_transaction_action', value: '' }
+  .control-group.string
+    %label.string.control-label
+      Credit Card fields
+  - if current_user.payor?
+    = f.input :use_stored_card, as: :boolean, input_html: { checked: true }
+
+  .credit_card_fields{ style: current_user.payor? ? 'display:none;' : '' }
+    - if !current_user.payor?
+      = f.input :store_card, as: :boolean, label: 'Store this card'
+    = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number',
+                                                          required: true }
+    = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true,
+                                                          class: 'span1', tooltip: true,
+                                                          message: 'CVV: 3-4 digit number, written on back of the card.' }
+    = render 'transaction_month_year_fields'
+
+  .form-actions
+    %input.btn.btn-primary{ type: 'submit', value: 'Book Reservation' }
+
