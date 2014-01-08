@@ -66,7 +66,7 @@ $ ->
   $('[type="submit"]').on 'click', (e) ->
     if $('[name="booking[id]"]').val() != undefined
       e.preventDefault()
-      url = window.location.origin + "/bookings/update_booking"
+      url = window.location.origin + "/bookings/update_message"
       $.ajax url,
         data:
           booking_id: $('[name="booking[id]"]').val(),

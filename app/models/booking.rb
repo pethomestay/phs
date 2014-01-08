@@ -61,10 +61,14 @@ class Booking < ActiveRecord::Base
 		self.save!
 	end
 
-	def update_transaction_by(params)
-		self.number_of_nights = params['number_of_nights'].to_i
-		self.check_in_date = params['check_in_date']
-		self.check_out_date = params['check_out_date']
+	def update_transaction_by(number_of_nights=nil, check_in_date=nil, check_out_date=nil)
+		if number_of_nights.blank? || check_in_date.blank? || check_out_date.blank?
+			return { error: true }
+		end
+		self.number_of_nights = number_of_nights.to_i
+		self.check_in_date = check_in_date
+		self.check_out_date = check_out_date
+
 		self.subtotal = self.number_of_nights * self.cost_per_night
 		self.amount = self.subtotal + TRANSACTION_FEE
 		self.save!
@@ -84,11 +88,6 @@ class Booking < ActiveRecord::Base
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
 		}
-	end
-
-	def update_booking_by(params)
-		self.message = params['message']
-		self.save!
 	end
 
 	def complete_transaction(current_user)

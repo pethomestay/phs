@@ -14,55 +14,36 @@ class Transaction < ActiveRecord::Base
 		self.amount.to_i.to_s + '.00'
 	end
 
-	def update_by_response(params)
-		secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{params['refid']}|#{self.
-				actual_amount}|#{params['timestamp']}|#{params['summarycode']}"
-
+	def update_by_response(secure_pay_response)
+		secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{secure_pay_response[:reference_id]}|#{self.
+			actual_amount}|#{secure_pay_response[:time_stamp]}|#{secure_pay_response[:summary_code]}"
 		self.secure_pay_fingerprint = Digest::SHA1.hexdigest(secure_pay_fingerprint_string)
 
-		unless self.secure_pay_fingerprint == params['fingerprint']
+		unless self.secure_pay_fingerprint == secure_pay_response[:fingerprint]
 			self.errors.add(:secure_pay_fingerprint, 'Transaction was not secured.')
 		end
-		puts
-		puts 'pre-auth transaction response from securepay'
-		puts
-		puts params.inspect
-		puts
-		puts
 
-		if %w(00 800).include?(params['strescode'])
+		if %w(00 800).include?(secure_pay_response[:card_storage_response_code]) && self.errors.blank?
 			owner = self.booking.booker
-			puts
-			puts 'owner user becoming payor'
-			puts
-			puts "owner.payor?#{owner.payor?}"
-			puts
-			puts owner.cards.inspect
-			puts
 			owner.payor = true
-			owner.cards.create! card_number: params['pan'], token: params['token']
+			owner.cards.create!(card_number: secure_pay_response[:card_number], token: secure_pay_response[:token])
 			owner.save!
-			puts 'owner user becomes payor'
-			puts
-			puts  "owner.payor?#{owner.payor?}"
-			puts
-			puts owner.cards.inspect
-			puts
 		end
 
-		if %w(00 08 11).include?(params['rescode']) && self.errors.blank?
-			self.transaction_id = params['txnid']
-			self.pre_authorisation_id = params['preauthid']
-			self.response_text = params['restext']
+		if %w(00 08 11).include?(secure_pay_response[:response_code]) && self.errors.blank?
+			self.transaction_id = secure_pay_response[:transaction_id]
+			self.pre_authorisation_id = secure_pay_response[:pre_authorization_id]
+			self.response_text = secure_pay_response[:response_text]
 			self.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED
 			self.finish_booking
 			self.save!
 		else
-			self.errors.add(:response_text, params['restext'])
-			if params['strestext'].to_s != params['restext'].to_s
-				self.errors.add(:storage_text, params['strestext'])
+			self.errors.add(:response_text, secure_pay_response[:response_text])
+			if secure_pay_response[:card_storage_response_text].to_s != secure_pay_response[:response_text].to_s
+				self.errors.add(:storage_text, secure_pay_response[:card_storage_response_text])
 			end
 		end
+		self
 	end
 
 	def finish_booking

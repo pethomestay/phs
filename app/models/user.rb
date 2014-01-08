@@ -114,44 +114,26 @@ class User < ActiveRecord::Base
     update_attribute :average_rating, rating
   end
 
-  def find_or_create_booking_by(params)
+  def find_or_create_booking_by(enquiry=nil, homestay=nil)
 	  unfinished_bookings = self.bookers.unfinished
-	  booking = nil
-	  if unfinished_bookings.blank?
-		  booking = self.bookers.create!
-	  else
-			booking = unfinished_bookings.first
-			return booking if params[:enquiry_id].blank?
-	  end
+	  booking = unfinished_bookings.blank? ? self.bookers.create! : unfinished_bookings.first
 
-	  homestay = nil
-
-		unless params[:enquiry_id].blank?
-			enquiry = Enquiry.find(params[:enquiry_id])
-			booking.enquiry = enquiry
-			homestay = enquiry.homestay
-		end
-
-	  homestay = Homestay.find(params[:homestay_id]) unless params[:homestay_id].blank?
-
+		booking.enquiry = enquiry
 	  booking.homestay = homestay
 	  booking.bookee = homestay.user
 	  booking.cost_per_night = homestay.cost_per_night
 
 	  date_time_now = DateTime.now
 	  time_now = Time.now
-
 	  booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
 	  booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
 	  booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
 	  booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
-
 	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
 		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
 	  booking.amount = booking.subtotal + TRANSACTION_FEE
-
 	  booking.save!
 	  booking
   end
@@ -173,13 +155,15 @@ class User < ActiveRecord::Base
 		transaction
 	end
 
-	def find_stored_card_id(params)
-		if params[:transaction][:select_stored_card].blank?
-			if params[:transaction][:use_stored_card].to_s == '1' && self.cards.size >= 1
+	def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
+		if selected_stored_card.blank?
+			if use_stored_card.blank?
+			  return nil
+			elsif use_stored_card.to_s == '1' && self.cards.size >= 1
 				return self.cards.first.id
 			end
 		else
-			return params[:transaction][:select_stored_card]
+			return selected_stored_card
 		end
 	end
 end
