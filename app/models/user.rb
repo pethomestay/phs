@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
     if pets.length == 1
       pets.first.name
     else
-      "your pets"
+      'your pets'
     end
   end
 

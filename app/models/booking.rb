@@ -91,14 +91,6 @@ class Booking < ActiveRecord::Base
 	end
 
 	def complete_transaction(current_user)
-		puts
-		puts "booking show and transaction completion"
-		puts
-		puts  self.host_accepted?.inspect
-		puts
-		puts  self.host_view?(current_user).inspect
-		puts
-		puts
 		if self.host_accepted?
 			if self.host_view?(current_user)
 				return self.transaction.complete_payment

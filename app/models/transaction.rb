@@ -11,7 +11,7 @@ class Transaction < ActiveRecord::Base
 	attr_accessor :store_card, :use_stored_card, :select_stored_card, :eps_redirect, :eps_merchant
 
 	def actual_amount
-		self.amount.to_i.to_s + '.00'
+		self.amount.to_i.to_s + '.00' unless self.amount.blank?
 	end
 
 	def update_by_response(secure_pay_response)
@@ -71,23 +71,11 @@ class Transaction < ActiveRecord::Base
 <clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{self.amount * 100}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
 
-				puts
-				puts
-				puts message.inspect
-				puts
-				puts
 				response = RestClient.post(
 						ENV['TRANSACTION_XML_API'],
 						message,
 						content_type: 'text/xml'
 				)
-				puts
-				puts
-				puts 'stored card transaction response'
-				puts
-				puts response.inspect
-				puts
-				puts
 
 				doc = Nokogiri::XML(response)
 				if doc.xpath('//responseCode').text == "00"
@@ -101,6 +89,7 @@ class Transaction < ActiveRecord::Base
 				else
 					return doc.xpath('//responseText').text
 				end
+
 			rescue Exception => e
 				return e.message
 			end
@@ -115,23 +104,11 @@ class Transaction < ActiveRecord::Base
 <purchaseOrderNo>#{self.reference}</purchaseOrderNo><preauthID>#{self.pre_authorisation_id}</preauthID></Txn></TxnList></Payment>
 </SecurePayMessage>"
 
-				puts
-				puts
-				puts message.inspect
-				puts
-				puts
 				response = RestClient.post(
 						ENV['TRANSACTION_PRE_AUTH_COMPLETE'],
 						message,
 						content_type: 'text/xml'
 				)
-				puts
-				puts
-				puts 'pre auth transaction response'
-				puts
-				puts response.inspect
-				puts
-				puts
 
 				doc = Nokogiri::XML(response)
 				if doc.xpath('//responseCode').text == "00"
@@ -144,10 +121,12 @@ class Transaction < ActiveRecord::Base
 				else
 					return doc.xpath('//responseText').text
 				end
+
 			rescue Exception => e
 				return e.message
 			end
 		end
+
 		false
 	end
 

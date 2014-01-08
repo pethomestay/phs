@@ -5,11 +5,31 @@ describe Enquiry do
     ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
     Homestay.any_instance.stub(:geocode).and_return true
   end
-   it { should belong_to :user }
-   it { should belong_to :homestay }
 
-   it { should have_many :feedbacks }
-   it { should have_and_belong_to_many :pets }
+  it { should belong_to :user }
+  it { should belong_to :homestay }
+
+  it { should have_many :feedbacks }
+  it { should have_and_belong_to_many :pets }
+
+  it { should have_one :booking }
+
+  describe '#need_feedback' do
+	  subject { Enquiry.need_feedback }
+	  context 'when no enquiry needed feedback' do
+		  let(:enquiry) { FactoryGirl.create :enquiry }
+		  it 'should return empty []' do
+			  subject.should be_blank
+		  end
+	  end
+	  context 'when enquiry needed feedback' do
+		  let(:enquiry) { FactoryGirl.create :enquiry, owner_accepted: true, check_in_date: Time.zone.now - 3.days }
+		  it 'should return 1 enquiry' do
+			  enquiry
+			  subject.size.should be_eql(1)
+		  end
+	  end
+  end
 
   describe '#duration_name' do
     subject { enquiry.duration_name }

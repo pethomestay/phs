@@ -24,7 +24,7 @@ describe EnquiriesController do
         assigns(:user).should == enquiry.user
       end
 
-      it 'shoudl render the show template' do
+      it 'should render the show template' do
         subject
         response.should render_template :show
       end
