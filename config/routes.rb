@@ -11,10 +11,12 @@ PetHomestay::Application.routes.draw do
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
 
-  resources :bookings, only: [:new, :create] do
+  resources :bookings do
 	  collection do
 		  post 'result'
 		  get 'result'
+		  get 'update_transaction'
+		  get 'update_booking'
 	  end
 	  member do
 		  get 'host_confirm'

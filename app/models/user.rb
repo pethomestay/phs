@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
@@ -25,7 +25,31 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation?
+    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+  end
+
+  def booking_accepted_by_host?
+	  booking_accepted_by_host.any?
+  end
+
+  def booking_accepted_by_host
+		self.bookers.accepted_by_host
+  end
+
+  def booking_declined_by_host?
+	  booking_declined_by_host.any?
+  end
+
+  def booking_declined_by_host
+	  self.bookers.declined_by_host
+	end
+
+  def booking_required_response?
+	  booking_required_response.any?
+  end
+
+  def booking_required_response
+	  self.bookers.required_response
   end
 
   def unanswered_enquiries?
@@ -45,7 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def booking_needing_confirmation
-	  homestay.blank? ? [] : homestay.enquiries.needing_host_confirmation
+	  homestay.blank? ? [] : homestay.bookings.needing_host_confirmation
   end
 
   def enquiries_needing_confirmation
@@ -89,7 +113,12 @@ class User < ActiveRecord::Base
 
   def find_or_create_booking_by(params)
 	  unfinished_bookings = self.bookers.unfinished
-	  booking = unfinished_bookings.blank? ? self.bookers.create! : unfinished_bookings.first
+	  booking = nil
+	  if unfinished_bookings.blank?
+		  booking = self.bookers.create!
+	  else
+			return unfinished_bookings.first
+	  end
 
 	  homestay = nil
 
@@ -108,10 +137,13 @@ class User < ActiveRecord::Base
 	  date_time_now = DateTime.now
 	  time_now = Time.now
 
-	  booking.check_in_date = enquiry.blank? ? date_time_now : enquiry.check_in_date
-	  booking.check_in_time = enquiry.blank? ? time_now : enquiry.check_in_time
-	  booking.check_out_date = enquiry.blank? ? date_time_now : enquiry.check_out_date
-	  booking.check_out_time = enquiry.blank? ? time_now : enquiry.check_out_time
+	  booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
+	  booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
+	  booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
+	  booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
+
+	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
+		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
 	  booking.amount = booking.subtotal + TRANSACTION_FEE

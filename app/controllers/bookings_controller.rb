@@ -8,7 +8,22 @@ class BookingsController < ApplicationController
 	end
 
 	def create
-		render nothing: true
+		return render nothing: true
+	end
+
+	def update
+		@booking = Booking.find(params[:id])
+		if @booking.update_attributes!(params[:booking])
+			@booking.confirmed_by_host
+			return redirect_to my_account_path, alert: "You have confirmed the booking"
+		else
+			return redirect_to host_confirm_booking_path(@booking)
+		end
+	end
+
+	def show
+		@booking = Booking.find(params[:id])
+		@booking.remove_notification
 	end
 
 	def result
@@ -25,7 +40,17 @@ class BookingsController < ApplicationController
 	end
 
 	def host_confirm
-		@booking = Transaction.find(params[:id]).confirmed_by_host
+		@booking = Booking.find(params[:id])
+	end
+
+	def update_transaction
+		transaction_payload = Booking.find(params[:booking_id]).update_transaction_by(params)
+		return render json: transaction_payload
+	end
+
+	def update_booking
+		Booking.find(params[:booking_id]).update_booking_by(params)
+		render nothing: true
 	end
 
 	private
