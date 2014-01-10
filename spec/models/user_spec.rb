@@ -49,4 +49,23 @@ describe User do
 			end
 		end
 	end
+
+	describe '#find_stored_card_id' do
+		subject { user }
+		let(:user) { FactoryGirl.create :user }
+		let(:card) { FactoryGirl.create :card, user: user }
+
+		context 'when user has selected stored card' do
+			it 'should return selected card id' do
+				subject.find_stored_card_id(card.id, nil).should eq(card.id)
+			end
+		end
+
+		context 'when user has not selected stored card' do
+			before { user.cards << card }
+			it 'should return first card id' do
+				subject.find_stored_card_id(nil, '1').should eq(card.id)
+			end
+		end
+	end
 end

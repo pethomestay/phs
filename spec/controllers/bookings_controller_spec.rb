@@ -25,9 +25,11 @@ describe BookingsController do
 			user.stub_chain(:enquiries, :find).with(enquiry.id.to_s).and_return enquiry
 		end
 
-		it 'should make booking and transaction object' do
+		it 'should make booking and transaction objects' do
 			subject
 			response.should render_template :new
+			assigns(:booking).should == enquiry.booking
+			assigns(:transaction).should == enquiry.booking.transaction
 		end
 	end
 end
