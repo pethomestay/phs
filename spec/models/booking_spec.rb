@@ -12,6 +12,20 @@ describe Booking do
 		booking.should be_valid
 	end
 
+	describe '#bookee and #booker' do
+		before :each do
+			@booking = FactoryGirl.create :booking
+		end
+
+		it 'should have booker i.e. guest' do
+			@booking.booker.id.should_not be_blank
+		end
+
+		it 'should have bookee i.e. host' do
+			@booking.bookee.id.should_not be_blank
+		end
+	end
+
 	describe '#unfinished' do
 		subject { Booking.unfinished }
 		context 'when there is no unfinished booking' do
@@ -92,6 +106,178 @@ describe Booking do
 			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true }
 			it 'should return booking' do
 				subject.any?.should be_true
+			end
+		end
+	end
+
+	describe '#host_view?' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+		context 'when current user is booker i.e. guest' do
+			it 'should return false' do
+				subject.host_view?(subject.booker).should be_false
+			end
+		end
+
+		context 'when current user is bookee i.e. host. And guest did not complete the booking.' do
+			it 'should return false' do
+				subject.host_view?(subject.bookee).should be_false
+			end
+		end
+
+		context 'when current user is bookee and guest made booking for him' do
+			before { booking.update_attributes owner_accepted: true, status: BOOKING_STATUS_FINISHED }
+			it 'should return true' do
+				subject.host_view?(subject.bookee).should be_true
+			end
+		end
+	end
+
+	describe '#owner_view?' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+		context 'when current user is bookee i.e. host' do
+			it 'should return false' do
+				subject.owner_view?(subject.bookee).should be_false
+			end
+		end
+
+		context 'when current user is booker or owner or guest' do
+			it 'should return true' do
+				subject.owner_view?(subject.booker).should be_true
+			end
+		end
+	end
+
+	describe '#editable_datetime?' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+
+		context 'when booking is finished' do
+			before do
+				booking.owner_accepted = true
+				booking.status = BOOKING_STATUS_FINISHED
+			end
+
+			it 'should return false' do
+				subject.editable_datetime?(subject.booker).should be_false
+			end
+		end
+
+		context 'when booking is not finished and it has no enquiry and owner is logged in' do
+			it 'should return true' do
+				subject.editable_datetime?(subject.booker).should be_true
+			end
+		end
+	end
+
+	describe '#confirmed_by_host' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+
+		before :each do
+			subject.stub(:complete_transaction).with(booking.bookee).and_return true
+		end
+
+		context 'when host confirmed the booking' do
+			it 'should return success message' do
+				PetOwnerMailer.stub(:booking_receipt).with(subject).and_return mock(:mail, deliver: true)
+				subject.confirmed_by_host(booking.bookee).should be_eql('You have confirmed the booking')
+			end
+		end
+
+		context 'when host confirmed unavailability' do
+			before { booking.response_id = ReferenceData::Response::UNAVAILABLE.id }
+
+			it 'should return message that guest will be known of your unavailability' do
+				PetOwnerMailer.stub(:provider_not_available).with(subject).and_return mock(:mail, deliver: true)
+				subject.confirmed_by_host(booking.bookee).should be_eql('Guest will be informed of your unavailability')
+			end
+		end
+
+		context 'when host ask a question from guest' do
+			before { booking.response_id = ReferenceData::Response::QUESTION.id }
+
+			it 'should return message that guest will have your question' do
+				PetOwnerMailer.stub(:provider_has_question).with(subject).and_return mock(:mail, deliver: true)
+				subject.confirmed_by_host(booking.bookee).should be_eql('Your question has been sent to guest')
+			end
+		end
+	end
+
+	describe '#remove_notification' do
+		subject { booking.remove_notification }
+		let(:booking) { FactoryGirl.create :booking }
+
+		context 'when there is a notification' do
+			before do
+				booking.update_attributes status: BOOKING_STATUS_FINISHED, owner_accepted: true
+				booking.homestay = FactoryGirl.create :homestay, user: booking.bookee
+				booking.save
+				booking.bookee.notifications?.should be_true
+			end
+
+			it 'should remove all notification' do
+				subject.should be_true
+				booking.bookee.notifications?.should be_false
+			end
+		end
+	end
+
+	describe '#update_transaction_by' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+		before { booking.transaction = FactoryGirl.create :transaction }
+
+		context 'when required parameters are provided' do
+			it 'should update transaction and will return response hash' do
+				result = subject.update_transaction_by(1, Time.now, Time.now + 2.days)
+				result.keys.should be_eql([:booking_subtotal, :booking_amount, :transaction_actual_amount,
+				                           :transaction_time_stamp, :transaction_merchant_fingerprint])
+			end
+		end
+
+		context 'when any of the required parameters is absent' do
+			it 'should return error hash' do
+				result = subject.update_transaction_by(nil, Time.now, Time.now + 2.days)
+				result.keys.should be_eql([:error])
+			end
+		end
+	end
+
+	describe '#complete transaction' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+
+		context 'when its called in a host view' do
+			context 'when booking is finished' do
+				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+				it 'should complete the payment' do
+					subject.transaction.stub(:complete_payment).and_return true
+					subject.complete_transaction(subject.bookee).should be_true
+				end
+			end
+
+			context 'when booking is not finished' do
+				it 'should return nil' do
+					subject.complete_transaction(subject.bookee).should be_nil
+				end
+			end
+		end
+
+		context 'when its called in an owner\'s view' do
+			context 'when booking is finished' do
+				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+
+				it 'should remove the notification' do
+					subject.complete_transaction(subject.booker).should be_true
+				end
+			end
+
+			context 'when booking is not finished' do
+				it 'should return nil' do
+					subject.complete_transaction(subject.booker).should be_nil
+				end
 			end
 		end
 	end

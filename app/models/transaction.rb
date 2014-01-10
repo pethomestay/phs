@@ -11,7 +11,7 @@ class Transaction < ActiveRecord::Base
 	attr_accessor :store_card, :use_stored_card, :select_stored_card, :eps_redirect, :eps_merchant
 
 	def actual_amount
-		self.amount.to_i.to_s + '.00' unless self.amount.blank?
+		self.amount.blank? ? '00.00' : self.amount.to_i.to_s + '.00'
 	end
 
 	def update_by_response(secure_pay_response)

@@ -21,7 +21,7 @@ class Booking < ActiveRecord::Base
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
 	def host_view?(user)
-		self.owner_accepted && self.status = BOOKING_STATUS_FINISHED && user == self.bookee
+		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
 	end
 
 	def owner_view?(user)
