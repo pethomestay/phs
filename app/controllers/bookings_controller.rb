@@ -4,6 +4,12 @@ class BookingsController < ApplicationController
 	before_filter :secure_pay_response, only: :result
 
 	def new
+		puts
+		puts
+		puts
+		puts @homestay.inspect
+		puts
+		puts
 		@booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
 		@transaction = current_user.find_or_create_transaction_by(@booking)
 	end

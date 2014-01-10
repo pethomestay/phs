@@ -130,7 +130,7 @@ class Transaction < ActiveRecord::Base
 		false
 	end
 
-	def update_status(stored_card_id)
+	def update_status(stored_card_id=nil)
 		self.card_id = stored_card_id
 		self.finish_booking
 		self.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED
