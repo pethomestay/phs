@@ -1,4 +1,3 @@
-require 'pry'
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
