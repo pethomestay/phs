@@ -14,6 +14,9 @@ Devise.setup do |config|
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
+  require 'omniauth-facebook'
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
+  config.omniauth :facebook, ENV['APP_ID'], ENV['APP_SECRET'], {:info_fields => 'age_range',:scope => "user_location,email,offline_access"}
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

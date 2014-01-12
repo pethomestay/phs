@@ -7,6 +7,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'haml-rails'
 gem 'devise'
+gem 'omniauth-facebook'
 
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
@@ -25,6 +26,7 @@ gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
 gem 'unicorn'
+gem 'koala'
 
 group :test, :development do
   gem 'capistrano'
