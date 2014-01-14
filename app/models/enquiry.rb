@@ -66,7 +66,7 @@ class Enquiry < ActiveRecord::Base
   end
 
   def send_enquiry_update_notifications
-    return if response_message.blank?
+    #return if response_message.blank?
     return if confirmed?
     PetOwnerMailer.host_enquiry_response(self).deliver
   end
