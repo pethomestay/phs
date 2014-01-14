@@ -68,28 +68,28 @@ describe EnquiriesController do
     let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when the homestay owner can look after the pet' do
-      let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id} }
-      before { PetOwnerMailer.stub(:contact_details).and_return mock(:mail, deliver: true) }
+      let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id, response_message: 'something'} }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:contact_details)
+        PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
 
     context 'when the homestay owner cannot look after the pet' do
-      let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id} }
-      before { PetOwnerMailer.stub(:provider_unavailable).and_return mock(:mail, deliver: true) }
+      let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id, response_message: 'something'} }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:provider_unavailable)
+        PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
 
     context 'when the homestay owner is unsure if they can look after the pet' do
       let(:attributes) { {response_id: ReferenceData::Response::UNDECIDED.id, response_message: 'something'} }
-      before { PetOwnerMailer.stub(:provider_undecided).and_return mock(:mail, deliver: true) }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to get more information from the requester' do
-        PetOwnerMailer.should_receive(:provider_undecided)
+        PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end

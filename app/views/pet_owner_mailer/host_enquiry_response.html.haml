@@ -1,0 +1,72 @@
+%p.article-content
+  %strong= "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
+%p.article-content
+  %i= "From "
+  = ": #{@host.first_name.capitalize}"
+%p.article-content
+  %i= "PetHomeStay "
+  = ": #{@homestay.title.capitalize}"
+
+%p.article-content
+  %strong= "Proposed PetHomeStay"
+
+%p.article-content
+  %i= "Pet Name "
+  = ": #{@guest.pet_names}"
+%p.article-content
+  %i= "Pet Breed "
+  = ": #{@guest.pet_breed}"
+%p.article-content
+  %i= "Pet Age "
+  = ": #{@guest.pets.map(&:age).to_sentence}"
+%p.article-content
+  %i= "Check In Date"
+  = ": #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i= "Check Out Date"
+  = ": #{@enquiry.check_out_date.to_formatted_s(:day_and_month)}"
+
+%p.article-content
+  %strong= "Message"
+%p.article-content= @enquiry.response_message
+
+%p.article-content
+  %strong= "What Happens Next?"
+
+
+%p.article-content.enquiry-message-reply
+  %strong= "Reply To This Message"
+  if you need more information, or want to arrange to meet the host first.
+
+%p.article-content.enquiry-message-reply
+  %strong= "Book This HomeStay"
+  when you are happy and want to commit to the HomeStay. You will be taken to the full Booking Screen where you can edit
+  any details and enter payment.
+
+%p.article-content
+  %strong= "Some Key Reasons Why You Should Book via PetHomeStay!"
+
+%ul
+  %li.article-content
+    %strong= "Trusted Community Service"
+    = "- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring "
+    pet lovers together to provide a better community option - we can't help unhappy pets without Hosts booking via 
+    PetHomeStay :)
+  %li.article-content
+    %strong= "Charity"
+    = "- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need."
+  %li.article-content
+    %strong= "Save Money"
+    = "- PetHomeStay is up to 50% cheaper than traditional alternatives like kennels."
+  %li.article-content
+    %strong= "Convenience"
+    = "- Hundreds of amazing local pet sitters and PetHomeStays."
+  %li.article-content
+    %strong= "Happier Pets"
+    = "- We provide a better environment & more cuddles from caring families."
+  %li.article-content
+    %strong= "Money Back Guarantee"
+    = "- If you are not 100% happy, we will refund fees as per our Pawfect Guarantee!"
+
+%p.article-content Thanks!
+%p.article-content The PetHomeStay Team

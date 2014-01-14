@@ -29,6 +29,15 @@ class PetOwnerMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
   end
 
+  def host_enquiry_response(enquiry)
+	  @enquiry = enquiry
+	  @guest = @enquiry.user
+	  @homestay = @enquiry.homestay
+	  @host = @homestay.user
+	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
+	  mail(to: email_with_name, subject: "#{@host.first_name.capitalize} has sent you a message")
+  end
+
   def provider_not_available(booking)
 	  @booking = booking
 	  @owner = booking.booker
@@ -45,15 +54,6 @@ class PetOwnerMailer < ActionMailer::Base
 	  @provider = booking.bookee
 	  email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"
 	  mail(to: email_with_name, subject: "#{@provider.first_name} is unavailable")
-  end
-
-  def provider_undecided(enquiry)
-    @enquiry = enquiry
-    @owner = @enquiry.user
-    @homestay = @enquiry.homestay
-    @provider = @homestay.user
-    email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"
-    mail(to: email_with_name, subject: "#{@provider.first_name} has sent you a message")
   end
 
   def booking_receipt(booking)
