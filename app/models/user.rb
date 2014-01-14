@@ -213,8 +213,9 @@ class User < ActiveRecord::Base
 	user.address_city = "n/a"
 	user.address_country = "n/a"
         if location_info_str
-		location_info = location_info_str['name'].split(" ")		
-		user.address_city = location_info[0].gsub(/,/,'')
+		location_info = location_info_str['name'].split(",")
+		location_info.each { | location_piece | location_piece.strip! }
+		user.address_city = location_info[0]
 		if location_info.length == 3
 	        	user.address_country = location_info[2]
 		end
