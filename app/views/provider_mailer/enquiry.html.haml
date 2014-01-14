@@ -1,29 +1,48 @@
-%p.article-title You have a new PetHomeStay enquiry!
-%p.article-content= "Hello #{@provider.first_name}!"
-%p.article-content= "#{@user.first_name} needs help with their #{'pet'.pluralize(@pets.length)} #{@user.pet_names}. Are you available on #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}?" # for #{@enquiry.duration.natural}
-%p.article-content= link_to 'Please view the details and indicate your availability on PetHomeStay', enquiry_url(@enquiry)
-- if @enquiry.message.present?
-  %p.article-content= "#{@user.first_name} has also included the following message:"
-  %p.article-content
-    %strong= @enquiry.message
-%p.article-content You are not committing yourself at this stage, just the suitability of the dates and the pet in principle. You can accept as many enquiries as you like at a time.
-%p.article-content If you indicate you can help, your email and contact phone number will be sent to the pet owner for them to follow up with you to discuss any further details they need.
-%p.article-content If not, the pet owner will receive an email saying you are unavailable on the dates indicated. Your contact information will not be sent out in this case.
-%p.article-title What happens next?
-%p.article-content The pet owner will review their requests
-%ul
-  %li.article-content Based on the indicated availability, they may also contact pet service providers to understand any further info they need.
-  %li.article-content Be prepared to invite people round to see your PetHomeStay
-  %li.article-content Be upfront and honest about the type of help you can provide
-  %li.article-content Ensure both you and the pet owner have read and understand our House Rules
+-#%p.article-content
+-#  %strong= "#{@host.first_name} - You have a new PetHomeStay enquiry!"
+%p.article-content
+  %i= "From: #{@guest.first_name}!"
+%p.article-content
+  %i= "Pet Name: #{@guest.pet_names}!"
+%p.article-content
+  %i= "Pet Breed: #{@guest.pet_breed}!"
+%p.article-content
+  %i= "Pet Age: #{@guest.pets.map(&:age).to_sentence}!"
+%p.article-content
+  %i= "Check In Date: #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}!"
+%p.article-content
+  %i= "Check Out Date: #{@enquiry.check_out_date.to_formatted_s(:day_and_month)}!"
+%p.article-content
+  %strong= "Message"
+%p.article-content= @enquiry.message
 
-%p.article-title Pet owners will then confirm with one provider via PetHomeStay
-%ul
-  %li.article-content  If your listing is confirmed, their pet profile will be sent to you, including all the emergency and contact information you need.
-  %li.article-content  Enjoy your time with someone’s pet!
-  %li.article-content  Feedback after the experience to help the PetHomeStay community!
+%p.article-content.enquiry-message-reply
+  %strong= "Reply to this message"
+  and answer any queries the guest may have.
 
-%p.article-content= link_to "View the details and indicate your availability on PetHomeStay now", enquiry_url(@enquiry)
+%p.article-content
+  %strong= "Please encourage your Guest to ‘Book this HomeStay’ once they have all the information they need."
+%p.article-content
+  %strong= "A Guest clicking on ‘Book this HomeStay’ is the only way for a Host to be Insured, Reviewed and receive Payment via PetHomeStay."
+%p.article-content
+  %strong= "5 Key Reasons Why Hosts Should Encourage Bookings via PetHomeStay!"
+
+%ul.phs-benefits-list
+  %li.article-content
+    %strong= "Trusted Community Service"
+    = "- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring pet lovers together to provide a better community option - we can't help unhappy pets without Hosts booking via PetHomeStay :)"
+  %li.article-content
+    %strong= "Charity"
+    = "- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need."
+  %li.article-content
+    %strong= "Insurance"
+    = "- PetHomeStay provides Public & Professional Liability insurance for all Hosts. It is illegal to look after someones pet for money without insurance!"
+  %li.article-content
+    %strong= "Marketing & Support"
+    = "- PetHomeStay provides leads, marketing to drive traffic and maintains this website!"
+  %li.article-content
+    %strong= "No Disputes"
+    = "- We hold the payment in escrow until the HomeStay is completed, and ensure that any cancellation fees are paid as per policy."
 
 %p.article-content Thanks!
 %p.article-content The PetHomeStay Team
