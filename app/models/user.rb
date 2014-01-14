@@ -210,14 +210,14 @@ class User < ActiveRecord::Base
         graph = Koala::Facebook::API.new(auth['credentials']['token'])
         permissions = graph.get_connections('me','permissions')
 	location_info_str =  auth.extra['raw_info']['location']
+	user.address_city = "n/a"
+	user.address_country = "n/a"
         if location_info_str
-		location_info = location_info_str['name'].split(" ")
+		location_info = location_info_str['name'].split(" ")		
 		user.address_city = location_info[0].gsub(/,/,'')
-        	state = location_info[1].gsub(/,/,'')       #note we don't have a state for user????
-        	user.address_country = location_info[2]
-	else
-		user.address_city = "n/a"
-		user.address_country = "n/a"
+		if location_info.length == 3
+	        	user.address_country = location_info[2]
+		end
 	end
         age_info = graph.get_object("me", :fields=>"age_range")
 	if age_info
