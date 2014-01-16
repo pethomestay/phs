@@ -21,7 +21,7 @@
 
 %p.article-content
   %strong= "Message"
-%p.article-content= @enquiry.message
+%p.article-content= @enquiry.message.blank? ? '-' : @enquiry.message
 
 %p.article-content.enquiry-message-reply
   %strong= "Reply to this message"

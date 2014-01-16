@@ -28,7 +28,7 @@
 
 %p.article-content
   %strong= "Message"
-%p.article-content= @enquiry.response_message
+%p.article-content= @enquiry.response_message.blank? ? '-' : @enquiry.response_message
 
 %p.article-content
   %strong= "What Happens Next?"

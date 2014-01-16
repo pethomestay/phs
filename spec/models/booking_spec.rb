@@ -182,6 +182,11 @@ describe Booking do
 		context 'when host confirmed the booking' do
 			it 'should return success message' do
 				PetOwnerMailer.stub(:booking_receipt).with(subject).and_return mock(:mail, deliver: true)
+				booking.check_in_date = Time.now
+				booking.check_out_date = Time.now
+				booking.homestay = FactoryGirl.create :homestay
+				pet = FactoryGirl.create :pet
+				booking.booker.pets << pet
 				subject.confirmed_by_host(booking.bookee).should be_eql('You have confirmed the booking')
 			end
 		end

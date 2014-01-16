@@ -25,6 +25,7 @@ class BookingsController < ApplicationController
 
 	def result
 		if @transaction.errors.blank?
+			PetOwnerMailer.booking_receipt(@transaction.booking).deliver
 			ProviderMailer.owner_confirmed(@transaction.booking).deliver
 			return redirect_to booking_path(@transaction.booking)
 		else

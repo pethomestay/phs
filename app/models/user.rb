@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
 		pets.map(&:breed).to_sentence
   end
 
+  def pet
+	  self.pets.first unless self.pets.blank?
+  end
+
   def update_average_rating
     rating = received_feedbacks.count == 0 ? 0 : received_feedbacks.sum('rating') / received_feedbacks.count
     update_attribute :average_rating, rating

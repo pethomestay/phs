@@ -44,7 +44,8 @@ class Booking < ActiveRecord::Base
 		self.save!
 		if self.response_id == 5
 			message = 'You have confirmed the booking'
-			PetOwnerMailer.booking_receipt(self).deliver
+			PetOwnerMailer.booking_confirmation(self).deliver
+			ProviderMailer.booking_confirmation(self).deliver
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
 			PetOwnerMailer.provider_not_available(self).deliver
@@ -99,5 +100,13 @@ class Booking < ActiveRecord::Base
 				self.remove_notification
 			end
 		end
+	end
+
+	def service_fee
+		(self.subtotal * 0.15).to_i
+	end
+
+	def insurance
+		(self.number_of_nights * 2).to_i
 	end
 end

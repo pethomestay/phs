@@ -1,5 +1,5 @@
-%p.article-content
-  %strong= "#{@host.first_name.capitalize} - You have a PetHomeStay Booking!"
+%p.article-title= "Brilliant! You have confirmed your service availability for #{@guest.first_name.capitalize}!"
+
 %p.article-content
   %i Guest Name
   = ": #{@guest.first_name.capitalize}"
@@ -11,7 +11,7 @@
   = ": #{@guest.pet_names}"
 %p.article-content
   %i Pet Breed
-  = ": #{@guest.pet_breed}"
+  = ": #{@guest.pet_breed.blank? ? '-' : @guest.pet_breed }"
 %p.article-content
   %i Pet Age
   = ": #{@guest.pets.map(&:age).to_sentence}"
@@ -71,8 +71,7 @@
   = ": #{@guest.pet.medication}"
 %br
 
-%p.article-content
-  %strong Booking Details
+%p.article-title Booking Details
 %p.article-content
   %i Check In Date
   = ": #{@booking.check_in_date.to_formatted_s(:day_and_month)}"
@@ -80,16 +79,16 @@
   %i Check Out Date
   = ": #{@booking.check_out_date.to_formatted_s(:day_and_month)}"
 %p.article-content
-  %i Number of stays (24 hour blocks)
+  %i Number of stays (24 hour blocks)
   = ": #{@booking.number_of_nights}"
 %p.article-content
-  %i Rate per night
+  %i Rate per night
   = ": $#{@booking.cost_per_night.to_i}.00"
 %p.article-content
   %i Subtotal
   = ": $#{@booking.subtotal}.00"
 %p.article-content
-  %i PetHomeStay Service Fee (15%)
+  %i PetHomeStay Service Fee (15%)
   = ": $#{@booking.service_fee}.00"
 %p.article-content
   %i Insurance
@@ -100,38 +99,5 @@
   = ": $#{@booking.amount.to_i}.00"
 %br
 
-%p.article-content
-  %strong Message
-%p.article-content
-  = @booking.message
-%br
-
-%p.article-content
-  %strong Please Click this 
-  = link_to 'Link', host_confirm_booking_path(@booking)
-  %strong to go to your PetHomeStay Account in order to:
-%p.article-content
-  %strong 1) Confirm this Booking
-%p.article-content
-  %strong 2) Decline this Booking
-%p.article-content
-  %strong 3) Request some more Information from the Guest
-%br
-
-%p.article-content
-  %strong Awesome Host Tips
-%p.article-content
-  %strong Respond Promptly
-  \- most people expect responses within 24 hours, and 48 hours at the at the latest. Remember that a Guest can cancel 
-  their booking at any time so to secure a HomeStay, respond as soon as possible.
-%p.article-content
-  %strong Be Polite
-  \- Even if you decline, it is good to give some sort of reason so Guests ask you next time. People do appreciate it 
-  and know for next time.
-%p.article-content
-  %strong Be Responsible
-  \- The Guest is trusting you with part of their family, so take pride in that and be the best Host you can be. It 
-  means a lot to people seeing their pet happy, and you will get repeat Guests for a long time to come!
-
-%p.article-content Thanks for helping out with PetHomeStay!
+%p.article-content Thanks!
 %p.article-content The PetHomeStay Team
