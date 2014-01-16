@@ -29,7 +29,7 @@
   %br
   = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
   %br
-  = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: TRANSACTION_FEE }, readonly: true
+  = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: @booking.transaction_fee }, readonly: true
   %br
   = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Total', readonly: true
 

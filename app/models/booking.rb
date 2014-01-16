@@ -71,7 +71,7 @@ class Booking < ActiveRecord::Base
 		self.check_out_date = check_out_date
 
 		self.subtotal = self.number_of_nights * self.cost_per_night
-		self.amount = self.subtotal + TRANSACTION_FEE
+		self.amount = self.subtotal + self.transaction_fee
 		self.save!
 
 		self.transaction.amount = self.amount
@@ -108,5 +108,9 @@ class Booking < ActiveRecord::Base
 
 	def insurance
 		(self.number_of_nights * 2).to_i
+	end
+
+	def transaction_fee
+		self.insurance + self.service_fee
 	end
 end

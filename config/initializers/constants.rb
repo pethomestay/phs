@@ -1,5 +1,3 @@
-TRANSACTION_FEE = 10
-
 TRANSACTION_PRE_AUTHORIZATION_REQUIRED = 'Pre authorization required'
 TRANSACTION_HOST_CONFIRMATION_REQUIRED = 'Host confirmation required'
 TRANSACTION_FINISHED = 'transaction finished'

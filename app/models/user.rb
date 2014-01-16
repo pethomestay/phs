@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
 		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
-	  booking.amount = booking.subtotal + TRANSACTION_FEE
+	  booking.amount = booking.subtotal + booking.transaction_fee
 	  booking.save!
 	  booking
   end
