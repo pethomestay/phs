@@ -14,6 +14,9 @@
   %dt Date of birth
   %dd= @user.date_of_birth
   - if not @user.provider.nil?
+    - if not @user.facebook_location.nil?
+      %dt Facebook Location
+      %dd= @user.facebook_location
     %dt Age range minimum
     %dd= @user.age_range_min
     -if not @user.age_range_max.nil?

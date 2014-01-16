@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112015358) do
+ActiveRecord::Schema.define(:version => 20140116004531) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20140112015358) do
     t.string   "uid"
     t.integer  "age_range_min"
     t.integer  "age_range_max"
+    t.string   "facebook_location"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

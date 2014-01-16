@@ -207,24 +207,21 @@ class User < ActiveRecord::Base
         user.date_of_birth  =   Date.new(1800,01,01) #fake date
         user.address_suburb = "n/a"
         user.address_1 = "n/a"
-        graph = Koala::Facebook::API.new(auth['credentials']['token'])
+        graph = Koala::Facebook::API.new(auth.credentials.token)
         permissions = graph.get_connections('me','permissions')
-	location_info_str =  auth.extra['raw_info']['location']
-	user.address_city = "n/a"
-	user.address_country = "n/a"
-        if location_info_str
-		location_info = location_info_str['name'].split(",")
-		location_info.each { | location_piece | location_piece.strip! }
-		user.address_city = location_info[0]
-		if location_info.length == 3
-	        	user.address_country = location_info[2]
-		end
-	end
+        user.address_city = "n/a"
+        user.address_country = "n/a"
+        if permissions[0]['user_location'] == 1
+	        location_info =  auth.extra['raw_info']['location']
+          if location_info
+            user.facebook_location = location_info['name']
+          end
+        end
         age_info = graph.get_object("me", :fields=>"age_range")
-	if age_info
+	      if age_info
         	user.age_range_min = age_info['age_range']['min']
         	user.age_range_max = age_info['age_range']['max']
-	end
+	      end
       end
       if user.provider.nil?
         user.provider = auth.provider
