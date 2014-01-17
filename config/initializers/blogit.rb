@@ -49,7 +49,7 @@ Blogit.configure do |config|
   # config.include_admin_links = true
 
   # The default format for parsing the blog content.
-  # config.default_parser = :markdown
+  config.default_parser = :html
 
   # If blog content contains code, this should be highlighted using
   # albino.
@@ -72,14 +72,14 @@ Blogit.configure do |config|
   
   # When using redcarpet as content parser, pass these options as defaults.
   # @see here for more options: https://github.com/tanoku/redcarpet
-   config.redcarpet_options = {
-     hard_wrap: true,
-     filter_html: true,
-     autolink: true,
-     no_intraemphasis: true,
-     fenced_code_blocks: true,
-     gh_blockcode: true
-   }
+  # config.redcarpet_options = {
+  #   hard_wrap: true,
+  #   filter_html: true,
+  #   autolink: true,
+  #   no_intraemphasis: true,
+  #   fenced_code_blocks: true,
+  #   gh_blockcode: true
+  # }
 
   # If set to true, it will be possible to call named routes of the main app
   # directly, without the "main_app." prefix.

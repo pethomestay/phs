@@ -60,5 +60,7 @@ module PetHomestay
 
     # Adding dragonfly middleware
     config.middleware.insert 1, 'Dragonfly::Middleware', :images
+
+    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
 end

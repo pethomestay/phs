@@ -27,6 +27,7 @@ gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
 gem 'unicorn'
+gem "ckeditor"
 
 group :test, :development do
   gem 'capistrano'

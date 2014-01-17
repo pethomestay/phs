@@ -1,5 +1,7 @@
 PetHomestay::Application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
+
   devise_for :users, controllers: {registrations: "registrations"}
 
   resources :contacts, only: [:new, :create]
@@ -32,6 +34,8 @@ PetHomestay::Application.routes.draw do
     resources :pets
     resources :users
   end
+
+  mount Ckeditor::Engine => "/ckeditor"
 
   get '/my-account'     => 'users#show', as: :my_account
   get '/my-account'     => 'users#show', as: :user_root
