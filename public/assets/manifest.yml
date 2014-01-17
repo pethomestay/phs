@@ -61,6 +61,8 @@ ckeditor/plugins/README.md: ckeditor/plugins/README-c86c5b9c5a16220d4274eb662590
 ckeditor/plugins/README/index.md: ckeditor/plugins/README-c86c5b9c5a16220d4274eb6625904a67.md
 ckeditor/plugins/youtube/images/icon.png: ckeditor/plugins/youtube/images/icon-16acd1c6d19a39a39a872aebbc94a037.png
 ckeditor/plugins/youtube/images/icon/index.png: ckeditor/plugins/youtube/images/icon-16acd1c6d19a39a39a872aebbc94a037.png
+ckeditor/plugins/youtube/lang/en.js: ckeditor/plugins/youtube/lang/en-1fb7ebaaeba29f3a7ae2d15ee8ef1014.js
+ckeditor/plugins/youtube/lang/en/index.js: ckeditor/plugins/youtube/lang/en-1fb7ebaaeba29f3a7ae2d15ee8ef1014.js
 ckeditor/plugins/youtube/plugin.js: ckeditor/plugins/youtube/plugin-21756e786a8f90b16be754fbdb882c01.js
 ckeditor/plugins/youtube/plugin/index.js: ckeditor/plugins/youtube/plugin-21756e786a8f90b16be754fbdb882c01.js
 application.css: application-210021673a52087602934865ab3972c4.css
