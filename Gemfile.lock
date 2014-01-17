@@ -116,6 +116,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     ffaker (1.15.0)
     fog (1.9.0)
       builder
@@ -136,9 +138,11 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.0.5)
     highline (1.6.16)
     hike (1.2.1)
     htmlentities (4.3.1)
+    httpauth (0.2.0)
     i18n (0.6.4)
     journey (1.0.4)
     jquery-rails (2.2.1)
@@ -148,6 +152,8 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.7.7)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -163,6 +169,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.7.0)
+    multipart-post (1.2.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.1.1)
@@ -172,6 +179,20 @@ GEM
       net-ssh (>= 2.6.5)
     newrelic_rpm (3.5.8.72)
     nokogiri (1.5.6)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-facebook (1.5.1)
+      omniauth-oauth2 (~> 1.1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
     orm_adapter (0.4.0)
     pg (0.14.1)
     pingr (0.0.3)
@@ -311,6 +332,7 @@ DEPENDENCIES
   libv8 (~> 3.11.8)
   net-scp (= 1.0.4)
   newrelic_rpm
+  omniauth-facebook
   pg
   pry
   pry-debugger

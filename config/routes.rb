@@ -1,7 +1,5 @@
 PetHomestay::Application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
-
   devise_for :users, controllers: {registrations: "registrations"}
 
   resources :contacts, only: [:new, :create]
@@ -12,6 +10,7 @@ PetHomestay::Application.routes.draw do
   resources :homestays
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
+  post "/users/:id/unlink" => "unlink#create", as: "unlink"
 
   resources :bookings do
 	  collection do

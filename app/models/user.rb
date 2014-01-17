@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
@@ -168,5 +168,76 @@ class User < ActiveRecord::Base
 
 		transaction.save!
 		transaction
-	end
+  end
+
+  def unlink_from_facebook
+    update_column(:uid, nil)
+    update_column(:provider, nil)
+  end
+
+  def needs_password?
+    provider.blank?
+  end
+
+  def update_without_password(params, *options)
+    current_password = params.delete(:current_password)
+
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    result = update_attributes(params, *options)
+
+    clean_up_passwords
+    result
+  end
+
+  def self.find_for_facebook_oauth(auth, current_user)
+    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      if current_user  #if we have a current user save
+        user = current_user
+      else
+        user = where(email: auth.info.email).first_or_initialize
+      end
+      if not user.persisted? #must be a new user fill in the details
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.date_of_birth  =   Date.new(1800,01,01) #fake date
+        user.address_suburb = "n/a"
+        user.address_1 = "n/a"
+        graph = Koala::Facebook::API.new(auth.credentials.token)
+        permissions = graph.get_connections('me','permissions')
+        user.address_city = "n/a"
+        user.address_country = "n/a"
+        if permissions[0]['user_location'] == 1
+	        location_info =  auth.extra['raw_info']['location']
+          if location_info
+            user.facebook_location = location_info['name']
+          end
+        end
+        age_info = graph.get_object("me", :fields=>"age_range")
+	      if age_info
+        	user.age_range_min = age_info['age_range']['min']
+        	user.age_range_max = age_info['age_range']['max']
+	      end
+      end
+      if user.provider.nil?
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.save!
+      end
+      return user
+    end
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
 end

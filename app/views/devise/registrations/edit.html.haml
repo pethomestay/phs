@@ -7,16 +7,25 @@
   .clear
 - html = {:class => 'form-horizontal'}
 - url = registration_path(resource_name)
+%div.top-buttons
+  - if current_user.uid.nil?
+    = link_to "Link account with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn btn-primary'
+  - else
+    = link_to "Unlink account from Facebook", unlink_path(@user), method: :post, class: 'btn btn-primary'
+    %p
+      %br
+      Note: Please set a password before unlinking your account.
 = simple_form_for resource, {as: resource_name, url: url, html: html} do |f|
   = f.input :email, label: 'Email address'
   = f.input :mobile_number
   = f.input :phone_number, label: 'Home phone number'
   = f.input :first_name
   = f.input :last_name
-  = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 15, end_year: 1910
+  = f.input :date_of_birth, as: :date, start_year: Date.today.year - 110, end_year: Date.today.year - 15, discard_day: false, order: [:day, :month, :year]
   = f.input :password, hint: "leave blank if you don't want to change it"
   = f.input :password_confirmation, hint: 'Confirm your password'
-  .well.current-password
-    = f.input :current_password, label: 'We need your current password to confirm your changes'
+  - if current_user.needs_password?
+    .well.current-password
+      = f.input :current_password, label: 'We need your current password to confirm your changes'
   .form-actions
     = f.submit 'Update account', class: 'btn btn-primary'
