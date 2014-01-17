@@ -39,7 +39,8 @@ PetHomestay::Application.routes.draw do
   get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
   get '/what-is'              => 'pages#about_us', as: 'what_is'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
-  get '/blog'                 => 'pages#home'
+  #get '/blog'                 => 'pages#home'
+  mount Blogit::Engine => "/blog"
   get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
   get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
   get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'

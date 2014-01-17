@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :enquiries
   has_many :bookers, class_name: 'Booking', foreign_key: :booker_id
   has_many :bookees, class_name: 'Booking', foreign_key: :bookee_id
+  blogs
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'

@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
+gem 'redcarpet'
+gem 'blogit'
 
 gem 'rails', '3.2.12'
 gem 'pg'
@@ -28,10 +30,15 @@ gem 'unicorn'
 
 group :test, :development do
   gem 'capistrano'
-  gem 'pry'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
+  gem 'ruby-debug-ide'
+
+  unless ENV['RM_INFO']
+    gem 'pry'
+    gem 'pry-remote'
+    gem 'pry-stack_explorer'
+    gem 'pry-debugger'
+  end
+
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 1.4.2'
   gem 'thin'

@@ -1,6 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def admin_login_required
+    authenticate_user!
+    require_admin!
+  end
+
+  def require_admin!
+    render file: "#{Rails.root}/public/403", format: :html, status: 403 unless current_user.admin?
+  end
+
   def after_sign_in_path_for(resource)
     if params[:redirect_path].present?
       params[:redirect_path]
