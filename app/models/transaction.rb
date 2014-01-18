@@ -55,6 +55,7 @@ class Transaction < ActiveRecord::Base
 			enquiry.save!
 		end
 		self.booking.save!
+		self.booking.reload
 	end
 
 	def complete_payment

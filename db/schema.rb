@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140102185823) do
+ActiveRecord::Schema.define(:version => 20140117131013) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
@@ -133,6 +133,23 @@ ActiveRecord::Schema.define(:version => 20140102185823) do
   add_index "homestays", ["property_type_id"], :name => "index_homestays_on_property_type_id"
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
 
+  create_table "mailboxes", :force => true do |t|
+    t.integer  "host_mailbox_id"
+    t.integer  "guest_mailbox_id"
+    t.integer  "enquiry_id"
+    t.integer  "booking_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "mailbox_id"
+    t.integer  "user_id"
+    t.text     "message_text"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "pets", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -223,6 +240,10 @@ ActiveRecord::Schema.define(:version => 20140102185823) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.boolean  "payor",                  :default => false
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "age_range_min"
+    t.integer  "age_range_max"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

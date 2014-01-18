@@ -7,9 +7,88 @@ describe Booking do
 	it { should belong_to :homestay }
 	it { should have_one :transaction }
 
+	it { should validate_presence_of :booker_id }
+	it { should validate_presence_of :bookee_id }
+	it { should validate_presence_of :check_in_date }
+	it { should validate_presence_of :check_out_date }
+
 	it 'should be valid with valid attributes' do
 		booking = FactoryGirl.create :booking
 		booking.should be_valid
+	end
+
+	describe '#destroy_dependents' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking, enquiry: FactoryGirl.create(:enquiry) }
+
+		before do
+			subject.transaction = FactoryGirl.create :transaction
+			subject.save!
+		end
+
+		it 'should have transacton' do
+			subject.transaction.persisted?.should be_true
+		end
+
+		it 'should have enquiry' do
+			subject.enquiry.persisted?.should be_true
+		end
+
+		it 'should have mailbox' do
+			subject.mailbox.persisted?.should be_true
+		end
+
+		context 'when subject is destroyed' do
+			before do
+				subject.destroy
+			end
+			it 'should destroy it transaction' do
+				Transaction.all.should be_blank
+			end
+
+			it 'should destroy its enquiries' do
+				Enquiry.all.should be_blank
+			end
+
+			it 'should destroy its mailboxes' do
+				Mailbox.all.should be_blank
+			end
+		end
+	end
+
+	describe '#message_update' do
+		subject { booking }
+		let(:booking) { FactoryGirl.create :booking }
+
+		before { @new_message = 'new message' }
+
+		context 'when booking has no message' do
+			before { subject.message_update(@new_message) }
+
+			it 'should update the booking message' do
+				subject.message.should be_eql(@new_message)
+			end
+
+			it 'should create message in mailbox' do
+				subject.mailbox.messages.first.message_text.should be_eql(@new_message)
+			end
+		end
+
+		context 'when booking already has a message' do
+			before do
+				@old_message = 'old message'
+				subject.message_update(@old_message)
+				subject.message_update(@new_message)
+			end
+
+			it 'should update the message' do
+				subject.message.should be_eql(@new_message)
+			end
+
+			it 'should update the mailbox' do
+				subject.mailbox.messages.first.message_text.should be_eql(@new_message)
+			end
+		end
 	end
 
 	describe '#bookee and #booker' do

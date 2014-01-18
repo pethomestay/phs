@@ -1,12 +1,14 @@
 require 'digest/sha1'
 
 class Booking < ActiveRecord::Base
-
 	belongs_to :booker, class_name: 'User', foreign_key: :booker_id
 	belongs_to :bookee, class_name: 'User', foreign_key: :bookee_id
 	belongs_to :enquiry
 	belongs_to :homestay
 	has_one :transaction
+	has_one :mailbox
+
+	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
 
 	attr_accessor :fees, :payment
 
@@ -19,6 +21,26 @@ class Booking < ActiveRecord::Base
 	scope :required_response, where(response_id: 7, host_accepted: false)
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
+
+	after_create :create_mailbox
+	before_destroy :destroy_dependents
+
+	def destroy_dependents
+		self.transaction.destroy if self.transaction
+		self.enquiry.destroy if self.enquiry
+		self.mailbox.destroy if self.mailbox
+	end
+
+	def create_mailbox
+		mailbox = nil
+		if self.enquiry_id.blank?
+			mailbox = Mailbox.find_or_create_by_booking_id self.id
+		else
+			mailbox = Mailbox.find_or_create_by_enquiry_id self.enquiry_id
+		end
+		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
+		                           host_mailbox_id: self.bookee_id
+	end
 
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
@@ -44,6 +66,7 @@ class Booking < ActiveRecord::Base
 		self.save!
 		if self.response_id == 5
 			message = 'You have confirmed the booking'
+			self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
 			PetOwnerMailer.booking_confirmation(self).deliver
 			ProviderMailer.booking_confirmation(self).deliver
 		elsif self.response_id == 6
@@ -112,5 +135,18 @@ class Booking < ActiveRecord::Base
 
 	def transaction_fee
 		self.insurance + self.service_fee
+	end
+
+	def message_update(new_message)
+		old_message = self.message
+		self.message = new_message
+		self.save!
+		if old_message.blank?
+			self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
+		else
+			message = Message.find_by_user_id_and_mailbox_id(self.booker_id, self.mailbox.id)
+			message.message_text = new_message
+			message.save!
+		end
 	end
 end

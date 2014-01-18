@@ -11,14 +11,13 @@ describe BookingsController do
 
 	before do
 		controller.stub(:authenticate_user!).and_return true
-		Homestay.any_instance.stub(:geocode).and_return true
 	end
 
 	describe 'GET #new' do
 		subject { get :new, enquiry_id: enquiry.id }
 
-		let(:user) { stub_model(User) }
-		let(:enquiry) { stub_model(Enquiry, user: user, homestay: stub_model(Homestay, cost_per_night: 10)) }
+		let(:user) { FactoryGirl.create :user }
+		let(:enquiry) { FactoryGirl.create(:enquiry, homestay: FactoryGirl.create(:homestay))  }
 
 		before do
 			controller.stub(:current_user).and_return user

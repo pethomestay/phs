@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   has_many :bookers, class_name: 'Booking', foreign_key: :booker_id
   has_many :bookees, class_name: 'Booking', foreign_key: :bookee_id
   has_many :cards
+  has_many :host_mailboxes, class_name: 'Mailbox', foreign_key: :host_mailbox_id
+  has_many :guest_mailboxes, class_name: 'Mailbox', foreign_key: :guest_mailbox_id
+  has_many :messages
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -124,7 +127,7 @@ class User < ActiveRecord::Base
 
   def find_or_create_booking_by(enquiry=nil, homestay=nil)
 	  unfinished_bookings = self.bookers.unfinished
-	  booking = unfinished_bookings.blank? ? self.bookers.create! : unfinished_bookings.first
+	  booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
 
 		booking.enquiry = enquiry
 	  booking.homestay = homestay

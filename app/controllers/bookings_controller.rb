@@ -50,8 +50,7 @@ class BookingsController < ApplicationController
 
 	def update_message
 		booking = Booking.find(params[:booking_id])
-		booking.message = params[:message]
-		booking.save!
+		booking.message_update(params[:message])
 		render nothing: true
 	end
 

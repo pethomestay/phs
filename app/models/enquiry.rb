@@ -4,6 +4,7 @@ class Enquiry < ActiveRecord::Base
   has_many :feedbacks
   has_and_belongs_to_many :pets
   has_one :booking
+  has_one :mailbox
 
   scope :unanswered, where(response_id: ReferenceData::Response::NONE.id)
   scope :unsent_feedback_email, where(sent_feedback_email: false)
@@ -18,15 +19,25 @@ class Enquiry < ActiveRecord::Base
                                         (check_in_date < ? AND (duration_id = 9)) OR \
                                         (check_in_date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
-
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
 
   before_save :set_response, on: :create
   after_create :send_new_enquiry_notifications
   after_update :send_enquiry_update_notifications
+  after_create :create_mailbox
 
   scope :last_five, order('created_at DESC').limit(5)
+
+  def create_mailbox
+		if self.mailbox.blank?
+			Mailbox.create enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
+		else
+			self.mailbox.update_attributes! enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
+		end
+		self.reload
+		self.mailbox.messages.create! message_text: self.message, user_id: self.user_id
+  end
 
   def duration
     ReferenceData::Duration.find_by_id(duration_id) if duration_id

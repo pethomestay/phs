@@ -43,7 +43,10 @@ describe User do
 			end
 		end
 		context 'when the host accepted the user booking' do
-			before { user.bookers.create host_accepted: true, response_id: 5 }
+			before do
+				booking = FactoryGirl.create :booking, booker: user
+				booking.update_attributes! host_accepted: true, response_id: 5
+			end
 			it 'should return user booking which has been accepted by the host' do
 				subject.any?.should be_true
 			end
