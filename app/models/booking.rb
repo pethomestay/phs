@@ -40,6 +40,7 @@ class Booking < ActiveRecord::Base
 		end
 		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
 		                           host_mailbox_id: self.bookee_id
+		mailbox.reload
 	end
 
 	def host_view?(user)
