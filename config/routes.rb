@@ -25,9 +25,11 @@ PetHomestay::Application.routes.draw do
 	  end
   end
 
-  resources :mailboxes do
-	  resources :messages
+  resources :mailboxes, only: :index do
+	  resources :messages, only: [:index, :create]
   end
+
+  resources :accounts
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
