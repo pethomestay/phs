@@ -33,11 +33,6 @@ class Booking < ActiveRecord::Base
 
 	def create_mailbox
 		mailbox = nil
-		puts
-		puts
-		puts self.inspect
-		puts
-		puts
 		if self.enquiry_id.blank?
 			mailbox = Mailbox.find_or_create_by_booking_id self.id
 		else
@@ -46,11 +41,6 @@ class Booking < ActiveRecord::Base
 		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
 		                           host_mailbox_id: self.bookee_id
 		mailbox.reload
-		puts
-		puts
-		puts mailbox.inspect
-		puts
-		puts
 	end
 
 	def host_view?(user)
@@ -150,34 +140,14 @@ class Booking < ActiveRecord::Base
 
 	def message_update(new_message)
 		old_message = self.message
-		puts
-		puts "message action"
-		puts
-		puts self.inspect
-		puts
-		puts self.mailbox.inspect
-		puts
-		puts  "message action"
-		puts new_message.inspect
-		puts
-		puts old_message.inspect
-		puts
-		puts
 		self.message = new_message
 		self.save!
 		if old_message.blank?
-			puts
-			puts "old is blank"
-			puts
 			self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
 		else
-			puts
-			puts "old is not blank"
-			puts
 			message = Message.find_by_user_id_and_mailbox_id(self.booker_id, self.mailbox.id)
 			message.message_text = new_message
 			message.save!
 		end
-
 	end
 end

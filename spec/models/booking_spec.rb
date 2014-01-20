@@ -59,7 +59,6 @@ describe Booking do
 	describe '#message_update' do
 		subject { booking }
 		let(:booking) { FactoryGirl.create :booking }
-
 		before { @new_message = 'new message' }
 
 		context 'when booking has no message' do

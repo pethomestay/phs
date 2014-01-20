@@ -1,12 +1,12 @@
 .page-header
   .pull-left
-    %h1= @mailbox.mailbox_subject
+    %h1= @mailbox.subject_message
   .pull-right
     = link_to 'Back to Inbox', mailboxes_path, class: 'btn btn-primary', style: 'margin-right:10px'
   %br
   %br
   %br
-  %h4= @mailbox.all_dates
+  %h4= @mailbox.subject_dates
   .clearfix
 - if @messages.present?
   - @messages.each do |message|
@@ -21,7 +21,7 @@
   %p There are no messages in this inbox
 
 - message = Message.new
-= simple_form_for [@mailbox,message], html: { class: 'form-horizontal' } do |f|
+= simple_form_for [@mailbox, message], html: { class: 'form-horizontal' } do |f|
   = f.input :message_text, as: :text , input_html: { rows: 3 }
   = f.input_field :user_id, type: :hidden, value: current_user.id
   = f.input_field :mailbox_id, type: :hidden, value: @mailbox.id

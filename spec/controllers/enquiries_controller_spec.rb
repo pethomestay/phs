@@ -41,7 +41,8 @@ describe EnquiriesController do
     end
 
     context 'with valid attributes' do
-      let(:attributes) { {enquiry:{'homestay_id' => homestay.id, 'duration_id' => '3'}} }
+      let(:attributes) { {enquiry:{'homestay_id' => homestay.id, 'check_in_date' => DateTime.now,
+                                   'check_out_date' => DateTime.now, 'duration_id' => '3'}} }
       it 'should create an enquiry' do
         expect{ subject }.to change(Enquiry, :count).by(1)
       end
@@ -55,7 +56,9 @@ describe EnquiriesController do
       end
     end
 
-    context 'with invalid attributes'
+    context 'with invalid attributes' do
+
+    end
   end
 
   describe 'PUT #update' do

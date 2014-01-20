@@ -14,25 +14,37 @@ class Mailbox < ActiveRecord::Base
 		end
 	end
 
-	def mailbox_subject
-		subject_message = "Booking for #{booking.check_in_date.to_formatted_s(:day_and_month)}" unless booking.check_in_date.blank? unless booking.blank?
-		if subject_message.blank?
-			subject_message = enquiry.message.blank? ? 'No enquiry message' : enquiry.message
-		end
-		subject_message
+	def subject
+		booking.blank? ? enquiry : booking
 	end
 
-	def type
-		booking.blank? ? 'Enquiry' : 'Booking'
+	def subject_message
+		message = booking_subject_message unless booking.check_in_date.blank? unless booking.blank?
+		message = enquiry_subject_message if message.blank?
+		message
 	end
 
-	def all_dates
-		if self.booking.blank?
-			if self.enquiry
-				return "Check in date: #{self.enquiry.check_in_date.strftime("%d/%m/%Y")} - Check out date: #{self.enquiry.check_out_date.strftime("%d/%m/%Y")}"
-			end
+	def booking_subject_message
+		"Booking for #{booking.check_in_date.to_formatted_s(:day_and_month)}"
+	end
+
+	def enquiry_subject_message
+		enquiry.message.blank? ? 'this enquiry has no message' : enquiry.message
+	end
+
+	def subject_dates
+		if subject.check_in_date.blank? || subject.check_out_date.blank?
+			absent_dates_message
 		else
-			return "Check in date: #{self.booking.check_in_date.strftime("%d/%m/%Y")} - Check out date: #{self.booking.check_out_date.strftime("%d/%m/%Y")}"
+			dates_message
 		end
+	end
+
+	def dates_message
+		"Check in date: #{subject.check_in_date.strftime('%d/%m/%Y')} - Check out date: #{subject.check_out_date.strftime('%d/%m/%Y')}"
+	end
+
+	def absent_dates_message
+		'check-in or check-out date are absent'
 	end
 end
