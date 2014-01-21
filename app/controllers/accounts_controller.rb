@@ -21,11 +21,6 @@ class AccountsController < ApplicationController
 	def update
 		@account = current_user.account
 		if @account.update_attributes(params[:account])
-			puts
-			puts
-			puts @account.errors.inspect
-			puts
-			puts
 			return redirect_to @account
 		else
 			render :edit

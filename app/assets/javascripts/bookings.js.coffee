@@ -22,6 +22,7 @@ $ ->
       success: (data) ->
         $('[name="booking[subtotal]"]').val(data["booking_subtotal"])
         $('[name="booking[amount]"]').val(data["booking_amount"])
+        $('[name="booking[fees]"]').val(data["transaction_fee"])
         $('[name="EPS_TIMESTAMP"]').val(data["transaction_time_stamp"])
         $('[name="EPS_AMOUNT"]').val(data["transaction_actual_amount"])
         $('[name="EPS_FINGERPRINT"]').val(data["transaction_merchant_fingerprint"])

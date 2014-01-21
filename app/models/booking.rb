@@ -10,7 +10,7 @@ class Booking < ActiveRecord::Base
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
 
-	attr_accessor :fees, :payment
+	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout
 
 	scope :unfinished, where(status: BOOKING_STATUS_UNFINISHED)
 
@@ -109,6 +109,7 @@ class Booking < ActiveRecord::Base
 		{
 		    booking_subtotal: self.subtotal,
 		    booking_amount: self.amount,
+		    transaction_fee: self.transaction_fee,
 		    transaction_actual_amount: self.transaction.actual_amount,
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
@@ -126,22 +127,36 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def service_fee
+	def phs_service_charge
 		(self.subtotal * 0.15).to_i
 	end
 
-	def insurance
+	def public_liability_insurance
 		(self.number_of_nights * 2).to_i
 	end
 
+	def host_payout_deduction
+		public_liability_insurance + phs_service_charge + transaction_fee
+	end
+
+	def host_payout
+		amount - host_payout_deduction
+	end
+
 	def transaction_fee
-		self.insurance + self.service_fee
+		credit_card_fee
+	end
+
+	def credit_card_fee
+		fee = (subtotal * 0.025).to_i
+		fee < 1 ? 1 : fee
 	end
 
 	def message_update(new_message)
 		old_message = self.message
 		self.message = new_message
 		self.save!
+
 		if old_message.blank?
 			self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
 		else

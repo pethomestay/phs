@@ -31,14 +31,11 @@
   %i Subtotal
   = ": $#{@booking.subtotal}.00"
 %p.article-content
-  %i PetHomeStay Service Fee (15%)
-  = ": $#{@booking.service_fee}.00"
-%p.article-content
-  %i Insurance
-  = ": $#{@booking.insurance}.00"
+  %i Credit Card Fee
+  = ": $#{@booking.credit_card_fee}.00"
 %p.article-content
   %strong
-    %i Total Payout
+    %i Total Amount Paid
   = ": $#{@booking.amount.to_i}.00"
 %br
 

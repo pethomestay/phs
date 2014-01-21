@@ -37,6 +37,6 @@ class ProviderMailer < ActionMailer::Base
 		@homestay = @booking.homestay
 		@host = @homestay.user
 		email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
-		mail(to: email_with_name, subject: "You have confirmed the booking #{@guest.first_name.capitalize}!")
+		mail(to: email_with_name, subject: "You have confirmed the booking with #{@guest.first_name.capitalize}!")
 	end
 end

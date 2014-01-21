@@ -8,19 +8,19 @@
   .control-group.string
     %label.string.control-label Account Name:
     .controls
-      %p.control-para= @account.name
+      %p.control-content= @account.name
   .control-group.string
     %label.string.control-label Bank:
     .controls
-      %p.control-para= @account.bank
+      %p.control-content= @account.bank
   .control-group.string
     %label.string.control-label BSB:
     .controls
-      %p.control-para= @account.bsb
+      %p.control-content= @account.bsb
   .control-group.string
     %label.string.control-label Account number:
     .controls
-      %p.control-para= @account.hidden_account_number
+      %p.control-content= @account.hidden_account_number
 
   .form-actions
     = link_to 'Edit', edit_account_path(@account), class: 'btn btn-primary'

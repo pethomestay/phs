@@ -25,13 +25,22 @@
 
   %hr
   - wrapper_class = 'input-prepend input-append'
-  = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per night', readonly: true
+  = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per night',
+             readonly: true
   %br
   = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
   %br
-  = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: @booking.transaction_fee }, readonly: true
+  - if host_view
+    = f.input :public_liability_insurance, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
+    %br
+    = f.input :phs_service_charge, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
+              label: 'PHS Service Charge'
+  - else
+    = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: @booking.transaction_fee },
+              readonly: true
   %br
-  = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Total', readonly: true
+  = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: host_view ? 'Total Payout' : 'Total',
+            readonly: true, input_html: { value: @booking.amount - (host_view ? @booking.host_payout_deduction : 0) }
 
   %hr
   = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true, label: 'Payment method'
@@ -39,4 +48,3 @@
   - if @booking.host_accepted?
     %hr
     = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge', value: @booking.response_message.blank? ? 'none' : @booking.response_message }, readonly: true
-
