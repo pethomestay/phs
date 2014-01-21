@@ -10,8 +10,8 @@ class MessagesController < ApplicationController
 		@mailbox = Mailbox.find(params[:mailbox_id])
 		if @mailbox.messages.create! params[:message]
 			redirect_to mailbox_messages_path(@mailbox)
+			UserMailer.receive_message(@mailbox.messages.last).deliver
 		end
 	end
-
 
 end

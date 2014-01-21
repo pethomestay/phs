@@ -315,7 +315,7 @@ describe Booking do
 		context 'when required parameters are provided' do
 			it 'should update transaction and will return response hash' do
 				result = subject.update_transaction_by(1, Time.now, Time.now + 2.days)
-				result.keys.should be_eql([:booking_subtotal, :booking_amount, :transaction_actual_amount, :transaction_fee,
+				result.keys.should be_eql([:booking_subtotal, :booking_amount, :transaction_fee, :transaction_actual_amount,
 				                           :transaction_time_stamp, :transaction_merchant_fingerprint])
 			end
 		end
