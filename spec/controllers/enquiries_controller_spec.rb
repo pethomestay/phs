@@ -66,6 +66,7 @@ describe EnquiriesController do
     before do
       ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
       controller.stub_chain(:current_user, :homestay, :id).and_return 2
+      controller.stub_chain(:current_user, :id).and_return 2
       Enquiry.stub(:find_by_homestay_id_and_id!).and_return enquiry
     end
     let(:enquiry) { FactoryGirl.create :enquiry }
@@ -74,7 +75,7 @@ describe EnquiriesController do
       let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id, response_message: 'something'} }
       before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:host_enquiry_response)
+	      PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
