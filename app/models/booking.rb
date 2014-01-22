@@ -23,6 +23,8 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
+	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED)
+
 	after_create :create_mailbox
 
 	def create_mailbox

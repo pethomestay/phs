@@ -55,6 +55,13 @@ class BookingsController < ApplicationController
 		render nothing: true
 	end
 
+	def host_paid
+		@booking = Booking.find(params[:id])
+		@booking.status = BOOKING_STATUS_HOST_PAID
+		@booking.save!
+		render nothing: true
+	end
+
 	private
 
 	def homestay_required

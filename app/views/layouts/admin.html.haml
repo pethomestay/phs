@@ -14,9 +14,9 @@
     = render partial: 'layouts/facebook_tag'
     %div.navbar.navbar-fixed-top
       .navbar-inner
-        .container
+        .container.admin-container-phs
           = link_to "Pet Homestay", root_path, class: "brand"
-          %ul.nav
+          %ul.nav.admin-nav-phs
             %li= link_to "Admin Dashboard", admin_dashboard_path
             %li= link_to "Users", admin_users_path
             %li= link_to "Homestays", admin_homestays_path
@@ -24,6 +24,7 @@
             %li= link_to "Enquiries", admin_enquiries_path
             %li= link_to "Feedback", admin_feedbacks_path
             %li= link_to "Transactions", admin_transactions_path
+            %li= link_to "Reconciliation", admin_bookings_path
 
     .container.main
       = render "layouts/flash_messages", :locals => {:flash => flash}

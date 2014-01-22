@@ -22,6 +22,7 @@ PetHomestay::Application.routes.draw do
 	  member do
 		  get 'host_confirm'
 		  get 'host_message'
+		  get 'host_paid'
 	  end
   end
 
