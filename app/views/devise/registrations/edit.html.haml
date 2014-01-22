@@ -8,7 +8,7 @@
 - html = {:class => 'form-horizontal'}
 - url = registration_path(resource_name)
 = simple_form_for resource, {as: resource_name, url: url, html: html} do |f|
-  = f.input :email, label: 'Email address'
+  = f.input :email, label: 'Email address', disabled: true
   = f.input :mobile_number
   = f.input :phone_number, label: 'Home phone number'
   = f.input :first_name

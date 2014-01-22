@@ -17,28 +17,7 @@ PetHomestay::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   # Add default mailer URL
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.asset_host = 'http://localhost:3000'
-  #config.action_mailer.delivery_method = :test
-  # Use mailgun for ActionMailer
-  ActionMailer::Base.smtp_settings = {
-    :port           => ENV['MAILGUN_SMTP_PORT'], 
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => ENV['HOST'],
-    :authentication => :plain,
-  }
-  #  ActionMailer::Base.smtp_settings = {
-  #  :address              => "smtp.gmail.com",
-  #  :port                 => 587,
-  #  :domain               => ENV['GMAIL_DOMAIN'],
-  #  :user_name            => ENV['GMAIL_USERNAME'],
-  #  :password             => ENV['GMAIL_PASSWORD'],
-  #  :authentication       => "plain",
-  #  :enable_starttls_auto => true
-  #  }
-  #ActionMailer::Base.delivery_method = :smtp
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -54,10 +33,12 @@ PetHomestay::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Do not compress assets
-  config.assets.compress = false
+  #config.assets.compress = false
+
+  #config.serve_static_assets = true
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   config.middleware.use('StubIp', '203.206.102.165')
 end

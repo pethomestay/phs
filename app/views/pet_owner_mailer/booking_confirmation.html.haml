@@ -1,5 +1,5 @@
-%p.article-title Brilliant! You've confirmed a great PetHomeStay service near you!
-%p.article-content= "Here is all of the contact details we have for #{@provider.first_name} so you have a record."
+%p.article-title Brilliant! #{@host.first_name.capitalize} has confirmed his service availability for you!
+%p.article-content= "Here is all of the contact details we have for #{@host.first_name.capitalize} so you have a record."
 %p.article-content The next step is simply for you to handover your pet to the provider at the agreed place and time.
 %p.article-content
   Don’t forget to follow the
@@ -13,8 +13,31 @@
   %li.article-content Bring food for your pet (owners provide this unless otherwise agreed!)
   %li.article-content Bring a favourite toy or bedding so they feel at home
   %li.article-content Any special instructions such as feeding or walking
-%p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
-%p.article-content The PetHomeStay Team
+
+%p.article-title Booking Details
+%p.article-content
+  %i Check In Date
+  = ": #{@booking.check_in_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Check Out Date
+  = ": #{@booking.check_out_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Number of stays (24 hour blocks)
+  = ": #{@booking.number_of_nights}"
+%p.article-content
+  %i Rate per night
+  = ": $#{@booking.cost_per_night.to_i}.00"
+%p.article-content
+  %i Subtotal
+  = ": $#{@booking.subtotal}.00"
+%p.article-content
+  %i Credit Card Fee
+  = ": $#{@booking.credit_card_fee}.00"
+%p.article-content
+  %strong
+    %i Total Amount Paid
+  = ": $#{@booking.amount.to_i}.00"
+%br
 
 %p.article-title Provider details for your records
 %p.article-content
@@ -23,15 +46,15 @@
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
   %p.article-content
-    = "Provider's name: #{@provider.name}"
+    = "Provider's name: #{@host.name}"
     %br
-    = "Provider's email: #{@provider.email}"
-    - if @provider.phone_number.present?
+    = "Provider's email: #{@host.email}"
+    - if @host.phone_number.present?
       %br
-      = "Provider's phone: #{@provider.phone_number}"
-    - if @provider.mobile_number.present?
+      = "Provider's phone: #{@host.phone_number}"
+    - if @host.mobile_number.present?
       %br
-      = "Provider's mobile: #{@provider.mobile_number}"
+      = "Provider's mobile: #{@host.mobile_number}"
     %br
     Address:
     %br
@@ -70,3 +93,6 @@
       Emergency preparedness?:
       = @homestay.pretty_emergency_preparedness
       %br
+
+%p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
+%p.article-content The PetHomeStay Team

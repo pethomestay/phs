@@ -1,0 +1,15 @@
+= simple_form_for [@mailbox, Message.new], html: { class: 'form-horizontal' } do |f|
+  = f.input :message_text, as: :text , input_html: { rows: 3 }
+  = f.input_field :user_id, type: :hidden, value: current_user.id
+  = f.input_field :mailbox_id, type: :hidden, value: @mailbox.id
+
+  .form-actions
+    = f.submit 'Send', class: 'btn btn-primary'
+    - if @mailbox.booking.blank? && (current_user == @mailbox.guest_mailbox)
+      = link_to 'Book it', new_booking_path(enquiry_id: @mailbox.enquiry_id), class: 'btn btn-primary'
+    - elsif @mailbox.host_booking?(current_user)
+      = link_to 'Confirm Booking', host_confirm_booking_path(@mailbox.booking), class: 'btn btn-primary'
+    - elsif !@mailbox.booking.blank? && (current_user == @mailbox.guest_mailbox) && !@mailbox.booking.owner_accepted?
+      - booking_params = @mailbox.enquiry_id.blank? ? { homestay_id: @mailbox.booking.homestay.id } : { enquiry_id: @mailbox.enquiry_id }
+      = link_to 'Book it', new_booking_path(booking_params), class: 'btn btn-primary'
+

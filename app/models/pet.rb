@@ -56,4 +56,8 @@ class Pet < ActiveRecord::Base
   def size_name
     size.title if size_id
   end
+
+	def any_dislikes?
+		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
+	end
 end

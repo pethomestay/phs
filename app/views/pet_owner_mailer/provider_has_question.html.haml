@@ -1,0 +1,42 @@
+%p.article-content
+  %strong= "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
+
+%p.article-content
+  %i From
+  = ": #{@host.first_name}"
+  %br
+  %i PetHomeStay
+  = ": #{@homestay.title}"
+  %br
+  %i Date requested
+  = ": #{@booking.check_in_date.to_formatted_s(:day_and_month)}"
+
+%p.article-content
+  %strong Message
+%p.article-content= @booking.response_message
+
+%p.article-content
+  %strong Some Key Reasons Why You Should Book via PetHomeStay!
+%ul.phs-benefits-list
+  %li.article-content
+    %strong Trusted Community Service
+    \- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring
+    pet lovers together to provide a better community option - we can't help unhappy pets without Hosts booking via 
+    PetHomeStay :)
+  %li.article-content
+    %strong Charity
+    \- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need.
+  %li.article-content
+    %strong Insurance
+    \- PetHomeStay provides Public & Professional Liability insurance for all Hosts. It is illegal to look after
+    someones pet for money without insurance!
+  %li.article-content
+    %strong Marketing & Support
+    \- PetHomeStay provides leads, marketing to drive traffic and maintains this website!
+  %li.article-content
+    %strong No Disputes
+    \- We hold the payment in escrow until the HomeStay is completed, and ensure that any cancellation fees are paid
+    as per policy.
+
+%p.article-content Many thanks!
+%p.article-content The PetHomeStay Team

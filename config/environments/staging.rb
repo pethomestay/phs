@@ -75,17 +75,8 @@ PetHomestay::Application.configure do
     :authentication => :plain,
   }
   ActionMailer::Base.delivery_method = :smtp
-  #
-  ## Add default mailer URL
+
+  # Add default mailer URL
   config.action_mailer.default_url_options = { :host => ENV['HOST'] }
   config.action_mailer.asset_host = "http://#{ENV['HOST']}"
-
-	# TODO: following action_mailer settings are temporary for heroku staging server
-	# Don't care if the mailer can't send
-	config.action_mailer.raise_delivery_errors = false
-
-	# Add default mailer URL
-	#config.action_mailer.default_url_options = { :host => 'pethomestay.herokuapp.com' }
-	#config.action_mailer.asset_host = 'http://pethomestay.herokuapp.com'
-	#config.action_mailer.delivery_method = :test
 end

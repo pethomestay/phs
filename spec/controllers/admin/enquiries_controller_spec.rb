@@ -13,7 +13,8 @@ describe Admin::EnquiriesController do
     { homestay_id: homestay.id,
       user_id: user.id,
       duration_id: ReferenceData::Duration::OVERNIGHT.id,
-      date: Time.zone.now
+      check_in_date: Time.zone.now,
+      check_out_date: Time.zone.now
     }
   end
 

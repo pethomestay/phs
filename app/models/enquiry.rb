@@ -3,11 +3,14 @@ class Enquiry < ActiveRecord::Base
   belongs_to :homestay
   has_many :feedbacks
   has_and_belongs_to_many :pets
-  has_one :booking
+
+  has_one :booking, dependent: :destroy
+  has_one :mailbox, dependent: :destroy
 
   scope :unanswered, where(response_id: ReferenceData::Response::NONE.id)
   scope :unsent_feedback_email, where(sent_feedback_email: false)
-  scope :need_confirmation, where(response_id: ReferenceData::Response::ACCEPTED.id, confirmed: false)
+  scope :need_confirmation, where("response_id IN (?) AND confirmed = false", [ReferenceData::Response::ACCEPTED.id,
+		ReferenceData::Response::UNDECIDED.id, ReferenceData::Response::DECLINED.id])
   scope :owner_accepted, where(owner_accepted: true)
   scope :need_feedback, lambda { where("owner_accepted IS NOT FALSE AND (check_in_date < ? AND (duration_id = 1 OR duration_id = 2 OR duration_id = 3 OR duration_id = 4)) OR \
                                         (check_in_date < ? AND (duration_id = 5)) OR \
@@ -17,15 +20,26 @@ class Enquiry < ActiveRecord::Base
                                         (check_in_date < ? AND (duration_id = 9)) OR \
                                         (check_in_date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
-
+  validates_presence_of :check_in_date, :check_out_date
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
 
   before_save :set_response, on: :create
   after_create :send_new_enquiry_notifications
   after_update :send_enquiry_update_notifications
+  after_create :create_mailbox
 
   scope :last_five, order('created_at DESC').limit(5)
+
+  def create_mailbox
+		if self.mailbox.blank?
+			Mailbox.create enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
+		else
+			self.mailbox.update_attributes! enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
+		end
+		self.reload
+		self.mailbox.messages.create! message_text: self.message, user_id: self.user_id
+  end
 
   def duration
     ReferenceData::Duration.find_by_id(duration_id) if duration_id
@@ -65,15 +79,8 @@ class Enquiry < ActiveRecord::Base
   end
 
   def send_enquiry_update_notifications
-    return unless response_id_changed?
-    case response_id
-      when ReferenceData::Response::ACCEPTED.id
-        PetOwnerMailer.contact_details(self).deliver
-      when ReferenceData::Response::UNDECIDED.id
-        PetOwnerMailer.provider_undecided(self).deliver
-      when ReferenceData::Response::DECLINED.id
-        PetOwnerMailer.provider_unavailable(self).deliver
-    end
+    return if confirmed?
+    PetOwnerMailer.host_enquiry_response(self).deliver
   end
 
   def require_respsonse_message

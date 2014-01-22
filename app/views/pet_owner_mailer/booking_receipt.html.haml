@@ -1,0 +1,62 @@
+%p.article-content
+  %strong You have successfully made a booking
+
+%p.article-content
+  %strong Host Details
+%p.article-content
+  %i Host Name
+  = ": #{@host.first_name.capitalize}"
+%p.article-content
+  %i Email address
+  = ": #{@host.email}"
+  %br
+  - if @host.phone_number.present?
+    %i Home phone
+    = ": #{@host.phone_number}"
+    %br
+  - if @host.mobile_number.present?
+    %i Mobile phone
+    = ": #{@host.mobile_number}"
+    %br
+  Listing:
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+
+%p.article-content
+  %strong Booking Details
+%p.article-content
+  %i Check In Date
+  = ": #{@booking.check_in_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Check Out Date
+  = ": #{@booking.check_out_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Number of stays (24 hour blocks)
+  = ": #{@booking.number_of_nights}"
+%p.article-content
+  %i Rate per night
+  = ": $#{@booking.cost_per_night.to_i}.00"
+%p.article-content
+  %i Subtotal
+  = ": $#{@booking.subtotal}.00"
+%p.article-content
+  %i PetHomeStay Service Fee (15%)
+  = ": $#{@booking.phs_service_charge}.00"
+%p.article-content
+  %i Insurance
+  = ": $#{@booking.public_liability_insurance}.00"
+%p.article-content
+  %strong
+    %i Total Payout
+  = ": $#{@booking.amount.to_i}.00"
+%br
+
+%p.article-content
+  %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
+%p.article-content
+  = @booking.message
+%br
+
+%p.article-content Thanks for helping out with PetHomeStay!
+%p.article-content The PetHomeStay Team

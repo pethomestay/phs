@@ -1,0 +1,27 @@
+.page-header
+  .pull-left
+    %h1= @mailbox.subject_message
+  .pull-right
+    = link_to 'Back to Inbox', mailboxes_path, class: 'btn btn-primary', style: 'margin-right:10px'
+  %br
+  %br
+  %br
+  %h4= @mailbox.subject_dates
+  - if current_user == @mailbox.host_mailbox && !@mailbox.booking.blank?
+    - booking_status =  @mailbox.booking.host_booking_status
+    - booking_address = booking_status.include?('Pending') ? host_confirm_booking_path(@mailbox.booking) : booking_path(@mailbox.booking)
+    %h5= link_to(booking_status, booking_address)
+  .clearfix
+- if @messages.present?
+  - @messages.each do |message|
+    .content{ style: "border: 2px black solid;" }
+      .pull-right= message.created_at.strftime("%d/%m/%Y")
+      .pull-left= "From: #{(current_user == message.user) ? 'Me' : message.user.first_name.capitalize}"
+      %br
+      %p= "Message: #{message.message_text}"
+    %br
+    %br
+- else
+  %p There are no messages in this inbox
+
+= render 'form'

@@ -1,0 +1,30 @@
+%p.article-title= "Hi #{@guest.first_name.capitalize},"
+%p.article-content= "Sorry, but #{@host.first_name.capitalize} is unavailable on the dates you have booked, although they would be happy to be hired or enquired again later!"
+- if @booking.response_message.present?
+  %p.article-content= "#{@host.first_name.capitalize} has also included the following message:"
+  %p.article-content
+    %strong= @booking.response_message
+
+%p.article-content
+  %i HomeStay Title:
+  = @homestay.title.capitalize
+  %br
+  %strong
+    %i Date requested:
+    from
+    = @booking.check_in_date.to_formatted_s(:day_and_month)
+    to
+    = @booking.check_out_date.to_formatted_s(:day_and_month)
+
+%p.article-content
+  %strong Click 
+  = link_to 'here', my_account_path
+  %strong to Search and Enquire with more fantastic HomeStays in your Postcode.
+
+%p.article-content
+  %strong
+    If you can’t find a suitable HomeStay, and you need it within 2 weeks, please contact us via email at 
+    info@pethomestay.com and we will do our best to assist you.
+
+%p.article-content Many thanks!
+%p.article-content The PetHomeStay Team
