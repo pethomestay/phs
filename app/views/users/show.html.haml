@@ -10,7 +10,7 @@
             %br
             perform several operation based on them!
         .span2.pull-right
-          = link_to "Admin Dashboard", admin_dashboard_path, class: 'btn'
+          = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn'
       %hr
     %ul
       %li= link_to 'Messages', mailboxes_path
@@ -26,7 +26,7 @@
           %br
           Update these here!
       .span2.pull-right
-        = link_to "Update details", edit_user_registration_path, class: 'btn'
+        = link_to 'Update details', edit_user_registration_path, class: 'btn'
     %hr
     = render partial: 'pets_link'
     = render partial: 'homestay_link'
@@ -34,7 +34,7 @@
       .span6
         %h4 Close my PetHomeStay account
       .span2.pull-right
-        = link_to "Close account", user_registration_path, class: 'btn btn-mini', method: 'delete',
+        = link_to 'Close account', user_registration_path, class: 'btn btn-mini', method: 'delete',
           confirm: 'Are you sure you wish to close your PetHomeStay account?'
 
   .span4.notifications

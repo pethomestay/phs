@@ -4,3 +4,4 @@ TRANSACTION_FINISHED = 'transaction finished'
 
 BOOKING_STATUS_FINISHED = 'finished'
 BOOKING_STATUS_UNFINISHED = 'unfinished'
+BOOKING_STATUS_REJECTED = 'rejected'

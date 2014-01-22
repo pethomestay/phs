@@ -40,6 +40,7 @@ class BookingsController < ApplicationController
 	def host_message
 		@booking = Booking.find(params[:id])
 		@booking.remove_notification
+		redirect_to mailbox_messages_path(@booking.mailbox)
 	end
 
 	def update_transaction

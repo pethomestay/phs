@@ -25,7 +25,7 @@
     %i= "Check Out Date "
     = ": #{@message.mailbox.enquiry.check_out_date.to_formatted_s(:day_and_month)}"
 
-%p.article-content
+%p.article-content.enquiry-message-reply
   %strong Message:
   %i= " #{@message.message_text}"
 

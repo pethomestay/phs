@@ -46,10 +46,6 @@ describe Booking do
 				Transaction.all.should be_blank
 			end
 
-			it 'should destroy its enquiries' do
-				Enquiry.all.should be_blank
-			end
-
 			it 'should destroy its mailboxes' do
 				Mailbox.all.should be_blank
 			end
@@ -362,6 +358,38 @@ describe Booking do
 					subject.complete_transaction(subject.booker).should be_nil
 				end
 			end
+		end
+	end
+
+	describe '#host_booking_status' do
+		subject { booking.host_booking_status }
+		let(:booking) { FactoryGirl.create :booking }
+
+		context 'when booking is pending' do
+			it 'should return "Pending"' do
+				pending
+			end
+		end
+
+		context 'when booking is accepted' do
+			it 'should return "Accepted"' do
+				pending
+			end
+		end
+
+		context 'when booking is rejected' do
+			it 'should return "Rejected"' do
+				pending
+			end
+		end
+	end
+
+	describe '#host_payout' do
+		subject { booking.host_payout }
+		let(:booking) { FactoryGirl.create :booking }
+
+		it 'will return the host payout amount' do
+			pending
 		end
 	end
 end

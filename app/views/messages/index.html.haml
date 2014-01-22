@@ -7,6 +7,10 @@
   %br
   %br
   %h4= @mailbox.subject_dates
+  - if current_user == @mailbox.host_mailbox
+    - booking_status =  @mailbox.booking.host_booking_status
+    - booking_address = booking_status.include?('Pending') ? host_confirm_booking_path(@mailbox.booking) : booking_path(@mailbox.booking)
+    %h5= link_to(booking_status, booking_address)
   .clearfix
 - if @messages.present?
   - @messages.each do |message|

@@ -3,10 +3,11 @@ require 'digest/sha1'
 class Booking < ActiveRecord::Base
 	belongs_to :booker, class_name: 'User', foreign_key: :booker_id
 	belongs_to :bookee, class_name: 'User', foreign_key: :bookee_id
-	belongs_to :enquiry
 	belongs_to :homestay
-	has_one :transaction
-	has_one :mailbox
+	belongs_to :enquiry
+
+	has_one :transaction, dependent: :destroy
+	has_one :mailbox, dependent: :destroy
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
 
@@ -23,13 +24,6 @@ class Booking < ActiveRecord::Base
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
 	after_create :create_mailbox
-	before_destroy :destroy_dependents
-
-	def destroy_dependents
-		self.transaction.destroy if self.transaction
-		self.enquiry.destroy if self.enquiry
-		self.mailbox.destroy if self.mailbox
-	end
 
 	def create_mailbox
 		mailbox = nil
@@ -62,19 +56,23 @@ class Booking < ActiveRecord::Base
 		else
 			self.response_id = 5
 			self.host_accepted = true
-
 		end
-		self.save!
+		self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
+
 		if self.response_id == 5
 			message = 'You have confirmed the booking'
-			self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
+			self.save!
 			PetOwnerMailer.booking_confirmation(self).deliver
 			ProviderMailer.booking_confirmation(self).deliver
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
+			self.status = BOOKING_STATUS_REJECTED
+			self.save!
 			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
 			message = 'Your question has been sent to guest'
+			self.response_message = nil
+			self.save!
 			PetOwnerMailer.provider_has_question(self).deliver
 		end
 		self.complete_transaction(current_user)
@@ -164,5 +162,10 @@ class Booking < ActiveRecord::Base
 			message.message_text = new_message
 			message.save!
 		end
+	end
+
+	def host_booking_status
+		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
+		"Booking $#{self.host_payout}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 end
