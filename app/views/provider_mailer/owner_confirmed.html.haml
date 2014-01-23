@@ -1,79 +1,137 @@
-%p.article-title= "Fantastic! #{@user.first_name} has confirmed their enquiry"
-%p.article-content= "#{@user.first_name} has confirmed their enquiry and is happy with you looking after #{@user.pet_names} on #{@booking.check_in_date.to_formatted_s(:day_and_month)} for #{@booking.number_of_nights}!"
-
-%p.article-content= "All of the information we have about #{@user.pet_names} is on the pet profile below. You should review this in full when the owner hands over their #{'pet'.pluralize(@user.pets.length)} with you."
-
-%p.article-content Don’t forget the following points:
-%ul
-  %li.article-content
-    %strong Follow the House Rules
-  %li.article-content Confirm pick up times / dates?
-  %li.article-content Money for looking after pet?
-  %li.article-content Confirm medical & emergency contact info?
-  %li.article-content Is there anything else on the pet profile you need to know?
-
-%p.article-title= "Details for #{@user.first_name}"
 %p.article-content
-  = "Full name: #{@user.name}"
-  %br
-  = "Email: #{@user.email}"
-  - if @user.phone_number.present?
-    %br
-    = "Phone: #{@user.phone_number}"
-  - if @user.mobile_number.present?
-    %br
-    = "Mobile: #{@user.mobile_number}"
-  %br
-  Address:
-  %br
-  = @user.address_1
-  - if @user.address_2.present?
-    %br
-    = @user.address_2
-  %br
-  = @user.address_suburb
-  %br
-  = @user.address_city
+  %strong= "#{@host.first_name.capitalize} - You have a PetHomeStay Booking!"
+%p.article-content
+  %i Guest Name
+  = ": #{@guest.first_name.capitalize}"
 
-- @pets.each do |pet|
-  %p.article-title= "Details for #{pet.name}"
-  - if pet.pictures.present?
-    %p.article-content= image_tag(pet.pictures.first.file.thumb('190x150#').url)
+- if @guest.pet.pictures.present?
+  %p.article-content= image_tag(@guest.pet.pictures.first.file.thumb('190x150#').url)
+%p.article-content
+  %i Pet Name
+  = ": #{@guest.pet_names}"
+%p.article-content
+  %i Pet Breed
+  = ": #{@guest.pet_breed}"
+%p.article-content
+  %i Pet Age
+  = ": #{@guest.pets.map(&:age).to_sentence}"
+%p.article-content
+  %i Date of Birth
+  = ": #{@guest.pet.date_of_birth.to_formatted_s(:day_and_month_and_year)}"
+%p.article-content
+  %strong
+    %i Dislike Loneliness
+  = ": #{@guest.pet.dislike_loneliness? ? 'Yes' : 'No'}, "
+  %strong
+    %i Dislike Children
+  = ": #{@guest.pet.dislike_children? ? 'Yes' : 'No'}, "
+  %strong
+    %i Dislike Animals
+  = ": #{@guest.pet.dislike_animals? ? 'Yes' : 'No'}, "
+  %strong
+    %i Dislike People
+  = ": #{@guest.pet.dislike_people? ? 'Yes' : 'No'}."
+- if @guest.pet.any_dislikes?
   %p.article-content
-    = "Type: #{pet.pet_type_name}"
-    %br
-    = "Age: #{pet.age}"
-    %br
-    = "Size: #{pet.size_name}"
-    %br
-    = "Sex: #{pet.sex_name}"
-    %br
-    = "Dislikes: #{pet.dislikes}"
-    %br
-  - if pet.dislikes.present?
-    %p.article-content= "More information about dislikes: #{pet.explain_dislikes}"
-  - if pet.council_number.present? || pet.microchip_number.present? || pet.medication.present? || pet.emergency_contact_name.present? || pet.vet_name.present?
-    %p.article-title= "Emergency / medical details for #{pet.name}"
-    %p.article-content
-      - if pet.council_number.present?
-        = "Council #: #{pet.council_number}"
-        %br
-      - if pet.microchip_number.present?
-        = "Microchip #: #{pet.microchip_number}"
-        %br
-      - if pet.medication.present?
-        = "Medication: #{pet.medication}"
-        %br
-      - if pet.emergency_contact_name.present? && pet.emergency_contact_phone.present?
-        = "Emergency contact name: #{pet.emergency_contact_name}"
-        %br
-        = "Emergency contact phone: #{pet.emergency_contact_phone}"
-        %br
-      - if pet.vet_name.present? && pet.vet_phone.present?
-        = "Vet name: #{pet.vet_name}"
-        %br
-        = "Vet phone: #{pet.vet_phone}"
-        %br
+    %i Dislike explanation
+    = ": #{@guest.pet.explain_dislikes}."
+
+%p.article-content
+  %strong
+    %i Flee treated
+  = ": #{@guest.pet.flea_treated? ? 'Yes' : 'No'}, "
+  %strong
+    %i Vaccinated
+  = ": #{@guest.pet.vaccinated? ? 'Yes' : 'No'}, "
+  %strong
+    %i House Trained
+  = ": #{@guest.pet.house_trained? ? 'Yes' : 'No'}."
+
+%p.article-content
+  %i Microchip Number
+  = ": #{@guest.pet.microchip_number}"
+%p.article-content
+  %i Council Number
+  = ": #{@guest.pet.council_number}"
+
+%p.article-content
+  %i Emergency Contact Name
+  = ": #{@guest.pet.emergency_contact_name}"
+%p.article-content
+  %i Emergency Contact Phone
+  = ": #{@guest.pet.emergency_contact_phone}"
+%p.article-content
+  %i Vet Name
+  = ": #{@guest.pet.vet_name}"
+%p.article-content
+  %i Vet Phone
+  = ": #{@guest.pet.vet_phone}"
+%p.article-content
+  %i Medication
+  = ": #{@guest.pet.medication}"
+%br
+
+%p.article-content
+  %strong Booking Details
+%p.article-content
+  %i Check In Date
+  = ": #{@booking.check_in_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Check Out Date
+  = ": #{@booking.check_out_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i Number of stays (24 hour blocks)
+  = ": #{@booking.number_of_nights}"
+%p.article-content
+  %i Rate per night
+  = ": $#{@booking.cost_per_night.to_i}.00"
+%p.article-content
+  %i Subtotal
+  = ": $#{@booking.subtotal}.00"
+%p.article-content
+  %i PetHomeStay Service Fee (15%)
+  = ": $#{@booking.phs_service_charge}.00"
+%p.article-content
+  %i Insurance
+  = ": $#{@booking.public_liability_insurance}.00"
+%p.article-content
+  %strong
+    %i Total Payout
+  = ": $#{@booking.amount.to_i}.00"
+%br
+
+%p.article-content
+  %strong Message
+%p.article-content
+  = @booking.message
+%br
+
+%p.article-content
+  %strong Please Click this 
+  = link_to 'Link', host_confirm_booking_path(@booking)
+  %strong to go to your PetHomeStay Account in order to:
+%p.article-content
+  %strong 1) Confirm this Booking
+%p.article-content
+  %strong 2) Decline this Booking
+%p.article-content
+  %strong 3) Request some more Information from the Guest
+%br
+
+%p.article-content
+  %strong Awesome Host Tips
+%p.article-content
+  %strong Respond Promptly
+  \- most people expect responses within 24 hours, and 48 hours at the at the latest. Remember that a Guest can cancel 
+  their booking at any time so to secure a HomeStay, respond as soon as possible.
+%p.article-content
+  %strong Be Polite
+  \- Even if you decline, it is good to give some sort of reason so Guests ask you next time. People do appreciate it 
+  and know for next time.
+%p.article-content
+  %strong Be Responsible
+  \- The Guest is trusting you with part of their family, so take pride in that and be the best Host you can be. It 
+  means a lot to people seeing their pet happy, and you will get repeat Guests for a long time to come!
 
 %p.article-content Thanks for helping out with PetHomeStay!
 %p.article-content The PetHomeStay Team

@@ -1,0 +1,42 @@
+= link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
+%h1 Reconciliation for host payouts
+%table.table.tablesorter
+  %thead
+    %tr
+      %th Username
+      %th Check-out Date
+      %th Transaction ID
+      %th Total
+      %th Insurance Fees
+      %th PHS fee
+      %th Host Payout
+      %th Host Paid
+
+  %tbody
+    - @bookings.each do |booking|
+      %tr{ "data-id" => booking.id }
+        %td= booking.booker.name.capitalize
+        %td= booking.check_out_date.to_formatted_s(:year_month_day)
+        %td= booking.transaction.transaction_id
+        %td= "$#{(booking.transaction.amount - booking.transaction_fee).to_i}.00"
+        %td= "$#{booking.public_liability_insurance}.00"
+        %td= "$#{booking.phs_service_charge}.00"
+        %td= "$#{booking.host_payout}.00"
+        %td
+          %input.booking_paid_confirm{type: 'button', value: 'YES'}
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+    $('.booking_paid_confirm').on('click', function(){
+      $this = $(this)
+      row = $this.parent().parent();
+      $.ajax({
+        url: '/bookings/' + $this.parent().parent().data("id") + '/host_paid'
+      }).done(function(){
+        row.slideUp();
+      });
+    });
+  });
+
+

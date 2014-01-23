@@ -8,6 +8,7 @@ PetHomestay::Application.routes.draw do
     resource :feedbacks, only: [:new, :create]
   end
   resources :homestays
+  resources :transactions
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
   post "/users/:id/unlink" => "unlink#create", as: "unlink"
@@ -17,17 +18,26 @@ PetHomestay::Application.routes.draw do
 		  post 'result'
 		  get 'result'
 		  get 'update_transaction'
-		  get 'update_booking'
+		  get 'update_message'
 	  end
 	  member do
 		  get 'host_confirm'
+		  get 'host_message'
+		  get 'host_paid'
 	  end
   end
 
+  resources :mailboxes, only: :index do
+	  resources :messages, only: [:index, :create]
+  end
+
+  resources :accounts
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
+    resources :bookings
+    resources :transactions
     resources :feedbacks
     resources :homestays, except:[:new, :create]
     resources :pets

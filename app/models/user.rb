@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
@@ -8,7 +10,11 @@ class User < ActiveRecord::Base
   has_many :enquiries
   has_many :bookers, class_name: 'Booking', foreign_key: :booker_id
   has_many :bookees, class_name: 'Booking', foreign_key: :bookee_id
-  blogs
+  has_many :cards
+  has_many :host_mailboxes, class_name: 'Mailbox', foreign_key: :host_mailbox_id
+  has_many :guest_mailboxes, class_name: 'Mailbox', foreign_key: :guest_mailbox_id
+  has_many :messages
+  has_one :account
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -20,6 +26,8 @@ class User < ActiveRecord::Base
   validates_acceptance_of :accept_terms, on: :create
 
   scope :last_five, order('created_at DESC').limit(5)
+
+  blogs
 
   def name
     "#{first_name} #{last_name}"
@@ -107,48 +115,39 @@ class User < ActiveRecord::Base
     pets.map(&:name).to_sentence
   end
 
+  def pet_breed
+		pets.map(&:breed).to_sentence
+  end
+
+  def pet
+	  self.pets.first unless self.pets.blank?
+  end
+
   def update_average_rating
     rating = received_feedbacks.count == 0 ? 0 : received_feedbacks.sum('rating') / received_feedbacks.count
     update_attribute :average_rating, rating
   end
 
-  def find_or_create_booking_by(params)
+  def find_or_create_booking_by(enquiry=nil, homestay=nil)
 	  unfinished_bookings = self.bookers.unfinished
-	  booking = nil
-	  if unfinished_bookings.blank?
-		  booking = self.bookers.create!
-	  else
-			return unfinished_bookings.first
-	  end
+	  booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
 
-	  homestay = nil
-
-		unless params[:enquiry_id].blank?
-			enquiry = Enquiry.find(params[:enquiry_id])
-			booking.enquiry = enquiry
-			homestay = enquiry.homestay
-		end
-
-	  homestay = Homestay.find(params[:homestay_id]) unless params[:homestay_id].blank?
-
+		booking.enquiry = enquiry
 	  booking.homestay = homestay
 	  booking.bookee = homestay.user
 	  booking.cost_per_night = homestay.cost_per_night
 
 	  date_time_now = DateTime.now
 	  time_now = Time.now
-
 	  booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
 	  booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
 	  booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
 	  booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
-
 	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
 		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
-	  booking.amount = booking.subtotal + TRANSACTION_FEE
-
+	  booking.amount = booking.subtotal + booking.transaction_fee
 	  booking.save!
 	  booking
   end
@@ -163,11 +162,23 @@ class User < ActiveRecord::Base
 
 		fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction.type_code}|#{transaction.
 				reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
-		require 'digest/sha1'
+
 		transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
 
 		transaction.save!
 		transaction
+	end
+
+	def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
+		if selected_stored_card.blank?
+			if use_stored_card.blank?
+			  return nil
+			elsif use_stored_card.to_s == '1' && self.cards.size >= 1
+				return self.cards.first.id
+			end
+		else
+			return selected_stored_card
+		end
   end
 
   def unlink_from_facebook
@@ -213,16 +224,16 @@ class User < ActiveRecord::Base
         user.address_city = "n/a"
         user.address_country = "n/a"
         if permissions[0]['user_location'] == 1
-	        location_info =  auth.extra['raw_info']['location']
+          location_info =  auth.extra['raw_info']['location']
           if location_info
             user.facebook_location = location_info['name']
           end
         end
         age_info = graph.get_object("me", :fields=>"age_range")
-	      if age_info
-        	user.age_range_min = age_info['age_range']['min']
-        	user.age_range_max = age_info['age_range']['max']
-	      end
+        if age_info
+          user.age_range_min = age_info['age_range']['min']
+          user.age_range_max = age_info['age_range']['max']
+        end
       end
       if user.provider.nil?
         user.provider = auth.provider

@@ -17,8 +17,8 @@ class ConfirmationsController < ApplicationController
         PetOwnerMailer.enquiry_reciept(enquiry).deliver
         redirect_to my_account_path, alert: "You've confirmed that #{enquiry.homestay.user.first_name} will handle your booking."
       else
-        ProviderMailer.owner_canceled(enquiry).deliver
-        redirect_to my_account_path, alert: "We'll let #{enquiry.homestay.user.first_name} know you've decided to go with someone else."
+        #ProviderMailer.owner_canceled(enquiry).deliver
+        redirect_to my_account_path, alert: "You've closed this enquiry"
       end
     else
       redirect_to my_account_path

@@ -24,7 +24,7 @@ describe EnquiriesController do
         assigns(:user).should == enquiry.user
       end
 
-      it 'shoudl render the show template' do
+      it 'should render the show template' do
         subject
         response.should render_template :show
       end
@@ -41,7 +41,8 @@ describe EnquiriesController do
     end
 
     context 'with valid attributes' do
-      let(:attributes) { {enquiry:{'homestay_id' => homestay.id, 'duration_id' => '3'}} }
+      let(:attributes) { {enquiry:{'homestay_id' => homestay.id, 'check_in_date' => DateTime.now,
+                                   'check_out_date' => DateTime.now, 'duration_id' => '3'}} }
       it 'should create an enquiry' do
         expect{ subject }.to change(Enquiry, :count).by(1)
       end
@@ -55,7 +56,9 @@ describe EnquiriesController do
       end
     end
 
-    context 'with invalid attributes'
+    context 'with invalid attributes' do
+
+    end
   end
 
   describe 'PUT #update' do
@@ -63,33 +66,34 @@ describe EnquiriesController do
     before do
       ProviderMailer.stub(:enquiry).and_return mock(:mail, deliver: true)
       controller.stub_chain(:current_user, :homestay, :id).and_return 2
+      controller.stub_chain(:current_user, :id).and_return 2
       Enquiry.stub(:find_by_homestay_id_and_id!).and_return enquiry
     end
     let(:enquiry) { FactoryGirl.create :enquiry }
 
     context 'when the homestay owner can look after the pet' do
-      let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id} }
-      before { PetOwnerMailer.stub(:contact_details).and_return mock(:mail, deliver: true) }
+      let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id, response_message: 'something'} }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:contact_details)
+	      PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
 
     context 'when the homestay owner cannot look after the pet' do
-      let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id} }
-      before { PetOwnerMailer.stub(:provider_unavailable).and_return mock(:mail, deliver: true) }
+      let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id, response_message: 'something'} }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:provider_unavailable)
+        PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
 
     context 'when the homestay owner is unsure if they can look after the pet' do
       let(:attributes) { {response_id: ReferenceData::Response::UNDECIDED.id, response_message: 'something'} }
-      before { PetOwnerMailer.stub(:provider_undecided).and_return mock(:mail, deliver: true) }
+      before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to get more information from the requester' do
-        PetOwnerMailer.should_receive(:provider_undecided)
+        PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end

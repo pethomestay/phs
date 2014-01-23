@@ -1,6 +1,23 @@
 .row.my-account
   .span8
     %h1.page-header My Account
+    - if current_user.admin?
+      %h3 Admin Dashboard
+      .row
+        .span6
+          %p
+            You can go to admin dashboard and view several statistics and
+            %br
+            perform several operation based on them!
+        .span2.pull-right
+          = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn'
+      %hr
+    %ul
+      %li= link_to 'Messages', mailboxes_path
+      - if current_user.account.blank?
+        %li= link_to 'Payout Details', new_account_path
+      - else
+        %li= link_to 'Payout Details', account_path(current_user.account)
     %h3 Manage details
     .row
       .span6
@@ -9,7 +26,7 @@
           %br
           Update these here!
       .span2.pull-right
-        = link_to "Update details", edit_user_registration_path, class: 'btn'
+        = link_to 'Update details', edit_user_registration_path, class: 'btn'
     %hr
     = render partial: 'pets_link'
     = render partial: 'homestay_link'
@@ -17,10 +34,11 @@
       .span6
         %h4 Close my PetHomeStay account
       .span2.pull-right
-        = link_to "Close account", user_registration_path, class: 'btn btn-mini', method: 'delete', |
-                  confirm: 'Are you sure you wish to close your PetHomeStay account?'
+        = link_to 'Close account', user_registration_path, class: 'btn btn-mini', method: 'delete',
+          confirm: 'Are you sure you wish to close your PetHomeStay account?'
+
   .span4.notifications
-    %h2.page-header Inbox
+    %h2.page-header Notifications
     - if @user.notifications?
       - if @user.unanswered_enquiries?
         %h4 Enquiries for your PetHomeStay
@@ -33,21 +51,21 @@
       - if @user.booking_accepted_by_host?
         %h4 Accepted bookings
         - @user.booking_accepted_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking_path(booking)
           %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.booking_declined_by_host?
         %h4 Declined bookings
         - @user.booking_declined_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", host_message_booking_path(booking)
           %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.booking_required_response?
         %h4 Bookings needed further response
         - @user.booking_required_response.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", booking
+          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", host_message_booking_path(booking)
           %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
@@ -59,7 +77,7 @@
           .clear
         %hr
       - if @user.booking_needing_confirmation?
-        %h4 Selection invites
+        %h4 Booking requests
         - @user.booking_needing_confirmation.each do |booking|
           %p.pull-left= link_to "You have been selected by #{booking.booker.first_name}", host_confirm_booking_path(booking)
           %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}

@@ -4,9 +4,10 @@
   %tr
     %td Start date
     %td= @enquiry.check_in_date.strftime("%d/%m/%Y")
-  %tr
-    %td Check out date
-    %td= @enquiry.check_out_date.strftime("%d/%m/%Y")
+  - unless @enquiry.check_out_date.blank?
+    %tr
+      %td Check out date
+      %td= @enquiry.check_out_date.strftime("%d/%m/%Y")
   %tr
     %td Duration
     %td= @enquiry.duration_name
@@ -62,7 +63,7 @@
 = simple_form_for @enquiry, html: {class: 'form-button'} do |f|
   .row
     .span5
-      = f.input :response_id, required: true, as: :radio_buttons, label_method: :description,
+      = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 2,
                 collection: ReferenceData::Response.find_by_ids([2,3,4])
     .span7
       = f.input :response_message, input_html: {rows: 5, class: 'input-xxlarge'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
