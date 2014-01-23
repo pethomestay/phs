@@ -278,7 +278,7 @@ describe Booking do
 			before { booking.response_id = ReferenceData::Response::QUESTION.id }
 
 			it 'should return message that guest will have your question' do
-				PetOwnerMailer.stub(:provider_has_question).with(subject).and_return mock(:mail, deliver: true)
+				PetOwnerMailer.stub(:provider_has_question).with(subject, nil).and_return mock(:mail, deliver: true)
 				subject.confirmed_by_host(booking.bookee).should be_eql('Your question has been sent to guest')
 			end
 		end
