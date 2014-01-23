@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
     if current_user && current_user.admin?
       return current_user
     end
-    return nil
   end
 
   def require_admin!
