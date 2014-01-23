@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 20140120042044) do
 
+  create_table "accounts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "bank"
+    t.string   "bsb"
+    t.string   "account_number"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "blog_comments", :force => true do |t|
     t.string   "name",       :null => false
     t.string   "email",      :null => false
@@ -38,16 +48,6 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
 
   add_index "blog_posts", ["blogger_type", "blogger_id"], :name => "index_blog_posts_on_blogger_type_and_blogger_id"
 
-  create_table "accounts", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "name"
-    t.string   "bank"
-    t.string   "bsb"
-    t.string   "account_number"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
     t.integer  "bookee_id"
@@ -71,6 +71,14 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.integer  "response_id",      :default => 0
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+  end
+
+  create_table "cards", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "card_number"
+    t.string   "token"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "ckeditor_assets", :force => true do |t|
@@ -177,6 +185,23 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
   add_index "homestays", ["property_type_id"], :name => "index_homestays_on_property_type_id"
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
 
+  create_table "mailboxes", :force => true do |t|
+    t.integer  "host_mailbox_id"
+    t.integer  "guest_mailbox_id"
+    t.integer  "enquiry_id"
+    t.integer  "booking_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "mailbox_id"
+    t.integer  "user_id"
+    t.text     "message_text"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "pets", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -248,6 +273,9 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.string   "type_code"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.string   "storage_text"
+    t.string   "status"
+    t.integer  "card_id"
   end
 
   create_table "users", :force => true do |t|
@@ -286,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
+    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

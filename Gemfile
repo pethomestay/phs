@@ -10,7 +10,7 @@ gem 'jquery-ui-rails'
 gem 'haml-rails'
 gem 'devise'
 gem 'omniauth-facebook'
-gem 'koala'
+gem "koala", "~> 1.8.0rc1"
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 

@@ -206,25 +206,26 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(auth, current_user)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      graph = Koala::Facebook::API.new(auth.credentials.token)
+      me = graph.get_object("me")
       if current_user  #if we have a current user save
         user = current_user
       else
-        user = where(email: auth.info.email).first_or_initialize
+        user = where(email: me["email"]).first_or_initialize
       end
       if not user.persisted? #must be a new user fill in the details
-        user.email = auth.info.email
+        user.email = me["email"]
         user.password = Devise.friendly_token[0,20]
-        user.first_name = auth.info.first_name
-        user.last_name = auth.info.last_name
+        user.first_name = me["first_name"]
+        user.last_name = me["last_name"]
         user.date_of_birth  =   Date.new(1800,01,01) #fake date
         user.address_suburb = "n/a"
         user.address_1 = "n/a"
-        graph = Koala::Facebook::API.new(auth.credentials.token)
         permissions = graph.get_connections('me','permissions')
         user.address_city = "n/a"
         user.address_country = "n/a"
         if permissions[0]['user_location'] == 1
-          location_info =  auth.extra['raw_info']['location']
+          location_info =  me["location"]
           if location_info
             user.facebook_location = location_info['name']
           end
