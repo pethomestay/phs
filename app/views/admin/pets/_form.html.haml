@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.input :name
-    = f.input :pet_type, collection: ReferenceData::PetType.all
+    = f.input :pet_type_id, collection: ReferenceData::PetType.all
     = f.input :breed
     = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year, end_year: 1980
     = f.input :microchip_number, label: 'Microchip #'

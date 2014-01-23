@@ -5,7 +5,7 @@ class Homestay < ActiveRecord::Base
   belongs_to :user
   has_many :enquiries
   has_many :bookings
-  has_many :pictures, as: 'picturable'
+  has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
