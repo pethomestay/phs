@@ -1,10 +1,11 @@
 class Homestay < ActiveRecord::Base
   include ActionView::Helpers
+  include HomestaysHelper
 
   belongs_to :user
   has_many :enquiries
   has_many :bookings
-  has_many :pictures, as: 'picturable'
+  has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
@@ -40,7 +41,10 @@ class Homestay < ActiveRecord::Base
   end
 
   def sanitize_description
-    self.description = strip_tags(self.description) if self.description.present?
+    if self.description.present?
+      self.description = strip_tags(self.description)
+      self.description = strip_nbsp(self.description)
+    end
   end
 
   def titleize_attributes

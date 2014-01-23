@@ -12,7 +12,16 @@
   %dt Pets
   %dd= @user.pets.count
   %dt Date of birth
-  %dd= l @user.date_of_birth
+  %dd= @user.date_of_birth
+  - if not @user.provider.nil?
+    - if not @user.facebook_location.nil?
+      %dt Facebook Location
+      %dd= @user.facebook_location
+    %dt Age range minimum
+    %dd= @user.age_range_min
+    -if not @user.age_range_max.nil?
+      %dt Age range maximum
+      %dd= @user.age_range_max
   %dt Phone
   %dd= @user.phone_number.present? ? @user.phone_number : '-'
   %dt Mobile

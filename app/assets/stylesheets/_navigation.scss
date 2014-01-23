@@ -10,16 +10,32 @@
   }
 }
 
+.navbar .login-dropdown {
+  margin-left: 80px;
+}
+
 .open .dropdown-menu { display: block; }
 
 .navbar {
   border-top: 3px solid $orange;
   .navbar-inner {
     min-height: 42px;
+    .margin-left { margin-left: 30px;}
     .nav {
+      li {
+        max-width: 110px;
+      }
       .cta {
         margin-top: 1px;
         margin-right: 10px;
+        .btn-facebook-sign-in {
+          text-indent: -9999px;
+          min-width: 198px;
+          min-height: 38px;
+          background: url('/assets/facebook-sign-in.png') no-repeat;
+          margin-top: 3px;
+          padding: 0;
+        }
         a {
           line-height: 9px;
           font-size: 13px;
