@@ -1,59 +1,60 @@
 %p.article-content
   %strong= "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!"
 %p.article-content
-  %i= "From "
+  %i From
   = ": #{@guest.first_name.capitalize}"
 %p.article-content
-  %i= "Pet Name "
+  %i Pet Name
   = ": #{@guest.pet_names}"
 %p.article-content
-  %i= "Pet Breed "
+  %i Pet Breed
   = ": #{@guest.pet_breed}"
 %p.article-content
-  %i= "Pet Age "
+  %i Pet Age
   = ": #{@guest.pets.map(&:age).to_sentence}"
 %p.article-content
-  %i= "Check In Date "
+  %i Check In Date
   = ": #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}"
 %p.article-content
-  %i= "Check Out Date "
+  %i Check Out Date
   = ": #{@enquiry.check_out_date.to_formatted_s(:day_and_month)}"
 
 %p.article-content
-  %strong= "Message"
-%p.article-content= @enquiry.message.blank? ? '-' : @enquiry.message
+  %strong Message
+%p.article-content
+  %i= @enquiry.message.blank? ? '-' : @enquiry.message
 
-%p.article-content.enquiry-message-reply
-  %strong= "Reply to this message"
+%p.article-content.email-message-reply
+  %strong= link_to 'Reply to this message', enquiry_url(@enquiry), style: 'color:#444444;'
   and answer any queries the guest may have.
 
 %p.article-content
-  %strong= "Please encourage your Guest to ‘Book this HomeStay’ once they have all the information they need."
+  %strong Please encourage your Guest to ‘Book this HomeStay’ once they have all the information they need.
 %p.article-content
-  %strong= "A Guest clicking on ‘Book this HomeStay’ is the only way for a Host to be Insured, Reviewed and receive "
+  %strong A Guest clicking on ‘Book this HomeStay’ is the only way for a Host to be Insured, Reviewed and receive
   Payment via PetHomeStay.
 %p.article-content
-  %strong= "5 Key Reasons Why Hosts Should Encourage Bookings via PetHomeStay!"
+  %strong 5 Key Reasons Why Hosts Should Encourage Bookings via PetHomeStay!
 
 %ul.phs-benefits-list
   %li.article-content
-    %strong= "Trusted Community Service"
-    = "- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring "
+    %strong Trusted Community Service
+    \- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring 
     pet lovers together to provide a better community option - we can't help unhappy pets without Hosts booking via 
     PetHomeStay :)
   %li.article-content
-    %strong= "Charity"
-    = "- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need."
+    %strong Charity
+    \- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need.
   %li.article-content
-    %strong= "Insurance"
-    = "- PetHomeStay provides Public & Professional Liability insurance for all Hosts. It is illegal to look after "
+    %strong Insurance
+    \- PetHomeStay provides Public & Professional Liability insurance for all Hosts. It is illegal to look after 
     someones pet for money without insurance!
   %li.article-content
-    %strong= "Marketing & Support"
-    = "- PetHomeStay provides leads, marketing to drive traffic and maintains this website!"
+    %strong Marketing & Support
+    \- PetHomeStay provides leads, marketing to drive traffic and maintains this website!
   %li.article-content
-    %strong= "No Disputes"
-    = "- We hold the payment in escrow until the HomeStay is completed, and ensure that any cancellation fees are paid "
+    %strong No Disputes
+    \- We hold the payment in escrow until the HomeStay is completed, and ensure that any cancellation fees are paid
     as per policy.
 
 %p.article-content Thanks!

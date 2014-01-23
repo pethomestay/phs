@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
 
 	def index
 		@mailbox = Mailbox.find(params[:mailbox_id])
-		@messages = @mailbox.messages
+		@messages = @mailbox.messages.reverse
 	end
 
 	def create

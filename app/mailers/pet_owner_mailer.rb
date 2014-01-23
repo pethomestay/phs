@@ -48,11 +48,12 @@ class PetOwnerMailer < ActionMailer::Base
 	  mail(to: email_with_name, subject: subject)
   end
 
-  def provider_has_question(booking)
+  def provider_has_question(booking, message)
 	  @booking = booking
 	  @guest = booking.booker
 	  @homestay = booking.homestay
 	  @host = booking.bookee
+	  @message = message
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
 	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
 	  mail(to: email_with_name, subject: subject)

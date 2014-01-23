@@ -19,7 +19,7 @@
     = ": #{@host.mobile_number}"
     %br
   Listing:
-  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay), target: '_blank'
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
 
@@ -52,7 +52,7 @@
 %p.article-content
   %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
 %p.article-content
-  = @booking.message
+  %i= @booking.message
 %br
 
 %p.article-content Thanks for helping out with PetHomeStay!
