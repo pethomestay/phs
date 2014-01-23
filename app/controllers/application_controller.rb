@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
     require_admin!
   end
 
+
+  def current_admin_user
+    if current_user && current_user.admin?
+      return current_user
+    end
+    return nil
+  end
+
   def require_admin!
     render file: "#{Rails.root}/public/403", format: :html, status: 403 unless current_user.admin?
   end
