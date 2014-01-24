@@ -5,7 +5,7 @@
     %tr
       %th Username
       %th Check-out Date
-      %th Transaction ID
+      %th Transaction Reference
       %th Total
       %th Insurance Fees
       %th PHS fee
@@ -17,8 +17,8 @@
       %tr{ "data-id" => booking.id }
         %td= booking.booker.name.capitalize
         %td= booking.check_out_date.to_formatted_s(:year_month_day)
-        %td= booking.transaction.transaction_id
-        %td= "$#{(booking.transaction.amount - booking.transaction_fee).to_i}.00"
+        %td= booking.transaction.reference
+        %td= "$#{booking.transaction.amount}.00"
         %td= "$#{booking.public_liability_insurance}.00"
         %td= "$#{booking.phs_service_charge}.00"
         %td= "$#{booking.host_payout}.00"

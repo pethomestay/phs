@@ -73,9 +73,10 @@ class Booking < ActiveRecord::Base
 			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
 			message = 'Your question has been sent to guest'
+			old_message = self.response_message
 			self.response_message = nil
 			self.save!
-			PetOwnerMailer.provider_has_question(self).deliver
+			PetOwnerMailer.provider_has_question(self, old_message).deliver
 		end
 		self.complete_transaction(current_user)
 		message
@@ -169,5 +170,10 @@ class Booking < ActiveRecord::Base
 	def host_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
 		"Booking $#{self.host_payout}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+	end
+
+	def guest_booking_status
+		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
+		"Booking $#{self.amount}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 end

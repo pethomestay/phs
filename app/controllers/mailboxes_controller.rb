@@ -3,5 +3,6 @@ class MailboxesController < ApplicationController
 
 	def index
 		@mailboxes = current_user.guest_mailboxes | current_user.host_mailboxes
+		#@mailboxes = Mailbox.with_finished_bookings(current_user)
 	end
 end
