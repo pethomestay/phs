@@ -1,13 +1,16 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
-
+gem 'redcarpet'
+gem 'blogit'
+gem 'ckeditor'
 gem 'rails', '3.2.12'
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'haml-rails'
 gem 'devise'
-
+gem 'omniauth-facebook'
+gem "koala", "~> 1.8.0rc1"
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 
@@ -30,10 +33,15 @@ gem 'nokogiri', '1.5.6'
 
 group :test, :development do
   gem 'capistrano'
-  gem 'pry'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
+  gem 'ruby-debug-ide'
+
+  unless ENV['RM_INFO']
+    gem 'pry'
+    gem 'pry-remote'
+    gem 'pry-stack_explorer'
+    gem 'pry-debugger'
+  end
+
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 1.4.2'
   gem 'thin'

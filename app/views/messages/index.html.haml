@@ -11,6 +11,8 @@
     - booking_status =  @mailbox.booking.host_booking_status
     - booking_address = booking_status.include?('Pending') ? host_confirm_booking_path(@mailbox.booking) : booking_path(@mailbox.booking)
     %h5= link_to(booking_status, booking_address)
+  - elsif current_user == @mailbox.guest_mailbox && !@mailbox.booking.blank? && @mailbox.booking.owner_accepted?
+    %h5= link_to @mailbox.booking.guest_booking_status, booking_path(@mailbox.booking)
   .clearfix
 - if @messages.present?
   - @messages.each do |message|

@@ -97,18 +97,18 @@
 %p.article-content
   %strong
     %i Total Payout
-  = ": $#{@booking.amount.to_i}.00"
+  = ": $#{@booking.host_payout}.00"
 %br
 
 %p.article-content
-  %strong Message
+  %strong Message:
 %p.article-content
-  = @booking.message
+  %i= @booking.message
 %br
 
 %p.article-content
   %strong Please Click this 
-  = link_to 'Link', host_confirm_booking_path(@booking)
+  = link_to 'Link', host_confirm_booking_url(@booking)
   %strong to go to your PetHomeStay Account in order to:
 %p.article-content
   %strong 1) Confirm this Booking

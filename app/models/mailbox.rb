@@ -9,6 +9,8 @@ class Mailbox < ActiveRecord::Base
 	validates_presence_of :guest_mailbox_id, :host_mailbox_id
 	validate :enquiry_or_booking_presence
 
+	#scope :with_finished_bookings, lambda   , includes(:category, :comments)
+
 	def enquiry_or_booking_presence
 		if enquiry_id.blank? && booking_id.blank?
 			self.errors.add(:enquiry_id, "can't be blank")

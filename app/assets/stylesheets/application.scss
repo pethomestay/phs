@@ -25,6 +25,10 @@
 
 .red {color: red;}
 
+#new_blog_post_link { margin-top: 20px; }
+#post_title, #post_tag_list { width: 506px; }
+
+
 .alert.info {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
   background-image: -webkit-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
@@ -34,8 +38,10 @@
 }
 
 .main{
-	margin-top: $margins * 3;
+	margin-top: $margins * 4;
 }
+
+.row-margin-top { margin-top: 20px;}
 
 .fixed{
   position: fixed;

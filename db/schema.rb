@@ -23,6 +23,31 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "blog_comments", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "email",      :null => false
+    t.string   "website"
+    t.text     "body",       :null => false
+    t.integer  "post_id",    :null => false
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "blog_comments", ["post_id"], :name => "index_blog_comments_on_post_id"
+
+  create_table "blog_posts", :force => true do |t|
+    t.string   "title",                         :null => false
+    t.text     "body",                          :null => false
+    t.integer  "blogger_id"
+    t.string   "blogger_type"
+    t.integer  "comments_count", :default => 0, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "blog_posts", ["blogger_type", "blogger_id"], :name => "index_blog_posts_on_blogger_type_and_blogger_id"
+
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
     t.integer  "bookee_id"
@@ -47,6 +72,31 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end
+
+  create_table "cards", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "card_number"
+    t.string   "token"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "ckeditor_assets", :force => true do |t|
+    t.string   "data_uid",                     :null => false
+    t.string   "data_name",                    :null => false
+    t.string   "data_mime_type"
+    t.integer  "data_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type", :limit => 30
+    t.string   "type",           :limit => 30
+    t.integer  "data_width"
+    t.integer  "data_height"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
@@ -135,6 +185,23 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
   add_index "homestays", ["property_type_id"], :name => "index_homestays_on_property_type_id"
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
 
+  create_table "mailboxes", :force => true do |t|
+    t.integer  "host_mailbox_id"
+    t.integer  "guest_mailbox_id"
+    t.integer  "enquiry_id"
+    t.integer  "booking_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "mailbox_id"
+    t.integer  "user_id"
+    t.text     "message_text"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "pets", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -175,6 +242,24 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
+
   create_table "transactions", :force => true do |t|
     t.integer  "booking_id"
     t.string   "transaction_id"
@@ -188,6 +273,9 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.string   "type_code"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.string   "storage_text"
+    t.string   "status"
+    t.integer  "card_id"
   end
 
   create_table "users", :force => true do |t|
@@ -221,6 +309,12 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "age_range_min"
+    t.integer  "age_range_max"
+    t.string   "facebook_location"
+    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

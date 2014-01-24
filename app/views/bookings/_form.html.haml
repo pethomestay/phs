@@ -57,14 +57,9 @@
       %label.string.control-label
         Payment method
     = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
-
-  - if @booking.enquiry.blank? && host_view
     %hr
     = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
                     collection: ReferenceData::Response.find_by_ids([5, 6, 7])
-  - if host_view
     = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
-
-  - if host_view
     .form-actions
       = f.submit 'Confirm booking', class: 'btn btn-primary'

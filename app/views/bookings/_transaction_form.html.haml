@@ -19,7 +19,7 @@
     %label.string.control-label
       Credit Card fields
   - if current_user.payor?
-    = f.input :use_stored_card, as: :boolean, input_html: { checked: true, class: 'control-content' }
+    = f.input :use_stored_card, as: :boolean, input_html: { checked: true }
 
   .credit_card_fields{ style: current_user.payor? ? 'display:none;' : '' }
     - if !current_user.payor?

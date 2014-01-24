@@ -41,21 +41,18 @@
   %i Subtotal
   = ": $#{@booking.subtotal}.00"
 %p.article-content
-  %i PetHomeStay Service Fee (15%)
-  = ": $#{@booking.phs_service_charge}.00"
-%p.article-content
-  %i Insurance
-  = ": $#{@booking.public_liability_insurance}.00"
+  %i Credit Card Fee
+  = ": $#{@booking.transaction_fee}.00"
 %p.article-content
   %strong
-    %i Total Payout
+    %i Total
   = ": $#{@booking.amount.to_i}.00"
 %br
 
 %p.article-content
   %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
 %p.article-content
-  = @booking.message
+  %i= @booking.message
 %br
 
 %p.article-content Thanks for helping out with PetHomeStay!
