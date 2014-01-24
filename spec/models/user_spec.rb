@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'pry'
 describe User do
 
   it { should have_one :homestay }
@@ -32,6 +32,54 @@ describe User do
       end
     end
   end
+
+
+  # When have signed up via Facebook ensure
+  # we don't need to put in a password
+
+  describe '#no_password_with_facebook' do
+    context 'when signed in with facebook no password required' do
+      subject { user }
+      let(:user) { FactoryGirl.create :user }
+      before do
+        user.password_confirmation = nil
+        user.provider ="Facebook"
+        user.uid =  "78787878"
+      end
+      it 'if account linked with Facebook we do not need to enter password' do
+          subject.needs_password?.should be_false
+      end
+    end
+
+
+    context 'when unlinked with Facebook password required' do
+
+      subject { user }
+      let(:user) { FactoryGirl.create :user }
+      before do
+        user.provider ="Facebook"
+        user.uid =  "78787878"
+        user.unlink_from_facebook
+      end
+      it 'if account un linked with Facebook we do need to enter password' do
+        subject.needs_password?.should be_true
+      end
+    end
+
+
+    # When have signed up via the web site
+    # we need to put in a password and password confirmation
+
+    context 'when signed with website password required' do
+      subject { user }
+      let(:user) { FactoryGirl.create :user }
+
+      it 'if we have no facebook link we need to enter a password' do
+        subject.needs_password?.should be_true
+      end
+    end
+  end
+
 
 	describe '#booking_accepted_by_host' do
 		subject { user.booking_accepted_by_host }

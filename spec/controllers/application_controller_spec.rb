@@ -1,6 +1,26 @@
 require 'spec_helper'
 
 describe ApplicationController do
+  login_admin_user
+  describe '#is_current_user_admin' do
+
+
+    context 'when current_user is not set or is not admin' do
+      before do
+        sign_out subject.current_admin_user
+      end
+      it "should not be admin by default"   do
+        subject.current_admin_user.should be_nil
+      end
+    end
+
+    context 'when current_user is an admin' do
+
+      it "should be admin"   do
+        subject.current_admin_user.should_not be_nil
+      end
+    end
+  end
 
   describe '#after_sign_in_path_for' do
     subject { controller.after_sign_in_path_for(user) }
