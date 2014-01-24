@@ -13,10 +13,11 @@
       %th.name Type
       %th.name Date
     - @mailboxes.each do |mailbox|
-      %tr
-        %td.name= mailbox.guest_mailbox.name.capitalize
-        %td.name= link_to mailbox.subject_message, mailbox_messages_path(mailbox)
-        %td.name= mailbox.subject.class.to_s
-        %td.name= mailbox.created_at.strftime("%d/%m/%Y")
+      - if mailbox.subject_is_finished
+        %tr
+          %td.name= mailbox.guest_mailbox.name.capitalize
+          %td.name= link_to mailbox.subject_message, mailbox_messages_path(mailbox)
+          %td.name= mailbox.subject.class.to_s
+          %td.name= mailbox.created_at.strftime("%d/%m/%Y")
 - else
   %p Your inbox is Empty
