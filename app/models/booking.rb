@@ -108,9 +108,9 @@ class Booking < ActiveRecord::Base
 		self.transaction.save!
 
 		{
-		    booking_subtotal: self.subtotal,
-		    booking_amount: self.amount,
-		    transaction_fee: self.transaction_fee,
+		    booking_subtotal: self.subtotal.to_s,
+		    booking_amount: self.amount.to_s,
+		    transaction_fee: self.transaction_fee.to_s,
 		    transaction_actual_amount: self.transaction.actual_amount,
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
@@ -129,11 +129,11 @@ class Booking < ActiveRecord::Base
 	end
 
 	def phs_service_charge
-		(self.subtotal * 0.15).to_i
+		transaction_mode_value(self.subtotal * 0.15)
 	end
 
 	def public_liability_insurance
-		(self.number_of_nights * 2).to_i
+		transaction_mode_value(self.number_of_nights * 2)
 	end
 
 	def host_payout_deduction
@@ -141,16 +141,40 @@ class Booking < ActiveRecord::Base
 	end
 
 	def host_payout
-		amount - host_payout_deduction
+		(amount - host_payout_deduction).round(2)
 	end
 
 	def transaction_fee
 		credit_card_fee
 	end
 
+	def actual_amount
+		return '00.00' if self.amount.blank?
+		return rounded_test_amount(self.amount) if ENV['LIVE_MODE_ROUNDED_VALUE'] == 'false'
+		(self.amount.to_s.split('.').last.size == 1) ? (self.amount.to_s + '0') : (self.amount.to_s)
+	end
+
+	def fees
+		transaction_fee
+	end
+
 	def credit_card_fee
-		fee = (subtotal * 0.025).to_i
-		fee < 1 ? 1 : fee
+		transaction_mode_value(subtotal * 0.025)
+	end
+
+	def transaction_mode_value(value)
+		if ENV['LIVE_MODE_ROUNDED_VALUE'] == 'true'
+			return value.round(2)
+		else
+			rounded_test_amount(value).to_f
+		end
+	end
+
+	def rounded_test_amount(value)
+		integer_part = value.to_s.split('.')[0]
+		fraction_part = value.to_s.split('.')[1]
+		fraction_part = fraction_part.to_i > 0 ? '.08' : '.00'
+		integer_part + fraction_part
 	end
 
 	def message_update(new_message)

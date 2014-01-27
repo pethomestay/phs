@@ -387,9 +387,19 @@ describe Booking do
 	describe '#host_payout' do
 		subject { booking.host_payout }
 		let(:booking) { FactoryGirl.create :booking }
+		before do
+			booking.number_of_nights = 2
+			booking.cost_per_night = 30
+			booking.subtotal = 60
+			booking.amount = booking.subtotal + booking.transaction_fee
+		end
 
-		it 'will return the host payout amount' do
-			pending
+		it 'will deduct PetHomeStay service charge and public liability insurance and transaction fee' do
+			booking.amount.should be_eql(61.08)
+			booking.phs_service_charge.should be_eql(9.0)
+			booking.public_liability_insurance.should be_eql(4.0)
+			booking.transaction_fee.should be_eql(1.08)
+			subject.should be_eql(47.0)
 		end
 	end
 end
