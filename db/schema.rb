@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140120042044) do
+ActiveRecord::Schema.define(:version => 20140126151350) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.integer  "number_of_nights", :default => 1
-    t.integer  "cost_per_night",   :default => 1
-    t.integer  "subtotal",         :default => 1
-    t.integer  "amount",           :default => 1
+    t.float    "cost_per_night",   :default => 1.0
+    t.float    "subtotal",         :default => 1.0
+    t.float    "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
     t.string   "status",           :default => "unfinished"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
 
   create_table "homestays", :force => true do |t|
     t.string   "title"
-    t.integer  "cost_per_night"
+    t.float    "cost_per_night"
     t.text     "description"
     t.integer  "user_id"
     t.string   "address_1"
@@ -267,7 +267,7 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.string   "merchant_fingerprint"
     t.string   "pre_authorisation_id"
     t.string   "response_text"
-    t.integer  "amount"
+    t.float    "amount"
     t.string   "secure_pay_fingerprint"
     t.string   "reference"
     t.string   "type_code"
@@ -309,12 +309,12 @@ ActiveRecord::Schema.define(:version => 20140120042044) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.boolean  "payor",                  :default => false
     t.string   "provider"
     t.string   "uid"
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
