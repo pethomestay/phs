@@ -63,16 +63,6 @@ class Transaction < ActiveRecord::Base
 		time_stamp = Time.now.strftime("%Y%m%dT%H%M%S%L%z")
 		if self.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED
 			begin
-
-				puts
-				puts "cmplete"
-				puts
-				puts "host confirmation stored card"
-				puts
-				puts (self.amount * 100).to_i
-				puts
-				puts ENV['TRANSACTION_XML_API'].inspect
-				puts
 				message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>#{message_id}</messageID>
 <messageTimestamp>#{time_stamp}</messageTimestamp><timeoutValue>60</timeoutValue>
 <apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
@@ -80,23 +70,13 @@ class Transaction < ActiveRecord::Base
 <Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType>
 <clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{(self.amount * 100).to_i}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
-				puts
-				puts
-				puts
-				puts
-				puts
-				puts
+
 				response = RestClient.post(
 						ENV['TRANSACTION_XML_API'],
 						message,
 						content_type: 'text/xml'
 				)
 
-				puts
-				puts
-				puts response.inspect
-				puts
-				puts
 				doc = Nokogiri::XML(response)
 				if doc.xpath('//responseCode').text == "00"
 					self.transaction_id = doc.xpath('//txnID').text
@@ -111,12 +91,6 @@ class Transaction < ActiveRecord::Base
 				end
 
 			rescue Exception => e
-				puts
-				puts "error"
-				puts
-				puts e.message.inspect
-				puts
-				puts
 				return e.message
 			end
 		elsif self.status == TRANSACTION_PRE_AUTHORIZATION_REQUIRED
@@ -130,25 +104,12 @@ class Transaction < ActiveRecord::Base
 <purchaseOrderNo>#{self.reference}</purchaseOrderNo><preauthID>#{self.pre_authorisation_id}</preauthID></Txn></TxnList></Payment>
 </SecurePayMessage>"
 
-				puts
-				puts "cmplete"
-				puts
-				puts (self.amount * 100).inspect
-				puts
-				puts "pre auth complete"
-				puts
-				puts ENV['TRANSACTION_PRE_AUTH_COMPLETE'].inspect
-				puts
 				response = RestClient.post(
 						ENV['TRANSACTION_PRE_AUTH_COMPLETE'],
 						message,
 						content_type: 'text/xml'
 				)
-				puts
-				puts
-				puts response.inspect
-				puts
-				puts
+
 				doc = Nokogiri::XML(response)
 				if doc.xpath('//responseCode').text == "00"
 					self.transaction_id = doc.xpath('//txnID').text
@@ -162,12 +123,6 @@ class Transaction < ActiveRecord::Base
 				end
 
 			rescue Exception => e
-				puts
-				puts "error"
-				puts
-				puts e.message.inspect
-				puts
-				puts
 				return e.message
 			end
 		end

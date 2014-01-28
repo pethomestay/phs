@@ -18,10 +18,10 @@
         %td= booking.booker.name.capitalize
         %td= booking.check_out_date.to_formatted_s(:year_month_day)
         %td= booking.transaction.reference
-        %td= "$#{booking.transaction.amount}.00"
-        %td= "$#{booking.public_liability_insurance}.00"
-        %td= "$#{booking.phs_service_charge}.00"
-        %td= "$#{booking.host_payout}.00"
+        %td= "$#{booking.transaction.amount}"
+        %td= "$#{booking.public_liability_insurance}"
+        %td= "$#{booking.phs_service_charge}"
+        %td= "$#{booking.host_payout}"
         %td
           %input.booking_paid_confirm{type: 'button', value: 'YES'}
 
