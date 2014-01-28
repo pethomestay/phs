@@ -96,7 +96,7 @@ class Booking < ActiveRecord::Base
 		self.check_out_date = check_out_date
 
 		self.subtotal = self.number_of_nights * self.cost_per_night
-		self.amount = self.subtotal + self.transaction_fee
+		self.amount = self.calculate_amount
 		self.save!
 
 		self.transaction.amount = self.amount
@@ -136,45 +136,52 @@ class Booking < ActiveRecord::Base
 		transaction_mode_value(self.number_of_nights * 2)
 	end
 
-	def host_payout_deduction
-		public_liability_insurance + phs_service_charge + transaction_fee
-	end
-
-	def host_payout
-		(amount - host_payout_deduction).round(2)
-	end
-
 	def transaction_fee
 		credit_card_fee
-	end
-
-	def actual_amount
-		return '00.00' if self.amount.blank?
-		return rounded_test_amount(self.amount) if ENV['LIVE_MODE_ROUNDED_VALUE'] == 'false'
-		(self.amount.to_s.split('.').last.size == 1) ? (self.amount.to_s + '0') : (self.amount.to_s)
-	end
-
-	def fees
-		transaction_fee
 	end
 
 	def credit_card_fee
 		transaction_mode_value(subtotal * 0.025)
 	end
 
+	def host_payout_deduction
+		public_liability_insurance + phs_service_charge + transaction_fee
+	end
+
+	def host_payout
+		actual_value_figure(amount - host_payout_deduction)
+	end
+
+	def fees
+		credit_card_fee
+	end
+
+	def actual_amount
+		return '00.00' if self.amount.blank?
+		actual_value_figure(amount)
+	end
+
+	def actual_value_figure(value)
+		value.to_s.split('.').last.size == 1 ? "#{value.to_s}0" : value.to_s
+	end
+
+	def calculate_amount
+		transaction_mode_value(self.subtotal + self.transaction_fee)
+	end
+
 	def transaction_mode_value(value)
-		if ENV['LIVE_MODE_ROUNDED_VALUE'] == 'true'
+		if live_mode_rounded_value?
 			return value.round(2)
 		else
-			rounded_test_amount(value).to_f
+			integer_part = value.to_s.split('.')[0]
+			fraction_part = value.to_s.split('.')[1]
+			fraction_part = fraction_part.to_i > 0 ? '.08' : '.00'
+			(integer_part + fraction_part).to_f
 		end
 	end
 
-	def rounded_test_amount(value)
-		integer_part = value.to_s.split('.')[0]
-		fraction_part = value.to_s.split('.')[1]
-		fraction_part = fraction_part.to_i > 0 ? '.08' : '.00'
-		integer_part + fraction_part
+	def live_mode_rounded_value?
+		ENV['LIVE_MODE_ROUNDED_VALUE'] == 'true' ? true : false
 	end
 
 	def message_update(new_message)
@@ -193,11 +200,11 @@ class Booking < ActiveRecord::Base
 
 	def host_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
-		"Booking $#{self.host_payout}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+		"Booking $#{self.host_payout} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
 	def guest_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
-		"Booking $#{self.amount}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 end

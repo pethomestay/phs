@@ -361,31 +361,7 @@ describe Booking do
 		end
 	end
 
-	describe '#host_booking_status' do
-		subject { booking.host_booking_status }
-		let(:booking) { FactoryGirl.create :booking }
-
-		context 'when booking is pending' do
-			it 'should return "Pending"' do
-				pending
-			end
-		end
-
-		context 'when booking is accepted' do
-			it 'should return "Accepted"' do
-				pending
-			end
-		end
-
-		context 'when booking is rejected' do
-			it 'should return "Rejected"' do
-				pending
-			end
-		end
-	end
-
-	describe '#host_payout' do
-		subject { booking.host_payout }
+	describe 'transaction helper functions' do
 		let(:booking) { FactoryGirl.create :booking }
 		before do
 			booking.number_of_nights = 2
@@ -394,12 +370,115 @@ describe Booking do
 			booking.amount = booking.subtotal + booking.transaction_fee
 		end
 
-		it 'will deduct PetHomeStay service charge and public liability insurance and transaction fee' do
-			booking.amount.should be_eql(61.08)
-			booking.phs_service_charge.should be_eql(9.0)
-			booking.public_liability_insurance.should be_eql(4.0)
-			booking.transaction_fee.should be_eql(1.08)
-			subject.should be_eql(47.0)
+		describe '#host_payout' do
+			subject { booking.host_payout }
+
+			it 'will deduct PetHomeStay service charge and public liability insurance and transaction fee' do
+				booking.amount.should be_eql(61.08)
+				booking.phs_service_charge.should be_eql(9.0)
+				booking.public_liability_insurance.should be_eql(4.0)
+				booking.transaction_fee.should be_eql(1.08)
+				subject.should be_eql('47.00')
+			end
 		end
+
+		describe '#host_booking_status' do
+			subject { booking.host_booking_status }
+
+			context 'when status is accepted' do
+				before { booking.host_accepted = true }
+
+				it 'should return "Accepted"' do
+					subject.should be_eql('Booking $47.00 - Accepted')
+				end
+			end
+
+			context 'when status is pending' do
+				before { booking.host_accepted = false }
+
+				it 'should return "Pending"' do
+					subject.should be_eql('Booking $47.00 - Pending')
+				end
+			end
+
+			context 'when status is rejected' do
+				before {
+					booking.status = BOOKING_STATUS_REJECTED
+					booking.host_accepted = false
+				}
+
+				it 'should return "Rejected"' do
+					subject.should be_eql('Booking $47.00 - Rejected')
+				end
+			end
+		end
+
+		describe '#guest_booking_status ' do
+			subject { booking.guest_booking_status }
+
+			context 'when status is accepted' do
+				before { booking.host_accepted = true }
+
+				it 'should return "Accepted"' do
+					subject.should be_eql('Booking $61.08 - Accepted')
+				end
+			end
+
+			context 'when status is pending' do
+				before { booking.host_accepted = false }
+
+				it 'should return "Pending"' do
+					subject.should be_eql('Booking $61.08 - Pending')
+				end
+			end
+
+			context 'when status is rejected' do
+				before {
+					booking.status = BOOKING_STATUS_REJECTED
+					booking.host_accepted = false
+				}
+
+				it 'should return "Rejected"' do
+					subject.should be_eql('Booking $61.08 - Rejected')
+				end
+			end
+		end
+
+		describe '#fees' do
+			subject { booking.fees }
+
+			it 'should return transaction fees paid by guest' do
+				subject.should be_eql(1.08)
+			end
+		end
+
+		describe '#actual_amount' do
+			subject { booking.actual_amount }
+
+			it 'will return the transaction amount in string format' do
+				subject.should be_eql('61.08')
+			end
+		end
+
+		describe '#transaction_fee' do
+			subject { booking.transaction_fee }
+
+			context 'live mode' do
+				before { booking.stub(:live_mode_rounded_value?).and_return(true) }
+
+				it 'will return transaction value rounded 2 digit with actual cents value' do
+					subject.should be_eql(booking.subtotal * 0.025)
+				end
+			end
+
+			context 'test mode' do
+				before { booking.stub(:live_mode_rounded_value?).and_return(false) }
+
+				it 'will return transaction value rounded 2 digit with actual cents value' do
+					subject.should be_eql(1.08)
+				end
+			end
+		end
+
 	end
 end
