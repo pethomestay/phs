@@ -1,5 +1,6 @@
 = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Reconciliation for host payouts
+%h5= link_to "Download Reconciliations", reconciliations_file_admin_bookings_url(format: "csv")
 %table.table.tablesorter
   %thead
     %tr

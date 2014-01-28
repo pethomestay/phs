@@ -39,6 +39,19 @@ class Booking < ActiveRecord::Base
 		mailbox.reload
 	end
 
+	def self.to_csv(options = {})
+		CSV.generate(options) do |csv|
+			csv << [ 'Username', 'Check-out Date', 'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee',
+			         'Host Payout' ]
+
+			all.each do |booking|
+				csv << [ booking.booker.name.capitalize, booking.check_out_date.to_formatted_s(:year_month_day),
+				         booking.transaction.reference, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
+				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}" ]
+			end
+		end
+	end
+
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
 	end
