@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140126151350) do
+ActiveRecord::Schema.define(:version => 20140128130643) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -190,8 +190,10 @@ ActiveRecord::Schema.define(:version => 20140126151350) do
     t.integer  "guest_mailbox_id"
     t.integer  "enquiry_id"
     t.integer  "booking_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "host_read",        :default => false
+    t.boolean  "guest_read",       :default => false
   end
 
   create_table "messages", :force => true do |t|

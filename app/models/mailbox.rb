@@ -61,4 +61,30 @@ class Mailbox < ActiveRecord::Base
 		!self.booking.blank? && (current_user == self.host_mailbox) && self.booking.owner_accepted? &&
 				!self.booking.host_accepted? && (self.booking.status != BOOKING_STATUS_REJECTED)
 	end
+
+	def read_by?(current_user)
+		if current_user == guest_mailbox
+		  guest_read?
+		elsif current_user == host_mailbox
+			host_read?
+		end
+	end
+
+	def read_by(current_user)
+		if current_user == guest_mailbox
+			self.guest_read = true
+		elsif current_user == host_mailbox
+			self.host_read = true
+		end
+		self.save!
+	end
+
+	def read_for(current_user)
+		if current_user == guest_mailbox
+			self.host_read = false
+		elsif current_user == host_mailbox
+			self.guest_read = false
+		end
+		self.save!
+	end
 end
