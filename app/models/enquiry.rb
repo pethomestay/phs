@@ -33,11 +33,9 @@ class Enquiry < ActiveRecord::Base
   scope :last_five, order('created_at DESC').limit(5)
 
   def create_mailbox
-		if self.mailbox.blank?
-			Mailbox.create enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
-		else
-			self.mailbox.update_attributes! enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id
-		end
+		mailbox_attributes = { enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id,
+		                       guest_read: true }
+	  self.mailbox.blank? ? Mailbox.create!(mailbox_attributes) : self.mailbox.update_attributes!(mailbox_attributes)
 		self.reload
 		self.mailbox.messages.create! message_text: self.message, user_id: self.user_id
   end
