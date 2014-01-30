@@ -11,12 +11,12 @@ class Transaction < ActiveRecord::Base
 	attr_accessor :store_card, :use_stored_card, :select_stored_card, :eps_redirect, :eps_merchant
 
 	def actual_amount
-		self.amount.blank? ? '00.00' : self.amount.to_i.to_s + '.00'
+		booking.actual_amount
 	end
 
 	def update_by_response(secure_pay_response)
 		secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{secure_pay_response[:reference_id]}|#{self.
-			actual_amount}|#{secure_pay_response[:time_stamp]}|#{secure_pay_response[:summary_code]}"
+				actual_amount}|#{secure_pay_response[:time_stamp]}|#{secure_pay_response[:summary_code]}"
 		self.secure_pay_fingerprint = Digest::SHA1.hexdigest(secure_pay_fingerprint_string)
 
 		unless self.secure_pay_fingerprint == secure_pay_response[:fingerprint]
@@ -63,13 +63,12 @@ class Transaction < ActiveRecord::Base
 		time_stamp = Time.now.strftime("%Y%m%dT%H%M%S%L%z")
 		if self.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED
 			begin
-
 				message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>#{message_id}</messageID>
 <messageTimestamp>#{time_stamp}</messageTimestamp><timeoutValue>60</timeoutValue>
 <apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
 <password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Periodic</RequestType>
 <Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType>
-<clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{self.amount * 100}</amount><currency>AUD</currency>
+<clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{(self.amount * 100).to_i}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
 
 				response = RestClient.post(
@@ -101,7 +100,7 @@ class Transaction < ActiveRecord::Base
 <messageTimestamp>#{time_stamp}</messageTimestamp><timeoutValue>60</timeoutValue>
 <apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
 <password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Payment</RequestType>
-<Payment><TxnList count=\"1\"><Txn ID=\"1\"><txnType>11</txnType><txnSource>7</txnSource><amount>#{self.amount * 100}</amount>
+<Payment><TxnList count=\"1\"><Txn ID=\"1\"><txnType>11</txnType><txnSource>7</txnSource><amount>#{(self.amount * 100).to_i}</amount>
 <purchaseOrderNo>#{self.reference}</purchaseOrderNo><preauthID>#{self.pre_authorisation_id}</preauthID></Txn></TxnList></Payment>
 </SecurePayMessage>"
 

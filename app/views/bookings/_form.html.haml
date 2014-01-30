@@ -31,9 +31,11 @@
 
   %hr
   - wrapper_class = 'input-prepend input-append'
-  = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per stay', readonly: true
+  = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per stay', readonly: true,
+              input_html: { value: @booking.cost_per_night }
   %br
-  = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
+  = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
+              input_html: { value: @booking.subtotal }
   %br
   - if host_view
     = f.input :public_liability_insurance, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,

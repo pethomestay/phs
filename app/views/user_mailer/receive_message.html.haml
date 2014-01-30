@@ -6,29 +6,22 @@
   = ": #{@from.first_name.capitalize}"
   %br
 
-- if @message.mailbox.enquiry.blank?
-  %p.article-content
-    %strong Booking Details
-  %p.article-content
-    %i Check In Date
-    = ": #{@message.mailbox.booking.check_in_date.to_formatted_s(:day_and_month)}"
-  %p.article-content
-    %i Check Out Date
-    = ": #{@message.mailbox.booking.check_out_date.to_formatted_s(:day_and_month)}"
-- else
-  %p.article-content
-    %strong Enquiry Details
-  %p.article-content
-    %i= "Check In Date "
-    = ": #{@message.mailbox.enquiry.check_in_date.to_formatted_s(:day_and_month)}"
-  %p.article-content
-    %i= "Check Out Date "
-    = ": #{@message.mailbox.enquiry.check_out_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %strong= "#{@reservation.class.to_s} Details"
+%p.article-content
+  %i= "Check In Date "
+  = ": #{@reservation.check_in_date.to_formatted_s(:day_and_month)}"
+%p.article-content
+  %i= "Check Out Date "
+  = ": #{@reservation.check_out_date.to_formatted_s(:day_and_month)}"
 
-%p.article-content.enquiry-message-reply
+%p.article-content
   %strong Message:
+%p.article-content
   %i= " #{@message.message_text}"
 
+%p.article-content.email-message-reply
+  %strong= link_to 'Reply to this message', mailbox_messages_url(@message.mailbox), style: 'color:#444444;'
 
 %p.article-content Many thanks!
 %p.article-content The PetHomeStay Team

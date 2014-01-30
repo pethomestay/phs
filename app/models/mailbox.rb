@@ -9,7 +9,8 @@ class Mailbox < ActiveRecord::Base
 	validates_presence_of :guest_mailbox_id, :host_mailbox_id
 	validate :enquiry_or_booking_presence
 
-	#scope :with_finished_bookings, lambda   , includes(:category, :comments)
+	scope :with_finished_bookings, ->(user) { where("guest_mailbox_id = ? OR host_mailbox_id = ?", user.id, user.id).
+			order('created_at DESC') }
 
 	def enquiry_or_booking_presence
 		if enquiry_id.blank? && booking_id.blank?
@@ -26,6 +27,10 @@ class Mailbox < ActiveRecord::Base
 		message = booking_subject_message unless booking.check_in_date.blank? unless booking.blank?
 		message = enquiry_subject_message if message.blank?
 		message
+	end
+
+	def subject_is_finished
+		booking.blank? ? true : booking.status != BOOKING_STATUS_UNFINISHED
 	end
 
 	def booking_subject_message
@@ -55,5 +60,31 @@ class Mailbox < ActiveRecord::Base
 	def host_booking?(current_user)
 		!self.booking.blank? && (current_user == self.host_mailbox) && self.booking.owner_accepted? &&
 				!self.booking.host_accepted? && (self.booking.status != BOOKING_STATUS_REJECTED)
+	end
+
+	def read_by?(current_user)
+		if current_user == guest_mailbox
+		  guest_read?
+		elsif current_user == host_mailbox
+			host_read?
+		end
+	end
+
+	def read_by(current_user)
+		if current_user == guest_mailbox
+			self.guest_read = true
+		elsif current_user == host_mailbox
+			self.host_read = true
+		end
+		self.save!
+	end
+
+	def read_for(current_user)
+		if current_user == guest_mailbox
+			self.host_read = false
+		elsif current_user == host_mailbox
+			self.guest_read = false
+		end
+		self.save!
 	end
 end

@@ -11,15 +11,15 @@ describe Transaction do
 
 	describe '#actual_amount' do
 		subject { transaction.actual_amount }
-		let(:transaction) { FactoryGirl.create :transaction }
+		let(:transaction) { FactoryGirl.create :transaction, booking: FactoryGirl.create(:booking) }
 		context 'when transaction has no amount' do
 			it 'should return nil' do
-				subject.should be_eql('00.00')
+				subject.should be_eql('1.00')
 			end
 		end
 
 		context 'when transaction has amount' do
-			before { transaction.amount = 20 }
+			before { transaction.booking.amount = 20 }
 			it 'should return actual amount' do
 				subject.should be_eql('20.00')
 			end

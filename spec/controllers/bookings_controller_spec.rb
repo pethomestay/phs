@@ -31,4 +31,26 @@ describe BookingsController do
 			assigns(:transaction).should == enquiry.booking.transaction
 		end
 	end
+
+	describe 'GET #result' do
+		subject { get :result, response_params_from_secure_pay }
+
+		let(:booking) { FactoryGirl.create :booking, transaction: FactoryGirl.create(:transaction) }
+		let(:response_params_from_secure_pay) { { timestamp: 'timestamp', summarycode: '00', preauthid: 'pid', txnid: 'tid',
+		                                          refid: "transaction_id=#{booking.transaction.id}", restext: '00',
+		                                          rescode: '00', fingerprint: 'secure_pay_fingerprint_string' } }
+
+		before do
+			secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|transaction_id=#{booking.
+					transaction.id}|1.00|timestamp|00"
+			Digest::SHA1.stub(:hexdigest).with(secure_pay_fingerprint_string).and_return('secure_pay_fingerprint_string')
+			PetOwnerMailer.stub(:booking_receipt).and_return mock(:mail, deliver: true)
+			ProviderMailer.stub(:owner_confirmed).and_return mock(:mail, deliver: true)
+		end
+
+		it 'should display successful booking and transaction details' do
+			subject
+			response.should redirect_to booking_path(booking)
+		end
+	end
 end

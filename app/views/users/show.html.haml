@@ -44,8 +44,11 @@
         %h4 Enquiries for your PetHomeStay
 
         - @user.unanswered_enquiries.each do |enquiry|
-          %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", enquiry
-          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+          = simple_form_for enquiry do |f|
+            = f.hidden_field :response_id, value: 2
+            = f.hidden_field :confirmed, value: true
+            %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", '#', class: 'enquiry-update-submit'
+            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
           .clear
         %hr
       - if @user.booking_accepted_by_host?

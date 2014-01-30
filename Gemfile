@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
+ruby '1.9.3'
 gem 'redcarpet'
 gem 'blogit'
 gem 'ckeditor'
@@ -10,7 +10,7 @@ gem 'jquery-ui-rails'
 gem 'haml-rails'
 gem 'devise'
 gem 'omniauth-facebook'
-gem "koala", "~> 1.8.0rc1"
+gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 

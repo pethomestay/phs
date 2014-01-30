@@ -26,21 +26,26 @@
   %hr
   - wrapper_class = 'input-prepend input-append'
   = f.input :cost_per_night, as: :currency, wrapper_html: { class: wrapper_class }, label: 'Rate per night',
-             readonly: true
+             readonly: true, input_html: { value: @booking.cost_per_night }
   %br
-  = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
+  = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
+            input_html: { value: @booking.subtotal }
   %br
   - if host_view
-    = f.input :public_liability_insurance, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true
+    = f.input :public_liability_insurance, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
+              input_html: { value: @booking.public_liability_insurance }
     %br
     = f.input :phs_service_charge, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
-              label: 'PHS Service Charge'
+              label: 'PHS Service Charge', input_html: { value: @booking.phs_service_charge }
+    %br
+    = f.input :host_payout, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
+              label: 'Payout Amount', input_html: { value: @booking.host_payout }
   - else
-    = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: @booking.transaction_fee },
+    = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, input_html: { value: @booking.fees },
               readonly: true
-  %br
-  = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: host_view ? 'Total Payout' : 'Total',
-            readonly: true, input_html: { value: @booking.amount - (host_view ? @booking.host_payout_deduction : 0) }
+    %br
+    = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, label: host_view ? 'Total Payout' : 'Total',
+              readonly: true, input_html: { value: @booking.amount }
 
   %hr
   = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true, label: 'Payment method'

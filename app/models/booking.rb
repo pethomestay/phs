@@ -39,6 +39,19 @@ class Booking < ActiveRecord::Base
 		mailbox.reload
 	end
 
+	def self.to_csv(options = {})
+		CSV.generate(options) do |csv|
+			csv << [ 'Username', 'Check-out Date', 'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee',
+			         'Host Payout' ]
+
+			all.each do |booking|
+				csv << [ booking.booker.name.capitalize, booking.check_out_date.to_formatted_s(:year_month_day),
+				         booking.transaction.reference, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
+				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}" ]
+			end
+		end
+	end
+
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
 	end
@@ -96,7 +109,7 @@ class Booking < ActiveRecord::Base
 		self.check_out_date = check_out_date
 
 		self.subtotal = self.number_of_nights * self.cost_per_night
-		self.amount = self.subtotal + self.transaction_fee
+		self.amount = self.calculate_amount
 		self.save!
 
 		self.transaction.amount = self.amount
@@ -108,9 +121,9 @@ class Booking < ActiveRecord::Base
 		self.transaction.save!
 
 		{
-		    booking_subtotal: self.subtotal,
-		    booking_amount: self.amount,
-		    transaction_fee: self.transaction_fee,
+		    booking_subtotal: self.subtotal.to_s,
+		    booking_amount: self.amount.to_s,
+		    transaction_fee: self.transaction_fee.to_s,
 		    transaction_actual_amount: self.transaction.actual_amount,
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
@@ -129,19 +142,11 @@ class Booking < ActiveRecord::Base
 	end
 
 	def phs_service_charge
-		(self.subtotal * 0.15).to_i
+		transaction_mode_value(self.subtotal * 0.15)
 	end
 
 	def public_liability_insurance
-		(self.number_of_nights * 2).to_i
-	end
-
-	def host_payout_deduction
-		public_liability_insurance + phs_service_charge + transaction_fee
-	end
-
-	def host_payout
-		amount - host_payout_deduction
+		transaction_mode_value(self.number_of_nights * 2)
 	end
 
 	def transaction_fee
@@ -149,8 +154,47 @@ class Booking < ActiveRecord::Base
 	end
 
 	def credit_card_fee
-		fee = (subtotal * 0.025).to_i
-		fee < 1 ? 1 : fee
+		transaction_mode_value(subtotal * 0.025)
+	end
+
+	def host_payout_deduction
+		public_liability_insurance + phs_service_charge + transaction_fee
+	end
+
+	def host_payout
+		actual_value_figure(amount - host_payout_deduction)
+	end
+
+	def fees
+		credit_card_fee
+	end
+
+	def actual_amount
+		return '00.00' if self.amount.blank?
+		actual_value_figure(amount)
+	end
+
+	def actual_value_figure(value)
+		value.to_s.split('.').last.size == 1 ? "#{value.to_s}0" : value.to_s
+	end
+
+	def calculate_amount
+		transaction_mode_value(self.subtotal + self.transaction_fee)
+	end
+
+	def transaction_mode_value(value)
+		if live_mode_rounded_value?
+			return value.round(2)
+		else
+			integer_part = value.to_s.split('.')[0]
+			fraction_part = value.to_s.split('.')[1]
+			fraction_part = fraction_part.to_i > 0 ? '.08' : '.00'
+			(integer_part + fraction_part).to_f
+		end
+	end
+
+	def live_mode_rounded_value?
+		ENV['LIVE_MODE_ROUNDED_VALUE'] == 'true' ? true : false
 	end
 
 	def message_update(new_message)
@@ -169,11 +213,11 @@ class Booking < ActiveRecord::Base
 
 	def host_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
-		"Booking $#{self.host_payout}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+		"Booking $#{self.host_payout} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
 	def guest_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
-		"Booking $#{self.amount}.00 - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 end

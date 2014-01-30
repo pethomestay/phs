@@ -27,4 +27,6 @@ module ApplicationHelper
   def google_maps_source_url
     "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true&libraries=places"
   end
+
+
 end
