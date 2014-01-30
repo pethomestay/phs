@@ -45,6 +45,7 @@ PetHomestay::Application.routes.draw do
     resources :feedbacks
     resources :homestays, except:[:new, :create]
     resources :pets
+    resources :analytics
     resources :users
   end
 

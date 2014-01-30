@@ -17,7 +17,6 @@
         .container.admin-container-phs
           = link_to "Pet Homestay", root_path, class: "brand"
           %ul.nav.admin-nav-phs
-            %li= link_to "Admin Dashboard", admin_dashboard_path
             %li= link_to "Users", admin_users_path
             %li= link_to "Homestays", admin_homestays_path
             %li= link_to "Pets", admin_pets_path
@@ -25,6 +24,7 @@
             %li= link_to "Feedback", admin_feedbacks_path
             %li= link_to "Transactions", admin_transactions_path
             %li= link_to "Reconciliation", admin_bookings_path
+            %li= link_to "Analytics", admin_analytics_path
 
     .container.main
       = render "layouts/flash_messages", :locals => {:flash => flash}
