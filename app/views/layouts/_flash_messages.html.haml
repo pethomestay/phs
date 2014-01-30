@@ -1,4 +1,9 @@
+- indent = ""
+- if request.fullpath == root_path
+  - indent = " indent-alert"
+
 - flash.each do |type, message|
-  %div.alert.fade.in{ :class => flash_class_for(type) }
+  %div.alert.fade.in{ :class => flash_class_for(type) + indent }
     %button.close{"data-dismiss" => "alert"} ×
     = message
+
