@@ -72,4 +72,83 @@ describe Mailbox do
 			end
 		end
 	end
+
+	describe '#read_by?' do
+		subject { mailbox }
+		let(:mailbox)  { FactoryGirl.create :mailbox }
+
+		context 'if guest has read the inbox' do
+			before { mailbox.guest_read = true }
+
+			it 'should return false' do
+				subject.read_by?(mailbox.guest_mailbox).should be_eql(true)
+			end
+		end
+
+		context 'if guest has not read the inbox' do
+			before { mailbox.guest_read = false }
+
+			it 'should return false' do
+				subject.read_by?(mailbox.guest_mailbox).should be_eql(false)
+			end
+		end
+
+		context 'if host has read the inbox' do
+			before { mailbox.host_read = true }
+
+			it 'should return false' do
+				subject.read_by?(mailbox.host_mailbox).should be_eql(true)
+			end
+		end
+
+		context 'if guest has not read the inbox' do
+			before { mailbox.host_read = false }
+
+			it 'should return false' do
+				subject.read_by?(mailbox.host_mailbox).should be_eql(false)
+			end
+		end
+	end
+
+	describe '#read_by' do
+		subject { mailbox }
+		let(:mailbox)  { FactoryGirl.create :mailbox }
+
+		context 'when host read the mailbox' do
+			before { mailbox.read_by(mailbox.host_mailbox) }
+
+			it 'should set host_read to true' do
+				subject.host_read.should be_true
+			end
+		end
+
+		context 'when guest read the mailbox' do
+			before { mailbox.read_by(mailbox.guest_mailbox) }
+
+			it 'should set host_read to true' do
+				subject.guest_read.should be_true
+			end
+		end
+	end
+
+	describe '#read_for' do
+		subject { mailbox }
+		let(:mailbox)  { FactoryGirl.create :mailbox }
+
+		context 'when guest creates a message' do
+			before { mailbox.read_for(mailbox.guest_mailbox) }
+
+			it 'should turn host as unread' do
+				subject.host_read.should be_false
+			end
+		end
+
+		context 'when host creates a message' do
+			before { mailbox.read_for(mailbox.host_mailbox) }
+
+			it 'should turn guest as unread' do
+				subject.guest_read.should be_false
+			end
+		end
+	end
 end

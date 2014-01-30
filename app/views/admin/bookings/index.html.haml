@@ -1,5 +1,6 @@
 = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Reconciliation for host payouts
+%h5= link_to "Download Reconciliations", reconciliations_file_admin_bookings_url(format: "csv")
 %table.table.tablesorter
   %thead
     %tr
@@ -18,10 +19,10 @@
         %td= booking.booker.name.capitalize
         %td= booking.check_out_date.to_formatted_s(:year_month_day)
         %td= booking.transaction.reference
-        %td= "$#{booking.transaction.amount}.00"
-        %td= "$#{booking.public_liability_insurance}.00"
-        %td= "$#{booking.phs_service_charge}.00"
-        %td= "$#{booking.host_payout}.00"
+        %td= "$#{booking.transaction.amount}"
+        %td= "$#{booking.public_liability_insurance}"
+        %td= "$#{booking.phs_service_charge}"
+        %td= "$#{booking.host_payout}"
         %td
           %input.booking_paid_confirm{type: 'button', value: 'YES'}
 

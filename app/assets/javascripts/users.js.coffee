@@ -26,3 +26,6 @@ $ ->
   $('[name="user[homestay_attributes][is_homestay]"], [name="user[homestay_attributes][is_sitter]"], [name="user[homestay_attributes][is_services]"], [name="homestay[is_homestay]"], [name="homestay[is_sitter]"], [name="homestay[is_services]"]').trigger('change')
 
   $('form').nestedFields(containerSelector: '.homestay-pictures tbody');
+
+  $('a.enquiry-update-submit').on 'click', ->
+    $(this).closest('form').submit()

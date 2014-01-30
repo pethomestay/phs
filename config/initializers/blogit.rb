@@ -2,7 +2,7 @@
 Blogit.configure do |config|
 
   # What kind of comments do you want to add to your blog ? (:active_record, :disqus or :no)
-  # config.include_comments = :active_record
+  config.include_comments = :active_record
 
   # When using disqus comments, what is the shortname of your forum ?
   # config.disqus_shortname = ""
@@ -36,7 +36,7 @@ Blogit.configure do |config|
 
   # If set to true, the comments form will POST and DELETE to the comments
   # controller using AJAX calls.
-  # config.ajax_comments = true
+  config.ajax_comments = true
 
   # If set to true, the create, edit, update and destroy actions
   # will be included. If set to false, you'll have to set these
@@ -56,10 +56,10 @@ Blogit.configure do |config|
   # config.highlight_code_syntax = true
 
   # RSS Feed title content
-  # config.rss_feed_title = "A blog about ponies!"
+  config.rss_feed_title = "Pet homestay blog"
 
   # RSS Feed description content
-  # config.rss_feed_description = "Get your daily pony news here!"
+  config.rss_feed_description = "Everything you wanted to know about keeping your pets in a home based enviroment."
 
   # Should blogit ping search engines with your sitemap
   # when posts are created, updated or destroyed?

@@ -34,6 +34,13 @@
   background-image: -webkit-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
   border: 1px solid rgba(234, 110, 40, 0.6);
   color: rgba(255, 255, 255, 0.9);
+}
+
+.hidden {
+  display: none;
+}
+
+.indent-alert {
   margin-left: 180px;
 }
 
@@ -113,6 +120,10 @@ footer {
     }
   }
 }
+}
+
+footer[type="comment"] {
+  padding-bottom: 20px !important;
 }
 
 .chzn-container-single .chzn-single div b {

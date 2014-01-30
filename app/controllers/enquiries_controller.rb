@@ -20,8 +20,8 @@ class EnquiriesController < ApplicationController
 
   def update
     if @enquiry.update_attributes(params[:enquiry])
-	    @enquiry.mailbox.messages.create! user_id: current_user.id, message_text: @enquiry.response_message
-      redirect_to my_account_path, alert: "Your response has been sent to #{@enquiry.user.first_name}"
+	    @enquiry.mailbox.messages.create!(user_id: current_user.id, message_text: @enquiry.response_message) unless @enquiry.response_message.blank?
+			return redirect_to mailbox_messages_path(@enquiry.mailbox)
     else
       flash[:alert] = "Please fill in a response message if your are not answering yes or no"
       @user = @enquiry.user
