@@ -12,12 +12,29 @@
         .span2.pull-right
           = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn'
       %hr
-    %ul
-      %li= link_to 'Messages', mailboxes_path
-      - if current_user.account.blank?
-        %li= link_to 'Payout Details', new_account_path
-      - else
-        %li= link_to 'Payout Details', account_path(current_user.account)
+    %h3 My Messages
+    .row
+      .span6
+        %p
+          See all current and previous messages here.
+          %br
+          All  notifications are kept here for your records.
+      .span2.pull-right
+        = link_to 'Messages', mailboxes_path, class: 'btn'
+    %hr
+    %h3 Payout Details
+    .row
+      .span6
+        %p
+          Wanted to add or change your payout details?
+          %br
+          Click this button to proceed
+      .span2.pull-right
+        - if current_user.account.blank?
+          = link_to 'Payout Details', new_account_path, class: 'btn'
+        - else
+          = link_to 'Payout Details', account_path(current_user.account), class: 'btn'
+    %hr
     %h3 Manage details
     .row
       .span6

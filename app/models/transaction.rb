@@ -60,7 +60,7 @@ class Transaction < ActiveRecord::Base
 
 	def complete_payment
 		message_id = SecureRandom.hex(15)
-		time_stamp = Time.now.strftime("%Y%m%dT%H%M%S%L%z")
+		time_stamp = Time.now.strftime('%Y%m%dT%H%M%S%L%z')
 		if self.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED
 			begin
 				message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>#{message_id}</messageID>
