@@ -23,7 +23,10 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
-	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED)
+	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED).order('created_at DESC')
+
+	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
+			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
 
 	after_create :create_mailbox
 
@@ -42,12 +45,13 @@ class Booking < ActiveRecord::Base
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
 			csv << [ 'Username', 'Check-out Date', 'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee',
-			         'Host Payout' ]
+			         'Host Payout', 'Status' ]
 
 			all.each do |booking|
 				csv << [ booking.booker.name.capitalize, booking.check_out_date.to_formatted_s(:year_month_day),
 				         booking.transaction.reference, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
-				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}" ]
+				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
+				         (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid' ]
 			end
 		end
 	end

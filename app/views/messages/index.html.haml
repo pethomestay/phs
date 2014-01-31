@@ -16,13 +16,14 @@
   .clearfix
 - if @messages.present?
   - @messages.each do |message|
-    .content{ style: "border: 2px black solid;" }
-      .pull-right= message.created_at.strftime("%d/%m/%Y")
-      .pull-left= "From: #{(current_user == message.user) ? 'Me' : message.user.first_name.capitalize}"
+    - unless message.message_text.blank?
+      .content{ style: "border: 2px black solid;" }
+        .pull-right= message.created_at.strftime("%d/%m/%Y")
+        .pull-left= "From: #{(current_user == message.user) ? 'Me' : message.user.first_name.capitalize}"
+        %br
+        %p= "Message: #{message.message_text}"
       %br
-      %p= "Message: #{message.message_text}"
-    %br
-    %br
+      %br
 - else
   %p There are no messages in this inbox
 
