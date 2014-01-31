@@ -84,20 +84,20 @@
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
-  = ": $#{@booking.cost_per_night.to_i}.00"
+  = ": $#{@booking.cost_per_night}"
 %p.article-content
   %i Subtotal
-  = ": $#{@booking.subtotal}.00"
+  = ": $#{@booking.subtotal}"
 %p.article-content
   %i PetHomeStay Service Fee (15%)
-  = ": $#{@booking.phs_service_charge}.00"
+  = ": $#{@booking.phs_service_charge}"
 %p.article-content
   %i Insurance
-  = ": $#{@booking.public_liability_insurance}.00"
+  = ": $#{@booking.public_liability_insurance}"
 %p.article-content
   %strong
     %i Total Payout
-  = ": $#{@booking.host_payout}.00"
+  = ": $#{@booking.host_payout}"
 %br
 
 %p.article-content
