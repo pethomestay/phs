@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
+gem 'oauth2'
 gem 'redcarpet'
+gem 'legato'
 gem 'blogit'
 gem 'ckeditor'
 gem 'rails', '3.2.12'

@@ -10,9 +10,6 @@
   }
 }
 
-.navbar .login-dropdown {
-  margin-left: 80px;
-}
 
 .open .dropdown-menu { display: block; }
 
@@ -22,9 +19,6 @@
     min-height: 42px;
     .margin-left { margin-left: 30px;}
     .nav {
-      li {
-        max-width: 110px;
-      }
       .cta {
         margin-top: 1px;
         margin-right: 10px;
@@ -32,7 +26,7 @@
           text-indent: -9999px;
           min-width: 198px;
           min-height: 38px;
-          background: url('/assets/facebook-sign-in.png') no-repeat;
+          background: url('facebook-sign-in.png') no-repeat;
           margin-top: 3px;
           padding: 0;
         }
