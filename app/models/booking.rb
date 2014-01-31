@@ -149,20 +149,20 @@ class Booking < ActiveRecord::Base
 		transaction_mode_value(self.number_of_nights * 2)
 	end
 
+	def host_payout_deduction
+		transaction_mode_value(public_liability_insurance + phs_service_charge)
+	end
+
+	def host_payout
+		actual_value_figure(subtotal - host_payout_deduction)
+	end
+
 	def transaction_fee
 		credit_card_fee
 	end
 
 	def credit_card_fee
 		transaction_mode_value(subtotal * 0.025)
-	end
-
-	def host_payout_deduction
-		public_liability_insurance + phs_service_charge + transaction_fee
-	end
-
-	def host_payout
-		actual_value_figure(amount - host_payout_deduction)
 	end
 
 	def fees
@@ -175,7 +175,14 @@ class Booking < ActiveRecord::Base
 	end
 
 	def actual_value_figure(value)
-		value.to_s.split('.').last.size == 1 ? "#{value.to_s}0" : value.to_s
+		fraction = value.to_s.split('.').last
+		if fraction.size == 1
+			"#{value.to_s}0"
+		elsif fraction.size == 2
+			value.to_s
+		elsif fraction.size > 2
+			value.round(2).to_s
+		end
 	end
 
 	def calculate_amount

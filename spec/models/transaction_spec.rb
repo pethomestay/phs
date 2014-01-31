@@ -152,22 +152,11 @@ describe Transaction do
 <recurringFlag>no</recurringFlag><cardType>6</cardType><cardDescription>Visa</cardDescription></CreditCardInfo>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>" }
 
-		before { Time.now.stub(:strftime).with('%Y%m%dT%H%M%S%L%z').and_return('current_time') }
-		before { SecureRandom.stub(:hex).with(15).and_return('unique_hash') }
-
 		context 'when stored card is used' do
 			let(:card) { FactoryGirl.create :card, user: user, transaction: transaction }
-			let(:message) { "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>unique_hash
-</messageID><messageTimestamp>current_time</messageTimestamp><timeoutValue>60</timeoutValue>
-<apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
-<password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Periodic</RequestType>
-<Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType>
-<clientID>#{card.token}</clientID><amount>2000</amount><currency>AUD</currency>
-</PeriodicItem></PeriodicList></Periodic></SecurePayMessage>" }
 
 			before { transaction.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED }
-			before { RestClient.stub(:post).with(ENV['TRANSACTION_XML_API'], message, content_type: 'text/xml').
-					and_return(response) }
+			before { RestClient.stub(:post) { response } }
 
 			it 'should complete the payment transaction' do
 				subject.should be_true
@@ -175,17 +164,8 @@ describe Transaction do
 		end
 
 		context 'when credit card is used' do
-			let(:message) { "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>unique_hash
-</messageID><messageTimestamp>current_time</messageTimestamp><timeoutValue>60</timeoutValue><apiVersion>spxml-4.2
-</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
-<password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Payment</RequestType>
-<Payment><TxnList count=\"1\"><Txn ID=\"1\"><txnType>11</txnType><txnSource>7</txnSource><amount>
-#{(transaction.amount * 100).to_i}</amount><purchaseOrderNo>#{transaction.reference}</purchaseOrderNo><preauthID>
-#{transaction.pre_authorisation_id}</preauthID></Txn></TxnList></Payment></SecurePayMessage>" }
-
 			before { transaction.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED }
-			before { RestClient.stub(:post).with(ENV['TRANSACTION_XML_API'], message, content_type: 'text/xml').
-					and_return(response) }
+			before { RestClient.stub(:post) { response } }
 
 			it 'should complete the payment transaction' do
 				subject.should be_true
