@@ -36,10 +36,10 @@
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
-  = ": $#{@booking.cost_per_night}"
+  = ": $#{@booking.actual_value_figure(:cost_per_night)}"
 %p.article-content
   %i Subtotal
-  = ": $#{@booking.subtotal}"
+  = ": $#{@booking.actual_value_figure(:subtotal)}"
 %p.article-content
   %i Credit Card Fee
   = ": $#{@booking.transaction_fee}"

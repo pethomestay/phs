@@ -34,10 +34,8 @@
 %p.article-content
   %strong What Happens Next?
 
-
-%p.article-content.enquiry-message-reply
-  %strong= link_to 'Reply To This Message', mailbox_messages_url(@enquiry.mailbox)
-  if you need more information, or want to arrange to meet the host first.
+%p.article-content.email-message-reply
+  %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
 
 - unless [3,4].include?(@enquiry.response_id)
   %p.article-content.enquiry-message-reply

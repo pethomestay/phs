@@ -133,7 +133,7 @@ class Booking < ActiveRecord::Base
 		{
 		    booking_subtotal: self.subtotal.to_s,
 		    booking_amount: self.amount.to_s,
-		    transaction_fee: self.transaction_fee.to_s,
+		    transaction_fee: self.transaction_fee,
 		    transaction_actual_amount: self.transaction.actual_amount,
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
@@ -152,15 +152,15 @@ class Booking < ActiveRecord::Base
 	end
 
 	def phs_service_charge
-		transaction_mode_value(self.subtotal * 0.15)
+		actual_value_figure(transaction_mode_value(self.subtotal * 0.15))
 	end
 
 	def public_liability_insurance
-		transaction_mode_value(self.number_of_nights * 2)
+		actual_value_figure(transaction_mode_value(self.number_of_nights * 2))
 	end
 
 	def host_payout_deduction
-		transaction_mode_value(public_liability_insurance + phs_service_charge)
+		transaction_mode_value(public_liability_insurance.to_f + phs_service_charge.to_f)
 	end
 
 	def host_payout
@@ -168,7 +168,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def transaction_fee
-		credit_card_fee
+		actual_value_figure(credit_card_fee)
 	end
 
 	def credit_card_fee
@@ -176,7 +176,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def fees
-		credit_card_fee
+		actual_value_figure(credit_card_fee)
 	end
 
 	def actual_amount
@@ -185,6 +185,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def actual_value_figure(value)
+		value = self.send(value) if value.class == Symbol
 		fraction = value.to_s.split('.').last
 		if fraction.size == 1
 			"#{value.to_s}0"
@@ -196,7 +197,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def calculate_amount
-		transaction_mode_value(self.subtotal + self.transaction_fee)
+		transaction_mode_value(self.subtotal + self.transaction_fee.to_f)
 	end
 
 	def transaction_mode_value(value)

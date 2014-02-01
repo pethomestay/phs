@@ -5,6 +5,9 @@
   %p.article-content
     %strong= @booking.response_message
 
+%p.article-content.email-message-reply
+  %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
+
 %p.article-content
   %i HomeStay Title:
   = @homestay.title.capitalize
