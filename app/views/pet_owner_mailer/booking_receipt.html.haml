@@ -46,7 +46,7 @@
 %p.article-content
   %strong
     %i Total
-  = ": $#{@booking.amount}"
+  = ": $#{@booking.actual_value_figure(:amount)}"
 %br
 
 %p.article-content
