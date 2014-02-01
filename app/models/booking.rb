@@ -80,9 +80,16 @@ class Booking < ActiveRecord::Base
 
 		if self.response_id == 5
 			message = 'You have confirmed the booking'
-			self.save!
-			PetOwnerMailer.booking_confirmation(self).deliver
-			ProviderMailer.booking_confirmation(self).deliver
+			results = self.complete_transaction(current_user)
+			if results.class == String
+				message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
+				UserMailer.error_report('host confirming transaction', results).deliver
+			else
+				self.save!
+				PetOwnerMailer.booking_confirmation(self).deliver
+				ProviderMailer.booking_confirmation(self).deliver
+			end
+
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
 			self.status = BOOKING_STATUS_REJECTED
@@ -95,7 +102,6 @@ class Booking < ActiveRecord::Base
 			self.save!
 			PetOwnerMailer.provider_has_question(self, old_message).deliver
 		end
-		self.complete_transaction(current_user)
 		message
 	end
 

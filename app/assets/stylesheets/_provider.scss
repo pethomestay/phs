@@ -70,9 +70,13 @@ $orange:  #EA6E28;
   }
 }
 
-.edit-listing, .enquire-listing {
+.edit-listing, .enquire-listing, .booking-listing {
   .btn {
     margin-right:20px;
+  }
+
+  p {
+    margin-top: 9px;
   }
 }
 

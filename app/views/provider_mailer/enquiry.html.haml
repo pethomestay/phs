@@ -3,15 +3,11 @@
 %p.article-content
   %i From
   = ": #{@guest.first_name.capitalize}"
+
+= render 'shared/pet_details'
+
 %p.article-content
-  %i Pet Name
-  = ": #{@guest.pet_names}"
-%p.article-content
-  %i Pet Breed
-  = ": #{@guest.pet_breed}"
-%p.article-content
-  %i Pet Age
-  = ": #{@guest.pets.map(&:age).to_sentence}"
+  %strong Enquiry Details
 %p.article-content
   %i Check In Date
   = ": #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}"

@@ -1,0 +1,61 @@
+%p.article-content
+  %strong Pet Details
+- if @guest.pet.pictures.present?
+  %p.article-content= image_tag(@guest.pet.pictures.first.file.thumb('190x150#').url)
+%p.article-content
+  %i Pet Name
+  = ": #{@guest.pet_names}"
+%p.article-content
+  %i Pet Breed
+  = ": #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}"
+%p.article-content
+  %i Pet Age
+  = ": #{@guest.pets.map(&:age).to_sentence}"
+%p.article-content
+  %i Date of Birth
+  = ": #{@guest.pet.date_of_birth.to_formatted_s(:day_and_month_and_year)}"
+%p.article-content
+  %i Dislike Loneliness
+  %strong= ": #{@guest.pet.dislike_loneliness? ? 'Yes' : 'No'}, "
+  %i Dislike Children
+  %strong= ": #{@guest.pet.dislike_children? ? 'Yes' : 'No'}, "
+  %i Dislike Animals
+  %strong= ": #{@guest.pet.dislike_animals? ? 'Yes' : 'No'}, "
+  %i Dislike People
+  %strong= ": #{@guest.pet.dislike_people? ? 'Yes' : 'No'}."
+- if @guest.pet.any_dislikes?
+  %p.article-content
+    %i Dislike explanation
+    = ": #{@guest.pet.explain_dislikes}."
+
+%p.article-content
+  %i Flee treated
+  %strong= ": #{@guest.pet.flea_treated? ? 'Yes' : 'No'}, "
+  %i Vaccinated
+  %strong= ": #{@guest.pet.vaccinated? ? 'Yes' : 'No'}, "
+  %i House Trained
+  %strong= ": #{@guest.pet.house_trained? ? 'Yes' : 'No'}."
+
+%p.article-content
+  %i Microchip Number
+  = ": #{@guest.pet.microchip_number.blank? ? 'n/a' : @guest.pet.microchip_number}"
+%p.article-content
+  %i Council Number
+  = ": #{@guest.pet.council_number.blank? ? 'n/a' : @guest.pet.council_number}"
+
+%p.article-content
+  %i Emergency Contact Name
+  = ": #{@guest.pet.emergency_contact_name.blank? ? 'n/a' : @guest.pet.emergency_contact_name}"
+%p.article-content
+  %i Emergency Contact Phone
+  = ": #{@guest.pet.emergency_contact_phone.blank? ? 'n/a' : @guest.pet.emergency_contact_phone}"
+%p.article-content
+  %i Vet Name
+  = ": #{@guest.pet.vet_name.blank? ? 'n/a' : @guest.pet.vet_name}"
+%p.article-content
+  %i Vet Phone
+  = ": #{@guest.pet.vet_phone.blank? ? 'n/a' : @guest.pet.vet_phone}"
+%p.article-content
+  %i Medication
+  = ": #{@guest.pet.medication.blank? ? 'n/a' : @guest.pet.medication}"
+%br

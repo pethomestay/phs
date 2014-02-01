@@ -78,7 +78,7 @@ class Transaction < ActiveRecord::Base
 				)
 
 				doc = Nokogiri::XML(response)
-				if doc.xpath('//responseCode').text == "00"
+				if %w(00 08).include?(doc.xpath('//responseCode').text)
 					self.transaction_id = doc.xpath('//txnID').text
 					self.reference = doc.xpath('//ponum').text
 					self.response_text = doc.xpath('//responseText').text
@@ -87,7 +87,7 @@ class Transaction < ActiveRecord::Base
 					self.status = TRANSACTION_FINISHED
 					return self.save!
 				else
-					return doc.xpath('//responseText').text
+					return "response code #{doc.xpath('//responseCode').text} - message - #{doc.xpath('//responseText').text}"
 				end
 
 			rescue Exception => e
@@ -111,7 +111,7 @@ class Transaction < ActiveRecord::Base
 				)
 
 				doc = Nokogiri::XML(response)
-				if doc.xpath('//responseCode').text == "00"
+				if %w(00 08).include?(doc.xpath('//responseCode').text)
 					self.transaction_id = doc.xpath('//txnID').text
 					self.response_text = doc.xpath('//responseText').text
 					doc.xpath('//receipt').text
@@ -119,7 +119,7 @@ class Transaction < ActiveRecord::Base
 					self.status = TRANSACTION_FINISHED
 					return self.save!
 				else
-					return doc.xpath('//responseText').text
+					return "response code #{doc.xpath('//responseCode').text} - message - #{doc.xpath('//responseText').text}"
 				end
 
 			rescue Exception => e
