@@ -3,7 +3,7 @@
 - if @booking.response_message.present?
   %p.article-content= "#{@host.first_name.capitalize} has also included the following message:"
   %p.article-content
-    %strong= @booking.response_message.blank? '-' : @booking.response_message
+    %strong= @booking.response_message.blank? ? '-' : @booking.response_message
 
 %p.article-content.email-message-reply
   %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
