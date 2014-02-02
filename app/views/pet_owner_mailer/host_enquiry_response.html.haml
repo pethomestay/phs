@@ -35,7 +35,7 @@
   %strong What Happens Next?
 
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
+  %strong= link_to 'Reply to this message', mailbox_messages_url(@enquiry.mailbox), style: 'color:#444444;'
 
 - unless [3,4].include?(@enquiry.response_id)
   %p.article-content.enquiry-message-reply

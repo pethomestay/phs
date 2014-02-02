@@ -52,7 +52,7 @@
 %p.article-content
   %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
 %p.article-content
-  %i= @booking.message
+  %i= @booking.message.blank? ? '-' : @booking.message
 %br
 
 %p.article-content Thanks for helping out with PetHomeStay!
