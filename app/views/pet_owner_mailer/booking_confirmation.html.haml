@@ -32,7 +32,7 @@
   = ": $#{@booking.actual_value_figure(:subtotal)}"
 %p.article-content
   %i Credit Card Fee
-  = ": $#{@booking.credit_card_fee}"
+  = ": $#{@booking.actual_value_figure(:credit_card_fee)}"
 %p.article-content
   %strong
     %i Total Amount Paid
