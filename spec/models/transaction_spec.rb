@@ -172,4 +172,28 @@ describe Transaction do
 			end
 		end
 	end
+
+	describe '#client_id' do
+		subject { transaction.client_id }
+
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) { FactoryGirl.create :booking, booker: user }
+		let(:transaction) { FactoryGirl.create :transaction, booking: booking }
+
+		context 'when credit card transaction' do
+			it 'should return booker id' do
+				subject.should be_eql(user.id)
+			end
+		end
+
+		context 'when stored card is used' do
+			let(:card) { FactoryGirl.create :card, transaction: transaction, user: user }
+
+			before { user.cards << card }
+
+			it 'should return card token' do
+				subject.should be_eql(card.token)
+			end
+		end
+	end
 end

@@ -42,6 +42,11 @@ class Transaction < ActiveRecord::Base
 			if secure_pay_response[:card_storage_response_text].to_s != secure_pay_response[:response_text].to_s
 				self.errors.add(:storage_text, secure_pay_response[:card_storage_response_text])
 			end
+#			self.errors.add(:response_text, 'Please make sure you have entered valid expiry date or credit card details. If
+#error persists than consult PetHomeStay Team.')
+#			error_message = "1) #{secure_pay_response[:response_text]} 2) #{secure_pay_response[:card_storage_response_text]}\
+#user details are: #{self.booking.booker.email}"
+#			UserMailer.error_report('guest making booking', error_message).deliver
 		end
 		self
 	end
@@ -58,6 +63,14 @@ class Transaction < ActiveRecord::Base
 		self.booking.reload
 	end
 
+	def client_id
+		if self.card.blank?
+			self.booking.booker.id
+		else
+			self.card.token.blank? ? self.booking.booker.id : self.card.token
+		end
+	end
+
 	def complete_payment
 		message_id = SecureRandom.hex(15)
 		time_stamp = Time.now.strftime('%Y%m%dT%H%M%S%L%z')
@@ -68,7 +81,7 @@ class Transaction < ActiveRecord::Base
 <apiVersion>spxml-4.2</apiVersion></MessageInfo><MerchantInfo><merchantID>#{ENV['MERCHANT_ID']}</merchantID>
 <password>#{ENV['TRANSACTION_PASSWORD']}</password></MerchantInfo><RequestType>Periodic</RequestType>
 <Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType>
-<clientID>#{self.card.blank? ? self.booking.booker.id : self.card.token}</clientID><amount>#{(self.amount * 100).to_i}</amount><currency>AUD</currency>
+<clientID>#{self.client_id}</clientID><amount>#{(self.amount * 100).to_i}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
 
 				response = RestClient.post(
