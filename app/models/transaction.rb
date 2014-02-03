@@ -23,11 +23,21 @@ class Transaction < ActiveRecord::Base
 			self.errors.add(:secure_pay_fingerprint, 'Transaction was not secured.')
 		end
 
+		puts
+		puts
+		puts secure_pay_response.inspect
+		puts
+		puts
+
 		if %w(00 800).include?(secure_pay_response[:card_storage_response_code]) && self.errors.blank?
 			owner = self.booking.booker
 			owner.payor = true
 			owner.cards.create!(card_number: secure_pay_response[:card_number], token: secure_pay_response[:token])
 			owner.save!
+			puts
+			puts owner.cards.inspect
+			puts owner.inspect
+			puts
 		end
 
 		if %w(00 08 11).include?(secure_pay_response[:response_code]) && self.errors.blank?
@@ -74,6 +84,11 @@ class Transaction < ActiveRecord::Base
 	def complete_payment
 		message_id = SecureRandom.hex(15)
 		time_stamp = Time.now.strftime('%Y%m%dT%H%M%S%L%z')
+		puts
+		puts "transaction compelte type"
+		puts self.status.inspect
+		puts
+		puts
 		if self.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED
 			begin
 				message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SecurePayMessage><MessageInfo><messageID>#{message_id}</messageID>
@@ -84,11 +99,19 @@ class Transaction < ActiveRecord::Base
 <clientID>#{self.client_id}</clientID><amount>#{(self.amount * 100).to_i}</amount><currency>AUD</currency>
 </PeriodicItem></PeriodicList></Periodic></SecurePayMessage>"
 
+				puts
+				puts 'transaction complete message'
+				puts message.inspect
+				puts
 				response = RestClient.post(
 						ENV['TRANSACTION_XML_API'],
 						message,
 						content_type: 'text/xml'
 				)
+				puts
+				puts 'transaction complete response'
+				puts response.inspect
+				puts
 
 				doc = Nokogiri::XML(response)
 				if %w(00 08).include?(doc.xpath('//responseCode').text)
@@ -104,6 +127,10 @@ class Transaction < ActiveRecord::Base
 				end
 
 			rescue Exception => e
+				puts
+				puts 'error'
+				puts e.message.inspect
+				puts
 				return e.message
 			end
 		elsif self.status == TRANSACTION_PRE_AUTHORIZATION_REQUIRED
@@ -116,13 +143,20 @@ class Transaction < ActiveRecord::Base
 <Payment><TxnList count=\"1\"><Txn ID=\"1\"><txnType>11</txnType><txnSource>7</txnSource><amount>#{(self.amount * 100).to_i}</amount>
 <purchaseOrderNo>#{self.reference}</purchaseOrderNo><preauthID>#{self.pre_authorisation_id}</preauthID></Txn></TxnList></Payment>
 </SecurePayMessage>"
-
+				puts
+				puts 'transaction complete message'
+				puts message.inspect
+				puts
 				response = RestClient.post(
 						ENV['TRANSACTION_PRE_AUTH_COMPLETE'],
 						message,
 						content_type: 'text/xml'
 				)
 
+				puts
+				puts 'transaction complete response'
+				puts response.inspect
+				puts
 				doc = Nokogiri::XML(response)
 				if %w(00 08).include?(doc.xpath('//responseCode').text)
 					self.transaction_id = doc.xpath('//txnID').text
@@ -136,6 +170,10 @@ class Transaction < ActiveRecord::Base
 				end
 
 			rescue Exception => e
+				puts
+				puts 'error'
+				puts e.message.inspect
+				puts
 				return e.message
 			end
 		end
