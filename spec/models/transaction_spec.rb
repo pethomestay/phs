@@ -196,4 +196,24 @@ describe Transaction do
 			end
 		end
 	end
+
+	describe '#transaction_amount' do
+		subject { transaction.transaction_amount }
+
+		let(:transaction) { FactoryGirl.create :transaction }
+
+		it 'should return transaction amount' do
+			subject.should be_eql((transaction.amount * 100).to_i)
+		end
+
+		it 'should return valid transaction amount in cents for all valid amounts' do
+			((1..999).inject(true) do |boolean, dollar|
+				boolean && (0..99).inject(true) do |bool, cent|
+					transaction.amount = dollar + (BigDecimal.new(cent.to_s) * BigDecimal.new('0.01'))
+					result_amount =  transaction.transaction_amount
+					bool && result_amount.to_s.include?(dollar.to_s) && result_amount.to_s.include?(cent.to_s)
+				end
+			end).should be_true
+		end
+	end
 end
