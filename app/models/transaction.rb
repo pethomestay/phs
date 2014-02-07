@@ -23,21 +23,11 @@ class Transaction < ActiveRecord::Base
 			self.errors.add(:secure_pay_fingerprint, 'Transaction was not secured.')
 		end
 
-		puts
-		puts
-		puts secure_pay_response.inspect
-		puts
-		puts
-
 		if %w(00 800).include?(secure_pay_response[:card_storage_response_code]) && self.errors.blank?
 			owner = self.booking.booker
 			owner.payor = true
 			owner.cards.create!(card_number: secure_pay_response[:card_number], token: secure_pay_response[:token])
 			owner.save!
-			puts
-			puts owner.cards.inspect
-			puts owner.inspect
-			puts
 		end
 
 		if %w(00 08 11).include?(secure_pay_response[:response_code]) && self.errors.blank?
