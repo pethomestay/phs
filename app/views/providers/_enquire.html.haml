@@ -34,14 +34,14 @@
             %td
               -#- current_time = Time.now.strftime('%H:%m')
               - current_date = DateTime.now.strftime('%d/%m/%Y')
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_in_date]', label: 'Check in date',
+              = render partial: 'shared/datetime_field', object: { htmlid: 'xdpd1', inputid: 'dpd1', name: 'enquiry[check_in_date]', label: 'Check in date',
                                                                    value: current_date, readonly: true }
             -#%td
             -#  = render partial: 'shared/time_field', object: { name: 'enquiry[check_in_time]', label: 'Check in time',
             -#                                                   value: current_time, readonly: true }
           %tr
             %td
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_out_date]', label: 'Check out date',
+              = render partial: 'shared/datetime_field', object: { htmlid: 'xdpd2', inputid: 'dpd2', name: 'enquiry[check_out_date]', label: 'Check out date',
                                                                    value: current_date, readonly: true }
             -#%td
             -#  = render partial: 'shared/time_field', object: { name: 'enquiry[check_out_time]', label: 'Check out time',

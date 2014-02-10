@@ -53,10 +53,36 @@ $ ->
       number_of_nights_input.val(number_of_nights)
       updateTransactionFromServer(number_of_nights_input)
 
-  $('.datepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' }).on 'changeDate', (event) ->
-    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
-    if $('[name="booking[number_of_nights]"]').val() != undefined
-      setNumberOfNights()
+#  $('.datepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' }).on 'changeDate', (event) ->
+#    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
+#    if $('[name="booking[number_of_nights]"]').val() != undefined
+#      setNumberOfNights()
+#
+#  nowTemp = new Date()
+#  now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0)
+#
+#  checkin = $('#xdpd1').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy', onRender: (date) ->
+#    date.valueOf() < now.valueOf() ? 'disabled' : ''
+#  }).on 'changeDate', (event) ->
+#    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
+#    if $('[name="booking[number_of_nights]"]').val() != undefined
+#      setNumberOfNights()
+#    alert("kami")
+#    if event.date.valueOf() > checkout.date.valueOf()
+#      newDate = new Date(event.date)
+#      newDate.setDate(newDate.getDate() + 1)
+#      checkout.setValue(newDate)
+#    checkin.hide().data 'datepicker'
+##    $('#xdpd2')[0].focus();
+#
+#  checkout = $('#xdpd2').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy', onRender: (date) -> date.valueOf() == checkin.valueOf() ? 'disabled' : '' }).on 'changeDate', (event) ->
+#    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
+#    if $('[name="booking[number_of_nights]"]').val() != undefined
+#      setNumberOfNights()
+#    alert("kami")
+#    checkout.hide()
+
+
 
   $('input', 'div.datepicker').on 'click', ->
     $(this).siblings("span").click()
