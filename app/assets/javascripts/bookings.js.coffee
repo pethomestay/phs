@@ -57,30 +57,39 @@ $ ->
 #    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
 #    if $('[name="booking[number_of_nights]"]').val() != undefined
 #      setNumberOfNights()
-#
-#  nowTemp = new Date()
-#  now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0)
-#
-#  checkin = $('#xdpd1').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy', onRender: (date) ->
-#    date.valueOf() < now.valueOf() ? 'disabled' : ''
-#  }).on 'changeDate', (event) ->
-#    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
-#    if $('[name="booking[number_of_nights]"]').val() != undefined
-#      setNumberOfNights()
-#    alert("kami")
-#    if event.date.valueOf() > checkout.date.valueOf()
-#      newDate = new Date(event.date)
-#      newDate.setDate(newDate.getDate() + 1)
-#      checkout.setValue(newDate)
-#    checkin.hide().data 'datepicker'
-##    $('#xdpd2')[0].focus();
-#
-#  checkout = $('#xdpd2').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy', onRender: (date) -> date.valueOf() == checkin.valueOf() ? 'disabled' : '' }).on 'changeDate', (event) ->
-#    $(this).children("input").val new XDate(event.date).toString('dd/MM/yyyy')
-#    if $('[name="booking[number_of_nights]"]').val() != undefined
-#      setNumberOfNights()
-#    alert("kami")
-#    checkout.hide()
+
+  nowTemp = new Date()
+  now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0)
+  nowTemp.setDate nowTemp.getDate() + 1
+  secondPickerDate = nowTemp.getDate()
+  secondPickerMonth = nowTemp.getMonth()
+  secondPickerYear = nowTemp.getFullYear()
+  #tempDate
+  checkin = $("#xdpd1").datetimepicker(
+    language: "en"
+    pickTime: false
+    format: "dd/MM/yyyy"
+    startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
+  ).on("changeDate", (ev) ->
+    eventTarget = jQuery(ev.target)
+    picker = eventTarget.data("datetimepicker")
+    tempDate = new Date(picker.getLocalDate())
+    tempDate.setDate tempDate.getDate() + 1
+    if $("#xdpd2").length isnt 0
+      $("#xdpd2").datetimepicker "destroy"
+      $("#xdpd2").children("input").val new XDate(tempDate).toString("dd/MM/yyyy")
+      tempDate.setDate tempDate.getDate() + 1
+      checkout = $("#xdpd2").datetimepicker(
+        language: "en"
+        pickTime: false
+        format: "dd/MM/yyyy"
+        startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
+      ).on("changeDate", (ev) ->
+        $(this).children("input").val new XDate(ev.date).toString("dd/MM/yyyy")
+        return
+      ).data("datepicker")
+    return
+  ).data("datepicker")
 
 
 
