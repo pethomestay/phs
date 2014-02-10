@@ -4,7 +4,7 @@
   = f.input_field :type_code, type: :hidden, name: 'EPS_TXNTYPE'
   = f.input_field :reference, type: :hidden, name: 'EPS_REFERENCEID'
   = f.input_field :actual_amount, type: :hidden, name: 'EPS_AMOUNT'
-  = f.input_field :eps_result_url, type: :hidden, name: 'EPS_RESULTURL', value: root_url + ENV['TRANSACTION_RESULT_URL'], id: 'EPS_RESULTURL'
+  = f.input_field :eps_result_url, type: :hidden, name: 'EPS_RESULTURL', value: ENV['TRANSACTION_RESULT_URL'], id: 'EPS_RESULTURL'
   = f.input_field :eps_redirect, type: :hidden, name: 'EPS_REDIRECT', value: ENV['TRANSACTION_RESPONSE_METHOD']
   = f.input_field :time_stamp, type: :hidden, name: 'EPS_TIMESTAMP'
   = f.input_field :merchant_fingerprint, type: :hidden, name: 'EPS_FINGERPRINT'
