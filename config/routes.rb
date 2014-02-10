@@ -47,6 +47,7 @@ PetHomestay::Application.routes.draw do
     resources :pets
     resources :analytics
     resources :users
+    resources :accounts
   end
 
   mount Ckeditor::Engine => '/ckeditor'

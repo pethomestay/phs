@@ -33,6 +33,8 @@
       %td P
       %td = S - I - P
       %td
+        payout
+        %i.icon-eye-open
 
   %tbody
     - @bookings.each do |booking|
@@ -52,6 +54,7 @@
         %td= currency_formatter(booking.host_payout)
         %td
           %input.booking_paid_confirm{type: 'button', value: 'YES'}
+          = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(booking.bookee.account)
 
 :javascript
   $(document).ready(function(){
