@@ -1,5 +1,4 @@
-%p.article-content
-  %strong Pet Details
+%p.article-title Pet Details
 - if @guest.pet.pictures.present?
   %p.article-content= image_tag(@guest.pet.pictures.first.file.thumb('190x150#').url)
 %p.article-content

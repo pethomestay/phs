@@ -1,0 +1,9 @@
+%p.article-title Pet Details
+%p.article-content
+  %i Pet Name
+  = ": #{@guest.pet_names}"
+%p.article-content
+  %i Pet Breed
+  = ": #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}"
+%br
+

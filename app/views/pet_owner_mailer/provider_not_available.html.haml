@@ -20,6 +20,11 @@
     = @booking.check_out_date.to_formatted_s(:day_and_month)
 
 %p.article-content
+  %strong
+    Pet Details:
+    = "Name is #{@guest.pet_names} and breed is #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}."
+
+%p.article-content
   %strong Click 
   = link_to 'here', my_account_url
   %strong to Search and Enquire with more fantastic HomeStays in your Postcode.

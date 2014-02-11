@@ -9,19 +9,21 @@
 %p.article-content
   %i Email address
   = ": #{@host.email}"
-  %br
+%p.article-content
   - if @host.phone_number.present?
     %i Home phone
     = ": #{@host.phone_number}"
-    %br
+%p.article-content
   - if @host.mobile_number.present?
     %i Mobile phone
     = ": #{@host.mobile_number}"
-    %br
-  Listing:
+%p.article-content
+  %i Listing
+  \:
   = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%br
 
 %p.article-content
   %strong Booking Details
@@ -49,6 +51,9 @@
   = ": $#{@booking.actual_value_figure(:amount)}"
 %br
 
+= render 'shared/brief_pet_details'
+
+%p.article-title Message
 %p.article-content
   %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
 %p.article-content

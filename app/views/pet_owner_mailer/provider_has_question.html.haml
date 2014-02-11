@@ -20,6 +20,11 @@
   %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
 
 %p.article-content
+  %strong
+    Pet Details:
+    = "Name is #{@guest.pet_names} and breed is #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}."
+
+%p.article-content
   %strong Some Key Reasons Why You Should Book via PetHomeStay!
 %ul.phs-benefits-list
   %li.article-content
