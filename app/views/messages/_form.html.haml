@@ -1,15 +1,36 @@
-= simple_form_for [@mailbox, Message.new], html: { class: 'form-horizontal' } do |f|
-  = f.input :message_text, as: :text , input_html: { rows: 3 }
+= simple_form_for [@mailbox, Message.new], html: { class: 'form-horizontal mailbox-messages-form' } do |f|
   = f.input_field :user_id, type: :hidden, value: current_user.id
   = f.input_field :mailbox_id, type: :hidden, value: @mailbox.id
+  .well.message-text-mailbox.hidden
+    = f.input :message_text, as: :text , input_html: { rows: 3 }
+    .controls
+      = f.submit 'Submit', class: 'btn btn-primary'
+      %input.message-mailbox-cancel.btn.btn-link{ value: 'Cancel', type: 'button' }
 
-  .form-actions
-    = f.submit 'Send', class: 'btn btn-primary'
-    - if @mailbox.booking.blank? && (current_user == @mailbox.guest_mailbox)
-      = link_to 'Book it', new_booking_path(enquiry_id: @mailbox.enquiry_id), class: 'btn btn-primary'
-    - elsif @mailbox.host_booking?(current_user)
-      = link_to 'Confirm Booking', host_confirm_booking_path(@mailbox.booking), class: 'btn btn-primary'
-    - elsif !@mailbox.booking.blank? && (current_user == @mailbox.guest_mailbox) && !@mailbox.booking.owner_accepted?
+  - guest_view = (current_user == @mailbox.guest_mailbox)
+  .well.booking-listing
+    - if guest_view
+      %input{ value:  'Ask another question', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
+      if you need some more information to make a decision.
+    - else
+      %input{ value: 'Answer guest question', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
+      if you need some more information to make a decision.
+
+
+  - if @mailbox.booking.blank? && guest_view
+    %p OR
+    .well.booking-listing
+      = link_to 'Book this HomeStay', new_booking_path(enquiry_id: @mailbox.enquiry_id), class: 'btn btn-primary btn-large'
+      if you are happy to reserve this HomeStay.
+  - elsif @mailbox.host_booking?(current_user)
+    %p OR
+    .well.booking-listing
+      = link_to 'Confirm this HomeStay', host_confirm_booking_path(@mailbox.booking), class: 'btn btn-primary btn-large'
+      if you are happy to reserve this HomeStay.
+
+  - elsif !@mailbox.booking.blank? && guest_view && !@mailbox.booking.owner_accepted?
+    %p OR
+    .well.booking-listing
       - booking_params = @mailbox.enquiry_id.blank? ? { homestay_id: @mailbox.booking.homestay.id } : { enquiry_id: @mailbox.enquiry_id }
-      = link_to 'Book it', new_booking_path(booking_params), class: 'btn btn-primary'
-
+      = link_to 'Book this HomeStay', new_booking_path(booking_params), class: 'btn btn-primary btn-large'
+      if you are happy to reserve this HomeStay.
