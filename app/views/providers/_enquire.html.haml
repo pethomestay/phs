@@ -11,7 +11,7 @@
 %p or, if you are happy with this HomeStay, and want to reserve it now,
 .well.booking-listing
   - if current_user.pets.present?
-    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large'
+    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Booking', Booking for #{@homestay.user.first_name.titlecase} Homestay']);"
     Contact the owner of this listing now!
   - else
     = link_to 'Book this PetHomeStay', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
