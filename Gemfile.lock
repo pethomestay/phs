@@ -74,6 +74,7 @@ GEM
       coffee-rails (>= 3.2)
       railties (>= 3.0)
       sass-rails (>= 3.2)
+    chronic (0.10.2)
     ckeditor (4.0.8)
       mime-types
       orm_adapter
@@ -326,6 +327,7 @@ DEPENDENCIES
   bootstrap-sass
   capistrano
   chosen-rails
+  chronic
   ckeditor
   coffee-rails (~> 3.2.1)
   country_select

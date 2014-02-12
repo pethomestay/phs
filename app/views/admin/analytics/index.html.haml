@@ -1,1 +1,83 @@
 %h1 Pet Homestay Analytics
+:css
+  .a_date, .b_date { float:left;  margin-right: 50px }
+  #date_range_div { float:right }
+  .well {float:left; width: 100% }
+
+= form_tag("/admin/analytics", :remote=>true, :class => 'admin-form', :method=>'post') do
+  %p
+    - default_start_date_str =Chronic.parse("two weeks ago").strftime("%d/%m/%Y")
+    - default_end_date_str = Chronic.parse("now").strftime("%d/%m/%Y")
+
+  .well
+    .a_date
+      %label{:for => "start_date"} Start Date
+      #start_date.mypicker.input-append.date{"data-date-format" => "dd/mm/yyyy"}
+        %input.span2{:readonly => "", :name=> "start_date[date]", :size => "16", :type => "text", :value => "#{default_start_date_str}"}/
+        %span.add-on
+          %i.icon-calendar
+
+    .b_date
+      %label{:for => "end_date"} End Date
+      #end_date.mypicker.input-append.date{"data-date-format" => "dd/mm/yyyy"}
+        %input.span2{:readonly => "", :name=> "end_date[date]",:size => "16", :type => "text", :value => "#{default_end_date_str}"}/
+        %span.add-on
+          %i.icon-calendar
+
+    #date_range_div.a_date
+      %label{:for => "date_range"} Date Range
+      %select#date_range{:name => 'date_range[range]',}
+        %option{:value => 'last_week'} Last Week
+        %option{:value => 'last_fortnight'} Last Fortnight
+        %option{:value => 'last_month'} Last Month
+        %option{:value => 'all_data'} All Statistics
+  %p
+    = submit_tag "View Report", :class => 'button'
+  %div#report
+
+
+
+
+
+  :javascript
+    $('.mypicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' });
+    $('input', 'div.mypicker').css('cursor', 'default');
+    $('input', 'div.mypicker').on( "click", function() {
+      $(this).siblings("span").click();
+    });
+    $( "#date_range" ).change(function() {
+      //alert( "Handler for .change() called." + $(this).val() );
+      var myDate = new Date();
+      myDate.setHours(0, 0, 0, 0);
+      if ($(this).val() == 'last_week') {
+        // Subtract 1 week.
+        myDate.setDate(myDate.getDate() - 7);
+      } else if ($(this).val() == 'last_fortnight') {
+       // Subtract 2 weeks.
+       myDate.setDate(myDate.getDate() - 14);
+      } else if ($(this).val() == 'last_month') {
+        // Subtract 1 month.
+        myDate.setMonth(myDate.getMonth() -1);
+      }
+
+      //Lets set our start date
+      var month = myDate.getMonth()+1;
+      var day = myDate.getDate();
+      var year = myDate.getFullYear();
+      var my_new_date =  day + "/" + month + "/" + year;
+      var date_picker_date = year + "-" + month + "-" + day
+
+      /*$('#start_date.mypicker').data({date: my_new_date});
+      $('#start_date.mypicker').datetimepicker('update');
+      $('#start_date.mypicker').datetimepicker().children('input').val(my_new_date);    */
+      /*$('.mypicker').datepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' });
+      $('input', 'div.mypicker').css('cursor', 'default');
+      $('input', 'div.mypicker').on( "click", function() {
+        $(this).siblings("span").click();
+      }); */
+      var picker = $('#start_date.mypicker').data('datetimepicker');
+      picker.setLocalDate(myDate);
+
+
+    });
+
