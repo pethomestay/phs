@@ -5,7 +5,7 @@
   %li.pet
     = link_to 'My Pet profile', pets_path
   %li.homestay-listing
-    - if current_user.homestay
+    - if !current_user.homestay.blank? && current_user.homestay.persisted?
       = link_to 'Edit listing', edit_homestay_path(current_user.homestay)
     - else
       = link_to 'Create Homestay Listing', new_homestay_path
