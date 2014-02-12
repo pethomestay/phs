@@ -9,7 +9,7 @@
     before you can make a reservation
 .enquire-listing
   - if current_user.pets.present?
-    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal'
+    = link_to 'Ask host a question','#enquire', 'data-toggle' => 'modal', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
     Contact the owner of this listing now!
   - else
     = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'disabled'
