@@ -238,4 +238,20 @@ class Booking < ActiveRecord::Base
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
 		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
+
+	def actual_status
+		if self.status == BOOKING_STATUS_UNFINISHED
+			BOOKING_STATUS_UNFINISHED
+		elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
+			'awaiting host response'
+		elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
+			'host accepted but not paid'
+		elsif self.status == BOOKING_STATUS_REJECTED
+			'host rejected'
+		elsif self.status == BOOKING_STATUS_HOST_PAID
+			'host has been paid'
+		else
+			'invalid booking state'
+		end
+	end
 end
