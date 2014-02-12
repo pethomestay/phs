@@ -11,8 +11,8 @@
 %p or, if you are happy with this HomeStay, and want to reserve it now,
 .well.booking-listing
   - if current_user.pets.present?
-    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
-    Contact the owner of this listing now!
+    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
+    %p Enter your details and commit to this booking. Your HomeStay will be reserved as soon as the Host accepts the booking.
   - else
     = link_to 'Book this PetHomeStay', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
