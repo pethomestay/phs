@@ -43,7 +43,7 @@
         %td= transaction.updated_at.strftime('%d/%m/%Y')
         %td= transaction.pre_authorisation_id
         %td= transaction.response_text
-        %td= transaction.amount
+        %td= currency_formatter(transaction.amount)
         %td
           %strong= booking_status
 
