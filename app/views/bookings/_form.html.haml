@@ -15,17 +15,23 @@
   - unless host_view
     = f.input :id, as: :hidden
 
-  = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
-            input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
-
-  = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
-            input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+  -#= f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
+  -#          input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
+  -#
+  -#= f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
+  -#          input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+                - current_date = DateTime.now.strftime('%d/%m/%Y')
+  - current_date = DateTime.now.strftime('%d/%m/%Y')
+  = render partial: 'shared/datetime_field', object: { htmlid: 'xdpd1', inputid: 'booking_check_in_date', name: 'booking[check_in_date]', label: 'Check in date',
+                                                       value: current_date, readonly: true }
   %br
-  = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
-            input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
-
-  = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
-            input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+  = render partial: 'shared/datetime_field', object: { htmlid: 'xdpd2', inputid: 'booking_check_out_date', name: 'booking[check_out_date]', label: 'Check out date',
+                                                       value: current_date, readonly: true }
+  -#= f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
+  -#          input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
+  -#
+  -#= f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
+  -#          input_html: { value: @booking.check_out_time.strftime("%H:%M") }
 
   = f.input :number_of_nights, readonly: true, as: :string
 

@@ -4,6 +4,12 @@ class EnquiriesController < ApplicationController
   before_filter :find_enquiry, only: [:show, :update]
 
 	def create
+    @old_reused_enquiry = Enquiry.select('*').where(reuse_message: true)
+    if @old_reused_enquiry.present?
+      ore = @old_reused_enquiry.first
+      ore.reuse_message = 'false'
+      ore.save
+    end
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
       flash[:alert] = "Your enquiry has been sent to this provider. They will respond with their availability soon."

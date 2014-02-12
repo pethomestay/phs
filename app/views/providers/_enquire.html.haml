@@ -48,7 +48,13 @@
             -#                                                   value: current_time, readonly: true }
           %tr
             %td.message{ colspan: 2 }
-              = f.input :message, placeholder: 'Enter an optional personal message', input_html: { class: 'span7', rows: 4 }
+              - if last_enquiry.present?
+                - last_enquiry_message  = last_enquiry.first['message']
+              = f.input :message, placeholder: 'Enter an optional personal message', input_html: { class: 'span7', rows: 4, value: last_enquiry_message }
+          %tr
+            %td
+              = f.check_box :reuse_message, options = {checked: false, class: 'form-checkbox'}
+              %span Reuse this message next time I contact a host
     .modal-footer
       %a.btn{ href: '#', 'data-dismiss' => 'modal' } Cancel
       = f.submit 'Submit', class: 'btn btn-primary'
