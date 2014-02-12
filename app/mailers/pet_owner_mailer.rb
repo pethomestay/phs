@@ -65,6 +65,6 @@ class PetOwnerMailer < ActionMailer::Base
     @homestay = @booking.homestay
     @host = @homestay.user
     email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-    mail(to: email_with_name, subject: "You have made a booking!")
+    mail(to: email_with_name, subject: "Booking has been made and a response is pending")
   end
 end

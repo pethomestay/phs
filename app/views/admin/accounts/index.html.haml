@@ -1,0 +1,25 @@
+%h1 Listing Host Payout
+%table.table.tablesorter
+  %thead
+    %tr
+      %th Username
+      %th Account Name
+      %th Bank
+      %th BSB
+      %th Account Number
+      %th
+  %tbody
+    - @accounts.each do |account|
+      %tr
+        %td= account.user.name
+        %td= account.name
+        %td= account.bank
+        %td= account.bsb
+        %td= account.account_number
+        %td= link_to 'show', admin_account_path(account)
+
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+  });

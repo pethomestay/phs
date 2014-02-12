@@ -1,27 +1,51 @@
 = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Listing Transactions
+-#%p
+-#  %strong Note: Several transaction states and their respective explanation:-
+-#%p
+-#  %strong unfinished
+-#  \: guest has not been able to complete booking transaction (bank error, system bug, invalid credit card or guest simply left booking).
+-#  %br
+-#  %strong awaiting host response
+-#  \: transaction has been done successfully. But host hasn't responded yet.
+-#  %br
+-#  %strong host rejected
+-#  \: transaction has been done successfully. But host rejected guest's offer.
+-#  %br
+-#  %strong host accepted but not paid
+-#  \: transaction has been done successfully. Host accepted guest's offer. But hasn't been paid.
+-#  %br
+-#  %strong host has been paid
+-#  \: transaction has been done successfully. Host accepted guest's offer and manually paid as well.
+
 %table.table.tablesorter
   %thead
     %tr
-      %th User Name
-      %th Id
+      %th Guest
+      %th Host
+      %th Reference Id
       %th Date
-      %th Pre-authorisation Id
+      %th Pre-auth Id
       %th Response Text
       %th Amount
       %th Status
 
   %tbody
     - @transactions.each do |transaction|
-      - booking_status = transaction.booking_status
-      %tr{ class: booking_status == 'ready to be completed' ? 'completed' : '' }
-        %td= transaction.booking.booker.blank? ? 'none' : transaction.booking.booker.name
+      - booking = transaction.booking
+      - booking_status = booking.actual_status
+      %tr{ class: booking_status == 'host has been paid' ? 'completed' : '' }
+        - guest = booking.booker
+        - host = booking.bookee
+        %td= link_to (guest.name || 'n/a'), admin_user_path(guest)
+        %td= link_to (host.name || 'n/a'), admin_user_path(host)
         %td= transaction.reference
-        %td= transaction.updated_at.to_formatted_s(:year_month_day)
+        %td= transaction.updated_at.strftime('%d/%m/%Y')
         %td= transaction.pre_authorisation_id
         %td= transaction.response_text
         %td= transaction.amount
-        %td= booking_status
+        %td
+          %strong= booking_status
 
 :javascript
   $(document).ready(function(){

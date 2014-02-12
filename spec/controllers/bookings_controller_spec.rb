@@ -16,8 +16,8 @@ describe BookingsController do
 	describe 'GET #new' do
 		subject { get :new, enquiry_id: enquiry.id }
 
-		let(:user) { FactoryGirl.create :user }
-		let(:enquiry) { FactoryGirl.create(:enquiry, homestay: FactoryGirl.create(:homestay))  }
+		let(:user) { FactoryGirl.create :user_with_pet }
+		let(:enquiry) { FactoryGirl.create(:enquiry, homestay: FactoryGirl.create(:homestay), user: user)  }
 
 		before do
 			controller.stub(:current_user).and_return user

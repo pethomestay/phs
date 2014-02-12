@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 	def index
 		@mailbox = Mailbox.find(params[:mailbox_id])
 		@mailbox.read_by(current_user)
-		@messages = @mailbox.messages.reverse
+		@messages = @mailbox.messages
 	end
 
 	def create

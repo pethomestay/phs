@@ -5,16 +5,16 @@ module ApplicationHelper
 
   def flash_class_for(type)
     case type
-      when :alert
-        "warning"
-      when :error
-        "error"
-      when :notice
-        "info"
-      when :success
-        "success"
-      else
-        type.to_s
+    when :alert
+      'warning'
+    when :error
+      'error'
+    when :notice
+      'info'
+    when :success
+      'success'
+    else
+      type.to_s
     end
   end
 
@@ -27,6 +27,4 @@ module ApplicationHelper
   def google_maps_source_url
     "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true&libraries=places"
   end
-
-
 end

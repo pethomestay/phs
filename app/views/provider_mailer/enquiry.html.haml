@@ -3,30 +3,26 @@
 %p.article-content
   %i From
   = ": #{@guest.first_name.capitalize}"
-%p.article-content
-  %i Pet Name
-  = ": #{@guest.pet_names}"
-%p.article-content
-  %i Pet Breed
-  = ": #{@guest.pet_breed}"
-%p.article-content
-  %i Pet Age
-  = ": #{@guest.pets.map(&:age).to_sentence}"
+%br
+
+%p.article-title Enquiry Details
 %p.article-content
   %i Check In Date
   = ": #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}"
 %p.article-content
   %i Check Out Date
   = ": #{@enquiry.check_out_date.to_formatted_s(:day_and_month)}"
+%br
 
-%p.article-content
-  %strong Message
+= render 'shared/pet_details'
+
+%p.article-title Message
 %p.article-content
   %i= @enquiry.message.blank? ? '-' : @enquiry.message
-
 %p.article-content.email-message-reply
   %strong= link_to 'Reply to this message', mailbox_messages_url(@enquiry.mailbox), style: 'color:#444444;'
   and answer any queries the guest may have.
+%br
 
 %p.article-content
   %strong Please encourage your Guest to ‘Book this HomeStay’ once they have all the information they need.

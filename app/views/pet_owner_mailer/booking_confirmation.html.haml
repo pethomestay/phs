@@ -5,6 +5,13 @@
   Don’t forget to follow the
   = succeed '.' do
     = link_to('House Rules', house_rules_url)
+%p.article-content
+  Also
+  = link_to 'Read Cancellation Policy', cancellation_policy_url
+  and
+  = succeed '.' do
+    = link_to 'Insurance Policy', insurance_policy_url
+
 %p.article-content When you handover your pet, make sure you:
 %ul
   %li.article-content Review pick up times & dates
@@ -13,6 +20,7 @@
   %li.article-content Bring food for your pet (owners provide this unless otherwise agreed!)
   %li.article-content Bring a favourite toy or bedding so they feel at home
   %li.article-content Any special instructions such as feeding or walking
+%br
 
 %p.article-title Booking Details
 %p.article-content
@@ -26,73 +34,79 @@
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
-  = ": $#{@booking.cost_per_night}"
+  = ": $#{@booking.actual_value_figure(:cost_per_night)}"
 %p.article-content
   %i Subtotal
-  = ": $#{@booking.subtotal}"
+  = ": $#{@booking.actual_value_figure(:subtotal)}"
 %p.article-content
   %i Credit Card Fee
-  = ": $#{@booking.credit_card_fee}"
+  = ": $#{@booking.actual_value_figure(:credit_card_fee)}"
 %p.article-content
   %strong
     %i Total Amount Paid
-  = ": $#{@booking.amount}"
+  = ": $#{@booking.actual_value_figure(:amount)}"
 %br
+
+= render 'shared/brief_pet_details'
 
 %p.article-title Provider details for your records
 %p.article-content
-  Listing:
+  %i Listing
+  \:
   = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%p.article-content
+  %i Provider's name
+  = ": #{@host.name}"
+%p.article-content
+  %i Provider's email
+  = ": #{@host.email}"
+- if @host.phone_number.present?
   %p.article-content
-    = "Provider's name: #{@host.name}"
-    %br
-    = "Provider's email: #{@host.email}"
-    - if @host.phone_number.present?
-      %br
-      = "Provider's phone: #{@host.phone_number}"
-    - if @host.mobile_number.present?
-      %br
-      = "Provider's mobile: #{@host.mobile_number}"
-    %br
-    Address:
-    %br
-    = @homestay.address_1
-    - if @homestay.address_2.present?
-      %br
-      = @homestay.address_2
-    %br
-    = @homestay.address_suburb
-    %br
-    = @homestay.address_city
-    %br
-    Professional?:
-    - if @homestay.is_professional?
-      Yes
-    - else
-      No
-    %br
-    Property type:
-    = @homestay.property_type_name
-    %br
-    Outdoor area:
-    = @homestay.outdoor_area_name
-    %br
-    Fenced?:
-    - if @homestay.fenced
-      Yes
-    - else
-      No
-    %br
-    - if @homestay.supervision?
-      Supervision?:
-      = @homestay.pretty_supervision
-      %br
-    - if @homestay.emergency_preparedness?
-      Emergency preparedness?:
-      = @homestay.pretty_emergency_preparedness
-      %br
+    %i Provider's phone
+    = ": #{@host.phone_number}"
+- if @host.mobile_number.present?
+  %p.article-content
+    %i Provider's mobile
+    = ": #{@host.mobile_number}"
+%p.article-content
+  %i Address
+  = ": #{@homestay.address_1}"
+  = @homestay.address_suburb
+  = @homestay.address_city
+- if @homestay.address_2.present?
+  %p.article-content
+    %i Address 2
+    = ": #{@homestay.address_2}"
+%p.article-content
+  %i Professional?
+  - if @homestay.is_professional?
+    = ': Yes'
+  - else
+    = ': No'
+%p.article-content
+  %i Property type
+  = ": #{@homestay.property_type_name}"
+%p.article-content
+  %i Outdoor area
+  = ": #{@homestay.outdoor_area_name}"
+%p.article-content
+  %i Fenced?
+  - if @homestay.fenced
+    = ': Yes'
+  - else
+    = ': No'
+%p.article-content
+  - if @homestay.supervision?
+    %i Supervision?
+    \:
+    = @homestay.pretty_supervision
+%p.article-content
+  - if @homestay.emergency_preparedness?
+    %i Emergency preparedness?
+    = ": #{@homestay.pretty_emergency_preparedness}"
+%br
 
 %p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
 %p.article-content The PetHomeStay Team

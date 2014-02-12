@@ -107,3 +107,27 @@ p.first {
     float:right;
   }
 }
+
+.font-italic {
+  font-style: italic;
+}
+.font-bold {
+  font-weight: bold;
+}
+
+.font-underline {
+  text-decoration: underline;
+}
+
+.list-roman-blue {
+  list-style-type: lower-roman;
+  color: darkslateblue;
+}
+
+.font-color-blue {
+  color: steelblue;
+}
+
+.list-roman {
+  list-style-type: lower-roman;
+}

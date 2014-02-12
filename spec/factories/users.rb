@@ -13,4 +13,8 @@ FactoryGirl.define do
     accept_house_rules '1'
     accept_terms '1'
   end
+
+  factory :user_with_pet, :parent => :user do |f|
+	  f.pets { [FactoryGirl.create(:pet)] }
+  end
 end

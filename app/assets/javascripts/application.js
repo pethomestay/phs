@@ -30,4 +30,5 @@
 //= require users
 //= require bookings
 //= require provider
+//= require messages
 //= require_tree ../../../vendor/assets/javascripts/.

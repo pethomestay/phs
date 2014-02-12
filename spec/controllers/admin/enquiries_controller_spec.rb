@@ -7,10 +7,11 @@ describe Admin::EnquiriesController do
     Homestay.any_instance.stub(:geocode).and_return true
   end
   let(:homestay) { FactoryGirl.create :homestay }
-  let(:user) { FactoryGirl.create :user}
+  let(:user) { FactoryGirl.create :user_with_pet }
 
   def valid_attributes
-    { homestay_id: homestay.id,
+    {
+		  homestay_id: homestay.id,
       user_id: user.id,
       duration_id: ReferenceData::Duration::OVERNIGHT.id,
       check_in_date: Time.zone.now,

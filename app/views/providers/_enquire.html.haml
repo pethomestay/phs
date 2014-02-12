@@ -1,21 +1,24 @@
-.well.booking-listing
+.well.enquire-listing
   - if current_user.pets.present?
-    = link_to 'Make reservation', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', 'data-toggle' => 'modal'
-    Book accommodation with this listing now!
+    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
+    %p Contact the owner of the listing with any queries or additional information you might need.
   - else
-    = link_to 'Make reservation', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
-    You need to
-    = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
-    before you can make a reservation
-.enquire-listing
-  - if current_user.pets.present?
-    = link_to 'Ask host a question','#enquire', 'data-toggle' => 'modal', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
-    Contact the owner of this listing now!
-  - else
-    = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'disabled'
+    = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
     = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
     before you can make an enquiry
+
+%p or, if you are happy with this HomeStay, and want to reserve it now,
+.well.booking-listing
+  - if current_user.pets.present?
+    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
+    Contact the owner of this listing now!
+  - else
+    = link_to 'Book this PetHomeStay', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
+    You need to
+    = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
+    before you can make a reservation
+
 .modal.hide.fade#enquire
   .modal-header
     %button.close{type: 'button', 'data-dismiss' => 'modal'} ×

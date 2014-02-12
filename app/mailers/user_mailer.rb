@@ -18,4 +18,10 @@ class UserMailer < ActionMailer::Base
 		email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
 		mail(to: email_with_name, subject: "#{@from.first_name.capitalize} has sent you a message!")
 	end
+
+	def error_report(situation, error)
+		@situation = situation
+		@error = error
+		mail(to: ENV['DEVELOPER_EMAIL'], subject: 'An error has been occurred')
+	end
 end

@@ -23,7 +23,10 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
-	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED)
+	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED).order('created_at DESC')
+
+	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
+			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
 
 	after_create :create_mailbox
 
@@ -42,12 +45,13 @@ class Booking < ActiveRecord::Base
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
 			csv << [ 'Username', 'Check-out Date', 'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee',
-			         'Host Payout' ]
+			         'Host Payout', 'Status' ]
 
 			all.each do |booking|
 				csv << [ booking.booker.name.capitalize, booking.check_out_date.to_formatted_s(:year_month_day),
 				         booking.transaction.reference, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
-				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}" ]
+				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
+				         (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid' ]
 			end
 		end
 	end
@@ -76,9 +80,16 @@ class Booking < ActiveRecord::Base
 
 		if self.response_id == 5
 			message = 'You have confirmed the booking'
-			self.save!
-			PetOwnerMailer.booking_confirmation(self).deliver
-			ProviderMailer.booking_confirmation(self).deliver
+			results = self.complete_transaction(current_user)
+			if results.class == String
+				message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
+				UserMailer.error_report('host confirming transaction', results).deliver
+			else
+				self.save!
+				PetOwnerMailer.booking_confirmation(self).deliver
+				ProviderMailer.booking_confirmation(self).deliver
+			end
+
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
 			self.status = BOOKING_STATUS_REJECTED
@@ -91,7 +102,6 @@ class Booking < ActiveRecord::Base
 			self.save!
 			PetOwnerMailer.provider_has_question(self, old_message).deliver
 		end
-		self.complete_transaction(current_user)
 		message
 	end
 
@@ -123,7 +133,7 @@ class Booking < ActiveRecord::Base
 		{
 		    booking_subtotal: self.subtotal.to_s,
 		    booking_amount: self.amount.to_s,
-		    transaction_fee: self.transaction_fee.to_s,
+		    transaction_fee: self.transaction_fee,
 		    transaction_actual_amount: self.transaction.actual_amount,
 		    transaction_time_stamp: self.transaction.time_stamp,
 		    transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
@@ -142,15 +152,15 @@ class Booking < ActiveRecord::Base
 	end
 
 	def phs_service_charge
-		transaction_mode_value(self.subtotal * 0.15)
+		actual_value_figure(transaction_mode_value(self.subtotal * 0.15))
 	end
 
 	def public_liability_insurance
-		transaction_mode_value(self.number_of_nights * 2)
+		actual_value_figure(transaction_mode_value(self.number_of_nights * 2))
 	end
 
 	def host_payout_deduction
-		transaction_mode_value(public_liability_insurance + phs_service_charge)
+		transaction_mode_value(public_liability_insurance.to_f + phs_service_charge.to_f)
 	end
 
 	def host_payout
@@ -158,7 +168,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def transaction_fee
-		credit_card_fee
+		actual_value_figure(credit_card_fee)
 	end
 
 	def credit_card_fee
@@ -166,7 +176,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def fees
-		credit_card_fee
+		actual_value_figure(credit_card_fee)
 	end
 
 	def actual_amount
@@ -175,6 +185,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def actual_value_figure(value)
+		value = self.send(value) if value.class == Symbol
 		fraction = value.to_s.split('.').last
 		if fraction.size == 1
 			"#{value.to_s}0"
@@ -186,7 +197,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def calculate_amount
-		transaction_mode_value(self.subtotal + self.transaction_fee)
+		transaction_mode_value(self.subtotal + self.transaction_fee.to_f)
 	end
 
 	def transaction_mode_value(value)
@@ -226,5 +237,21 @@ class Booking < ActiveRecord::Base
 	def guest_booking_status
 		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
 		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
+	end
+
+	def actual_status
+		if self.status == BOOKING_STATUS_UNFINISHED
+			BOOKING_STATUS_UNFINISHED
+		elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
+			'awaiting host response'
+		elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
+			'host accepted but not paid'
+		elsif self.status == BOOKING_STATUS_REJECTED
+			'host rejected'
+		elsif self.status == BOOKING_STATUS_HOST_PAID
+			'host has been paid'
+		else
+			'invalid booking state'
+		end
 	end
 end
