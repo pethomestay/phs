@@ -4,11 +4,13 @@ class EnquiriesController < ApplicationController
   before_filter :find_enquiry, only: [:show, :update]
 
 	def create
-    @old_reused_enquiry = Enquiry.select('*').where(reuse_message: true)
-    if @old_reused_enquiry.present?
-      ore = @old_reused_enquiry.first
-      ore.reuse_message = 'false'
-      ore.save
+    if params[:enquiry][:reuse_message] == '1'
+      @old_reused_enquiry = Enquiry.select('*').where(reuse_message: true)
+      if @old_reused_enquiry.present?
+        old_reused_enquiry = @old_reused_enquiry.first
+        old_reused_enquiry.reuse_message = false
+        old_reused_enquiry.save
+      end
     end
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
