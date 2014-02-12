@@ -1,0 +1,31 @@
+.span12
+  %h1.page-header My booking history
+
+  - if @bookings.blank?
+    %p You have no bookings as a host in your history
+  - else
+    - @bookings.each do |booking|
+      .well.show-booking-history
+        - guest = booking.booker
+        .guest-pic.pull-left
+
+        .booking-info.pull-left
+          %p
+            %strong Guest Name
+            = ": #{guest.name}"
+            %br
+            %strong Pet Name
+            = ": #{guest.pet.name}"
+            %br
+            %strong Date
+            = ": #{booking.check_in_date.strftime('%d/%m/%Y')} - #{booking.check_out_date.strftime('%d/%m/%Y')}"
+            %br
+            %strong Location
+            = ": #{guest.address_1}, #{guest.address_suburb}, #{guest.address_city}."
+            %br
+            %strong Payout
+            = ": $#{booking.host_payout}"
+
+        .view-receipt.pull-right
+          = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+

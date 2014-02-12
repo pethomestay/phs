@@ -1,121 +1,128 @@
-.row.my-account
-  .span8
-    %h1.page-header My Account
-    - if current_user.admin?
-      %h3 Admin Dashboard
-      .row
-        .span6
-          %p
-            You can go to admin dashboard and view several statistics and
-            %br
-            perform several operation based on them!
-        .span2.pull-right
-          = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn'
+.span8.my-account
+  %h1.page-header My Account
+  - if current_user.admin?
+    %h3 Admin Dashboard
+    .row
+      .span6
+        %p
+          You can go to admin dashboard and view several statistics and
+          %br
+          perform several operation based on them!
+      .span2.pull-right
+        = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn'
+    %hr
+  %h3 My Messages
+  .row
+    .span6
+      %p
+        See all current and previous messages here.
+        %br
+        All  notifications are kept here for your records.
+    .span2.pull-right
+      = link_to 'Messages', mailboxes_path, class: 'btn'
+  %hr
+  %h3 My Booking History
+  .row
+    .span6
+      %p
+        See all bookings here.
+    .span2.pull-right
+      = link_to 'My bookings', bookings_path, class: 'btn'
+  %hr
+  %h3 Payout Details
+  .row
+    .span6
+      %p
+        Wanted to add or change your payout details?
+        %br
+        Click this button to proceed
+    .span2.pull-right
+      - if current_user.account.blank?
+        = link_to 'Payout Details', new_account_path, class: 'btn'
+      - else
+        = link_to 'Payout Details', account_path(current_user.account), class: 'btn'
+  %hr
+  %h3 Manage details
+  .row
+    .span6
+      %p
+        Had a change of email or name? Want to change your password?
+        %br
+        Update these here!
+    .span2.pull-right
+      = link_to 'Update details', edit_user_registration_path, class: 'btn'
+  %hr
+  = render partial: 'pets_link'
+  = render partial: 'homestay_link'
+  .row
+    .span6
+      %h4 Close my PetHomeStay account
+    .span2.pull-right
+      = link_to 'Close account', user_registration_path, class: 'btn btn-mini', method: 'delete',
+        confirm: 'Are you sure you wish to close your PetHomeStay account?'
+
+.span4.notifications
+  %h2.page-header Notifications
+  - if @user.notifications?
+    - if @user.unanswered_enquiries?
+      %h4 Enquiries for your PetHomeStay
+
+      - @user.unanswered_enquiries.each do |enquiry|
+        = simple_form_for enquiry do |f|
+          = f.hidden_field :response_id, value: 2
+          = f.hidden_field :confirmed, value: true
+          %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", '#', class: 'enquiry-update-submit'
+          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        .clear
       %hr
-    %h3 My Messages
-    .row
-      .span6
-        %p
-          See all current and previous messages here.
-          %br
-          All  notifications are kept here for your records.
-      .span2.pull-right
-        = link_to 'Messages', mailboxes_path, class: 'btn'
-    %hr
-    %h3 Payout Details
-    .row
-      .span6
-        %p
-          Wanted to add or change your payout details?
-          %br
-          Click this button to proceed
-      .span2.pull-right
-        - if current_user.account.blank?
-          = link_to 'Payout Details', new_account_path, class: 'btn'
-        - else
-          = link_to 'Payout Details', account_path(current_user.account), class: 'btn'
-    %hr
-    %h3 Manage details
-    .row
-      .span6
-        %p
-          Had a change of email or name? Want to change your password?
-          %br
-          Update these here!
-      .span2.pull-right
-        = link_to 'Update details', edit_user_registration_path, class: 'btn'
-    %hr
-    = render partial: 'pets_link'
-    = render partial: 'homestay_link'
-    .row
-      .span6
-        %h4 Close my PetHomeStay account
-      .span2.pull-right
-        = link_to 'Close account', user_registration_path, class: 'btn btn-mini', method: 'delete',
-          confirm: 'Are you sure you wish to close your PetHomeStay account?'
-
-  .span4.notifications
-    %h2.page-header Notifications
-    - if @user.notifications?
-      - if @user.unanswered_enquiries?
-        %h4 Enquiries for your PetHomeStay
-
-        - @user.unanswered_enquiries.each do |enquiry|
-          = simple_form_for enquiry do |f|
-            = f.hidden_field :response_id, value: 2
-            = f.hidden_field :confirmed, value: true
-            %p.pull-left= link_to "Enquiry from #{enquiry.user.first_name}", '#', class: 'enquiry-update-submit'
-            %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.booking_accepted_by_host?
-        %h4 Accepted bookings
-        - @user.booking_accepted_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking_path(booking)
-          %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.booking_declined_by_host?
-        %h4 Declined bookings
-        - @user.booking_declined_by_host.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", host_message_booking_path(booking)
-          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.booking_required_response?
-        %h4 Bookings needed further response
-        - @user.booking_required_response.each do |booking|
-          %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", host_message_booking_path(booking)
-          %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.enquiries_needing_confirmation?
-        %h4 Bookings to confirm
-        - @user.enquiries_needing_confirmation.each do |enquiry|
-          %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
-          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.booking_needing_confirmation?
-        %h4 Booking requests
-        - @user.booking_needing_confirmation.each do |booking|
-          %p.pull-left= link_to "You have been selected by #{booking.booker.first_name}", host_confirm_booking_path(booking)
-          %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.owners_needing_feedback?
-        %h4 Owners needing feedback
-        - @user.owners_needing_feedback.each do |enquiry|
-          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
-          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-      - if @user.homestays_needing_feedback?
-        %h4 PetHomeStay's needing feedback
-        - @user.homestays_needing_feedback.each do |enquiry|
-          %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
-          %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
-          .clear
-        %hr
-    - else
-      You have no new notifications!
+    - if @user.booking_accepted_by_host?
+      %h4 Accepted bookings
+      - @user.booking_accepted_by_host.each do |booking|
+        %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking_path(booking)
+        %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.booking_declined_by_host?
+      %h4 Declined bookings
+      - @user.booking_declined_by_host.each do |booking|
+        %p.pull-left= link_to "#{booking.bookee.first_name} has declined your offer", host_message_booking_path(booking)
+        %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.booking_required_response?
+      %h4 Bookings needed further response
+      - @user.booking_required_response.each do |booking|
+        %p.pull-left= link_to "#{booking.bookee.first_name} has query for you", host_message_booking_path(booking)
+        %p.pull-right #{booking.updated_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.enquiries_needing_confirmation?
+      %h4 Bookings to confirm
+      - @user.enquiries_needing_confirmation.each do |enquiry|
+        %p.pull-left= link_to "Response from #{enquiry.homestay.user.first_name}", enquiry_confirmation_path(enquiry)
+        %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.booking_needing_confirmation?
+      %h4 Booking requests
+      - @user.booking_needing_confirmation.each do |booking|
+        %p.pull-left= link_to "You have been selected by #{booking.booker.first_name}", host_confirm_booking_path(booking)
+        %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.owners_needing_feedback?
+      %h4 Owners needing feedback
+      - @user.owners_needing_feedback.each do |enquiry|
+        %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
+        %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+    - if @user.homestays_needing_feedback?
+      %h4 PetHomeStay's needing feedback
+      - @user.homestays_needing_feedback.each do |enquiry|
+        %p.pull-left= link_to "Give #{enquiry.homestay.user.first_name} feedback", new_enquiry_feedbacks_path(enquiry)
+        %p.pull-right #{enquiry.created_at.to_formatted_s(:day_and_month)}
+        .clear
+      %hr
+  - else
+    You have no new notifications!

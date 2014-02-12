@@ -1,15 +1,16 @@
-.page-header
-  .pull-left
-    %h1 Booking results
+.span12
+  .page-header
+    .pull-left
+      %h1 Booking results
 
-  .pull-right
-    = link_to 'Back to My Account', my_account_path, class: 'btn'
-  .clear
+    .pull-right
+      = link_to 'Back to My Account', my_account_path, class: 'btn'
+    .clear
 
 
-%h3 Message from host
-.row
-  .span6
-    %p
-      = @booking.response_message.blank? ? 'none' : @booking.response_message
-      %br
+  %h3 Message from host
+  .row
+    .span6
+      %p
+        = @booking.response_message.blank? ? 'none' : @booking.response_message
+        %br
