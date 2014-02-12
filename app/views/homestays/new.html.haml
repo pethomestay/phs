@@ -1,12 +1,13 @@
-.page-header
-  .pull-left
-    %h1
-      Create a PetHomeStay listing
-      %small join our great community
-  .pull-right
-    = link_to 'Back to My Account', my_account_path, class: 'btn'
-  .clear
-= simple_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
-  = render partial: 'fields', locals: {f: f}
-  .form-actions
-    = f.submit 'Create my listing', class: 'btn btn-primary'
+.span12
+  .page-header
+    .pull-left
+      %h1
+        Create a PetHomeStay listing
+        %small join our great community
+    .pull-right
+      = link_to 'Back to My Account', my_account_path, class: 'btn'
+    .clear
+  = simple_form_for @homestay, html: {class: 'form-horizontal', multipart: true} do |f|
+    = render partial: 'fields', locals: {f: f}
+    .form-actions
+      = f.submit 'Create my listing', class: 'btn btn-primary'

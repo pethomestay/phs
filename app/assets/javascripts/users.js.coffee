@@ -29,3 +29,24 @@ $ ->
 
   $('a.enquiry-update-submit').on 'click', ->
     $(this).closest('form').submit()
+
+  if window.location.href.match('my-account')
+    $('.account', 'ul.nav.nav-pills').addClass('active')
+  else if window.location.href.match('bookings')
+    $('.bookings', 'ul.nav.nav-pills').addClass('active')
+  else if window.location.href.match('favourites')
+    $('.favourites', 'ul.nav.nav-pills').addClass('active')
+  else if window.location.href.match('trips')
+    $('.trips', 'ul.nav.nav-pills').addClass('active')
+  else if window.location.href.match('mailbox')
+    $('.messages', 'ul.nav.nav-pills').addClass('active')
+
+
+  if window.location.href.match('users/edit')
+    $('.personal', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
+  else if window.location.href.match('pets')
+    $('.pet', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
+  else if window.location.href.match('homestays')
+    $('.homestay-listing', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
+  else if window.location.href.match('accounts')
+    $('.payout-details', 'ul.nav.nav-tabs.nav-stacked').addClass('active')

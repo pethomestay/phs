@@ -1,0 +1,18 @@
+%ul.nav.nav-tabs.nav-stacked.span2{ style: 'padding-top: 138px; float: left; padding-left: 10px;' }
+
+  %li.personal
+    = link_to 'Personal details', edit_user_registration_path
+  %li.pet
+    = link_to 'My Pet profile', pets_path
+  %li.homestay-listing
+    - if current_user.homestay
+      = link_to 'Edit listing', edit_homestay_path(current_user.homestay)
+    - else
+      = link_to 'Create Homestay Listing', new_homestay_path
+
+  %li.card-nav.disabled
+  %li.payout-details
+    - if current_user.account.blank?
+      = link_to 'Payout Details', new_account_path
+    - else
+      = link_to 'Payout Details', account_path(current_user.account)

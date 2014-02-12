@@ -8,14 +8,20 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == "642031549187678" #this Facebook app id is for the local dev
+    = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == '642031549187678' #this Facebook app id is for the local dev
     = yield :open_graph_tags
   %body
     = render partial: 'layouts/facebook_tag'
     = render partial: 'layouts/navbar'
-    .container.main
-      = render "layouts/flash_messages", :locals => {:flash => flash}
-      = yield
+    - if current_user
+      = render 'layouts/sidebar_navigation'
+
+    .container.main{ class: current_user.blank? ? '' :  'main-changes' }
+      - if current_user
+        = render 'layouts/top_navigaton'
+      = render 'layouts/flash_messages', :locals => {:flash => flash}
+      .row
+        = yield
       %hr
-      = render partial: "layouts/footer"
-      = render partial: "layouts/feedbackify"
+      = render partial: 'layouts/footer'
+      = render partial: 'layouts/feedbackify'
