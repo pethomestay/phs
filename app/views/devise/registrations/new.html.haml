@@ -1,56 +1,57 @@
-.page-header
-  %h1
-    Sign up
-    %small Create an account to access all our cool features
-- html = {:class => 'form-horizontal'}
-- url = registration_path(resource_name)
-= simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
-  %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
-  = field_set_tag do
-    %p Note: we do not pass your details on to any third party companies. We hate spam too :)
-    .row
-      .span6
-        = f.input :email, label: 'Email address'
-        = f.input :mobile_number
-        = f.input :phone_number, label: 'Home phone number'
-        - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
-          = f.input :password
-          = f.input :password_confirmation, label: 'Confirm your password'
-        - else
-          %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
-          %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
-      .span4 Your email address, surname and contact details will not be publically viewable on PetHomeStay. Details are ONLY exchanged via email after a pet owner has confirmed a booking.
-    %h3{style: "margin-bottom: 10px;"}
-      We'd love to get to know you!
-      %small Tell the community a bit more about you
-    = f.input :first_name
-    = f.input :last_name
-    = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 18, end_year: 1910
-    %h3{style: "margin-bottom: 10px;"}
-      Your address
-      %small Where are you from?
-    - if request.get?
-      .control-group
-        = label_tag :geocomplete, 'Street address', class: 'control-label'
-        .controls
-          %input#geocomplete.span7
-      %input#street_name{type: 'hidden', 'data-geocomplete' => 'route'}
-      %input#street_number{type: 'hidden', 'data-geocomplete' => 'street_number'}
-      %input#administrative_area_level_1{type: 'hidden', 'data-geocomplete' => 'administrative_area_level_1'}
-      %input#locality{type: 'hidden', 'data-geocomplete' => 'locality'}
-      %input#sublocality{type: 'hidden', 'data-geocomplete' => 'sublocality'}
-      = f.hidden_field :address_1
-      = f.hidden_field :address_suburb
-      = f.hidden_field :address_city
-      = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
-    - else
-      = f.input :address_1, label: 'Street address'
-      .control-group
-        .controls
-          %input#user_homestay_address_2{name: 'user[address_2]'}
-      = f.input :address_suburb, label: 'Suburb'
-      = f.input :address_city, label: 'City'
-      = f.input :address_country, label: 'Country', priority: ['Australia']
-    = render partial: 'devise/registrations/accept_terms', locals: {f: f}
-    .form-actions
-      = f.submit 'Create an account', class: 'btn btn-primary'
+.span12
+  .page-header
+    %h1
+      Sign up
+      %small Create an account to access all our cool features
+  - html = {:class => 'form-horizontal'}
+  - url = registration_path(resource_name)
+  = simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+    %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
+    = field_set_tag do
+      %p Note: we do not pass your details on to any third party companies. We hate spam too :)
+      .row
+        .span6
+          = f.input :email, label: 'Email address'
+          = f.input :mobile_number
+          = f.input :phone_number, label: 'Home phone number'
+          - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
+            = f.input :password
+            = f.input :password_confirmation, label: 'Confirm your password'
+          - else
+            %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
+            %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
+        .span4 Your email address, surname and contact details will not be publically viewable on PetHomeStay. Details are ONLY exchanged via email after a pet owner has confirmed a booking.
+      %h3{style: "margin-bottom: 10px;"}
+        We'd love to get to know you!
+        %small Tell the community a bit more about you
+      = f.input :first_name
+      = f.input :last_name
+      = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year - 18, end_year: 1910
+      %h3{style: "margin-bottom: 10px;"}
+        Your address
+        %small Where are you from?
+      - if request.get?
+        .control-group
+          = label_tag :geocomplete, 'Street address', class: 'control-label'
+          .controls
+            %input#geocomplete.span7
+        %input#street_name{type: 'hidden', 'data-geocomplete' => 'route'}
+        %input#street_number{type: 'hidden', 'data-geocomplete' => 'street_number'}
+        %input#administrative_area_level_1{type: 'hidden', 'data-geocomplete' => 'administrative_area_level_1'}
+        %input#locality{type: 'hidden', 'data-geocomplete' => 'locality'}
+        %input#sublocality{type: 'hidden', 'data-geocomplete' => 'sublocality'}
+        = f.hidden_field :address_1
+        = f.hidden_field :address_suburb
+        = f.hidden_field :address_city
+        = f.hidden_field :address_country, 'data-geocomplete' => 'country_short'
+      - else
+        = f.input :address_1, label: 'Street address'
+        .control-group
+          .controls
+            %input#user_homestay_address_2{name: 'user[address_2]'}
+        = f.input :address_suburb, label: 'Suburb'
+        = f.input :address_city, label: 'City'
+        = f.input :address_country, label: 'Country', priority: ['Australia']
+      = render partial: 'devise/registrations/accept_terms', locals: {f: f}
+      .form-actions
+        = f.submit 'Create an account', class: 'btn btn-primary'

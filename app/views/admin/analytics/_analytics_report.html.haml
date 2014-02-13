@@ -1,0 +1,22 @@
+%h1
+- if @start_date
+  %p
+    %strong
+      Start Date: #{@start_date.strftime("%d/%m/%Y")}
+  %p
+    %strong
+      End Date: #{@end_date.strftime("%d/%m/%Y")}
+  %p
+    Average days from booking request to host confirmation: #{@average_booking_length_in_days}
+  %p
+    Average days from enquiry request to booking: #{@average_enquiry_to_booking_in_days}
+  %p
+    Number of unconfirmed bookings in date range: #{@number_of_unconfirmed_bookings}
+  %p
+    Number of confirmed bookings in date range: #{@number_of_confirmed_bookings}
+  %p
+    Number of unconfirmed enquires in date range: #{@number_of_unconfirmed_to_enquiries}
+  %p
+    Number of confirmed enquires in date range: #{@number_of_confirmed_to_enquires}
+
+

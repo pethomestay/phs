@@ -45,7 +45,9 @@ PetHomestay::Application.routes.draw do
     resources :feedbacks
     resources :homestays, except:[:new, :create]
     resources :pets
+    resources :analytics
     resources :users
+    resources :accounts
   end
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -62,5 +64,6 @@ PetHomestay::Application.routes.draw do
   get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
+  get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
   root to: 'pages#home'
 end

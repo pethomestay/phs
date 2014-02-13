@@ -1,5 +1,5 @@
 %p.article-content
-  %strong You have successfully made a booking
+  %strong Booking has been made and a response is pending from the host.
 
 %p.article-content
   %strong Host Details
@@ -9,19 +9,21 @@
 %p.article-content
   %i Email address
   = ": #{@host.email}"
-  %br
+%p.article-content
   - if @host.phone_number.present?
     %i Home phone
     = ": #{@host.phone_number}"
-    %br
+%p.article-content
   - if @host.mobile_number.present?
     %i Mobile phone
     = ": #{@host.mobile_number}"
-    %br
-  Listing:
+%p.article-content
+  %i Listing
+  \:
   = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%br
 
 %p.article-content
   %strong Booking Details
@@ -36,23 +38,26 @@
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
-  = ": $#{@booking.cost_per_night.to_i}.00"
+  = ": $#{@booking.actual_value_figure(:cost_per_night)}"
 %p.article-content
   %i Subtotal
-  = ": $#{@booking.subtotal}.00"
+  = ": $#{@booking.actual_value_figure(:subtotal)}"
 %p.article-content
   %i Credit Card Fee
-  = ": $#{@booking.transaction_fee}.00"
+  = ": $#{@booking.transaction_fee}"
 %p.article-content
   %strong
     %i Total
-  = ": $#{@booking.amount.to_i}.00"
+  = ": $#{@booking.actual_value_figure(:amount)}"
 %br
 
+= render 'shared/brief_pet_details'
+
+%p.article-title Message
 %p.article-content
   %strong= "You have also sent the following message to #{@host.first_name.capitalize}:"
 %p.article-content
-  %i= @booking.message
+  %i= @booking.message.blank? ? '-' : @booking.message
 %br
 
 %p.article-content Thanks for helping out with PetHomeStay!

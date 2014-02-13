@@ -1,24 +1,20 @@
-.page-header
-  .pull-left
-    %h1 Inbox
-  .pull-right
-    = link_to 'Back to My Account', my_account_path, class: 'btn', style: 'margin-right:10px'
+.span12
+  %h1.page-header Inbox
 
-  .clearfix
-- if @mailboxes.present?
-  %table.table.pet-index
-    %tr
-      %th.name From
-      %th.name Subject
-      %th.name Type
-      %th.name Date
-    - @mailboxes.each do |mailbox|
-      - if mailbox.subject_is_finished
-        %tr{ style: mailbox.read_by?(current_user) ? '' : 'font-weight:bold;' }
-          %td.name= mailbox.guest_mailbox.name.capitalize
-          %td.name
-            = link_to mailbox.subject_message, mailbox_messages_path(mailbox)
-          %td.name= mailbox.subject.class.to_s
-          %td.name= mailbox.created_at.strftime("%d/%m/%Y")
-- else
-  %p Your inbox is Empty
+  - if @mailboxes.present?
+    %table.table.pet-index
+      %tr
+        %th.name From
+        %th.name Subject
+        %th.name Type
+        %th.name Date
+      - @mailboxes.each do |mailbox|
+        - if mailbox.subject_is_finished
+          %tr{ style: mailbox.read_by?(current_user) ? '' : 'font-weight:bold;' }
+            %td.name= mailbox.guest_mailbox.name.capitalize
+            %td.name
+              = link_to mailbox.subject_message, mailbox_messages_path(mailbox)
+            %td.name= mailbox.subject.class.to_s
+            %td.name= mailbox.created_at.strftime("%d/%m/%Y")
+  - else
+    %p Your inbox is Empty

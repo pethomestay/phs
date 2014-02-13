@@ -13,6 +13,7 @@
 @import "provider";
 @import "search";
 @import "users";
+@import "bookings";
 @import "gmaps4rails";
 @import "chosen";
 @import "tablesorter";
@@ -32,6 +33,10 @@
 .alert.info {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
   background-image: -webkit-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
+  background-image: linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
+  background-image: -moz-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
+  background-image: -ms-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
+  background-image: -o-linear-gradient(top, rgba(234, 110, 40, 0.8), rgba(234, 142, 40, 0.7));
   border: 1px solid rgba(234, 110, 40, 0.6);
   color: rgba(255, 255, 255, 0.9);
 }
@@ -46,6 +51,11 @@
 
 .main{
 	margin-top: $margins * 3;
+}
+
+.main-changes {
+  float: left;
+  padding-left: 20px;
 }
 
 .row-margin-top { margin-top: 20px;}
@@ -131,3 +141,7 @@ footer[type="comment"] {
 }
 
 .control-content { padding-top: 5px; }
+
+.space-for-navbar-fixed {
+  padding-top: 40px;
+}

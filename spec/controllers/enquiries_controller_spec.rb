@@ -7,7 +7,7 @@ describe EnquiriesController do
   end
   describe 'GET #show' do
     subject { get :show, id: 12 }
-    let(:enquiry) { stub_model(Enquiry, user: stub_model(User)) }
+    let(:enquiry) { stub_model(Enquiry, user: FactoryGirl.create(:user_with_pet)) }
 
     context 'when the enquiry homesay belongs to the current user' do
       before do

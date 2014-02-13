@@ -8,7 +8,7 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'layouts/google_analytics' if Rails.env.production?
+    = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == "642031549187678" #this Facebook app id is for the local dev
     = yield :open_graph_tags
   %body
     = render partial: 'layouts/facebook_tag'
@@ -17,7 +17,6 @@
         .container.admin-container-phs
           = link_to "Pet Homestay", root_path, class: "brand"
           %ul.nav.admin-nav-phs
-            %li= link_to "Admin Dashboard", admin_dashboard_path
             %li= link_to "Users", admin_users_path
             %li= link_to "Homestays", admin_homestays_path
             %li= link_to "Pets", admin_pets_path
@@ -25,6 +24,8 @@
             %li= link_to "Feedback", admin_feedbacks_path
             %li= link_to "Transactions", admin_transactions_path
             %li= link_to "Reconciliation", admin_bookings_path
+            %li= link_to "Analytics", admin_analytics_path
+            -#%li= link_to "Accounts", admin_accounts_path
 
     .container.main
       = render "layouts/flash_messages", :locals => {:flash => flash}

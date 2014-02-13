@@ -1,30 +1,69 @@
 = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Reconciliation for host payouts
 %h5= link_to "Download Reconciliations", reconciliations_file_admin_bookings_url(format: "csv")
-%table.table.tablesorter
+%p
+  Note:
+  %i.icon-exclamation-sign
+  means user has not entered his payout details
+%table.table.tablesorter.table-bordered
   %thead
     %tr
-      %th Username
-      %th Check-out Date
+      %td.table-header-text{ colspan: '3' } General Information
+      %td.table-header-text{ colspan: '3' } Guest Paid
+      %td.table-header-text{ colspan: '3' } Host Payout
+
+    %tr
+      %th Guest
+      %th Checkout Date
       %th Transaction Reference
+      %th Subtotal
+      %th Fee
       %th Total
-      %th Insurance Fees
-      %th PHS fee
-      %th Host Payout
+      %th Insurance Fee
+      %th PHS Fee
+      %th total
       %th Host Paid
+    %tr.table-row-bold-text
+      %td Username
+      %td (day/month/year)
+      %td
+        %span.stored-card-color stored card
+        %i.icon-minus
+        %span.credit-card-color credit card
+      %td S
+      %td F
+      %td = S + F
+      %td I
+      %td P
+      %td = S - I - P
+      %td
+        payout
+        %i.icon-eye-open
 
   %tbody
     - @bookings.each do |booking|
       %tr{ "data-id" => booking.id }
         %td= booking.booker.name.capitalize
-        %td= booking.check_out_date.to_formatted_s(:year_month_day)
-        %td= booking.transaction.reference
-        %td= "$#{booking.transaction.amount}"
-        %td= "$#{booking.public_liability_insurance}"
-        %td= "$#{booking.phs_service_charge}"
-        %td= "$#{booking.host_payout}"
+        %td= booking.check_out_date.strftime('%d/%m/%Y')
+        - reference = booking.transaction.reference
+        %td{ class: "#{reference.include?('transaction_id') ? 'credit-card-color' : 'stored-card-color'}" }
+          = booking.transaction.reference
+
+        %td= currency_formatter(booking.subtotal)
+        %td= currency_formatter(booking.credit_card_fee)
+        %td= currency_formatter(booking.transaction.amount)
+
+        %td= currency_formatter(booking.public_liability_insurance)
+        %td= currency_formatter(booking.phs_service_charge)
+        %td= currency_formatter(booking.host_payout)
         %td
-          %input.booking_paid_confirm{type: 'button', value: 'YES'}
+          %input.booking_paid_confirm{ type: 'button', value: 'YES' }
+          - account = booking.bookee.account
+          - if account.blank?
+            %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
+          - else
+            = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
+
 
 :javascript
   $(document).ready(function(){

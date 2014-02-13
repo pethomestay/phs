@@ -367,7 +367,7 @@ describe Booking do
 			booking.number_of_nights = 2
 			booking.cost_per_night = 30
 			booking.subtotal = 60
-			booking.amount = booking.subtotal + booking.transaction_fee
+			booking.amount = booking.subtotal + booking.transaction_fee.to_f
 		end
 
 		describe '#host_payout' do
@@ -375,9 +375,9 @@ describe Booking do
 
 			it 'will deduct PetHomeStay service charge and public liability insurance and transaction fee' do
 				booking.amount.should be_eql(61.08)
-				booking.phs_service_charge.should be_eql(9.0)
-				booking.public_liability_insurance.should be_eql(4.0)
-				booking.transaction_fee.should be_eql(1.08)
+				booking.phs_service_charge.should be_eql('9.00')
+				booking.public_liability_insurance.should be_eql('4.00')
+				booking.transaction_fee.should be_eql('1.08')
 				subject.should be_eql('47.00')
 			end
 		end
@@ -448,7 +448,7 @@ describe Booking do
 			subject { booking.fees }
 
 			it 'should return transaction fees paid by guest' do
-				subject.should be_eql(1.08)
+				subject.should be_eql('1.08')
 			end
 		end
 
@@ -467,7 +467,7 @@ describe Booking do
 				before { booking.stub(:live_mode_rounded_value?).and_return(true) }
 
 				it 'will return transaction value rounded 2 digit with actual cents value' do
-					subject.should be_eql(booking.subtotal * 0.025)
+					subject.should be_eql('1.50')
 				end
 			end
 
@@ -475,7 +475,7 @@ describe Booking do
 				before { booking.stub(:live_mode_rounded_value?).and_return(false) }
 
 				it 'will return transaction value rounded 2 digit with actual cents value' do
-					subject.should be_eql(1.08)
+					subject.should be_eql(1.08.to_s)
 				end
 			end
 		end

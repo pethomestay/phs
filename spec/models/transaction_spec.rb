@@ -114,7 +114,7 @@ describe Transaction do
 		end
 	end
 
-	describe '#confirmed_by_host' do
+	 describe '#confirmed_by_host' do
 		subject { transaction.confirmed_by_host }
 		let(:transaction) { FactoryGirl.create :transaction }
 
@@ -132,6 +132,88 @@ describe Transaction do
 		before { transaction.booking = FactoryGirl.create :booking }
 		it 'should return the booking status' do
 			subject.should eq(BOOKING_STATUS_UNFINISHED)
+		end
+	end
+
+	describe '#complete_payment' do
+		subject { transaction.complete_payment }
+
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) { FactoryGirl.create :booking, booker: user }
+		let(:transaction) { FactoryGirl.create :transaction, booking: booking }
+		let(:response) { "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><SecurePayMessage><MessageInfo>
+<messageID>8af793f9af34bea0cf40f5fb5c630c</messageID><messageTimestamp>20133012112658958000+660</messageTimestamp>
+<apiVersion>spxml-4.2</apiVersion></MessageInfo><RequestType>Periodic</RequestType><MerchantInfo><merchantID>EHY0047
+</merchantID></MerchantInfo><Status><statusCode>0</statusCode><statusDescription>Normal</statusDescription></Status>
+<Periodic><PeriodicList count=\"1\"><PeriodicItem ID=\"1\"><actionType>trigger</actionType><clientID>1</clientID>
+<responseCode>00</responseCode><responseText>Approved</responseText><successful>yes</successful><txnType>3</txnType>
+<amount>2900</amount><currency>AUD</currency><txnID>346576</txnID><receipt>523166</receipt><ponum>5231661</ponum>
+<settlementDate>20131230</settlementDate><CreditCardInfo><pan>444433...111</pan><expiryDate>01/13</expiryDate>
+<recurringFlag>no</recurringFlag><cardType>6</cardType><cardDescription>Visa</cardDescription></CreditCardInfo>
+</PeriodicItem></PeriodicList></Periodic></SecurePayMessage>" }
+
+		context 'when stored card is used' do
+			let(:card) { FactoryGirl.create :card, user: user, transaction: transaction }
+
+			before { transaction.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED }
+			before { RestClient.stub(:post) { response } }
+
+			it 'should complete the payment transaction' do
+				subject.should be_true
+			end
+		end
+
+		context 'when credit card is used' do
+			before { transaction.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED }
+			before { RestClient.stub(:post) { response } }
+
+			it 'should complete the payment transaction' do
+				subject.should be_true
+			end
+		end
+	end
+
+	describe '#client_id' do
+		subject { transaction.client_id }
+
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) { FactoryGirl.create :booking, booker: user }
+		let(:transaction) { FactoryGirl.create :transaction, booking: booking }
+
+		context 'when credit card transaction' do
+			it 'should return booker id' do
+				subject.should be_eql(user.id)
+			end
+		end
+
+		context 'when stored card is used' do
+			let(:card) { FactoryGirl.create :card, transaction: transaction, user: user }
+
+			before { user.cards << card }
+
+			it 'should return card token' do
+				subject.should be_eql(card.token)
+			end
+		end
+	end
+
+	describe '#transaction_amount' do
+		subject { transaction.transaction_amount }
+
+		let(:transaction) { FactoryGirl.create :transaction }
+
+		it 'should return transaction amount' do
+			subject.should be_eql((transaction.amount * 100).to_i)
+		end
+
+		it 'should return valid transaction amount in cents for all valid amounts' do
+			((1..999).inject(true) do |boolean, dollar|
+				boolean && (0..99).inject(true) do |bool, cent|
+					transaction.amount = dollar + (BigDecimal.new(cent.to_s) * BigDecimal.new('0.01'))
+					result_amount =  transaction.transaction_amount
+					bool && result_amount.to_s.include?(dollar.to_s) && result_amount.to_s.include?(cent.to_s)
+				end
+			end).should be_true
 		end
 	end
 end

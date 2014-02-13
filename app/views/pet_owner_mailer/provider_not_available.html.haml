@@ -3,7 +3,10 @@
 - if @booking.response_message.present?
   %p.article-content= "#{@host.first_name.capitalize} has also included the following message:"
   %p.article-content
-    %strong= @booking.response_message
+    %strong= @booking.response_message.blank? ? '-' : @booking.response_message
+
+%p.article-content.email-message-reply
+  %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
 
 %p.article-content
   %i HomeStay Title:
@@ -15,6 +18,11 @@
     = @booking.check_in_date.to_formatted_s(:day_and_month)
     to
     = @booking.check_out_date.to_formatted_s(:day_and_month)
+
+%p.article-content
+  %strong
+    Pet Details:
+    = "Name is #{@guest.pet_names} and breed is #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}."
 
 %p.article-content
   %strong Click 

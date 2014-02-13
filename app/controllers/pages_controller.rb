@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
   def home
+		@homepage = true
   end
 
   def welcome

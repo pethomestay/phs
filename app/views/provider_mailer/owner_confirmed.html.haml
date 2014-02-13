@@ -4,72 +4,7 @@
   %i Guest Name
   = ": #{@guest.first_name.capitalize}"
 
-- if @guest.pet.pictures.present?
-  %p.article-content= image_tag(@guest.pet.pictures.first.file.thumb('190x150#').url)
-%p.article-content
-  %i Pet Name
-  = ": #{@guest.pet_names}"
-%p.article-content
-  %i Pet Breed
-  = ": #{@guest.pet_breed}"
-%p.article-content
-  %i Pet Age
-  = ": #{@guest.pets.map(&:age).to_sentence}"
-%p.article-content
-  %i Date of Birth
-  = ": #{@guest.pet.date_of_birth.to_formatted_s(:day_and_month_and_year)}"
-%p.article-content
-  %strong
-    %i Dislike Loneliness
-  = ": #{@guest.pet.dislike_loneliness? ? 'Yes' : 'No'}, "
-  %strong
-    %i Dislike Children
-  = ": #{@guest.pet.dislike_children? ? 'Yes' : 'No'}, "
-  %strong
-    %i Dislike Animals
-  = ": #{@guest.pet.dislike_animals? ? 'Yes' : 'No'}, "
-  %strong
-    %i Dislike People
-  = ": #{@guest.pet.dislike_people? ? 'Yes' : 'No'}."
-- if @guest.pet.any_dislikes?
-  %p.article-content
-    %i Dislike explanation
-    = ": #{@guest.pet.explain_dislikes}."
-
-%p.article-content
-  %strong
-    %i Flee treated
-  = ": #{@guest.pet.flea_treated? ? 'Yes' : 'No'}, "
-  %strong
-    %i Vaccinated
-  = ": #{@guest.pet.vaccinated? ? 'Yes' : 'No'}, "
-  %strong
-    %i House Trained
-  = ": #{@guest.pet.house_trained? ? 'Yes' : 'No'}."
-
-%p.article-content
-  %i Microchip Number
-  = ": #{@guest.pet.microchip_number}"
-%p.article-content
-  %i Council Number
-  = ": #{@guest.pet.council_number}"
-
-%p.article-content
-  %i Emergency Contact Name
-  = ": #{@guest.pet.emergency_contact_name}"
-%p.article-content
-  %i Emergency Contact Phone
-  = ": #{@guest.pet.emergency_contact_phone}"
-%p.article-content
-  %i Vet Name
-  = ": #{@guest.pet.vet_name}"
-%p.article-content
-  %i Vet Phone
-  = ": #{@guest.pet.vet_phone}"
-%p.article-content
-  %i Medication
-  = ": #{@guest.pet.medication}"
-%br
+= render 'shared/pet_details'
 
 %p.article-content
   %strong Booking Details
@@ -84,26 +19,29 @@
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
-  = ": $#{@booking.cost_per_night.to_i}.00"
+  = ": $#{@booking.actual_value_figure(:cost_per_night)}"
 %p.article-content
   %i Subtotal
-  = ": $#{@booking.subtotal}.00"
+  = ": $#{@booking.actual_value_figure(:subtotal)}"
 %p.article-content
   %i PetHomeStay Service Fee (15%)
-  = ": $#{@booking.phs_service_charge}.00"
+  = ": $#{@booking.phs_service_charge}"
 %p.article-content
   %i Insurance
-  = ": $#{@booking.public_liability_insurance}.00"
+  = ": $#{@booking.public_liability_insurance}"
 %p.article-content
   %strong
     %i Total Payout
-  = ": $#{@booking.host_payout}.00"
+  = ": $#{@booking.host_payout}"
 %br
 
 %p.article-content
   %strong Message:
 %p.article-content
-  %i= @booking.message
+  %i= @booking.message.blank? ? '-' : @booking.message
+%p.article-content
+  Reply to this message
+  %strong= link_to 'here', mailbox_messages_url(@booking.mailbox)
 %br
 
 %p.article-content

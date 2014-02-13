@@ -11,7 +11,7 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 set :scm, :git
-set :repository,  "git@github.com:tinyrobotarmy/pet_homestay.git"
+set :repository,  "git@github.com:tapmint/pet_homestay.git"
 set :deploy_via, :remote_cache
 set :git_shallow_clone, 1
 
