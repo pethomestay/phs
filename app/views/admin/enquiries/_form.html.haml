@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.association :homestay, collection: Homestay.active.all(order: 'title'), prompt: "Choose a Homestay"
-    = f.association :user,   collection: User.active.find(:all, :joins => :pets, :order => 'last_name'), prompt: "Choose an Enquiry from person"
+    = f.association :user, :label=> 'Enquiry from',  collection: User.active.find(:all, :joins => :pets, :order => 'last_name'), prompt: "Choose an Enquiry from person"
     %h3 Enquiry details:
     = f.input :confirmed
     = f.input :owner_accepted
