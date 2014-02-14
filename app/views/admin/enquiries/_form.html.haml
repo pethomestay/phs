@@ -2,9 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    %h3 Enquiry Homestay:
     = f.association :homestay, collection: Homestay.active.all(order: 'title'), prompt: "Choose a Homestay"
-    %h3 Enquiry from:
     = f.association :user,   collection: User.active.find(:all, :joins => :pets, :order => 'last_name'), prompt: "Choose an Enquiry from person"
     %h3 Enquiry details:
     = f.input :confirmed
