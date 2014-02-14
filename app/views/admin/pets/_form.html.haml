@@ -3,6 +3,7 @@
 
   .form-inputs
     = f.input :name
+    = f.association :user, label: 'Owner', collection: User.active.find(:all, :order => 'last_name'), prompt: "Choose an owner for this pet"
     = f.input :pet_type_id, collection: ReferenceData::PetType.all, prompt: "Choose a type of pet"
     = f.input :breed
     = f.input :date_of_birth, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true, input_html: { value: @pet.date_of_birth.strftime("%d/%m/%Y"), class: 'span2 checkin' }
