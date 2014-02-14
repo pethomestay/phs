@@ -10,11 +10,24 @@ class Admin::EnquiriesController < Admin::AdminController
   end
 
   def new
-    respond_with(:admin, @enquiry = Enquiry.new)
+    @enquiry = Enquiry.new
+    @enquiry.check_in_date = DateTime.now
+    @enquiry.check_out_date = DateTime.now
+    @enquiry.check_in_time = DateTime.now
+    @enquiry.check_out_time = DateTime.now
+    respond_with(:admin, @enquiry)
   end
 
   def edit
-    respond_with(:admin, @enquiry = Enquiry.find(params[:id]))
+    @enquiry = Enquiry.find(params[:id])
+    if @enquiry.check_out_time.nil?
+      @enquiry.check_out_time = DateTime.new(@enquiry.check_out_date.year,@enquiry.check_out_date.month,@enquiry.check_out_date.day,0,0,0)
+    end
+    if @enquiry.check_in_time.nil?
+      @enquiry.check_in_time = DateTime.new(@enquiry.check_in_date.year,@enquiry.check_in_date.month,@enquiry.check_in_date.day,0,0,0)
+    end
+
+    respond_with(:admin, @enquiry)
   end
 
   def create

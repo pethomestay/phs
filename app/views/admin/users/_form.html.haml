@@ -6,7 +6,7 @@
     =f.input :last_name
     =f.input :email
     =f.input :password, required: true
-    =f.input :date_of_birth, as: :date, start_year: Date.today.year - 110, end_year: Date.today.year - 15, discard_day: false, order: [:day, :month, :year]
+    =f.input :date_of_birth, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true, input_html: { value: @user.date_of_birth.strftime("%d/%m/%Y"), class: 'span2 checkin' }
     - if not @user.provider.nil?
       =f.input :facebook_location, disabled: true
       =f.input :age_range_min, disabled: true
@@ -23,3 +23,6 @@
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
     = link_to 'Cancel', admin_users_path, class: 'btn'
+
+:javascript
+  $('.mydatepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' });

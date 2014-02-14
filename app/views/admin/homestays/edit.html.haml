@@ -1,10 +1,12 @@
-%h1 Editing Pet
+%h1 Editing Homestay
 
 = simple_form_for([:admin, @homestay], html: {class: 'form-horizontal', multipart: true}) do |f|
   = f.error_notification
 
   = f.input :title
   = f.input :slug
+  = f.association :user,   collection: User.active.all(order: 'last_name'), prompt: "Choose an Homestay host"
+
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
     .add-on $
     = f.input_field :cost_per_night, class: 'span1'

@@ -11,6 +11,10 @@
     = "(#{@enquiry.user.mobile_number || @enquiry.user.phone_number})"
   %dt Created
   %dd= l @enquiry.created_at
+  %dt Check in date/time
+  %dd= @enquiry.check_in_date.to_s + " " + @enquiry.check_in_time.to_s.split(" ")[1].chomp(":00")
+  %dt Check out date/time
+  %dd= @enquiry.check_out_date.to_s + " " + @enquiry.check_out_time.to_s.split(" ")[1].chomp(":00")
   %dt Duration
   %dd= @enquiry.duration_name
   %dt Response

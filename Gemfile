@@ -36,7 +36,7 @@ gem 'nokogiri', '1.5.6'
 
 group :test, :development do
   gem 'capistrano'
-  gem 'ruby-debug-ide'
+  #gem 'ruby-debug-ide'
 
   unless ENV['RM_INFO']
     gem 'pry'
