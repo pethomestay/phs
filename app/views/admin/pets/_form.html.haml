@@ -3,23 +3,47 @@
 
   .form-inputs
     = f.input :name
-    = f.input :pet_type_id, collection: ReferenceData::PetType.all
+    = f.association :user, label: 'Owner', collection: User.active.find(:all, :order => 'last_name'), prompt: "Choose an owner for this pet"
+    = f.input :pet_type_id, collection: ReferenceData::PetType.all, prompt: "Choose a type of pet"
     = f.input :breed
-    = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year, end_year: 1980
+    = f.input :date_of_birth, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true, input_html: { value: @pet.date_of_birth.strftime("%d/%m/%Y"), class: 'span2 checkin' }
     = f.input :microchip_number, label: 'Microchip #'
     = f.input :council_number, label: 'Council Pet Tag Reg. #'
     = f.input :vet_name
     = f.input :vet_phone
+    = f.input :size_id, label: 'Size', collection: ReferenceData::Size.all, include_blank: false
+    = f.input :sex_id, label: 'Sex', collection: ReferenceData::Sex.all, include_blank: false
     = f.input :emergency_contact_name, label: 'Contact name'
     = f.input :emergency_contact_phone, label: 'Contact phone'
     .grouped-checkboxes
       .dislikes
-        = label_tag "My pet doesn't like", nil, class: 'for-group'
+        %p My pet doesn't like:
         = f.input :dislike_people, as: :boolean, inline_label: 'Other people', label: false
         = f.input :dislike_animals, as: :boolean, inline_label: 'Other animals', label: false
         = f.input :dislike_children, as: :boolean, inline_label: 'Children', label: false
         = f.input :dislike_loneliness, as: :boolean, inline_label: 'Being alone', label: false
+        = field_set_tag 'Photos' do
+          %table.table.homestay-pictures
+            %tbody
+              = f.nested_fields_for :pictures do |f|
+                %tr.item
+                  %td
+                    - if f.object.file.present?
+                      = image_tag(f.object.file.thumb('200x200').url)
+                    - else
+                      = f.input :file, as: :file, label: 'Upload picture'
+                    = f.hidden_field :retained_file
+                  %td
+                    = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
+                    = f.hidden_field :id
+                    = f.hidden_field :_destroy
+            %table.table#remove.new-picture
+              %tr
+                %td= link_to '+ Add new picture', '#', class: 'add'
 
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
     = link_to 'Cancel', admin_pets_path, class: 'btn'
+
+:javascript
+  $('.mydatepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' });

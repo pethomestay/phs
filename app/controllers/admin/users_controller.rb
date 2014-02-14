@@ -10,7 +10,9 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def new
-    respond_with(:admin, @user = User.new)
+    @user = User.new
+    @user.date_of_birth = Date.today
+    respond_with(:admin, @user)
   end
 
   def edit

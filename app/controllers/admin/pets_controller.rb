@@ -10,11 +10,19 @@ class Admin::PetsController < Admin::AdminController
   end
 
   def new
-    respond_with(:admin, @pet = Pet.new)
+    @pet = Pet.new
+    if @pet.date_of_birth.nil?
+      @pet.date_of_birth = Date.today
+    end
+    respond_with(:admin, @pet)
   end
 
   def edit
-    respond_with(:admin, @pet = Pet.find(params[:id]))
+    @pet = Pet.find(params[:id])
+    if @pet.date_of_birth.nil?
+      @pet.date_of_birth = Date.today
+    end
+    respond_with(:admin, @pet)
   end
 
   def create

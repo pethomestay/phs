@@ -1,25 +1,111 @@
-= simple_form_for([:admin, @pet]) do |f|
+= simple_form_for([:admin, @enquiry]) do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    = f.input :pet_type, collection: ReferenceData::PetType.all
-    = f.input :breed
-    = f.input :date_of_birth, order: [:day, :month, :year], start_year: Time.now.year, end_year: 1980
-    = f.input :microchip_number, label: 'Microchip #'
-    = f.input :council_number, label: 'Council Pet Tag Reg. #'
-    = f.input :vet_name
-    = f.input :vet_phone
-    = f.input :emergency_contact_name, label: 'Contact name'
-    = f.input :emergency_contact_phone, label: 'Contact phone'
-    -#.grouped-checkboxes
-    -#  .dislikes
-    -#    = label_tag "My pet doesn't like", nil, class: 'for-group'
-    -#    = f.input :dislike_people, as: :boolean, inline_label: 'Other people', label: false
-    -#    = f.input :dislike_animals, as: :boolean, inline_label: 'Other animals', label: false
-    -#    = f.input :dislike_children, as: :boolean, inline_label: 'Children', label: false
-    -#    = f.input :dislike_loneliness, as: :boolean, inline_label: 'Being alone', label: false
+    = f.association :homestay, collection: Homestay.active.all(order: 'title'), prompt: "Choose a Homestay"
+    = f.association :user, :label=> 'Enquiry from',  collection: User.active.find(:all, :joins => :pets, :order => 'last_name'), prompt: "Choose an Enquiry from person"
+    %h3 Enquiry details:
+    = f.input :confirmed
+    = f.input :owner_accepted
+    = f.input :message
+    = f.input :sent_feedback_email
+    = f.input :duration_id, collection: ReferenceData::Duration.all, include_blank: false
+    = f.input :response_message
+
+    = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true,
+            input_html: { value: @enquiry.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
+
+    = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append mytimepicker" }, readonly: true,
+            input_html: { value: @enquiry.check_in_time.strftime("%H:%M") }
+    %br
+    = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true,
+            input_html: { value: @enquiry.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
+
+    = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append mytimepicker" }, readonly: true,
+            input_html: { value: @enquiry.check_out_time.strftime("%H:%M") }
+
 
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
-    = link_to 'Cancel', admin_pets_path, class: 'btn'
+    = link_to 'Cancel', admin_enquiries_path, class: 'btn'
+
+:javascript
+
+  function parseDate(str) {
+      var dmy = str.split('/');
+      return new Date(dmy[2], dmy[1]-1, dmy[0]);
+  }
+
+
+  function daydiff(firstDate, secondDate) {
+       var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+       return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  }
+
+  function setTimeForDate(date, timestr) {
+         hm = timestr.split(":");
+         date.setHours(hm[0],hm[1],0,0);
+         return date;
+  }
+
+  function setDuration(date_time_objects) {
+
+    var days =  daydiff(date_time_objects['check_in_date'], date_time_objects['check_out_date']);
+
+    if (days > 7) {
+         $('#enquiry_duration_id').val(11);
+    } else if (days > 0 && days < 8) {
+       $('#enquiry_duration_id').val(days + 3);
+    } else {
+      var hours = date_time_objects['check_out_date'].getHours();
+      var in_hours = date_time_objects['check_in_date'].getHours();
+      if (hours < 12) {
+            $('#enquiry_duration_id').val(1); //morning
+      } else if (hours < 18) {
+           if (in_hours < 12 && hours < 13)  {
+                $('#enquiry_duration_id').val(1); //morning
+           } else {
+            $('#enquiry_duration_id').val(2);//afternoon
+           }
+      } else   {
+           $('#enquiry_duration_id').val(3); //evening
+      }
+
+    }
+
+  }
+
+  function getDateTimeObjects() {
+    var date_time_objects = {};
+    var types = ['in', 'out'];
+    for (var i= 0 ; i< types.length; i++) {
+      var date_str = $('#enquiry_check_' + types[i] + '_date').val();
+      date_time_objects['check_'+ types[i] + '_date'] = parseDate(date_str);
+      date_time_objects['check_'+ types[i] + '_time_str'] = $('#enquiry_check_' + types[i] + '_time').val();
+      date_time_objects['check_'+ types[i] + '_date'] = setTimeForDate(date_time_objects['check_' + types[i] + '_date'], date_time_objects['check_'+ types[i] + '_time_str']);
+    }
+    return  date_time_objects;
+
+  }
+
+  $('.mydatepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' }).on('changeDate', function(ev) {
+
+      var date_time_objects = getDateTimeObjects();
+      if (date_time_objects['check_out_date'].valueOf() < date_time_objects['check_in_date'].valueOf())   {
+        alert('checkout date must be later than check in date');
+      }  else {
+        setDuration(date_time_objects);
+      }
+
+  });
+
+  $('.mytimepicker').datetimepicker({ language: 'en', pickSeconds: false, pickDate: false, pick12HourFormat: true }).on('changeDate', function(ev) {
+   var date_time_objects = getDateTimeObjects();
+    setDuration(date_time_objects);
+  }).on('hide', function(ev) {
+      var date_time_objects = getDateTimeObjects();
+      if (date_time_objects['check_out_date'].valueOf() < date_time_objects['check_in_date'].valueOf())   {
+        alert('checkout date must be later than check in date');
+      }
+  });
+
