@@ -35,11 +35,11 @@
 %p.article-title What Happens Next?
 %p.article-content.email-message-reply
   %strong= link_to 'Reply to this message', mailbox_messages_url(@enquiry.mailbox), style: 'color:#444444;'
-- unless [3,4].include?(@enquiry.response_id)
-  %p.article-content.enquiry-message-reply
-    %strong= link_to 'Book This HomeStay', enquiry_confirmation_url(@enquiry)
-    when you are happy and want to commit to the HomeStay. You will be taken to the full Booking Screen where you can edit
-    any details and enter payment.
+
+%p.article-content.enquiry-message-reply
+  %strong= link_to 'Book This HomeStay', new_booking_url(enquiry_id: @enquiry.id)
+  when you are happy and want to commit to the HomeStay. You will be taken to the full Booking Screen where you can edit
+  any details and enter payment.
 %br
 
 %p.article-content

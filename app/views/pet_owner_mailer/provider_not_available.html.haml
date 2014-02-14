@@ -1,32 +1,36 @@
 %p.article-title= "Hi #{@guest.first_name.capitalize},"
 %p.article-content= "Sorry, but #{@host.first_name.capitalize} is unavailable on the dates you have booked, although they would be happy to be hired or enquired again later!"
-- if @booking.response_message.present?
-  %p.article-content= "#{@host.first_name.capitalize} has also included the following message:"
-  %p.article-content
-    %strong= @booking.response_message.blank? ? '-' : @booking.response_message
+
+%p.article-content= "#{@host.first_name.capitalize} has also included the following message:"
+%p.article-content
+  %strong= @booking.response_message.blank? ? '-' : @booking.response_message
 
 %p.article-content.email-message-reply
   %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
 
 %p.article-content
-  %i HomeStay Title:
-  = @homestay.title.capitalize
-  %br
+  %strong Name
+  = " - #{@host.name.capitalize}"
+
+%p.article-content
+  %strong HomeStay Title
+  = " : #{@homestay.title.capitalize}"
+
+%p.article-content
+  %strong Pet Details:
+  = "Name is #{@guest.pet_names} and breed is #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}."
+
+%p.article-content
   %strong
-    %i Date requested:
+    Date requested:
     from
     = @booking.check_in_date.to_formatted_s(:day_and_month)
     to
     = @booking.check_out_date.to_formatted_s(:day_and_month)
 
 %p.article-content
-  %strong
-    Pet Details:
-    = "Name is #{@guest.pet_names} and breed is #{@guest.pet_breed.blank? ? 'n/a' : @guest.pet_breed}."
-
-%p.article-content
   %strong Click 
-  = link_to 'here', my_account_url
+  = link_to 'here', root_url
   %strong to Search and Enquire with more fantastic HomeStays in your Postcode.
 
 %p.article-content

@@ -22,7 +22,7 @@ $ ->
         return "." + stringValue.split('.')[1]
 
   updateTransactionFromServer = (number_of_nights_input) ->
-    url = window.location.origin + "/bookings/update_transaction"
+    url = window.location.hostname + "bookings/update_transaction"
     $.ajax url,
       data:
         number_of_nights: number_of_nights_input.val(),
@@ -80,7 +80,7 @@ $ ->
   $('[type="submit"]').on 'click', (e) ->
     if $('[name="booking[id]"]').val() != undefined
       e.preventDefault()
-      url = window.location.origin + "/bookings/update_message"
+      url = window.location.hostname + "/bookings/update_message"
       $.ajax url,
         data:
           booking_id: $('[name="booking[id]"]').val(),
