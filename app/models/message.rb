@@ -6,13 +6,6 @@ class Message < ActiveRecord::Base
 
 	def enquiry_response_message
 		if mailbox.booking.blank? && (mailbox.messages.size <= 2) && (user == mailbox.host_mailbox) && (mailbox.messages.first.user == mailbox.guest_mailbox)
-		  puts
-		  puts
-		  puts
-		  puts 'should b here'
-		  puts
-		  puts
-		  puts
 			PetOwnerMailer.host_enquiry_response(mailbox.enquiry).deliver
 		end
 	end
