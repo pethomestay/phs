@@ -66,6 +66,9 @@ class BookingsController < ApplicationController
 		render nothing: true
 	end
 
+	def trips
+		@bookings = current_user.bookers
+	end
 
 	private
 
