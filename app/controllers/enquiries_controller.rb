@@ -6,7 +6,10 @@ class EnquiriesController < ApplicationController
 	def create
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
-      flash[:alert] = "Your enquiry has been sent to this provider. They will respond with their availability soon."
+	    message = 'Your enquiry has been sent to the PetHomeStay Host, and there is a record in your My Account InBox.
+								Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using
+								PetHomeStay!'
+      flash[:alert] = message
     else
       flash[:error] = "There was an issue with your request. Please contact support."
     end
