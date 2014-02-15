@@ -29,7 +29,14 @@
 
 %p.article-title Message
 %p.article-content
-  %i= @enquiry.response_message.blank? ? '-' : @enquiry.response_message
+  %i
+    - if @enquiry.response_message.blank?
+      - if @enquiry.mailbox.messages.size == 2
+        = @enquiry.mailbox.messages.last.message_text
+      - else
+        = '-'
+    - else
+      = @enquiry.response_message
 %br
 
 %p.article-title What Happens Next?
