@@ -43,8 +43,10 @@ $ ->
 
   setNumberOfNights = ->
     number_of_nights_input = $('[name="booking[number_of_nights]"]')
-    check_in_date = new Date($('input.checkin', 'div.datepicker').val().split("/").reverse().join("-"))
-    check_out_date = new Date($('input.checkout', 'div.datepicker').val().split("/").reverse().join("-"))
+#    check_in_date = new Date($('input.checkin', 'div.datepicker').val().split("/").reverse().join("-"))
+#    check_out_date = new Date($('input.checkout', 'div.datepicker').val().split("/").reverse().join("-"))
+    check_in_date = new Date($('input.checkin').val().split("/").reverse().join("-"))
+    check_out_date = new Date($('input.checkout').val().split("/").reverse().join("-"))
     time_difference = Math.abs(check_out_date.getTime() - check_in_date.getTime())
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
     if parseInt(number_of_nights) <= 0
@@ -64,7 +66,10 @@ $ ->
   secondPickerDate = nowTemp.getDate()
   secondPickerMonth = nowTemp.getMonth()
   secondPickerYear = nowTemp.getFullYear()
-  #tempDate
+
+  if $("#xdpd2").length isnt 0
+    $("#xdpd2").children("input").val new XDate(nowTemp).toString("dd/MM/yyyy")
+
   checkin = $("#xdpd1").datetimepicker(
     language: "en"
     pickTime: false
@@ -86,8 +91,12 @@ $ ->
         startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
       ).on("changeDate", (ev) ->
         $(this).children("input").val new XDate(ev.date).toString("dd/MM/yyyy")
+        if $('[name="booking[number_of_nights]"]').val() != undefined
+          setNumberOfNights()
         return
       ).data("datepicker")
+      if $('[name="booking[number_of_nights]"]').val() != undefined
+        setNumberOfNights()
     return
   ).data("datepicker")
 
