@@ -57,6 +57,27 @@ class HomestaysController < ApplicationController
     end
   end
 
+  def favourite
+	  @homestay = Homestay.find params[:id]
+		Favourite.create! homestay_id: @homestay.id, user_id: current_user.id
+		render nothing: true
+  end
+
+  def non_favourite
+	  @homestay = Homestay.find params[:id]
+	  @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
+	  if @fav
+		  @fav.destroy
+		  render nothing: true
+	  else
+			render nothing: true, status: 302
+		end
+  end
+
+  def favourites
+	  @homestays = current_user.homestays
+  end
+
   private
   def find_homestay
     @homestay = current_user.homestay

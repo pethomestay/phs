@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :host_mailboxes, class_name: 'Mailbox', foreign_key: :host_mailbox_id
   has_many :guest_mailboxes, class_name: 'Mailbox', foreign_key: :guest_mailbox_id
   has_many :messages
+  has_many :favourites
+  has_many :homestays, through: :favourites, dependent: :destroy
   has_one :account
 
   has_many :given_feedbacks, class_name: 'Feedback'

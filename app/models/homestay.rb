@@ -6,6 +6,8 @@ class Homestay < ActiveRecord::Base
   has_many :enquiries
   has_many :bookings
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
+  has_many :favourites
+  has_many :users, through: :favourites, dependent: :destroy
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
@@ -127,6 +129,10 @@ class Homestay < ActiveRecord::Base
     services << 'Pet training' if pet_training
     services << 'Pet walking' if pet_walking
     services.to_sentence.downcase.capitalize
+  end
+
+  def favourite?(current_user)
+	  !Favourite.where(user_id: current_user, homestay_id: self).blank?
   end
 
   private
