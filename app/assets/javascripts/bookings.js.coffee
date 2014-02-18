@@ -60,10 +60,9 @@ $ ->
 #    if $('[name="booking[number_of_nights]"]').val() != undefined
 #      setNumberOfNights()
 
-  if window.location.href.indexOf("bookings/new?enquiry_id=") > -1
-    $( "#dpd1" ).siblings( "span" ).remove()
-    $( "#dpd2" ).siblings( "span" ).remove()
-  else if window.location.href.indexOf("bookings/new?enquiry_id=") < 0
+  if $( "#dpd1" ).length is 0
+    $( ".date_picker" ).siblings( "span" ).remove()
+  else
     nowTemp = new Date()
     now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0)
     nowTemp.setDate nowTemp.getDate() + 1
@@ -73,6 +72,21 @@ $ ->
 
     if $( "#dpd2" ).length isnt 0
       $( "#dpd2" ).val new XDate(nowTemp).toString("dd/MM/yyyy")
+      $("#dpd2").closest( "div" ).datetimepicker "destroy"
+      startDateSecondPicker = nowTemp
+      startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1
+      checkout = $( "#dpd2" ).closest( "div" ).datetimepicker(
+        language: "en"
+        pickTime: false
+        format: "dd/MM/yyyy"
+        startDate: new Date(startDateSecondPicker.getFullYear(), startDateSecondPicker.getMonth(), startDateSecondPicker.getDate(), 0, 0)
+      ).on("changeDate", (ev) ->
+        #        $(this).children("input").val new XDate(ev.date).toString("dd/MM/yyyy")
+        $( this ).val new XDate(ev.date).toString("dd/MM/yyyy")
+        if $('[name="booking[number_of_nights]"]').val() != undefined
+          setNumberOfNights()
+        return
+      ).data("datepicker")
 
     checkin = $( "#dpd1" ).closest( "div" ).datetimepicker(
       language: "en"

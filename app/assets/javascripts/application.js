@@ -31,4 +31,3 @@
 //= require bookings
 //= require provider
 //= require_tree ../../../vendor/assets/javascripts/.
-//= require testing

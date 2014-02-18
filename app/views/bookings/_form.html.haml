@@ -11,12 +11,14 @@
   %hr
   - date_class = booking_editable ? 'datepicker' : ''
   - time_class = booking_editable ? 'timepicker' : ''
+  - date_id1 = booking_editable ? 'dpd1' : ''
+  - date_id2 = booking_editable ? 'dpd2' : ''
 
   - unless host_view
     = f.input :id, as: :hidden
 
   = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
-            input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin', id: "dpd1" }
+            input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin', id: "#{date_id1}" }
   -#
   -#= f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
   -#          input_html: { value: @booking.check_in_time.strftime("%H:%M") }
@@ -29,7 +31,7 @@
   -#                                                     value: current_date, readonly: true }
 
   = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append #{date_class}" }, readonly: true,
-            input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout', id: "dpd2" }
+            input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout', id: "#{date_id2}" }
   -#
   -#= f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append #{time_class}" }, readonly: true,
   -#          input_html: { value: @booking.check_out_time.strftime("%H:%M") }
