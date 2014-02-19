@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "admin/pets/show" do
   before(:each) do
-    @user = assign(:pet, stub_model(Pet))
+    @pet = FactoryGirl.create :pet
+    @pet.user = FactoryGirl.create :user
   end
 
   it "renders attributes in <p>" do

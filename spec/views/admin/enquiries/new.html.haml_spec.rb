@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "admin/pets/new" do
   before(:each) do
-    assign(:pet, stub_model(Pet).as_new_record)
+	  @pet = FactoryGirl.build :pet
   end
 
   it "renders new pet form" do

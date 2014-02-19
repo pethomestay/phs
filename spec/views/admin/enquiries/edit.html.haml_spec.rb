@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "admin/pets/edit" do
   before(:each) do
-    @pet = assign(:pet, stub_model(Pet))
+	  @pet = FactoryGirl.create :pet
   end
 
   it "renders the edit admin_pet form" do

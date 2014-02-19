@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "admin/users/edit" do
   before(:each) do
-    @user = assign(:user, stub_model(User))
+	  @user = FactoryGirl.create :user
   end
 
   it "renders the edit admin_user form" do

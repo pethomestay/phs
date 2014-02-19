@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "admin/users/new" do
   before(:each) do
-    assign(:user, stub_model(User).as_new_record)
+    @user = FactoryGirl.build :user
   end
 
   it "renders new user form" do
