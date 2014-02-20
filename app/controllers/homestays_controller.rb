@@ -30,10 +30,6 @@ class HomestaysController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     if @homestay.update_attributes(params[:homestay])
       redirect_to my_account_path, alert: "Your listing has been updated."
