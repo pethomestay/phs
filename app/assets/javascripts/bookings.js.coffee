@@ -42,8 +42,8 @@ $ ->
 
   setNumberOfNights = ->
     number_of_nights_input = $('[name="booking[number_of_nights]"]')
-    check_in_date = new Date($('input.checkin').val().split('/').reverse().join('-'))
-    check_out_date = new Date($('input.checkout').val().split('/').reverse().join('-'))
+    check_in_date = new Date($('input.checkin').val().split('/').reverse().join('/'))
+    check_out_date = new Date($('input.checkout').val().split('/').reverse().join('/'))
     time_difference = Math.abs(check_out_date.getTime() - check_in_date.getTime())
     console.log(time_difference)
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
@@ -59,23 +59,6 @@ $ ->
   else
     nowTemp = new Date()
     nowTemp.setDate nowTemp.getDate() + 1
-
-    if $('#datepicker-check-out-date').length isnt 0
-      $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
-      $('#datepicker-check-out-date').closest('div').datetimepicker('destroy')
-      startDateSecondPicker = nowTemp
-      startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1
-      $('#datepicker-check-out-date').closest('div').datetimepicker(
-        language: 'en'
-        pickTime: false
-        format: 'dd/MM/yyyy'
-        startDate: new Date(startDateSecondPicker.getFullYear(), startDateSecondPicker.getMonth(), startDateSecondPicker.getDate(), 0, 0)
-      ).on('changeDate', (ev) ->
-        $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
-        if $('[name="booking[number_of_nights]"]').val() != undefined
-          setNumberOfNights()
-        return
-      ).data('datepicker')
 
     $('#datepicker-check-in-date').closest('div').datetimepicker(
       language: 'en'
@@ -106,6 +89,23 @@ $ ->
           setNumberOfNights()
       return
     ).data('datepicker')
+
+    if $('#datepicker-check-out-date').length isnt 0
+      $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
+      $('#datepicker-check-out-date').closest('div').datetimepicker('destroy')
+      startDateSecondPicker = nowTemp
+      startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1
+      $('#datepicker-check-out-date').closest('div').datetimepicker(
+        language: 'en'
+        pickTime: false
+        format: 'dd/MM/yyyy'
+        startDate: new Date(startDateSecondPicker.getFullYear(), startDateSecondPicker.getMonth(), startDateSecondPicker.getDate(), 0, 0)
+      ).on('changeDate', (ev) ->
+        $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
+        if $('[name="booking[number_of_nights]"]').val() != undefined
+          setNumberOfNights()
+        return
+      ).data('datepicker')
 
   $('input', 'div.datepicker').on 'click', ->
     $(this).siblings('span').click()
