@@ -45,9 +45,7 @@ $ ->
     check_in_date = new Date($('input.checkin').val().split('/').reverse().join('/'))
     check_out_date = new Date($('input.checkout').val().split('/').reverse().join('/'))
     time_difference = Math.abs(check_out_date.getTime() - check_in_date.getTime())
-    console.log(time_difference)
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
-    console.log(number_of_nights)
     if parseInt(number_of_nights) <= 0
       number_of_nights = 1
     if parseInt(number_of_nights_input.val()) != parseInt(number_of_nights)

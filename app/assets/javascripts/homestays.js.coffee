@@ -1,18 +1,18 @@
 $ ->
-  $('.fa.fa-heart-o.favourite-unheart').on 'click', ->
+  $('.fa.fa-star-o.favourite-unheart').on 'click', ->
     $this = $(this)
     $thisP = $(this).closest('p')
-    favP = $('.fa.fa-heart.favourite-heart').closest('p')
+    favP = $('.fa.fa-star.favourite-heart').closest('p')
     dataId = $this.closest('div').data('id')
     $.ajax "#{dataId}/favourite",
       success: ->
         $thisP.hide()
         favP.show()
 
-  $('.fa.fa-heart.favourite-heart').on 'click', ->
+  $('.fa.fa-star.favourite-heart').on 'click', ->
     $this = $(this)
     $thisP = $(this).closest('p')
-    nonFavP = $('.fa.fa-heart-o.favourite-unheart').closest('p')
+    nonFavP = $('.fa.fa-star-o.favourite-unheart').closest('p')
     dataId = $this.closest('div').data('id')
     $.ajax "#{dataId}/non_favourite",
       success: ->

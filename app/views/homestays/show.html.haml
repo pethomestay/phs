@@ -32,9 +32,9 @@
           - if current_user
             - homestay_is_favourite = @homestay.favourite?(current_user)
             %p{ style: homestay_is_favourite ? '' : 'display:none' }
-              %i.fa.fa-heart.favourite-heart
+              %i.fa.fa-star.favourite-heart
             %p{ style: homestay_is_favourite ? 'display:none' : '' }
-              %i.fa.fa-heart-o.favourite-unheart
+              %i.fa.fa-star-o.favourite-unheart
 
         .clear
         .span7
