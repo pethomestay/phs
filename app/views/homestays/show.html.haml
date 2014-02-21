@@ -88,7 +88,7 @@
         .clearfix
       - unless my_homestay?(@homestay)
         - if user_signed_in?
-          = render partial: 'providers/enquire', locals: {provider: @homestay}
+          = render partial: 'providers/enquire', locals: {provider: @homestay, last_enquiry: @reusable_enquiries}
         - else
           .well.listing-form
             = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}

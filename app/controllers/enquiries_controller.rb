@@ -4,6 +4,14 @@ class EnquiriesController < ApplicationController
   before_filter :find_enquiry, only: [:show, :update]
 
 	def create
+    if params[:enquiry][:reuse_message] == '1'
+      @old_reused_enquiry = current_user.enquiries.where(reuse_message: true)
+      if @old_reused_enquiry.present?
+        old_reused_enquiry = @old_reused_enquiry.first
+        old_reused_enquiry.reuse_message = false
+        old_reused_enquiry.save
+      end
+    end
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
 	    message = 'Your enquiry has been sent to the PetHomeStay Host, and there is a record in your My Account InBox.

@@ -25,6 +25,8 @@ describe HomestaysController do
   describe 'GET #show' do
     subject { get :show, id: homestay.slug }
     let(:homestay) { FactoryGirl.create :homestay }
+    before { controller.stub(:current_user).and_return homestay.user }
+
     it 'should make homestay to the pets variable' do
       subject
       assigns(:homestay).should == homestay
