@@ -31,10 +31,14 @@
             %i per night
           - if current_user
             - homestay_is_favourite = @homestay.favourite?(current_user)
-            %p{ style: homestay_is_favourite ? '' : 'display:none' }
+            %p{ style: homestay_is_favourite ? 'width:184px;' : 'display:none;width:184px;' }
+              %span Remove from favourites
               %i.fa.fa-star.favourite-heart
-            %p{ style: homestay_is_favourite ? 'display:none' : '' }
+            %p{ style: homestay_is_favourite ? 'display:none;width:184px;' : 'width:184px;' }
+              %span Favourite this host
               %i.fa.fa-star-o.favourite-unheart
+
+
 
         .clear
         .span7
