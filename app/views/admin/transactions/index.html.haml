@@ -39,7 +39,7 @@
         - host = booking.bookee
         %td= link_to (guest.name || 'n/a'), admin_user_path(guest)
         %td= link_to (host.name || 'n/a'), admin_user_path(host)
-        %td= transaction.reference
+        %td= link_to transaction.reference, admin_view_booking_url(booking)
         %td= transaction.updated_at.strftime('%d/%m/%Y')
         %td= transaction.pre_authorisation_id
         %td= transaction.response_text

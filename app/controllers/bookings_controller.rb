@@ -70,6 +70,10 @@ class BookingsController < ApplicationController
 		@bookings = current_user.bookers
 	end
 
+	def admin_view
+		@booking = Booking.find(params[:id])
+	end
+
 	private
 
 	def homestay_required
