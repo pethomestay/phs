@@ -53,4 +53,57 @@ describe BookingsController do
 			response.should redirect_to booking_path(booking)
 		end
 	end
+
+	describe 'GET #index' do
+		subject { get :index }
+
+		let(:user) { FactoryGirl.create :user }
+
+		before { controller.stub(:current_user).and_return user }
+
+		it 'should render the index template' do
+			subject
+			response.should render_template :index
+		end
+	end
+
+	describe 'GET #show' do
+		subject { get :show, id: booking.id }
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) {  FactoryGirl.create :booking, booker: user }
+		before { controller.stub(:current_user).and_return user }
+
+		it 'should render the show template' do
+			subject
+			response.should render_template :show
+		end
+	end
+
+	describe 'GET #host_confirm' do
+		subject { get :host_confirm, id: booking.id }
+
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) {  FactoryGirl.create :booking, booker: user }
+
+		before { controller.stub(:current_user).and_return user }
+
+		it 'should render the host confirm template' do
+			subject
+			response.should render_template :host_confirm
+		end
+	end
+
+	describe 'GET #host_message' do
+		subject { get :host_message, id: booking.id }
+
+		let(:user) { FactoryGirl.create :user }
+		let(:booking) {  FactoryGirl.create :booking, booker: user }
+
+		before { controller.stub(:current_user).and_return user }
+
+		it 'should redirect to inbox' do
+			subject
+			response.should redirect_to mailbox_messages_path(booking.mailbox)
+		end
+	end
 end

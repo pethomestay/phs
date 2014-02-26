@@ -18,10 +18,12 @@
 
     %hr
     = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
-    = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+    -# to be used in future
+    -#= f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
     %br
     = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
-    = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+    -# to be used in future
+    -#= f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
     = f.input :number_of_nights, readonly: true, as: :string
 
     %hr

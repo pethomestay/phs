@@ -33,7 +33,7 @@ class HomestaysController < ApplicationController
 
   def update
     if @homestay.update_attributes(params[:homestay])
-      redirect_to my_account_path, alert: "Your listing has been updated."
+      redirect_to my_account_path, alert: 'Your listing has been updated.'
     else
       render :edit
     end
@@ -46,10 +46,10 @@ class HomestaysController < ApplicationController
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
-      flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
+      flash[:new_homestay] = 'Nice, your PetHomeStay is ready for the world!'
       redirect_to @homestay
     else
-      flash[:notice] = "That title is not unique" if @homestay.errors[:slug].present?
+      flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
       render :new
     end
   end

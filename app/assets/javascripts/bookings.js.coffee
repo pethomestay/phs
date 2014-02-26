@@ -68,28 +68,35 @@ $ ->
       picker = eventTarget.data('datetimepicker')
       tempDate = new Date(picker.getLocalDate())
       tempDate.setDate tempDate.getDate() + 1
-      if $('#datepicker-check-out-date').length isnt 0
+      if $('#datepicker-check-out-date').val() != undefined
+        secondTCurrentDate = new Date($('input.checkout').val().split('/').reverse().join('/'))
+        secondNewDate = secondTCurrentDate
+        if tempDate > secondTCurrentDate
+          secondNewDate = tempDate
         $('#datepicker-check-out-date').closest('div').datetimepicker 'destroy'
-        $('#datepicker-check-out-date').val new XDate(tempDate).toString('dd/MM/yyyy')
+        $('#datepicker-check-out-date').val new XDate(secondNewDate).toString('dd/MM/yyyy')
         tempDate.setDate tempDate.getDate() + 1
         $('#datepicker-check-out-date').closest('div').datetimepicker(
-          language: 'en'
-          pickTime: false
-          format: 'dd/MM/yyyy'
-          startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
+            language: 'en'
+            pickTime: false
+            format: 'dd/MM/yyyy'
+            startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
         ).on('changeDate', (ev) ->
           $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
           if $('[name="booking[number_of_nights]"]').val() != undefined
             setNumberOfNights()
           return
         ).data('datepicker')
-        if $('[name="booking[number_of_nights]"]').val() != undefined
-          setNumberOfNights()
+      if $('[name="booking[number_of_nights]"]').val() != undefined
+        setNumberOfNights()
       return
     ).data('datepicker')
 
     if $('#datepicker-check-out-date').length isnt 0
-      $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
+      oldDate = new Date($('#datepicker-check-out-date').val().split('/').reverse().join('/'))
+      if oldDate <= nowTemp
+        $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
+
       $('#datepicker-check-out-date').closest('div').datetimepicker('destroy')
       startDateSecondPicker = nowTemp
       startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1

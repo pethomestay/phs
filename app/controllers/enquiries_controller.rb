@@ -19,7 +19,7 @@ class EnquiriesController < ApplicationController
 								PetHomeStay!'
       flash[:alert] = message
     else
-      flash[:error] = "There was an issue with your request. Please contact support."
+      flash[:error] = 'There was an issue with your request. Please contact support.'
     end
     redirect_to @enquiry.homestay
   end
@@ -34,7 +34,7 @@ class EnquiriesController < ApplicationController
 	    @enquiry.mailbox.messages.create!(user_id: current_user.id, message_text: @enquiry.response_message) unless @enquiry.response_message.blank?
 			return redirect_to mailbox_messages_path(@enquiry.mailbox)
     else
-      flash[:alert] = "Please fill in a response message if your are not answering yes or no"
+      flash[:alert] = 'Please fill in a response message if your are not answering yes or no'
       @user = @enquiry.user
       render :show
     end
