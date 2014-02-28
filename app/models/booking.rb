@@ -56,6 +56,22 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
+	def self.to_completed_csv(options = {})
+		CSV.generate(options) do |csv|
+			csv << [ 'Guest name', 'Guest address', 'Guest pet name', 'Guest pet breed', 'Guest pet age', 'Checkin Date',
+			         'Checkout Date', 'Host name', 'Host Address', 'Time of Stay', '# of 24 hour period']
+
+			all.each do |booking|
+				booker = booking.booker
+				pet = booker.pet
+				host = booking.bookee
+				csv << [ booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age, booking.check_in_date.to_formatted_s(:year_month_day),
+				         booking.check_out_date.to_formatted_s(:year_month_day), host.name.capitalize, host.complete_address, 'n/a',
+				         booking.number_of_nights ]
+			end
+		end
+	end
+
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
 	end

@@ -207,6 +207,10 @@ class User < ActiveRecord::Base
     result
   end
 
+  def complete_address
+		"#{self.address_1} #{self.address_suburb}, #{self.address_city} #{self.address_country}"
+  end
+
   def self.find_for_facebook_oauth(auth, current_user)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
       graph = Koala::Facebook::API.new(auth.credentials.token)

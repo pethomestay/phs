@@ -1,23 +1,6 @@
 = link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn pull-right'
 %h1 Listing Transactions
--#%p
--#  %strong Note: Several transaction states and their respective explanation:-
--#%p
--#  %strong unfinished
--#  \: guest has not been able to complete booking transaction (bank error, system bug, invalid credit card or guest simply left booking).
--#  %br
--#  %strong awaiting host response
--#  \: transaction has been done successfully. But host hasn't responded yet.
--#  %br
--#  %strong host rejected
--#  \: transaction has been done successfully. But host rejected guest's offer.
--#  %br
--#  %strong host accepted but not paid
--#  \: transaction has been done successfully. Host accepted guest's offer. But hasn't been paid.
--#  %br
--#  %strong host has been paid
--#  \: transaction has been done successfully. Host accepted guest's offer and manually paid as well.
-
+%h5= link_to 'Download completed bookings', export_completed_admin_bookings_url(format: 'csv')
 %table.table.tablesorter
   %thead
     %tr

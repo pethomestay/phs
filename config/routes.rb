@@ -50,6 +50,7 @@ PetHomestay::Application.routes.draw do
     resources :bookings do
 	    collection do
 		    get :reconciliations_file
+		    get :export_completed
 	    end
     end
     resources :transactions
