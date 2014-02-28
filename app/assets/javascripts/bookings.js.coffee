@@ -168,3 +168,8 @@ $ ->
       $('.payment_form').attr('action', $('[name="stored_card_transaction_action"]').val())
     else
       $('.payment_form').attr('action', $('[name="securepay_transaction_action"]').val())
+
+  $('input[type="radio"]:checked').parent().css('color', '#EA6E28')
+  $('input[type="radio"]').on 'change', ->
+    $('input[type="radio"]:unchecked').parent().css('color', 'black')
+    $('input[type="radio"]:checked').parent().css('color', '#EA6E28')
