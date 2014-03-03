@@ -59,7 +59,7 @@ class Booking < ActiveRecord::Base
 	def self.to_completed_csv(options = {})
 		CSV.generate(options) do |csv|
 			csv << [ 'Guest name', 'Guest address', 'Guest pet name', 'Guest pet breed', 'Guest pet age', 'Checkin Date',
-			         'Checkout Date', 'Host name', 'Host Address', 'Time of Stay', '# of 24 hour period']
+			         'Checkout Date', 'Host name', 'Host Address', 'Time of Stay', '# of 24 hour period' ]
 
 			all.each do |booking|
 				booker = booking.booker

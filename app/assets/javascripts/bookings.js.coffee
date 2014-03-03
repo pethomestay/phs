@@ -137,7 +137,9 @@ $ ->
       $.ajax '/bookings/update_message',
         data:
           booking_id: $('[name="booking[id]"]').val(),
-          message: $('[name="booking[message]"]').val()
+          message: $('[name="booking[message]"]').val(),
+          check_in_time: $('[name="booking[check_in_time]"]').val(),
+          check_out_time: $('[name="booking[check_out_time]"]').val()
         success: () ->
           set_eps_result_url()
           $('.payment_form').submit()

@@ -55,6 +55,8 @@ class BookingsController < ApplicationController
 
 	def update_message
 		booking = Booking.find(params[:booking_id])
+		booking.check_in_time = params[:check_in_time]
+		booking.check_out_time = params[:check_out_time]
 		booking.message_update(params[:message])
 		render nothing: true
 	end
