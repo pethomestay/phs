@@ -8,20 +8,27 @@
 
       .booking-info.pull-left
         %p
-          %strong Guest Name
-          = ": #{guest.name}"
+          %strong Guest Name:
+          = guest.name
           %br
-          %strong Pet Name
-          = ": #{guest.pet.name}"
+          - pet = guest.pet
+          %strong Pet Name:
+          = "#{pet.name}, "
+          %strong Pet Breed:
+          = "#{pet.breed.blank? ? 'n/a' : pet.breed}, "
+          %strong Pet Age:
+          = "#{[pet.age].to_sentence}, "
+          %strong Pet Date of Birth:
+          = "#{pet.date_of_birth.strftime('%d/%m/%Y')}."
           %br
-          %strong Date
-          = ": #{booking.check_in_date.strftime('%d/%m/%Y')} - #{booking.check_out_date.strftime('%d/%m/%Y')}"
+          %strong Date:
+          = " #{booking.check_in_date.strftime('%d/%m/%Y')} - #{booking.check_out_date.strftime('%d/%m/%Y')}"
           %br
-          %strong Location
-          = ": #{guest.address_1}, #{guest.address_suburb}, #{guest.address_city}."
+          %strong Location:
+          = " #{guest.complete_address}"
           %br
-          %strong Payout
-          = ": $#{booking.host_payout}"
+          %strong Payout:
+          = " $#{booking.host_payout}"
 
       .view-receipt.pull-right
         = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
