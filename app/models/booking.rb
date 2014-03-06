@@ -58,16 +58,18 @@ class Booking < ActiveRecord::Base
 
 	def self.to_completed_csv(options = {})
 		CSV.generate(options) do |csv|
-			csv << [ 'Guest name', 'Guest address', 'Guest pet name', 'Guest pet breed', 'Guest pet age', 'Checkin Date',
-			         'Checkout Date', 'Host name', 'Host Address', 'Time of Stay', '# of 24 hour period' ]
+			csv << [ 'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
+			         'Check-out Date', 'Check-out Time', 'Host name', 'Homestay Title', 'Host Address', '# of 24 hour period' ]
 
 			all.each do |booking|
 				booker = booking.booker
 				pet = booker.pet
 				host = booking.bookee
-				csv << [ booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age, booking.check_in_date.to_formatted_s(:year_month_day),
-				         booking.check_out_date.to_formatted_s(:year_month_day), host.name.capitalize, host.complete_address, 'n/a',
-				         booking.number_of_nights ]
+				homestay = booking.homestay
+				csv << [ booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
+				         booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
+				         booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
+				         host.name.capitalize, homestay.title, host.complete_address, booking.number_of_nights ]
 			end
 		end
 	end

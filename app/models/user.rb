@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
   end
 
   def complete_address
-		"#{self.address_1} #{self.address_suburb}, #{self.address_city} #{self.address_country}"
+		"#{self.address_1} #{self.address_suburb}, #{self.address_city}, #{self.address_country}."
   end
 
   def self.find_for_facebook_oauth(auth, current_user)

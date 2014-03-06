@@ -34,8 +34,8 @@
     = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number',
                                                           required: true }
     = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true,
-                                                          class: 'span1', tooltip: true,
-                                                          message: 'CVV: 3-4 digit number, written on back of the card.' }
+                                                          message: 'CVV: 3-4 digit number, written on back of the card.',
+                                                          class: 'span1', tooltip: true }
     = render 'transaction_month_year_fields'
 
   = render 'policies'
