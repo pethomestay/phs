@@ -11,7 +11,8 @@ class Booking < ActiveRecord::Base
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
 
-	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout
+	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
+	              :pet_date_of_birth
 
 	scope :unfinished, where(status: BOOKING_STATUS_UNFINISHED)
 
