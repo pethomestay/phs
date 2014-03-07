@@ -11,11 +11,4 @@ class Admin::BookingsController < Admin::AdminController
 			format.csv { send_data @bookings.to_csv }
 		end
 	end
-
-	def export_completed
-		@bookings = Booking.finished_and_host_accepted_or_host_paid
-		respond_to do |format|
-			format.csv { send_data @bookings.to_completed_csv }
-		end
-	end
 end
