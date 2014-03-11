@@ -27,8 +27,12 @@
           %strong Location:
           = " #{guest.complete_address}"
           %br
-          %strong Payout:
-          = " $#{booking.host_payout}"
+          - if current_user == booking.booker
+            %strong Amount Paid:
+            = " $#{booking.amount}"
+          - else
+            %strong Payout:
+            = " $#{booking.host_payout}"
 
       .view-receipt.pull-right
         - if current_user == booking.booker

@@ -45,21 +45,25 @@ class Booking < ActiveRecord::Base
 
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
-			csv << [ 'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
-			         'Check-out Date', 'Check-out Time', 'Host name', 'Homestay Title', 'Host Address', '# of 24 hour period',
-			         'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee', 'Host Payout', 'Status' ]
+			csv << [
+				'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
+			  'Check-out Date', 'Check-out Time', 'Host name', 'Homestay Title', 'Host Address', '# of 24 hour period',
+			  'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee', 'Host Payout', 'Status'
+			]
 
 			all.each do |booking|
 				booker = booking.booker
 				pet = booker.pet
 				host = booking.bookee
-				csv << [ booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
-									booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
-				          booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
-				          host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
-				          booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
-				          "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
-				          (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid' ]
+				csv << [
+					booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
+					booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
+			    booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
+			    host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
+			    booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
+			    "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
+			    (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid'
+				]
 			end
 		end
 	end

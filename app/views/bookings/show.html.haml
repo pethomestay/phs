@@ -17,18 +17,20 @@
     - if host_view
       = f.input :pet_breed, input_html: { value: pet.breed.blank? ? 'n/a' : pet.breed }, readonly: true
       = f.input :pet_age, input_html: { value: pet.age.blank? ? 'n/a' : [pet.age].to_sentence }, readonly: true
-      = f.input :pet_date_of_birth, input_html: { value: pet.date_of_birth.blank? ? 'n/a' : pet.date_of_birth.strftime('%d/%m/%Y') }, readonly: true
+      = f.input :pet_date_of_birth, input_html: { value: pet.date_of_birth.blank? ? 'n/a' : pet.date_of_birth.strftime('%d/%m/%Y') },
+        readonly: true
     = f.input :message, as: :text, input_html: { rows: 3 }, readonly: true, label: host_view ? 'Guest message' : 'My message'
 
     %hr
-    = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
-
-    = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+    = f.input :check_in_date, as: :date_picker, wrapper_html: { class: 'input-append' }, readonly: true,
+        input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin' }
+    = f.input :check_in_time, as: :time_picker, wrapper_html: { class: 'input-append' }, readonly: true,
+        input_html: { value: @booking.check_in_time.strftime('%H:%M') }
     %br
-    = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
-
-    = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
-
+    = f.input :check_out_date, as: :date_picker, wrapper_html: { class: 'input-append' }, readonly: true,
+        input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'span2 checkout' }
+    = f.input :check_out_time, as: :time_picker, wrapper_html: { class: 'input-append' }, readonly: true,
+        input_html: { value: @booking.check_out_time.strftime('%H:%M') }
     = f.input :number_of_nights, readonly: true, as: :string
 
     %hr
@@ -60,4 +62,5 @@
 
     - if @booking.host_accepted?
       %hr
-      = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge', value: @booking.response_message.blank? ? 'none' : @booking.response_message }, readonly: true
+      = f.input :response_message, input_html: { rows: 3, class: 'input-xxlarge', readonly: true,
+        value: @booking.response_message.blank? ? 'none' : @booking.response_message }
