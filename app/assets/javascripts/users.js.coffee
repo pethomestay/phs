@@ -34,7 +34,7 @@ $ ->
     $('.account', 'ul.nav.nav-pills').addClass('active')
   else if window.location.href.match('favourites')
     $('.favourites', 'ul.nav.nav-pills').addClass('active')
-  else if window.location.href.match('bookings/trips')
+  else if window.location.href.match('trips')
     $('.trips', 'ul.nav.nav-pills').addClass('active')
   else if window.location.href.match('bookings')
     $('.bookings', 'ul.nav.nav-pills').addClass('active')

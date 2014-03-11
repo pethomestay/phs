@@ -31,5 +31,8 @@
           = " $#{booking.host_payout}"
 
       .view-receipt.pull-right
-        = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        - if current_user == booking.booker
+          = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
+        - else
+          = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
 
