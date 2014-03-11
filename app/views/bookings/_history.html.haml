@@ -29,7 +29,7 @@
           %br
           - if current_user == booking.booker
             %strong Amount Paid:
-            = " $#{booking.amount}"
+            = " $#{booking.actual_amount}"
           - else
             %strong Payout:
             = " $#{booking.host_payout}"
