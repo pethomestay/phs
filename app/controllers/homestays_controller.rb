@@ -20,8 +20,8 @@ class HomestaysController < ApplicationController
 
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
-    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
     if current_user
+	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,
