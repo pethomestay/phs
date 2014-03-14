@@ -41,7 +41,6 @@ $ ->
   else if window.location.href.match('mailbox')
     $('.messages', 'ul.nav.nav-pills').addClass('active')
 
-
   if window.location.href.match('users/edit')
     $('.personal', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
   else if window.location.href.match('pets')
@@ -50,3 +49,42 @@ $ ->
     $('.homestay-listing', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
   else if window.location.href.match('accounts')
     $('.payout-details', 'ul.nav.nav-tabs.nav-stacked').addClass('active')
+
+  rootLocation = window.location.protocol + '//' + window.location.hostname;
+  if $('div.alert').val() != undefined
+    if $('div.alert').text().match("A message with a confirmation link has been sent to your email address. Please open the link to activate your account.")
+      alert 'send email'
+      ga 'set', 'location', rootLocation + "/users/sign_up/send_email"
+      ga 'send', 'pageview',
+        'page': '/users/sign_up/send_email',
+        'title': 'Sign Up Successful'
+
+    if $('div.alert').text().match("Your account was successfully confirmed. You are now signed in.")
+      alert 'email confimation'
+      ga 'set', 'location', rootLocation + '/users/sign_up/email_confirmation'
+      ga 'send', 'pageview',
+        'page': '/users/sign_up/email_confirmation',
+        'title': 'SignUp Email confirmation'
+
+  $( "#ask_host_a_question" ).click ->
+    alert "ask host a question"
+    ga 'set', 'location', rootLocation + '/homestays/ask_host_a_question'
+    ga 'send', 'pageview',
+      'page': '/homestays/ask_host_a_question',
+      'title': 'Ask Host a Question'
+
+  $( "#ask_host_a_question_submit" ).click ->
+    alert "ask host a question submit"
+    ga 'set', 'location', rootLocation + '/homestays/ask_host_a_question/submit'
+    ga 'send', 'pageview',
+      'page': '/homestays/ask_host_a_question/submit',
+      'title': 'Ask Host a Question Submit'
+
+  $("#booking_confirm_by_host").click (e) ->
+    if $('[name="booking[response_id]"]:checked').val() == "5"
+
+      ga 'set', 'location', rootLocation + '/bookings/confirmation'
+      ga 'send', 'pageview',
+        'page': '/bookings/confirmation',
+        'title': 'Confirm a Booking'
+      alert 'booking cnfirm by host'

@@ -9,6 +9,7 @@ class TransactionsController < ApplicationController
 			PetOwnerMailer.booking_receipt(@transaction.booking).deliver
 			ProviderMailer.owner_confirmed(@transaction.booking).deliver
 
+
 			return redirect_to booking_path(@transaction.booking)
 		else
 			return redirect_to new_booking_path(homestay_id: @transaction.booking.homestay.id, alert: @transaction.error_messages)
