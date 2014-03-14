@@ -5,6 +5,7 @@
     %tr
       %th From (Guest)
       %th To (Host)
+      %th Message
       %th Created
       %th Actions
   %tbody
@@ -14,6 +15,7 @@
         %td= link_to guest.name, admin_user_path(guest)
         - host = enquiry.homestay.user
         %td= link_to host.name, admin_user_path(host)
+        %td= enquiry['message']
         %td= enquiry.created_at.to_formatted_s(:year_month_day)
         %td
           =link_to 'Show', admin_enquiry_path(enquiry)

@@ -29,6 +29,9 @@ class Booking < ActiveRecord::Base
 	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
 			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
 
+	scope :finished_or_host_accepted, where('status IN (?)', [BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID])
+			.order('created_at DESC')
+
 	after_create :create_mailbox
 
 	def create_mailbox
