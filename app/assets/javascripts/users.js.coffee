@@ -73,18 +73,22 @@ $ ->
       'page': '/homestays/ask_host_a_question',
       'title': 'Ask Host a Question'
 
-  $( "#ask_host_a_question_submit" ).click ->
-    alert "ask host a question submit"
+  $( "#ask_host_a_question_submit" ).click (e) ->
+    e.preventDefault()
     ga 'set', 'location', rootLocation + '/homestays/ask_host_a_question/submit'
     ga 'send', 'pageview',
       'page': '/homestays/ask_host_a_question/submit',
       'title': 'Ask Host a Question Submit'
+    $(this).closest('form').submit()
 
   $("#booking_confirm_by_host").click (e) ->
+    e.preventDefault()
+    $this = $(this)
     if $('[name="booking[response_id]"]:checked').val() == "5"
-
       ga 'set', 'location', rootLocation + '/bookings/confirmation'
       ga 'send', 'pageview',
         'page': '/bookings/confirmation',
         'title': 'Confirm a Booking'
-      alert 'booking cnfirm by host'
+      $this.closest('form').submit()
+    else
+      $this.closest('form').submit()

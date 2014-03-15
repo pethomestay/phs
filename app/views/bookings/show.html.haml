@@ -64,3 +64,14 @@
       %hr
       = f.input :response_message, input_html: { rows: 3, class: 'input-xxlarge', readonly: true,
         value: @booking.response_message.blank? ? 'none' : @booking.response_message }
+
+  - if params[:confirmed_by] == 'guest'
+    :javascript
+      $(function() {
+        var rootLocation = window.location.protocol + '//' + window.location.hostname;
+        ga('set', 'location', rootLocation + '/bookings/new' );
+        ga('send', 'pageview', {
+          'page': '/bookings/new',
+          'title': 'Booking made by Guest'
+        });
+      });
