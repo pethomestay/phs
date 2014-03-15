@@ -86,6 +86,4 @@ $ ->
       ga 'send', 'pageview',
         'page': '/bookings/confirmation',
         'title': 'Confirm a Booking'
-      $this.closest('form').submit()
-    else
-      $this.closest('form').submit()
+    $this.closest('form').submit()
