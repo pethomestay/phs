@@ -1,0 +1,27 @@
+.span12
+  %h1.page-header My Favourites
+  - if @homestays.blank?
+    %p You have no favourites listing at the moment
+  - else
+    - @homestays.each do |homestay|
+      .well.show-favourite-listings
+        .guest-pic.pull-left
+
+        .homestay-info.pull-left
+          %p
+            %strong Listing Title
+            = ": #{homestay.title.capitalize}"
+            %br
+            %strong Location
+            = ": #{homestay.location}"
+            %br
+            %strong Price
+            = ": #{number_to_currency(homestay.cost_per_night)}"
+            %br
+
+        .view-actions.pull-right{ 'data-id' => homestay.id }
+          = link_to 'View Listing', homestay, class: 'btn btn-primary fav-homestay-action'
+          %br
+          = link_to 'Make Enquiry', homestay_path(homestay, anchor: 'enquiry'), class: 'btn btn-primary fav-homestay-action fav-make-enquiry'
+          %br
+          = link_to 'Remove', '#', class: 'btn btn-primary remove-from-favourite'

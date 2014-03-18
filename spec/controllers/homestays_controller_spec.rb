@@ -25,6 +25,8 @@ describe HomestaysController do
   describe 'GET #show' do
     subject { get :show, id: homestay.slug }
     let(:homestay) { FactoryGirl.create :homestay }
+    before { controller.stub(:current_user).and_return homestay.user }
+
     it 'should make homestay to the pets variable' do
       subject
       assigns(:homestay).should == homestay
@@ -129,4 +131,51 @@ describe HomestaysController do
       end
     end
   end
+
+	describe 'GET favourite' do
+		subject { get :favourite, id: homestay.id }
+		let(:homestay) { FactoryGirl.create :homestay }
+
+		before { controller.stub(:current_user).and_return homestay.user }
+
+		it 'should favourite this homestay' do
+			subject
+			response.status.should be_eql(200)
+		end
+	end
+
+
+	describe 'GET non_favourite' do
+		subject { get :non_favourite, id: homestay.id }
+		let(:homestay) { FactoryGirl.create :homestay }
+
+		before { controller.stub(:current_user).and_return homestay.user }
+
+		context 'when homestay is not favourite' do
+			it 'should sent 302' do
+				subject
+				response.status.should be_eql(302)
+			end
+		end
+
+		context 'when homestay is favourite' do
+			before { Favourite.create! user_id: homestay.user.id, homestay_id: homestay.id }
+
+			it 'should sent 200 ok message' do
+				subject
+				response.status.should be_eql(200)
+			end
+		end
+	end
+
+	describe 'GET favourites' do
+		subject { get :favourites }
+		let(:homestay) { FactoryGirl.create :homestay }
+
+		before { controller.stub(:current_user).and_return homestay.user }
+		it 'should render favourites list' do
+			subject
+			response.should render_template :favourites
+		end
+	end
 end

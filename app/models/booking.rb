@@ -11,7 +11,8 @@ class Booking < ActiveRecord::Base
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
 
-	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout
+	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
+	              :pet_date_of_birth
 
 	scope :unfinished, where(status: BOOKING_STATUS_UNFINISHED)
 
@@ -27,6 +28,9 @@ class Booking < ActiveRecord::Base
 
 	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
 			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
+
+	scope :finished_or_host_accepted, where('status IN (?)', [BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID])
+			.order('created_at DESC')
 
 	after_create :create_mailbox
 
@@ -44,14 +48,25 @@ class Booking < ActiveRecord::Base
 
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
-			csv << [ 'Username', 'Check-out Date', 'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee',
-			         'Host Payout', 'Status' ]
+			csv << [
+				'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
+			  'Check-out Date', 'Check-out Time', 'Host name', 'Homestay Title', 'Host Address', '# of 24 hour period',
+			  'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee', 'Host Payout', 'Status'
+			]
 
 			all.each do |booking|
-				csv << [ booking.booker.name.capitalize, booking.check_out_date.to_formatted_s(:year_month_day),
-				         booking.transaction.reference, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
-				         "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
-				         (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid' ]
+				booker = booking.booker
+				pet = booker.pet
+				host = booking.bookee
+				csv << [
+					booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
+					booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
+			    booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
+			    host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
+			    booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
+			    "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
+			    (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid'
+				]
 			end
 		end
 	end

@@ -1,6 +1,6 @@
 .well.enquire-listing
   - if current_user.pets.present?
-    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Enquiry', 'Enquiry for #{@homestay.user.first_name.titlecase} Homestay']);"
+    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', id: 'ask_host_a_question'
     %p Contact the owner of the listing with any queries or additional information you might need.
   - else
     = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
@@ -11,7 +11,7 @@
 %p or, if you are happy with this HomeStay, and want to reserve it now,
 .well.booking-listing
   - if current_user.pets.present?
-    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', :onclick => "var _gaq = _gaq || []; _gaq.push(['_trackEvent', 'Booking', 'Booking', Booking for #{@homestay.user.first_name.titlecase} Homestay']);"
+    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', id: 'direct_booking'
     Contact the owner of this listing now!
   - else
     = link_to 'Book this PetHomeStay', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
@@ -32,23 +32,21 @@
           = f.input_field :duration_id, value: 1, style: 'display:none;'
           %tr
             %td
-              -#- current_time = Time.now.strftime('%H:%m')
               - current_date = DateTime.now.strftime('%d/%m/%Y')
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_in_date]', label: 'Check in date',
-                                                                   value: current_date, readonly: true }
-            -#%td
-            -#  = render partial: 'shared/time_field', object: { name: 'enquiry[check_in_time]', label: 'Check in time',
-            -#                                                   value: current_time, readonly: true }
-          %tr
+              = f.input :check_in_date, as: :date_picker, wrapper_html: { class: 'input-append datepicker' }, readonly: true,
+                        input_html: { value: current_date, class: 'span2 checkin', id: 'datepicker-check-in-date' }
             %td
-              = render partial: 'shared/datetime_field', object: { name: 'enquiry[check_out_date]', label: 'Check out date',
-                                                                   value: current_date, readonly: true }
-            -#%td
-            -#  = render partial: 'shared/time_field', object: { name: 'enquiry[check_out_time]', label: 'Check out time',
-            -#                                                   value: current_time, readonly: true }
+              = f.input :check_out_date, as: :date_picker, wrapper_html: { class: 'input-append datepicker' }, readonly: true,
+                        input_html: { value: current_date, class: 'span2 checkout', id: 'datepicker-check-out-date' }
           %tr
             %td.message{ colspan: 2 }
-              = f.input :message, placeholder: 'Enter an optional personal message', input_html: { class: 'span7', rows: 4 }
+              - if last_enquiry.present?
+                - last_enquiry_message  = last_enquiry.first['message']
+              = f.input :message, placeholder: 'Enter an optional personal message', input_html: { class: 'span7', rows: 4, value: last_enquiry_message }
+          %tr
+            %td.message{ colspan: 2 }
+              = f.check_box :reuse_message, options = {checked: false, class: 'form-checkbox'}
+              %span Reuse this message next time I contact a host
     .modal-footer
       %a.btn{ href: '#', 'data-dismiss' => 'modal' } Cancel
-      = f.submit 'Submit', class: 'btn btn-primary'
+      = f.submit 'Submit', class: 'btn btn-primary', id: 'ask_host_a_question_submit'

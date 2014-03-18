@@ -1,0 +1,42 @@
+- if @bookings.blank?
+  %p You have no bookings as a host in your history
+- else
+  - @bookings.each do |booking|
+    .well.show-booking-history
+      - guest = booking.booker
+      .guest-pic.pull-left
+
+      .booking-info.pull-left
+        %p
+          %strong Guest Name:
+          = guest.name
+          %br
+          - pet = guest.pet
+          %strong Pet Name:
+          = "#{pet.name}, "
+          %strong Pet Breed:
+          = "#{pet.breed.blank? ? 'n/a' : pet.breed}, "
+          %strong Pet Age:
+          = "#{[pet.age].to_sentence}, "
+          %strong Pet Date of Birth:
+          = "#{pet.date_of_birth.strftime('%d/%m/%Y')}."
+          %br
+          %strong Date:
+          = " #{booking.check_in_date.strftime('%d/%m/%Y')} - #{booking.check_out_date.strftime('%d/%m/%Y')}"
+          %br
+          %strong Location:
+          = " #{guest.complete_address}"
+          %br
+          - if current_user == booking.booker
+            %strong Amount Paid:
+            = " $#{booking.actual_amount}"
+          - else
+            %strong Payout:
+            = " $#{booking.host_payout}"
+
+      .view-receipt.pull-right
+        - if current_user == booking.booker
+          = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
+        - else
+          = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+

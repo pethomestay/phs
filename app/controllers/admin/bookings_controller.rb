@@ -11,5 +11,4 @@ class Admin::BookingsController < Admin::AdminController
 			format.csv { send_data @bookings.to_csv }
 		end
 	end
-
 end

@@ -9,6 +9,7 @@ class Admin::AdminController < ApplicationController
     @users = User.last_five
     @homestays = Homestay.last_five
     @enquiries = Enquiry.last_five
+    @bookings = Booking.finished_or_host_accepted.limit(5)
     respond_with @stats = {user_count: User.count, homestay_count: Homestay.count, pet_count: Pet.count, enquiries_count: Enquiry.count }
   end
 

@@ -31,7 +31,7 @@ class BookingsController < ApplicationController
 		if @transaction.errors.blank?
 			PetOwnerMailer.booking_receipt(@transaction.booking).deliver
 			ProviderMailer.owner_confirmed(@transaction.booking).deliver
-			return redirect_to booking_path(@transaction.booking)
+			return redirect_to booking_path(@transaction.booking, confirmed_by: 'guest')
 		else
 			return redirect_to(new_booking_path(homestay_id: @transaction.booking.homestay.id), alert: @transaction.error_messages)
 		end
@@ -55,6 +55,8 @@ class BookingsController < ApplicationController
 
 	def update_message
 		booking = Booking.find(params[:booking_id])
+		booking.check_in_time = params[:check_in_time]
+		booking.check_out_time = params[:check_out_time]
 		booking.message_update(params[:message])
 		render nothing: true
 	end
@@ -66,6 +68,13 @@ class BookingsController < ApplicationController
 		render nothing: true
 	end
 
+	def trips
+		@bookings = current_user.bookers
+	end
+
+	def admin_view
+		@booking = Booking.find(params[:id])
+	end
 
 	private
 

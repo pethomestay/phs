@@ -59,6 +59,28 @@
         - @enquiries.each do |enquiry|
           %tr
             %td
-              = "From #{enquiry.user.name} to #{enquiry.homestay.title}"
+              = "From"
+              = link_to enquiry.user.name, admin_user_path(enquiry.user.id)
+              = " to #{enquiry.homestay.title}"
             %td
               = "#{time_ago_in_words enquiry.created_at} ago"
+
+  .span6
+    %table.table.table-striped
+      %caption
+        Recent Bookings
+        = link_to 'view all', admin_bookings_path, class: 'admin'
+      %thead
+        %tr
+          %th host
+          %th guest
+          %th created
+      %tbody
+        - @bookings.each do |booking|
+          %tr
+            %td
+              = link_to booking.bookee.name, admin_user_path(booking.bookee.id)
+            %td
+              = link_to booking.booker.name, admin_user_path(booking.booker.id)
+            %td
+              = "#{time_ago_in_words booking.created_at} ago"

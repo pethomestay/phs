@@ -2,8 +2,8 @@
   %label.string.control-label
     = datetime_field[:label]
   .controls
-    .input-append.datepicker.date
-      %input.string.span2{ type: 'text', name: datetime_field[:name], class: datetime_field[:class],
+    .input-append.datepicker.date{ id: datetime_field[:htmlid]}
+      %input.string.span2{ type: 'text', id: datetime_field[:inputid], name: datetime_field[:name], class: datetime_field[:class],
         value: datetime_field[:value], readonly: datetime_field[:readonly], style: datetime_field[:readonly] ? 'cursor:pointer;' : '',
         "data-format" => "dd/MM/yyyy" }
 

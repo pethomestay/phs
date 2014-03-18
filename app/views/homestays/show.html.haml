@@ -10,7 +10,7 @@
           .facebook-share
             .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
       .modal-footer
-        %a.btn{href:"#", 'data-dismiss' => "modal"} I'm done sharing
+        %a.btn{ href: '#', 'data-dismiss' => 'modal' } I'm done sharing
   .row
     .span7
       .row
@@ -25,10 +25,19 @@
               %span= link_to "(#{@reviewed_ratings.length} #{'review'.pluralize(@reviewed_ratings.length)})", "#reviews"
             - else
               %span (No reviews yet)
-        .span2.pricing
+        .span2.pricing{ 'data-id' => @homestay.id }
           %h1= number_to_currency(@homestay.cost_per_night)
           %p
             %i per night
+          - if current_user
+            - homestay_is_favourite = @homestay.favourite?(current_user)
+            %p{ style: homestay_is_favourite ? 'width:184px;' : 'display:none;width:184px;' }
+              %span Remove from favourites
+              %i.fa.fa-star.favourite-heart
+            %p{ style: homestay_is_favourite ? 'display:none;width:184px;' : 'width:184px;' }
+              %span Favourite this host
+              %i.fa.fa-star-o.favourite-unheart
+
         .clear
         .span7
           .homestay-share-buttons.top
@@ -81,7 +90,7 @@
         .clearfix
       - unless my_homestay?(@homestay)
         - if user_signed_in?
-          = render partial: 'providers/enquire', locals: {provider: @homestay}
+          = render partial: 'providers/enquire', locals: {provider: @homestay, last_enquiry: @reusable_enquiries}
         - else
           .well.listing-form
             = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}

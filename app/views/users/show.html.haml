@@ -1,3 +1,6 @@
+- content_for :sidebar_navigation do
+  = render 'layouts/sidebar_navigation'
+
 .span8.my-account
   %h1.page-header My Account
   - if current_user.admin?

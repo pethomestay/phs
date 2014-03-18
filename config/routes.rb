@@ -7,7 +7,16 @@ PetHomestay::Application.routes.draw do
     resource :confirmation, only: [:show, :update]
     resource :feedbacks, only: [:new, :create]
   end
-  resources :homestays
+  resources :homestays do
+	  member do
+		  get 'favourite'
+		  get 'non_favourite'
+	  end
+
+	  collection do
+		  get 'favourites'
+	  end
+  end
   resources :transactions
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
@@ -19,11 +28,13 @@ PetHomestay::Application.routes.draw do
 		  get 'result'
 		  get 'update_transaction'
 		  get 'update_message'
+		  get 'trips'
 	  end
 	  member do
 		  get 'host_confirm'
 		  get 'host_message'
 		  get 'host_paid'
+		  get 'admin_view'
 	  end
   end
 

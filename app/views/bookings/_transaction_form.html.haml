@@ -24,11 +24,18 @@
   .credit_card_fields{ style: current_user.payor? ? 'display:none;' : '' }
     - if !current_user.payor?
       = f.input :store_card, as: :boolean, label: 'Store this card'
+    .control-group
+      .controls
+        = image_tag 'visa_logo_6.gif', alt: 'Credit Card Logos', title: 'Credit Card Logos', width: '60'
+        = image_tag 'mastercard_logo_5.gif', alt: 'Credit Card Logos', title: 'Credit Card Logos', width: '60'
+        -#= image_tag 'logo_bluebox.gif', alt: 'Credit Card Logos', title: 'Credit Card Logos', width: '72'
+        = image_tag 'SecurePay-logo-250x106-2011.png', alt: 'Credit Card Logos', title: 'Credit Card Logos', width: '148'
+
     = render partial: 'shared/form_text_field', object: { name: 'EPS_CARDNUMBER', value: '', label: 'Card number',
                                                           required: true }
     = render partial: 'shared/form_text_field', object: { name: 'EPS_CCV', value: '', label: 'CVV', required: true,
-                                                          class: 'span1', tooltip: true,
-                                                          message: 'CVV: 3-4 digit number, written on back of the card.' }
+                                                          message: 'CVV: 3-4 digit number, written on back of the card.',
+                                                          class: 'span1', tooltip: true }
     = render 'transaction_month_year_fields'
 
   = render 'policies'

@@ -51,6 +51,8 @@ describe Admin::EnquiriesController do
   describe "GET edit" do
     let(:enquiry) { stub_model(Enquiry) }
     it "assigns the requested enquiry as @enquiry" do
+	    enquiry.check_in_date = Time.now
+	    enquiry.check_out_date = Time.now
       Enquiry.stub(:find).with(enquiry.to_param).and_return enquiry
       get :edit, {:id => enquiry.to_param}, valid_session
       assigns(:enquiry).should eq(enquiry)

@@ -21,6 +21,7 @@ class HomestaysController < ApplicationController
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
+	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,
@@ -30,13 +31,9 @@ class HomestaysController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     if @homestay.update_attributes(params[:homestay])
-      redirect_to my_account_path, alert: "Your listing has been updated."
+      redirect_to my_account_path, alert: 'Your listing has been updated.'
     else
       render :edit
     end
@@ -49,12 +46,33 @@ class HomestaysController < ApplicationController
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
-      flash[:new_homestay] = "Nice, your PetHomeStay is ready for the world!"
+      flash[:new_homestay] = 'Nice, your PetHomeStay is ready for the world!'
       redirect_to @homestay
     else
-      flash[:notice] = "That title is not unique" if @homestay.errors[:slug].present?
+      flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
       render :new
     end
+  end
+
+  def favourite
+	  @homestay = Homestay.find params[:id]
+		Favourite.create! homestay_id: @homestay.id, user_id: current_user.id
+		render nothing: true
+  end
+
+  def non_favourite
+	  @homestay = Homestay.find params[:id]
+	  @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
+	  if @fav
+		  @fav.destroy
+		  render nothing: true
+	  else
+			render nothing: true, status: 302
+		end
+  end
+
+  def favourites
+	  @homestays = current_user.homestays
   end
 
   private

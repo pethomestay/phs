@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140128130643) do
+ActiveRecord::Schema.define(:version => 20140212124800) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20140128130643) do
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
+    t.boolean  "reuse_message"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
