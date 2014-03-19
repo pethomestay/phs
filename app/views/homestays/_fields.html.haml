@@ -97,20 +97,4 @@
   %p Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
   %p When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
   %p No photos = no enquiries!!
-  %table.table.homestay-pictures
-    %tbody
-      = f.nested_fields_for :pictures do |f|
-        %tr.item
-          %td
-            - if f.object.file.present?
-              = image_tag(f.object.file.thumb('200x200').url)
-            - else
-              = f.input :file, as: :file, label: 'Upload picture'
-            = f.hidden_field :retained_file
-          %td
-            = link_to 'Remove', '#remove', confirm: "Are you sure?", class: 'remove'
-            = f.hidden_field :id
-            = f.hidden_field :_destroy
-    %table.table#remove.new-picture
-      %tr
-        %td= link_to '+ Add new picture', '#', class: 'add'
+  = render partial: 'pictures', locals: {f: f}

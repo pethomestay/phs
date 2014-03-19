@@ -43,6 +43,8 @@
     = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
     = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
 
+  = render partial: 'homestays/pictures', locals: {f: f}
+
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
     = link_to 'Cancel', admin_homestays_path, class: 'btn'
