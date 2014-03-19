@@ -59,8 +59,8 @@ group :test do
 end
 
 group :assets do
-  gem 'therubyracer'
-  gem 'libv8', '~> 3.11.8'
+  gem 'therubyracer', '~> 0.12.1'
+  gem 'libv8', '~> 3.16.14'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'sass-rails'
   gem 'uglifier', '>= 1.0.3'

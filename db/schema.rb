@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212124800) do
+ActiveRecord::Schema.define(:version => 20140215212544) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -128,6 +128,13 @@ ActiveRecord::Schema.define(:version => 20140212124800) do
 
   add_index "enquiries_pets", ["enquiry_id"], :name => "index_enquiries_pets_on_enquiry_id"
   add_index "enquiries_pets", ["pet_id"], :name => "index_enquiries_pets_on_pet_id"
+
+  create_table "favourites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "homestay_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "feedbacks", :force => true do |t|
     t.integer  "user_id"
@@ -312,12 +319,12 @@ ActiveRecord::Schema.define(:version => 20140212124800) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.boolean  "payor",                  :default => false
     t.string   "provider"
     t.string   "uid"
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
