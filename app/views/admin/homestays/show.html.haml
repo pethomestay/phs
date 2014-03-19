@@ -22,7 +22,7 @@
     %tr
     - pictures.each do |picture|
       %td
-        = image_tag(picture.file.thumb('380x300#').url)
+        = image_tag(picture.file.thumb('380x300').url)
 
 .form-actions
   = link_to 'Edit', edit_admin_homestay_path(@homestay), class: 'btn btn-primary'
