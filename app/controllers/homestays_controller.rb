@@ -15,16 +15,13 @@ class HomestaysController < ApplicationController
   end
 
   def rotate_image
-
-
       @image = UserPicture.find_by_id(params[:id])
       @image.file = @image.file.process(:rotate, 90)
       @image.save
       @new_url = @image.file.thumb('200x200').url
-   respond_to do | format|
+      respond_to do | format|
         format.js
       end
-  #end
   end
 
   def show

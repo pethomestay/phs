@@ -5,6 +5,7 @@
       %th Title
       %th Suburb
       %th Created
+      %th Active?
       %th Actions
   %tbody
     - @homestays.each do |homestay|
@@ -12,9 +13,15 @@
         %td= link_to homestay.title, admin_homestay_path(homestay)
         %td= homestay.address_suburb
         %td= homestay.created_at.to_formatted_s(:year_month_day)
+        %td{:id => "is_active_" + homestay.id.to_s}
+          =homestay.active ? "Active" : "Inactive"
         %td
           =link_to 'Edit', edit_admin_homestay_path(homestay)
           =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
+          -if homestay.active
+            =link_to 'Deactivate', admin_homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+          -else
+            =link_to 'Activate', admin_homestay_activate_path(homestay), id:'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
 
 :javascript
   $(document).ready(function(){
