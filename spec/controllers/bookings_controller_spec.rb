@@ -50,7 +50,7 @@ describe BookingsController do
 
 		it 'should display successful booking and transaction details' do
 			subject
-			response.should redirect_to booking_path(booking)
+			response.should redirect_to booking_path(booking, confirmed_by: 'guest')
 		end
 	end
 
