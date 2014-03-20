@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "admin/pets/edit" do
+describe "admin/enquiries/edit" do
   before(:each) do
-	  @enquiry = FactoryGirl.create :enquiry
+    @enquiry = FactoryGirl.create :enquiry
   end
 
   it "renders the edit admin_enquiry form" do
