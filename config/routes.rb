@@ -21,6 +21,7 @@ PetHomestay::Application.routes.draw do
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
+  post '/homestays/:homestay_id/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
 
   resources :bookings do
 	  collection do
