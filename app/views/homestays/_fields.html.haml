@@ -1,4 +1,7 @@
 .homestay-form
+  %h3 Listing is Active?
+  .row
+    .span7= f.input :active, as: :boolean
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
   .row
@@ -97,4 +100,4 @@
   %p Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
   %p When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
   %p No photos = no enquiries!!
-  = render partial: 'pictures', locals: {homestay: homestay, f: f}
+  = render partial: 'pictures', locals: {f: f}

@@ -26,8 +26,8 @@ class HomestaysController < ApplicationController
 
   def show
     @homestay = Homestay.find_by_slug(params[:id])
-    raise ActiveRecord::RecordNotFound unless @homestay && @homestay.active?
-
+    raise ActiveRecord::RecordNotFound unless @homestay
+    flash.now[:notice] = 'This listing is not active' if !@homestay.active?
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
@@ -46,6 +46,19 @@ class HomestaysController < ApplicationController
       redirect_to my_account_path, alert: 'Your listing has been updated.'
     else
       render :edit
+    end
+  end
+
+  def activate
+    @homestay = Homestay.find_by_slug!(params[:homestay_id])
+    if @homestay.active
+      @homestay.active = false
+    else
+      @homestay.active = true
+    end
+    @homestay.save
+    respond_to do | format|
+      format.js
     end
   end
 

@@ -1,0 +1,30 @@
+.span12
+  .page-header
+    .pull-left
+      %h1 Listing Availability Details
+
+    .pull-right
+      = link_to 'Back to My Account', my_account_path, class: 'btn'
+    .clear
+
+  %table.table.tablesorter
+    %thead
+      %tr
+        %th Title
+        %th Suburb
+        %th Created
+        %th Active?
+        %th Actions
+    %tbody
+      %tr
+        %td= link_to @homestay.title, homestay_path(@homestay)
+        %td= @homestay.address_suburb
+        %td= @homestay.created_at.to_formatted_s(:year_month_day)
+        %td{:id => "is_active_" + @homestay.id.to_s}
+          =@homestay.active ? "Active" : "Inactive"
+        %td
+          =link_to 'Edit', edit_homestay_path(@homestay)
+          -if @homestay.active
+            =link_to 'Deactivate', homestay_activate_path(@homestay), id: 'active_toggle_' + @homestay.id.to_s, remote: true, :method=>:post
+          -else
+            =link_to 'Activate', homestay_activate_path(@homestay), id:'active_toggle_' + @homestay.id.to_s, remote: true, :method=>:post

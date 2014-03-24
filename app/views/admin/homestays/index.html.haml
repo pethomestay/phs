@@ -19,9 +19,9 @@
           =link_to 'Edit', edit_admin_homestay_path(homestay)
           =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
           -if homestay.active
-            =link_to 'Deactivate', admin_homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+            =link_to 'Deactivate', homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
           -else
-            =link_to 'Activate', admin_homestay_activate_path(homestay), id:'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+            =link_to 'Activate', homestay_activate_path(homestay), id:'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
 
 :javascript
   $(document).ready(function(){

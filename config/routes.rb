@@ -21,8 +21,8 @@ PetHomestay::Application.routes.draw do
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
-  post '/homestays/:homestay_id/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
-  post '/admin/homestays/:homestay_id/activate' => 'admin/homestays#activate', as: 'admin_homestay_activate'
+  post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
+  post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
 
   resources :bookings do
 	  collection do
@@ -43,6 +43,8 @@ PetHomestay::Application.routes.draw do
   resources :mailboxes, only: :index do
 	  resources :messages, only: [:index, :create]
   end
+
+  resources :availability
 
   resources :accounts
 
