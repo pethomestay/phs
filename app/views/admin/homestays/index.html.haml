@@ -6,6 +6,7 @@
       %th Suburb
       %th Created
       %th Active?
+      %th Approved?
       %th Actions
   %tbody
     - @homestays.each do |homestay|
@@ -15,13 +16,14 @@
         %td= homestay.created_at.to_formatted_s(:year_month_day)
         %td{:id => "is_active_" + homestay.id.to_s}
           =homestay.active ? "Active" : "Inactive"
+        %td{:id => "is_locked_" + homestay.id.to_s}
+          =homestay.locked ? "Approval Pending" : "Approved"
         %td
           =link_to 'Edit', edit_admin_homestay_path(homestay)
           =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
-          -if homestay.active
-            =link_to 'Deactivate', homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
-          -else
-            =link_to 'Activate', homestay_activate_path(homestay), id:'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+          =link_to homestay.active? ? 'Deactivate' : 'Activate', homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+
+          =link_to homestay.locked? ? 'Approve' : 'Unapprove', admin_homestay_locking_path(homestay), id: 'locked_toggle_' + homestay.id.to_s, remote: true, :method=>:post
 
 :javascript
   $(document).ready(function(){

@@ -1,0 +1,8 @@
+var active_el = $('#is_active_' + '#{escape_javascript(@homestay.id.to_s)}');
+var locking_el = $('#is_locked_' + '#{escape_javascript(@homestay.id.to_s)}');
+var active_toggle_el = $('#active_toggle_' + '#{escape_javascript(@homestay.id.to_s)}');
+var locked_toggle_el = $('#locked_toggle_' + '#{escape_javascript(@homestay.id.to_s)}');
+var active = active_el.html().trim();
+var locked = locking_el.html().trim();
+console.log(locked);
+if (locked == 'Approval Pending') { locking_el.html('Approved'); active_el.html('Active'); locked_toggle_el.text('Unapprove'); active_toggle_el.text('Deactivate'); } else { locking_el.html('Approval Pending'); active_el.html('Inactive'); active_toggle_el.text('Activate');locked_toggle_el.text('Approve');}

@@ -23,6 +23,7 @@ PetHomestay::Application.routes.draw do
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
   post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
+  post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
 
   resources :bookings do
 	  collection do

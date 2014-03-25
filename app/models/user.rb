@@ -46,7 +46,14 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
 
+  def locked_homestay?
+    if homestay.present?
+      return homestay.locked?
+    else
+      return false
+    end
   end
 
   def booking_accepted_by_host?

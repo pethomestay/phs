@@ -27,7 +27,12 @@ class HomestaysController < ApplicationController
   def show
     @homestay = Homestay.find_by_slug(params[:id])
     raise ActiveRecord::RecordNotFound unless @homestay
-    flash.now[:notice] = 'This listing is not active' if !@homestay.active?
+    notice = 'This listing is not active.'
+    if @homestay.locked?
+      notice += ' Currently waiting for admin approval.'
+    end
+
+    flash.now[:notice] = notice if !@homestay.active?
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
@@ -39,6 +44,10 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
+  end
+
+  def edit
+    show()
   end
 
   def update

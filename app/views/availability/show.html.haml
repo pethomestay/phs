@@ -1,3 +1,5 @@
+:css
+  #infoa { margin-top: -5px;}
 .span12
   .page-header
     .pull-left
@@ -14,6 +16,7 @@
         %th Suburb
         %th Created
         %th Active?
+        %th Approved?
         %th Actions
     %tbody
       %tr
@@ -21,10 +24,12 @@
         %td= @homestay.address_suburb
         %td= @homestay.created_at.to_formatted_s(:year_month_day)
         %td{:id => "is_active_" + @homestay.id.to_s}
-          =@homestay.active ? "Active" : "Inactive"
+          =@homestay.active? ? "Active" : "Inactive"
+        %td{:id => "is_locked_" + @homestay.id.to_s}
+          =@homestay.locked? ? "Pending Approval" : "Approved"
         %td
           =link_to 'Edit', edit_homestay_path(@homestay)
-          -if @homestay.active
-            =link_to 'Deactivate', homestay_activate_path(@homestay), id: 'active_toggle_' + @homestay.id.to_s, remote: true, :method=>:post
-          -else
-            =link_to 'Activate', homestay_activate_path(@homestay), id:'active_toggle_' + @homestay.id.to_s, remote: true, :method=>:post
+          -if !@homestay.locked
+            =link_to @homestay.active? ? 'Deactivate' : 'Activate', homestay_activate_path(@homestay), id: 'active_toggle_' + @homestay.id.to_s, remote: true, :method=>:post
+        %td
+          = image_tag 'info-image.png', id: "infoa",class: "icon", rel: "tooltip", :'data-placement'=>"top", :'title'=>'You can choose to temporarily take a break from PetHomeStay. If you select "deactivate" your listing will not take new bookings and you will not appear in searches.'

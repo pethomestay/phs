@@ -70,10 +70,13 @@
   - if @user.notifications?
     - if @user.inactive_homestay?
       %h4 Your Homestay is currently inactive
-      %p.pull-left
-        Please
-        = link_to 'activate', availability_path(@user.homestay)
-        your listing when you are available to take new bookings.
+      - if @user.locked_homestay?
+        %p This is a new listing, it can take up to 24 hours to approve your homestay and to activate it.
+      -else
+        %p.pull-left
+          Please
+          = link_to 'activate', availability_path(@user.homestay)
+          your listing when you are available to take new bookings.
 
     - if @user.unanswered_enquiries?
       %h4 Enquiries for your PetHomeStay

@@ -1,0 +1,1 @@
+$('#infoa').tooltip()
