@@ -16,7 +16,7 @@
         %li Do you provide bedding, toys, treats?
         %li Do you provide a pick up or drop off?
         %li Are you specific about certain times?
-      %p Please do not place your phone numbers or alternative website addresses inside your listing. This encourages people to go outside PetHomeStay, which undermines the community as no feedback or trust will be left to help others.
+      %p Please do not place your phone numbdateers or alternative website addresses inside your listing. This encourages people to go outside PetHomeStay, which undermines the community as no feedback or trust will be left to help others.
   .row
     .span7
       = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
@@ -77,7 +77,7 @@
     = f.input :pet_grooming, as: :boolean, inline_label: 'pet grooming', label: false
     = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
     = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
-  - if current_user.date_of_birth > 18.years.ago.to_date
+  - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
     %h3 As you are under 18 years old please confirm
     - error_class = f.object.errors.messages.has_key?(:parental_consent) ? 'error' : ''
     .control-group{class: error_class}
