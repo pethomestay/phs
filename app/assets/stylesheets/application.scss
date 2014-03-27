@@ -29,6 +29,16 @@
 #new_blog_post_link { margin-top: 20px; }
 #post_title, #post_tag_list { width: 506px; }
 
+.btn-facebook-sign-up {
+  display:inline-block;
+  text-indent: -9999px;
+  min-width: 230px;
+  min-height: 42px;
+  background: url('fb_sign_up.png') no-repeat;
+  margin-left: 120px;
+  margin-bottom: 30px;
+  padding: 0;
+}
 
 .alert.info {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
