@@ -1,4 +1,20 @@
+:css
+  .fltrt {
+    float:left;
+    margin-left:200px;
+  }
+
+
+
 .homestay-form
+  - if f.object.persisted?
+    %h3 Listing is Active?
+    .row
+      - if f.object.locked?
+        .span7= f.input :active, as: :boolean, disabled: true, hint: 'This listing is currently waiting for admin approval.'
+      -else
+        .span1= f.input :active, as: :boolean
+        .fltrt= image_tag 'info-image.png', id: "infoa",class: "icon", rel: "tooltip", :'data-placement'=>"top", :'title'=>'You can choose to temporarily take a break from PetHomeStay. If you select "deactivate" your listing will not take new bookings and you will not appear in searches.'
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
   .row

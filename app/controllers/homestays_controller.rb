@@ -15,22 +15,24 @@ class HomestaysController < ApplicationController
   end
 
   def rotate_image
-
-
       @image = UserPicture.find_by_id(params[:id])
       @image.file = @image.file.process(:rotate, 90)
       @image.save
       @new_url = @image.file.thumb('200x200').url
-   respond_to do | format|
+      respond_to do | format|
         format.js
       end
-  #end
   end
 
   def show
     @homestay = Homestay.find_by_slug(params[:id])
-    raise ActiveRecord::RecordNotFound unless @homestay && @homestay.active?
+    raise ActiveRecord::RecordNotFound unless @homestay
+    notice = 'This listing is not active.'
+    if @homestay.locked?
+      notice += ' Currently waiting for admin approval.'
+    end
 
+    flash.now[:notice] = notice if !@homestay.active?
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
@@ -44,11 +46,28 @@ class HomestaysController < ApplicationController
     end
   end
 
+  def edit
+    show()
+  end
+
   def update
     if @homestay.update_attributes(params[:homestay])
       redirect_to my_account_path, alert: 'Your listing has been updated.'
     else
       render :edit
+    end
+  end
+
+  def activate
+    @homestay = Homestay.find_by_slug!(params[:homestay_id])
+    if @homestay.active
+      @homestay.active = false
+    else
+      @homestay.active = true
+    end
+    @homestay.save
+    respond_to do | format|
+      format.js
     end
   end
 

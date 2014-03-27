@@ -38,7 +38,23 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+  end
+
+  def inactive_homestay?
+    if homestay.present?
+      return !homestay.active?
+    else
+      return false
+    end
+  end
+
+  def locked_homestay?
+    if homestay.present?
+      return homestay.locked?
+    else
+      return false
+    end
   end
 
   def booking_accepted_by_host?

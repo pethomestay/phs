@@ -18,6 +18,7 @@
 //= require bootstrap-modal
 //= require bootstrap-carousel
 //= require bootstrap-tooltip
+//= require bootstrap-popover
 //= require ckeditor/init
 //= require handlebars
 //= require handlebars.comparison
@@ -29,6 +30,7 @@
 //= require searches
 //= require users
 //= require bookings
+//= require itooltip
 //= require provider
 //= require messages
 //= require homestays
