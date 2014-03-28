@@ -22,7 +22,9 @@
           - else
             %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
             %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
-          %p Note: we do not pass your details on to any third party companies. We hate spam too :)
+          %p PetHomeStay introduces pet owners to trusted local pet care services.
+          %p The details above are the absolute minimum we need to make this happen, however they are never publicly visible.
+          %p We will never pass your details onto any third parties. We hate spam too:)
         .span4
 
       = render partial: 'accept_terms', locals: {f: f, test: 'test'}
