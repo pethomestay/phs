@@ -237,6 +237,9 @@ class User < ActiveRecord::Base
       else
         user = where(email: me["email"]).first_or_initialize
       end
+      if user.mobile_number.nil?
+        user.mobile_number = "n/a"
+      end
       if not user.persisted? #must be a new user fill in the details
         user.email = me["email"]
         user.password = Devise.friendly_token[0,20]
@@ -257,9 +260,6 @@ class User < ActiveRecord::Base
         end
       end
       if user.provider.nil?
-        if user.mobile_number.nil?
-          user.mobile_number = "n/a"
-        end
         user.skip_confirmation! # dont' need to confirm if this is a Facebook user
         user.provider = auth.provider
         user.uid = auth.uid
