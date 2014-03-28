@@ -77,7 +77,7 @@
           %th created
       %tbody
         - @bookings.each do |booking|
-          - if booking.bookee.present?
+          - if booking.bookee.present? && booking.booker.present?
             %tr
               %td
                 = link_to booking.bookee.name, admin_user_path(booking.bookee.id)
