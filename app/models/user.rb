@@ -257,6 +257,9 @@ class User < ActiveRecord::Base
         end
       end
       if user.provider.nil?
+        if user.mobile_number.nil?
+          user.mobile_number = "n/a"
+        end
         user.skip_confirmation! # dont' need to confirm if this is a Facebook user
         user.provider = auth.provider
         user.uid = auth.uid
