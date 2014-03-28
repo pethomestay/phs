@@ -65,7 +65,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def need_parental_consent?
-    user && user.date_of_birth > 18.years.ago.to_date
+    user && user.date_of_birth.present? and user.date_of_birth > 18.years.ago.to_date
   end
 
   def emergency_preparedness?

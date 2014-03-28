@@ -1,0 +1,4 @@
+var active_el = $('#is_active_' + '#{escape_javascript(@homestay.id.to_s)}');
+var active_toggle_el = $('#active_toggle_' + '#{escape_javascript(@homestay.id.to_s)}');
+var active = active_el.html().trim();
+if (active == 'Active') {active_el.html('Inactive');active_toggle_el.text('Activate');} else {active_el.html('Active');active_toggle_el.text('Deactivate');}

@@ -10,7 +10,20 @@
   }
 }
 
+.login-dropdown {
+  margin-right: 12px;
+}
 
+.btn-facebook-sign-in {
+  display:inline-block;
+  text-indent: -9999px;
+  min-width: 198px;
+  min-height: 38px;
+  background: url('facebook-sign-in.png') no-repeat;
+  margin-left: 7px;
+  margin-bottom: 10px;
+  padding: 0;
+}
 .open .dropdown-menu { display: block; }
 
 .navbar {
@@ -22,14 +35,7 @@
       .cta {
         margin-top: 1px;
         margin-right: 10px;
-        .btn-facebook-sign-in {
-          text-indent: -9999px;
-          min-width: 198px;
-          min-height: 38px;
-          background: url('facebook-sign-in.png') no-repeat;
-          margin-top: 3px;
-          padding: 0;
-        }
+
         a {
           line-height: 9px;
           font-size: 13px;

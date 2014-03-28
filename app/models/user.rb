@@ -21,9 +21,10 @@ class User < ActiveRecord::Base
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
-  validates_presence_of :first_name, :last_name, :date_of_birth, :address_1, :address_suburb,
-                        :address_city, :address_country
+  validates_presence_of :first_name, :last_name, :email, :mobile_number
 
+  validates :accept_house_rules, :acceptance => true
+  validates :accept_terms, :acceptance => true
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
 
@@ -37,7 +38,23 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+  end
+
+  def inactive_homestay?
+    if homestay.present?
+      return !homestay.active?
+    else
+      return false
+    end
+  end
+
+  def locked_homestay?
+    if homestay.present?
+      return homestay.locked?
+    else
+      return false
+    end
   end
 
   def booking_accepted_by_host?
@@ -220,17 +237,16 @@ class User < ActiveRecord::Base
       else
         user = where(email: me["email"]).first_or_initialize
       end
+      if user.mobile_number.blank?
+        user.mobile_number = "n/a"
+      end
       if not user.persisted? #must be a new user fill in the details
         user.email = me["email"]
         user.password = Devise.friendly_token[0,20]
         user.first_name = me["first_name"]
         user.last_name = me["last_name"]
-        user.date_of_birth  =   Date.new(1800,01,01) #fake date
-        user.address_suburb = "n/a"
-        user.address_1 = "n/a"
+        user.mobile_number = "n/a"
         permissions = graph.get_connections('me','permissions')
-        user.address_city = "n/a"
-        user.address_country = "n/a"
         if permissions[0]['user_location'] == 1
           location_info =  me["location"]
           if location_info
@@ -244,6 +260,7 @@ class User < ActiveRecord::Base
         end
       end
       if user.provider.nil?
+        user.skip_confirmation! # dont' need to confirm if this is a Facebook user
         user.provider = auth.provider
         user.uid = auth.uid
         user.save!

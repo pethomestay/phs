@@ -77,10 +77,11 @@
           %th created
       %tbody
         - @bookings.each do |booking|
-          %tr
-            %td
-              = link_to booking.bookee.name, admin_user_path(booking.bookee.id)
-            %td
-              = link_to booking.booker.name, admin_user_path(booking.booker.id)
-            %td
-              = "#{time_ago_in_words booking.created_at} ago"
+          - if booking.bookee.present? && booking.booker.present?
+            %tr
+              %td
+                = link_to booking.bookee.name, admin_user_path(booking.bookee.id)
+              %td
+                = link_to booking.booker.name, admin_user_path(booking.booker.id)
+              %td
+                = "#{time_ago_in_words booking.created_at} ago"

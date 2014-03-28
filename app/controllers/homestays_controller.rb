@@ -15,22 +15,24 @@ class HomestaysController < ApplicationController
   end
 
   def rotate_image
-
-
       @image = UserPicture.find_by_id(params[:id])
       @image.file = @image.file.process(:rotate, 90)
       @image.save
       @new_url = @image.file.thumb('200x200').url
-   respond_to do | format|
+      respond_to do | format|
         format.js
       end
-  #end
   end
 
   def show
     @homestay = Homestay.find_by_slug(params[:id])
-    raise ActiveRecord::RecordNotFound unless @homestay && @homestay.active?
+    raise ActiveRecord::RecordNotFound unless @homestay
+    notice = 'This listing is not active.'
+    if @homestay.locked?
+      notice = nil #we will change this to a message later
+    end
 
+    flash.now[:notice] = notice if notice && !@homestay.active?
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
     if current_user
@@ -44,11 +46,28 @@ class HomestaysController < ApplicationController
     end
   end
 
+  def edit
+    show()
+  end
+
   def update
     if @homestay.update_attributes(params[:homestay])
       redirect_to my_account_path, alert: 'Your listing has been updated.'
     else
       render :edit
+    end
+  end
+
+  def activate
+    @homestay = Homestay.find_by_slug!(params[:homestay_id])
+    if @homestay.active
+      @homestay.active = false
+    else
+      @homestay.active = true
+    end
+    @homestay.save
+    respond_to do | format|
+      format.js
     end
   end
 
@@ -59,7 +78,7 @@ class HomestaysController < ApplicationController
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
-      flash[:new_homestay] = 'Nice, your PetHomeStay is ready for the world!'
+      flash[:notice] = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
