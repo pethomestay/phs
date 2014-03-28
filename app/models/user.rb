@@ -237,7 +237,7 @@ class User < ActiveRecord::Base
       else
         user = where(email: me["email"]).first_or_initialize
       end
-      if user.mobile_number.nil?
+      if user.mobile_number.blank?
         user.mobile_number = "n/a"
       end
       if not user.persisted? #must be a new user fill in the details
