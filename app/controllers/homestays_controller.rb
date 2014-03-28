@@ -29,7 +29,7 @@ class HomestaysController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @homestay
     notice = 'This listing is not active.'
     if @homestay.locked?
-      notice = 'We will review your Homestay & will be in touch to approve it shortly!'
+      notice = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
     end
 
     flash.now[:notice] = notice if !@homestay.active?
