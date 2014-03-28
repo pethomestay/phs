@@ -29,7 +29,7 @@ class HomestaysController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @homestay
     notice = 'This listing is not active.'
     if @homestay.locked?
-      notice += ' Currently waiting for admin approval.'
+      notice = 'We will review your Homestay & will be in touch to approve it shortly!'
     end
 
     flash.now[:notice] = notice if !@homestay.active?
@@ -78,7 +78,6 @@ class HomestaysController < ApplicationController
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
-      flash[:new_homestay] = 'Nice, your PetHomeStay is ready for the world!'
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
