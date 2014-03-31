@@ -34,6 +34,7 @@ gem 'unicorn'
 gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'delayed_job_active_record'
+gem 'workless'
 
 group :test, :development do
   gem 'capistrano'

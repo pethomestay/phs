@@ -79,4 +79,8 @@ PetHomestay::Application.configure do
   # Add default mailer URL
   config.action_mailer.default_url_options = { :host => ENV['HOST'] }
   config.action_mailer.asset_host = "http://#{ENV['HOST']}"
+
+  config.after_initialize do
+    Delayed::Job.scaler = :heroku_cedar
+  end
 end
