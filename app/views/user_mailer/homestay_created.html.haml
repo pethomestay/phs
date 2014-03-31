@@ -1,0 +1,26 @@
+%p.article-content
+  %strong= "What Happens Next?"
+
+%p.article-content
+  It is really important that PetHomeStay Hosts all provide the highest level of pet care for our Guests. That's why we review every Host application, and make sure we talk to every Host before we approve their listing.
+%p.article-content
+  This will generally take around two-three business days depending on our workload, and once we have spoken to you and there is nothing needing editing on your listing, then we can approve immediately.
+%p.article-content
+  To make sure your application is approved first time, its really important that you add lots of photos (especially ones of your pets, you personally, and the place where the pets will be staying such as your backyard or spot by the fire!), and put detail about the style of HomeStay service you will provide - active, relaxed, 24x7 care, and so on.
+%p.article-content
+  Take a step back, look at your Listing and ask yourself - 'Would I trust this Host to look after my pet?'
+%p.article-content
+  If you have doubt, then it is likely that other people will have too, and you won't get many bookings.
+%p.article-content
+  We will be in touch, and thanks again for checking us out!
+
+%p.article-content
+  %strong= "Listing Details"
+%p.article-content
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%br
+
+%p.article-content thanks
+%p.article-content The PetHomeStay Team

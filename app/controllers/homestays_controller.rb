@@ -79,6 +79,8 @@ class HomestaysController < ApplicationController
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
       flash[:notice] = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
+      #Send email to let them know that their homestay has been created and is ready for approval
+      UserMailer.delay.homestay_created(@homestay)
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
