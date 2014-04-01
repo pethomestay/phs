@@ -1,0 +1,17 @@
+%p.article-content
+  %strong= "A Host has created a new Homestay"
+
+%p.article-content
+  %strong= "Listing Details"
+%p.article-content
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  %emphersize "Description"
+%p.article-content
+  = @homestay.description
+%p.article-content
+  Cost per night : "#{@homestay.cost_per_night}"
+%p.article-content
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+
+
