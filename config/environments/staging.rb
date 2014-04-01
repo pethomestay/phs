@@ -31,7 +31,7 @@ PetHomestay::Application.configure do
   config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -79,4 +79,8 @@ PetHomestay::Application.configure do
   # Add default mailer URL
   config.action_mailer.default_url_options = { :host => ENV['HOST'] }
   config.action_mailer.asset_host = "http://#{ENV['HOST']}"
+
+  config.after_initialize do
+    Delayed::Job.scaler = :heroku_cedar
+  end
 end

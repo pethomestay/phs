@@ -1,0 +1,14 @@
+%p.article-content
+  %strong= "#{@user.first_name.capitalize} - Your Homestay listing has been approved!"
+
+
+%p.article-content
+  %strong= "Listing Details"
+%p.article-content
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+  - if @homestay.pictures.present?
+    %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
+%br
+
+%p.article-content Many thanks!
+%p.article-content The PetHomeStay Team

@@ -1,3 +1,4 @@
-== Pet Homestay
+== Pet Homestay 
+
 
 Rails app for finding pet hotels and homestayers.
