@@ -25,7 +25,7 @@ class Admin::HomestaysController < Admin::AdminController
       @homestay.locked = false
       @homestay.active = true
       #need to send out message to user to let them know it's approved!
-      #UserMailer.delay.homestay_approved(@homestay)
+      UserMailer.delay.homestay_approved(@homestay.id) #only serialize the id
     else
       @homestay.locked = true
       @homestay.active = false
