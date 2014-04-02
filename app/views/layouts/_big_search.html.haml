@@ -9,6 +9,6 @@
         I’m looking for help with my pet in....
       = form_for Search.new, url: homestays_path, method: 'GET', html: {class: 'form-search'} do |f|
         .input-append
-          = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'e.g. 3000'
+          = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'enter your postcode'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
         .clear
