@@ -13,7 +13,7 @@ p.first {
 .big-search {
   background-color : transparent;
   margin-top:-13px;
-  height:600px;
+  height:700px;
   margin-bottom: -40px;
   .picture-container {
     background: url('home_back.jpg') no-repeat center center fixed;
@@ -23,7 +23,7 @@ p.first {
     z-index: -20;
     background-size: cover;
 
-    height:600px;
+    height:700px;
   }
   .form-search .input-append .search-query {
     @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -33,10 +33,6 @@ p.first {
   }
   .search-container {
     background-color : transparent;
-
-
-    z-index: 15;
-
     width:500px;
     color: #fff;
     margin-right: 200px;
@@ -45,7 +41,7 @@ p.first {
     h2 {
       font-size: 36px;
       margin-bottom: -6px;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+      text-shadow: 3px 3px 3px rgba(0,0,0,0.8);
     }
     h3 {
       margin-top: 10px;
@@ -53,13 +49,13 @@ p.first {
       line-height:27px;
       font-weight: normal;
       margin-bottom: 67px;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+      text-shadow: 3px 3px 3px rgba(0,0,0,0.8);
     }
     h4 {
       font-size: 14px;
       position: absolute;
       margin-top: -40px;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+      text-shadow: 3px 3px 3spx rgba(0,0,0,0.8);
     }
   }
   .beta {
