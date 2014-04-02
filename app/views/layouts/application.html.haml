@@ -19,12 +19,9 @@
       .span2.sidebar-nav
         = yield :sidebar_navigation
 
-    .container.main{ class: current_user_present ? 'main-changes' :  '' }
-      - if current_user_present
-        = render 'layouts/top_navigaton'
-      = render 'layouts/flash_messages', :locals => {:flash => flash}
-      .row
-        = yield
-      %hr
-      = render partial: 'layouts/footer'
-      = render partial: 'layouts/feedbackify'
+    -if @homepage.blank? or !@homepage
+      .container.main{ class: current_user_present ? 'main-changes' :  '' }
+        = render partial: 'layouts/nav_layouts', :locals => {:flash => flash, :current_user_present => current_user_present}
+    -else
+      .main{ class: current_user_present ? 'main-changes' :  '' }
+        = render partial: 'layouts/nav_layouts', :locals => {:flash => flash, :current_user_present => current_user_present}

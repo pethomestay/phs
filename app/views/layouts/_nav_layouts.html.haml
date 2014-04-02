@@ -1,0 +1,8 @@
+- if current_user_present
+  = render 'layouts/top_navigaton'
+= render 'layouts/flash_messages', :locals => {:flash => flash}
+.row
+  = yield
+%hr
+= render partial: 'layouts/footer'
+= render partial: 'layouts/feedbackify'
