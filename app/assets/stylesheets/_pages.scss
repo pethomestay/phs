@@ -20,6 +20,7 @@ p.first {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
+    z-index: -20;
     background-size: cover;
 
     height:600px;
@@ -31,6 +32,7 @@ p.first {
     };
   }
   .search-container {
+    background-color : transparent;
 
 
     z-index: 15;
