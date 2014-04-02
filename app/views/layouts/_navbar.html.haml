@@ -1,6 +1,6 @@
 %div.navbar.navbar-fixed-top
   .navbar-inner
-    .container
+    %div{ :class => if @homepage.blank? or !@homepage then 'container' else 'container-home' end }
       - if params[:action] == 'home'
         = link_to "Pet Homestay", root_path, class: "brand large"
       - else
