@@ -15,6 +15,30 @@
       -else
         .span1= f.input :active, as: :boolean
         .fltrt= image_tag 'info-image.png', id: "infoa",class: "icon", rel: "tooltip", :'data-placement'=>"top", :'title'=>'You can choose to temporarily take a break from PetHomeStay. If you select "deactivate" your listing will not take new bookings and you will not appear in searches.'
+
+
+  %p
+    PetHomeStay provides a platform for connecting pet owners to trusted local pet hosts, and charges a success fee and insurance fee for each completed booking paid for by a Guest.
+  %p
+    It is free for Hosts to create a HomeStay listing, and to interact with Guests.
+  %p
+    Guests book a HomeStay by confirming and paying via the PetHomeStay website, and all details are circulated at this point.
+  %p
+    PetHomeStay then provides a 'payout' to the Host on completion of the successful stay.
+  %p
+    The payout to Hosts is calculated as the stated Host fee, minus 15% success fee and $2 per night public liability insurance fee. The Host should take this into account when setting their 24 hour rate.
+  %p
+    The success fee provides for maintenance of the site, approval of Hosts, and marketing to drive enquiries to listings. The Insurance fee is a $10m public liability cover that ensures you, the Host, are covered in case of a 3rd party accident and is a legal requirement for people looking after pets.
+  %p
+    Host Incidents - The Host or their family is not covered for personal or property damage.
+  %p
+    Pet Accident & Emergency – We do not provide accident & emergency cover for the pet, however our terms and conditions allow us to recoup money from the pet owner in the event of an incident.
+  %p
+    Please click
+    = link_to 'here', '/insurance-policy', target: '_blank'
+    for more information on our Insurance Policy.
+
+
   %h3 Information for Pet Owners
   %p More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
   .row
@@ -32,15 +56,13 @@
         %li Do you provide bedding, toys, treats?
         %li Do you provide a pick up or drop off?
         %li Are you specific about certain times?
-      %p Please do not place your phone numbdateers or alternative website addresses inside your listing. This encourages people to go outside PetHomeStay, which undermines the community as no feedback or trust will be left to help others.
+      %p Please do not place your phone numbers or alternative website addresses inside your listing. This encourages people to go outside PetHomeStay, which undermines the community as no feedback or trust will be left to help others.
   .row
     .span7
       = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
         .add-on $
         = f.input_field :cost_per_night, class: 'span1'
         .add-on .00
-    .span5
-      %p The cost is up to you, however we would guide this to be between $15-40 per night depending on your particular PetHomeStay. You can also enter zero dollars and operate a reciprocal agreement with your community - you look after their pets, they will look after yours!
   %h3 Tell us about your PetHomeStay
   = f.input :property_type_id, collection: ReferenceData::PropertyType.all, include_blank: false
   = f.input :outdoor_area_id, label: 'Size of outdoor area', collection: ReferenceData::OutdoorArea.all, include_blank: false
