@@ -35,6 +35,9 @@
             = " $#{booking.host_payout}"
 
       .view-receipt.pull-right
+        %span.confirmed-block
+          = booking.host_accepted ? 'Confirmed' : 'Unconfirmed'
+        %br
         - if current_user == booking.booker
           = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
         - else
