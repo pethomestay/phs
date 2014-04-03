@@ -24,6 +24,8 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
+  scope :canceled, where(status: BOOKING_STATUS_CANCELED).order('created_at DESC')
+
 	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED).order('created_at DESC')
 
 	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
@@ -265,6 +267,8 @@ class Booking < ActiveRecord::Base
 			'host rejected'
 		elsif self.status == BOOKING_STATUS_HOST_PAID
 			'host has been paid'
+    elsif self.status == BOOKING_STATUS_CANCELED
+      'guest has canceled the booking'
 		else
 			'invalid booking state'
 		end

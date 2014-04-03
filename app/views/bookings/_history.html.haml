@@ -42,4 +42,6 @@
           = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
         - else
           = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        %br
+        = link_to 'View Receipt', cancel_path(booking), class: 'btn btn-primary', id: 'cancel-booking'
 

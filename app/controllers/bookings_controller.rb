@@ -59,7 +59,13 @@ class BookingsController < ApplicationController
 		booking.check_out_time = params[:check_out_time]
 		booking.message_update(params[:message])
 		render nothing: true
-	end
+  end
+
+  def guest_canceled
+    booking = Booking.find(params[:id])
+    booking.status = "cancelled"
+    booking.save
+  end
 
 	def host_paid
 		@booking = Booking.find(params[:id])
