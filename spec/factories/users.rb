@@ -10,6 +10,7 @@ FactoryGirl.define do
     address_suburb 'Parnell'
     address_city 'Aukland'
     address_country 'NZ'
+    mobile_number '04 5555 5555'
     accept_house_rules '1'
     accept_terms '1'
   end
