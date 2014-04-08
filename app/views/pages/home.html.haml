@@ -1,9 +1,11 @@
 = render partial: 'layouts/big_search'
 .row.footer-boxes
-:javascript
+%script{type: "text/javascript"}
+  /* <![CDATA[ */
   var google_conversion_id = 985769911;
   var google_custom_params = window.google_tag_params;
   var google_remarketing_only = true;
+  /* ]]> */
 
 %script{type: "text/javascript", src:"//www.googleadservices.com/pagead/conversion.js"}
 %noscript
