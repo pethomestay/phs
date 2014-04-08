@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   end
 
   def welcome
+    @welcome = true
   end
 
   def why_join_pethomestay
