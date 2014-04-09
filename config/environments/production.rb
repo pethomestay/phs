@@ -85,7 +85,4 @@ PetHomestay::Application.configure do
   # Use SSL
   # config.force_ssl = true
 
-  config.after_initialize do
-    Delayed::Job.scaler = :null
-  end
 end

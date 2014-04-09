@@ -45,7 +45,4 @@ PetHomestay::Application.configure do
 
   config.middleware.use('StubIp', '203.206.102.165')
 
-  config.after_initialize do
-    Delayed::Job.scaler = :null
-  end
 end

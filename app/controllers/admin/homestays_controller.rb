@@ -22,14 +22,12 @@ class Admin::HomestaysController < Admin::AdminController
   def locking
     @homestay = Homestay.find_by_slug!(params[:homestay_id])
     if @homestay.locked
-      @homestay.locked = false
-      @homestay.active = true
       #need to send out message to user to let them know it's approved!
-      UserMailer.delay.homestay_approved(@homestay.id) #only serialize the id
-    else
-      @homestay.locked = true
-      @homestay.active = false
+      HomestayApprovedJob.new.async.perform(@homestay)
     end
+    @homestay.locked = !@homestay.locked #toggle locked state
+    @homestay.active = !@homestay.locked #active is going to be the reverse of locked ie locked true then active false
+
     @homestay.save
     respond_to do | format|
       format.js

@@ -80,7 +80,7 @@ class HomestaysController < ApplicationController
     if @homestay.save
       flash[:notice] = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
       #Send email to let them know that their homestay has been created and is ready for approval
-      UserMailer.delay.homestay_created(@homestay.id)
+      HomestayCreatedJob.new.async.perform(@homestay)
       #Send email to admin to let them know currently not needed but can be activated later
       #AdminMailer.delay.homestay_created_admin(@homestay.id)
       redirect_to @homestay
