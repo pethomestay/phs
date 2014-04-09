@@ -50,7 +50,20 @@ describe Booking do
 				Mailbox.all.should be_blank
 			end
 		end
-	end
+  end
+
+  describe '#guest_canceled' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.status = BOOKING_STATUS_CANCELED
+    end
+
+
+    it 'should cancel the booking' do
+      @booking.actual_status.should be_eql('guest has canceled the booking')
+    end
+
+  end
 
 	describe '#message_update' do
 		subject { booking }

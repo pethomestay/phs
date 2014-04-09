@@ -37,6 +37,7 @@ PetHomestay::Application.routes.draw do
 		  get 'host_confirm'
 		  get 'host_message'
 		  get 'host_paid'
+      get 'guest_canceled'
 		  get 'admin_view'
 	  end
   end
