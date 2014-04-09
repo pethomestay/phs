@@ -34,9 +34,6 @@ gem 'unicorn'
 gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'heroku-api'
-gem 'delayed_job_active_record'
-gem 'workless'
-gem 'daemons'
 
 group :test, :development do
   gem 'capistrano'
