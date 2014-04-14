@@ -1,4 +1,5 @@
 class BookingsController < ApplicationController
+  include BookingsHelper
 	before_filter :authenticate_user!
 	before_filter :homestay_required, only: :new
 	before_filter :secure_pay_response, only: :result
@@ -62,9 +63,7 @@ class BookingsController < ApplicationController
   end
 
   def guest_canceled
-    booking = Booking.find(params[:id])
-    booking.status = BOOKING_STATUS_CANCELED
-    booking.save
+    canceled(params[:id], BOOKING_STATUS_GUEST_CANCELED)
     return redirect_to trips_bookings_path
   end
 
@@ -81,7 +80,11 @@ class BookingsController < ApplicationController
 
 	def admin_view
 		@booking = Booking.find(params[:id])
-	end
+  end
+
+  def host_cancel
+    @bookings = current_user.bookees
+  end
 
 	private
 

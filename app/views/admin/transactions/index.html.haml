@@ -11,6 +11,7 @@
       %th Response Text
       %th Amount
       %th Status
+      %th Actions
 
   %tbody
     - @transactions.each do |transaction|
@@ -28,6 +29,12 @@
         %td= currency_formatter(transaction.amount)
         %td
           %strong= booking_status
+        %td
+          - if booking.status != BOOKING_STATUS_GUEST_CANCELED and booking.status != BOOKING_STATUS_HOST_CANCELED
+            = link_to "Cancel Booking", admin_cancel_booking_path(booking), :method=>:post
+          -else
+            &nbsp;
+
 
 :javascript
   $(document).ready(function(){

@@ -38,5 +38,14 @@ class UserMailer < ActionMailer::Base
 		@situation = situation
 		@error = error
 		mail(to: ENV['DEVELOPER_EMAIL'], subject: 'An error has been occurred')
-	end
+  end
+
+  def admin_canceled_booking(booking)
+    @booking = booking
+    @homestay = booking.homestay
+    @user = booking.booker
+
+    email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
+    mail(to: email_with_name, subject: "Your booking has been canceled by the host")
+  end
 end

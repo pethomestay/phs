@@ -55,7 +55,7 @@ describe Booking do
   describe '#guest_canceled' do
     before :each do
       @booking = FactoryGirl.create :booking
-      @booking.status = BOOKING_STATUS_CANCELED
+      @booking.status = BOOKING_STATUS_GUEST_CANCELED
     end
 
 

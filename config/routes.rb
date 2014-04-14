@@ -24,17 +24,23 @@ PetHomestay::Application.routes.draw do
   post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
+  post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_cancel_booking'
+
+
+
 
   resources :bookings do
 	  collection do
 		  post 'result'
 		  get 'result'
 		  get 'update_transaction'
+      get 'host_cancel'
 		  get 'update_message'
 		  get 'trips'
 	  end
 	  member do
 		  get 'host_confirm'
+
 		  get 'host_message'
 		  get 'host_paid'
       get 'guest_canceled'
