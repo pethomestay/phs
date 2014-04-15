@@ -82,8 +82,12 @@ class BookingsController < ApplicationController
 		@booking = Booking.find(params[:id])
   end
 
-  def host_cancel
+  def host_cancellation
     @bookings = current_user.bookees
+  end
+
+  def host_cancel
+    @booking = Booking.find(params[:booking]['cancelled_booking'])
   end
 
 	private

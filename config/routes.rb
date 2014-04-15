@@ -34,13 +34,13 @@ PetHomestay::Application.routes.draw do
 		  post 'result'
 		  get 'result'
 		  get 'update_transaction'
-      get 'host_cancel'
+      get 'host_cancellation'
+      post 'host_cancel'
 		  get 'update_message'
 		  get 'trips'
 	  end
 	  member do
 		  get 'host_confirm'
-
 		  get 'host_message'
 		  get 'host_paid'
       get 'guest_canceled'
