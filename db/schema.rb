@@ -321,12 +321,12 @@ ActiveRecord::Schema.define(:version => 20140415012010) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.boolean  "payor",                  :default => false
     t.string   "provider"
     t.string   "uid"
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.boolean  "payor",                  :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

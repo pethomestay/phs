@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host? || booking_host_request_cancellation?
   end
 
   def inactive_homestay?
@@ -47,6 +47,14 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  def booking_host_request_cancellation?
+    if self.admin?
+      @bookings = Booking.where("cancel_reason is not null and status != '" + BOOKING_STATUS_HOST_CANCELED  + "' and status !='" + BOOKING_STATUS_GUEST_CANCELED + "'")
+      return @bookings.length > 0
+    end
+    return false
   end
 
   def locked_homestay?

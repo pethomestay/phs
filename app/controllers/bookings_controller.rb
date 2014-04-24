@@ -84,10 +84,27 @@ class BookingsController < ApplicationController
 
   def host_cancellation
     @bookings = current_user.bookees
+    if @bookings.length == 1
+      @one_booking = true
+      @booking = @bookings.first
+      render 'host_cancel'
+    end
   end
 
   def host_cancel
+    @one_booking = current_user.bookees.length == 1 ? true : false
+    @booking_errors = ""
     @booking = Booking.find(params[:booking]['cancelled_booking'])
+  end
+
+  def host_confirm_cancellation
+    if params[:booking][:cancel_reason].blank?
+      @booking = Booking.find(params[:id])
+      @booking_errors = "Cancel reason cannot be blank!"
+      render 'host_cancel'
+    else
+      return redirect_to my_account_path
+    end
   end
 
 	private

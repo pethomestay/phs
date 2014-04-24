@@ -1,6 +1,45 @@
-= simple_form_for @booking, html: { class: 'form-horizontal' } do |f|
-  The Host Booking being requested for cancellion is:
-  = "#{@booking.bookee.name} #{@booking.bookee.pet.name}, #{@booking.bookee.pet.breed} "
-  = f.input :cancel_reason, input_html: { value: f.object.cancel_reason }, readonly: false
+= simple_form_for @booking, :url=> host_confirm_cancellation_booking_path(@booking), html: { class: 'form-horizontal' } do |f|
+  - if @one_booking
+    = render partial: 'cancel_host_text'
+  %p
+    The Host Booking being requested for cancellation is:
+  %table#bookingtbl{:border=>0}
+    %tr
+      %td
+        Guest Name:
+      %td
+        ="#{f.object.booker.name}"
+    %tr
+      %td
+        Pet Name:
+      %td
+        = "#{f.object.booker.pet.name}"
+    %tr
+      %td
+        Pet Breed:
+      %td
+        = "#{f.object.booker.pet.breed}"
+    %tr
+      %td
+        Start Date:
+      %td
+        = "#{f.object.check_in_date.strftime('%d/%m/%Y')}"
+    %tr
+      %td
+        End Date:
+      %td
+        = "#{f.object.check_out_date.strftime('%d/%m/%Y')}"
+
+  %p
+
+
+
+    = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
+      = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
+      - if @booking_errors
+        %span.help-inline
+          = @booking_errors
+
+
   .form-actions
     = f.submit 'Confirm cancellation of this booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'
