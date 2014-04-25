@@ -64,8 +64,9 @@ class BookingsController < ApplicationController
   end
 
   def guest_canceled
-    canceled(params[:id], BOOKING_STATUS_GUEST_CANCELED)
-    return redirect_to trips_bookings_path
+    @booking = Booking.find(params[:id])
+    #canceled(params[:id], BOOKING_STATUS_GUEST_CANCELED)
+    #return redirect_to trips_bookings_path
   end
 
 	def host_paid
