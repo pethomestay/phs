@@ -5,6 +5,7 @@ class BookingsController < ApplicationController
 	before_filter :secure_pay_response, only: :result
 
 	def index
+    @trips = false
 		@bookings = current_user.bookees
 	end
 
@@ -76,6 +77,7 @@ class BookingsController < ApplicationController
 
 	def trips
 		@bookings = current_user.bookers
+    @trips = true
 	end
 
 	def admin_view
