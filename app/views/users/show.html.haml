@@ -70,7 +70,7 @@
   - if @user.notifications?
     - if @user.booking_host_request_cancellation?
       %h4 There are some hosts requesting a Homestay cancellation
-      - @bookings = Booking.where("cancel_reason is not null and status != 'host_canceled'")
+      - @bookings = Booking.find_all_by_status(HOST_HAS_REQUESTED_CANCELLATION)
       - @bookings.each do |booking|
         %p.pull-left= link_to "Cancel booking for Host: #{booking.bookee.name}, Guest:  #{booking.booker.name}, Start Date: #{booking.check_in_date.strftime('%d/%m/%Y')}, End Date: #{booking.check_out_date.strftime('%d/%m/%Y')}", admin_cancel_booking_path(booking), :method=>:post
 
