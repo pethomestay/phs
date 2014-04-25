@@ -101,11 +101,14 @@ class BookingsController < ApplicationController
   end
 
   def host_confirm_cancellation
+    @booking = Booking.find(params[:id])
     if params[:booking][:cancel_reason].blank?
-      @booking = Booking.find(params[:id])
       @booking_errors = "Cancel reason cannot be blank!"
       render 'host_cancel'
     else
+      # ensure that we can search for this status when showing the admin notifications
+      @booking.status = HOST_HAS_REQUESTED_CANCELLATION
+      @booking.save
       return redirect_to my_account_path
     end
   end

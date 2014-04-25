@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   def booking_host_request_cancellation?
     if self.admin?
-      @bookings = Booking.where("cancel_reason is not null and status != '" + BOOKING_STATUS_HOST_CANCELED  + "' and status !='" + BOOKING_STATUS_GUEST_CANCELED + "'")
+      @bookings = Booking.find_all_by_status(HOST_HAS_REQUESTED_CANCELLATION)
       return @bookings.length > 0
     end
     return false
