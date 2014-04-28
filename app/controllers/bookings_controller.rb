@@ -65,6 +65,10 @@ class BookingsController < ApplicationController
 
   def guest_canceled
     @booking = Booking.find(params[:id])
+    @account = current_user.account
+    if @account.nil?
+      @account = Account.new
+    end
     #canceled(params[:id], BOOKING_STATUS_GUEST_CANCELED)
     #return redirect_to trips_bookings_path
   end

@@ -17,3 +17,17 @@
     Less than 7 days, no fee is returned.
 %p
   We deduct our Service Fee of 15% and Insurance of $2 per night on all cancellations.
+%h4
+  Cancellation Summary
+%p
+  = "Your original Booking request from (#{@booking.check_in_date.strftime('%d/%m/%Y')}) - (#{@booking.check_out_date.strftime('%d/%m/%Y')}) was $(#{@booking.subtotal})"
+%p
+  Based on the current date and time, there is (x) days left until your Stay commences.
+%p
+  This means the total booking fee refunded will be $(x).
+%p
+  To confirm this cancellation, please let us know why, enter your bank details and press submit.
+%p
+  Please confirm your bank account details so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
+%p
+  = render :partial => 'accounts/form'
