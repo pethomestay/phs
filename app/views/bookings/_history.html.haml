@@ -36,15 +36,15 @@
 
       .view-receipt.pull-right
         %span.confirmed-block
-          = if (booking.status == BOOKING_STATUS_GUEST_CANCELED || booking.status == BOOKING_STATUS_HOST_CANCELED) then 'Canceled' else booking.host_accepted ? 'Confirmed' : 'Unconfirmed' end
+          = booking_status_for_listing(booking)
         %br
         - if current_user == booking.booker
           = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
         - else
           = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
-        - if booking.status != BOOKING_STATUS_GUEST_CANCELED and booking.status != BOOKING_STATUS_HOST_CANCELED and booking.owner_view?(current_user)
+        - if not is_canceled_booking?(booking) and booking.owner_view?(current_user)
           %br
           = link_to 'Cancel', guest_canceled_booking_path(booking), class: 'btn btn-primary cancel-booking-btn', id: 'cancel-booking'
 
-  - if !@trips
+  - if !@trips and has_uncanceled_bookings?(@bookings)
     = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
