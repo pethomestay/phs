@@ -13,7 +13,7 @@ module BookingsHelper
   end
 
   def is_canceled_booking?(booking)
-    canceled_booking_statuses = [HOST_HAS_REQUESTED_CANCELLATION,BOOKING_STATUS_HOST_CANCELED,BOOKING_STATUS_GUEST_CANCELED]
+    canceled_booking_statuses = [HOST_HAS_REQUESTED_CANCELLATION,BOOKING_STATUS_HOST_CANCELED,BOOKING_STATUS_GUEST_CANCELED, GUEST_HAS_REQUESTED_CANCELLATION]
     if (canceled_booking_statuses.include?(booking.status))
       return true
     end
@@ -25,6 +25,8 @@ module BookingsHelper
     if (is_canceled_booking?(booking)) then
       if booking.status == HOST_HAS_REQUESTED_CANCELLATION
         return 'Host requested cancellation'
+      elsif booking.status == GUEST_HAS_REQUESTED_CANCELLATION
+        return 'Guest requested cancellation'
       else
         return 'Cancelled'
       end
@@ -34,4 +36,24 @@ module BookingsHelper
       return 'Unconfirmed'
     end
   end
+
+  def get_days_left(check_in_date)
+    return check_in_date.mjd - Date.today.mjd
+  end
+
+
+  # More than 14 days away, all of the fee is returned.
+  # Between 14 - 7 days, 50% of the fee is returned
+  # Less than 7 days, no fee is returned.
+  def calculate_refund(booking)
+    days = get_days_left(booking.check_in_date)
+    if days > 14
+      return booking.amount
+    elsif days >= 7
+      return booking.amount * 0.5
+    else
+      return 0
+    end
+  end
+
 end

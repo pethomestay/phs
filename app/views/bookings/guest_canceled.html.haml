@@ -1,3 +1,9 @@
+:javascript
+  $(document).ready(function(){
+      if ('#{escape_javascript(@booking.cancel_reason)}'.length == 0) {
+        $('#account-save-btn').attr("disabled", "disabled");
+      }
+  });
 %p
   Please confirm your cancellation&#8230;
 %p
@@ -20,14 +26,28 @@
 %h4
   Cancellation Summary
 %p
-  = "Your original Booking request from (#{@booking.check_in_date.strftime('%d/%m/%Y')}) - (#{@booking.check_out_date.strftime('%d/%m/%Y')}) was $(#{@booking.subtotal})"
+  = "Your original Booking request from (#{@booking.check_in_date.strftime('%d/%m/%Y')}) - (#{@booking.check_out_date.strftime('%d/%m/%Y')}) was $(#{@booking.amount})"
 %p
-  Based on the current date and time, there is (x) days left until your Stay commences.
+  Based on the current date and time, there is (#{get_days_left(@booking.check_in_date)}) days left until your Stay commences.
 %p
-  This means the total booking fee refunded will be $(x).
+  This means the total booking fee refunded will be $(#{calculate_refund(@booking)}).
 %p
-  To confirm this cancellation, please let us know why, enter your bank details and press submit.
-%p
-  Please confirm your bank account details so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
-%p
-  = render :partial => 'accounts/form'
+  To confirm this cancellation, please let us know why.
+  = simple_form_for @booking, :url=> guest_save_cancel_reason_booking_path(@booking), html: { class: 'form-horizontal' }, :remote => true do |f|
+    = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
+      = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
+      %span.help-inline
+    .form-actions
+      = f.submit 'Save', class: 'btn btn-primary', id: 'save_cancel_reason'
+
+- if calculate_refund(@booking) > 0
+  %p
+    Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
+  %p
+    = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { class: 'form-horizontal' } do |f|
+      - @f = f
+      = render :partial => "accounts/account_fields"
+      = hidden_field_tag :booking_id, @booking.id
+      .form-actions
+        = f.submit 'Submit', id: 'account-save-btn', class: 'btn btn-primary'
+

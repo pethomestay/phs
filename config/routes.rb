@@ -44,6 +44,7 @@ PetHomestay::Application.routes.draw do
 		  get 'host_message'
 		  get 'host_paid'
       put 'host_confirm_cancellation'
+      put 'guest_save_cancel_reason'
       get 'guest_canceled'
 		  get 'admin_view'
 	  end
@@ -55,7 +56,11 @@ PetHomestay::Application.routes.draw do
 
   resources :availability
 
-  resources :accounts
+  resources :accounts do
+    collection do
+      post 'guest_cancel_save_account_details'
+    end
+  end
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard

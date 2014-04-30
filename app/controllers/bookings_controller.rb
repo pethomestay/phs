@@ -117,6 +117,27 @@ class BookingsController < ApplicationController
     end
   end
 
+  def guest_save_cancel_reason
+    @booking = Booking.find(params[:id])
+    @booking_errors = nil
+    if params[:booking][:cancel_reason].blank?
+      @booking_errors = "Cancel reason cannot be blank!"
+    else
+      @booking.status = GUEST_HAS_REQUESTED_CANCELLATION
+      @booking.cancel_reason = params[:booking][:cancel_reason]
+      @booking.save
+    end
+    if (calculate_refund(@booking) == 0 and @booking_errors.nil?)
+      render :js => "window.location = '#{trips_bookings_path}'"
+    else
+      respond_to do | format|
+        format.js
+      end
+    end
+  end
+
+
+
 	private
 
 	def homestay_required
