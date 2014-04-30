@@ -26,9 +26,9 @@ module BookingsHelper
       if booking.status == HOST_HAS_REQUESTED_CANCELLATION
         return 'Host requested cancellation'
       elsif booking.status == BOOKING_STATUS_HOST_CANCELED
-          return 'Host cancelled'
+          return 'Host canceled'
       else
-          return 'Guest cancelled'
+          return 'Guest canceled'
       end
     elsif (booking.host_accepted)
       return  'Confirmed'
