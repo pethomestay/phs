@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  add_template_helper(BookingsHelper)
+  include ActionView::Helpers::BookingsHelper
   layout 'mailer'
   default from: "Pet Homestay <admin@pethomestay.com>"
 
