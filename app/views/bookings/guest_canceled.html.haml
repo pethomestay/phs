@@ -28,9 +28,9 @@
 %p
   = "Your original Booking request from (#{@booking.check_in_date.strftime('%d/%m/%Y')}) - (#{@booking.check_out_date.strftime('%d/%m/%Y')}) was $(#{@booking.amount})"
 %p
-  Based on the current date and time, there is (#{get_days_left(@booking.check_in_date)}) days left until your Stay commences.
+  Based on the current date and time, there is (#{@booking.get_days_left}) days left until your Stay commences.
 %p
-  This means the total booking fee refunded will be $(#{calculate_refund(@booking)}).
+  This means the total booking fee refunded will be $(#{@booking.calculate_refund}).
 %p
   To confirm this cancellation, please let us know why.
   = simple_form_for @booking, :url=> guest_save_cancel_reason_booking_path(@booking), html: { class: 'form-horizontal' }, :remote => true do |f|
@@ -40,7 +40,7 @@
     .form-actions
       = f.submit 'Save', class: 'btn btn-primary', id: 'save_cancel_reason'
 
-- if calculate_refund(@booking) > 0
+- if @booking.calculate_refund > 0
   %p
     Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
   %p

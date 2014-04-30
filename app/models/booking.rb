@@ -71,7 +71,25 @@ class Booking < ActiveRecord::Base
 				]
 			end
 		end
-	end
+  end
+
+  def get_days_left
+    return self.check_in_date.mjd - Date.today.mjd
+  end
+
+  # More than 14 days away, all of the fee is returned.
+  # Between 14 - 7 days, 50% of the fee is returned
+  # Less than 7 days, no fee is returned.
+  def calculate_refund
+    days = get_days_left
+    if days > 14
+      return this.amount
+    elsif days >= 7
+      return this.amount * 0.5
+    else
+      return 0
+    end
+  end
 
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee

@@ -37,23 +37,4 @@ module BookingsHelper
     end
   end
 
-  def get_days_left(check_in_date)
-    return check_in_date.mjd - Date.today.mjd
-  end
-
-
-  # More than 14 days away, all of the fee is returned.
-  # Between 14 - 7 days, 50% of the fee is returned
-  # Less than 7 days, no fee is returned.
-  def calculate_refund(booking)
-    days = get_days_left(booking.check_in_date)
-    if days > 14
-      return booking.amount
-    elsif days >= 7
-      return booking.amount * 0.5
-    else
-      return 0
-    end
-  end
-
 end

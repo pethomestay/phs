@@ -42,7 +42,7 @@
           = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
         - else
           = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
-        - if not is_canceled_booking?(booking) and booking.owner_view?(current_user) and get_days_left(booking.check_in_date) >= 0 #don't allow a booking to be canceled if it's an old one
+        - if not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0 #don't allow a booking to be canceled if it's an old one
           %br
           = link_to 'Cancel', guest_canceled_booking_path(booking), class: 'btn btn-primary cancel-booking-btn', id: 'cancel-booking'
 
