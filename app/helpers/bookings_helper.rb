@@ -13,7 +13,7 @@ module BookingsHelper
   end
 
   def is_canceled_booking?(booking)
-    canceled_booking_statuses = [HOST_HAS_REQUESTED_CANCELLATION,BOOKING_STATUS_HOST_CANCELED,BOOKING_STATUS_GUEST_CANCELED, GUEST_HAS_REQUESTED_CANCELLATION]
+    canceled_booking_statuses = [HOST_HAS_REQUESTED_CANCELLATION,BOOKING_STATUS_HOST_CANCELED,BOOKING_STATUS_GUEST_CANCELED]
     if (canceled_booking_statuses.include?(booking.status))
       return true
     end
