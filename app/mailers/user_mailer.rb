@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  add_template_helper(BookingsHelper)
   layout 'mailer'
   default from: "Pet Homestay <admin@pethomestay.com>"
 
@@ -47,5 +48,16 @@ class UserMailer < ActionMailer::Base
 
     email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
     mail(to: email_with_name, subject: "Your booking has been canceled by the host")
+  end
+
+  def guest_canceled_booking(booking)
+    @booking = booking
+    @homestay = booking.homestay
+    @user = booking.bookee
+    @guest = booking.booker
+    @booking_fee_refunded = calculate_refund(booking)
+
+    email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
+    mail(to: email_with_name, subject: "Your booking has been canceled by the guest")
   end
 end
