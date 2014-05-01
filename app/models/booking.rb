@@ -73,6 +73,10 @@ class Booking < ActiveRecord::Base
 		end
   end
 
+  def self.canceled_states
+    [HOST_HAS_REQUESTED_CANCELLATION, BOOKING_STATUS_HOST_CANCELED, BOOKING_STATUS_GUEST_CANCELED]
+  end
+
   def get_days_left
     return self.check_in_date.mjd - Date.today.mjd
   end
@@ -83,9 +87,9 @@ class Booking < ActiveRecord::Base
   def calculate_refund
     days = get_days_left
     if days > 14
-      return this.amount
+      return self.amount
     elsif days >= 7
-      return this.amount * 0.5
+      return self.amount * 0.5
     else
       return 0
     end
