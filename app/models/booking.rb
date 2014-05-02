@@ -16,7 +16,7 @@ class Booking < ActiveRecord::Base
 
 	scope :unfinished, where(status: BOOKING_STATUS_UNFINISHED)
 
-	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0)
+	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0, status: [BOOKING_STATUS_FINISHED, BOOKING_STATUS_UNFINISHED])
 
 	scope :declined_by_host, where(response_id: 6, host_accepted: false)
 

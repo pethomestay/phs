@@ -1,5 +1,6 @@
 = simple_form_for @booking, html: { class: 'form-horizontal' } do |f|
   - owner_view = @booking.owner_view?(current_user)
+  - host_view = @booking.host_view?(current_user)
   - booking_editable = @booking.editable_datetime?(current_user)
   - booking_editable = true unless !owner_view
   - user_name = owner_view ? current_user.name : @booking.booker.name
@@ -61,16 +62,20 @@
     = f.input :host_payout, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Total Payout',
               input_html: { value: @booking.host_payout }
 
-
   - if !owner_view
-    %hr
-    .control-group.string
-      %label.string.control-label
-        Payment method
-    = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
-    %hr
-    = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
-                    collection: ReferenceData::Response.find_by_ids([5, 6, 7])
-    = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
-    .form-actions
-      = f.submit 'Confirm booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'
+    - if Booking.canceled_states.include?(@booking.status)
+      %hr
+      = @booking.actual_status.slice(0,1).capitalize + @booking.actual_status.slice(1..-1)
+
+    - elsif host_view
+      %hr
+      .control-group.string
+        %label.string.control-label
+          Payment method
+      = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
+      %hr
+      = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
+                      collection: ReferenceData::Response.find_by_ids([5, 6, 7])
+      = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
+      .form-actions
+        = f.submit 'Confirm booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'
