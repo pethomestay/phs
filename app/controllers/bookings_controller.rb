@@ -41,6 +41,13 @@ class BookingsController < ApplicationController
 
 	def host_confirm
 		@booking = Booking.find(params[:id])
+    if @booking.status == BOOKING_STATUS_GUEST_CANCELED
+      flash[:notice] = "This booking has been canceled by the guest"
+    elsif @booking.status == BOOKING_STATUS_HOST_CANCELED
+      flash[:notice] = "This booking has now been canceled by the admin as requested"
+    elsif @booking.status == HOST_HAS_REQUESTED_CANCELLATION
+      flash[:notice] = "You have requested to cancel this booking"
+    end
 	end
 
 	def host_message

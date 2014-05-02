@@ -52,6 +52,38 @@ describe Booking do
 		end
   end
 
+  describe '#calculate_refund' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.status = BOOKING_STATUS_FINISHED
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be zero refund for booking' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql(0)
+    end
+
+
+    it 'should be 50% refund for booking' do
+      eight_days_time = Date.today + 8  #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql(7.1)
+    end
+
+    it 'should be 100% refund for booking' do
+      fifteen_days_time = Date.today + 15 #add 15 days
+      @booking.check_in_date = fifteen_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql(14.2)
+    end
+
+  end
+
   describe '#guest_canceled' do
     before :each do
       @booking = FactoryGirl.create :booking
@@ -63,6 +95,22 @@ describe Booking do
       @booking.actual_status.should be_eql('guest has canceled the booking')
     end
 
+  end
+
+  describe '#host_canceled' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.status = BOOKING_STATUS_HOST_CANCELED
+    end
+
+    it 'should have a request for admin to cancel booking for host' do
+      @booking.status = HOST_HAS_REQUESTED_CANCELLATION
+      @booking.actual_status.should be_eql('host has requested cancellation of this booking')
+    end
+
+    it 'should cancel the booking' do
+      @booking.actual_status.should be_eql('host has canceled the booking')
+    end
   end
 
 	describe '#message_update' do
