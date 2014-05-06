@@ -24,7 +24,8 @@ PetHomestay::Application.routes.draw do
   post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
-  post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_cancel_booking'
+  post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_host_cancel_booking'
+  post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
 
 
 
@@ -43,6 +44,7 @@ PetHomestay::Application.routes.draw do
 		  get 'host_confirm'
 		  get 'host_message'
 		  get 'host_paid'
+      get 'guest_refunded'
       put 'host_confirm_cancellation'
       put 'guest_save_cancel_reason'
       get 'guest_canceled'

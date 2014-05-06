@@ -36,4 +36,17 @@ module BookingsHelper
     end
   end
 
+  def save_guest_canceled reason, id
+    @booking = Booking.find(id)
+    @booking.status = BOOKING_STATUS_GUEST_CANCELED
+    @booking.cancel_reason = reason
+    @booking.cancel_date = Date.today #save current cancel date
+    @booking.refund = @booking.calculate_refund
+    if @booking.refund == 0
+      @booking.refunded = true #no refund needed if amount is 0
+    end
+    @booking.save
+    GuestCanceledBookingJob.new.async.perform(id)
+  end
+
 end

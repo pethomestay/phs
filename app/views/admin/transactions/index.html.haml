@@ -11,6 +11,9 @@
       %th Response Text
       %th Amount
       %th Status
+      %th Cancel Date
+      %th Refund Amount
+      %th Is Refunded?
       %th Actions
 
   %tbody
@@ -29,9 +32,17 @@
         %td= currency_formatter(transaction.amount)
         %td
           %strong= booking_status
+        - if booking.status == BOOKING_STATUS_GUEST_CANCELED
+          %td= booking.cancel_date.strftime('%d/%m/%Y')
+          %td= currency_formatter(booking.refund)
+          %td= check_box_tag "is_refunded_" + booking.id.to_s,  1, booking.refunded, {:class => 'is_refunded'}
+        - else
+          %td{:colspan => 3}
+            &nbsp;
         %td
-          - if booking.status != BOOKING_STATUS_GUEST_CANCELED and booking.status != BOOKING_STATUS_HOST_CANCELED
-            = link_to "Cancel Booking", admin_cancel_booking_path(booking), :method=>:post
+          - if booking.status == BOOKING_STATUS_FINISHED or booking.status == BOOKING_STATUS_UNFINISHED
+            = link_to "Host Cancel", admin_host_cancel_booking_path(booking), :style => 'margin-bottom: 4px;',:method=>:post, :class=>'btn btn-primary'
+            = link_to "Guest Cancel", admin_guest_cancel_booking_path(booking), :method=>:post, :class=>'btn btn-primary'
           -else
             &nbsp;
 
@@ -40,5 +51,16 @@
   $(document).ready(function(){
     $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
   });
+  $('.is_refunded').on('click', function(){
+        $id = $(this).attr('id').replace("is_refunded_", "");
+        if($(this).is(':checked')) {
+          alert('Guest has been refunded');
+        } else {
+           alert('Guest has not been refunded');
+        }
+        $.ajax({
+          url: '/bookings/' + $id + '/guest_refunded'
+        });
+      });
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140415012010) do
+ActiveRecord::Schema.define(:version => 20140505231734) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -60,18 +60,21 @@ ActiveRecord::Schema.define(:version => 20140415012010) do
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
-    t.integer  "number_of_nights", :default => 1
-    t.float    "cost_per_night",   :default => 1.0
-    t.float    "subtotal",         :default => 1.0
-    t.float    "amount",           :default => 1.0
-    t.boolean  "host_accepted",    :default => false
-    t.boolean  "owner_accepted",   :default => false
-    t.string   "status",           :default => "unfinished"
+    t.integer  "number_of_nights",                               :default => 1
+    t.float    "cost_per_night",                                 :default => 1.0
+    t.float    "subtotal",                                       :default => 1.0
+    t.float    "amount",                                         :default => 1.0
+    t.boolean  "host_accepted",                                  :default => false
+    t.boolean  "owner_accepted",                                 :default => false
+    t.string   "status",                                         :default => "unfinished"
     t.text     "response_message"
-    t.integer  "response_id",      :default => 0
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.integer  "response_id",                                    :default => 0
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
     t.string   "cancel_reason"
+    t.float    "refund"
+    t.boolean  "refunded",                                       :default => false
+    t.date     "cancel_date"
   end
 
   create_table "cards", :force => true do |t|

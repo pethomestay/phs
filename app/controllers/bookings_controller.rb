@@ -85,7 +85,14 @@ class BookingsController < ApplicationController
 		@booking.status = BOOKING_STATUS_HOST_PAID
 		@booking.save!
 		render nothing: true
-	end
+  end
+
+  def guest_refunded
+    @booking = Booking.find(params[:id])
+    @booking.refunded.nil? ? @booking.refunded = true : @booking.refunded = !@booking.refunded
+    @booking.save!
+    render nothing: true
+  end
 
 	def trips
 		@bookings = current_user.bookers
@@ -130,10 +137,7 @@ class BookingsController < ApplicationController
     if params[:booking][:cancel_reason].blank?
       @booking_errors = "Cancel reason cannot be blank!"
     else
-      @booking.status = BOOKING_STATUS_GUEST_CANCELED
-      @booking.cancel_reason = params[:booking][:cancel_reason]
-      @booking.save
-      GuestCanceledBookingJob.new.async.perform(params[:id])
+      save_guest_canceled params[:booking][:cancel_reason], params[:id]
     end
     if (@booking.calculate_refund == 0 and @booking_errors.nil?)
       render :js => "window.location = '#{trips_bookings_path}'"
