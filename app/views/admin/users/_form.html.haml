@@ -6,7 +6,11 @@
     =f.input :last_name
     =f.input :email
     =f.input :password, required: true
-    =f.input :date_of_birth, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true, input_html: { value: @user.date_of_birth.strftime("%d/%m/%Y"), class: 'span2 checkin' }
+    - input_html = {}
+    - input_html[:class] = 'span2 checkin'
+    - if ! @user.date_of_birth.nil?
+      - input_html[:value]= @user.date_of_birth.strftime("%d/%m/%Y")
+    =f.input :date_of_birth, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: false, input_html: input_html
     - if not @user.provider.nil?
       =f.input :facebook_location, disabled: true
       =f.input :age_range_min, disabled: true
