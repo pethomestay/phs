@@ -8,9 +8,11 @@ task :sanatise do
     #lets use each to sanitise each user in the db
     #so lets say their email was joe.blogs@company.com and their id was 33
     #new email is joe.blogs_33@tapmint.com and password is password
-    User.all.each{ | u |
+    task :create_user => :development do
+      User.all.each{ | u |
         u.sanatise  #so we can unit test lets add a method that can be run for each user sanitise their email address
-    }
+      }
+    end
     puts "Resetting email back to origional value"
     ActionMailer::Base.delivery_method = dm #turn sending back to original state
   else
