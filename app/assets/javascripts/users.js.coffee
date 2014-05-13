@@ -91,3 +91,5 @@ $ ->
         'page': '/bookings/confirmation',
         'title': 'Confirm a Booking'
     $this.closest('form').submit()
+
+  $("#calendar").fullCalendar();

@@ -26,6 +26,7 @@
 //= require chosen-jquery
 //= require_tree ./gmaps4rails
 //= require jquery.popup
+//= require jquery.fullcalendar
 //= require maps
 //= require searches
 //= require users
