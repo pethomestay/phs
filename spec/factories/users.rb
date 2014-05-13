@@ -5,6 +5,7 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password 'abcdefghij'
+    password_confirmation 'abcdefghij'
     date_of_birth { DateTime.now - 20.years }
     address_1 { Faker::Address.street_address }
     address_suburb 'Parnell'
@@ -15,7 +16,11 @@ FactoryGirl.define do
     accept_terms '1'
   end
 
-  factory :user_with_pet, :parent => :user do |f|
+  factory :confirmed_user, :parent => :user do
+    after(:create) { |user| user.confirm! }
+  end
+
+  factory :user_with_pet, :parent => :confirmed_user do |f|
 	  f.pets { [FactoryGirl.create(:pet)] }
   end
 end
