@@ -239,9 +239,6 @@ class User < ActiveRecord::Base
     self.email = new_email
     self.password = "password"
     self.password_confirmation = "password"
-    if self.mobile_number.blank?
-      self.mobile_number = "n/a"
-    end
     self.save!
     self.confirm!
     self.save!
