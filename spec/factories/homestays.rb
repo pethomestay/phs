@@ -10,6 +10,8 @@ FactoryGirl.define do
     description { Faker::Lorem.paragraph }
     property_type_id 1
     outdoor_area_id 2
+    locked false
+    active true
     sequence(:slug) {|sn| "slug-title-#{sn}" }
     user
 
