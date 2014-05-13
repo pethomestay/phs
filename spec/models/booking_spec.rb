@@ -84,6 +84,38 @@ describe Booking do
 
   end
 
+  describe '#calculate_host_amount_after_refund' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.status = BOOKING_STATUS_FINISHED
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be zero host amount for booking' do
+      fifteen_days_time = Date.today + 15 #add 15 days
+      @booking.check_in_date = fifteen_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql(0)
+    end
+
+
+    it 'should be 50% host amount for booking' do
+      eight_days_time = Date.today + 8  #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql(7.1)
+    end
+
+    it 'should be 100% amount for host for booking' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql(14.2)
+    end
+
+  end
+
   describe '#guest_canceled' do
     before :each do
       @booking = FactoryGirl.create :booking

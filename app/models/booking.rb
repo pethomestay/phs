@@ -95,6 +95,17 @@ class Booking < ActiveRecord::Base
     end
   end
 
+  def calculate_host_amount_after_guest_cancel
+    days = get_days_left
+    if days > 14
+      return 0
+    elsif days >= 7
+      return self.amount * 0.5
+    else
+      return self.amount
+    end
+  end
+
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
 	end

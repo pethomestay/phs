@@ -1,9 +1,9 @@
 %p.article-content
-  = "Dear #{@user.first_name.capitalize},"
+  = "Dear #{@user.first_name.capitalize.strip},"
 %p.article-content
-  We are really sorry, but this note is to confirm that your Guest has had to cancel your booking. Their booking fee, if eligible will be refunded.
+  We are really sorry, but this note is to confirm that your Guest has had to cancel your booking. Their booking fee, if eligible will be refunded as per our cancellation policy and shown below.
 %p.article-content
-  We understand that this can be disappointing, especially if at the last minute, but we will do everything we can to help.
+  We understand that this can be disappointing, especially if at the last minute, but we will try to get you another booking if possible.
 %p.article-content
   Many thanks for your understanding.
 %p.article-content The PetHomeStay Team
@@ -15,11 +15,12 @@
   = "Guest Name: #{@guest.first_name.capitalize} #{@guest.last_name.capitalize}"
 %p.article-content
   = "Pet Name: #{@guest.pet.name.capitalize}"
+%ul.article-content
+  %li
+    More than 14 days away, full refund to Guest.
+  %li
+    Between 14 - 7 days, 50% refund to Guest, 50% to Host.
+  %li
+    Less than 7 days, no refund to Guest.
 %p.article-content
-  = "Host Name: #{@booking.bookee.first_name.capitalize} #{@booking.bookee.last_name.capitalize}"
-%p.article-content
-  = "HomeStay Title: #{@homestay.title}"
-%p.article-content
-  = "Total Booking Fee: $#{@booking.amount}"
-%p.article-content
-  = "Booking Fee Refunded: $#{@booking_fee_refunded}"
+  Based on this as a host you will receive $#{@booking.calculate_host_amount_after_guest_cancel} fees.

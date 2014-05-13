@@ -39,7 +39,7 @@ PetHomestay::Application.configure do
 
   #config.serve_static_assets = true
   #ensure we don't send emails on dev
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method = :smtp
   
   # Expands the lines which load the assets
   config.assets.debug = false
