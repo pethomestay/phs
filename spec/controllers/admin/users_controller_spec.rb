@@ -15,6 +15,7 @@ describe Admin::UsersController do
       address_1: Faker::Address.street_address,
       address_suburb: 'Collingwood',
       address_city: 'Melbourne',
+      mobile_number: '04 55 555 555',
       address_country: 'AU' }
   end
 

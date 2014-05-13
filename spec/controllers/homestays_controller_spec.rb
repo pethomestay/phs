@@ -83,9 +83,11 @@ describe HomestaysController do
 
   describe 'GET #edit' do
     subject { get :edit, id: homestay.slug }
-    let(:homestay) { stub_model(Homestay, slug: 'my-homestay') }
-    before { controller.stub_chain(:current_user, :homestay).and_return homestay }
-
+    let(:homestay) { FactoryGirl.create :homestay }
+    before do
+      controller.stub(:current_user).and_return homestay.user
+      controller.stub_chain(:current_user, :homestay).and_return homestay
+    end
     it 'should make a the homestay object available to views for editing' do
       subject
       assigns(:homestay).should == homestay
