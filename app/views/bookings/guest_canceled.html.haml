@@ -4,17 +4,20 @@
         $('#account-save-btn').attr("disabled", "disabled");
       }
   });
+= link_to 'Back to My Account', trips_bookings_path, class: 'btn'
+%br
+%br
 %p
-  Please confirm your cancellation&#8230;
+  = "Homestay: #{@booking.homestay.title},"
 %p
   Cancellations happen for all sorts of reasons - perhaps your holiday isn't going ahead  or maybe you are going to take your pet with you!
 %p
   However, based on your booking, a Host has committed themselves and blocked out their time for you.
   This means they may have missed out on looking after other pets instead, so it is only fair we compensate them if you change your mind.
-  Likewise PetHomeStay has incurred costs like booking insurance on your behalf with our underwriter.
+  PetHomeStay has also incurred costs like booking insurance on your behalf with our underwriter.
 %p
   PetHomeStay has a standard cancellation policy for all stays booked through us. For cancellations occurring :-
-%ul
+%ul.extra-line-height
   %li
     More than 14 days away, all of the fee is returned.
   %li
@@ -22,7 +25,7 @@
   %li
     Less than 7 days, no fee is returned.
 %p
-  We deduct our Service Fee of 15% and Insurance of $2 per night on all cancellations.
+  We deduct our Service Fee of 15% and Insurance of $2 per night before refunding any cancellations.
 %h4
   Cancellation Summary
 %p
@@ -38,8 +41,10 @@
       = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
       %span.help-inline
     .form-actions
-      = f.submit 'Save', class: 'btn btn-primary', id: 'save_cancel_reason'
-      = link_to 'Back', trips_bookings_path, style:'margin-left:20px;', class: 'btn btn-primary'
+      - button_title = "Cancel This Booking"
+      - if @booking.calculate_refund > 0
+        - button_title = "Save Cancel Reason"
+      = f.submit button_title, class: 'btn btn-primary', id: 'save_cancel_reason'
 
 - if @booking.calculate_refund > 0
   %p
@@ -50,5 +55,5 @@
       = render :partial => "accounts/account_fields"
       = hidden_field_tag :booking_id, @booking.id
       .form-actions
-        = f.submit 'Submit', id: 'account-save-btn', class: 'btn btn-primary'
+        = f.submit 'Cancel This Booking', id: 'account-save-btn', class: 'btn btn-primary'
 
