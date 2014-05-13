@@ -34,14 +34,14 @@ describe User do
   end
 
 
-  describe '#sanatise' do
+  describe '#sanitise' do
     subject { user }
 
     let(:user) { FactoryGirl.create :user }
 
-    context 'when the user has their email sanatised' do
-      before { user.sanatise }
-      it 'should return the sanatised email address' do
+    context 'when the user has their email sanitised' do
+      before { user.sanitise }
+      it 'should return the sanitised email address' do
         subject.email.should include("@tapmint.com")
       end
     end
