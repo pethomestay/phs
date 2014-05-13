@@ -42,7 +42,6 @@ describe User do
     context 'when the user has their email sanatised' do
       before { user.sanatise }
       it 'should return the sanatised email address' do
-        subject.sanatise
         subject.email.should include("@tapmint.com")
       end
     end
