@@ -9,7 +9,11 @@ task :sanatise => :environment do
     #lets use each to sanitise each user in the db
     #so lets say their email was joe.blogs@company.com and their id was 33
     #new email is joe.blogs_33@tapmint.com and password is password
+    puts "Sanatising email addresses and passwords"
     User.all.each{ | u |
+      if u.mobile_number.blank? #just in case we have a blank mobile record
+        u.mobile_number = "n/a"
+      end
       u.sanatise  #so we can unit test lets add a method that can be run for each user sanitise their email address
     }
     puts "Resetting email sending back to origional value"
