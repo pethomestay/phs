@@ -237,9 +237,13 @@ class User < ActiveRecord::Base
     end
     new_email = "#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com"
     self.email = new_email
-    self.confirm!
     self.password = "password"
     self.password_confirmation = "password"
+    if self.mobile_number.blank?
+      self.mobile_number = "n/a"
+    end
+    self.save!
+    self.confirm!
     self.save!
   end
 
