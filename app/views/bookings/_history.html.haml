@@ -2,7 +2,7 @@
   %p You have no bookings as a host in your history
 - else
   - @bookings.each do |booking|
-    .well.show-booking-history
+    %div{class:current_user == booking.bookee ? 'well show-booking-history' : 'well show-booking-history-guest'}
       - guest = booking.booker
       .guest-pic.pull-left
 
@@ -30,6 +30,11 @@
           - if current_user == booking.booker
             %strong Amount Paid:
             = " $#{booking.actual_amount}"
+            - if booking.status == BOOKING_STATUS_GUEST_CANCELED
+              %br
+              = "Trip cancelled #{booking.get_days_before_cancellation} days before Check In Date"
+              %br
+              = "Amount refunded to Guest as per Cancellation Policy - $#{booking.refund}"
           - else
             %strong Payout:
             = " $#{booking.host_payout}"

@@ -84,6 +84,40 @@ describe Booking do
 
   end
 
+  describe '#get_days_left' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.status = BOOKING_STATUS_FINISHED
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be 3 days before check in date' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.get_days_left.should be_eql(3)
+    end
+  end
+
+
+  describe '#get_days_before_cancellation' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.status = BOOKING_STATUS_GUEST_CANCELED
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be 8 days between the cancel date and the check in date' do
+      eight_days_time = Date.today + 8 #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.cancel_date = Date.today
+      @booking.get_days_before_cancellation.should be_eql(8)
+    end
+  end
+
   describe '#calculate_host_amount_after_refund' do
     before :each do
       @booking = FactoryGirl.create :booking

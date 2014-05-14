@@ -81,6 +81,10 @@ class Booking < ActiveRecord::Base
     return self.check_in_date.mjd - Date.today.mjd
   end
 
+  def get_days_before_cancellation
+    return self.check_in_date.mjd - self.cancel_date.mjd
+  end
+
   # More than 14 days away, all of the fee is returned.
   # Between 14 - 7 days, 50% of the fee is returned
   # Less than 7 days, no fee is returned.
