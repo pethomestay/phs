@@ -47,6 +47,8 @@ PetHomestay::Application.routes.draw do
 
   resources :availability
 
+  resources :unavailable_dates, :only => [:create, :destroy]
+
   resources :accounts
 
   namespace :admin do

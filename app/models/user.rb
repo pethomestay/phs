@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
+  has_many :unavailable_dates
+
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
   validates :accept_house_rules, :acceptance => true

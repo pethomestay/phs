@@ -10,6 +10,7 @@ describe User do
   it { should have_many :bookers }
   it { should have_many :bookees }
   it { should have_many :cards }
+  it { should have_many :unavailable_dates }
 
 
   describe '#name' do
