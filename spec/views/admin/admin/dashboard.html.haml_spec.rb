@@ -1,16 +1,18 @@
 require 'spec_helper'
 
 describe 'admin/admin/dashboard' do
-  let(:stats) { {user_count: 2, homestay_count: 3, pet_count: 4, enquiries_count: 5} }
+  let(:stats) { {user_count: 2, homestay_count: 3, pet_count: 4, bookings_count: 2, enquiries_count: 5} }
   let(:homestays) { [] }
   let(:users) { [] }
   let(:enquiries) { [] }
+  let(:bookings) { [] }
 
   before do
     assign(:stats, stats)
     assign(:homestays, homestays)
     assign(:users, users)
     assign(:enquiries, enquiries)
+    assign(:bookings, bookings)
     render
   end
 
