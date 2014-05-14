@@ -33,6 +33,8 @@ gem 'net-scp', '1.0.4'
 gem 'unicorn'
 gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
+gem 'sucker_punch'
+gem 'figaro'
 
 group :test, :development do
   gem 'capistrano'
