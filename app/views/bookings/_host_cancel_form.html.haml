@@ -1,4 +1,25 @@
+:javascript
+  $(document).ready(function() {
+    $('#request_host_cancel').click( function (e) {
+        e.preventDefault();
+        var btn = $(this);
+        var url = btn.attr('href')
+        var cancel_reason = $('#booking_cancel_reason');
+        if (cancel_reason.val().length > 0) {
+          $('.help-inline').html("&nbsp;");
+          $('.booking_cancel_reason').removeClass( 'error' );
+          $(url).modal('open');
+        } else {
+          $('.help-inline').html("Cancel reason cannot be blank!");
+          $('.booking_cancel_reason').addClass( 'error' );
+          e.stopPropagation();
+        }
+    });
+  });
+
 = simple_form_for @booking, :url=> host_confirm_cancellation_booking_path(@booking), html: { class: 'form-horizontal' } do |f|
+  %h4
+    Host Cancellation Request
   - if @one_booking
     = render partial: 'cancel_host_text'
   %p
@@ -32,14 +53,23 @@
 
   %p
 
-
-
     = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
       = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
-      - if @booking_errors
-        %span.help-inline
+      %span.help-inline
+        - if @booking_errors
           = @booking_errors
-
+        - else
+          &nbsp;
+  %p
+    PetHomeStay will call your mobile to confirm the cancellation and background to arrange any next steps.
 
   .form-actions
-    = f.submit 'Confirm cancellation of this booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'
+    = link_to 'Request cancellation of this booking', '#requestcancel', 'data-toggle' => 'modal', class: 'btn btn-primary', id: 'request_host_cancel'
+
+  .modal.hide.fade#requestcancel
+    .modal-header
+      %button.close{type: 'button', 'data-dismiss' => 'modal'} ×
+      .modal-body
+        PetHomeStay has received your cancellation request and will be in touch via phone to confirm this with you and inform the Guest. We appreciate your working with us to help this Guest and for being a part of our community.
+        .pull-right
+          = f.submit 'OK', class: 'btn btn-primary', style: 'margin-top: 20px;', id: 'booking_confirm_by_host'
