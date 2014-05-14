@@ -35,9 +35,10 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'heroku-api'
 gem 'sucker_punch'
-gem 'figaro'
+
 
 group :test, :development do
+  gem 'figaro'
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
