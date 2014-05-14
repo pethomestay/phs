@@ -122,6 +122,9 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffaker (1.15.0)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     fog (1.9.0)
       builder
       excon (~> 0.9.4)
@@ -340,6 +343,7 @@ DEPENDENCIES
   dragonfly
   factory_girl_rails
   ffaker
+  figaro
   fog
   geocoder!
   gmaps4rails
