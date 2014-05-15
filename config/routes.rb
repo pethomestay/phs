@@ -45,7 +45,11 @@ PetHomestay::Application.routes.draw do
 	  resources :messages, only: [:index, :create]
   end
 
-  resources :availability
+  resources :availability do
+    collection do
+      get :booking_info
+    end
+  end
 
   resources :unavailable_dates, :only => [:create, :destroy]
 

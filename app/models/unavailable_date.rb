@@ -9,6 +9,8 @@ class UnavailableDate < ActiveRecord::Base
 
   validate :date_should_not_be_a_past_date, if: "date.present?"
 
+  scope :between, ->(date1, date2) { where("date BETWEEN ? and ?", date1, date2) }
+
   private
 
   def date_should_not_be_a_past_date

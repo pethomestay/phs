@@ -5,7 +5,7 @@ class UnavailableDatesController < ApplicationController
   def create
     unavailable_date = current_user.unavailable_dates.new(unavailable_date_params)
     if unavailable_date.save
-      render json: { message: t("unavailable_date.successfully_created") }, status: 200
+      render json: { message: t("unavailable_date.successfully_created"), id: unavailable_date.id }, status: 200
     else
       render json: { message: unavailable_date.errors.messages }, status: 400
     end
