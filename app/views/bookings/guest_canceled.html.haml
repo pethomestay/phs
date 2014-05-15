@@ -57,7 +57,7 @@
   %p
     Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
   %p
-    = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { class: 'form-horizontal' } do |f|
+    = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { id: 'account_details_save',class: 'form-horizontal' } do |f|
       - @f = f
       = render :partial => "accounts/account_fields"
       = hidden_field_tag :booking_id, @booking.id
