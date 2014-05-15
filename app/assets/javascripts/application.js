@@ -26,6 +26,8 @@
 //= require chosen-jquery
 //= require_tree ./gmaps4rails
 //= require jquery.popup
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 //= require maps
 //= require searches
 //= require users
