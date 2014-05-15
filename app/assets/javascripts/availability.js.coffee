@@ -16,7 +16,6 @@ $ ->
         if(isSameDate(date, calEvent.start))
           cal_event = calEvent 
       )
-      alert(cal_event.id)
       if !cal_event.id
         create_unavailable_date(cal_event)
       else
