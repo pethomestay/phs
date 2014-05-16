@@ -1,30 +1,5 @@
-:javascript
-  $(document).ready(function() {
-      jQuery.validator.setDefaults({
-        debug: false,
-        success: "valid"
-      });
+= render partial: 'standard_cancel_submit',format: 'js', locals: {form_name: "#host_cancel_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#request_host_cancel"}
 
-      $('#request_host_cancel').click( function (e) {
-        e.preventDefault();
-        $('#host_cancel_form').validate(); //end validate
-        $("#booking_cancel_reason").rules("add", {
-          required: true,
-                       messages: {
-                          required: "Cancel reason cannot be blank!"
-                       }
-        });
-        var valid = $('#host_cancel_form').valid();
-        if (valid) {
-            $('.help-inline').html("&nbsp;");
-            $('.booking_cancel_reason').removeClass( 'error' );
-            $(url).modal('open');
-        } else {
-          $('.booking_cancel_reason').addClass( 'error' );
-          e.stopPropagation();
-        }
-      });
-  }); // end document.ready
 
 = simple_form_for @booking, :url=> host_confirm_cancellation_booking_path(@booking),html: { id: 'host_cancel_form', class: 'form-horizontal' } do |f|
   %h4

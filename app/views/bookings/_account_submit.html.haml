@@ -1,0 +1,48 @@
+
+
+
+:javascript
+    $(document).ready(function() {
+        #{render partial: 'jquery_validator_defaults',format: 'js'}
+        $('#account-save-btn').click( function (e) {
+          e.preventDefault();
+          $('#account_details_save').validate();
+
+          $("#account_name").rules("add", {
+            required: true,
+              messages: {
+              required: "Account name cannot be blank"
+            }
+          });
+           $("#account_bank").rules("add", {
+            required: true,
+            messages: {
+              required: "Account bank name cannot be blank"
+            }
+           });
+
+          $("#account_bsb").rules("add", {
+            required: true,
+            messages: {
+              required: "Account BSB number cannot be blank"
+            }
+          });
+
+          $("#account_account_number").rules("add", {
+            required: true,
+            minlength: 7,
+            messages: {
+              required: "Account number cannot be blank",
+              minlength: "Account number must be at least 7 digits"
+            }
+          });
+
+          var valid = $('#account_details_save').valid();
+          if (valid) {
+              $(url).modal('open');
+          } else {
+            $('.account_name').addClass( 'error' );
+            e.stopPropagation();
+          }
+        });
+    }); // end document.ready
