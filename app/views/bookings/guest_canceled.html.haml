@@ -1,16 +1,8 @@
-:javascript
-  $(document).ready(function(){
-      if ('#{escape_javascript(@booking.cancel_reason)}'.length == 0) {
-        $('#account-save-btn').attr("disabled", "disabled");
-      }
-  });
 
 - if @booking.calculate_refund > 0
-  = render partial: 'account_submit'
+  = render partial: 'bookings/account_submit'
 - else
-  = render partial: 'standard_cancel_submit',format: 'js', locals: {form_name: "#request_host_cancel", cancel_reason_area_name: "#booking_cancel_reason", button: "booking_cancel_reason" }
-
-
+  = render partial: 'bookings/account_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
 
 = link_to 'Back to My Account', trips_bookings_path, class: 'btn'
 %br
@@ -44,31 +36,25 @@
   This means the total booking fee refunded will be $#{@booking.calculate_refund}.
 %p
   To confirm this cancellation, please let us know why.
+
   = simple_form_for @booking, :url=> guest_save_cancel_reason_booking_path(@booking), html: { id: 'cancel_reason_form', class: 'form-horizontal' }, :remote => true do |f|
     = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
       = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
       %span.help-inline
-    .form-actions
-      - button_title = "Cancel This Booking"
-      - if @booking.calculate_refund > 0
-        - button_title = "Save Cancel Reason"
-      = f.submit button_title, class: 'btn btn-primary', id: 'save_cancel_reason'
+    - if @booking.calculate_refund > 0
+      .form-actions
+        = f.submit "Save Cancel Reason", class: 'btn btn-primary', id: 'save_cancel_reason'
+    - else
+      = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
+
 
 - if @booking.calculate_refund > 0
   %p
     Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
   %p
     = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { id: 'account_details_save',class: 'form-horizontal' } do |f|
-      - @f = f
-      = render :partial => "accounts/account_fields"
+      = render partial: "accounts/account_fields", locals: {f: f}
       = hidden_field_tag :booking_id, @booking.id
-      .form-actions
-        = f.submit 'Cancel This Booking', id: 'account-save-btn', class: 'btn btn-primary'
+      = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
 
-      .modal.hide.fade#requestguestaccountcancel
-        .modal-header
-          %button.close{type: 'button', 'data-dismiss' => 'modal'} ×
-          .modal-body
-            PetHomeStay has received your cancellation request and will be in touch via phone to confirm this with you and inform the Guest. We appreciate your working with us to help this Guest and for being a part of our community.
-            .pull-right
-              = f.submit 'OK', class: 'btn btn-primary', style: 'margin-top: 20px;', id: 'booking_confirm_by_host'
+

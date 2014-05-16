@@ -3,8 +3,11 @@
 
 :javascript
     $(document).ready(function() {
-        #{render partial: 'jquery_validator_defaults',format: 'js'}
-        $('#account-save-btn').click( function (e) {
+        if ('#{@booking.cancel_reason}'.length == 0) {
+          $('#guest_cancel').attr("disabled", "disabled");
+        }
+        #{render partial: 'bookings/jquery_validator_defaults',format: 'js'}
+        $('#guest_cancel').click( function (e) {
           e.preventDefault();
           $('#account_details_save').validate();
 
@@ -30,10 +33,12 @@
 
           $("#account_account_number").rules("add", {
             required: true,
+            number: true,
             minlength: 7,
             messages: {
               required: "Account number cannot be blank",
-              minlength: "Account number must be at least 7 digits"
+              minlength: "Account number must be at least 7 digits",
+              number: "Account number must be a number"
             }
           });
 

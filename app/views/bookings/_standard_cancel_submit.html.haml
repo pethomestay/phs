@@ -1,6 +1,6 @@
 :javascript
   $(document).ready(function() {
-      #{render partial: 'jquery_validator_defaults',format: 'js'}
+      #{render partial: 'bookings/jquery_validator_defaults',format: 'js'}
 
       $('#{button}').click( function (e) {
         e.preventDefault();
@@ -12,6 +12,7 @@
                        }
         });
         var valid = $('#{form_name}').valid();
+
         if (valid) {
             $('.help-inline').html("&nbsp;");
             $('div.modal').modal('show');
