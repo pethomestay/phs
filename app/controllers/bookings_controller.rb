@@ -76,8 +76,6 @@ class BookingsController < ApplicationController
     if @account.nil?
       @account = Account.new
     end
-    #canceled(params[:id], BOOKING_STATUS_GUEST_CANCELED)
-    #return redirect_to trips_bookings_path
   end
 
 	def host_paid

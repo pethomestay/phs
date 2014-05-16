@@ -52,7 +52,22 @@ describe BookingsController do
 			subject
 			response.should redirect_to booking_path(booking, confirmed_by: 'guest')
 		end
-	end
+  end
+
+  describe 'GET #guest_canceled' do
+    subject { get :guest_canceled, id: booking.id }
+
+    let(:user) {FactoryGirl.create :user }
+    let(:booking) {  FactoryGirl.create :booking, booker: user }
+
+    before { controller.stub(:current_user).and_return user }
+
+    it 'should render the guest_canceled template' do
+      subject
+      response.should render_template :guest_canceled
+    end
+
+  end
 
 	describe 'GET #index' do
 		subject { get :index }
