@@ -14,7 +14,7 @@
         var valid = $('#{form_name}').valid();
         if (valid) {
             $('.help-inline').html("&nbsp;");
-            $(url).modal('open');
+            $('div.modal').modal('show');
         } else {
           e.stopPropagation();
         }

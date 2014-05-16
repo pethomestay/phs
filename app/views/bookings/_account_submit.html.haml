@@ -38,10 +38,11 @@
           });
 
           var valid = $('#account_details_save').valid();
+
           if (valid) {
-              $(url).modal('open');
+              $('.help-inline').html("&nbsp;");
+              $('div.modal').modal('show');
           } else {
-            $('.account_name').addClass( 'error' );
             e.stopPropagation();
           }
         });
