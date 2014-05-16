@@ -3,9 +3,9 @@
 
 :javascript
     $(document).ready(function() {
-        if ('#{@booking.cancel_reason}'.length == 0) {
+        /*if ('#{@booking.cancel_reason}'.length == 0) {
           $('#guest_cancel').attr("disabled", "disabled");
-        }
+        }*/
         #{render partial: 'bookings/jquery_validator_defaults',format: 'js'}
         $('#guest_cancel').click( function (e) {
           e.preventDefault();
