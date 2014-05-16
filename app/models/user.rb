@@ -235,11 +235,7 @@ class User < ActiveRecord::Base
       end_str = ">"
       clean_email = clean_email[/#{start_str}(.*?)#{end_str}/m, 1] #extract out the email part
     end
-<<<<<<< HEAD
-    new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com"
-=======
     new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com" #
->>>>>>> 2_2_x
     self.email = new_email
     self.password = "password"
     self.password_confirmation = "password"
