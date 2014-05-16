@@ -2,7 +2,7 @@
 - if @booking.calculate_refund > 0
   = render partial: 'bookings/account_submit'
 - else
-  = render partial: 'bookings/account_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
+  = render partial: 'bookings/standard_cancel_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
 
 = link_to 'Back to My Account', trips_bookings_path, class: 'btn'
 %br
