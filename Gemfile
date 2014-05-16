@@ -36,7 +36,9 @@ gem 'nokogiri', '1.5.6'
 gem 'heroku-api'
 gem 'sucker_punch'
 
+
 group :test, :development do
+  gem 'figaro'
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
