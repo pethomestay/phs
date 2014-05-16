@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  include BookingsHelper
 	before_filter :authenticate_user!
 
 	def new
@@ -6,6 +7,7 @@ class AccountsController < ApplicationController
 	end
 
 	def create
+    puts "here instead"
 		@account = Account.new(params[:account])
 		if @account.save
 			return redirect_to @account
@@ -15,8 +17,10 @@ class AccountsController < ApplicationController
   end
 
   def guest_cancel_save_account_details
+
     @account = Account.new(params[:account])
     if @account.save
+      save_guest_canceled params[:booking_id]
       flash[:notice] = 'Your account details have been saved'
       return redirect_to trips_bookings_path
     else
@@ -30,8 +34,13 @@ class AccountsController < ApplicationController
 	end
 
 	def update
+
 		@account = current_user.account
 		if @account.update_attributes(params[:account])
+      flash[:notice] = 'Your account details have been saved'
+      if defined? params[:booking_id]
+        save_guest_canceled params[:booking_id]
+      end
 			return redirect_to @account
 		else
 			render :edit

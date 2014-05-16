@@ -137,9 +137,11 @@ class BookingsController < ApplicationController
     if params[:booking][:cancel_reason].blank?
       @booking_errors = "Cancel reason cannot be blank!"
     else
-      save_guest_canceled params[:booking][:cancel_reason], params[:id]
+      @booking.cancel_reason = params[:booking][:cancel_reason]
+      @booking.save
     end
     if (@booking.calculate_refund == 0 and @booking_errors.nil?)
+      save_guest_canceled params[:id]
       render :js => "window.location = '#{trips_bookings_path}'"
     else
       respond_to do | format|
