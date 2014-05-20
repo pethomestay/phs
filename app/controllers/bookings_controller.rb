@@ -102,7 +102,7 @@ class BookingsController < ApplicationController
   end
 
   def host_cancellation
-    @bookings = current_user.bookees
+    @bookings = Booking.where("bookee_id = ? AND status in (?) AND check_in_date >= ?", current_user.id, [BOOKING_STATUS_FINISHED, BOOKING_STATUS_UNFINISHED], Date.today)
     if @bookings.length == 1
       @one_booking = true
       @booking = @bookings.first
@@ -124,7 +124,9 @@ class BookingsController < ApplicationController
     else
       # ensure that we can search for this status when showing the admin notifications
       @booking.status = HOST_HAS_REQUESTED_CANCELLATION
+      @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
+      flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
       return redirect_to my_account_path
     end
   end
@@ -139,7 +141,7 @@ class BookingsController < ApplicationController
       @booking.save
     end
     if (@booking.calculate_refund == 0 and @booking_errors.nil?)
-      save_guest_canceled params[:id]
+      canceled params[:id], BOOKING_STATUS_GUEST_CANCELED
       render :js => "window.location = '#{trips_bookings_path}'"
     else
       respond_to do | format|

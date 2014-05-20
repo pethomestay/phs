@@ -1,7 +1,21 @@
 module BookingsHelper
   def canceled booking_id, type
     booking = Booking.find(booking_id)
+    if booking.cancel_reason.blank?
+      booking.cancel_reason = "Admin cancelled"
+    end
     booking.status = type
+    booking.cancel_date = Date.today #save current cancel date
+    if type == BOOKING_STATUS_HOST_CANCELED
+      booking.refund = booking.amount #The amount paid to guest should be the full amount if host cancels
+    else
+      booking.refund = booking.calculate_refund
+      GuestCanceledBookingJob.new.async.perform(booking_id) #Let the host know booking has been canceled
+    end
+
+    if booking.refund == 0
+      booking.refunded = true #no refund needed if amount is 0
+    end
     booking.save
   end
 
@@ -36,18 +50,6 @@ module BookingsHelper
     end
   end
 
-  def save_guest_canceled booking_id
-    @booking = Booking.find(booking_id)
-    @booking.status = BOOKING_STATUS_GUEST_CANCELED
 
-    @booking.cancel_date = Date.today #save current cancel date
-    @booking.refund = @booking.calculate_refund
-    if @booking.refund == 0
-      @booking.refunded = true #no refund needed if amount is 0
-    end
-    @booking.save
-    GuestCanceledBookingJob.new.async.perform(booking_id)
-    @booking
-  end
 
 end

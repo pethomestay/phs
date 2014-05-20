@@ -14,7 +14,7 @@ class Admin::BookingsController < Admin::AdminController
   end
 
   def guest_cancel
-    save_guest_canceled "Admin cancelled", params[:booking_id]
+    canceled  params[:booking_id], BOOKING_STATUS_GUEST_CANCELED
     return redirect_to admin_transactions_path
   end
 
