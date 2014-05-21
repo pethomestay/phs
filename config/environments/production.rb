@@ -73,10 +73,14 @@ PetHomestay::Application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'www.pethomsetay.com',
+    :domain         => 'www.pethomestay.com',
     :authentication => :plain,
   }
-  ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+      api_key: ENV['MAILGUN_API_KEY'],
+      domain: ENV['MAILGUN_DOMAIN']
+  }
 
   # Add default mailer URL
   config.action_mailer.default_url_options = { :host => 'www.pethomestay.com' }

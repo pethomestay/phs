@@ -16,7 +16,8 @@ class UserMailer < ActionMailer::Base
 		@message = message
 		@reservation = message.mailbox.enquiry.blank? ? message.mailbox.booking : message.mailbox.enquiry
 		email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-		mail(to: email_with_name, subject: "#{@from.first_name.capitalize} has sent you a message!")
+		email = mail(to: email_with_name, subject: "#{@from.first_name.capitalize} has sent you a message!")
+    email.mailgun_headers = {"o:tag" =>"user_message"}
   end
 
   def homestay_created(homestay)
