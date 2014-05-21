@@ -12,11 +12,12 @@ require 'spec_helper'
 # end
 describe BookingsHelper do
 
-  describe '#save_guest_canceled' do
+  describe '#canceled' do
     let(:booking) { FactoryGirl.create :booking }
-    it "saves a new status to booking object and sets the cancel date to today" do
+    it "saves a new status to booking object" do
 
-      helper.save_guest_canceled(booking.id).status.should eql(BOOKING_STATUS_GUEST_CANCELED)
+      helper.canceled(booking.id, BOOKING_STATUS_GUEST_CANCELED)
+      booking.status.should eql(BOOKING_STATUS_GUEST_CANCELED)
     end
   end
 
