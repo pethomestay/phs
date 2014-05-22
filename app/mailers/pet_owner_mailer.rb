@@ -17,7 +17,8 @@ class PetOwnerMailer < ActionMailer::Base
 	  @homestay = @booking.homestay
 	  @host = @booking.bookee
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  mail(to: email_with_name, subject: "#{@host.first_name} has confirmed the booking!")
+	  email = mail(to: email_with_name, subject: "#{@host.first_name} has confirmed the booking!")
+    email.mailgun_operations = {tag: "booking_confirmation_for_guest", "tracking-opens"=>"yes"}
   end
 
   def provider_unavailable(enquiry)
@@ -47,7 +48,7 @@ class PetOwnerMailer < ActionMailer::Base
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
 	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
 	  email = mail(to: email_with_name, subject: subject)
-    email.mailgun_operations = {tag: "provider_has_question", "tracking-opens"=>"yes"}
+    email.mailgun_operations = {tag: "provider_not_available", "tracking-opens"=>"yes"}
   end
 
   def provider_has_question(booking, message)
