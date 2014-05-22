@@ -17,6 +17,7 @@ module BookingsHelper
       booking.refunded = true #no refund needed if amount is 0
     end
     booking.save
+    booking
   end
 
   def has_uncanceled_bookings?(bookings)

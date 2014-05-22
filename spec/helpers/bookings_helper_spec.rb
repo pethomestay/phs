@@ -15,9 +15,7 @@ describe BookingsHelper do
   describe '#canceled' do
     let(:booking) { FactoryGirl.create :booking }
     it "saves a new status to booking object" do
-
-      helper.canceled(booking.id, BOOKING_STATUS_GUEST_CANCELED)
-      booking.status.should eql(BOOKING_STATUS_GUEST_CANCELED)
+      helper.canceled(booking.id, BOOKING_STATUS_GUEST_CANCELED).status.should eql(BOOKING_STATUS_GUEST_CANCELED)
     end
   end
 
