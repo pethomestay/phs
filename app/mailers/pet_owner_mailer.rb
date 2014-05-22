@@ -35,7 +35,8 @@ class PetOwnerMailer < ActionMailer::Base
 	  @homestay = @enquiry.homestay
 	  @host = @homestay.user
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  mail(to: email_with_name, subject: "#{@host.first_name.capitalize} has sent you a message!")
+	  email = mail(to: email_with_name, subject: "#{@host.first_name.capitalize} has sent you a message!")
+    email.mailgun_operations = {tag: "host_enquiry_response", "tracking-opens"=>"yes"}
   end
 
   def provider_not_available(booking)

@@ -9,7 +9,7 @@ class ProviderMailer < ActionMailer::Base
     @host = enquiry.homestay.user
     email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
     email = mail(to: email_with_name, subject: "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!")
-    email.mailgun_operations = {tag: "user_message", "tracking-opens"=>"yes"}
+    email.mailgun_operations = {tag: "enquiry", "tracking-opens"=>"yes"}
 
 
   end
@@ -22,7 +22,8 @@ class ProviderMailer < ActionMailer::Base
     @host = @booking.bookee
     email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
     subject =  "#{@host.first_name.capitalize} - You have a new PetHomeStay Booking!"
-    mail(to: email_with_name, subject: subject)
+    email = mail(to: email_with_name, subject: subject)
+    email.mailgun_operations = {tag: "owner_confirmed", "tracking-opens"=>"yes"}
   end
 
   def owner_canceled(enquiry)
