@@ -46,7 +46,8 @@ class PetOwnerMailer < ActionMailer::Base
 	  @host = booking.bookee
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
 	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
-	  mail(to: email_with_name, subject: subject)
+	  email = mail(to: email_with_name, subject: subject)
+    email.mailgun_operations = {tag: "provider_has_question", "tracking-opens"=>"yes"}
   end
 
   def provider_has_question(booking, message)
@@ -57,7 +58,8 @@ class PetOwnerMailer < ActionMailer::Base
 	  @message = message
 	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
 	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
-	  mail(to: email_with_name, subject: subject)
+	  email = mail(to: email_with_name, subject: subject)
+    email.mailgun_operations = {tag: "provider_has_question", "tracking-opens"=>"yes"}
   end
 
   def booking_receipt(booking)
@@ -66,6 +68,7 @@ class PetOwnerMailer < ActionMailer::Base
     @homestay = @booking.homestay
     @host = @homestay.user
     email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-    mail(to: email_with_name, subject: "Booking has been made and a response is pending")
+    email = mail(to: email_with_name, subject: "Booking has been made and a response is pending")
+    email.mailgun_operations = {tag: "booking_receipt", "tracking-opens"=>"yes"}
   end
 end
