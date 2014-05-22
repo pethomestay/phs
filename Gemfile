@@ -35,7 +35,6 @@ gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 
-
 group :test, :development do
   gem 'figaro'
   gem 'capistrano'
