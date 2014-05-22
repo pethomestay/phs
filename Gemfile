@@ -5,7 +5,7 @@ gem 'redcarpet'
 gem 'legato'
 gem 'blogit'
 gem 'ckeditor'
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -36,6 +36,8 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'heroku-api'
 gem 'sucker_punch'
+gem 'mailgun_rails', git:  'git://github.com/darmou/mailgun_rails.git'
+
 
 group :test, :development do
   gem 'figaro'

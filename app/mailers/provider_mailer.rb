@@ -8,7 +8,8 @@ class ProviderMailer < ActionMailer::Base
     @pets = @guest.pets
     @host = enquiry.homestay.user
     email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
-    mail(to: email_with_name, subject: "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!")
+    email = mail(to: email_with_name, subject: "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!")
+    email.mailgun_operations = {tag: "enquiry", "tracking-opens"=>"yes"}
   end
 
   def owner_confirmed(booking)
@@ -19,7 +20,8 @@ class ProviderMailer < ActionMailer::Base
     @host = @booking.bookee
     email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
     subject =  "#{@host.first_name.capitalize} - You have a new PetHomeStay Booking!"
-    mail(to: email_with_name, subject: subject)
+    email = mail(to: email_with_name, subject: subject)
+    email.mailgun_operations = {tag: "owner_confirmed", "tracking-opens"=>"yes"}
   end
 
   def owner_canceled(enquiry)
@@ -37,6 +39,7 @@ class ProviderMailer < ActionMailer::Base
 		@homestay = @booking.homestay
 		@host = @homestay.user
 		email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
-		mail(to: email_with_name, subject: "You have confirmed the booking with #{@guest.first_name.capitalize}!")
+		email = mail(to: email_with_name, subject: "You have confirmed the booking with #{@guest.first_name.capitalize}!")
+    email.mailgun_operations = {tag: "booking_confirmation_for_host", "tracking-opens"=>"yes"}
 	end
 end
