@@ -39,9 +39,15 @@
           %td
             &nbsp;
         - if booking.status == BOOKING_STATUS_GUEST_CANCELED or booking.status == BOOKING_STATUS_HOST_CANCELED
-          %td= booking.cancel_date.strftime('%d/%m/%Y')
+          - if booking.cancel_date.nil?
+            %td No cancel date
+          - else
+            %td= booking.cancel_date.strftime('%d/%m/%Y')
 
-          %td= currency_formatter(booking.refund)
+          - if booking.refund.nil?
+            %td No refund information
+          - else
+            %td= currency_formatter(booking.refund)
           %td= check_box_tag "is_refunded_" + booking.id.to_s,  1, booking.refunded, {:class => 'is_refunded'}
         - else
           %td{:colspan => 3}
