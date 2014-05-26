@@ -2,7 +2,7 @@ class UnavailableDate < ActiveRecord::Base
   belongs_to :user
 
   validates :date, presence: true
-  validates :date, uniqueness: true
+  validates :date, uniqueness: { scope: :user_id }
 
   #TODO add this validation
   #validate :date_should_not_be_already_booked
