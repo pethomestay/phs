@@ -295,4 +295,26 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  #TODO move view logic to presenter
+  def booking_info_between(start_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(start_date, end_date)
+    booking_info = unavailable_dates.collect do |unavailable_date|
+      {
+        id: unavailable_date.id,
+        title: "Unavailable",
+        start: unavailable_date.date.strftime("%Y-%m-%d"),
+        end: unavailable_date.date.strftime("%Y-%m-%d")
+      }
+    end
+    ((start_date..end_date).to_a - unavailable_dates.map(&:date)).each do |date|
+      booking_info << { 
+        title: "Available",
+        start: date.strftime("%Y-%m-%d"),
+        end: date.strftime("%Y-%m-%d")
+      }
+    end
+    booking_info
+  end
+
 end

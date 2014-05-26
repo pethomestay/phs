@@ -133,4 +133,67 @@ describe User do
 			end
 		end
 	end
+
+
+  describe "#booking_info_between" do
+
+    let(:user) { FactoryGirl.create :confirmed_user }
+
+    before do
+      2.times{ |index| FactoryGirl.create(:unavailable_date, date: Date.today + index.day, user: user) }
+    end
+
+    context "when end date is greater than start date" do
+
+      let(:booking_info){ user.booking_info_between(Date.today - 1.day, Date.today + 2.days) }
+    
+      it "should return info of all dates between start and end dates" do
+        expect(booking_info.count).to eq(4)
+      end
+
+      it "should return users unavailable dates info between start and end dates" do
+        first_unavailable_date = user.unavailable_dates.first
+        expect(booking_info).to include({
+          id: first_unavailable_date.id,
+          title: "Unavailable",
+          start: first_unavailable_date.date.strftime("%Y-%m-%d"),
+          end: first_unavailable_date.date.strftime("%Y-%m-%d")
+        })
+        last_unavailable_date = user.unavailable_dates.first
+        expect(booking_info).to include({
+          id: last_unavailable_date.id,
+          title: "Unavailable",
+          start: last_unavailable_date.date.strftime("%Y-%m-%d"),
+          end: last_unavailable_date.date.strftime("%Y-%m-%d")
+        })
+      end
+
+      it "should return users available dates info between start and end dates" do
+        first_available_date = Date.today - 1
+        expect(booking_info).to include({
+          title: "Available",
+          start: first_available_date.strftime("%Y-%m-%d"),
+          end: first_available_date.strftime("%Y-%m-%d")
+        })
+        last_available_date = Date.today + 2
+        expect(booking_info).to include({
+          title: "Available",
+          start: last_available_date.strftime("%Y-%m-%d"),
+          end: last_available_date.strftime("%Y-%m-%d")
+        })
+      end
+
+    end
+
+    context "when start date is greater than end date" do
+
+      let(:booking_info){ user.booking_info_between(Date.today + 2.days, Date.today) }
+
+      it "should return a blank array" do
+        expect(booking_info).to be_blank
+      end
+
+    end
+
+  end
 end
