@@ -35,6 +35,20 @@ describe User do
   end
 
 
+  describe '#sanitise' do
+    subject { user }
+
+    let(:user) { FactoryGirl.create :user }
+
+    context 'when the user has their email sanitised' do
+      before { user.sanitise }
+      it 'should return the sanitised email address' do
+        subject.email.should include("@tapmint.com")
+      end
+    end
+  end
+
+
   # When have signed up via Facebook ensure
   # we don't need to put in a password
 
@@ -56,7 +70,7 @@ describe User do
     context 'when unlinked with Facebook password required' do
 
       subject { user }
-      let(:user) { FactoryGirl.create :user }
+      let(:user) { FactoryGirl.create :confirmed_user }
       before do
         user.provider ="Facebook"
         user.uid =  "78787878"
@@ -73,7 +87,7 @@ describe User do
 
     context 'when signed with website password required' do
       subject { user }
-      let(:user) { FactoryGirl.create :user }
+      let(:user) { FactoryGirl.create :confirmed_user }
 
       it 'if we have no facebook link we need to enter a password' do
         subject.needs_password?.should be_true
@@ -81,10 +95,9 @@ describe User do
     end
   end
 
-
 	describe '#booking_accepted_by_host' do
 		subject { user.booking_accepted_by_host }
-		let(:user) { FactoryGirl.create :user }
+		let(:user) { FactoryGirl.create :confirmed_user }
 		context 'when the user booking is not accepted by the host' do
 			before { user.bookers.create host_accepted: false }
 			it 'should not return any booking' do
@@ -104,7 +117,7 @@ describe User do
 
 	describe '#find_stored_card_id' do
 		subject { user }
-		let(:user) { FactoryGirl.create :user }
+		let(:user) { FactoryGirl.create :confirmed_user }
 		let(:card) { FactoryGirl.create :card, user: user }
 
 		context 'when user has selected stored card' do
