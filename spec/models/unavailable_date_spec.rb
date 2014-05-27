@@ -6,7 +6,8 @@ describe UnavailableDate do
   it { should validate_presence_of(:date) }
   it { should validate_uniqueness_of(:date).scoped_to(:user_id) }
 
-  let(:unavailable_date){ FactoryGirl.create(:unavailable_date) }
+  let(:user){ FactoryGirl.create(:confirmed_user) }
+  let(:unavailable_date){ FactoryGirl.create(:unavailable_date, user: user) }
 
   context "date validation" do
     
@@ -23,6 +24,15 @@ describe UnavailableDate do
       expect(unavailable_date.errors[:date].first).to eq(I18n.t("unavailable_date.invalid_date"))
     end
 
+  end
+
+  describe ".after_save" do
+    it "should mark calendar as updated" do
+      time = Time.now
+      Time.stub(:now).and_return(time)
+      unavailable_date.save
+      expect(unavailable_date.user.calendar_updated_at).to eq(time)
+    end
   end
 
 end

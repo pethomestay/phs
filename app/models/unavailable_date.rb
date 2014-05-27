@@ -9,12 +9,18 @@ class UnavailableDate < ActiveRecord::Base
 
   validate :date_should_not_be_a_past_date, if: "date.present?"
 
+  after_save :update_calendar, if: "user"
+
   scope :between, ->(date1, date2) { where("date BETWEEN ? and ?", date1, date2) }
 
   private
 
   def date_should_not_be_a_past_date
     errors.add(:date, I18n.t("unavailable_date.invalid_date")) if self.date < Date.today
+  end
+
+  def update_calendar
+    self.user.update_calendar
   end
 
 end

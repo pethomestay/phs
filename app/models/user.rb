@@ -317,4 +317,8 @@ class User < ActiveRecord::Base
     booking_info
   end
 
+  def update_calendar
+    self.update_attribute(:calendar_updated_at, Time.now)
+  end
+
 end
