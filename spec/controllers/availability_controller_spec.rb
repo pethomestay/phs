@@ -29,7 +29,7 @@ describe AvailabilityController do
       expect(response.code).to eq("200")
     end
 
-    it "shoudld return booking info json data" do
+    it "should return booking info json data" do
       get :booking_info, start: start_date.to_time.to_i, end: end_date.to_time.to_i
       expect(response.body).to eq(booking_info.to_json)
     end

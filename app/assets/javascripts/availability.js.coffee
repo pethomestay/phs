@@ -1,6 +1,12 @@
 $ ->
   #calendar to show hosts availablity
   $("#calendar").fullCalendar
+    height: 500
+    header:
+      left: 'prev',
+      center: 'title',
+      right: 'next'
+
     viewDisplay: (view) ->
       $('.fc-view').find('td').css('cursor', 'auto')
       $('.fc-today').css('cursor', 'pointer')

@@ -15,8 +15,10 @@
 -----------------------------------------------------*/
  
 .fc-event {
-	background: #fff !important;
+	background: none;
 	color: #000 !important;
+  border: none;
+  text-align: center;
 	}
 	
 /* for vertical events */
@@ -28,5 +30,50 @@
 .fc-event .ui-resizable-handle {
 	display: none !important;
 	}
+
+.fc{
+  border: 1px solid;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.fc table {
+	border: none
+}
+
+.fc-week td{
+  border: none;
+}
+
+.fc-first th{
+  border: none;
+}
+
+.fc-today{
+  background: none;
+}
+
+.fc-day{
+  background: #fff;
+  margin: 4px 5px;
+}
+
+.fc-day div:first-child{
+  background: #ea7a28;
+  margin:5px;
+  min-height:30px;
+}
+
+thead tr.fc-first{
+  margin-bottom: 10px;
+}
+
+.fc-other-month.fc-future{
+  opacity: 0.2;
+}
+
+.fc-past {
+  opacity: 0.2;
+}
 	
 	
