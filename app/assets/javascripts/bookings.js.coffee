@@ -10,6 +10,8 @@ $ ->
         minlength: 13,
         maxlength: 16,
         digits: true
+    higlight:
+
 
   fractionalPart = (value) ->
     stringValue = value.toString()
