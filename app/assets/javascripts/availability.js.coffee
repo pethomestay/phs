@@ -21,6 +21,16 @@ $ ->
       else
         destroy_unavailable_date(cal_event)
 
+  $("#update_calendar").on "click", ->
+    $.ajax
+      url: "/users/update_calendar"
+      type: "Post"
+      success: (data)->
+        console.log(data)
+      error: (request, status, error) ->
+        #TODO change error handling
+        console.log(request.responseText)
+
   create_unavailable_date = (calEvent) ->
     $.ajax
       url: "/unavailable_dates"
