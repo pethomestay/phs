@@ -2,6 +2,12 @@ PetHomestay::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
+  resources :users do
+    collection do
+      post :update_calendar
+    end
+  end
+
   resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
