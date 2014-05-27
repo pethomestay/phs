@@ -21,16 +21,16 @@ describe AvailabilityController do
 
     it "should pass booking info message to current user" do
       user.should_receive(:booking_info_between).with(start_date, end_date)
-      get :booking_info, start: start_date, end: end_date
+      get :booking_info, start: start_date.to_time.to_i, end: end_date.to_time.to_i
     end
 
     it "should return 200 status codes" do
-      get :booking_info, start: start_date, end: end_date
+      get :booking_info, start: start_date.to_time.to_i, end: end_date.to_time.to_i
       expect(response.code).to eq("200")
     end
 
     it "shoudld return booking info json data" do
-      get :booking_info, start: start_date, end: end_date
+      get :booking_info, start: start_date.to_time.to_i, end: end_date.to_time.to_i
       expect(response.body).to eq(booking_info.to_json)
     end
 
