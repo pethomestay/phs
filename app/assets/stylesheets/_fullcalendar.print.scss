@@ -46,6 +46,11 @@
 	border: none
 }
 
+.fc-border-separate {
+    position: relative;
+    z-index: 10;
+}
+
 .fc-week td{
   border: none;
 }
@@ -61,6 +66,7 @@
 .fc-day{
   background: #fff;
   margin: 4px 5px;
+  opacity: 0.6;
 }
 
 .fc-day div:first-child{
@@ -74,15 +80,15 @@ thead tr.fc-first{
 }
 
 .fc-other-month.fc-future{
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .fc-past {
-  opacity: 0.4;
+  opacity: 0.2;
 }
 	
 .fc-grid .fc-other-month .fc-day-number {
-  opacity: 0.4 !important;
+  opacity: 0.2 !important;
 }
 
 .fc-event-title, .fc-text-arrow{
