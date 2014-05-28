@@ -6,6 +6,8 @@ class Booking < ActiveRecord::Base
 	belongs_to :homestay
 	belongs_to :enquiry
 
+  state_machine :state, :initial => :booking_created
+
 	has_one :transaction, dependent: :destroy
 	has_one :mailbox, dependent: :destroy
 
@@ -14,7 +16,7 @@ class Booking < ActiveRecord::Base
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
 
-	scope :unfinished, where(status: BOOKING_STATUS_UNFINISHED)
+	scope :unfinished, with_state(:booking_created)
 
 	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0)
 
@@ -65,11 +67,15 @@ class Booking < ActiveRecord::Base
 			    host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
 			    booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
 			    "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
-			    (booking.status == BOOKING_STATUS_HOST_PAID) ? 'Paid' : 'Not Paid'
+			    (booking.status?(:booking_host_paid)) ? 'Paid' : 'Not Paid'
 				]
 			end
 		end
-	end
+  end
+
+  event :host_paid do
+    transition :parked => :idling
+  end
 
 	def host_view?(user)
 		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee

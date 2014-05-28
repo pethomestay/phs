@@ -12,6 +12,9 @@
 # Ignore .rvmrc
 .rvmrc
 
+# Ignore zeus socket files dir
+.zeus.sock
+
 # Ignore .env
 .env
 

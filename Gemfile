@@ -34,7 +34,7 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
-gem 'strong_parameters'
+gem 'state_machine'
 
 group :test, :development do
   gem 'figaro'

@@ -1,5 +1,5 @@
 - url = current_user.payor? ? @transaction : ENV['TRANSACTION_POST_ACTION']
-= simple_form_for @transaction, url: url, html: { class: 'form-horizontal payment_form' } do |f|
+= simple_form_for @transaction, url: url, html: { id: 'booking-form', class: 'form-horizontal payment_form' } do |f|
   = f.input_field :eps_merchant, type: :hidden, name: 'EPS_MERCHANT', value: ENV['MERCHANT_ID']
   = f.input_field :type_code, type: :hidden, name: 'EPS_TXNTYPE'
   = f.input_field :reference, type: :hidden, name: 'EPS_REFERENCEID'

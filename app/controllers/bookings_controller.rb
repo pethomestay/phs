@@ -62,8 +62,9 @@ class BookingsController < ApplicationController
 	end
 
 	def host_paid
+
 		@booking = Booking.find(params[:id])
-		@booking.status = BOOKING_STATUS_HOST_PAID
+    @booking.host_paid
 		@booking.save!
 		render nothing: true
 	end
