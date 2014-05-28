@@ -100,7 +100,7 @@ describe User do
 		subject { confirmed_user.booking_accepted_by_host }
 
 		context 'when the user booking is not accepted by the host' do
-			before { user.bookers.create host_accepted: false }
+			before { confirmed_user.bookers.create host_accepted: false }
 			it 'should not return any booking' do
 				subject.any?.should be_false
 			end
@@ -109,7 +109,7 @@ describe User do
 		context 'when the host accepted the user booking' do
 
 			before do
-				booking = FactoryGirl.create :booking, booker: user
+				booking = FactoryGirl.create :booking, booker: confirmed_user
 				booking.update_attributes! host_accepted: true, response_id: 5
 			end
 
@@ -148,7 +148,7 @@ describe User do
 
     context "when end date is greater than start date" do
 
-      let(:booking_info){ confirmed_user.booking_info_between(Date.today - 1.day, Date.today + 2.days) }
+      let(:booking_info){ user.booking_info_between(Date.today - 1.day, Date.today + 2.days) }
     
       it "should return info of all dates between start and end dates" do
         expect(booking_info.count).to eq(4)
@@ -203,10 +203,8 @@ describe User do
 
   describe "#update_calendar" do
     it "should mark calendar as updated" do
-      time = Time.now
-      Time.stub(:now).and_return(time)
       confirmed_user.update_calendar
-      expect(confirmed_user.calendar_updated_at).to eq(time)
+      expect(confirmed_user.calendar_updated_at).to eq(Date.today)
     end
   end
 end

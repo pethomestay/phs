@@ -10,6 +10,7 @@ class UnavailableDate < ActiveRecord::Base
   validate :date_should_not_be_a_past_date, if: "date.present?"
 
   after_save :update_calendar, if: "user"
+  after_destroy :update_calendar
 
   scope :between, ->(date1, date2) { where("date BETWEEN ? and ?", date1, date2) }
 

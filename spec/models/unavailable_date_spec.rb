@@ -28,10 +28,17 @@ describe UnavailableDate do
 
   describe ".after_save" do
     it "should mark calendar as updated" do
-      time = Time.now
-      Time.stub(:now).and_return(time)
       unavailable_date.save
-      expect(unavailable_date.user.calendar_updated_at).to eq(time)
+      expect(unavailable_date.user.calendar_updated_at).to eq(Date.today)
+    end
+  end
+
+  describe ".after_destroy" do
+    it "should mark calendar as updated" do
+      unavailable_date.save
+      user.calendar_updated_at = Date.today - 1.day
+      unavailable_date.destroy
+      expect(unavailable_date.user.calendar_updated_at).to eq(Date.today)
     end
   end
 

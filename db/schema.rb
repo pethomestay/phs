@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(:version => 20140527041516) do
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.datetime "calendar_updated_at"
+    t.date     "calendar_updated_at"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

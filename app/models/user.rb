@@ -318,7 +318,7 @@ class User < ActiveRecord::Base
   end
 
   def update_calendar
-    self.update_attribute(:calendar_updated_at, Time.now)
+    self.update_attribute(:calendar_updated_at, Date.today)
   end
 
 end

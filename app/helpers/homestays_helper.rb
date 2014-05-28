@@ -8,7 +8,7 @@ module HomestaysHelper
   end
 
   def calendar_updation_date(user)
-    return "Today" if user.calendar_updated_at.to_date == Date.today
+    return "Today" if user.calendar_updated_at.blank? || user.calendar_updated_at == Date.today
     user.calendar_updated_at.strftime("%B %d, %Y")
   end
 
