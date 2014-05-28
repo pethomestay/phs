@@ -6,4 +6,10 @@ module HomestaysHelper
   def strip_nbsp(str)
     str.gsub(/&nbsp;/i," ")
   end
+
+  def calendar_updation_date(user)
+    return "Today" if user.calendar_updated_at.to_date == Date.today
+    user.calendar_updated_at.strftime("%B %d, %Y")
+  end
+
 end

@@ -106,6 +106,12 @@
           zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
         }})
         setupMarker(#{homestay_latitude}, #{homestay_longitude})
+
+      .calendar-updation-date.span5
+        %span.cal-date-span
+          Calendar Updated:&nbsp&nbsp
+          = "#{calendar_updation_date(@homestay.user)}"
+
   - content_for :open_graph_tags do
     %meta{property: 'og:title', content: @homestay.title}
     %meta{property: 'og:type', content: 'hotel'}
