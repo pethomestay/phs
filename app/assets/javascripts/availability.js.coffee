@@ -32,7 +32,8 @@ $ ->
       url: "/users/update_calendar"
       type: "Post"
       success: (data)->
-        console.log(data)
+        $("#calendar_update_alert").show()
+        setTimeout( "$('#calendar_update_alert').hide();", 2000);
       error: (request, status, error) ->
         #TODO change error handling
         console.log(request.responseText)
