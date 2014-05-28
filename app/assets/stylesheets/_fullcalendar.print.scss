@@ -13,7 +13,11 @@
  
  /* Events
 -----------------------------------------------------*/
- 
+
+.fc{
+  color: #888 !important
+}
+
 .fc-event {
 	background: none;
 	color: #000 !important;
@@ -32,9 +36,10 @@
 	}
 
 .fc{
-  border: 1px solid;
-  padding: 5px;
+  border: 1px solid #CCCBCA;
+  padding: 10px 5px;
   margin-bottom: 10px;
+  background-color: #FCECE1;
 }
 
 .fc table {
@@ -59,7 +64,7 @@
 }
 
 .fc-day div:first-child{
-  background: #ea7a28;
+  background: #F0A269;
   margin:5px;
   min-height:30px;
 }
@@ -69,11 +74,18 @@ thead tr.fc-first{
 }
 
 .fc-other-month.fc-future{
-  opacity: 0.2;
+  opacity: 0.4;
 }
 
 .fc-past {
-  opacity: 0.2;
+  opacity: 0.4;
 }
 	
+.fc-grid .fc-other-month .fc-day-number {
+  opacity: 0.4 !important;
+}
+
+.fc-event-title, .fc-text-arrow{
+  color: #888;
+}
 	

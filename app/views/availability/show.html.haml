@@ -9,7 +9,13 @@
       = link_to 'Back to My Account', my_account_path, class: 'btn'
     .clear
 
-  = link_to 'Update Calendar', "javascript:" , class: 'btn', id: "update_calendar"
+
+  #update-calendar
+    %span.pull-left
+      %i Calendar already up to date, but want your profile to show a recent updated time?
+    = link_to 'Update Calendar', "javascript:" , class: 'btn pull-right', id: "update-calendar-btn"
+  .clear
+
   #calendar
 
   %table.table.tablesorter

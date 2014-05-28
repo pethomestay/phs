@@ -11,7 +11,7 @@ $ ->
       $('.fc-view').find('td').css('cursor', 'auto')
       $('.fc-today').css('cursor', 'pointer')
       $('.fc-today').nextAll('td').css('cursor', 'pointer')
-      $('.fc-today').closest('tr').nextAll('tr').find('td').css('cursor', 'pointer')
+      $('.fc-future').nextAll('td').css('cursor', 'pointer')
 
     events: "/availability/booking_info"
 
@@ -27,7 +27,7 @@ $ ->
       else
         destroy_unavailable_date(cal_event)
 
-  $("#update_calendar").on "click", ->
+  $("#update-calendar-btn").on "click", ->
     $.ajax
       url: "/users/update_calendar"
       type: "Post"
