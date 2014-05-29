@@ -2,7 +2,7 @@ require 'dragonfly'
 require 'dragonfly/s3_data_store'
 
 # Configure
-Dragonfly.app.configure do
+Dragonfly.app(:images).configure do
   plugin :imagemagick
 
   protect_from_dos_attacks true
@@ -27,7 +27,7 @@ end
 Dragonfly.logger = Rails.logger
 
 # Mount as middleware
-Rails.application.middleware.use Dragonfly::Middleware
+Rails.application.middleware.use Dragonfly::Middleware, :images
 
 # Add model functionality
 if defined?(ActiveRecord::Base)
