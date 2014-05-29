@@ -67,14 +67,34 @@ class Booking < ActiveRecord::Base
 			    host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
 			    booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
 			    "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
-			    (booking.status?(:booking_host_paid)) ? 'Paid' : 'Not Paid'
+			    (booking.status?(:host_paid)) ? 'Paid' : 'Not Paid'
 				]
 			end
 		end
   end
 
   event :host_paid do
-    transition :parked => :idling
+    transition :finished => :host_paid
+  end
+
+  event :host_rejects_booking do
+    transaction :finished => :rejected
+  end
+
+  event :guest_cancels_booking do
+    transaction [:unfinished, :finished, :payment_authorisation_pending] => :guest_cancelled
+  end
+
+  event :payment_check_succeed do
+    transaction :unfinished => :finished
+  end
+
+  event :payment_check_fail do
+    transaction :unfinished => :payment_authorisation_pending
+  end
+
+  event :admin_cancel_booking do
+    transaction :host_requested_cancellation => :host_cancelled
   end
 
 	def host_view?(user)
