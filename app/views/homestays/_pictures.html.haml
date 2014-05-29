@@ -2,7 +2,7 @@
   %tbody
     = f.nested_fields_for :pictures do |fp|
       %tr.item
-        %td#image
+        %td{id: fp.object.file.present? ? "image_#{fp.object['id']}" : "image"}
           - if fp.object.file.present?
             = image_tag(fp.object.file.thumb('200x200').url)
           - else
@@ -13,7 +13,7 @@
           = fp.hidden_field :id
           = fp.hidden_field :_destroy
         %td
-          - if fp.object.file.present?
+          - if fp.object.file.present? and fp.object['id']
             = link_to 'Rotate', rotate_homestay_image_path(f.object['slug'], fp.object['id']), class: 'rotate', remote: true, :method=>:post
   %table.table#remove.new-picture
     %tr
