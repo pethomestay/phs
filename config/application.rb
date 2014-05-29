@@ -69,7 +69,7 @@ module PetHomestay
 
     # Adding dragonfly middleware
     config.middleware.insert 1, 'Dragonfly::Middleware'
-    #config.assets.precompile += Ckeditor.assets
-    #config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+    config.assets.precompile += Ckeditor.assets
+    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
 end
