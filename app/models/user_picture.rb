@@ -1,5 +1,6 @@
-class UserPicture < ActiveRecord::Base
+class UserPicture
+  extend Dragonfly::Model
   belongs_to :picturable, polymorphic: true
   self.table_name = "pictures"
-  image_accessor :file
+  dragonfly_accessor :file, app: :images
 end

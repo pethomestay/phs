@@ -103,9 +103,12 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.1)
-    dragonfly (0.9.14)
+    dragonfly (1.0.5)
       multi_json (~> 1.0)
       rack
+    dragonfly-s3_data_store (1.0.4)
+      dragonfly (~> 1.0)
+      fog
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.9.4)
@@ -173,7 +176,7 @@ GEM
     mime-types (1.21)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
-    multi_json (1.8.2)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-scp (1.0.4)
@@ -319,6 +322,7 @@ DEPENDENCIES
   country_select
   devise
   dragonfly
+  dragonfly-s3_data_store
   factory_girl_rails
   ffaker
   figaro
