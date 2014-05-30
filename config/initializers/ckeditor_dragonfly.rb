@@ -17,8 +17,8 @@ else
     # mandatory and the files don't even have to be stored under
     # public. If not storing under public then set server_root to nil.
     datastore :file,
-      root_path Rails.root.join("public", "uploads", "ckeditor", Rails.env).to_s
-      server_root Rails.root.join("public").to_s
+      root_path: Rails.root.join("public", "uploads", "ckeditor", Rails.env).to_s,
+      server_root: Rails.root.join("public").to_s
 
     # Accept asset requests on /ckeditor_assets. Again, this is not
     # mandatory. Just be sure to include :job somewhere.
