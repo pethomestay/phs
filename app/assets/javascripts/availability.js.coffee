@@ -16,12 +16,12 @@ $ ->
     events: "/availability/booking_info"
 
     dayClick: (date, allDay, jsEvent, view) ->
-      return false if date < new Date().setHours(0,0,0,0)
       cal_event = ""
       $('#calendar').fullCalendar('clientEvents', (calEvent) ->
         if(isSameDate(date, calEvent.start))
           cal_event = calEvent 
       )
+      return false if cal_event.title.match(/booked/i) != null
       if !cal_event.id
         create_unavailable_date(cal_event)
       else

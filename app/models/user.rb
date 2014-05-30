@@ -299,6 +299,8 @@ class User < ActiveRecord::Base
   #TODO move view logic to presenter
   def booking_info_between(start_date, end_date)
     unavailable_dates = self.unavailable_dates.between(start_date, end_date)
+    bookings = self.bookees.host_paid.where("check_in_date in (?) or check_out_date in (?)", (start_date..end_date).to_a, (start_date..end_date).to_a)
+    booked_dates = bookings.collect{ |booking| [booking.check_in_date, booking.check_out_date] }.flatten.compact.uniq
     booking_info = unavailable_dates.collect do |unavailable_date|
       {
         id: unavailable_date.id,
@@ -307,8 +309,16 @@ class User < ActiveRecord::Base
         end: unavailable_date.date.strftime("%Y-%m-%d")
       }
     end
-    ((start_date..end_date).to_a - unavailable_dates.map(&:date)).each do |date|
-      booking_info << { 
+    booked_dates.each do|date|
+      booking_info << {
+        title: "Booked",
+        start: date.strftime("%Y-%m-%d"),
+        end: date.strftime("%Y-%m-%d"),
+      }
+    end
+    available_dates = (start_date..end_date).to_a - (unavailable_dates.map(&:date) + booked_dates).uniq
+    available_dates.each do |date|
+      booking_info << {
         title: "Available",
         start: date.strftime("%Y-%m-%d"),
         end: date.strftime("%Y-%m-%d")
