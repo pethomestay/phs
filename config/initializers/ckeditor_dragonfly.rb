@@ -23,7 +23,9 @@ app.configure do
     datastore :s3,
               bucket_name: ENV['S3_BUCKET'],
               access_key_id: ENV['S3_KEY'],
-              secret_access_key: ENV['S3_SECRET']
+              secret_access_key: ENV['S3_SECRET'],
+              region:  ENV['S3_REGION'],
+              url_host: ENV['S3_URL_HOST']
   else
     datastore :file,
               root_path:  Rails.root.join("public", "uploads", "ckeditor", Rails.env).to_s,

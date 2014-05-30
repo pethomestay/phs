@@ -12,9 +12,11 @@ Dragonfly.app(:images).configure do
 
   if Rails.env.staging? || Rails.env.production?
     datastore :s3,
-            bucket_name: ENV['S3_BUCKET'],
-            access_key_id: ENV['S3_KEY'],
-            secret_access_key: ENV['S3_SECRET']
+              bucket_name: ENV['S3_BUCKET'],
+              access_key_id: ENV['S3_KEY'],
+              secret_access_key: ENV['S3_SECRET'],
+              region:  ENV['S3_REGION'],
+              url_host: ENV['S3_URL_HOST']
     else
       datastore :file,
                 root_path: Rails.root.join('public/system/dragonfly', Rails.env),
