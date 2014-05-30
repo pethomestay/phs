@@ -16,7 +16,6 @@ Dragonfly.app(:images).configure do
               access_key_id: ENV['S3_KEY'],
               secret_access_key: ENV['S3_SECRET'],
               region:  ENV['S3_REGION'],
-              url_host: ENV['S3_URL_HOST'],
               use_iam_profile: ENV['S3_IAM_PROFILE']
     else
       datastore :file,
