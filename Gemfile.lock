@@ -122,7 +122,7 @@ GEM
       fog
     erubis (2.7.0)
     eventmachine (1.0.3)
-    excon (0.9.4)
+    excon (0.19.5)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -138,7 +138,7 @@ GEM
       rails (>= 3, < 5)
     fog (1.9.0)
       builder
-      excon (~> 0.9.4)
+      excon (~> 0.19.5)
       formatador (~> 0.2.0)
       mime-types
       multi_json (~> 1.0)
