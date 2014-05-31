@@ -5,6 +5,14 @@ GIT
     geocoder (1.1.6)
 
 GIT
+  remote: git://github.com/darmou/ckeditor.git
+  revision: e744bf6334fac1f45180510b2652700e6cfb99fd
+  specs:
+    ckeditor (4.0.11)
+      mime-types
+      orm_adapter (~> 0.5.0)
+
+GIT
   remote: git://github.com/darmou/mailgun_rails.git
   revision: de14df178df4000371818254353508c0c284b5d2
   specs:
@@ -85,9 +93,6 @@ GEM
       railties (>= 3.0)
       sass-rails (>= 3.2)
     chronic (0.10.2)
-    ckeditor (4.0.8)
-      mime-types
-      orm_adapter
     coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -216,7 +221,7 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
-    orm_adapter (0.4.0)
+    orm_adapter (0.5.0)
     pg (0.14.1)
     pingr (0.0.3)
     polyglot (0.3.3)
@@ -343,7 +348,7 @@ DEPENDENCIES
   capistrano
   chosen-rails
   chronic
-  ckeditor
+  ckeditor!
   coffee-rails (~> 3.2.1)
   country_select
   devise
