@@ -35,6 +35,7 @@ gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'dragonfly-s3_data_store'
+gem 'rails_12factor'
 
 group :test, :development do
   gem 'figaro'
