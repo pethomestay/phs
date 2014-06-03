@@ -7,13 +7,18 @@ $ ->
       center: 'title',
       right: 'next'
 
-    viewDisplay: (view) ->
-      $('.fc-view').find('td').css('cursor', 'auto')
-      $('.fc-today').css('cursor', 'pointer')
-      $('.fc-today').nextAll('td').css('cursor', 'pointer')
-      $('.fc-future').nextAll('td').css('cursor', 'pointer')
-
     events: "/availability/booking_info"
+
+    eventAfterRender: (event, element, monthView) ->
+      dateString = $.fullCalendar.formatDate(event.start, 'yyyy-MM-dd')
+      $cell = $("td[data-date=" + dateString + "]")
+      if ($cell.hasClass("fc-past") || $cell.hasClass("fc-other-month fc-future"))
+        element.css("opacity", $cell.css("opacity"))
+      if (event.title.match(/unavailable/i) != null)
+        $cell.addClass("unavailable")
+      else if (event.title.match(/booked/i) != null)
+        $cell.css("cursor", "auto")
+
 
     dayClick: (date, allDay, jsEvent, view) ->
       cal_event = ""

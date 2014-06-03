@@ -299,6 +299,7 @@ class User < ActiveRecord::Base
   #TODO move view logic to presenter
   def booking_info_between(start_date, end_date)
     unavailable_dates = self.unavailable_dates.between(start_date, end_date)
+    #TODO change query and write test cases for booking
     bookings = self.bookees.finished_and_host_accepted.where("check_in_date in (?) or check_out_date in (?)", (start_date..end_date).to_a, (start_date..end_date).to_a)
     booked_dates = bookings.collect{ |booking| [booking.check_in_date, booking.check_out_date] }.flatten.compact.uniq
     booking_info = unavailable_dates.collect do |unavailable_date|
