@@ -5,6 +5,7 @@ require 'dragonfly/s3_data_store'
 app = Dragonfly.app(:ckeditor)
 if Rails.env.staging? || Rails.env.production?
   app.configure do
+    plugin :imagemagick
     url_format "/media/:job/:name"
 
     datastore :s3,
