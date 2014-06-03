@@ -8,7 +8,7 @@ Dragonfly.app(:images).configure do
   #protect_from_dos_attacks true
   #secret "31fd103b6f8ef6b912283a6a63ae4e5e42f4e6961150f8aec1d7a5f9d3b36127"
 
-  #url_format "/media/:job/:name"
+  url_format "/media/:job/:name"
 
   datastore :s3,
             :bucket_name => ENV['S3_BUCKET'],
