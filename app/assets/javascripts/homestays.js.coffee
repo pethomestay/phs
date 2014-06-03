@@ -33,3 +33,15 @@ $ ->
 
   if window.location.href.match('homestays') && window.location.href.match('#enquiry')
     $('[data-toggle="modal"]').click()
+
+
+  homestay_id = $("#listing-calendar").data("homestay-id")
+  $("#listing-calendar").fullCalendar
+    header:
+      left: 'prev',
+      center: 'title',
+      right: 'next'
+
+    events: "/homestays/" + homestay_id + "/availability"
+
+

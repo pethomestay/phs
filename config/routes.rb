@@ -17,6 +17,7 @@ PetHomestay::Application.routes.draw do
 	  member do
 		  get 'favourite'
 		  get 'non_favourite'
+      get 'availability'
 	  end
 
 	  collection do
