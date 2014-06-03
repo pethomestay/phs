@@ -5,6 +5,8 @@ require 'dragonfly/s3_data_store'
 app = Dragonfly.app(:ckeditor)
 if Rails.env.staging? || Rails.env.production?
   app.configure do
+    url_format "/media/:job/:name"
+
     datastore :s3,
               :bucket_name => ENV['S3_BUCKET'],
               :access_key_id => ENV['S3_KEY'],
