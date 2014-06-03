@@ -4,6 +4,14 @@ GIT
   specs:
     geocoder (1.1.6)
 
+GIT
+  remote: git://github.com/darmou/ckeditor.git
+  revision: e744bf6334fac1f45180510b2652700e6cfb99fd
+  specs:
+    ckeditor (4.0.11)
+      mime-types
+      orm_adapter (~> 0.5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -77,9 +85,6 @@ GEM
       railties (>= 3.0)
       sass-rails (>= 3.2)
     chronic (0.10.2)
-    ckeditor (4.0.11)
-      mime-types
-      orm_adapter (~> 0.5.0)
     coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -248,6 +253,11 @@ GEM
       activesupport (= 3.2.12)
       bundler (~> 1.0)
       railties (= 3.2.12)
+    rails_12factor (0.0.2)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (3.2.12)
       actionpack (= 3.2.12)
       activesupport (= 3.2.12)
@@ -339,7 +349,7 @@ DEPENDENCIES
   capistrano
   chosen-rails
   chronic
-  ckeditor
+  ckeditor!
   coffee-rails (~> 3.2.1)
   country_select
   devise
@@ -370,6 +380,7 @@ DEPENDENCIES
   pry-stack_explorer
   rack-cache
   rails (= 3.2.12)
+  rails_12factor
   redcarpet
   rest-client (= 1.6.7)
   rspec-rails
