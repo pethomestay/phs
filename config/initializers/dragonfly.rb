@@ -21,6 +21,7 @@ end
 Dragonfly.logger = Rails.logger
 
 # Mount as middleware
+#Rails.application.middleware.insert 1, Dragonfly::Middleware, :images
 Rails.application.middleware.use Dragonfly::Middleware, :images
 
 # Add model functionality
