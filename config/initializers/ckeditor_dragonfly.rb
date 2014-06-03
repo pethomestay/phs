@@ -27,4 +27,5 @@ else
 end
 
 # Insert our Dragonfly "app" into the stack.
-Rails.application.middleware.insert_after Rack::Cache, Dragonfly::Middleware, :ckeditor
+#Rails.application.middleware.insert_after Rack::Cache, Dragonfly::Middleware, :ckeditor
+Rails.application.middleware.use Dragonfly::Middleware, :ckeditor
