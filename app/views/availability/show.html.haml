@@ -13,10 +13,10 @@
   .alert.fade.in.success.hide#calendar_update_alert
     Calendar updated successfully
 
-  #update-calendar
+  #update-calendar.clearfix
     %span.pull-left
       %i Calendar already up to date, but want your profile to show a recent updated time?
-    = link_to 'Update Calendar', "javascript:" , class: 'btn pull-right', id: "update-calendar-btn"
+    = link_to 'My Calendar is Up to Date', "javascript:" , class: 'btn btn-primary pull-right', id: "update-calendar-btn"
   .clear
 
   #calendar
