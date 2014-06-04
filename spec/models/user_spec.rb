@@ -144,14 +144,15 @@ describe User do
 
     before do
       2.times{ |index| FactoryGirl.create(:unavailable_date, date: Date.today + index.day, user: user) }
+      2.times{ |index| FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: user, check_in_date: Date.today + (index + 2), check_out_date: Date.today + (index + 2))}
     end
 
     context "when end date is greater than start date" do
 
-      let(:booking_info){ user.booking_info_between(Date.today - 1.day, Date.today + 2.days) }
+      let(:booking_info){ user.booking_info_between(Date.today - 1.day, Date.today + 4.days) }
     
       it "should return info of all dates between start and end dates" do
-        expect(booking_info.count).to eq(4)
+        expect(booking_info.count).to eq(6)
       end
 
       it "should return users unavailable dates info between start and end dates" do
@@ -160,14 +161,12 @@ describe User do
           id: first_unavailable_date.id,
           title: "Unavailable",
           start: first_unavailable_date.date.strftime("%Y-%m-%d"),
-          end: first_unavailable_date.date.strftime("%Y-%m-%d")
         })
         last_unavailable_date = user.unavailable_dates.first
         expect(booking_info).to include({
           id: last_unavailable_date.id,
           title: "Unavailable",
           start: last_unavailable_date.date.strftime("%Y-%m-%d"),
-          end: last_unavailable_date.date.strftime("%Y-%m-%d")
         })
       end
 
@@ -176,13 +175,18 @@ describe User do
         expect(booking_info).to include({
           title: "Available",
           start: first_available_date.strftime("%Y-%m-%d"),
-          end: first_available_date.strftime("%Y-%m-%d")
         })
-        last_available_date = Date.today + 2
+        last_available_date = Date.today + 4
         expect(booking_info).to include({
           title: "Available",
           start: last_available_date.strftime("%Y-%m-%d"),
-          end: last_available_date.strftime("%Y-%m-%d")
+        })
+      end
+
+      it "should return users booked dates in full calendar event format" do
+        expect(booking_info).to include({
+          title: "Booked",
+          start: (Date.today + 2).strftime("%Y-%m-%d")
         })
       end
 
@@ -197,6 +201,63 @@ describe User do
       end
 
     end
+
+   describe "#unavailable_dates_info" do
+     it "should return unavilable dates in fullcalendar event format" do
+       date = FactoryGirl.create(:unavailable_date, date: Date.today, user: confirmed_user)
+       expect(confirmed_user.unavailable_dates_info(Date.today, Date.today)).to eq([{ id: date.id, title: "Unavailable", start: Date.today.strftime("%Y-%m-%d") }])
+     end
+   end
+
+   describe "#booked_dates" do
+
+     let(:booking_date_ranges){ 
+       [
+         [(Date.today - 1), (Date.today + 1)],
+         [(Date.today + 3), (Date.today + 7)],
+         [(Date.today + 2), (Date.today + 8)]
+       ]
+     }
+     let(:all_booked_dates){ 
+       booking_date_ranges.collect{ |date_arr| (date_arr[0]..(date_arr[1] - 1)).to_a }.flatten.uniq
+     }
+
+     before do
+       3.times.collect{ |index|
+         FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: booking_date_ranges[index][0], check_out_date: booking_date_ranges[index][1])
+       }
+     end
+
+     context "when start_date is greater than check in date of any booking" do
+       it "should return all booked dates for the user within the passed range" do
+         b_dates = confirmed_user.booked_dates_between(Date.today, Date.today + 30)
+         expect(b_dates).to eq(all_booked_dates - [Date.today - 1])
+       end
+     end
+
+     context "when end_date  is lesser than check out date of any booking" do
+       it "should return all booked dates for the user within the passed range" do
+         b_dates = confirmed_user.booked_dates_between(Date.today - 2, Date.today + 5)
+         expect(b_dates).to eq(all_booked_dates - [Date.today + 6, Date.today + 7] )
+       end
+     end
+
+     context "when start_date < check_in_date and end_date > check_out_date" do
+       it "should return all booked dates for the user within the passed range" do
+         b_dates = confirmed_user.booked_dates_between(Date.today - 2, Date.today + 30)
+         expect(b_dates).to eq(all_booked_dates)
+       end
+     end
+
+   end
+
+   describe "#booked_dates_info" do
+     it "should return booked dates in fullcalendar event format" do
+       FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: Date.today, check_out_date: Date.today)
+       expected_result = [{ title: "Booked", start: Date.today.strftime("%Y-%m-%d") }]
+       expect(confirmed_user.booked_dates_info((Date.today - 1), (Date.today + 1))).to eq(expected_result)
+     end
+   end
 
   end
 
