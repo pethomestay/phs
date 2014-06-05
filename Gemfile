@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
+gem "strong_parameters"
 gem 'oauth2'
 gem 'redcarpet'
 gem 'blogit'
@@ -35,9 +36,10 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
+gem 'figaro', :github=>"laserlemon/figaro"
+
 
 group :test, :development do
-  gem 'figaro'
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
