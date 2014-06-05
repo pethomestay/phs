@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe Booking do
 	it { should belong_to :booker }
@@ -50,7 +51,77 @@ describe Booking do
 				Mailbox.all.should be_blank
 			end
 		end
-	end
+  end
+
+  # def actual_status
+  #   if self.status == BOOKING_STATUS_UNFINISHED
+  #     BOOKING_STATUS_UNFINISHED
+  #   elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
+  #     'awaiting host response'
+  #   elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
+  #     'host accepted but not paid'
+  #   elsif self.status == BOOKING_STATUS_REJECTED
+  #     'host rejected'
+  #   elsif self.status == BOOKING_STATUS_HOST_PAID
+  #     'host has been paid'
+  #   else
+  #     'invalid booking state'
+  #   end
+  # end
+
+
+  describe '#human_state_name' do #was actual_status
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'when a booking is finished' do
+      before {
+        booking.payment_check_succeed
+      }
+
+      it 'should return awaiting host response' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("awaiting host response")
+      end
+    end
+
+    context 'when a booking is unfinished' do
+      it 'should return "unfinished"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("unfinished")
+      end
+    end
+
+    context 'when a booking is finished and the host has accepted' do
+      before {
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+      }
+      it 'should return "host accepted but not paid"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host accepted but not paid")
+      end
+    end
+
+    context 'when a booking is rejected' do
+      before {
+        booking.payment_check_succeed
+        booking.host_rejects_booking
+        booking.update_attributes owner_accepted: true, host_accepted: false
+      }
+      it 'should return "host rejected"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host rejected")
+      end
+    end
+
+    context 'when a booking has been paid' do
+      before {
+        booking.update_attributes owner_accepted: true, host_accepted: true, state: :host_paid
+      }
+      it 'should return "host has been paid"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host has been paid")
+      end
+    end
+
+  end
+
 
 	describe '#message_update' do
 		subject { booking }
@@ -200,7 +271,10 @@ describe Booking do
 		end
 
 		context 'when current user is bookee and guest made booking for him' do
-			before { booking.update_attributes owner_accepted: true, status: BOOKING_STATUS_FINISHED }
+			before {
+        booking.payment_check_succeed
+        booking.update_attributes owner_accepted: true
+      }
 			it 'should return true' do
 				subject.host_view?(subject.bookee).should be_true
 			end
@@ -211,6 +285,9 @@ describe Booking do
 		subject { booking }
 		let(:booking) { FactoryGirl.create :booking }
 		context 'when current user is bookee i.e. host' do
+      before {
+        booking.payment_check_succeed
+      }
 			it 'should return false' do
 				subject.owner_view?(subject.bookee).should be_false
 			end
@@ -230,7 +307,7 @@ describe Booking do
 		context 'when booking is finished' do
 			before do
 				booking.owner_accepted = true
-				booking.status = BOOKING_STATUS_FINISHED
+				booking.state = :finished
 			end
 
 			it 'should return false' do
@@ -290,7 +367,8 @@ describe Booking do
 
 		context 'when there is a notification' do
 			before do
-				booking.update_attributes status: BOOKING_STATUS_FINISHED, owner_accepted: true
+        booking.payment_check_succeed
+        booking.update_attributes owner_accepted: true
 				booking.homestay = FactoryGirl.create :homestay, user: booking.bookee
 				booking.save
 				booking.bookee.notifications?.should be_true
@@ -330,7 +408,12 @@ describe Booking do
 
 		context 'when its called in a host view' do
 			context 'when booking is finished' do
-				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+
+				before {
+          booking.payment_check_succeed
+          booking.host_accepts_booking #state should be finished_host_accepted
+          booking.update_attributes host_accepted: true, owner_accepted: true
+        }
 				it 'should complete the payment' do
 					subject.transaction.stub(:complete_payment).and_return true
 					subject.complete_transaction(subject.bookee).should be_true
@@ -346,7 +429,10 @@ describe Booking do
 
 		context 'when its called in an owner\'s view' do
 			context 'when booking is finished' do
-				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+				before {
+          booking.payment_check_succeed
+          booking.host_accepts_booking #state should be finished_host_accepted
+          booking.update_attributes host_accepted: true, owner_accepted: true }
 
 				it 'should remove the notification' do
 					subject.complete_transaction(subject.booker).should be_true
@@ -403,7 +489,9 @@ describe Booking do
 
 			context 'when status is rejected' do
 				before {
-					booking.status = BOOKING_STATUS_REJECTED
+          booking.payment_check_succeed
+          booking.update_attributes host_accepted: false, owner_accepted: true
+					booking.host_rejects_booking
 					booking.host_accepted = false
 				}
 
@@ -434,7 +522,8 @@ describe Booking do
 
 			context 'when status is rejected' do
 				before {
-					booking.status = BOOKING_STATUS_REJECTED
+          booking.payment_check_succeed
+					booking.host_rejects_booking
 					booking.host_accepted = false
 				}
 

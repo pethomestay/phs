@@ -6,9 +6,9 @@ class Booking < ActiveRecord::Base
 	belongs_to :homestay
 	belongs_to :enquiry
 
-  state_machine :state, :initial => :booking_created
+  @@valid_host_view_booking_states_list  = [:finished, :finished_host_accepted, :host_paid, :rejected, :host_requested_cancellation, :host_cancelled, :guest_cancelled]
 
-	has_one :transaction, dependent: :destroy
+  has_one :transaction, dependent: :destroy
 	has_one :mailbox, dependent: :destroy
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
@@ -16,7 +16,6 @@ class Booking < ActiveRecord::Base
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
 
-	scope :unfinished, with_state(:booking_created)
 
 	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0)
 
@@ -26,13 +25,13 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
-	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED).order('created_at DESC')
+  scope :unfinished, where('state IN (?)', [:unfinished, :payment_authorisation_pending]).order('created_at DESC')
 
-	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
-			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
+  scope :valid_host_view_booking_states, where('state IN (?)', @@valid_host_view_booking_states_list).order('created_at DESC')
 
-	scope :finished_or_host_accepted, where('status IN (?)', [BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID])
-			.order('created_at DESC')
+  scope :finished_and_host_accepted_or_host_paid, where('state IN (?)', [:finished_host_accepted, :host_paid]).order('created_at DESC')
+
+	scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
 	after_create :create_mailbox
 
@@ -46,7 +45,12 @@ class Booking < ActiveRecord::Base
 		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
 		                           host_mailbox_id: self.bookee_id
 		mailbox.reload
-	end
+  end
+
+
+  def is_host_view_valid?
+    self.state?(@@valid_host_view_booking_states_list)
+  end
 
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
@@ -67,38 +71,52 @@ class Booking < ActiveRecord::Base
 			    host.name.capitalize, booking.homestay.title, host.complete_address, booking.number_of_nights,
 			    booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
 			    "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
-			    (booking.status?(:host_paid)) ? 'Paid' : 'Not Paid'
+			    (booking.state?(:host_paid)) ? 'Paid' : 'Not Paid'
 				]
 			end
 		end
   end
 
-  event :host_paid do
-    transition :finished => :host_paid
+  state_machine :initial => :unfinished do
+    event :host_paid do
+      transition :finished => :host_paid
+    end
+
+    event :host_rejects_booking do
+      transition :finished => :rejected
+    end
+
+    event :guest_cancels_booking do
+      transition [:unfinished, :finished,  :finished_host_accepted, :payment_authorisation_pending] => :guest_cancelled
+    end
+
+    event :payment_check_succeed do
+      transition [:unfinished, :payment_authorisation_pending] => :finished
+    end
+
+    event :payment_check_fail do
+      transition :unfinished => :payment_authorisation_pending
+    end
+
+    event :host_requested_cancellation do
+      transition [:finished,  :finished_host_accepted] => :host_requested_cancellation
+    end
+
+    event :admin_cancel_booking do
+      transition :host_requested_cancellation => :host_cancelled
+    end
+
+    event :host_accepts_booking  do
+      transition :finished => :finished_host_accepted
+    end
   end
 
-  event :host_rejects_booking do
-    transaction :finished => :rejected
-  end
-
-  event :guest_cancels_booking do
-    transaction [:unfinished, :finished, :payment_authorisation_pending] => :guest_cancelled
-  end
-
-  event :payment_check_succeed do
-    transaction :unfinished => :finished
-  end
-
-  event :payment_check_fail do
-    transaction :unfinished => :payment_authorisation_pending
-  end
-
-  event :admin_cancel_booking do
-    transaction :host_requested_cancellation => :host_cancelled
+  def self.valid_host_view_booking_states_list
+    [:finished, :finished_host_accepted, :host_paid, :rejected, :host_requested_cancellation, :host_cancelled, :guest_cancelled]
   end
 
 	def host_view?(user)
-		self.owner_accepted? && self.status == BOOKING_STATUS_FINISHED && user == self.bookee
+		self.owner_accepted? && (self.state?(:finished) || self.state?(:finished_host_accepted)) && user == self.bookee
 	end
 
 	def owner_view?(user)
@@ -115,6 +133,7 @@ class Booking < ActiveRecord::Base
 			self.host_accepted = false
 		else
 			self.response_id = 5
+      self.host_accepts_booking #trigger host accepts booking event
 			self.host_accepted = true
 		end
 		self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
@@ -133,7 +152,7 @@ class Booking < ActiveRecord::Base
 
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
-			self.status = BOOKING_STATUS_REJECTED
+      self.host_rejects_booking
 			self.save!
 			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
@@ -271,28 +290,13 @@ class Booking < ActiveRecord::Base
 	end
 
 	def host_booking_status
-		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
+		pending_or_rejected = (self.state?(:rejected)) ? 'Rejected' : 'Pending'
 		"Booking $#{self.host_payout} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
 	def guest_booking_status
-		pending_or_rejected = (status == BOOKING_STATUS_REJECTED) ? 'Rejected' : 'Pending'
+		pending_or_rejected = (self.state?(:rejected)) ? 'Rejected' : 'Pending'
 		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
-	def actual_status
-		if self.status == BOOKING_STATUS_UNFINISHED
-			BOOKING_STATUS_UNFINISHED
-		elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
-			'awaiting host response'
-		elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
-			'host accepted but not paid'
-		elsif self.status == BOOKING_STATUS_REJECTED
-			'host rejected'
-		elsif self.status == BOOKING_STATUS_HOST_PAID
-			'host has been paid'
-		else
-			'invalid booking state'
-		end
-	end
 end

@@ -4,7 +4,7 @@ class BookingsController < ApplicationController
 	before_filter :secure_pay_response, only: :result
 
 	def index
-		@bookings = current_user.bookees
+		@bookings = current_user.bookees.valid_host_view_booking_states
 	end
 
 	def new
@@ -70,7 +70,7 @@ class BookingsController < ApplicationController
 	end
 
 	def trips
-		@bookings = current_user.bookers
+		@bookings = current_user.bookers.order('created_at DESC')
 	end
 
 	def admin_view

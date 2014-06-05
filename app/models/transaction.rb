@@ -53,7 +53,7 @@ class Transaction < ActiveRecord::Base
 
 	def finish_booking
 		self.booking.owner_accepted = true
-		self.booking.status = BOOKING_STATUS_FINISHED
+    self.booking.payment_check_succeed #trigger event
 		enquiry = self.booking.enquiry
 		unless enquiry.blank?
 			enquiry.confirmed = true
@@ -173,6 +173,7 @@ class Transaction < ActiveRecord::Base
 	end
 
 	def confirmed_by_host
+    self.booking.host_accepts_booking #trigger host accepts booking event
 		self.booking.host_accepted = true
 		self.booking.save!
 		self.booking
@@ -180,7 +181,6 @@ class Transaction < ActiveRecord::Base
 
 	def booking_status
 		b = self.booking
-		b_status = b.status
-		b_status == BOOKING_STATUS_UNFINISHED ? BOOKING_STATUS_UNFINISHED : (b.host_accepted ? 'ready to be completed' : 'awaiting host response')
+		b.state?(:unfinished) ? :unfinished : Booking.human_state_name(b.state.to_sym)
 	end
 end

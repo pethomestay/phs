@@ -21,6 +21,9 @@
 # Ignore dragonfly images
 public/system/dragonfly
 
+# Ignore dragonfly image uploades
+public/uploads
+
 # Ignore sass cache
 .sass-cache/
 

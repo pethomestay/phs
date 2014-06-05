@@ -2,7 +2,7 @@ class Admin::BookingsController < Admin::AdminController
 	respond_to :html
 
 	def index
-		respond_with(:admin, @bookings = Booking.finished_and_host_accepted)
+		respond_with(:admin, @bookings = Booking.with_state(:finished_host_accepted).all(:order => 'created_at DESC'))
 	end
 
 	def reconciliations_file

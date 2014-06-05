@@ -15,7 +15,7 @@
   %tbody
     - @transactions.each do |transaction|
       - booking = transaction.booking
-      - booking_status = booking.actual_status
+      - booking_status = Booking.human_state_name(booking.state.to_sym)
       %tr{ class: booking_status == 'host has been paid' ? 'completed' : '' }
         - guest = booking.booker
         - host = booking.bookee

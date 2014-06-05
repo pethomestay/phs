@@ -29,7 +29,10 @@
           %br
           - if current_user == booking.booker
             %strong Amount Paid:
-            = " $#{booking.actual_amount}"
+            - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
+              = " $#{booking.actual_amount}"
+            - else
+              = " $0.00" #payment not processed yet
           - else
             %strong Payout:
             = " $#{booking.host_payout}"
@@ -38,8 +41,12 @@
         %span.confirmed-block
           = booking.host_accepted ? 'Confirmed' : 'Unconfirmed'
         %br
-        - if current_user == booking.booker
-          = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
-        - else
-          = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
+
+          - if current_user == booking.booker
+            = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
+          - else
+            = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        - elsif current_user == booking.booker
+          = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary'
 

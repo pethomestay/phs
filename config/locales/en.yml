@@ -10,4 +10,23 @@ en:
     formats:
       default: "%e %b, %Y %H:%M"
 
-
+  activerecord:
+    state_machines:
+      booking: # model name
+        states:
+          rejected: 'host rejected'
+          finished: 'awaiting host response'
+          finished_host_accepted: 'host accepted but not paid'
+          unfinished: 'unfinished'
+          host_paid: 'host has been paid'
+          payment_authorisation_pending: 'payment authorisation pending'
+          guest_cancelled: 'guest cancelled'
+          host_requested_cancellation: 'host requested cancellation'
+          host_cancelled: 'host cancelled'
+        events: # you can also define translations for the events
+          host_paid: 'host paid'
+          host_rejects_booking: 'host rejects booking'
+          guest_cancels_booking: 'guest cancels booking'
+          payment_check_succeed: 'payment check succeed'
+          payment_check_fail: 'payment check fail'
+          admin_cancel_booking: 'admin cancel booking'
