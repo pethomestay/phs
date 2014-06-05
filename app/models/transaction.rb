@@ -181,6 +181,6 @@ class Transaction < ActiveRecord::Base
 
 	def booking_status
 		b = self.booking
-		b.state?(:unfinished) ? :unfinished : Booking.human_state_name(b.state.to_sym)
+		b.state?(:unfinished) ? 'unfinished' : Booking.human_state_name(b.state)
 	end
 end
