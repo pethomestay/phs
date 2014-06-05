@@ -17,6 +17,7 @@ gem 'omniauth-facebook'
 gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
+gem "legato"
 
 gem 'will_paginate'
 gem 'bootstrap-sass'
