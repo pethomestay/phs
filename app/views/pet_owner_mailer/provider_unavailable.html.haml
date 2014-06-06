@@ -13,7 +13,7 @@
   = @homestay.title
   %br
   Date requested:
-  = @enquiry.check_in_date.to_formatted_s(:day_and_month)
+  = date_day_monthname(@enquiry.check_in_date)
 
 %p.article-content Try asking another couple of providers, or expanding your search to a wider area.
 

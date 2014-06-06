@@ -12,9 +12,9 @@
   %dt Created
   %dd= l @enquiry.created_at
   %dt Check in date/time
-  %dd= @enquiry.check_in_date.to_s
+  %dd= date_day_month_year_format(@enquiry.check_in_date)
   %dt Check out date/time
-  %dd= @enquiry.check_out_date.to_s
+  %dd= date_day_month_year_format(@enquiry.check_out_date)
   %dt Duration
   %dd= @enquiry.duration_name
   %dt Response
