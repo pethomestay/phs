@@ -111,6 +111,14 @@ class HomestaysController < ApplicationController
 	  @homestays = current_user.homestays
   end
 
+  def availability
+    homestay = Homestay.find(params[:id])
+    start_date = Time.at(params[:start].to_i).to_date
+    end_date  = Time.at(params[:end].to_i).to_date
+    info = homestay.user.booking_info_between(start_date, end_date)
+    render json: info.to_json, status: 200
+  end
+
   private
   def find_homestay
     @homestay = current_user.homestay

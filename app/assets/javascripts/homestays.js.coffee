@@ -33,3 +33,28 @@ $ ->
 
   if window.location.href.match('homestays') && window.location.href.match('#enquiry')
     $('[data-toggle="modal"]').click()
+
+
+  homestay_id = $("#listing-calendar").data("homestay-id")
+  $("#listing-calendar").fullCalendar
+    height: 400
+    header:
+      left: 'prev',
+      center: 'title',
+      right: 'next'
+
+    events: "/homestays/" + homestay_id + "/availability"
+
+    eventAfterRender: (event, element, monthView) ->
+     dateString = $.fullCalendar.formatDate(event.start, 'yyyy-MM-dd')
+     $cell = $("td[data-date=" + dateString + "]")
+     if ($cell.hasClass("fc-past") || $cell.hasClass("fc-other-month fc-future"))
+       element.css("opacity", $cell.css("opacity"))
+     if (event.title.match(/unavailable/i) != null)
+       $cell.addClass("unavailable")
+       
+       
+
+
+
+

@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
+gem "strong_parameters"
 gem 'oauth2'
 gem 'redcarpet'
 gem 'blogit'
+gem 'fog', '~>1.2'
 gem 'ckeditor'
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.18'
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -23,9 +25,9 @@ gem 'country_select' #Country select
 gem 'awesome_nested_fields'
 gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
 
-gem 'dragonfly'
+gem 'dragonfly', '~>1.0.5'
+gem 'dragonfly-s3_data_store'
 gem 'rack-cache'
-gem 'fog'
 gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'net-scp', '1.0.4'
@@ -34,10 +36,10 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
-gem 'state_machine'
+gem 'figaro', :github=>"laserlemon/figaro"
+
 
 group :test, :development do
-  gem 'figaro'
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
