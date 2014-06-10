@@ -57,11 +57,11 @@ describe Homestay do
     let(:start_date){ Date.today }
     let(:end_date){ Date.today }
 
-    subject{ homestays; Homestay.available_between(start_date, end_date) }
+    subject{ homestays; Homestay.available_between(start_date, end_date).to_a }
 
     context "when none of the users have unavailalbe dates" do
       it "should return all homestays" do
-        expect(subject.to_a).to eq(homestays)
+        expect(subject).to eq(homestays)
       end
     end
 
@@ -69,7 +69,7 @@ describe Homestay do
       it "should exlclude that user's home stay" do
         unavailable_user = users.first
         unavailable_user.unavailable_dates.create(date: Date.today)
-        expect(subject.to_a).not_to include(unavailable_user.homestay)
+        expect(subject).not_to include(unavailable_user.homestay)
       end
     end
 
@@ -79,7 +79,7 @@ describe Homestay do
 
       it "should not return any homestays" do
         users.each { |user| user.unavailable_dates.create(date: (Date.today + 1)) }
-        expect(subject.to_a).to be_blank
+        expect(subject).to be_blank
       end
     end
   end

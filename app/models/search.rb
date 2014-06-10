@@ -49,16 +49,16 @@ class Search
 
   def perform
     perform_geocode unless @latitude.present? && @longitude.present?
-    unless sort_by == 'average_rating'
+    if sort_by != 'average_rating'
       homestays = Homestay.active.near([@latitude, @longitude], within, order: sort_by)
     else
-      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC').includes(:user)
+      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC')
     end
     if self.check_in_date.present?
       check_out_date = self.check_out_date || self.check_in_date + 1.day
       homestays = homestays.available_between(check_in_date, check_out_date)
     end
-    homestays
+    homestays.includes(:user)
   end
 
   def perform_geocode
