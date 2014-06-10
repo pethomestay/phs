@@ -32,6 +32,26 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
+  Geocoder.configure(:lookup => :test)
+
+  Geocoder::Lookup::Test.add_stub(
+    "Melbourne, MB", [
+      {
+        'latitude'     => 40.7143528,
+        'longitude'    => -74.0059731,
+        'address'      => 'Melbourne, AU',
+        'state'        => 'Melbourne',
+        'state_code'   => 'MB',
+        'country'      => 'Australia',
+        'country_code' => 'Au'
+      }
+    ]
+  )
+
+  config.before(:each) do
+    Homestay.any_instance.stub(:geocoding_address).and_return("Melbourne, MB")
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

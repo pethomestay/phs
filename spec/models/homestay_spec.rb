@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Homestay do
+
   it { should belong_to :user }
 
   it { should have_many :enquiries }
@@ -48,4 +49,43 @@ describe Homestay do
       end
     end
   end
+
+  describe ".available_between" do
+
+    let(:users){ 5.times.collect { FactoryGirl.create(:user_with_homestay) } }
+    let(:homestays){ users.map(&:homestay) }
+    let(:start_date){ Date.today }
+    let(:end_date){ Date.today }
+
+    subject{ homestays; Homestay.available_between(start_date, end_date) }
+
+    context "when none of the users have unavailalbe dates" do
+      it "should return all homestays" do
+        expect(subject.to_a).to eq(homestays)
+      end
+    end
+
+    context "when a user is unavailable on one or more days between the passed dates" do
+      it "should exlclude that user's home stay" do
+        unavailable_user = users.first
+        unavailable_user.unavailable_dates.create(date: Date.today)
+        expect(subject.to_a).not_to include(unavailable_user.homestay)
+      end
+    end
+
+    context "when every user is unavailable between one or more days between the passed dates" do
+      
+      let(:end_date){ Date.today + 2.day }
+
+      it "should not return any homestays" do
+        users.each { |user| user.unavailable_dates.create(date: (Date.today + 1)) }
+        expect(subject.to_a).to be_blank
+      end
+    end
+  end
+
+  describe ".not_booked_between" do
+    pending "add not booked date query for search after state machine is complete"
+  end
+
 end

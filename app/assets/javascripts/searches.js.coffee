@@ -16,3 +16,5 @@ $ ->
 
   $(".sidebar-search input[type='checkbox']").change ->
     $(this).closest('form')[0].submit()
+
+  $("#check_in_datepicker, #check_out_datepicker").datepicker format: "DD, d MM, yyyy"
