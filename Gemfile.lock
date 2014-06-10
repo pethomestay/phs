@@ -12,20 +12,27 @@ GIT
       rails (>= 3.2.13)
       rest-client (~> 1.6.7)
 
+GIT
+  remote: git://github.com/laserlemon/figaro.git
+  revision: ae200e44e8f2770ce1037753865985b02ee0048f
+  specs:
+    figaro (1.0.0.rc1)
+      thor (~> 0.14)
+
 GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    actionmailer (3.2.13)
-      actionpack (= 3.2.13)
-      mail (~> 2.4.4)
+    actionmailer (3.2.18)
+      actionpack (= 3.2.18)
+      mail (~> 2.5.4)
     actionmailer_inline_css (1.5.2)
       actionmailer (>= 3.0.0)
       nokogiri (>= 1.4.4)
       premailer (>= 1.7.1)
-    actionpack (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    actionpack (3.2.18)
+      activemodel (= 3.2.18)
+      activesupport (= 3.2.18)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -33,26 +40,26 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    activemodel (3.2.13)
-      activesupport (= 3.2.13)
+    activemodel (3.2.18)
+      activesupport (= 3.2.18)
       builder (~> 3.0.0)
-    activerecord (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    activerecord (3.2.18)
+      activemodel (= 3.2.18)
+      activesupport (= 3.2.18)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
-    activesupport (3.2.13)
-      i18n (~> 0.6)
+    activeresource (3.2.18)
+      activemodel (= 3.2.18)
+      activesupport (= 3.2.18)
+    activesupport (3.2.18)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     acts-as-taggable-on (3.0.1)
       rails (>= 3, < 5)
     addressable (2.3.3)
     albino (1.3.3)
       posix-spawn (>= 0.3.6)
-    arel (3.0.2)
+    arel (3.0.3)
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
     bcrypt-ruby (3.0.1)
@@ -85,9 +92,9 @@ GEM
       railties (>= 3.0)
       sass-rails (>= 3.2)
     chronic (0.10.2)
-    ckeditor (4.0.8)
+    ckeditor (4.0.11)
       mime-types
-      orm_adapter
+      orm_adapter (~> 0.5.0)
     coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -114,12 +121,15 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.1)
-    dragonfly (0.9.14)
+    dragonfly (1.0.5)
       multi_json (~> 1.0)
       rack
+    dragonfly-s3_data_store (1.0.4)
+      dragonfly (~> 1.0)
+      fog
     erubis (2.7.0)
     eventmachine (1.0.3)
-    excon (0.9.4)
+    excon (0.34.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -130,12 +140,9 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffaker (1.15.0)
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
     fog (1.9.0)
       builder
-      excon (~> 0.9.4)
+      excon (~> 0.14)
       formatador (~> 0.2.0)
       mime-types
       multi_json (~> 1.0)
@@ -143,7 +150,7 @@ GEM
       net-ssh (>= 2.1.3)
       nokogiri (~> 1.5.0)
       ruby-hmac
-    formatador (0.2.4)
+    formatador (0.2.5)
     gmaps4rails (1.5.6)
     haml (4.0.0)
       tilt
@@ -154,9 +161,9 @@ GEM
       railties (>= 3.1, < 4.1)
     hashie (2.0.5)
     highline (1.6.16)
-    hike (1.2.1)
+    hike (1.2.3)
     htmlentities (4.3.1)
-    i18n (0.6.4)
+    i18n (0.6.9)
     journey (1.0.4)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -164,7 +171,7 @@ GEM
     jquery-ui-rails (4.0.2)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.7.7)
+    json (1.8.1)
     jwt (0.1.11)
       multi_json (>= 1.5)
     kaminari (0.15.1)
@@ -176,23 +183,22 @@ GEM
       faraday
       multi_json
     libv8 (3.16.14.3)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     method_source (0.8.2)
-    mime-types (1.21)
+    mime-types (1.25.1)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
-    multi_json (1.8.2)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.1.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.6.6)
+    net-ssh (2.9.1)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     newrelic_rpm (3.5.8.72)
@@ -213,10 +219,10 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
-    orm_adapter (0.4.0)
+    orm_adapter (0.5.0)
     pg (0.14.1)
     pingr (0.0.3)
-    polyglot (0.3.3)
+    polyglot (0.3.5)
     posix-spawn (0.3.8)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
@@ -237,32 +243,27 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-ssl (1.3.3)
+    rack-ssl (1.3.4)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.13)
-      actionmailer (= 3.2.13)
-      actionpack (= 3.2.13)
-      activerecord (= 3.2.13)
-      activeresource (= 3.2.13)
-      activesupport (= 3.2.13)
+    rails (3.2.18)
+      actionmailer (= 3.2.18)
+      actionpack (= 3.2.18)
+      activerecord (= 3.2.18)
+      activeresource (= 3.2.18)
+      activesupport (= 3.2.18)
       bundler (~> 1.0)
-      railties (= 3.2.13)
-    rails_12factor (0.0.2)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.2)
-    rails_stdout_logging (0.0.3)
-    railties (3.2.13)
-      actionpack (= 3.2.13)
-      activesupport (= 3.2.13)
+      railties (= 3.2.18)
+    railties (3.2.18)
+      actionpack (= 3.2.18)
+      activesupport (= 3.2.18)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.12.0)
-    rake (10.0.3)
+    rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
     redcarpet (3.0.0)
@@ -302,6 +303,11 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    strong_parameters (0.2.3)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
     sucker_punch (1.0.5)
       celluloid (~> 0.15.2)
     therubyracer (0.12.1)
@@ -311,14 +317,14 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
-    thor (0.17.0)
-    tilt (1.3.6)
+    thor (0.19.1)
+    tilt (1.4.1)
     timecop (0.5.9.2)
     timers (1.1.0)
-    treetop (1.4.12)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.37)
+    tzinfo (0.3.39)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -349,11 +355,12 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   country_select
   devise
-  dragonfly
+  dragonfly (~> 1.0.5)
+  dragonfly-s3_data_store
   factory_girl_rails
   ffaker
-  figaro
-  fog
+  figaro!
+  fog (~> 1.2)
   geocoder!
   gmaps4rails
   haml-rails
@@ -373,8 +380,7 @@ DEPENDENCIES
   pry-remote
   pry-stack_explorer
   rack-cache
-  rails (= 3.2.13)
-  rails_12factor
+  rails (= 3.2.18)
   redcarpet
   rest-client (= 1.6.7)
   rspec-rails
@@ -382,6 +388,7 @@ DEPENDENCIES
   shoulda-matchers (~> 1.4.2)
   simple_form
   simplecov
+  strong_parameters
   sucker_punch
   therubyracer (~> 0.12.1)
   thin

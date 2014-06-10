@@ -1,0 +1,134 @@
+/*!
+ * FullCalendar v1.6.4 Print Stylesheet
+ * Docs & License: http://arshaw.com/fullcalendar/
+ * (c) 2013 Adam Shaw
+ */
+
+/*
+ * Include this stylesheet on your page to get a more printer-friendly calendar.
+ * When including this stylesheet, use the media='print' attribute of the <link> tag.
+ * Make sure to include this stylesheet IN ADDITION to the regular fullcalendar.css.
+ */
+ 
+ 
+ /* Events
+-----------------------------------------------------*/
+
+.fc-event {
+	background: none;
+	color: #000 !important;
+  border: none;
+  text-align: center;
+}
+
+.fc-event-title {
+  color: #888;
+}
+
+	
+/* for vertical events */
+	
+.fc-event-bg {
+	display: none !important;
+	}
+	
+.fc-event .ui-resizable-handle {
+	display: none !important;
+	}
+
+.fc{
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 2px #ccc;
+  padding: 10px 5px;
+  margin-bottom: 10px;
+  background-color: #fafafa;
+  color: #666 !important;
+  border-radius: 4px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.fc-button{
+  padding: 0 .4em !important;
+}
+
+.fc table {
+	border: none
+}
+
+.fc-border-separate {
+    position: relative;
+    z-index: 10;
+}
+
+.fc-week td{
+  border: none;
+}
+
+.fc-first th{
+  border: none;
+}
+
+.fc-today{
+  background: none;
+}
+
+.fc-day{
+  background: #fafafa;
+  margin: 4px 5px;
+  opacity: 0.6;
+}
+
+.fc-day div:first-child{
+  background: #F0A269;
+  margin:5px;
+  border-radius: 4px;
+}
+
+.unavailable div:first-child{
+  background: #A3A09E;
+}
+
+.fc-other-month.fc-future{
+  opacity: 0.3;
+}
+
+.fc-past {
+  opacity: 0.3;
+}
+
+.fc-grid .fc-other-month .fc-day-number {
+  opacity: 1.0 !important;
+}
+	
+.fc-text-arrow{
+  color: #666;
+}
+
+.fc-event-title{
+  color: #ea7a28;
+  text-transform:uppercase;
+  font-size: 0.8em !important;
+}
+
+/* overrides for my account calendar */
+
+#calendar .fc-day div:first-child{
+  min-height: 30px !important;
+}
+
+#calendar .fc-today, #calendar .fc-future{
+  cursor: pointer;
+}
+
+#calendar .fc-today:hover div:first-child, #calendar .fc-future:hover div:first-child{
+  background: #000;
+}
+
+/* overrides for listing calendar */
+
+#listing-calendar .fc-button{
+  padding: 0 .3em !important
+}
+
+
+	
