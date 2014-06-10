@@ -10,6 +10,12 @@ en:
     formats:
       default: "%e %b, %Y %H:%M"
 
+  unavailable_date:
+    invalid_date: "is not valid"
+    successfully_created: "Successfully Created"
+    successfully_destroyed: "Successfully Destroyed"
+    not_authorized: "You are not authorized"
+
   activerecord:
     state_machines:
       booking: # model name
