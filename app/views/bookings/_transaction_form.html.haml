@@ -1,3 +1,10 @@
+:javascript
+  $(document).ready(function() {
+      $('#booking-form').on('submit', function(e){
+        $.post( "#{book_reservation_booking_path(@booking)}", $( "#booking-form" ).serialize(), function(data) {
+      });
+    });
+  });
 - url = current_user.payor? ? @transaction : ENV['TRANSACTION_POST_ACTION']
 = simple_form_for @transaction, url: url, html: { id: 'booking-form', class: 'form-horizontal payment_form' } do |f|
   = f.input_field :eps_merchant, type: :hidden, name: 'EPS_MERCHANT', value: ENV['MERCHANT_ID']

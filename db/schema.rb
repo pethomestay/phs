@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20140604010907) do
     t.float    "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
-    t.string   "state",            :default => "unfinished"
+    t.string   "status",           :default => "unfinished"
     t.text     "response_message"
     t.integer  "response_id",      :default => 0
     t.datetime "created_at",                                 :null => false

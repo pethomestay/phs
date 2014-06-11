@@ -20,7 +20,7 @@ class BookingsController < ApplicationController
 		else
 			return redirect_to host_confirm_booking_path(@booking)
 		end
-	end
+  end
 
 	def show
 		@booking = Booking.find(params[:id])
@@ -39,7 +39,45 @@ class BookingsController < ApplicationController
 
 	def host_confirm
 		@booking = Booking.find(params[:id])
-	end
+  end
+
+  def book_reservation
+    @booking = Booking.find(params[:id])
+    if @booking.state?(:unfinished)
+      @booking.try_payment #try pay
+    end
+    respond_to do |format|
+      msg = { :status => "ok", :message => "Success!", :html => "<b>...</b>" }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end
+=begin
+    uri = URI(ENV['TRANSACTION_POST_ACTION'])
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.set_debug_output $stderr
+
+    request = Net::HTTP::Post.new(uri.request_uri)
+   # "utf8"=>"✓", "authenticity_token"=>"eFO2gJyZxHL+aiKfmEfm7r1t9ylDij5VbMqugfAqzvU=", "EPS_MERCHANT"=>"EHY0047", "EPS_TXNTYPE"=>"1", "EPS_REFERENCEID"=>"transaction_id=101", "EPS_AMOUNT"=>"23.08", "EPS_RESULTURL"=>"bookings/result?authenticity_token=eFO2gJyZxHL+aiKfmEfm7r1t9ylDij5VbMqugfAqzvU=", "EPS_REDIRECT"=>"TRUE", "EPS_TIMESTAMP"=>"20140610060743", "EPS_FINGERPRINT"=>"ce9748ac46b9e3a550acc91c3f5a3b7bfc05bb4b", "securepay_transaction_action"=>"https://api.securepay.com.au/test/directpost/authorise", "stored_card_transaction_action"=>"/bookings/91/book_reservation", "transaction"=>{"store_card"=>"0"}, "EPS_CARDNUMBER"=>"4444333325221111", "EPS_CCV"=>"123", "EPS_EXPIRYMONTH"=>"1", "EPS_EXPIRYYEAR"=>"2016", "id"=>"91"}
+    #params.delete :utf8
+    #params.delete :authenticity_token
+    #params.delete :securepay_transaction_action
+    #params.delete :transaction
+    #params.delete :id
+    #params.delete :_method
+    #params.delete :action
+    #params.delete :controller
+    #params.delete :stored_card_transaction_action
+
+    request.set_form_data(params)
+
+# Tweak headers, removing this will default to application/x-www-form-urlencoded
+    request["Content-Type"] = "application/json"
+    #res = Net::HTTP.post_form(uri, params)
+    res = http.request(request)
+    puts res.body
+=end
+  end
 
 	def host_message
 		@booking = Booking.find(params[:id])

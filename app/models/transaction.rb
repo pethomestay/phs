@@ -122,16 +122,6 @@ class Transaction < ActiveRecord::Base
 <purchaseOrderNo>#{self.reference}</purchaseOrderNo><preauthID>#{self.pre_authorisation_id}</preauthID></Txn></TxnList></Payment>
 </SecurePayMessage>"
 
-        # builder = Nokogiri::XML::Builder.new do |message_xml|
-        #   message_xml.root {
-        #     message_xml.products {
-        #       message_xml.widget {
-        #         message_xml.id_ "10"
-        #         message_xml.name "Awesome widget"
-        #         }
-        #       }
-        #     }
-        #   end
 
 
 				response = RestClient.post(

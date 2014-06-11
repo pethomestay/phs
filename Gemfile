@@ -37,7 +37,7 @@ gem 'nokogiri', '1.5.6'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=>"laserlemon/figaro"
-gem 'state_machine', :require => 'state_machine/core'
+gem 'state_machine'
 
 
 group :test, :development do

@@ -25,11 +25,11 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
-  	scope :unfinished, where('state IN (?)', [:unfinished, :payment_authorisation_pending]).order('created_at DESC')
+  scope :unfinished, where('state IN (?)', [:unfinished, :payment_authorisation_pending]).order('created_at DESC')
 
-  	scope :valid_host_view_booking_states, where('state IN (?)', @@valid_host_view_booking_states_list).order('created_at DESC')
+  scope :valid_host_view_booking_states, where('state IN (?)', @@valid_host_view_booking_states_list).order('created_at DESC')
 
-  	scope :finished_and_host_accepted_or_host_paid, where('state IN (?)', [:finished_host_accepted, :host_paid]).order('created_at DESC')
+  scope :finished_and_host_accepted_or_host_paid, where('state IN (?)', [:finished_host_accepted, :host_paid]).order('created_at DESC')
 
 	scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
@@ -88,6 +88,10 @@ class Booking < ActiveRecord::Base
 
     event :guest_cancels_booking do
       transition [:unfinished, :finished,  :finished_host_accepted, :payment_authorisation_pending] => :guest_cancelled
+    end
+
+    event :try_payment do
+      transition :unfinished => :payment_authorisation_pending
     end
 
     event :payment_check_succeed do
@@ -299,19 +303,4 @@ class Booking < ActiveRecord::Base
 		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
-	def actual_status
-		if self.status == BOOKING_STATUS_UNFINISHED
-			BOOKING_STATUS_UNFINISHED
-		elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
-			'awaiting host response'
-		elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
-			'host accepted but not paid'
-		elsif self.status == BOOKING_STATUS_REJECTED
-			'host rejected'
-		elsif self.status == BOOKING_STATUS_HOST_PAID
-			'host has been paid'
-		else
-			'invalid booking state'
-		end
-	end
 end
