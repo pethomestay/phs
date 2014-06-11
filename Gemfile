@@ -19,7 +19,7 @@ gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 
 gem 'will_paginate'
-gem 'bootstrap-sass', '~> 2.3.1'
+gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'country_select' #Country select
 gem 'awesome_nested_fields'
@@ -38,7 +38,6 @@ gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=>"laserlemon/figaro"
 gem 'state_machine'
-
 
 group :test, :development do
   gem 'capistrano'
