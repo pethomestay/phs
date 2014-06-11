@@ -29,11 +29,11 @@ module ApplicationHelper
   end
 
   def nil_or_not_date attribute
-    (attribute.nil? or not (attribute.kind_of? Date or attribute.kind_of? DateTime))
+    (attribute.nil? or not (attribute.kind_of? Date or attribute.kind_of? DateTime or attribute.kind_of? ActiveSupport::TimeWithZone))
   end
 
   def nil_or_not_time attribute
-    (attribute.nil? or not (attribute.kind_of? Time or attribute.kind_of? DateTime))
+    (attribute.nil? or not (attribute.kind_of? Time or attribute.kind_of? DateTime or attribute.kind_of? ActiveSupport::TimeWithZone))
   end
 
   def date_day_month_year_format attribute
