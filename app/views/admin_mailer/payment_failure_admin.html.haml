@@ -5,25 +5,25 @@
   %strong= "Booking Details"
 %p.article-content
   = link_to "#{@booking.homestay.title} in #{@booking.homestay.address_suburb}", homestay_url(@booking.homestay)
-  %emphersize "Description"
+%p.article-content
+  %strong= "Homestay Description"
 %p.article-content
   = @booking.homestay.description
 %p.article-content
-  Cost per night : "#{@booking.homestay.cost_per_night}"
+  Cost per night: #{number_to_currency(@booking.homestay.cost_per_night)}
 %p.article-content
-  Booking User Name and Email: "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
+  Booking User Name and Email: #{@user.first_name} #{@user.last_name} <#{@user.email}>
 %p.article-content
-  Booking User Mobile Number: "#{@user.mobile_number}"
+  Booking User Mobile Number: #{@user.mobile_number}
 %p.article-content
   %strong= "Transaction Details"
 %p.article-content
-  Date and Time: "#{date_day_month_year_format(@transaction.updated_at)} #{hour_minute_format(@transaction.updated_at)}"
+  Date and Time: #{date_day_month_year_format(@transaction.updated_at)} #{hour_minute_format(@transaction.updated_at)}
 %p.article-content
-  Transaction Id: "#{@transaction.id.to_s}"
+  Transaction Id: #{@transaction.id.to_s}
 %p.article-content
-  Transaction Securepay transaction id: "#{@transaction.transaction_id.to_s}"
-%p.article-content
-  Transaction Securepay per authorisation id: "#{@transaction.pre_authorisation_id.to_s}"
+  Transaction Securepay reference: "#{@transaction.reference.to_s}"
+
 
 
 

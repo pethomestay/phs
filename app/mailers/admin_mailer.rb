@@ -10,7 +10,7 @@ class AdminMailer < ActionMailer::Base
     mail(from: email_with_name, subject: "A Pet Homestay Host (#{@user.first_name} #{@user.last_name}) has created a new Homestay!")
   end
 
-  def payment_failure(booking,transaction)
+  def payment_failure_admin(booking,transaction)
     @booking = booking
     @user = @booking.booker
     @transaction = transaction
