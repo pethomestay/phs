@@ -2,3 +2,9 @@
 
 
 Rails app for finding pet hotels and homestayers.
+
+Deployment stategy
+
+create a  new branch from the one we are using with underscores
+i.e. 2_4_17
+tag it with the appropriate tag 2.4.17

@@ -1,6 +1,7 @@
 class AdminMailer < ActionMailer::Base
   layout 'mailer'
   default to: "Pet Homestay <admin@pethomestay.com>"
+  helper ApplicationHelper
 
   def homestay_created_admin(homestay)
     @homestay = homestay

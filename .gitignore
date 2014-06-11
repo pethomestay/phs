@@ -1,7 +1,7 @@
 # Ignore bundler config
 /.bundle
 /.DS_Store
-public/uploads
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
@@ -21,7 +21,6 @@ public/uploads
 # Ignore dragonfly images
 public/system/dragonfly
 
-# Ignore dragonfly image uploades
 public/uploads
 
 # Ignore sass cache

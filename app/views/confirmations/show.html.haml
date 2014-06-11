@@ -22,7 +22,7 @@
   %table.table.table-striped.table-condensed
     %tr
       %td Start date
-      %td= @enquiry.check_in_date
+      %td= date_day_month_year_format(@enquiry.check_in_date)
     %tr
       %td Duration
       %td= @enquiry.duration.title
