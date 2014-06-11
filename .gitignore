@@ -18,6 +18,8 @@ public/uploads
 # Ignore dragonfly images
 public/system/dragonfly
 
+public/uploads
+
 # Ignore sass cache
 .sass-cache/
 
