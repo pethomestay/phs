@@ -1,7 +1,6 @@
 # Ignore bundler config
 /.bundle
 /.DS_Store
-public/uploads
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
