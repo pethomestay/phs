@@ -91,6 +91,26 @@ p.first {
     font-size: 22px;
     height: 52px;
   }
+
+  .input-date-range{
+    margin-top: 2px;
+  }
+
+  .input-check-in-date {
+    width: 200px;
+    height: 30px;
+    font-size:14px;
+    margin-right:-3px;
+    border-radius: 6px;
+  }
+
+  .input-check-out-date {
+    width: 200px;
+    height: 30px;
+    font-size:14px;
+    margin-left:5px;
+    border-radius: 6px;
+  }
 }
 
 .header-boxes {

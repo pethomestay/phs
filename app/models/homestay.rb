@@ -94,6 +94,16 @@ class Homestay < ActiveRecord::Base
     end
   end
 
+  def self.homestay_ids_unavailable_between(start_date, end_date)
+    self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id").where("unavailable_dates.date between ? and ?", start_date, end_date).group("homestays.id").map(&:id)
+  end
+
+  def self.available_between(start_date, end_date)
+    unavailable_homestay_ids = self.homestay_ids_unavailable_between(start_date, end_date)
+    return self.scoped if unavailable_homestay_ids.blank?
+    self.where('id NOT IN (?)', unavailable_homestay_ids)
+  end
+
   def property_type
     ReferenceData::PropertyType.find(property_type_id) if property_type_id
   end

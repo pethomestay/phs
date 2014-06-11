@@ -11,8 +11,12 @@
         .input-append
           = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'enter your postcode'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
+        .input-append.input-date-range
+          = f.text_field :check_in_date, id: "check_in_datepicker", class: "input-check-in-date", placeholder: "Select start date"
+          = f.text_field :check_out_date, id: "check_out_datepicker", class: "input-check-out-date", placeholder: "Select end date"
         .clear
       %h3#bottom-home-text
         Free to View & Contact All PetHomeStay Hosts
         %br Peace of Mind with Exclusive Insurance
         Book & Pay Securely Online
+

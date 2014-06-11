@@ -1,6 +1,6 @@
 class HomestaysController < ApplicationController
   respond_to :html
-  before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :authenticate_user!, except: [:show, :index, :availability]
   before_filter :find_homestay, only: [:edit, :update]
 
   SEARCH_RADIUS = 20
