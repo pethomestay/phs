@@ -1,39 +1,25 @@
-.span4.fixed.sidebar-search
-  = simple_form_for @search, url: homestays_path, method: 'GET', html: { class: 'form-search'} do |f|
-    = f.hidden_field :latitude
-    = f.hidden_field :longitude
-    .well
-      = f.input :location, wrapper: :append do
-        = f.input_field :location, class: 'search-query input-medium'
-        = f.button :submit, 'Search', class: 'btn btn-primary'
-      .search-filters
-        %label.sort-by
-          Sort by
-          %label.radio.inline
-            = radio_button :search, :sort_by, 'distance'
-            Distance
-          %label.radio.inline
-            = radio_button :search, :sort_by, 'cost_per_night'
-            Cost
-          %label.radio.inline
-            = radio_button :search, :sort_by, 'average_rating'
-            Rating
-      -# = f.label 'Your pet prefers' do |controls|
-      -#   = controls.check_box :is_homestay, 'To sleep over at a homestay'
-      -#   = controls.check_box :is_sitter, 'To stay at home with a sitter'
-      -# = f.label 'Grooming, walking, training, feeding' do |controls|
-      -#   = controls.check_box :is_services, 'Show additional pet services listings'
-  - if @search.latitude.present? && @search.longitude.present?
-    .well#map{class: @homestays.any? ? '' : 'short'}
-      :javascript
-        initMap(#{@search.latitude}, #{@search.longitude}, {
-          zoom: 12,
-          maxZoom: 12,
-          mapTypeControl: false,
-          streetViewControl: false,
-          zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
-        }})
-      - if @homestays.any?
-        - @homestays.each do |homestay|
-          :javascript
-            setupMarker(#{homestay.latitude.round(3)}, #{homestay.longitude.round(3)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})
+= simple_form_for @search, url: homestays_path, method: 'GET', html: { class: 'form-search'} do |f|
+  = f.hidden_field :latitude
+  = f.hidden_field :longitude
+  .well
+    = f.input :location, wrapper: :append do
+      = f.input_field :location, class: 'search-query input-medium pull-left'
+      .search-date-range
+      = f.button :submit, 'Search', class: 'btn btn-primary'
+    .search-filters
+      %label.sort-by
+        Sort by
+        %label.radio.inline
+          = radio_button :search, :sort_by, 'distance'
+          Distance
+        %label.radio.inline
+          = radio_button :search, :sort_by, 'cost_per_night'
+          Cost
+        %label.radio.inline
+          = radio_button :search, :sort_by, 'average_rating'
+          Rating
+    -# = f.label 'Your pet prefers' do |controls|
+    -#   = controls.check_box :is_homestay, 'To sleep over at a homestay'
+    -#   = controls.check_box :is_sitter, 'To stay at home with a sitter'
+    -# = f.label 'Grooming, walking, training, feeding' do |controls|
+    -#   = controls.check_box :is_services, 'Show additional pet services listings'
