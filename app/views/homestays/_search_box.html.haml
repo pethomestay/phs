@@ -1,14 +1,20 @@
 = simple_form_for @search, url: homestays_path, method: 'GET', html: { class: 'form-search'} do |f|
   = f.hidden_field :latitude
   = f.hidden_field :longitude
-  .well
-    = f.input :location, wrapper: :append do
-      = f.input_field :location, class: 'search-query input-medium pull-left'
-      .search-date-range
-      = f.button :submit, 'Search', class: 'btn btn-primary'
+  .well.search-box
+    .location.pull-left
+      = f.text_field :location, placeholder: "Location"
+    .check_in_date.pull-left
+      = f.text_field :check_in_date, id: "check_in_datepicker", class: "input-check-in-date", placeholder: "Select start date", readonly: true, value: (params[:search][:check_in_date].present? ? params[:search][:check_in_date].to_date.strftime("%A,%d %B,%Y") : "")
+      %span.icon-calendar.check_in_calendar_icon
+    .check_out_date.pull-left
+      = f.text_field :check_out_date, id: "check_out_datepicker", class: "input-check-out-date", placeholder: "Select end date", readonly: true, value: (params[:search][:check_out_date].present? ? params[:search][:check_out_date].to_date.strftime("%A,%d %B,%Y") : "")
+      %span.icon-calendar.check_out_calendar_icon
+    = f.button :submit, 'Search', class: 'btn btn-primary pull-left search-btn'
+    .clear
     .search-filters
       %label.sort-by
-        Sort by
+        %span.sort-text Sort by
         %label.radio.inline
           = radio_button :search, :sort_by, 'distance'
           Distance
