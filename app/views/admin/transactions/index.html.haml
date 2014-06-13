@@ -11,12 +11,17 @@
       %th Response Text
       %th Amount
       %th Status
+      %th Cancel Reason
+      %th Cancel Date
+      %th Refund Amount
+      %th Is Refunded?
+      %th Actions
 
   %tbody
     - @transactions.each do |transaction|
       - booking = transaction.booking
-      - booking_status = Booking.human_state_name(booking.state.to_sym)
-      %tr{ class: booking_status == 'host has been paid' ? 'completed' : '' }
+      - booking_state = Booking.human_state_name(booking.state)
+      %tr{ class: booking_state == 'host has been paid' ? 'completed' : '' }
         - guest = booking.booker
         - host = booking.bookee
         %td= link_to (guest.name || 'n/a'), admin_user_path(guest)
@@ -27,11 +32,51 @@
         %td= transaction.response_text
         %td= currency_formatter(transaction.amount)
         %td
-          %strong= booking_status
+          %strong= booking_state
+        - if booking.is_cancelled? or booking.state?(:host_requested_cancellation)
+          %td= booking.cancel_reason
+        - else
+          %td
+            &nbsp;
+        - if booking.is_cancelled?
+          - if booking.cancel_date.nil?
+            %td No cancel date
+          - else
+            %td= date_day_month_year_format(booking.cancel_date)
+
+          - if booking.refund.nil?
+            %td No refund information
+          - else
+            %td= currency_formatter(booking.refund)
+          %td= check_box_tag "is_refunded_" + booking.id.to_s,  1, booking.refunded, {:class => 'is_refunded'}
+        - else
+          %td{:colspan => 3}
+            &nbsp;
+        %td
+          &nbsp;
+          - if booking.host_cancel?
+            = #link_to "Host Cancel", admin_host_cancel_booking_path(booking),:method=>:post, :class=>'trans-btn btn btn-primary'
+          - if booking.guest_cancel?
+            = #link_to "Guest Cancel", admin_guest_cancel_booking_path(booking), :method=>:post, :class=>'trans-btn btn btn-primary'
+          - if booking.state?(:payment_authorisation_pending)
+            = link_to "Reset", reset_booking_state_admin_booking_path(booking), :method=>:post, :style => 'margin-bottom: 4px;', :class=>'trans-btn btn btn-primary'
+            = link_to "Update details", edit_admin_transaction_path(transaction), :class=>'trans-btn btn btn-primary'
+
 
 :javascript
   $(document).ready(function(){
     $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
   });
+  $('.is_refunded').on('click', function(){
+        $id = $(this).attr('id').replace("is_refunded_", "");
+        if($(this).is(':checked')) {
+          alert('Guest has been refunded');
+        } else {
+           alert('Guest has not been refunded');
+        }
+        $.ajax({
+          url: '/bookings/' + $id + '/guest_refunded'
+        });
+      });
 
 

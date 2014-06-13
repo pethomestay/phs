@@ -90,16 +90,16 @@ class Booking < ActiveRecord::Base
       transition [:unfinished, :finished,  :finished_host_accepted, :payment_authorisation_pending] => :guest_cancelled
     end
 
+    event :reset_booking do
+      transition :payment_authorisation_pending => :unfinished
+    end
+
     event :try_payment do
       transition :unfinished => :payment_authorisation_pending
     end
 
     event :payment_check_succeed do
       transition [:unfinished, :payment_authorisation_pending] => :finished
-    end
-
-    event :payment_check_fail do
-      transition :unfinished => :payment_authorisation_pending
     end
 
     event :host_requested_cancellation do
@@ -125,7 +125,19 @@ class Booking < ActiveRecord::Base
 
 	def owner_view?(user)
 		user == self.booker
-	end
+  end
+
+  def is_cancelled?
+    (self.state?(:host_cancelled) or self.state?(:guest_cancelled))
+  end
+
+  def host_cancel?
+    (self.can_admin_cancel_booking? and self.check_in_date >= Date.today)
+  end
+
+  def guest_cancel?
+    (self.can_guest_cancels_booking? and self.check_in_date >= Date.today)
+  end
 
 	def editable_datetime?(user)
 		self.enquiry.blank? && !self.host_view?(user) && !self.owner_accepted

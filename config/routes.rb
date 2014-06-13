@@ -69,7 +69,10 @@ PetHomestay::Application.routes.draw do
     resources :bookings do
 	    collection do
 		    get :reconciliations_file
-	    end
+      end
+      member do
+        post :reset_booking_state
+      end
     end
     resources :transactions
     resources :feedbacks

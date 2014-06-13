@@ -10,5 +10,13 @@ class Admin::BookingsController < Admin::AdminController
 		respond_to do |format|
 			format.csv { send_data @bookings.to_csv }
 		end
-	end
+  end
+
+  def reset_booking_state
+    booking = Booking.find(params[:id])
+    booking.reset_booking
+    booking.save!
+    flash[:notice] = 'Booking has has been reset back to unfinished state'
+    redirect_to admin_transactions_path
+  end
 end
