@@ -53,22 +53,6 @@ describe Booking do
 		end
   end
 
-  # def actual_status
-  #   if self.status == BOOKING_STATUS_UNFINISHED
-  #     BOOKING_STATUS_UNFINISHED
-  #   elsif self.status == BOOKING_STATUS_FINISHED && !self.host_accepted?
-  #     'awaiting host response'
-  #   elsif self.status == BOOKING_STATUS_FINISHED && self.host_accepted?
-  #     'host accepted but not paid'
-  #   elsif self.status == BOOKING_STATUS_REJECTED
-  #     'host rejected'
-  #   elsif self.status == BOOKING_STATUS_HOST_PAID
-  #     'host has been paid'
-  #   else
-  #     'invalid booking state'
-  #   end
-  # end
-
 
   describe '#human_state_name' do #was actual_status
     subject { booking }
@@ -156,6 +140,79 @@ describe Booking do
 			end
 		end
 	end
+
+  describe '#host_cancel?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'When a booking has been created booking can not be host canceled by admin' do
+      it 'should return host can not cancel' do
+        subject.host_cancel?.should be_false
+      end
+    end
+
+    context 'When a booking has been requested to cancel by host host can cancel' do
+      before {
+        booking.payment_check_succeed
+        booking.host_requested_cancellation
+      }
+      it 'should return host can cancel' do
+        subject.host_cancel?.should be_true
+      end
+    end
+  end
+
+  describe '#guest_cancel?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'When a booking has been created booking can be canceled by guest' do
+      it 'should return host can cancel' do
+        subject.guest_cancel?.should be_true
+      end
+    end
+
+    context 'When a booking has been rejected by host, guest cannot cancel' do
+      before {
+        booking.payment_check_succeed
+        booking.host_rejects_booking
+      }
+      it 'should return guest cannot cancel' do
+        subject.guest_cancel?.should be_false
+      end
+    end
+  end
+
+  describe '#is_cancelled?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+
+    context 'When a booking has been created it is not canceled' do
+      it 'should not be canceled' do
+        subject.is_cancelled?.should be_false
+      end
+    end
+
+    context 'When a booking has been canceled by a guest it should be canceled' do
+      before { booking.guest_cancels_booking }
+      it 'should return canceled booking' do
+        subject.is_cancelled?.should be_true
+      end
+    end
+
+    context 'When a booking has been canceled by a host it should be canceled' do
+      before {
+        booking.payment_check_succeed
+        booking.host_requested_cancellation
+        booking.admin_cancel_booking
+
+      }
+      it 'should return canceled booking' do
+        subject.is_cancelled?.should be_true
+      end
+    end
+  end
 
 	describe '#bookee and #booker' do
 		before :each do
