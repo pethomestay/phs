@@ -50,6 +50,14 @@
         - if not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0 #don't allow a booking to be canceled if it's an old one
           %br
           = link_to 'Cancel', guest_canceled_booking_path(booking), class: 'btn btn-primary cancel-booking-btn', id: 'cancel-booking'
+        - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
 
   - if !@trips and has_uncanceled_bookings?(@bookings)
     = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
+          - if current_user == booking.booker
+            = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
+          - else
+            = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        - elsif current_user == booking.booker
+          = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary'
+

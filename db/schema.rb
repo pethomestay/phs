@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140505231734) do
+ActiveRecord::Schema.define(:version => 20140604010907) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20140505231734) do
     t.float    "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
-    t.string   "status",           :default => "unfinished"
+    t.string   "state",            :default => "unfinished"
     t.text     "response_message"
     t.integer  "response_id",      :default => 0
     t.datetime "created_at",                                 :null => false
@@ -293,6 +293,15 @@ ActiveRecord::Schema.define(:version => 20140505231734) do
     t.integer  "card_id"
   end
 
+  create_table "unavailable_dates", :force => true do |t|
+    t.date     "date"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "unavailable_dates", ["user_id"], :name => "index_unavailable_dates_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
@@ -330,6 +339,7 @@ ActiveRecord::Schema.define(:version => 20140505231734) do
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
+    t.date     "calendar_updated_at"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

@@ -13,16 +13,16 @@
     = f.input :response_message
 
     = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true,
-            input_html: { value: @enquiry.check_in_date.strftime("%d/%m/%Y"), class: 'span2 checkin' }
+            input_html: { value: date_day_month_year_format(@enquiry.check_in_date), class: 'span2 checkin' }
 
     = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append mytimepicker" }, readonly: true,
-            input_html: { value: @enquiry.check_in_time.strftime("%H:%M") }
+            input_html: { value: hour_minute_format(@enquiry.check_in_time) }
     %br
     = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append mydatepicker" }, readonly: true,
-            input_html: { value: @enquiry.check_out_date.strftime("%d/%m/%Y"), class: 'span2 checkout' }
+            input_html: { value: date_day_month_year_format(@enquiry.check_out_date), class: 'span2 checkout' }
 
     = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append mytimepicker" }, readonly: true,
-            input_html: { value: @enquiry.check_out_time.strftime("%H:%M") }
+            input_html: { value: hour_minute_format(@enquiry.check_out_time) }
 
 
   .form-actions

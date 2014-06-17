@@ -1,13 +1,14 @@
 .page-header
   %h1= "#{@user.first_name} would like to make a booking"
 %table.table.table-striped.table-condensed
-  %tr
-    %td Start date
-    %td= @enquiry.check_in_date.strftime("%d/%m/%Y")
+  - unless @enquiry.check_in_date.blank?
+    %tr
+      %td Start date
+      %td= date_day_month_year_format(@enquiry.check_in_date)
   - unless @enquiry.check_out_date.blank?
     %tr
       %td Check out date
-      %td= @enquiry.check_out_date.strftime("%d/%m/%Y")
+      %td= date_day_month_year_format(@enquiry.check_out_date)
   %tr
     %td Duration
     %td= @enquiry.duration_name

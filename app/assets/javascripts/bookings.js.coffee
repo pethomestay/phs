@@ -10,6 +10,13 @@ $ ->
         minlength: 13,
         maxlength: 16,
         digits: true
+    highlight: (element, error, valid) ->
+      $(element).closest(".control-group").addClass("error").removeClass "success"
+      return
+    unhighlight: (element, error, valid) ->
+      $(element).closest(".control-group").removeClass("error").addClass "success"
+      return
+
 
   fractionalPart = (value) ->
     stringValue = value.toString()

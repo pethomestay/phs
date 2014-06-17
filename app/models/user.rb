@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
+  has_many :unavailable_dates
+
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
   validates :accept_house_rules, :acceptance => true
@@ -301,4 +303,50 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def booking_info_between(start_date, end_date)
+    booking_info = self.unavailable_dates_info(start_date, end_date)
+    booking_info += self.booked_dates_info(start_date, end_date)
+    available_dates = (start_date..end_date).to_a - (booking_info.map{ |info| info[:start].to_date }).uniq
+    booking_info += available_dates.collect do |date|
+      { title: "Available", start: date.strftime("%Y-%m-%d") }
+    end
+    booking_info
+  end
+
+  def unavailable_dates_info(start_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(start_date, end_date)
+    unavailable_dates.collect do |unavailable_date|
+      {
+        id: unavailable_date.id,
+        title: "Unavailable",
+        start: unavailable_date.date.strftime("%Y-%m-%d")
+      }
+    end
+  end
+
+  #TODO change bookings query 
+  def booked_dates_between(start_date, end_date)
+    bookings = self.bookees.accepted_by_host.where("check_in_date in (?) or check_out_date in (?)", (start_date..end_date).to_a, (start_date..end_date).to_a)
+    bookings.collect do |booking| 
+      if booking.check_out_date == booking.check_in_date && booking.check_in_date.between?(start_date, end_date)
+        [booking.check_in_date]
+      else
+        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
+        booking_end = booking.check_out_date > end_date ? end_date : booking.check_out_date - 1.day
+        (booking_start..booking_end).to_a
+      end
+    end.flatten.compact.uniq
+  end
+
+  def booked_dates_info(start_date, end_date)
+    self.booked_dates_between(start_date, end_date).collect do|date|
+      { title: "Booked", start: date.strftime("%Y-%m-%d") }
+    end
+  end
+
+  def update_calendar
+    self.update_attribute(:calendar_updated_at, Date.today)
+  end
+
 end

@@ -2,6 +2,12 @@ PetHomestay::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
+  resources :users do
+    collection do
+      post :update_calendar
+    end
+  end
+
   resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
@@ -11,6 +17,7 @@ PetHomestay::Application.routes.draw do
 	  member do
 		  get 'favourite'
 		  get 'non_favourite'
+      get 'availability'
 	  end
 
 	  collection do
@@ -42,6 +49,7 @@ PetHomestay::Application.routes.draw do
 	  end
 	  member do
 		  get 'host_confirm'
+      put 'book_reservation'
 		  get 'host_message'
 		  get 'host_paid'
       get 'guest_refunded'
@@ -56,7 +64,13 @@ PetHomestay::Application.routes.draw do
 	  resources :messages, only: [:index, :create]
   end
 
-  resources :availability
+  resources :availability do
+    collection do
+      get :booking_info
+    end
+  end
+
+  resources :unavailable_dates, :only => [:create, :destroy]
 
   resources :accounts do
     collection do
@@ -70,7 +84,10 @@ PetHomestay::Application.routes.draw do
     resources :bookings do
 	    collection do
 		    get :reconciliations_file
-	    end
+      end
+      member do
+        post :reset_booking_state
+      end
     end
     resources :transactions
     resources :feedbacks

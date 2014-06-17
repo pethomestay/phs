@@ -55,9 +55,9 @@
         %td
           &nbsp;
           - if booking.host_cancel?
-            = #link_to "Host Cancel", admin_host_cancel_booking_path(booking),:method=>:post, :class=>'trans-btn btn btn-primary'
+            = link_to "Host Cancel", admin_host_cancel_booking_path(booking),:method=>:post, :class=>'trans-btn btn btn-primary'
           - if booking.guest_cancel?
-            = #link_to "Guest Cancel", admin_guest_cancel_booking_path(booking), :method=>:post, :class=>'trans-btn btn btn-primary'
+            = link_to "Guest Cancel", admin_guest_cancel_booking_path(booking), :method=>:post, :class=>'trans-btn btn btn-primary'
           - if booking.state?(:payment_authorisation_pending)
             = link_to "Reset", reset_booking_state_admin_booking_path(booking), :method=>:post, :style => 'margin-bottom: 4px;', :class=>'trans-btn btn btn-primary'
             = link_to "Update details", edit_admin_transaction_path(transaction), :class=>'trans-btn btn btn-primary'

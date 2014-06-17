@@ -26,8 +26,7 @@
 //= require chosen-jquery
 //= require_tree ./gmaps4rails
 //= require jquery.popup
-//= require jquery.validate
-//= require jquery.validate.additional-methods
+//= require jquery.fullcalendar
 //= require maps
 //= require searches
 //= require users
@@ -36,4 +35,5 @@
 //= require provider
 //= require messages
 //= require homestays
+//= require availability
 //= require_tree ../../../vendor/assets/javascripts/.
