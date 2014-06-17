@@ -10,7 +10,6 @@ gem 'rails', '3.2.18'
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-validation-rails'
 gem 'haml-rails'
 gem 'devise'
 gem 'chronic'
@@ -18,6 +17,7 @@ gem 'omniauth-facebook'
 gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
+gem "legato"
 
 gem 'will_paginate'
 gem 'bootstrap-sass'
@@ -43,8 +43,7 @@ gem 'state_machine'
 
 group :test, :development do
   gem 'capistrano'
-  gem 'ruby-debug-ide'
-  gem 'ruby-debug-base19x'
+  #gem 'ruby-debug-ide'
 
   unless ENV['RM_INFO']
     gem 'pry'

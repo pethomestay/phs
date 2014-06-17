@@ -7,7 +7,10 @@
   = f.input :transaction_id
   = f.input :time_stamp, disabled: true
   = f.input :merchant_fingerprint,  input_html: {class: 'input-xxlarge'}, disabled: true
-  = f.input :pre_authorisation_id, :required => true
+  - if @transaction.status == TRANSACTION_PRE_AUTHORIZATION_REQUIRED
+    = f.input :pre_authorisation_id,  :required => true
+  - else
+    = f.input :pre_authorisation_id
   = f.input :client_id, disabled: true, :required => true
   = f.input :response_text
   = f.input :amount, :required => true, wrapper_html: {class: 'input-append input-prepend'} do

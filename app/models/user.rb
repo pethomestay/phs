@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 
   def booking_host_request_cancellation?
     if self.admin?
-      @bookings = Booking.find_all_by_status(HOST_HAS_REQUESTED_CANCELLATION)
+      @bookings = Booking.where(:state=>:finished)
       return @bookings.length > 0
     end
     return false

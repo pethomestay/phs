@@ -36,7 +36,7 @@ module BookingsHelper
   end
 
   def is_canceled_booking?(booking)
-    if (Booking.canceled_states.include?(booking.status))
+    if (Booking.canceled_states.include?(booking.state))
       return true
     end
     return false
@@ -45,9 +45,9 @@ module BookingsHelper
   def booking_status_for_listing(booking)
 
     if (is_canceled_booking?(booking)) then
-      if booking.status == HOST_HAS_REQUESTED_CANCELLATION
+      if booking.state?(:host_requested_cancellation)
         return 'Host requested cancellation'
-      elsif booking.status == BOOKING_STATUS_HOST_CANCELED
+      elsif booking.state?(:host_cancelled)
           return 'Host cancelled'
       else
           return 'Guest cancelled'

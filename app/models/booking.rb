@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
 	              :pet_date_of_birth
 
 
-	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0, status: [BOOKING_STATUS_FINISHED, BOOKING_STATUS_UNFINISHED])
+	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0, state: :finished)
 
 	scope :declined_by_host, where(response_id: 6, host_accepted: false)
 
@@ -25,13 +25,13 @@ class Booking < ActiveRecord::Base
 
 	scope :accepted_by_host, where(response_id: 5, host_accepted: true)
 
-  scope :canceled, where(status: BOOKING_STATUS_GUEST_CANCELED).order('created_at DESC')
+  scope :guest_cancelled, where(:state=>:guest_cancelled).order('created_at DESC')
 
-	scope :finished_and_host_accepted, where(host_accepted: true, status: BOOKING_STATUS_FINISHED).order('created_at DESC')
+	scope :finished_and_host_accepted, where(:state=> :finished_host_accepted).order('created_at DESC')
+
   scope :unfinished, where('state IN (?)', [:unfinished, :payment_authorisation_pending]).order('created_at DESC')
 
-	scope :finished_and_host_accepted_or_host_paid, where('status IN (?) AND host_accepted is true', [
-			BOOKING_STATUS_FINISHED, BOOKING_STATUS_HOST_PAID]).order('created_at DESC')
+
   scope :valid_host_view_booking_states, where('state IN (?)', @@valid_host_view_booking_states_list).order('created_at DESC')
 
   scope :finished_and_host_accepted_or_host_paid, where('state IN (?)', [:finished_host_accepted, :host_paid]).order('created_at DESC')
@@ -83,7 +83,7 @@ class Booking < ActiveRecord::Base
   end
 
   def self.canceled_states
-    [HOST_HAS_REQUESTED_CANCELLATION, BOOKING_STATUS_HOST_CANCELED, BOOKING_STATUS_GUEST_CANCELED]
+    [:host_requested_cancellation, :host_cancelled, :guest_cancelled]
   end
 
   def get_days_left
@@ -129,7 +129,7 @@ class Booking < ActiveRecord::Base
     end
 
     event :guest_cancels_booking do
-      transition [:unfinished, :finished,  :finished_host_accepted, :payment_authorisation_pending] => :guest_cancelled
+      transition [:unfinished, :finished,  :finished_host_accepted] => :guest_cancelled
     end
 
     event :reset_booking do
@@ -145,7 +145,7 @@ class Booking < ActiveRecord::Base
     end
 
     event :host_requested_cancellation do
-      transition [:finished,  :finished_host_accepted] => :host_requested_cancellation
+      transition :finished_host_accepted => :host_requested_cancellation
     end
 
     event :admin_cancel_booking do

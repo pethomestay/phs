@@ -23,7 +23,7 @@ class Admin::TransactionsController < Admin::AdminController
     end
     @transaction.update_attributes(params[:transaction])
 
-    if not params[:transaction][:pre_authorisation_id].blank? and @transaction.booking
+    if (((@transaction.status == TRANSACTION_PRE_AUTHORIZATION_REQUIRED and not params[:transaction][:pre_authorisation_id].blank?) or  @transaction.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED)  and @transaction.booking)
       @transaction.booking.payment_check_succeed
       @transaction.booking.save!
     end

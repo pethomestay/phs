@@ -117,7 +117,7 @@ class BookingsController < ApplicationController
 
   def host_cancellation
     #list of bookings that the host can request to cancel
-    @bookings = Booking.where("bookee_id = ? AND state in (?) AND check_in_date >= ?", current_user.id, [:finished, :finished_host_accepted], Date.today)
+    @bookings = Booking.where("bookee_id = ? AND state = ? AND check_in_date >= ?", current_user.id, :finished_host_accepted, Date.today)
     if @bookings.length == 1
       @one_booking = true
       @booking = @bookings.first
@@ -156,7 +156,7 @@ class BookingsController < ApplicationController
       @booking.save
     end
     if (@booking.calculate_refund == 0 and @booking_errors.nil?)
-      canceled (params[:id], false)
+      canceled(params[:id], false)
       render :js => "window.location = '#{trips_bookings_path}'"
     else
       respond_to do | format|
