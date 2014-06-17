@@ -19,6 +19,7 @@ public/system/dragonfly
 
 public/uploads
 
+public/media
 # Ignore sass cache
 .sass-cache/
 
