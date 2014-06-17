@@ -9,12 +9,17 @@ Dragonfly.app(:images).configure do
   #secret "31fd103b6f8ef6b912283a6a63ae4e5e42f4e6961150f8aec1d7a5f9d3b36127"
 
   url_format "/media/:job/:name"
-
-  datastore :s3,
+  if Rails.env.staging? || Rails.env.production?
+    datastore :s3,
             :bucket_name => ENV['S3_BUCKET'],
             :access_key_id => ENV['S3_KEY'],
             :secret_access_key => ENV['S3_SECRET'],
             :region => ENV['S3_REGION']
+  else
+    datastore :file,
+              root_path: Rails.root.join("public", "media", Rails.env).to_s,
+              server_root: Rails.root.join("public").to_s
+  end
 end
 
 # Logger
