@@ -41,6 +41,7 @@ $ ->
         create_unavailable_date(cal_event)
       else
         destroy_unavailable_date(cal_event)
+        $(this).removeClass("unavailable")
 
   $("#update-calendar-btn").on "click", ->
     $.ajax
