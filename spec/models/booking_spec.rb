@@ -17,7 +17,17 @@ describe Booking do
 	it { should validate_presence_of :check_in_date }
 	it { should validate_presence_of :check_out_date }
 
-	it 'should be valid with valid attributes' do
+  it "should validate that check in date is not equal to checkout date" do
+    booking = FactoryGirl.build(:booking, check_in_date: Date.today, check_out_date: Date.today)
+    expect(booking.valid?).to eq(false)
+  end
+
+  it "should validate that check in date is not greater than checkout date" do
+    booking = FactoryGirl.build(:booking, check_in_date: Date.today, check_out_date: Date.today - 1.day)
+    expect(booking.valid?).to eq(false)
+  end
+
+  it 'should be valid with valid attributes' do
 		booking = FactoryGirl.create :booking
 		booking.should be_valid
 	end

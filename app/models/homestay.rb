@@ -103,6 +103,22 @@ class Homestay < ActiveRecord::Base
     return self.scoped if unavailable_homestay_ids.blank?
     self.where('id NOT IN (?)', unavailable_homestay_ids)
   end
+  
+  #TODO: change query after booking state related changes
+
+  def self.homestay_ids_booked_between(start_date, end_date)
+    host_accepted_condn = "bookings.response_id = ? and bookings.host_accepted = ?"
+    booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"
+    self.joins("inner join bookings on bookings.bookee_id = homestays.user_id")
+      .where("#{host_accepted_condn} and (#{booked_condition})", 5, true, start_date, end_date, start_date, start_date)
+      .group("homestays.id").map(&:id)
+  end
+
+  def self.not_booked_between(start_date, end_date)
+    booked_homestay_ids = self.homestay_ids_booked_between(start_date, end_date)
+    return self.scoped if booked_homestay_ids.blank?
+    self.where("id not in (?)", booked_homestay_ids)
+  end
 
   def property_type
     ReferenceData::PropertyType.find(property_type_id) if property_type_id

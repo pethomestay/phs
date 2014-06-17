@@ -85,7 +85,102 @@ describe Homestay do
   end
 
   describe ".not_booked_between" do
-    pending "add not booked date query for search after state machine is complete"
+
+    let(:users){ 5.times.collect { FactoryGirl.create(:user_with_homestay) } }
+    let(:homestays){ users.map(&:homestay) }
+    let(:booked_user){ users.last }
+    let(:booking){ FactoryGirl.create(:booking, bookee: booked_user, check_in_date: check_in_date, check_out_date: check_out_date, response_id: 5, host_accepted: true)}
+    let(:start_date){ Date.today }
+    let(:end_date){ start_date + 3.days }
+    let(:check_in_date){ end_date + 1.day  }
+    let(:check_out_date){ check_in_date + 100.days }
+
+    subject{ homestays; booking; Homestay.not_booked_between(start_date, end_date).to_a }
+
+    context "when none of the users are booked between start_date and end_date" do
+      let(:booking){ "" }
+      it "should return all homestays" do
+        expect(subject & homestays).to eq(homestays)
+      end
+    end
+
+    context "when a user is  booked" do
+
+      context "when check in date is less than start date and check out date is less than start date" do
+
+        let(:check_in_date){ start_date - 2.days }
+        let(:check_out_date){ start_date - 1.day }
+
+        it "should include the user's homestay" do
+          expect(subject).to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count)
+        end
+      end
+
+      context "when check in date is less than start date and check out date is equal to start date" do
+        
+        let(:check_in_date){ start_date - 2.days }
+        let(:check_out_date){ start_date }
+
+        it "should not include the user's homestay" do
+          expect(subject).to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count)
+        end
+      end
+
+      context "when check in date is less than start date and check out date is greater start date" do
+
+        let(:check_in_date){ start_date - 2.days }
+        let(:check_out_date){ start_date + 1.day }
+
+        it "should include the user's homestay" do
+          expect(subject).not_to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count - 1)
+        end
+      end
+
+      context "when check in date is equal to start date" do
+
+        let(:check_in_date){ start_date }
+
+        it "should return the user's homestay" do
+          expect(subject).not_to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count - 1)
+        end
+      end
+
+      context "when check in date is between start date and end date" do
+
+        let(:check_in_date){ start_date + 1.day }
+
+        it "should not return the user's homestay" do
+          expect(subject).not_to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count - 1)
+        end
+      end
+
+      context "when check in date is equal to end date" do
+
+        let(:check_in_date){ end_date }
+
+        it "should return the user's homestay" do
+          expect(subject).not_to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count - 1)
+        end
+      end
+
+      context "when check in date is greater than end date" do
+
+        let(:check_in_date){ end_date + 1.day }
+
+        it "should return the user's homestay" do
+          expect(subject).to include(booked_user.homestay)
+          expect(subject.count).to eq(users.count)
+        end
+      end
+
+    end
+
   end
 
 end
