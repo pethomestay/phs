@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Booking do
+
+  before do
+    Homestay.any_instance.stub(:geocoding_address).and_return("Melbourne, MB")
+  end
+
 	it { should belong_to :booker }
 	it { should belong_to :bookee }
 	it { should belong_to :enquiry }

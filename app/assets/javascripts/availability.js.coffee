@@ -9,6 +9,15 @@ $ ->
 
     events: "/availability/booking_info"
 
+    viewDisplay: (view) ->
+      now = new Date()
+      cal_date_string = view.start.getMonth()+'/'+view.start.getFullYear()
+      cur_date_string = now.getMonth()+'/'+now.getFullYear()
+      if(cal_date_string == cur_date_string)
+        jQuery('.fc-button-prev').addClass("fc-state-disabled")
+      else
+        jQuery('.fc-button-prev').removeClass("fc-state-disabled")
+
     eventAfterRender: (event, element, monthView) ->
       dateString = $.fullCalendar.formatDate(event.start, 'yyyy-MM-dd')
       $cell = $("td[data-date=" + dateString + "]")
@@ -21,6 +30,7 @@ $ ->
 
 
     dayClick: (date, allDay, jsEvent, view) ->
+      return false if date < new Date().setHours(0,0,0,0)
       cal_event = ""
       $('#calendar').fullCalendar('clientEvents', (calEvent) ->
         if(isSameDate(date, calEvent.start))
