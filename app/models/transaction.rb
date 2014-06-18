@@ -39,6 +39,8 @@ class Transaction < ActiveRecord::Base
 			self.save!
 		else
 			self.errors.add(:response_text, secure_pay_response[:response_text])
+      #reset state of booking
+      self.booking.payment_check_failed
 			if secure_pay_response[:card_storage_response_text].to_s != secure_pay_response[:response_text].to_s
 				self.errors.add(:storage_text, secure_pay_response[:card_storage_response_text])
 			end

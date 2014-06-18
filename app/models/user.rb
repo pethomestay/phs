@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 
   def booking_host_request_cancellation?
     if self.admin?
-      @bookings = Booking.where(:state=>:finished)
+      @bookings = Booking.where(:state=>:host_requested_cancellation)
       return @bookings.length > 0
     end
     return false
@@ -159,7 +159,12 @@ class User < ActiveRecord::Base
   end
 
   def find_or_create_booking_by(enquiry=nil, homestay=nil)
-	  unfinished_bookings = self.bookers.unfinished
+    if homestay
+      homestay_id = homestay.id
+    else
+      homestay_id = enquiry.homestay.id
+    end
+	  unfinished_bookings = self.bookers.unfinished.where(:homestay_id=>homestay_id).all()
 	  booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
 
 		booking.enquiry = enquiry

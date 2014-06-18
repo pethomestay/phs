@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
 
     @account = Account.new(params[:account])
     if @account.save
-      canceled (params[:booking_id], false)
+      canceled params[:booking_id], false
 
       flash[:notice] = 'Your account details have been saved'
       return redirect_to trips_bookings_path
@@ -40,7 +40,7 @@ class AccountsController < ApplicationController
 		if @account.update_attributes(params[:account])
       flash[:notice] = 'Your account details have been saved'
       if defined? params[:booking_id]
-        canceled (params[:booking_id], false)
+        canceled params[:booking_id], false
       end
 			return redirect_to @account
 		else

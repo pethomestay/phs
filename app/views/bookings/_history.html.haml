@@ -54,6 +54,6 @@
           %br
           = link_to 'Cancel', guest_canceled_booking_path(booking), class: 'btn btn-primary cancel-booking-btn', id: 'cancel-booking'
 
-  - if !@trips and has_uncanceled_bookings?(@bookings)
+  - if !@trips and can_host_request_cancel_any_bookings?
     = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
 

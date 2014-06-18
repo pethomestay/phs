@@ -22,11 +22,13 @@ class Admin::TransactionsController < Admin::AdminController
       params[:transaction].delete(:booking)
     end
     @transaction.update_attributes(params[:transaction])
-
-    if (((@transaction.status == TRANSACTION_PRE_AUTHORIZATION_REQUIRED and not params[:transaction][:pre_authorisation_id].blank?) or  @transaction.status == TRANSACTION_HOST_CONFIRMATION_REQUIRED)  and @transaction.booking)
-      @transaction.booking.payment_check_succeed
-      @transaction.booking.save!
+    if not params[:transaction][:pre_authorisation_id].blank?
+      @transaction.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED
+    else
+      @transaction.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED
     end
+    @transaction.booking.payment_check_succeed
+    @transaction.booking.save!
     respond_with(:admin, @transaction)
   end
 

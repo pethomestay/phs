@@ -36,10 +36,15 @@ module BookingsHelper
   end
 
   def is_canceled_booking?(booking)
-    if (Booking.canceled_states.include?(booking.state))
+    if (Booking.canceled_states.include?(booking.state.to_sym))
       return true
     end
     return false
+  end
+
+  def can_host_request_cancel_any_bookings?
+    @bookings = Booking.where("bookee_id = ? AND state = ? AND check_in_date >= ?", current_user.id, :finished_host_accepted, Date.today)
+    return @bookings.length > 0
   end
 
   def booking_status_for_listing(booking)

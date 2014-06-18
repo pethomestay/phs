@@ -11,11 +11,40 @@ require 'spec_helper'
 #   end
 # end
 describe BookingsHelper do
+  let(:user){ FactoryGirl.build(:user, id: 1) }
+
+  before do
+    controller.stub(:current_user).and_return(user)
+    controller.stub(:authenticate_user!).and_return(true)
+  end
+
 
   describe '#canceled' do
     let(:booking) { FactoryGirl.create :booking }
     it "saves a new status to booking object" do
-      helper.canceled(booking.id, BOOKING_STATUS_GUEST_CANCELED).status.should eql(BOOKING_STATUS_GUEST_CANCELED)
+      helper.canceled(booking.id, false).state.should eql('guest_cancelled')
+    end
+  end
+
+  describe '#can_host_request_cancel_any_bookings?' do
+    subject { helper.can_host_request_cancel_any_bookings? }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context "it should be false when I set the status to 'finished'" do
+      before do
+        booking.payment_check_succeed
+      end
+      it {should be_false }
+    end
+
+    context "it should be true when I set the status to 'finished_host_accepted'" do
+      before do
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.bookee = user
+        booking.save
+      end
+      it {should be_true }
     end
   end
 
@@ -24,14 +53,14 @@ describe BookingsHelper do
     let(:booking) { FactoryGirl.create :booking }
     context "it should be false when I set the status to 'finished'" do
       before do
-        booking.status = BOOKING_STATUS_FINISHED
+        booking.payment_check_succeed
       end
       it {should be_false }
     end
 
     context "it should be true when I set the status to 'guest_canceled'" do
       before do
-        booking.status = BOOKING_STATUS_GUEST_CANCELED
+        booking.guest_cancels_booking
       end
       it {should be_true }
     end
@@ -40,13 +69,17 @@ describe BookingsHelper do
   end
 
 
+
   describe '#booking_status_for_listing' do
     subject { helper.booking_status_for_listing booking }
 
     context 'when a host has canceled the booking' do
       let(:booking) { FactoryGirl.create :booking }
       before do
-        booking.status = BOOKING_STATUS_HOST_CANCELED
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_requested_cancellation
+        booking.admin_cancel_booking
       end
 
       it { should eql 'Host cancelled' }
@@ -55,7 +88,9 @@ describe BookingsHelper do
     context 'when a host has requested to cancel the booking' do
       let(:booking) { FactoryGirl.create :booking }
       before do
-        booking.status = HOST_HAS_REQUESTED_CANCELLATION
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_requested_cancellation
       end
 
       it { should eql 'Host requested cancellation' }
@@ -64,7 +99,7 @@ describe BookingsHelper do
     context 'when a guest has canceled the booking' do
       let(:booking) { FactoryGirl.create :booking }
       before do
-        booking.status = BOOKING_STATUS_GUEST_CANCELED
+        booking.guest_cancels_booking
       end
 
       it { should eql 'Guest cancelled' }
@@ -73,7 +108,8 @@ describe BookingsHelper do
     context 'when a host has accepted the booking' do
       let(:booking) { FactoryGirl.create :booking }
       before do
-        booking.status = BOOKING_STATUS_FINISHED
+        booking.payment_check_succeed
+        booking.host_accepts_booking
         booking.host_accepted = true
       end
 
@@ -83,15 +119,12 @@ describe BookingsHelper do
     context 'when a host has not accepted the booking' do
       let(:booking) { FactoryGirl.create :booking }
       before do
-        booking.status = BOOKING_STATUS_FINISHED
+        booking.payment_check_succeed
         booking.host_accepted = false
       end
 
       it { should eql 'Unconfirmed' }
     end
-
   end
-
-
 
 end

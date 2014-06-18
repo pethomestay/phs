@@ -9,6 +9,7 @@ class Admin::BookingsController < Admin::AdminController
   def host_cancel
     canceled(params[:booking_id], true)
     #we want to sent to the guest to let them know their booking is canceled
+  flash[:notice] = "Booking with transaction reference: #{Booking.find(params[:booking_id]).transaction.reference}, has been cancelled by host"
     AdminCanceledBookingJob.new.async.perform(params[:booking_id])
     return redirect_to admin_transactions_path
   end

@@ -1,7 +1,6 @@
 # Ignore bundler config
 /.bundle
 /.DS_Store
-
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
@@ -12,9 +11,6 @@
 # Ignore .rvmrc
 .rvmrc
 
-# Ignore zeus socket files dir
-.zeus.sock
-
 # Ignore .env
 .env
 
@@ -23,6 +19,7 @@ public/system/dragonfly
 
 public/uploads
 
+public/media
 # Ignore sass cache
 .sass-cache/
 

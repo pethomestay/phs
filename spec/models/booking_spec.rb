@@ -167,6 +167,7 @@ describe Booking do
     before :each do
       @booking = FactoryGirl.create :booking
       @booking.payment_check_succeed #put it in finished state
+      @booking.host_accepts_booking #put it into finished_host_accepted state
     end
 
     it 'should have a request for admin to cancel booking for host' do
@@ -282,6 +283,7 @@ describe Booking do
     context 'When a booking has been requested to cancel by host host can cancel' do
       before {
         booking.payment_check_succeed
+        booking.host_accepts_booking
         booking.host_requested_cancellation
       }
       it 'should return host can cancel' do
@@ -332,6 +334,7 @@ describe Booking do
     context 'When a booking has been canceled by a host it should be canceled' do
       before {
         booking.payment_check_succeed
+        booking.host_accepts_booking
         booking.host_requested_cancellation
         booking.admin_cancel_booking
 
@@ -382,8 +385,8 @@ describe Booking do
 		end
 
 		context 'when there is a booking needed host confirmation' do
-			before { FactoryGirl.create :booking, owner_accepted: true, response_id: 0 }
-			it 'should not return any booking' do
+			before { FactoryGirl.create :booking, owner_accepted: true, response_id: 0, state: :finished }
+			it 'there should be one booking' do
 				subject.size.should be_eql(1)
 			end
 		end
@@ -399,8 +402,8 @@ describe Booking do
 		end
 
 		context 'when there is a booking declined by host' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::UNAVAILABLE.id }
-			it 'should not return any booking' do
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::UNAVAILABLE.id, state: :finished }
+			it 'should return one booking' do
 				subject.size.should be_eql(1)
 			end
 		end
@@ -416,7 +419,7 @@ describe Booking do
 		end
 
 		context 'when host wants owner to answer his question' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::QUESTION.id }
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::QUESTION.id,  state: :finished}
 			it 'should return booking' do
 				subject.any?.should be_true
 			end
@@ -433,7 +436,7 @@ describe Booking do
 		end
 
 		context 'when host accepts booking' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true }
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true, state: :finished_host_accepted }
 			it 'should return booking' do
 				subject.any?.should be_true
 			end

@@ -144,6 +144,10 @@ class Booking < ActiveRecord::Base
       transition [:unfinished, :payment_authorisation_pending] => :finished
     end
 
+    event :payment_check_failed do
+      transition :payment_authorisation_pending => :unfinished
+    end
+
     event :host_requested_cancellation do
       transition :finished_host_accepted => :host_requested_cancellation
     end
