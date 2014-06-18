@@ -8,7 +8,7 @@ task :update_states_for_state_machine => :environment do
       end
       #Ensure that 'host paid' is now a valid state 'host_paid'
       if b.state == 'host paid'
-        b.state =  :host_paid
+        b.state =  'host_paid'
       end
       b.save!
     }
