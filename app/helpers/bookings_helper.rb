@@ -12,7 +12,8 @@ module BookingsHelper
       has_canceled = booking.guest_cancels_booking
       if has_canceled
         booking.refund = booking.calculate_refund
-        GuestCanceledBookingJob.new.async.perform(booking_id) #Let the host know booking has been canceled
+        GuestCanceledBookingHostJob.new.async.perform(booking_id) #Let the host know booking has been cancelled
+        GuestCanceledBookingGuestJob.new.async.perform(booking_id) #Confirm for the guest that their booking has been cancelled
       end
     end
     if has_canceled

@@ -1,0 +1,27 @@
+%p.article-content
+  = "Dear #{@guest.first_name.capitalize.strip},"
+%p.article-content
+  We are really sorry to hear that you need to cancel this booking. Your booking fee, if eligible will be refunded as per our cancellation policy and shown below.
+%p.article-content
+  Regards,
+%p.article-content The PetHomeStay Team
+
+%h3 Booking Details
+%p.article-content
+  = "Homestay: "
+  = link_to "#{@homestay.title} in #{@homestay.address_suburb}", homestay_url(@homestay)
+%p.article-content
+  = "Booking from #{@booking.check_in_date.to_formatted_s(:day_and_month)} #{@booking.check_in_time.strftime("%H:%M")} to #{@booking.check_out_date.to_formatted_s(:day_and_month)} #{@booking.check_out_time.strftime("%H:%M")}"
+%p.article-content
+  = "Pet Name: #{@guest.pet.name.capitalize}"
+%h3
+  PetHomeStay Cancellation Policy
+%ul.article-content
+  %li
+    More than 14 days away, full refund.
+  %li
+    Between 14 - 7 days, 50% refund.
+  %li
+    Less than 7 days, no refund.
+%p.article-content
+  The number of days before this booking commences is #{@days_left_until_booking_commences}. Based on this you will receive a refund amount of $#{@booking_fee_refunded}.
