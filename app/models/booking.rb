@@ -12,7 +12,6 @@ class Booking < ActiveRecord::Base
 	has_one :mailbox, dependent: :destroy
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
-  validate :check_in_date_is_less_than_check_out_date, if: "check_in_date && check_out_date"
 
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
@@ -362,8 +361,5 @@ class Booking < ActiveRecord::Base
 		"Booking $#{self.actual_amount} - #{self.host_accepted? ? 'Accepted' : pending_or_rejected}"
 	end
 
-  def check_in_date_is_less_than_check_out_date
-    errors.add(:check_in_date, "should be less than check out date") if check_out_date <= check_in_date
-  end
 
 end

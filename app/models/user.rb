@@ -174,10 +174,10 @@ class User < ActiveRecord::Base
 
 	  date_time_now = DateTime.now
 	  time_now = Time.now
-    date_time_tomorrow =  date_time_now + 1
+    #date_time_tomorrow =  date_time_now + 1
 	  booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
 	  booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
-	  booking.check_out_date = enquiry.blank? ? date_time_tomorrow : (enquiry.check_out_date.blank? ? date_time_tomorrow : enquiry.check_out_date)
+	  booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
 	  booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
 	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
 		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
