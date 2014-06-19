@@ -15,7 +15,7 @@ describe Admin::TransactionsController do
     reference = "transaction_id=27"
     fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{type_code}|#{reference}|#{amount}|#{time_stamp}"
     {
-      booking_id: 27,
+      booking_id: "#{booking.id}",
       transaction_id: "0000" + r.rand(10...99).to_s,
       time_stamp: time_stamp,
       merchant_fingerprint:  Digest::SHA1.hexdigest(fingerprint_string).to_s,
@@ -64,11 +64,12 @@ describe Admin::TransactionsController do
   describe "PUT update" do
     let(:transaction) { Transaction.create! valid_attributes(booking:booking) }
 
+
     describe "with valid params" do
       subject { put :update, {:id => transaction.to_param, :transaction => valid_attributes(booking:booking)}, valid_session }
       it "updates the requested transaction" do
-        Transaction.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => transaction.to_param, :transaction => { "these" => "params" }}, valid_session
+        Transaction.any_instance.should_receive(:update_attributes).with({ "response_text" => "TRANSACTION DENINED" })
+        put :update, {:id => transaction.to_param, :transaction => { "response_text" => "TRANSACTION DENINED" }}, valid_session
       end
 
       it "assigns the requested transaction as @transaction" do

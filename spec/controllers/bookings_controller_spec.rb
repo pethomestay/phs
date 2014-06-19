@@ -54,8 +54,8 @@ describe BookingsController do
 		end
   end
 
-  describe 'GET #guest_canceled' do
-    subject { get :guest_canceled, id: booking.id }
+  describe 'GET #guest_cancelled' do
+    subject { get :guest_cancelled, id: booking.id }
 
     let(:user) {FactoryGirl.create :user }
     let(:booking) {  FactoryGirl.create :booking, booker: user }
@@ -64,7 +64,7 @@ describe BookingsController do
 
     it 'should render the guest_canceled template' do
       subject
-      response.should render_template :guest_canceled
+      response.should render_template :guest_cancelled
     end
 
   end

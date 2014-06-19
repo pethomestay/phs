@@ -26,9 +26,9 @@ en:
           unfinished: 'unfinished'
           host_paid: 'host has been paid'
           payment_authorisation_pending: 'payment authorisation pending'
-          guest_cancelled: 'guest has canceled the booking'
+          guest_cancelled: 'guest has cancelled the booking'
           host_requested_cancellation: 'host has requested cancellation of this booking'
-          host_cancelled: 'host has canceled the booking'
+          host_cancelled: 'host has cancelled the booking'
         events: # you can also define translations for the events
           host_paid: 'host paid'
           host_rejects_booking: 'host rejects booking'

@@ -58,7 +58,7 @@ describe BookingsHelper do
       it {should be_false }
     end
 
-    context "it should be true when I set the status to 'guest_canceled'" do
+    context "it should be true when I set the status to 'guest_cancelled'" do
       before do
         booking.guest_cancels_booking
       end

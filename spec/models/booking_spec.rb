@@ -165,7 +165,7 @@ describe Booking do
 
   end
 
-  describe '#guest_canceled' do
+  describe '#guest_cancelled' do
     before :each do
       @booking = FactoryGirl.create :booking
       @booking.guest_cancels_booking
@@ -173,7 +173,7 @@ describe Booking do
 
 
     it 'should cancel the booking by guest' do
-      @booking.human_state_name(@booking.state).should be_eql('guest has canceled the booking')
+      @booking.human_state_name(@booking.state).should be_eql('guest has cancelled the booking')
     end
 
   end
@@ -193,7 +193,7 @@ describe Booking do
     it 'should cancel the booking' do
       @booking.host_requested_cancellation
       @booking.admin_cancel_booking
-      @booking.human_state_name(@booking.state).should be_eql('host has canceled the booking')
+      @booking.human_state_name(@booking.state).should be_eql('host has cancelled the booking')
     end
   end
 
