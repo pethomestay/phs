@@ -63,9 +63,9 @@
               input_html: { value: @booking.host_payout }
 
   - if !owner_view
-    - if Booking.canceled_states.include?(@booking.status)
+    - if Booking.canceled_states.include?(@booking.state.to_sym)
       %hr
-      = @booking.actual_status.slice(0,1).capitalize + @booking.actual_status.slice(1..-1)
+      = Booking.human_state_name(@booking.state).slice(0,1).capitalize + Booking.human_state_name(@booking.state).slice(1..-1)
 
     - elsif host_view
       %hr
