@@ -1,60 +1,63 @@
+.span12
+  .page-header
+    .pull-left
+      %h1 Booking Cancellation
+    .pull-right
+      = link_to 'Back to My My Trips List', trips_bookings_path, class: 'btn'
+    .clear
 
-- if @booking.calculate_refund > 0
-  = render partial: 'bookings/account_submit'
-- else
-  = render partial: 'bookings/standard_cancel_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
-
-= link_to 'Back to My Account', trips_bookings_path, class: 'btn'
-%br
-%br
-%p
-  = "Homestay: #{@booking.homestay.title},"
-%p
-  Cancellations happen for all sorts of reasons - perhaps your holiday isn't going ahead  or maybe you are going to take your pet with you!
-%p
-  However, based on your booking, a Host has committed themselves and blocked out their time for you.
-  This means they may have missed out on looking after other pets instead, so it is only fair we compensate them if you change your mind.
-  PetHomeStay has also incurred costs like booking insurance on your behalf with our underwriter.
-%p
-  PetHomeStay has a standard cancellation policy for all stays booked through us. For cancellations occurring :-
-%ul.extra-line-height
-  %li
-    More than 14 days away, all of the fee is returned.
-  %li
-    Between 14 - 7 days, 50% of the fee is returned
-  %li
-    Less than 7 days, no fee is returned.
-%p
-  We deduct our Service Fee of 15% and Insurance of $2 per night before refunding any cancellations.
-%h4
-  Cancellation Summary
-%p
-  = "Your original Booking request from #{@booking.check_in_date.strftime('%d/%m/%Y')} - #{@booking.check_out_date.strftime('%d/%m/%Y')} was $#{@booking.amount}"
-%p
-  Based on the current date and time, there is #{@booking.get_days_left} days left until your Stay commences.
-%p
-  This means the total booking fee refunded will be $#{@booking.calculate_refund}.
-%p
-  To confirm this cancellation, please let us know why.
-
-  = simple_form_for @booking, :url=> guest_save_cancel_reason_booking_path(@booking), html: { id: 'cancel_reason_form', class: 'form-horizontal' }, :remote => true do |f|
-    = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
-      = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
-      %span.help-inline
-    - if @booking.calculate_refund > 0
-      .form-actions
-        = f.submit "Save Cancel Reason", class: 'btn btn-primary', id: 'save_cancel_reason'
-    - else
-      = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
-
-
-- if @booking.calculate_refund > 0
+  - if @booking.calculate_refund > 0
+    = render partial: 'bookings/account_submit'
+  - else
+    = render partial: 'bookings/standard_cancel_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
   %p
-    Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
+    = "Homestay: #{@booking.homestay.title},"
   %p
-    = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { id: 'account_details_save',class: 'form-horizontal' } do |f|
-      = render partial: "accounts/account_fields", locals: {f: f}
-      = hidden_field_tag :booking_id, @booking.id
-      = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
+    Cancellations happen for all sorts of reasons - perhaps your holiday isn't going ahead  or maybe you are going to take your pet with you!
+  %p
+    However, based on your booking, a Host has committed themselves and blocked out their time for you.
+    This means they may have missed out on looking after other pets instead, so it is only fair we compensate them if you change your mind.
+    PetHomeStay has also incurred costs like booking insurance on your behalf with our underwriter.
+  %p
+    PetHomeStay has a standard cancellation policy for all stays booked through us. For cancellations occurring :-
+  %ul.extra-line-height
+    %li
+      More than 14 days away, all of the fee is returned.
+    %li
+      Between 14 - 7 days, 50% of the fee is returned
+    %li
+      Less than 7 days, no fee is returned.
+  %p
+    We deduct our Service Fee of 15% and Insurance of $2 per night before refunding any cancellations.
+  %h4
+    Cancellation Summary
+  %p
+    = "Your original Booking request from #{@booking.check_in_date.strftime('%d/%m/%Y')} - #{@booking.check_out_date.strftime('%d/%m/%Y')} was $#{@booking.amount}"
+  %p
+    Based on the current date and time, there is #{@booking.get_days_left} days left until your Stay commences.
+  %p
+    This means the total booking fee refunded will be $#{@booking.calculate_refund}.
+  %p
+    To confirm this cancellation, please let us know why.
+
+    = simple_form_for @booking, :url=> guest_save_cancel_reason_booking_path(@booking), html: { id: 'cancel_reason_form', class: 'form-horizontal' }, :remote => true do |f|
+      = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
+        = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
+        %span.help-inline
+      - if @booking.calculate_refund > 0
+        .form-actions
+          = f.submit "Save Cancel Reason", class: 'btn btn-primary', id: 'save_cancel_reason'
+      - else
+        = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
+
+
+  - if @booking.calculate_refund > 0
+    %p
+      Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
+    %p
+      = simple_form_for @account, :url=> guest_cancel_save_account_details_accounts_path, html: { id: 'account_details_save',class: 'form-horizontal' } do |f|
+        = render partial: "accounts/account_fields", locals: {f: f}
+        = hidden_field_tag :booking_id, @booking.id
+        = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
 
 

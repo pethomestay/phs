@@ -1,1 +1,4 @@
-if ('#{escape_javascript(@booking_errors)}'.length == 0) { $("span.help-inline").text('');$("#guest_cancel").removeAttr("disabled", "disabled");$("div.booking_cancel_reason").removeClass("error");} else {$("div.booking_cancel_reason").addClass("error");$("span.help-inline").text('#{escape_javascript(@booking_errors)}');$('#guest_cancel').attr("disabled", "disabled");}
+function insert_flash() {$( ".row" ).before( "<div class='alert fade in info'><button class='close' data-dismiss='alert'>×</button>Cancel reason saved.</div>" );}
+function no_errors() {$("span.help-inline").text('');$("#guest_cancel").removeAttr("disabled", "disabled");$("div.booking_cancel_reason").removeClass("error").addClass('success');if ($("div.info").length == 0) {insert_flash();}}
+function errors() {$("div.booking_cancel_reason").removeClass('success').addClass("error");if ($("div.info").length > 0) {$( "div.info" ).remove();};$("span.help-inline").text('#{escape_javascript(@booking_errors)}');$('#guest_cancel').attr("disabled", "disabled");}
+if ('#{escape_javascript(@booking_errors)}'.length == 0) { no_errors();} else {errors();}
