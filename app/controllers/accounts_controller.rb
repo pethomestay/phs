@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
       return redirect_to trips_bookings_path
     else
       @booking = Booking.find(params[:booking_id])
-      render 'bookings/guest_canceled'
+      render 'bookings/guest_cancelled'
     end
   end
 

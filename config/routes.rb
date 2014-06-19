@@ -55,7 +55,7 @@ PetHomestay::Application.routes.draw do
       get 'guest_refunded'
       put 'host_confirm_cancellation'
       put 'guest_save_cancel_reason'
-      get 'guest_canceled'
+      get 'guest_cancelled'
 		  get 'admin_view'
 	  end
   end

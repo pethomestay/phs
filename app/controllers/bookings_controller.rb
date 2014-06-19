@@ -84,7 +84,7 @@ class BookingsController < ApplicationController
 		render nothing: true
   end
 
-  def guest_canceled
+  def guest_cancelled
     @booking = Booking.find(params[:id])
     @account = current_user.account
     if @account.nil?

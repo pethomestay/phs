@@ -41,17 +41,17 @@ class UserMailer < ActionMailer::Base
 		mail(to: ENV['DEVELOPER_EMAIL'], subject: 'An error has been occurred')
   end
 
-  def admin_canceled_booking(booking)
+  def admin_cancelled_booking(booking)
     @booking = booking
     @homestay = booking.homestay
     @user = booking.booker
 
     email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-    mail(to: email_with_name, subject: "Your booking has been canceled by the host")
+    mail(to: email_with_name, subject: "Your booking has been cancelled by the host")
   end
 
 
-  def guest_canceled_booking_to_host(booking)
+  def guest_cancelled_booking_to_host(booking)
     @booking = booking
     @homestay = booking.homestay
     @user = booking.bookee
@@ -59,10 +59,10 @@ class UserMailer < ActionMailer::Base
     @booking_fee_refunded = booking.calculate_refund
 
     email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-    mail(to: email_with_name, subject: "Your booking has been canceled by the guest")
+    mail(to: email_with_name, subject: "Your booking has been cancelled by the guest")
   end
 
-  def guest_canceled_booking_to_guest(booking)
+  def guest_cancelled_booking_to_guest(booking)
     @booking = booking
     @homestay = booking.homestay
     @user = booking.bookee
@@ -71,6 +71,6 @@ class UserMailer < ActionMailer::Base
     @booking_fee_refunded = booking.calculate_refund
 
     email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-    mail(to: email_with_name, subject: "Your booking has been canceled as requested")
+    mail(to: email_with_name, subject: "Your booking has been cancelled as requested")
   end
 end
