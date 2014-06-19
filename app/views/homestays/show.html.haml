@@ -112,12 +112,21 @@
         %span.cal-date-span
           Calendar Updated:&nbsp&nbsp
           = "#{calendar_updation_date(@homestay.user)}"
-      
 
-  .row
-    .span9
-      %h2 Availability
-      #listing-calendar{data: { homestay_id: @homestay.id }}
+      .clear
+
+      .availability-calendar.span5
+        .calendar-legend
+          %h4 Legend
+          .legend_item.first
+            %span.tile.available
+            Available
+          .legend_item.last
+            %span.tile.unavailable 
+            Unavailable
+        .clear
+        .listing-calendar
+          #listing-calendar{data: { homestay_id: @homestay.id }}
 
   - content_for :open_graph_tags do
     %meta{property: 'og:title', content: @homestay.title}

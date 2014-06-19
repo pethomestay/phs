@@ -144,7 +144,7 @@ describe User do
 
     before do
       2.times{ |index| FactoryGirl.create(:unavailable_date, date: Date.today + index.day, user: user) }
-      2.times{ |index| FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: user, check_in_date: Date.today + (index + 2), check_out_date: Date.today + (index + 2))}
+      2.times{ |index| FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: user, check_in_date: Date.today + (index + 2), check_out_date: Date.today + (index + 3))}
     end
 
     context "when end date is greater than start date" do
@@ -253,7 +253,7 @@ describe User do
 
    describe "#booked_dates_info" do
      it "should return booked dates in fullcalendar event format" do
-       FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: Date.today, check_out_date: Date.today)
+       FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: Date.today, check_out_date: Date.today + 1)
        expected_result = [{ title: "Booked", start: Date.today.strftime("%Y-%m-%d") }]
        expect(confirmed_user.booked_dates_info((Date.today - 1), (Date.today + 1))).to eq(expected_result)
      end

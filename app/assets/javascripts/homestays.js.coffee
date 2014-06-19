@@ -37,7 +37,6 @@ $ ->
 
   homestay_id = $("#listing-calendar").data("homestay-id")
   $("#listing-calendar").fullCalendar
-    height: 400
     header:
       left: 'prev',
       center: 'title',
@@ -57,8 +56,6 @@ $ ->
     eventAfterRender: (event, element, monthView) ->
      dateString = $.fullCalendar.formatDate(event.start, 'yyyy-MM-dd')
      $cell = $("td[data-date=" + dateString + "]")
-     if ($cell.hasClass("fc-past") || $cell.hasClass("fc-other-month fc-future"))
-       element.css("opacity", $cell.css("opacity"))
      if (event.title.match(/unavailable/i) != null)
        $cell.addClass("unavailable")
        

@@ -12,6 +12,7 @@ class Booking < ActiveRecord::Base
 	has_one :mailbox, dependent: :destroy
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
+  validate :check_in_date_is_less_than_check_out_date, if: "check_in_date && check_out_date"
 
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth

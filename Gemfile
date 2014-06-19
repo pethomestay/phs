@@ -40,7 +40,6 @@ gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=>"laserlemon/figaro"
 gem 'state_machine'
 
-
 group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
@@ -53,7 +52,7 @@ group :test, :development do
   end
 
   gem 'rspec-rails'
-  gem 'shoulda-matchers', '~> 1.4.2'
+  gem 'shoulda-matchers', '~> 2.6.1'
   gem 'thin'
 end
 
@@ -71,4 +70,8 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'sass-rails'
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :production, :staging do
+  gem "rails_12factor"
 end
