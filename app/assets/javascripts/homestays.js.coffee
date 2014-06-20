@@ -56,7 +56,7 @@ $ ->
     eventAfterRender: (event, element, monthView) ->
      dateString = $.fullCalendar.formatDate(event.start, 'yyyy-MM-dd')
      $cell = $("td[data-date=" + dateString + "]")
-     if (event.title.match(/unavailable/i) != null)
+     if (event.title.match(/unavailable|booked/i ) != null)
        $cell.addClass("unavailable")
        
        
