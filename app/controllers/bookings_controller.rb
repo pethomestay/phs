@@ -1,15 +1,20 @@
 class BookingsController < ApplicationController
+  include BookingsHelper
 	before_filter :authenticate_user!
 	before_filter :homestay_required, only: :new
 	before_filter :secure_pay_response, only: :result
 
 	def index
-		@bookings = current_user.bookees
+		@bookings = current_user.bookees.valid_host_view_booking_states
 	end
 
 	def new
 		@booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
 		@transaction = current_user.find_or_create_transaction_by(@booking)
+    if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
+      PaymentFailedJob.new.async.perform(@booking, @transaction)
+      render "bookings/payment_issue"
+    end
 	end
 
 	def update
@@ -39,7 +44,25 @@ class BookingsController < ApplicationController
 
 	def host_confirm
 		@booking = Booking.find(params[:id])
+    if @booking.state?(:guest_cancelled)
+      flash[:notice] = "This booking has been canceled by the guest"
+    elsif @booking.state?(:host_cancelled)
+      flash[:notice] = "This booking has now been canceled by the admin as requested"
+    elsif @booking.state?(:host_requested_cancellation)
+      flash[:notice] = "You have requested to cancel this booking"
+    end
 	end
+
+  def book_reservation
+    @booking = Booking.find(params[:id])
+    try_pay = @booking.try_payment #try to upgrade status
+
+    respond_to do |format|
+      #return status back for debugging
+      msg = { :status => try_pay == true ? "ok" : "fail", :message => try_pay == true ? "Success!" : "failed" }
+      format.json  { render :json => msg }
+    end
+  end
 
 	def host_message
 		@booking = Booking.find(params[:id])
@@ -59,22 +82,90 @@ class BookingsController < ApplicationController
 		booking.check_out_time = params[:check_out_time]
 		booking.message_update(params[:message])
 		render nothing: true
-	end
+  end
+
+  def guest_cancelled
+    @booking = Booking.find(params[:id])
+    @account = current_user.account
+    if @account.nil?
+      @account = Account.new
+    end
+  end
 
 	def host_paid
+
 		@booking = Booking.find(params[:id])
-		@booking.status = BOOKING_STATUS_HOST_PAID
+    @booking.host_paid
 		@booking.save!
 		render nothing: true
-	end
+  end
+
+  def guest_refunded
+    @booking = Booking.find(params[:id])
+    @booking.refunded.nil? ? @booking.refunded = true : @booking.refunded = !@booking.refunded
+    @booking.save!
+    render nothing: true
+  end
 
 	def trips
-		@bookings = current_user.bookers
+		@bookings = current_user.bookers.order('created_at DESC')
 	end
 
 	def admin_view
 		@booking = Booking.find(params[:id])
-	end
+  end
+
+  def host_cancellation
+    #list of bookings that the host can request to cancel
+    @bookings = Booking.where("bookee_id = ? AND state = ? AND check_in_date >= ?", current_user.id, :finished_host_accepted, Date.today)
+    if @bookings.length == 1
+      @one_booking = true
+      @booking = @bookings.first
+      render 'host_cancel'
+    end
+  end
+
+  def host_cancel
+    @one_booking = current_user.bookees.length == 1 ? true : false
+    @booking_errors = ""
+    @booking = Booking.find(params[:booking]['cancelled_booking'])
+  end
+
+  def host_confirm_cancellation
+    @booking = Booking.find(params[:id])
+    if params[:booking][:cancel_reason].blank?
+      @booking_errors = "Cancel reason cannot be blank!"
+      render 'host_cancel'
+    else
+      # ensure that we can search for this status when showing the admin notifications
+      @booking.host_requested_cancellation
+      @booking.cancel_reason = params[:booking][:cancel_reason]
+      @booking.save
+      flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
+      return redirect_to my_account_path
+    end
+  end
+
+  def guest_save_cancel_reason
+    @booking = Booking.find(params[:id])
+    @booking_errors = nil
+    if params[:booking][:cancel_reason].blank?
+      @booking_errors = "Cancel reason cannot be blank!"
+    else
+      @booking.cancel_reason = params[:booking][:cancel_reason]
+      @booking.save
+    end
+    if (@booking.calculate_refund == 0 and @booking_errors.nil?)
+      canceled(params[:id], false)
+      render :js => "window.location = '#{trips_bookings_path}'"
+    else
+      respond_to do | format|
+        format.js
+      end
+    end
+  end
+
+
 
 	private
 

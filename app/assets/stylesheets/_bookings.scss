@@ -1,3 +1,28 @@
 .show-booking-history{
   padding-bottom: 90px;
 }
+
+.show-booking-history-guest{
+  padding-bottom: 130px;
+}
+
+#booking_cancelled_booking {
+  width: 400px;
+}
+
+#bookingtbl td {
+  width: 100px;
+}
+
+#booking_cancel_reason {
+  width: 500px !important;
+}
+
+ul.extra-line-height li {
+  line-height: 200% !important;
+}
+
+label.error {
+  margin-top: 10px;
+  color: #df382c;
+}

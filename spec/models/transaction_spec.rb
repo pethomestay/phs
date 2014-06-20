@@ -61,10 +61,13 @@ describe Transaction do
 		subject { transaction.finish_booking }
 		let(:transaction) { FactoryGirl.create :transaction }
 
-		before { transaction.booking = FactoryGirl.create :booking }
+		before {
+      transaction.booking = FactoryGirl.create :booking
+      transaction.booking.payment_check_succeed
+    }
 		it 'should mark the booking as finish' do
 			subject.should be_true
-			transaction.booking.status.should be_eql(BOOKING_STATUS_FINISHED)
+			transaction.booking.state.should be_eql("finished")
 		end
 
 		context 'when booking has enquiry' do
@@ -131,7 +134,7 @@ describe Transaction do
 
 		before { transaction.booking = FactoryGirl.create :booking }
 		it 'should return the booking status' do
-			subject.should eq(BOOKING_STATUS_UNFINISHED)
+			subject.should eq("unfinished")
 		end
 	end
 

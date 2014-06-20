@@ -1,0 +1,26 @@
+%p.article-content
+  = "Dear #{@user.first_name.capitalize.strip},"
+%p.article-content
+  We are really sorry, but this note is to confirm that your Guest has had to cancel your booking. Their booking fee, if eligible will be refunded as per our cancellation policy and shown below.
+%p.article-content
+  We understand that this can be disappointing, especially if at the last minute, but we will try to get you another booking if possible.
+%p.article-content
+  Many thanks for your understanding.
+%p.article-content The PetHomeStay Team
+
+%h3 Booking Details
+%p.article-content
+  = "Booking from #{@booking.check_in_date.to_formatted_s(:day_and_month)} #{@booking.check_in_time.strftime("%H:%M")} to #{@booking.check_out_date.to_formatted_s(:day_and_month)} #{@booking.check_out_time.strftime("%H:%M")}"
+%p.article-content
+  = "Guest Name: #{@guest.first_name.capitalize} #{@guest.last_name.capitalize}"
+%p.article-content
+  = "Pet Name: #{@guest.pet.name.capitalize}"
+%ul.article-content
+  %li
+    More than 14 days away, full refund to Guest.
+  %li
+    Between 14 - 7 days, 50% refund to Guest, 50% to Host.
+  %li
+    Less than 7 days, no refund to Guest.
+%p.article-content
+  Based on this as a host you will receive $#{@booking.calculate_host_amount_after_guest_cancel} fees.

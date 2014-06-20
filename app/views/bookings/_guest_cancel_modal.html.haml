@@ -1,0 +1,10 @@
+.form-actions
+  = link_to "Cancel This Booking", '#guestcancel', 'data-toggle' => 'modal', class: 'btn btn-primary', id: 'guest_cancel'
+
+.modal.hide.fade#guestcancelbooking
+  .modal-header
+    %button.close{type: 'button', 'data-dismiss' => 'modal'} ×
+    .modal-body
+      PetHomeStay has received your cancellation request and will be in touch via phone to confirm this with you and inform the Guest. We appreciate your working with us to help this Guest and for being a part of our community.
+      .pull-right
+        = f.submit 'OK', class: 'btn btn-primary', style: 'margin-top: 20px;', id: 'booking_confirm_by_host'

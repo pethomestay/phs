@@ -1,0 +1,17 @@
+.span12
+  .page-header
+    .pull-left
+      %h1 Host Booking Cancellation
+
+    .pull-right
+      = link_to 'Back to My Account', my_account_path, class: 'btn'
+    .clear
+    Please select a Booking to Cancel:
+    %br
+    = form_tag '/bookings/host_cancel', :class => 'simple-form' do
+      - booking_hash = {}
+      - @bookings.each do |booking|
+        - booking_hash["#{booking.booker.name}, Start Date: #{booking.check_in_date.strftime('%d/%m/%Y')}"] = booking.id
+      = select(:booking, :cancelled_booking,booking_hash)
+      = render partial: 'cancel_host_text'
+      = submit_tag   'Cancel selected booking'
