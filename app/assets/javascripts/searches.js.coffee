@@ -40,3 +40,15 @@ $ ->
     $("#check_out_datepicker")[0].focus()
     return
   ).data("datepicker")
+
+  $(".check_in_calendar_icon").on('click', (e) ->
+    e.preventDefault
+    checkin.show()
+    checkout.hide()
+  )
+
+  $(".check_out_calendar_icon").on('click', (e) ->
+    e.preventDefault
+    checkin.hide()
+    checkout.show()
+  )
