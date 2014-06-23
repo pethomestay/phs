@@ -95,7 +95,9 @@ class Homestay < ActiveRecord::Base
   end
 
   def self.homestay_ids_unavailable_between(start_date, end_date)
-    self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id").where("unavailable_dates.date between ? and ?", start_date, end_date).group("homestays.id").map(&:id)
+    self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id")
+      .where("unavailable_dates.date between ? and ?", start_date, end_date)
+      .group("homestays.id").map(&:id)
   end
 
   def self.available_between(start_date, end_date)
@@ -104,8 +106,6 @@ class Homestay < ActiveRecord::Base
     self.where('homestays.id NOT IN (?)', unavailable_homestay_ids)
   end
   
-  #TODO: change query after booking state related changes
-
   def self.homestay_ids_booked_between(start_date, end_date)
     host_accepted_condn = "bookings.response_id = ? and bookings.host_accepted = ?"
     booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"

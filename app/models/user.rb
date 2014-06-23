@@ -331,10 +331,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  #TODO change bookings query 
   def booked_dates_between(start_date, end_date)
-    bookings = self.bookees.accepted_by_host.where("check_in_date in (?) or check_out_date in (?)", (start_date..end_date).to_a, (start_date..end_date).to_a)
-    bookings.collect do |booking| 
+    bookings = self.bookees.accepted_by_host.where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
+    bookings.collect do |booking|
       if booking.check_out_date == booking.check_in_date && booking.check_in_date.between?(start_date, end_date)
         [booking.check_in_date]
       else

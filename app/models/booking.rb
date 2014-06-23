@@ -13,6 +13,7 @@ class Booking < ActiveRecord::Base
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
+  validate :is_host_available_btw_check_in_and_check_out_date, if: "check_in_date && check_out_date"
 
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
@@ -364,8 +365,17 @@ class Booking < ActiveRecord::Base
 
   private
 
+  def is_host_available_btw_check_in_and_check_out_date
+    booked_dates = self.bookee.booked_dates_between(self.check_in_date, self.check_out_date)
+    unavailable_dates = self.bookee.unavailable_dates.between(self.check_in_date, self.check_out_date).map(&:date)
+    if booked_dates.present? || unavailable_dates.present?
+      unavailable_dates = (unavailable_dates + booked_dates).uniq
+      errors.add(:host, "is either unavailable or booked on #{unavailable_dates.join(", ")}")
+    end
+  end
+
   def check_out_date_is_not_less_than_check_in_date
-    errors.add(:check_in_date, "should be less than check out date") if check_out_date < check_in_date
+    errors.add(:check_in_date, "should be less than or equal to check out date") if check_out_date < check_in_date
   end
 
 end

@@ -17,15 +17,39 @@ describe Booking do
 	it { should validate_presence_of :check_in_date }
 	it { should validate_presence_of :check_out_date }
 
-  it "should validate that check in date is not greater than checkout date" do
-    booking = FactoryGirl.build(:booking, check_in_date: Date.today, check_out_date: Date.today - 1.day)
-    expect(booking.valid?).to eq(false)
-  end
-
   it 'should be valid with valid attributes' do
 		booking = FactoryGirl.create :booking
 		booking.should be_valid
 	end
+
+  describe "host's availability validation" do
+
+    let(:start_date){ Date.today - 2.days }
+    let(:end_date){ Date.today + 4.days }
+    let(:booking){ FactoryGirl.build(:booking, check_in_date: start_date, check_out_date: end_date) }
+    
+    context "when host is unavailable between check in and check out date" do
+      it "should generate a validation error" do
+        unav_date = FactoryGirl.create(:unavailable_date, user: booking.bookee, date: Date.today)
+        expect(booking.valid?).to eq(false)
+        expect(booking.errors.full_messages).to eq(["Host is either unavailable or booked on #{ unav_date.date }"])
+      end
+    end
+
+    context "when host is booked between check in and check out date" do
+      it "should generate a validation error" do
+        prev_booking = FactoryGirl.create(:booking, bookee: booking.bookee, check_in_date: start_date + 1, check_out_date: start_date + 1, response_id: 5, host_accepted: true)
+        expect(booking.valid?).to eq(false)
+        expect(booking.errors.full_messages).to eq(["Host is either unavailable or booked on #{ (prev_booking.check_in_date..prev_booking.check_out_date).to_a.join(', ') }"])
+      end
+    end
+
+  end
+
+  it "should validate that check in date is not greater than checkout date" do
+    booking = FactoryGirl.build(:booking, check_in_date: Date.today, check_out_date: Date.today - 1.day)
+    expect(booking.valid?).to eq(false)
+  end
 
 	describe '#destroy_dependents' do
 		subject { booking }
