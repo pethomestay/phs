@@ -107,10 +107,9 @@ class Homestay < ActiveRecord::Base
   end
   
   def self.homestay_ids_booked_between(start_date, end_date)
-    host_accepted_condn = "bookings.response_id = ? and bookings.host_accepted = ?"
     booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"
     self.joins("inner join bookings on bookings.bookee_id = homestays.user_id")
-      .where("#{host_accepted_condn} and (#{booked_condition})", 5, true, start_date, end_date, start_date, start_date)
+      .where("state = ? and (#{booked_condition})", :finished_host_accepted, start_date, end_date, start_date, start_date)
       .group("homestays.id").map(&:id)
   end
 

@@ -13,7 +13,7 @@ class Booking < ActiveRecord::Base
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
-  validate :is_host_available_btw_check_in_and_check_out_date, if: "check_in_date && check_out_date"
+  validate :is_host_available_btw_check_in_and_check_out_date, if: "!new_record? && check_in_date && check_out_date"
 
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
