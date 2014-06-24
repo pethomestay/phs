@@ -89,7 +89,7 @@
 
 .availability-calendar {
   margin-top: 20px;
-  padding: 10px 5px;
+  padding: 5px 5px;
   display: block;
   border: 1px solid #ddd;
   -webkit-border-radius: 4px;
@@ -111,13 +111,14 @@
 .calendar-legend {
   display: block;
   position: relative;
-  float: right;
-  padding: 10px 5px;
+  padding: 5px 5px;
   border: 1px solid #CCC;
   height: 50px;
   width: 195px;
   font-family: Arial,Helvetica,sans-serif;
   font-size: .8em;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .calendar-legend .legend_item {
