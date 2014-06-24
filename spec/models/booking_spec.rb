@@ -232,7 +232,10 @@ describe Booking do
 
     context 'when a booking has been paid' do
       before {
-        booking.update_attributes owner_accepted: true, host_accepted: true, state: :host_paid
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_was_paid
+        booking.update_attributes owner_accepted: true, host_accepted: true
       }
       it 'should return "host has been paid"' do
         Booking.human_state_name(subject.state.to_sym).should be_eql("host has been paid")

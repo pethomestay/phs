@@ -120,8 +120,8 @@ class Booking < ActiveRecord::Base
   end
 
   state_machine :initial => :unfinished do
-    event :host_paid do
-      transition :finished => :host_paid
+    event :host_was_paid do
+      transition :finished_host_accepted => :host_paid
     end
 
     event :host_rejects_booking do
