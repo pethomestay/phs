@@ -1,6 +1,6 @@
 class AdminMailer < ActionMailer::Base
   layout 'mailer'
-  default to: "Pet Homestay <admin@pethomestay.com>"
+  default to: "PetHomeStay <admin@pethomestay.com>"
 
   def homestay_created_admin(homestay_id)
     @homestay = Homestay.find(homestay_id) #so that only the id gets serialised

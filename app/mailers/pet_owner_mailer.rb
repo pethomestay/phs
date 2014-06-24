@@ -1,6 +1,6 @@
 class PetOwnerMailer < ActionMailer::Base
   layout 'mailer'
-  default from: "Pet Homestay <admin@pethomestay.com>"
+  default from: "PetHomeStay <no-reply@pethomestay.com>"
 
   def contact_details(enquiry)
     @enquiry = enquiry
