@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   layout 'mailer'
-  default from: "Pet Homestay <admin@pethomestay.com>"
+  default from: "PetHomeStay <no-reply@pethomestay.com>"
 
   def leave_feedback(to, subject, enquiry)
     @user = to
