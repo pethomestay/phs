@@ -55,6 +55,7 @@ class BookingsController < ApplicationController
 
   def book_reservation
     @booking = Booking.find(params[:id])
+    @booking.update_attributes(params[:booking]);
     try_pay = @booking.try_payment #try to upgrade status
 
     respond_to do |format|
@@ -93,9 +94,8 @@ class BookingsController < ApplicationController
   end
 
 	def host_paid
-
 		@booking = Booking.find(params[:id])
-    @booking.host_paid
+    @booking.host_was_paid
 		@booking.save!
 		render nothing: true
   end
