@@ -333,7 +333,7 @@ class User < ActiveRecord::Base
   end
 
   def booked_dates_between(start_date, end_date)
-    bookings = self.bookees.where("state = ? and (check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?))", :finished_host_accepted, start_date, end_date, start_date, start_date)
+    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
     bookings.collect do |booking|
       if booking.check_out_date == booking.check_in_date && booking.check_in_date.between?(start_date, end_date)
         [booking.check_in_date]
