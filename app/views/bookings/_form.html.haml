@@ -23,8 +23,10 @@
   - unless !owner_view
     = f.input :id, as: :hidden
 
+  .check_in_error.hide#check_in_date_error
+
   = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true,
-            input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', id: enable_check_in_date }
+            input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', id: enable_check_in_date }, error_html: { id: 'check_in_date_error' }
 
   = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{enable_time_picker}" }, readonly: true,
             input_html: { value: @booking.check_in_time.strftime("%H:%M") }

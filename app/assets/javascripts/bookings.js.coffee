@@ -46,6 +46,16 @@ $ ->
         $('[name="EPS_TIMESTAMP"]').val(data['transaction_time_stamp'])
         $('[name="EPS_AMOUNT"]').val(data['transaction_actual_amount'])
         $('[name="EPS_FINGERPRINT"]').val(data['transaction_merchant_fingerprint'])
+        $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").removeClass("error")
+        $("#check_in_date_error").hide().text("")
+      error: (data) ->
+        error = $.parseJSON(data.responseText).error
+        $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").addClass("error").removeClass "success"
+        $("#check_in_date_error").show().text(error)
+        $("html, body").animate 
+          scrollTop: $(".container.main").offset().top
+          , 500
+        event.stopPropagation
 
   setNumberOfNights = ->
     number_of_nights_input = $('[name="booking[number_of_nights]"]')
@@ -146,10 +156,22 @@ $ ->
           booking_id: $('[name="booking[id]"]').val(),
           message: $('[name="booking[message]"]').val(),
           check_in_time: $('[name="booking[check_in_time]"]').val(),
-          check_out_time: $('[name="booking[check_out_time]"]').val()
+          check_out_time: $('[name="booking[check_out_time]"]').val(),
+          check_in_date: $('[name="booking[check_in_date]"]').val(),
+          check_out_date: $('[name="booking[check_out_date]"]').val()
         success: () ->
           set_eps_result_url()
+          $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").removeClass("error")
+          $("#check_in_date_error").hide().text("")
           $('.payment_form').submit()
+        error: (data) ->
+          error = $.parseJSON(data.responseText).error
+          $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").addClass("error").removeClass "success"
+          $("#check_in_date_error").show().text(error)
+          $("html, body").animate 
+            scrollTop: $(".container.main").offset().top
+            , 500
+          event.stopPropagation
 
   $('[name="transaction[store_card]"]').on 'change', ->
     if $(this).prop('checked') == true

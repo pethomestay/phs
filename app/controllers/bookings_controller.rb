@@ -73,16 +73,26 @@ class BookingsController < ApplicationController
 
 	def update_transaction
 		booking = Booking.find(params[:booking_id])
-		transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
-		return render json: transaction_payload
+    unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date], params[:check_out_date])
+    if unavailable_dates.blank?  
+      transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
+      return render json: transaction_payload
+    else
+      render json: { error: t("booking.unavailable", dates: unavailable_dates.join(", ")) }, status: 400
+    end
 	end
 
 	def update_message
 		booking = Booking.find(params[:booking_id])
 		booking.check_in_time = params[:check_in_time]
 		booking.check_out_time = params[:check_out_time]
-		booking.message_update(params[:message])
-		render nothing: true
+    unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date], params[:check_out_date])
+    if unavailable_dates.blank?
+      booking.message_update(params[:message])
+      render nothing: true
+    else
+      render json: { error: t("booking.unavailable", dates: unavailable_dates.join(", ")) }, status: 400
+    end
   end
 
   def guest_cancelled

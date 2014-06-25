@@ -351,6 +351,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  #returns user's booked, unavailable dates
+  def unavailable_dates_between(start_date, end_date)
+    booked_dates = self.booked_dates_between(start_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(start_date, end_date).map(&:date)
+    (booked_dates + unavailable_dates).uniq
+  end
+
   def update_calendar
     self.update_attribute(:calendar_updated_at, Date.today)
   end
