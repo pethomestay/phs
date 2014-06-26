@@ -73,64 +73,49 @@ $ ->
     $('.date_picker').siblings('span').attr('disabled', 'disabled')
   else
     nowTemp = new Date()
-    nowTemp.setDate nowTemp.getDate() + 1
+    unavailable_dates = []
+    if $("#unavailable_dates").length isnt 0
+      unavailable_dates = (+new Date date for date in $("#unavailable_dates").data("unavailable-dates").split(","))
 
-    $('#datepicker-check-in-date').closest('div').datetimepicker(
-      language: 'en'
-      pickTime: false
-      format: 'dd/MM/yyyy'
+    checkin = $('#datepicker-check-in-date').datepicker(
+      format: 'dd/mm/yyyy'
       startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
+      beforeShowDay: (date) ->
+        if ($.inArray(+date, unavailable_dates) != -1)
+          return enabled: false
     ).on('changeDate', (ev) ->
-      eventTarget = jQuery(ev.target)
-      picker = eventTarget.data('datetimepicker')
-      tempDate = new Date(picker.getLocalDate())
-      tempDate.setDate tempDate.getDate() + 1
-      if $('#datepicker-check-out-date').val() != undefined
-        secondTCurrentDate = new Date($('input.checkout').val().split('/').reverse().join('/'))
-        secondNewDate = secondTCurrentDate
-        if tempDate > secondTCurrentDate
-          secondNewDate = tempDate
-        $('#datepicker-check-out-date').closest('div').datetimepicker 'destroy'
-        $('#datepicker-check-out-date').val new XDate(secondNewDate).toString('dd/MM/yyyy')
-        tempDate.setDate tempDate.getDate() + 1
-        $('#datepicker-check-out-date').closest('div').datetimepicker(
-            language: 'en'
-            pickTime: false
-            format: 'dd/MM/yyyy'
-            startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
-        ).on('changeDate', (ev) ->
-          $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
-          if $('[name="booking[number_of_nights]"]').val() != undefined
-            setNumberOfNights()
-          return
-        ).data('datepicker')
+      newDate = new Date(ev.date)
+      if checkout.date.getTime() < newDate.getTime()
+        checkout.setDate newDate
+      checkout.startDate = newDate
+      checkout.update()
+      checkin.hide()
+      setNumberOfNights()
+    ).data('datepicker')
+
+    checkout = $('#datepicker-check-out-date').datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
+      beforeShowDay: (date) ->
+        if ($.inArray(+date, unavailable_dates) != -1)
+          return enabled: false
+    ).on('changeDate', (ev) ->
       if $('[name="booking[number_of_nights]"]').val() != undefined
         setNumberOfNights()
       return
     ).data('datepicker')
+    
+    $(".booking_check_in_date span.add-on").on('click', (e) ->
+      e.preventDefault
+      checkin.show()
+      checkout.hide()
+    )
 
-    if $('#datepicker-check-out-date').length isnt 0
-      oldDate = new Date($('#datepicker-check-out-date').val().split('/').reverse().join('/'))
-      if oldDate <= nowTemp
-        $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
-
-      $('#datepicker-check-out-date').closest('div').datetimepicker('destroy')
-      startDateSecondPicker = nowTemp
-      startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1
-      $('#datepicker-check-out-date').closest('div').datetimepicker(
-        language: 'en'
-        pickTime: false
-        format: 'dd/MM/yyyy'
-        startDate: new Date(startDateSecondPicker.getFullYear(), startDateSecondPicker.getMonth(), startDateSecondPicker.getDate(), 0, 0)
-      ).on('changeDate', (ev) ->
-        $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
-        if $('[name="booking[number_of_nights]"]').val() != undefined
-          setNumberOfNights()
-        return
-      ).data('datepicker')
-
-  $('input', 'div.datepicker').on 'click', ->
-    $(this).siblings('span').click()
+    $(".booking_check_out_date span.add-on").on('click', (e) ->
+      e.preventDefault
+      checkin.hide()
+      checkout.show()
+    )
 
   $('input', 'div.datepicker').css('cursor', 'default')
   $('input', 'div.timepicker').css('cursor', 'default')

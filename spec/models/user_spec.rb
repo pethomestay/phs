@@ -290,6 +290,34 @@ describe User do
 
   end
 
+  describe "#unavailable_dates_after" do
+
+    let(:start_date) { Date.today }
+
+    subject { user.unavailable_dates_after(start_date) }
+
+    context "when user is neither booked nor unavailable after start date" do
+      it "should return true" do
+        expect(subject).to be_blank
+      end
+    end
+
+    context "when user is booked between start date and end date" do
+      it "should return false" do
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
+        expect(subject).to eq([booking.check_in_date])
+      end
+    end
+
+    context "when user is unavailable between start date and end date" do
+      it "should return false" do
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: start_date + 1.day, user: user)
+        expect(subject).to eq([unavailable_date.date])
+      end
+    end
+
+  end
+
   describe "#update_calendar" do
     it "should mark calendar as updated" do
       confirmed_user.update_calendar
