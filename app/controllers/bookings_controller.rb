@@ -78,6 +78,7 @@ class BookingsController < ApplicationController
       transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
       return render json: transaction_payload
     else
+      unavailable_dates.collect!{ |date| date.strftime('%d/%m/%Y') }
       render json: { error: t("booking.unavailable", dates: unavailable_dates.join(", ")) }, status: 400
     end
 	end
@@ -91,6 +92,7 @@ class BookingsController < ApplicationController
       booking.message_update(params[:message])
       render nothing: true
     else
+      unavailable_dates.collect!{ |date| date.strftime('%d/%m/%Y') }
       render json: { error: t("booking.unavailable", dates: unavailable_dates.join(", ")) }, status: 400
     end
   end
