@@ -11,8 +11,6 @@
   - else
     = render partial: 'bookings/standard_cancel_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
   %p
-    = "Homestay: #{@booking.homestay.title},"
-  %p
     Cancellations happen for all sorts of reasons - perhaps your holiday isn't going ahead  or maybe you are going to take your pet with you!
   %p
     However, based on your booking, a Host has committed themselves and blocked out their time for you.
@@ -27,8 +25,6 @@
       Between 14 - 7 days, 50% of the fee is returned
     %li
       Less than 7 days, no fee is returned.
-  %p
-    We deduct our Service Fee of 15% and Insurance of $2 per night before refunding any cancellations.
   %h4
     Cancellation Summary
   %p
