@@ -11,6 +11,7 @@ class BookingsController < ApplicationController
 	def new
 		@booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
 		@transaction = current_user.find_or_create_transaction_by(@booking)
+    @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
     if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
       PaymentFailedJob.new.async.perform(@booking, @transaction)
       render "bookings/payment_issue"
@@ -74,7 +75,7 @@ class BookingsController < ApplicationController
 	def update_transaction
 		booking = Booking.find(params[:booking_id])
     unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date].to_date, params[:check_out_date].to_date)
-    if unavailable_dates.blank?  
+    if unavailable_dates.blank?
       transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
       return render json: transaction_payload
     else

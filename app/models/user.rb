@@ -335,7 +335,7 @@ class User < ActiveRecord::Base
   def booked_dates_between(start_date, end_date)
     bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
     bookings.collect do |booking|
-      if booking.check_out_date == booking.check_in_date && booking.check_in_date.between?(start_date, end_date)
+      if booking.check_out_date == booking.check_in_date 
         [booking.check_in_date]
       else
         booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
@@ -356,6 +356,20 @@ class User < ActiveRecord::Base
     booked_dates = self.booked_dates_between(start_date, end_date)
     unavailable_dates = self.unavailable_dates.between(start_date, end_date).map(&:date)
     (booked_dates + unavailable_dates).uniq
+  end
+
+  def unavailable_dates_after(start_date)
+    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date >= ? or (check_in_date < ? and check_out_date > ?)", start_date, start_date, start_date)
+    unavailable_dates = bookings.collect do |booking|
+      if booking.check_out_date == booking.check_in_date
+        [booking.check_in_date]
+      else
+        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
+        (booking_start..booking.check_out_date).to_a
+      end
+    end.flatten.compact.uniq
+    unavailable_dates += self.unavailable_dates.where("date >= ?", start_date).map(&:date)
+    unavailable_dates.uniq
   end
 
   def update_calendar
