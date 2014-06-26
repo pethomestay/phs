@@ -33,10 +33,10 @@
           %tr
             %td
               - current_date = DateTime.now.strftime('%d/%m/%Y')
-              = f.input :check_in_date, as: :date_picker, wrapper_html: { class: 'input-append datepicker' }, readonly: true,
+              = f.input :check_in_date, as: :date_picker, wrapper_html: { class: 'input-append' }, readonly: true,
                         input_html: { value: current_date, class: 'span2 checkin', id: 'datepicker-check-in-date' }
             %td
-              = f.input :check_out_date, as: :date_picker, wrapper_html: { class: 'input-append datepicker' }, readonly: true,
+              = f.input :check_out_date, as: :date_picker, wrapper_html: { class: 'input-append' }, readonly: true,
                         input_html: { value: current_date, class: 'span2 checkout', id: 'datepicker-check-out-date' }
           %tr
             %td.message{ colspan: 2 }
