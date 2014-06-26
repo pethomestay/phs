@@ -17,7 +17,7 @@ en:
     not_authorized: "You are not authorized"
 
   booking:
-    unavailable: "Host is either booked or unavailable on %{dates}"
+    unavailable: "Host is unavailable on %{dates}"
 
   activerecord:
     state_machines:
