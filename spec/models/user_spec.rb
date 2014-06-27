@@ -269,20 +269,20 @@ describe User do
     subject { user.unavailable_dates_between(start_date, end_date) }
 
     context "when user is neither booked nor unavailable between start date and end date" do
-      it "should return true" do
+      it "should return a blank array" do
         expect(subject).to be_blank
       end
     end
 
     context "when user is booked between start date and end date" do
-      it "should return false" do
+      it "should return the booked dates" do
         booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
         expect(subject).to eq([booking.check_in_date])
       end
     end
 
     context "when user is unavailable between start date and end date" do
-      it "should return false" do
+      it "should return unavailable dates" do
         unavailable_date = FactoryGirl.create(:unavailable_date, date: start_date + 1.day, user: user)
         expect(subject).to eq([unavailable_date.date])
       end
@@ -297,20 +297,20 @@ describe User do
     subject { user.unavailable_dates_after(start_date) }
 
     context "when user is neither booked nor unavailable after start date" do
-      it "should return true" do
+      it "should return a blank array" do
         expect(subject).to be_blank
       end
     end
 
-    context "when user is booked between start date and end date" do
-      it "should return false" do
+    context "when user is booked after start date" do
+      it "should return booked date" do
         booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
         expect(subject).to eq([booking.check_in_date])
       end
     end
 
-    context "when user is unavailable between start date and end date" do
-      it "should return false" do
+    context "when user is unavailable after start date" do
+      it "should return unavailable date" do
         unavailable_date = FactoryGirl.create(:unavailable_date, date: start_date + 1.day, user: user)
         expect(subject).to eq([unavailable_date.date])
       end
