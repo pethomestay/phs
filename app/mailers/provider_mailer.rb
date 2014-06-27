@@ -11,6 +11,15 @@ class ProviderMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!")
   end
 
+  def new_enquiry_SMS(enquiry)
+    host   = enquiry.homestay.user
+    host_mobile = trim(host.mobile_number)
+    return unless host_mobile # abort if mobile number is illegal
+    @sender = enquiry.user
+    address = "#{host_mobile}@email.smsglobal.com"
+    mail(to: address, subject: "New Enquiry Notification")
+  end
+
   def owner_confirmed(booking)
     @booking = booking
     @enquiry = @booking.enquiry
@@ -39,4 +48,19 @@ class ProviderMailer < ActionMailer::Base
 		email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
 		mail(to: email_with_name, subject: "You have confirmed the booking with #{@guest.first_name.capitalize}!")
 	end
+
+  private
+  def trim(mobile)
+    mobile.gsub(/[^0-9]/, "")
+    case mobile.length
+    when 10 # 0416 123 456
+      return '61' + mobile[1..-1]
+    when 11 # 61 416 291 496
+      return mobile
+    when 13 # 0061 416 123 456
+      return mobile[2..-1]
+    else
+      return nil
+    end
+  end
 end
