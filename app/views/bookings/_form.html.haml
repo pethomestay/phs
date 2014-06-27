@@ -24,7 +24,7 @@
     = f.input :id, as: :hidden
 
   .check_in_error.hide#check_in_date_error
-  .hide#unavailable_dates{ data: { unavailable_dates: @unavailable_dates.join(',') } }
+  .hide#unavailable_dates{ data: { unavailable_dates: @unavailable_dates.to_a.join(',') } }
   
   = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true,
             input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', id: enable_check_in_date }
