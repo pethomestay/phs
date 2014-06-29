@@ -365,7 +365,8 @@ class User < ActiveRecord::Base
         [booking.check_in_date]
       else
         booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
-        (booking_start..booking.check_out_date).to_a
+        booking_end = booking.check_out_date - 1.day
+        (booking_start..booking_end).to_a
       end
     end.flatten.compact.uniq
     unavailable_dates += self.unavailable_dates.where("date >= ?", start_date).map(&:date)

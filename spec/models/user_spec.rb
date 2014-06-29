@@ -303,10 +303,26 @@ describe User do
     end
 
     context "when user is booked after start date" do
+      
       it "should return booked date" do
         booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
         expect(subject).to eq([booking.check_in_date])
       end
+
+      context "when check in date is less than start date" do
+        it "should return all dates between start date and checkout date" do
+          booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date - 1.day , check_out_date: start_date + 2.days)
+          expect(subject).to eq((start_date..(start_date + 1.day)).to_a)
+        end
+      end
+
+      context "when check in date is greater than or equal start date" do
+        it "should return all dates between checkin date and checkout date" do
+          booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date + 2.days)
+          expect(subject).to eq((start_date..(start_date + 1.day)).to_a)
+        end
+      end
+
     end
 
     context "when user is unavailable after start date" do
