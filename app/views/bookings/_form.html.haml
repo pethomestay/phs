@@ -15,7 +15,7 @@
   = f.input :message, as: :text, input_html: { rows: 3 }, readonly: !owner_view
 
   %hr
-  - enable_date_picker = booking_editable ? 'datepicker' : ''
+  - enable_date_picker = booking_editable ? 'enabled_datepicker' : ''
   - enable_check_in_date = booking_editable ? 'datepicker-check-in-date' : ''
   - enable_check_out_date = booking_editable ? 'datepicker-check-out-date' : ''
   - enable_time_picker = booking_editable ? 'timepicker' : ''
@@ -26,14 +26,14 @@
   .check_in_error.hide#check_in_date_error
   .hide#unavailable_dates{ data: { unavailable_dates: @unavailable_dates.to_a.join(',') } }
   
-  = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true,
+  = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{enable_date_picker}" }, readonly: true,
             input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', id: enable_check_in_date }
 
   = f.input :check_in_time, as: :time_picker, wrapper_html: { class: "input-append #{enable_time_picker}" }, readonly: true,
             input_html: { value: @booking.check_in_time.strftime("%H:%M") }
 
   %br
-  = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append" }, readonly: true,
+  = f.input :check_out_date, as: :date_picker, wrapper_html: { class: "input-append #{enable_date_picker}" }, readonly: true,
             input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'span2 checkout', id: enable_check_out_date }
 
   = f.input :check_out_time, as: :time_picker, wrapper_html: { class: "input-append #{enable_time_picker}" }, readonly: true,

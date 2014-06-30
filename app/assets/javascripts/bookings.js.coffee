@@ -105,13 +105,13 @@ $ ->
       return
     ).data('datepicker')
     
-    $(".booking_check_in_date span.add-on").on('click', (e) ->
+    $(".booking_check_in_date span.add-on, .enquiry_check_in_date span.add-on").on('click', (e) ->
       e.preventDefault
       checkin.show()
       checkout.hide()
     )
 
-    $(".booking_check_out_date span.add-on").on('click', (e) ->
+    $(".booking_check_out_date span.add-on, .enquiry_check_out_date span.add-on").on('click', (e) ->
       e.preventDefault
       checkin.hide()
       checkout.show()
