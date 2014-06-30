@@ -57,12 +57,27 @@ class Admin::AnalyticsController < Admin::AdminController
       booking_lengths << (booking.updated_at.to_date - booking.created_at.to_date) #Note this will give you the days
     }
 
+    sum_first_response_in_sec = []
+    @enquiries.each do |enquiry|
+      first_response_in_sec = first_response_in_sec_to enquiry
+      sum_first_response_in_sec << first_response_in_sec if first_response_in_sec
+    end
+    seconds = sum_first_response_in_sec.reduce(:+) / sum_first_response_in_sec.length unless sum_first_response_in_sec.length == 0
+    hours = seconds / 3600
+    seconds -= hours * 3600
+    minutes = seconds / 60
+
     @average_booking_length_in_days = get_average_days(booking_lengths)
     @average_enquiry_to_booking_in_days = get_average_days(enquiry_to_booking_lengths)
     @number_of_unconfirmed_bookings =   @unconfirmed_bookings.count
     @number_of_confirmed_bookings =   @confirmed_bookings.count
     @number_of_unconfirmed_to_enquiries = @unconfirmed_enquiries.count
     @number_of_confirmed_to_enquires = @confirmed_enquiries.count
+    @average_first_response_time = "#{hours.round(2)} hours #{minutes.round(2)} minutes"
+    @num_of_unresponded_enquiries = num_of_unresponded_enquiries
+    @percent_of_unresponded_enquiries = (@num_of_unresponded_enquiries * 100.0 / @enquiries.count).round(2)
+    @num_of_responded_enquiries = @enquiries.count - num_of_unresponded_enquiries
+    @percent_of_responded_enquiries = 100 - @percent_of_unresponded_enquiries
 
 
 
@@ -78,5 +93,34 @@ class Admin::AnalyticsController < Admin::AdminController
       @average_length_in_days = day_array.inject{ |sum, el| sum + el }.to_f / day_array.size
     end
     return @average_length_in_days
+  end
+
+  private
+  def first_response_in_sec_to enquiry
+    # find first response date
+    messages = Message.where(mailbox_id: enquiry.id) # fetch all messages involved in this enquiry
+    return nil unless messages.length > 1 # Must have a response
+    first_res_datetime = Time.now()
+    # search for earliest response
+    messages.each { |m| first_res_datetime = m.created_at if m.created_at < first_res_datetime and m.user_id != enquiry.user_id }
+    # calculate diff
+    return first_res_datetime - enquiry.created_at
+  end
+
+  def responded? enquiry
+    messages = Message.where(mailbox_id: enquiry.id)
+    if messages.length > 1
+      true
+    else
+      false
+    end
+  end
+
+  def num_of_unresponded_enquiries
+    count = 0
+    @enquiries.each do |enquiry|
+      count += 1 unless responded? enquiry
+    end
+    count
   end
 end
