@@ -3,6 +3,20 @@
     float:left;
     margin-left:200px;
   }
+  #addressField {
+    margin-left: 5.7em;
+    width: 30em;
+  }
+  .address-preview {
+    background-color: #ebebeb;
+    padding-top: 1em;
+    padding-bottom: .5em;
+    border: none;
+    width: 43em;
+  }
+  .address-preview h5 {
+    margin-left: 5em;
+  }
 
 
 
@@ -102,13 +116,14 @@
     Your PetHomeStay address
     %small This will be used to place your listing on the map
   .control-group
-    .controls
-      %input{id: 'addressField', placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
-  = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
-  = f.input :address_suburb, label: 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
-  = f.input :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
-  = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
-  = f.input :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
+    %input{id: 'addressField', placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
+  .address-preview
+    %h5 Address Preview
+    = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+    = f.input :address_suburb, label: 'Suburb/City', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+    = f.input :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+    = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+    = f.input :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
   %h3{style: "margin-bottom: 10px;"} Other services offered
   .grouped-checkboxes
     = label_tag "I can also offer", nil, class: 'for-group'
