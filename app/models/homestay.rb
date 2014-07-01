@@ -34,6 +34,8 @@ class Homestay < ActiveRecord::Base
 
   before_save :sanitize_description
 
+  after_initialize :set_country_Australia # set country as Australia no matter what
+
   def to_param
     self.slug
   end
@@ -138,5 +140,9 @@ class Homestay < ActiveRecord::Base
   private
   def copy_slug_errors_to_title
     errors.add(:title, errors.get(:slug)[0]) if errors.get(:slug)
+  end
+
+  def set_country_Australia
+    self.address_country = 'Australia'
   end
 end
