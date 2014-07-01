@@ -263,28 +263,42 @@ describe User do
 
   describe "#unavailable_dates_between" do
 
-    let(:start_date) { Date.today - 1.day }
-    let(:end_date) { Date.today + 2.days }
+    let(:checkin_date) { Date.today - 1.day }
+    let(:checkout_date) { Date.today + 2.days }
 
-    subject { user.unavailable_dates_between(start_date, end_date) }
+    subject { user.unavailable_dates_between(checkin_date, checkout_date) }
 
-    context "when user is neither booked nor unavailable between start date and end date" do
+    context "when user is neither booked nor unavailable between checkin date and checkout date" do
       it "should return a blank array" do
         expect(subject).to be_blank
       end
     end
 
-    context "when user is booked between start date and end date" do
+    context "when user is booked between checkin and checkout date" do
       it "should return the booked dates" do
-        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: checkin_date , check_out_date: checkin_date)
         expect(subject).to eq([booking.check_in_date])
       end
     end
 
     context "when user is unavailable between start date and end date" do
       it "should return unavailable dates" do
-        unavailable_date = FactoryGirl.create(:unavailable_date, date: start_date + 1.day, user: user)
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: checkin_date + 1.day, user: user)
         expect(subject).to eq([unavailable_date.date])
+      end
+    end
+
+    context "when user is unavailable on checkout date" do
+      it "should return a blank array" do
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: checkout_date, user: user)
+        expect(subject).to be_blank
+      end
+    end
+
+    context "when user is booked on checkout date" do
+      it "should return a blank array" do
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: checkout_date , check_out_date: checkout_date)
+        expect(subject).to be_blank
       end
     end
 

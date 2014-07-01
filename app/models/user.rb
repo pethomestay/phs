@@ -352,9 +352,10 @@ class User < ActiveRecord::Base
   end
 
   #returns user's booked, unavailable dates
-  def unavailable_dates_between(start_date, end_date)
-    booked_dates = self.booked_dates_between(start_date, end_date)
-    unavailable_dates = self.unavailable_dates.between(start_date, end_date).map(&:date)
+  def unavailable_dates_between(checkin_date, checkout_date)
+    end_date = checkin_date == checkout_date ? checkout_date : checkout_date - 1.day
+    booked_dates = self.booked_dates_between(checkin_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(checkin_date, end_date).map(&:date)
     (booked_dates + unavailable_dates).uniq
   end
 
