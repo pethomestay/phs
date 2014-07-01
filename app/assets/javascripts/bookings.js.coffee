@@ -81,10 +81,7 @@ $ ->
       startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
       beforeShowDay: (date) ->
         if ($.inArray(+date, unavailable_dates) != -1)
-          prev_unavailable_date = new Date(date)
-          prev_unavailable_date.setDate(prev_unavailable_date.getDate() - 1)
-          if ($.inArray(+prev_unavailable_date, unavailable_dates) != -1)
-            return enabled: false
+          return enabled: false
     ).on('changeDate', (ev) ->
       newDate = new Date(ev.date)
       if checkout.date.getTime() < newDate.getTime()
@@ -104,6 +101,8 @@ $ ->
           prev_unavailable_date.setDate(prev_unavailable_date.getDate() - 1)
           if ($.inArray(+prev_unavailable_date, unavailable_dates) != -1)
             return enabled: false
+          else
+            return classes: "selectable-unavailable-date"
     ).on('changeDate', (ev) ->
       if $('[name="booking[number_of_nights]"]').val() != undefined
         setNumberOfNights()
