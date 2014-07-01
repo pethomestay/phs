@@ -68,6 +68,7 @@ class UserMailer < ActionMailer::Base
     @user = booking.bookee
     @guest = booking.booker
     @days_left_until_booking_commences = booking.get_days_left
+    @subtotal = booking.actual_value_figure(booking.subtotal)
     @booking_fee_refunded = booking.calculate_refund
 
     email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"

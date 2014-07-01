@@ -6,7 +6,7 @@
       = link_to 'Back to My My Trips List', trips_bookings_path, class: 'btn'
     .clear
 
-  - if @booking.calculate_refund > 0
+  - if @booking.calculate_refund.to_f > 0.0
     = render partial: 'bookings/account_submit'
   - else
     = render partial: 'bookings/standard_cancel_submit',format: 'js', locals: {form_name: "#cancel_reason_form", cancel_reason_area_name: "#booking_cancel_reason", button: "#guest_cancel" }
@@ -40,14 +40,14 @@
       = f.input :cancel_reason, required: true, input_html: { :id=>'cancel_reason_area',:rows => 8, value: f.object.cancel_reason }, wrapper_html: {class: 'control-group text required booking_cancel_reason ' + ('error' unless @booking_errors.blank? ).to_s} do
         = f.input_field :cancel_reason,:as => :text, :rows => 8, value: f.object.cancel_reason
         %span.help-inline
-      - if @booking.calculate_refund > 0
+      - if @booking.calculate_refund.to_f > 0.0
         .form-actions
           = f.submit "Save Cancel Reason", class: 'btn btn-primary', id: 'save_cancel_reason'
       - else
         = render partial: 'bookings/guest_cancel_modal', locals: {f: f}
 
 
-  - if @booking.calculate_refund > 0
+  - if @booking.calculate_refund.to_f > 0.0
     %p
       Please confirm your bank account details and click submit, so that we can reimburse you - we are not responsible for incorrect refunds due to account errors!
     %p

@@ -4,7 +4,7 @@ gem "strong_parameters"
 gem 'oauth2'
 gem 'redcarpet'
 gem 'blogit'
-gem 'fog', '1.22.1'
+gem 'fog', '~>1.2'
 gem 'ckeditor'
 gem 'rails', '3.2.18'
 gem 'pg'

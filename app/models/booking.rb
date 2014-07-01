@@ -102,22 +102,26 @@ class Booking < ActiveRecord::Base
   def calculate_refund
     days = get_days_left
     if days > 14
-      return self.amount
+      return actual_value_figure(transaction_mode_value(amount_minus_fees))
     elsif days >= 7
-      return self.amount * 0.5
+      return actual_value_figure(transaction_mode_value(self.amount_minus_fees * 0.5))
     else
-      return 0
+      return "0.00"
     end
+  end
+
+  def amount_minus_fees
+    return (self.subtotal - self.phs_service_charge.to_f)
   end
 
   def calculate_host_amount_after_guest_cancel
     days = get_days_left
     if days > 14
-      return 0
+      return "0.00"
     elsif days >= 7
-      return self.amount * 0.5
+      return actual_value_figure(transaction_mode_value(self.amount_minus_fees * 0.5))
     else
-      return self.amount
+      return actual_value_figure(transaction_mode_value(amount_minus_fees))
     end
   end
 

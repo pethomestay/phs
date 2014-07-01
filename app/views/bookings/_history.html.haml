@@ -34,7 +34,7 @@
               %br
               = "Trip cancelled #{booking.get_days_before_cancellation} days before Check In Date"
               %br
-              = "Amount refunded to Guest as per Cancellation Policy - $#{booking.refund}"
+              = "Amount refunded to Guest as per Cancellation Policy - $#{booking.actual_value_figure(booking.refund)}"
           - else
             %strong Payout:
             = " $#{booking.host_payout}"

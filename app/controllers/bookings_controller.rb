@@ -168,7 +168,7 @@ class BookingsController < ApplicationController
       @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
     end
-    if (@booking.calculate_refund == 0 and @booking_errors.nil?)
+    if (@booking.calculate_refund == "0.00" and @booking_errors.nil?)
       canceled(params[:id], false)
       render :js => "window.location = '#{trips_bookings_path}'"
     else

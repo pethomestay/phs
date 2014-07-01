@@ -89,7 +89,7 @@ describe Booking do
   describe '#calculate_refund' do
     before :each do
       @booking = FactoryGirl.create :booking
-      @booking.amount = 14.2
+      @booking.subtotal = 14.2
       @booking.payment_check_succeed
       @time = Time.parse("13:00:00")
     end
@@ -98,22 +98,22 @@ describe Booking do
       three_days_time = Date.today + 3 #add 3 days
       @booking.check_in_date = three_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql(0)
+      @booking.calculate_refund.should be_eql("0.00")
     end
 
 
-    it 'should be 50% refund for booking' do
+    it 'should be 50% refund for booking minus phs service fee' do
       eight_days_time = Date.today + 8  #add 8 days
       @booking.check_in_date = eight_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql(7.1)
+      @booking.calculate_refund.should be_eql("6.08")
     end
 
-    it 'should be 100% refund for booking' do
+    it 'should be 100% refund for booking minus phs service fee' do
       fifteen_days_time = Date.today + 15 #add 15 days
       @booking.check_in_date = fifteen_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql(14.2)
+      @booking.calculate_refund.should be_eql("12.08")
     end
 
   end
@@ -152,10 +152,25 @@ describe Booking do
     end
   end
 
+  #  def amount_minus_fees
+  #return (self.subtotal - self.phs_service_charge)
+  #end
+  describe '#amount_minus_fees' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.00
+      @booking.payment_check_succeed
+    end
+
+    it 'should be 11.92 for booking when subtotal is 14.00' do
+      @booking.amount_minus_fees.should be_eql(11.92)
+    end
+  end
+
   describe '#calculate_host_amount_after_refund' do
     before :each do
       @booking = FactoryGirl.create :booking
-      @booking.amount = 14.2
+      @booking.subtotal = 14.00
       @booking.payment_check_succeed
       @time = Time.parse("13:00:00")
     end
@@ -164,22 +179,22 @@ describe Booking do
       fifteen_days_time = Date.today + 15 #add 15 days
       @booking.check_in_date = fifteen_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql(0)
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("0.00")
     end
 
 
-    it 'should be 50% host amount for booking' do
+    it 'should be 50% host amount for booking minus phs service fee' do
       eight_days_time = Date.today + 8  #add 8 days
       @booking.check_in_date = eight_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql(7.1)
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("5.08")
     end
 
-    it 'should be 100% amount for host for booking' do
+    it 'should be 100% amount for host for booking minus phs service fee' do
       three_days_time = Date.today + 3 #add 3 days
       @booking.check_in_date = three_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql(14.2)
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("11.08")
     end
 
   end

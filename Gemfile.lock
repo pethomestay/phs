@@ -374,7 +374,7 @@ DEPENDENCIES
   factory_girl_rails
   ffaker
   figaro!
-  fog (= 1.22.1)
+  fog (~> 1.2)
   geocoder!
   gmaps4rails
   haml-rails
