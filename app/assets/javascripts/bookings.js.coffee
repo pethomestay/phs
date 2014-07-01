@@ -65,9 +65,8 @@ $ ->
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
     if parseInt(number_of_nights) <= 0
       number_of_nights = 1
-    if parseInt(number_of_nights_input.val()) != parseInt(number_of_nights)
-      number_of_nights_input.val(number_of_nights)
-      updateTransactionFromServer(number_of_nights_input)
+    number_of_nights_input.val(number_of_nights)
+    updateTransactionFromServer(number_of_nights_input)
 
   if $('#datepicker-check-in-date').length is 0
     $('.date_picker').siblings('span').attr('disabled', 'disabled')
@@ -82,7 +81,10 @@ $ ->
       startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
       beforeShowDay: (date) ->
         if ($.inArray(+date, unavailable_dates) != -1)
-          return enabled: false
+          prev_unavailable_date = new Date(date)
+          prev_unavailable_date.setDate(prev_unavailable_date.getDate() - 1)
+          if ($.inArray(+prev_unavailable_date, unavailable_dates) != -1)
+            return enabled: false
     ).on('changeDate', (ev) ->
       newDate = new Date(ev.date)
       if checkout.date.getTime() < newDate.getTime()
@@ -98,7 +100,10 @@ $ ->
       startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
       beforeShowDay: (date) ->
         if ($.inArray(+date, unavailable_dates) != -1)
-          return enabled: false
+          prev_unavailable_date = new Date(date)
+          prev_unavailable_date.setDate(prev_unavailable_date.getDate() - 1)
+          if ($.inArray(+prev_unavailable_date, unavailable_dates) != -1)
+            return enabled: false
     ).on('changeDate', (ev) ->
       if $('[name="booking[number_of_nights]"]').val() != undefined
         setNumberOfNights()
