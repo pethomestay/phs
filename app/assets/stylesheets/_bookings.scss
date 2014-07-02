@@ -40,5 +40,21 @@ label.error {
 }
 
 .selectable-unavailable-date {
-  color: #eeeeee !important;
+  color: #C1C1C1 !important;
 }
+
+.datepicker td.day.disabled {
+  color: #C1C1C1 !important;
+}
+
+.datepicker td span.old {
+  color: #8A8A8A !important;
+}
+
+.datepicker td.old,
+.datepicker td.new {
+  color: #8A8A8A !important;
+}
+
+
+
