@@ -56,7 +56,7 @@ class Booking < ActiveRecord::Base
 
 
   def is_host_view_valid?
-    self.state?(@@valid_host_view_booking_states_list)
+   not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
   end
 
 	def self.to_csv(options = {})

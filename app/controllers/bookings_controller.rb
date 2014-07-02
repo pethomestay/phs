@@ -100,9 +100,15 @@ class BookingsController < ApplicationController
 
   def guest_cancelled
     @booking = Booking.find(params[:id])
-    @account = current_user.account
-    if @account.nil?
-      @account = Account.new
+    if @booking.is_host_view_valid?
+      @account = current_user.account
+      if @account.nil?
+        @account = Account.new
+      end
+    else
+      @booking.destroy
+      flash[:notice] = 'Your incomplete booking was cancelled.'
+      return redirect_to trips_bookings_path
     end
   end
 

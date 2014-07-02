@@ -1,3 +1,16 @@
+:javascript
+  $( document ).ready(function() {
+    $("a.confirm-cancel").click(function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      bootbox.confirm("Are you sure you want to cancel?  This booking will be deleted and you will no longer see it in your list of Trips.", function(confirmed) {
+          if (confirmed) {
+            window.location =  url;
+          }
+      });
+    });
+  });
+
 - if @bookings.blank?
   %p You have no bookings as a host in your history
 - else
@@ -50,9 +63,13 @@
             = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
         - elsif current_user == booking.booker
           = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary'
-        - if not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0 #don't allow a booking to be canceled if it's an old one
+        - if ((not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0) or (!booking.is_host_view_valid?)) #don't allow a booking to be canceled if it's an old one and paid for
           %br
-          = link_to 'Cancel', guest_cancelled_booking_path(booking), class: 'btn btn-primary cancel-booking-btn', id: 'cancel-booking'
+          - cancel_classes = 'btn btn-primary cancel-booking-btn'
+          - if !booking.is_host_view_valid?
+            - cancel_classes += ' confirm-cancel'
+          = link_to 'Cancel', guest_cancelled_booking_path(booking), class: cancel_classes, id: 'cancel-booking_' + booking.id.to_s
+
 
   - if !@trips and can_host_request_cancel_any_bookings?
     = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
