@@ -66,6 +66,9 @@ PetHomestay::Application.routes.draw do
     resources :accounts
   end
 
+  # Zendesk Single Sign-on
+  get 'zendesk_session/:action', to: 'zendesk_session'
+
   mount Ckeditor::Engine => '/ckeditor'
 
   get '/my-account'     => 'users#show', as: :my_account

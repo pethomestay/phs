@@ -36,6 +36,7 @@ gem 'nokogiri', '1.5.6'
 gem 'heroku-api'
 gem 'sucker_punch'
 
+gem 'jwt' # For Zendesk Single Sign-on
 
 group :test, :development do
   gem 'figaro'
