@@ -31,4 +31,8 @@ class PagesController < ApplicationController
 
   def post_to_securepay
   end
+
+  def new_home
+    render layout: "new_application"
+  end
 end
