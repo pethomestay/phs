@@ -42,7 +42,10 @@
           %br
           - if current_user == booking.booker
             %strong Amount Paid:
-            = " $#{booking.actual_amount}"
+            - if booking.unfinished_booking?
+              = " $0.00"
+            - else
+              = " $#{booking.actual_amount}"
             - if booking.state?(:guest_cancelled)
               %br
               = "Trip cancelled #{booking.get_days_before_cancellation} days before Check In Date"

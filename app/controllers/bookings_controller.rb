@@ -106,6 +106,9 @@ class BookingsController < ApplicationController
         @account = Account.new
       end
     else
+      if @booking.transaction
+        @booking.transaction.destroy #remove any associated transaction
+      end
       @booking.destroy
       flash[:notice] = 'Your incomplete booking was cancelled.'
       return redirect_to trips_bookings_path

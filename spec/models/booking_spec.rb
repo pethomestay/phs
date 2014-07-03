@@ -167,6 +167,28 @@ describe Booking do
     end
   end
 
+  describe '#unfinished_booking?' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.00
+
+    end
+
+    it 'should be true when we have create a booking' do
+      @booking.unfinished_booking?.should be_true
+    end
+
+    it 'should be true when we have a payment pending' do
+      @booking.try_payment
+      @booking.unfinished_booking?.should be_true
+    end
+
+    it 'should be false when booking succeeds' do
+      @booking.payment_check_succeed
+      @booking.unfinished_booking?.should be_false
+    end
+  end
+
   describe '#calculate_host_amount_after_refund' do
     before :each do
       @booking = FactoryGirl.create :booking

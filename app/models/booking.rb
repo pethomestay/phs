@@ -59,6 +59,10 @@ class Booking < ActiveRecord::Base
    not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
   end
 
+  def unfinished_booking?
+    self.state?(:unfinished) or self.state?(:payment_authorisation_pending)
+  end
+
 	def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
 			csv << [
