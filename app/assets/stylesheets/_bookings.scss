@@ -1,13 +1,22 @@
 .show-booking-history{
   padding-bottom: 90px;
+  padding-right: 0px !important;
 }
 
 .show-booking-history-guest{
   padding-bottom: 130px;
+  padding-right: 0px !important;
 }
 
 #booking_cancelled_booking {
   width: 400px;
+}
+
+.right-panel-btn {
+  width: 100px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 #bookingtbl td {
