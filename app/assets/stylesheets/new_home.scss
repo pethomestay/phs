@@ -92,6 +92,45 @@
     background-color: #eb5b1a;
     color: #FFFFFF;
 }
+
+// Sections shared
+#why-phs h2,
+#process h2 {
+    font-size: 35px;
+    margin-top: 30px;
+}
+
+// Process
+#process img {
+    width: 120px;
+    margin: 25px;
+}
+#process .row {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+#process h3 {
+    margin-top: 45px;
+}
+
+// Why PHS
+#why-phs {
+    background-color: rgb(247, 247, 247);
+}
+#why-phs img {
+    width: 80%;
+}
+#why-phs h3 {
+    margin-top: 55px;
+}
+#first-row {
+    margin-top: 70px;
+}
+#last-row {
+    margin-bottom: 70px;
+}
+
+// Responsive
 @media (max-width: 767px) {
     #drop-off input,
     #pick-up input {
@@ -115,21 +154,4 @@
     #pick-up {
         margin-bottom: 5px;
     }
-}
-
-// Process
-#process img {
-    width: 120px;
-    margin: 25px;
-}
-#process h2 {
-    font-size: 35px;
-    margin-top: 30px;
-}
-#process .row {
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-#process h3 {
-    margin-top: 45px;
 }
