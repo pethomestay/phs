@@ -1,0 +1,118 @@
+// Nav bar
+#nav-bar {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 70px;
+    padding-top: 13px;
+}
+#logo {
+    color: #FFFFFF;
+    float: left;
+    margin-top: 10px;
+    font-style: italic;
+}
+// Nav pills
+#nav-bar a {
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0 3px;
+}
+#nav-bar a:focus,
+#nav-bar a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+#sign-up {
+    border: 2px solid #FFFFFF;
+}
+@media (max-width: 500px) {
+    #become-a-host {
+        display: none;
+    }
+}
+
+// Jumbotron
+.bg {
+    background: url('http://s.bootply.com/assets/example/bg_blueplane.jpg') no-repeat center center;
+    position: fixed;
+    width: 100%;
+    height: 550px; // Must be the height of jumbotron plus the height of nav bar
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.jumbotron {
+    margin-bottom: 0;
+    height: 480px; // Must be the height of bg minus the height of nav bar
+    background: rgba(18, 18, 18, 0.2);
+    // text
+    color: #FFFFFF;
+    text-shadow: black 0.03em 0.03em 0.03em; // Experimental
+    text-align: center;
+}
+// Greeting
+.jumbotron h1 {
+    margin: 50px 0 0.7em 0;
+}
+// Host search bar
+#host-search-form {
+    display: inline-block; // reduce the width to only what is necessary
+    margin: 0px auto;
+    background-color: rgba(57,60,61,0.5);
+    padding: 13px;
+}
+// Input field
+.left-merged .input-group-addon {
+    border-right: 0;
+    background-color: #FFFFFF;
+    border-radius: 0;
+}
+#postcode input {
+    border-left: 0;
+    background-color: #FFFFFF;
+    border-radius: 0;
+}
+.right-merged .input-group-addon {
+    border-left: 0;
+    background-color: #FFFFFF;
+    border-radius: 0;
+}
+#drop-off input,
+#pick-up input {
+    border-right: 0;
+    background-color: #FFFFFF;
+    border-radius: 0;
+    width: 155px;
+}
+#search-btn {
+    background-color: #eb5b3a;
+    width: 7em;
+    border-radius: 0;
+}
+#search-btn:focus,
+#search-btn:hover {
+    background-color: #eb5b1a;
+    color: #FFFFFF;
+}
+@media (max-width: 767px) {
+    #drop-off input,
+    #pick-up input {
+        display: block;
+        width: 100%;
+    }
+}
+@media (max-width: 991px) {
+    #postcode {
+        display: block;
+    }
+    #postcode .input-group {
+        width: 100%;
+    }
+    #search-btn {
+        display: block;
+        width: 100%;
+    }
+    #postcode,
+    #drop-off,
+    #pick-up {
+        margin-bottom: 5px;
+    }
+}
