@@ -31,7 +31,8 @@
 
 // Jumbotron
 .bg {
-    background: url('http://s.bootply.com/assets/example/bg_blueplane.jpg') no-repeat center center;
+    background: image-url("home/jumbotron_bg.png") no-repeat center center;
+    background-size: cover;
     position: absolute;
     width: 100%;
     height: 550px; // Must be the height of jumbotron plus the height of nav bar
@@ -91,6 +92,26 @@
 #search-btn:hover {
     background-color: #eb5b1a;
     color: #FFFFFF;
+}
+// Media
+.media {
+    margin-top: 110px;
+}
+.media img {
+    height: 40px;
+    margin: 0 15px;
+}
+.media img#herald-sun {
+    height: 50px;
+}
+.media img#daily-telegraph {
+    height: 30px;
+}
+.media img#financial-review {
+    height: 65px;
+}
+.media #cc {
+    text-shadow: none;
 }
 
 // Sections shared
