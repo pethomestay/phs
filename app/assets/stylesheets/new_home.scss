@@ -140,7 +140,7 @@
     background-color: rgb(247, 247, 247);
 }
 #why-phs img {
-    width: 80%;
+    width: 90%;
 }
 #why-phs h3 {
     margin-top: 55px;
@@ -189,10 +189,15 @@
 
 // Responsive
 @media (max-width: 767px) {
+    // Jumbotron
     #drop-off input,
     #pick-up input {
         display: block;
         width: 100%;
+    }
+    // Why PHS
+    #why-phs img {
+        width: 60%;
     }
     // Meet the Community
     #second-story,
