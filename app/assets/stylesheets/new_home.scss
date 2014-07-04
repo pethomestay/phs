@@ -198,6 +198,17 @@ section.bottom-search {
     margin-top: 45px;
 }
 
+// Footer
+section.footer {
+    background-color: rgb(60, 56, 53);
+    color: #FFFFFF;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.footer .connect {
+    margin-top: 20px;
+}
+
 // Responsive
 @media (max-width: 767px) {
     // Jumbotron
@@ -213,6 +224,10 @@ section.bottom-search {
     // Meet the Community
     #second-story,
     #second-story-description {
+        display: none;
+    }
+    // Footer
+    .footer .sitemap {
         display: none;
     }
 }
