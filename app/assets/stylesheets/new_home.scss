@@ -54,7 +54,7 @@ body {
     background: rgba(18, 18, 18, 0.2);
     // text
     color: #FFFFFF;
-    text-shadow: black 0.03em 0.03em 0.03em; // Experimental
+    text-shadow: black 0.03em 0.03em 0.03em;
     text-align: center;
 }
 // Greeting
@@ -168,6 +168,7 @@ body {
     padding: 0 0;
     height: 340px;
     overflow: hidden;
+    text-shadow: black 0.03em 0.03em 0.03em;
 }
 .meet-community .row {
     margin-top: 45px;
@@ -189,6 +190,7 @@ body {
     position: absolute;
     top: 35%;
     left: 33%;
+    pointer-events: none;
 }
 .meet-community p {
     font-style: italic;
