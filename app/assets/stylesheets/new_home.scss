@@ -84,6 +84,7 @@
     width: 155px;
 }
 #search-btn {
+    color: #FFFFFF;
     background-color: #eb5b3a;
     width: 7em;
     border-radius: 0;
@@ -185,6 +186,16 @@
     font-style: italic;
     margin-left: 15px;
     margin-right: 15px;
+}
+
+// Bottome search
+section.bottom-search {
+    background-color: rgb(93, 193, 191);
+    padding-bottom: 60px;
+}
+.bottom-search h3 {
+    color: #FFFFFF;
+    margin-top: 45px;
 }
 
 // Responsive
