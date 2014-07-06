@@ -40,6 +40,7 @@
   .excerpt {
     height:72px;
     font-size:14px;
+    word-break: break-word;
   }
   .view {
     text-align:right;
@@ -114,32 +115,26 @@
     margin-right: 20px;
   }
 
- .check_in_calendar_icon{
+ .check_in_calendar_icon {
    z-index: 20;
    position: absolute;
    top: 12px;
    display: block;
    right: 0;
-   /* background-size: 313px 194px; */
    width: 20px;
-   /* background: red; */
    height: 21px;
-   /* font-size: 119px; */
-   /* color: #000; */ 
+   cursor: pointer;
  }
 
- .check_out_calendar_icon{
+ .check_out_calendar_icon {
    z-index: 20;
    position: absolute;
    top: 12px;
    display: block;
    right: 0;
-   /* background-size: 313px 194px; */
    width: 20px;
-   /* background: red; */
    height: 21px;
-   /* font-size: 119px; */
-   /* color: #000; */ 
+   cursor: pointer;
  }
 
  .search-btn{

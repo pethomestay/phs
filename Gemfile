@@ -31,13 +31,14 @@ gem 'dragonfly-s3_data_store'
 gem 'rack-cache'
 gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
-gem 'net-scp', '1.0.4'
+gem 'net-scp', '1.2.1'
 gem 'unicorn'
 gem 'rest-client', '1.6.7'
-gem 'nokogiri', '1.5.6'
+gem 'nokogiri', '1.6.2.1'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=>"laserlemon/figaro"
+gem 'state_machine'
 
 group :test, :development do
   gem 'capistrano'

@@ -1,0 +1,31 @@
+%p.article-content
+  %strong= "A Guest has an issue with a booking payment authorisation"
+
+%p.article-content
+  %strong= "Booking Details"
+%p.article-content
+  = link_to "#{@booking.homestay.title} in #{@booking.homestay.address_suburb}", homestay_url(@booking.homestay)
+%p.article-content
+  %strong= "Homestay Description"
+%p.article-content
+  = @booking.homestay.description
+%p.article-content
+  Cost per night: #{number_to_currency(@booking.homestay.cost_per_night)}
+%p.article-content
+  Booking User Name and Email: #{@user.first_name} #{@user.last_name} <#{@user.email}>
+%p.article-content
+  Booking User Mobile Number: #{@user.mobile_number}
+%p.article-content
+  %strong= "Transaction Details"
+%p.article-content
+  Date and Time: #{date_day_month_year_format(@transaction.updated_at)} #{hour_minute_format(@transaction.updated_at)}
+%p.article-content
+  Transaction Id: #{@transaction.id.to_s}
+%p.article-content
+  Transaction Securepay reference: "#{@transaction.reference.to_s}"
+
+
+
+
+
+

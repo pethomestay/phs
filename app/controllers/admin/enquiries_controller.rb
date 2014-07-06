@@ -42,7 +42,14 @@ class Admin::EnquiriesController < Admin::AdminController
 
   def update
     @enquiry = Enquiry.find(params[:id])
+    #Lets find the message
+    @message  = Message.where(:user_id => @enquiry.user_id, :message_text=> @enquiry.message).first
     @enquiry.update_attributes(params[:enquiry])
+    #now enquiry has been updated we can update it's associated Message object also
+    if not @message.blank?
+      @message.message_text = @enquiry.message
+      @message.save
+    end
     respond_with(:admin, @enquiry)
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140527041516) do
+ActiveRecord::Schema.define(:version => 20140604010907) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -66,11 +66,15 @@ ActiveRecord::Schema.define(:version => 20140527041516) do
     t.float    "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
-    t.string   "status",           :default => "unfinished"
+    t.string   "state",            :default => "unfinished"
     t.text     "response_message"
     t.integer  "response_id",      :default => 0
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.string   "cancel_reason"
+    t.float    "refund"
+    t.boolean  "refunded",         :default => false
+    t.date     "cancel_date"
   end
 
   create_table "cards", :force => true do |t|

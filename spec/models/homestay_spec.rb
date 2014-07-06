@@ -89,7 +89,7 @@ describe Homestay do
     let(:users){ 5.times.collect { FactoryGirl.create(:user_with_homestay) } }
     let(:homestays){ users.map(&:homestay) }
     let(:booked_user){ users.last }
-    let(:booking){ FactoryGirl.create(:booking, bookee: booked_user, check_in_date: check_in_date, check_out_date: check_out_date, response_id: 5, host_accepted: true)}
+    let(:booking){ FactoryGirl.create(:booking, bookee: booked_user, check_in_date: check_in_date, check_out_date: check_out_date, state: :finished_host_accepted) }
     let(:start_date){ Date.today }
     let(:end_date){ start_date + 3.days }
     let(:check_in_date){ end_date + 1.day  }

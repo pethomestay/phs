@@ -144,7 +144,7 @@ describe User do
 
     before do
       2.times{ |index| FactoryGirl.create(:unavailable_date, date: Date.today + index.day, user: user) }
-      2.times{ |index| FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: user, check_in_date: Date.today + (index + 2), check_out_date: Date.today + (index + 3))}
+      2.times{ |index| FactoryGirl.create(:booking, state: :finished_host_accepted , bookee: user, check_in_date: Date.today + (index + 2), check_out_date: Date.today + (index + 3))}
     end
 
     context "when end date is greater than start date" do
@@ -224,7 +224,7 @@ describe User do
 
      before do
        3.times.collect{ |index|
-         FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: booking_date_ranges[index][0], check_out_date: booking_date_ranges[index][1])
+         FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: confirmed_user, check_in_date: booking_date_ranges[index][0], check_out_date: booking_date_ranges[index][1])
        }
      end
 
@@ -253,7 +253,7 @@ describe User do
 
    describe "#booked_dates_info" do
      it "should return booked dates in fullcalendar event format" do
-       FactoryGirl.create(:booking, response_id: 5, host_accepted: true, bookee: confirmed_user, check_in_date: Date.today, check_out_date: Date.today + 1)
+       FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: confirmed_user, check_in_date: Date.today, check_out_date: Date.today + 1)
        expected_result = [{ title: "Booked", start: Date.today.strftime("%Y-%m-%d") }]
        expect(confirmed_user.booked_dates_info((Date.today - 1), (Date.today + 1))).to eq(expected_result)
      end
@@ -261,6 +261,92 @@ describe User do
 
   end
 
+  describe "#unavailable_dates_between" do
+
+    let(:checkin_date) { Date.today - 1.day }
+    let(:checkout_date) { Date.today + 2.days }
+
+    subject { user.unavailable_dates_between(checkin_date, checkout_date) }
+
+    context "when user is neither booked nor unavailable between checkin date and checkout date" do
+      it "should return a blank array" do
+        expect(subject).to be_blank
+      end
+    end
+
+    context "when user is booked between checkin and checkout date" do
+      it "should return the booked dates" do
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: checkin_date , check_out_date: checkin_date)
+        expect(subject).to eq([booking.check_in_date])
+      end
+    end
+
+    context "when user is unavailable between start date and end date" do
+      it "should return unavailable dates" do
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: checkin_date + 1.day, user: user)
+        expect(subject).to eq([unavailable_date.date])
+      end
+    end
+
+    context "when user is unavailable on checkout date" do
+      it "should return a blank array" do
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: checkout_date, user: user)
+        expect(subject).to be_blank
+      end
+    end
+
+    context "when user is booked on checkout date" do
+      it "should return a blank array" do
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: checkout_date , check_out_date: checkout_date)
+        expect(subject).to be_blank
+      end
+    end
+
+  end
+
+  describe "#unavailable_dates_after" do
+
+    let(:start_date) { Date.today }
+
+    subject { user.unavailable_dates_after(start_date) }
+
+    context "when user is neither booked nor unavailable after start date" do
+      it "should return a blank array" do
+        expect(subject).to be_blank
+      end
+    end
+
+    context "when user is booked after start date" do
+      
+      it "should return booked date" do
+        booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
+        expect(subject).to eq([booking.check_in_date])
+      end
+
+      context "when check in date is less than start date" do
+        it "should return all dates between start date and checkout date" do
+          booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date - 1.day , check_out_date: start_date + 2.days)
+          expect(subject).to eq((start_date..(start_date + 1.day)).to_a)
+        end
+      end
+
+      context "when check in date is greater than or equal start date" do
+        it "should return all dates between checkin date and checkout date" do
+          booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date + 2.days)
+          expect(subject).to eq((start_date..(start_date + 1.day)).to_a)
+        end
+      end
+
+    end
+
+    context "when user is unavailable after start date" do
+      it "should return unavailable date" do
+        unavailable_date = FactoryGirl.create(:unavailable_date, date: start_date + 1.day, user: user)
+        expect(subject).to eq([unavailable_date.date])
+      end
+    end
+
+  end
 
   describe "#update_calendar" do
     it "should mark calendar as updated" do

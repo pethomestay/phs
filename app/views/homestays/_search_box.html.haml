@@ -5,10 +5,10 @@
     .location.pull-left
       = f.text_field :location, placeholder: "Location"
     .check_in_date.pull-left
-      = f.text_field :check_in_date, id: "check_in_datepicker", class: "input-check-in-date", placeholder: "Select start date", readonly: true, value: (params[:search][:check_in_date].present? ? params[:search][:check_in_date].to_date.strftime("%A,%d %B,%Y") : "")
+      = f.text_field :check_in_date, id: "check_in_datepicker", class: "input-check-in-date", placeholder: "Select start date", readonly: true, value: check_in_date
       %span.icon-calendar.check_in_calendar_icon
     .check_out_date.pull-left
-      = f.text_field :check_out_date, id: "check_out_datepicker", class: "input-check-out-date", placeholder: "Select end date", readonly: true, value: (params[:search][:check_out_date].present? ? params[:search][:check_out_date].to_date.strftime("%A,%d %B,%Y") : "")
+      = f.text_field :check_out_date, id: "check_out_datepicker", class: "input-check-out-date", placeholder: "Select end date", readonly: true, value: check_out_date
       %span.icon-calendar.check_out_calendar_icon
     = f.button :submit, 'Search', class: 'btn btn-primary pull-left search-btn'
     .clear

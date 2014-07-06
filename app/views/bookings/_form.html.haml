@@ -1,27 +1,31 @@
 = simple_form_for @booking, html: { class: 'form-horizontal' } do |f|
+  - owner_view = @booking.owner_view?(current_user)
   - host_view = @booking.host_view?(current_user)
   - booking_editable = @booking.editable_datetime?(current_user)
-  - booking_editable = true unless host_view
-  - user_name = host_view ? @booking.booker.name : current_user.name
-  - pet = host_view ? @booking.booker.pet : current_user.pet
+  - booking_editable = true unless !owner_view
+  - user_name = owner_view ? current_user.name : @booking.booker.name
+  - pet = owner_view ? current_user.pet : @booking.booker.pet
 
   = f.input :guest_name, input_html: { value: user_name }, readonly: true
   = f.input :pet_name, input_html: { value: pet.name }, readonly: true
-  - if host_view
+  - if !owner_view
     = f.input :pet_breed, input_html: { value: pet.breed.blank? ? 'n/a' : pet.breed }, readonly: true
     = f.input :pet_age, input_html: { value: pet.age.blank? ? 'n/a' : [pet.age].to_sentence }, readonly: true
     = f.input :pet_date_of_birth, input_html: { value: pet.date_of_birth.blank? ? 'n/a' : pet.date_of_birth.strftime('%d/%m/%Y') }, readonly: true
-  = f.input :message, as: :text, input_html: { rows: 3 }, readonly: host_view
+  = f.input :message, as: :text, input_html: { rows: 3 }, readonly: !owner_view
 
   %hr
-  - enable_date_picker = booking_editable ? 'datepicker' : ''
+  - enable_date_picker = booking_editable ? 'enabled_datepicker' : ''
   - enable_check_in_date = booking_editable ? 'datepicker-check-in-date' : ''
   - enable_check_out_date = booking_editable ? 'datepicker-check-out-date' : ''
   - enable_time_picker = booking_editable ? 'timepicker' : ''
 
-  - unless host_view
+  - unless !owner_view
     = f.input :id, as: :hidden
 
+  .check_in_error.hide#check_in_date_error
+  .hide#unavailable_dates{ data: { unavailable_dates: @unavailable_dates.to_a.join(',') } }
+  
   = f.input :check_in_date, as: :date_picker, wrapper_html: { class: "input-append #{enable_date_picker}" }, readonly: true,
             input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', id: enable_check_in_date }
 
@@ -45,7 +49,13 @@
   = f.input :subtotal, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
               input_html: { value: @booking.subtotal }
   %br
-  - if host_view
+  - if owner_view
+    = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Credit Card Fee',
+                  input_html: { value: @booking.transaction_fee }
+    %br
+    = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Total',
+                  input_html: { value: @booking.amount }
+  - else
     = f.input :public_liability_insurance, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true,
               input_html: { value: @booking.public_liability_insurance }
     %br
@@ -54,22 +64,21 @@
     %br
     = f.input :host_payout, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Total Payout',
               input_html: { value: @booking.host_payout }
-  - else
-    = f.input :fees, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Credit Card Fee',
-              input_html: { value: @booking.transaction_fee }
-    %br
-    = f.input :amount, as: :currency, wrapper_html: { class: wrapper_class }, readonly: true, label: 'Total',
-              input_html: { value: @booking.amount }
 
-  - if host_view
-    %hr
-    .control-group.string
-      %label.string.control-label
-        Payment method
-    = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
-    %hr
-    = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
-                    collection: ReferenceData::Response.find_by_ids([5, 6, 7])
-    = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
-    .form-actions
-      = f.submit 'Confirm booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'
+  - if !owner_view
+    - if Booking.canceled_states.include?(@booking.state.to_sym)
+      %hr
+      = Booking.human_state_name(@booking.state).slice(0,1).capitalize + Booking.human_state_name(@booking.state).slice(1..-1)
+
+    - elsif host_view
+      %hr
+      .control-group.string
+        %label.string.control-label
+          Payment method
+      = f.input :payment, input_html: { value: 'Credit Card' }, readonly: true
+      %hr
+      = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 5,
+                      collection: ReferenceData::Response.find_by_ids([5, 6, 7])
+      = f.input :response_message, input_html: {rows: 3, class: 'input-xxlarge'}, placeholder: "If you respond 'Have questions', a question is required to explain to the pet owner what you mean. For 'Available' or 'Not available' answers, you can also provide a message if you wish to give the pet owner more information."
+      .form-actions
+        = f.submit 'Confirm booking', class: 'btn btn-primary', id: 'booking_confirm_by_host'

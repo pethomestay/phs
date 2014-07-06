@@ -1,0 +1,23 @@
+:javascript
+  $(document).ready(function() {
+      #{render partial: 'bookings/jquery_validator_defaults',format: 'js'}
+
+      $('#{button}').click( function (e) {
+        e.preventDefault();
+        $('#{form_name}').validate(); //end validate
+        $('#{cancel_reason_area_name}').rules("add", {
+          required: true,
+                       messages: {
+                          required: "Cancel reason cannot be blank!"
+                       }
+        });
+        var valid = $('#{form_name}').valid();
+
+        if (valid) {
+            $('.help-inline').html("&nbsp;");
+            $('div.modal').modal('show');
+        } else {
+          e.stopPropagation();
+        }
+      });
+  }); // end document.ready
