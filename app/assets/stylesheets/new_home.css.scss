@@ -240,9 +240,6 @@ section.footer {
     }
     // Three features
     #why-phs{
-        .extra-description {
-            display: none;
-        }
         #first-row {
             margin-top: 30px;
         }
@@ -266,15 +263,6 @@ section.footer {
     #why-phs h3 {
         margin-top: 10px;
     }
-    // Meet the Community
-    #second-story,
-    #second-story-description {
-        display: none;
-    }
-    // Footer
-    .footer .sitemap {
-        display: none;
-    }
 }
 @media (max-width: 991px) {
     #postcode {
@@ -291,11 +279,6 @@ section.footer {
     #drop-off,
     #pick-up {
         margin-bottom: 5px;
-    }
-    // Meet the Community
-    #third-story,
-    #third-story-description {
-        display: none;
     }
 }
 // iPhone horizontal
