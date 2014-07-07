@@ -49,7 +49,7 @@ PetHomestay::Application.configure do
   # config.assets.precompile += %w( search.js )
   config.assets.precompile += %w( ckeditor/plugins/youtube/plugin.js )
   config.assets.precompile += %w( ckeditor/plugins/youtube/lang/en.js )
-  config.assets.precompile += %w( new_home.scss )
+  config.assets.precompile += %w( new_home.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
