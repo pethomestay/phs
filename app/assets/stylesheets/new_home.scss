@@ -2,38 +2,32 @@
 body {
     font-family: 'Ubuntu', sans-serif;
 }
+
 // Nav bar
-#nav-bar {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 70px;
-    padding-top: 13px;
-}
-#logo-img {
-    float: left;
-    height: 50px;
-    margin-right: 5px;
-}
-#logo {
+.nav-custom {
+    background-color: rgba(57,60,61,0.5);
+    margin-bottom: 0;
+    border-radius: 0;
     color: #FFFFFF;
-    float: left;
-    margin-top: 10px;
-}
-// Nav pills
-#nav-bar a {
-    color: #FFFFFF;
-    font-weight: bold;
-    margin: 0 3px;
-}
-#nav-bar a:focus,
-#nav-bar a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-#sign-up {
-    border: 2px solid #FFFFFF;
-}
-@media (max-width: 500px) {
-    #become-a-host {
-        display: none;
+
+    #brand {
+        color: inherit;
+        text-shadow: none;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .buttons {
+        font-weight: bold;
+        background: none;
+        margin-left:  7px;
+        margin-right: 7px;
+    }
+    #sign-up {
+        border: 2px solid #FFFFFF;
+    }
+    .buttons:hover {
+        color: inherit;
     }
 }
 
@@ -50,7 +44,7 @@ body {
 }
 .jumbotron {
     margin-bottom: 0;
-    height: 480px; // Must be the height of bg minus the height of nav bar
+    height: 498px; // Must be the height of bg minus the height of nav bar
     background: rgba(18, 18, 18, 0.2);
     // text
     color: #FFFFFF;
@@ -214,6 +208,12 @@ section.footer {
 }
 
 // Responsive
+@media (max-width: 500px) {
+    // Nav bar
+    #become-a-host {
+        display: none;
+    }
+}
 @media (max-width: 767px) {
     // Jumbotron
     #drop-off input,
