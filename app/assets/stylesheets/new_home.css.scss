@@ -231,6 +231,22 @@ section.footer {
         padding-left:  0;
         padding-right: 0;
     }
+    // Three features
+    #why-phs{
+        .extra-description {
+            display: none;
+        }
+        #first-row {
+            margin-top: 30px;
+        }
+        #last-row {
+            margin-bottom: 30px;
+        }
+    }
+    // Three stories
+    .meet-community .story .caption {
+        left: 25%;
+    }
 }
 @media (max-width: 767px) {
     // Jumbotron
