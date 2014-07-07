@@ -105,22 +105,10 @@ body {
 // Media
 .media {
     margin-top: 110px;
-}
-.media img {
-    height: 40px;
-    margin: 0 15px;
-}
-.media img#herald-sun {
-    height: 50px;
-}
-.media img#daily-telegraph {
-    height: 30px;
-}
-.media img#financial-review {
-    height: 65px;
-}
-.media #cc {
-    text-shadow: none;
+
+    img {
+        margin: 0 15px;
+    }
 }
 
 // Sections shared
