@@ -223,6 +223,11 @@ section.footer {
     #become-a-host {
         display: none;
     }
+    // Jumbotron
+    .jumbotron {
+        padding-left:  0;
+        padding-right: 0;
+    }
 }
 @media (max-width: 767px) {
     // Jumbotron
