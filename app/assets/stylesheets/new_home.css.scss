@@ -294,3 +294,21 @@ section.footer {
         display: none;
     }
 }
+// iPhone horizontal
+@media only screen and (min-width: 480px) and (max-width: 766px) {
+    .jumbotron{
+        h1 {
+            font-size: 30px;
+            margin-top: 5px;
+        }
+        #drop-off,
+        {
+            display: inline-block;
+            width: 50%;
+            float: left;
+        }
+        .media {
+            margin-top: 20px;
+        }
+    }
+}
