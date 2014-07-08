@@ -1,8 +1,21 @@
+:javascript
+  $( document ).ready(function() {
+    $("a.confirm-cancel").click(function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      bootbox.confirm("Are you sure you want to cancel?  This booking will be deleted and you will no longer see it in your list of Trips.", function(confirmed) {
+          if (confirmed) {
+            window.location =  url;
+          }
+      });
+    });
+  });
+
 - if @bookings.blank?
   %p You have no bookings as a host in your history
 - else
   - @bookings.each do |booking|
-    .well.show-booking-history
+    %div{class:current_user == booking.bookee ? 'well show-booking-history' : 'well show-booking-history-guest'}
       - guest = booking.booker
       .guest-pic.pull-left
 
@@ -29,17 +42,38 @@
           %br
           - if current_user == booking.booker
             %strong Amount Paid:
-            = " $#{booking.actual_amount}"
+            - if booking.unfinished_booking?
+              = " $0.00"
+            - else
+              = " $#{booking.actual_amount}"
+            - if booking.state?(:guest_cancelled)
+              %br
+              = "Trip cancelled #{booking.get_days_before_cancellation} days before Check In Date"
+              %br
+              = "Amount refunded to Guest as per Cancellation Policy - $#{booking.actual_value_figure(booking.refund)}"
           - else
             %strong Payout:
             = " $#{booking.host_payout}"
 
-      .view-receipt.pull-right
+      .booking-right-panel.pull-right{:style=>'min-width:190px;'}
         %span.confirmed-block
-          = booking.host_accepted ? 'Confirmed' : 'Unconfirmed'
+          = booking_status_for_listing(booking)
         %br
-        - if current_user == booking.booker
-          = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary'
-        - else
-          = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary'
+        - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
+          - if current_user == booking.booker
+            = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary right-panel-btn'
+          - else
+            = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary right-panel-btn'
+        - elsif current_user == booking.booker
+          = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary right-panel-btn'
+        - if ((not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0) or (!booking.is_host_view_valid?)) #don't allow a booking to be canceled if it's an old one and paid for
+          %br
+          - cancel_classes = 'btn btn-primary right-panel-btn'
+          - if !booking.is_host_view_valid?
+            - cancel_classes += ' confirm-cancel'
+          = link_to 'Cancel', guest_cancelled_booking_path(booking), class: cancel_classes, id: 'cancel-booking_' + booking.id.to_s
+
+
+  - if !@trips and can_host_request_cancel_any_bookings?
+    = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
 

@@ -8,10 +8,10 @@
 %p.article-title Enquiry Details
 %p.article-content
   %i Check In Date
-  = ": #{@enquiry.check_in_date.to_formatted_s(:day_and_month)}"
+  = ": #{date_day_monthname(@enquiry.check_in_date)}"
 %p.article-content
   %i Check Out Date
-  = ": #{@enquiry.check_out_date.to_formatted_s(:day_and_month)}"
+  = ": #{date_day_monthname(@enquiry.check_out_date)}"
 %br
 
 = render 'shared/pet_details'

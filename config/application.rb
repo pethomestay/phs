@@ -34,6 +34,7 @@ module PetHomestay
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.i18n.enforce_available_locales = true
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -67,8 +68,6 @@ module PetHomestay
 	    end if File.exists?(env_file)
     end
 
-    # Adding dragonfly middleware
-    config.middleware.insert 1, 'Dragonfly::Middleware', :images
     config.assets.precompile += Ckeditor.assets
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end

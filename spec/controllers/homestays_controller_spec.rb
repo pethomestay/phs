@@ -180,4 +180,35 @@ describe HomestaysController do
 			response.should render_template :favourites
 		end
 	end
+
+  describe "Get availability" do
+
+    let(:user) { FactoryGirl.build(:user) }
+    let(:homestay) { FactoryGirl.build(:homestay, id: 1) }
+    let(:start_date){ Date.today } 
+    let(:end_date){ Date.today + 4.days }
+    let(:booking_info){ [1,2,3] }
+
+    before do
+      Homestay.stub(:find).with("1").and_return(homestay)
+      homestay.stub(:user).and_return(user)
+      user.stub(:booking_info_between).with(start_date, end_date).and_return(booking_info)
+    end
+
+    it "should pass booking info message to current user" do
+      user.should_receive(:booking_info_between).with(start_date, end_date)
+      get :availability, id: homestay.id, start: start_date.to_time.to_i, end: end_date.to_time.to_i
+    end
+
+    it "should return 200 status codes" do
+      get :availability, id: homestay.id, start: start_date.to_time.to_i, end: end_date.to_time.to_i
+      expect(response.code).to eq("200")
+    end
+
+    it "should return booking info json data" do
+      get :availability, id: homestay.id, start: start_date.to_time.to_i, end: end_date.to_time.to_i
+      expect(response.body).to eq(booking_info.to_json)
+    end
+
+  end
 end

@@ -1,6 +1,6 @@
 class HomestaysController < ApplicationController
   respond_to :html
-  before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :authenticate_user!, except: [:show, :index, :availability]
   before_filter :find_homestay, only: [:edit, :update]
 
   SEARCH_RADIUS = 20
@@ -109,6 +109,14 @@ class HomestaysController < ApplicationController
 
   def favourites
 	  @homestays = current_user.homestays
+  end
+
+  def availability
+    homestay = Homestay.find(params[:id])
+    start_date = Time.at(params[:start].to_i).to_date
+    end_date  = Time.at(params[:end].to_i).to_date
+    info = homestay.user.booking_info_between(start_date, end_date)
+    render json: info.to_json, status: 200
   end
 
   private

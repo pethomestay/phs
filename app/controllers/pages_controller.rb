@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
+
   def home
 		@homepage = true
   end
@@ -30,5 +31,9 @@ class PagesController < ApplicationController
   end
 
   def post_to_securepay
+  end
+
+  def new_home
+    render layout: "new_application"
   end
 end

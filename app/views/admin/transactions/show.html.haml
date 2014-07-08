@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%dl.dl-horizontal
+  %dt Transaction ID
+  %dd #{@transaction.transaction_id}&nbsp;
+  %dt Created
+  %dd #{date_day_month_year_format(@transaction.created_at)}&nbsp;
+  %dt Time Stamp
+  %dd #{@transaction.time_stamp}&nbsp;
+  %dt Merchant Fingerprint
+  %dd #{@transaction.merchant_fingerprint}&nbsp;
+  %dt Pre Authorisation ID
+  %dd #{@transaction.pre_authorisation_id}&nbsp;
+  %dt Response Text
+  %dd #{@transaction.response_text}&nbsp;
+  %dt Client ID
+  %dd #{@transaction.client_id}&nbsp;
+  %dt Amount
+  %dd #{currency_formatter(@transaction.amount)}&nbsp;
+  %dt Securepay Fingerprint
+  %dd #{@transaction.secure_pay_fingerprint}&nbsp;
+  %dt Reference
+  %dd #{@transaction.reference}&nbsp;
+  %dt Storage Text
+  %dd #{@transaction.storage_text}&nbsp;
+  %dt Status
+  %dd #{@transaction.status}&nbsp;
+  %dt Card ID
+  %dd #{@transaction.card_id}&nbsp;
+
+.form-actions
+  = link_to 'Edit', edit_admin_transaction_path(@transaction), class: 'btn btn-primary'
+  = link_to 'Back to transaction list', admin_transactions_path, class: 'btn'
