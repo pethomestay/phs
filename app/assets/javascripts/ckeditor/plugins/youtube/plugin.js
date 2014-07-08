@@ -2,12 +2,12 @@
 * Youtube Embed Plugin
 *
 * @author Jonnas Fonini <contato@fonini.net>
-* @version 1.0.7
+* @version 1.0.10
 */
 ( function() {
 	CKEDITOR.plugins.add( 'youtube',
 	{
-		lang: [ 'en', 'pt', 'ja', 'hu', 'it', 'fr', 'tr', 'ru', 'de' ],
+		lang: [ 'en', 'pt', 'ja', 'hu', 'it', 'fr', 'tr', 'ru', 'de', 'ar', 'nl', 'pl', 'vi'],
 		init: function( editor )
 		{
 			editor.addCommand( 'youtube', new CKEDITOR.dialogCommand( 'youtube', {
@@ -40,15 +40,13 @@
 									type : 'textarea',
 									label : editor.lang.youtube.txtEmbed,
 									autofocus : 'autofocus',
+									onChange : function ( api )
+									{
+										handleEmbedChange( this, api );
+									},
 									onKeyUp : function ( api )
 									{
-										if ( this.getValue().length > 0 )
-										{
-											this.getDialog().getContentElement( 'youtubePlugin', 'txtUrl' ).disable();
-										}
-										else {
-											this.getDialog().getContentElement( 'youtubePlugin', 'txtUrl' ).enable();
-										}
+										handleEmbedChange( this, api );
 									},
 									validate : function ()
 									{
@@ -81,15 +79,13 @@
 											id : 'txtUrl',
 											type : 'text',
 											label : editor.lang.youtube.txtUrl,
+											onChange : function ( api )
+											{
+												handleLinkChange( this, api );
+											},
 											onKeyUp : function ( api )
 											{
-												if ( this.getValue().length > 0 )
-												{
-													this.getDialog().getContentElement( 'youtubePlugin', 'txtEmbed' ).disable();
-												}
-												else {
-													this.getDialog().getContentElement( 'youtubePlugin', 'txtEmbed' ).enable();
-												}
+												handleLinkChange( this, api );
 											},
 											validate : function ()
 											{
@@ -127,7 +123,7 @@
 													if ( width === 0 )
 													{
 														alert( editor.lang.youtube.invalidWidth );
-														return false;	
+														return false;
 													}
 												}
 												else {
@@ -151,7 +147,7 @@
 													if ( height === 0 )
 													{
 														alert( editor.lang.youtube.invalidHeight );
-														return false;	
+														return false;
 													}
 												}
 												else {
@@ -193,6 +189,19 @@
 											'default' : editor.config.youtube_privacy != null ? editor.config.youtube_privacy : false
 										},
 										{
+											id : 'chkAutoplay',
+											type : 'checkbox',
+											'default' : editor.config.youtube_autoplay != null ? editor.config.youtube_autoplay : false,
+											label : editor.lang.youtube.chkAutoplay
+										}
+									]
+								},
+								{
+									type : 'hbox',
+									widths : [ '45%', '55%'],
+									children :
+									[
+										{
 											id : 'txtStartAt',
 											type : 'text',
 											label : editor.lang.youtube.txtStartAt,
@@ -201,7 +210,7 @@
 												if ( this.getValue() )
 												{
 													var str = this.getValue();
-													
+
 													if ( !/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/i.test( str ) )
 													{
 														alert( editor.lang.youtube.invalidTime );
@@ -209,6 +218,11 @@
 													}
 												}
 											}
+										},
+										{
+											id: 'empty',
+											type: 'html',
+											html: ''
 										}
 									]
 								}
@@ -243,6 +257,11 @@
 								params.push('rel=0');
 							}
 
+							if ( this.getContentElement( 'youtubePlugin', 'chkAutoplay' ).getValue() === true )
+							{
+								params.push('autoplay=1');
+							}
+
 							startSecs = this.getValueOf( 'youtubePlugin', 'txtStartAt' );
 							if ( startSecs ){
 								var seconds = hmsToSeconds( startSecs );
@@ -250,16 +269,23 @@
 								params.push('start=' + seconds);
 							}
 
+							if ( params.length > 0 )
+							{
+								url = url + '?' + params.join( '&' );
+							}
+
 							if ( this.getContentElement( 'youtubePlugin', 'chkOlderCode' ).getValue() === true )
 							{
 								url = url.replace('embed/', 'v/');
 								url = url.replace(/&/g, '&amp;');
 
-								if ( params.length == 0 )
+								if ( url.indexOf('?')== -1 )
 								{
 									url += '?';
 								}
-
+								else {
+									url += '&amp;';
+								}
 								url += 'hl=pt_BR&amp;version=3';
 
 								content = '<object width="' + width + '" height="' + height + '">';
@@ -272,13 +298,8 @@
 								content += '</object>';
 							}
 							else {
-								if ( params.length > 0 )
-								{
-									url = url + '?' + params.join( '&' );
-								}
-
 								content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" ';
-								content += 'frameborder="0" allowfullscreen></iframe>';	
+								content += 'frameborder="0" allowfullscreen></iframe>';
 							}
 						}
 
@@ -291,9 +312,31 @@
 	});
 })();
 
+function handleLinkChange( el, api )
+{
+	if ( el.getValue().length > 0 )
+	{
+		el.getDialog().getContentElement( 'youtubePlugin', 'txtEmbed' ).disable();
+	}
+	else {
+		el.getDialog().getContentElement( 'youtubePlugin', 'txtEmbed' ).enable();
+	}
+}
+
+function handleEmbedChange( el, api )
+{
+	if ( el.getValue().length > 0 )
+	{
+		el.getDialog().getContentElement( 'youtubePlugin', 'txtUrl' ).disable();
+	}
+	else {
+		el.getDialog().getContentElement( 'youtubePlugin', 'txtUrl' ).enable();
+	}
+}
+
 
 /**
- * JavaScript function to match (and return) the video Id 
+ * JavaScript function to match (and return) the video Id
  * of any valid Youtube Url, given as input string.
  * @author: Stephan Schmitz <eyecatchup@gmail.com>
  * @url: http://stackoverflow.com/a/10315969/624466
@@ -304,7 +347,7 @@ function ytVidId( url )
 	return ( url.match( p ) ) ? RegExp.$1 : false;
 }
 
-/** 
+/**
  * Converts time in hms format to seconds only
  */
 function hmsToSeconds( time )

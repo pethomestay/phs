@@ -62,3 +62,99 @@
 .show-favourite-listings{
   padding-bottom: 90px;
 }
+
+.calendar-updation-date{
+  height: 40px;
+  margin-top: 20px;
+  display: block;
+  padding: 4px;
+  line-height: 18px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.cal-date-span{
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.availability-calendar {
+  margin-top: 20px;
+  padding: 5px 5px;
+  display: block;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.listing-calendar{
+  margin-top: 10px;
+}
+
+.calendar-legend {
+  display: block;
+  position: relative;
+  padding: 5px 5px;
+  border: 1px solid #CCC;
+  height: 50px;
+  width: 195px;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: .8em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.calendar-legend .legend_item {
+  float: left;
+  margin-right: 20px;
+}
+
+.calendar-legend>div {
+  padding-top: 5px;
+}
+
+.calendar-legend>div, .calendar-legend>h4 {
+  line-height: 15px;
+}
+
+.calendar-legend .tile {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+  vertical-align: bottom;
+}
+
+.calendar-legend .tile.available {
+  background-color: #F0A269;
+}
+
+.calendar-legend .tile.unavailable {
+  background-color: #A3A09E;
+}
+
+.calendar-legend .legend_item.last {
+  margin-right: 0;
+}
+
+.calendar-legend .legend_item {
+  float: left;
+  margin-right: 20px;
+}

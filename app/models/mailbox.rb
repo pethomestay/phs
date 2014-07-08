@@ -30,7 +30,7 @@ class Mailbox < ActiveRecord::Base
 	end
 
 	def subject_is_finished
-		booking.blank? ? true : booking.status != BOOKING_STATUS_UNFINISHED
+		booking.blank? ? true : !booking.state?(:unfinished)
 	end
 
 	def booking_subject_message
@@ -59,7 +59,7 @@ class Mailbox < ActiveRecord::Base
 	
 	def host_booking?(current_user)
 		!self.booking.blank? && (current_user == self.host_mailbox) && self.booking.owner_accepted? &&
-				!self.booking.host_accepted? && (self.booking.status != BOOKING_STATUS_REJECTED)
+				!self.booking.host_accepted? && (!self.booking.state?(:rejected))
 	end
 
 	def read_by?(current_user)

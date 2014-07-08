@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Booking do
+
+  before do
+    Homestay.any_instance.stub(:geocoding_address).and_return("Melbourne, MB")
+  end
+
 	it { should belong_to :booker }
 	it { should belong_to :bookee }
 	it { should belong_to :enquiry }
@@ -12,10 +17,39 @@ describe Booking do
 	it { should validate_presence_of :check_in_date }
 	it { should validate_presence_of :check_out_date }
 
-	it 'should be valid with valid attributes' do
+  it 'should be valid with valid attributes' do
 		booking = FactoryGirl.create :booking
 		booking.should be_valid
 	end
+
+  #describe "host's availability validation" do
+
+    #let(:start_date){ Date.today - 2.days }
+    #let(:end_date){ Date.today + 4.days }
+    #let(:booking){ FactoryGirl.create(:booking, check_in_date: start_date, check_out_date: end_date) }
+    
+    #context "when host is unavailable between check in and check out date" do
+      #it "should generate a validation error" do
+        #unav_date = FactoryGirl.create(:unavailable_date, user: booking.bookee, date: Date.today)
+        #expect(booking.valid?).to eq(false)
+        #expect(booking.errors.full_messages).to eq(["Host is either unavailable or booked on #{ unav_date.date }"])
+      #end
+    #end
+
+    #context "when host is booked between check in and check out date" do
+      #it "should generate a validation error" do
+        #prev_booking = FactoryGirl.create(:booking, bookee: booking.bookee, check_in_date: start_date + 1, check_out_date: start_date + 1, state: :finished_host_accepted)
+        #expect(booking.valid?).to eq(false)
+        #expect(booking.errors.full_messages).to eq(["Host is either unavailable or booked on #{ (prev_booking.check_in_date..prev_booking.check_out_date).to_a.join(', ') }"])
+      #end
+    #end
+
+  #end
+
+  it "should validate that check in date is not greater than checkout date" do
+    booking = FactoryGirl.build(:booking, check_in_date: Date.today, check_out_date: Date.today - 1.day)
+    expect(booking.valid?).to eq(false)
+  end
 
 	describe '#destroy_dependents' do
 		subject { booking }
@@ -50,7 +84,231 @@ describe Booking do
 				Mailbox.all.should be_blank
 			end
 		end
-	end
+  end
+
+  describe '#calculate_refund' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.2
+      @booking.payment_check_succeed
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be zero refund for booking' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql("0.00")
+    end
+
+
+    it 'should be 50% refund for booking minus phs service fee' do
+      eight_days_time = Date.today + 8  #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql("6.08")
+    end
+
+    it 'should be 100% refund for booking minus phs service fee' do
+      fifteen_days_time = Date.today + 15 #add 15 days
+      @booking.check_in_date = fifteen_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_refund.should be_eql("12.08")
+    end
+
+  end
+
+  describe '#get_days_left' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.payment_check_succeed
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be 3 days before check in date' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.get_days_left.should be_eql(3)
+    end
+  end
+
+
+  describe '#get_days_before_cancellation' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.amount = 14.2
+      @booking.guest_cancels_booking
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be 8 days between the cancel date and the check in date' do
+      eight_days_time = Date.today + 8 #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.cancel_date = Date.today
+      @booking.get_days_before_cancellation.should be_eql(8)
+    end
+  end
+
+  #  def amount_minus_fees
+  #return (self.subtotal - self.phs_service_charge)
+  #end
+  describe '#amount_minus_fees' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.00
+      @booking.payment_check_succeed
+    end
+
+    it 'should be 11.92 for booking when subtotal is 14.00' do
+      @booking.amount_minus_fees.should be_eql(11.92)
+    end
+  end
+
+  describe '#unfinished_booking?' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.00
+
+    end
+
+    it 'should be true when we have create a booking' do
+      @booking.unfinished_booking?.should be_true
+    end
+
+    it 'should be true when we have a payment pending' do
+      @booking.try_payment
+      @booking.unfinished_booking?.should be_true
+    end
+
+    it 'should be false when booking succeeds' do
+      @booking.payment_check_succeed
+      @booking.unfinished_booking?.should be_false
+    end
+  end
+
+  describe '#calculate_host_amount_after_refund' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.subtotal = 14.00
+      @booking.payment_check_succeed
+      @time = Time.parse("13:00:00")
+    end
+
+    it 'should be zero host amount for booking' do
+      fifteen_days_time = Date.today + 15 #add 15 days
+      @booking.check_in_date = fifteen_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("0.00")
+    end
+
+
+    it 'should be 50% host amount for booking minus phs service fee' do
+      eight_days_time = Date.today + 8  #add 8 days
+      @booking.check_in_date = eight_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("5.08")
+    end
+
+    it 'should be 100% amount for host for booking minus phs service fee' do
+      three_days_time = Date.today + 3 #add 3 days
+      @booking.check_in_date = three_days_time
+      @booking.check_in_time = @time
+      @booking.calculate_host_amount_after_guest_cancel.should be_eql("11.08")
+    end
+
+  end
+
+  describe '#guest_cancelled' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.guest_cancels_booking
+    end
+
+
+    it 'should cancel the booking by guest' do
+      @booking.human_state_name(@booking.state).should be_eql('guest has cancelled the booking')
+    end
+
+  end
+
+  describe '#host_canceled' do
+    before :each do
+      @booking = FactoryGirl.create :booking
+      @booking.payment_check_succeed #put it in finished state
+      @booking.host_accepts_booking #put it into finished_host_accepted state
+    end
+
+    it 'should have a request for admin to cancel booking for host' do
+      @booking.host_requested_cancellation
+      Booking.human_state_name(@booking.state).should be_eql('host has requested cancellation of this booking')
+    end
+
+    it 'should cancel the booking' do
+      @booking.host_requested_cancellation
+      @booking.admin_cancel_booking
+      @booking.human_state_name(@booking.state).should be_eql('host has cancelled the booking')
+    end
+  end
+
+
+  describe '#human_state_name' do #was actual_status
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'when a booking is finished' do
+      before {
+        booking.payment_check_succeed
+      }
+
+      it 'should return awaiting host response' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("awaiting host response")
+      end
+    end
+
+    context 'when a booking is unfinished' do
+      it 'should return "unfinished"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("unfinished")
+      end
+    end
+
+    context 'when a booking is finished and the host has accepted' do
+      before {
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+      }
+      it 'should return "host accepted but not paid"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host accepted but not paid")
+      end
+    end
+
+    context 'when a booking is rejected' do
+      before {
+        booking.payment_check_succeed
+        booking.host_rejects_booking
+        booking.update_attributes owner_accepted: true, host_accepted: false
+      }
+      it 'should return "host rejected"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host rejected")
+      end
+    end
+
+    context 'when a booking has been paid' do
+      before {
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_was_paid
+        booking.update_attributes owner_accepted: true, host_accepted: true
+      }
+      it 'should return "host has been paid"' do
+        Booking.human_state_name(subject.state.to_sym).should be_eql("host has been paid")
+      end
+    end
+
+  end
+
 
 	describe '#message_update' do
 		subject { booking }
@@ -85,6 +343,81 @@ describe Booking do
 			end
 		end
 	end
+
+  describe '#host_cancel?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'When a booking has been created booking can not be host canceled by admin' do
+      it 'should return host can not cancel' do
+        subject.host_cancel?.should be_false
+      end
+    end
+
+    context 'When a booking has been requested to cancel by host host can cancel' do
+      before {
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_requested_cancellation
+      }
+      it 'should return host can cancel' do
+        subject.host_cancel?.should be_true
+      end
+    end
+  end
+
+  describe '#guest_cancel?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+    context 'When a booking has been created booking can be canceled by guest' do
+      it 'should return host can cancel' do
+        subject.guest_cancel?.should be_true
+      end
+    end
+
+    context 'When a booking has been rejected by host, guest cannot cancel' do
+      before {
+        booking.payment_check_succeed
+        booking.host_rejects_booking
+      }
+      it 'should return guest cannot cancel' do
+        subject.guest_cancel?.should be_false
+      end
+    end
+  end
+
+  describe '#is_cancelled?' do
+    subject { booking }
+    let(:booking) { FactoryGirl.create :booking }
+
+
+    context 'When a booking has been created it is not canceled' do
+      it 'should not be canceled' do
+        subject.is_cancelled?.should be_false
+      end
+    end
+
+    context 'When a booking has been canceled by a guest it should be canceled' do
+      before { booking.guest_cancels_booking }
+      it 'should return canceled booking' do
+        subject.is_cancelled?.should be_true
+      end
+    end
+
+    context 'When a booking has been canceled by a host it should be canceled' do
+      before {
+        booking.payment_check_succeed
+        booking.host_accepts_booking
+        booking.host_requested_cancellation
+        booking.admin_cancel_booking
+
+      }
+      it 'should return canceled booking' do
+        subject.is_cancelled?.should be_true
+      end
+    end
+  end
 
 	describe '#bookee and #booker' do
 		before :each do
@@ -126,8 +459,8 @@ describe Booking do
 		end
 
 		context 'when there is a booking needed host confirmation' do
-			before { FactoryGirl.create :booking, owner_accepted: true, response_id: 0 }
-			it 'should not return any booking' do
+			before { FactoryGirl.create :booking, owner_accepted: true, response_id: 0, state: :finished }
+			it 'there should be one booking' do
 				subject.size.should be_eql(1)
 			end
 		end
@@ -143,8 +476,8 @@ describe Booking do
 		end
 
 		context 'when there is a booking declined by host' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::UNAVAILABLE.id }
-			it 'should not return any booking' do
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::UNAVAILABLE.id, state: :finished }
+			it 'should return one booking' do
 				subject.size.should be_eql(1)
 			end
 		end
@@ -160,7 +493,7 @@ describe Booking do
 		end
 
 		context 'when host wants owner to answer his question' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::QUESTION.id }
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::QUESTION.id,  state: :finished}
 			it 'should return booking' do
 				subject.any?.should be_true
 			end
@@ -177,7 +510,7 @@ describe Booking do
 		end
 
 		context 'when host accepts booking' do
-			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true }
+			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true, state: :finished_host_accepted }
 			it 'should return booking' do
 				subject.any?.should be_true
 			end
@@ -200,7 +533,10 @@ describe Booking do
 		end
 
 		context 'when current user is bookee and guest made booking for him' do
-			before { booking.update_attributes owner_accepted: true, status: BOOKING_STATUS_FINISHED }
+			before {
+        booking.payment_check_succeed
+        booking.update_attributes owner_accepted: true
+      }
 			it 'should return true' do
 				subject.host_view?(subject.bookee).should be_true
 			end
@@ -211,6 +547,9 @@ describe Booking do
 		subject { booking }
 		let(:booking) { FactoryGirl.create :booking }
 		context 'when current user is bookee i.e. host' do
+      before {
+        booking.payment_check_succeed
+      }
 			it 'should return false' do
 				subject.owner_view?(subject.bookee).should be_false
 			end
@@ -230,7 +569,7 @@ describe Booking do
 		context 'when booking is finished' do
 			before do
 				booking.owner_accepted = true
-				booking.status = BOOKING_STATUS_FINISHED
+				booking.state = :finished
 			end
 
 			it 'should return false' do
@@ -290,7 +629,8 @@ describe Booking do
 
 		context 'when there is a notification' do
 			before do
-				booking.update_attributes status: BOOKING_STATUS_FINISHED, owner_accepted: true
+        booking.payment_check_succeed
+        booking.update_attributes owner_accepted: true
 				booking.homestay = FactoryGirl.create :homestay, user: booking.bookee
 				booking.save
 				booking.bookee.notifications?.should be_true
@@ -330,7 +670,12 @@ describe Booking do
 
 		context 'when its called in a host view' do
 			context 'when booking is finished' do
-				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+
+				before {
+          booking.payment_check_succeed
+          booking.host_accepts_booking #state should be finished_host_accepted
+          booking.update_attributes host_accepted: true, owner_accepted: true
+        }
 				it 'should complete the payment' do
 					subject.transaction.stub(:complete_payment).and_return true
 					subject.complete_transaction(subject.bookee).should be_true
@@ -346,7 +691,10 @@ describe Booking do
 
 		context 'when its called in an owner\'s view' do
 			context 'when booking is finished' do
-				before { booking.update_attributes status: BOOKING_STATUS_FINISHED, host_accepted: true, owner_accepted: true }
+				before {
+          booking.payment_check_succeed
+          booking.host_accepts_booking #state should be finished_host_accepted
+          booking.update_attributes host_accepted: true, owner_accepted: true }
 
 				it 'should remove the notification' do
 					subject.complete_transaction(subject.booker).should be_true
@@ -403,7 +751,9 @@ describe Booking do
 
 			context 'when status is rejected' do
 				before {
-					booking.status = BOOKING_STATUS_REJECTED
+          booking.payment_check_succeed
+          booking.update_attributes host_accepted: false, owner_accepted: true
+					booking.host_rejects_booking
 					booking.host_accepted = false
 				}
 
@@ -434,7 +784,8 @@ describe Booking do
 
 			context 'when status is rejected' do
 				before {
-					booking.status = BOOKING_STATUS_REJECTED
+          booking.payment_check_succeed
+					booking.host_rejects_booking
 					booking.host_accepted = false
 				}
 

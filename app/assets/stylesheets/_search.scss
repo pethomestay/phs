@@ -40,6 +40,7 @@
   .excerpt {
     height:72px;
     font-size:14px;
+    word-break: break-word;
   }
   .view {
     text-align:right;
@@ -74,4 +75,78 @@
 
 .results {
   min-height: 350px;
+}
+
+.search-box {
+
+  .location input{
+    height: 30px;
+    width: 260px;
+    font-size: 18px;
+    border-radius: 6px;
+  }
+
+  .input-check-in-date {
+    width: 190px;
+    height: 30px;
+    font-size:14px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #fff;
+  }
+
+  .input-check-out-date {
+    width: 190px;
+    height: 30px;
+    font-size:14px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #fff;
+  }
+
+  .check_in_date{
+    position: relative;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+
+  .check_out_date{
+    position: relative;
+    margin-right: 20px;
+  }
+
+ .check_in_calendar_icon {
+   z-index: 20;
+   position: absolute;
+   top: 12px;
+   display: block;
+   right: 0;
+   width: 20px;
+   height: 21px;
+   cursor: pointer;
+ }
+
+ .check_out_calendar_icon {
+   z-index: 20;
+   position: absolute;
+   top: 12px;
+   display: block;
+   right: 0;
+   width: 20px;
+   height: 21px;
+   cursor: pointer;
+ }
+
+ .search-btn{
+   width: 100px;
+   height: 40px;
+ }
+
+ .sort-by{
+   margin-top: 15px;
+ }
+ 
+ .sort-text{
+   margin-right: 10px;
+ }
 }

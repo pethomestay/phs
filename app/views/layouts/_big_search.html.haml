@@ -2,17 +2,23 @@
   .picture-container
     .search-container
       %h2
-        Looking for
-        %span.phsorange
-          Awesome
-        %br Pet Boarding & Pet Sitting?
-      %h3 Find trusted local people who love looking after pets!
+        Trusted, Local Pet Boarding & Sitting
+      %h3 PetHomeStay has hundreds of amazing Hosts who love looking after pets!
       = form_for Search.new, url: homestays_path, method: 'GET', html: {class: 'form-search'} do |f|
         .input-append
-          = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'enter your postcode'
+          = f.text_field :location, class: 'search-query input-xlarge', placeholder: 'enter your postcode to find Hosts near you!'
           %button.btn.btn-large.btn-primary{type: "submit"} Search
+        .input-append.input-date-range
+          .check_in_date.pull-left
+            = f.text_field :check_in_date, id: "check_in_datepicker", class: "input-check-in-date", placeholder: "Select start date", readonly: true
+            %span.icon-calendar.check_in_calendar_icon
+          .check_out_date.pull-left
+            = f.text_field :check_out_date, id: "check_out_datepicker", class: "input-check-out-date", placeholder: "Select end date", readonly: true
+            %span.icon-calendar.check_out_calendar_icon
+
         .clear
       %h3#bottom-home-text
         Free to View & Contact All PetHomeStay Hosts
         %br Peace of Mind with Exclusive Insurance
         Book & Pay Securely Online
+

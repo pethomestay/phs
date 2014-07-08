@@ -2,6 +2,12 @@ PetHomestay::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
+  resources :users do
+    collection do
+      post :update_calendar
+    end
+  end
+
   resources :contacts, only: [:new, :create]
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
@@ -11,6 +17,7 @@ PetHomestay::Application.routes.draw do
 	  member do
 		  get 'favourite'
 		  get 'non_favourite'
+      get 'availability'
 	  end
 
 	  collection do
@@ -24,19 +31,31 @@ PetHomestay::Application.routes.draw do
   post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
+  post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_host_cancel_booking'
+  post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
+
+
+
 
   resources :bookings do
 	  collection do
 		  post 'result'
 		  get 'result'
 		  get 'update_transaction'
+      get 'host_cancellation'
+      post 'host_cancel'
 		  get 'update_message'
 		  get 'trips'
 	  end
 	  member do
 		  get 'host_confirm'
+      put 'book_reservation'
 		  get 'host_message'
 		  get 'host_paid'
+      get 'guest_refunded'
+      put 'host_confirm_cancellation'
+      put 'guest_save_cancel_reason'
+      get 'guest_cancelled'
 		  get 'admin_view'
 	  end
   end
@@ -45,9 +64,19 @@ PetHomestay::Application.routes.draw do
 	  resources :messages, only: [:index, :create]
   end
 
-  resources :availability
+  resources :availability do
+    collection do
+      get :booking_info
+    end
+  end
 
-  resources :accounts
+  resources :unavailable_dates, :only => [:create, :destroy]
+
+  resources :accounts do
+    collection do
+      post 'guest_cancel_save_account_details'
+    end
+  end
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
@@ -55,7 +84,10 @@ PetHomestay::Application.routes.draw do
     resources :bookings do
 	    collection do
 		    get :reconciliations_file
-	    end
+      end
+      member do
+        post :reset_booking_state
+      end
     end
     resources :transactions
     resources :feedbacks

@@ -23,4 +23,8 @@ FactoryGirl.define do
   factory :user_with_pet, :parent => :confirmed_user do |f|
 	  f.pets { [FactoryGirl.create(:pet)] }
   end
+
+  factory :user_with_homestay, :parent => :confirmed_user do |f|
+	  f.homestay { FactoryGirl.create(:homestay) }
+  end
 end

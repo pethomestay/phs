@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
+  has_many :unavailable_dates
+
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
   validates :accept_house_rules, :acceptance => true
@@ -38,7 +40,7 @@ class User < ActiveRecord::Base
   end
 
   def notifications?
-    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host?
+    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host? || booking_host_request_cancellation?
   end
 
   def inactive_homestay?
@@ -47,6 +49,14 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  def booking_host_request_cancellation?
+    if self.admin?
+      @bookings = Booking.where(:state=>:host_requested_cancellation)
+      return @bookings.length > 0
+    end
+    return false
   end
 
   def locked_homestay?
@@ -149,7 +159,12 @@ class User < ActiveRecord::Base
   end
 
   def find_or_create_booking_by(enquiry=nil, homestay=nil)
-	  unfinished_bookings = self.bookers.unfinished
+    if homestay
+      homestay_id = homestay.id
+    else
+      homestay_id = enquiry.homestay.id
+    end
+	  unfinished_bookings = self.bookers.unfinished.where(:homestay_id=>homestay_id).all()
 	  booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
 
 		booking.enquiry = enquiry
@@ -159,10 +174,12 @@ class User < ActiveRecord::Base
 
 	  date_time_now = DateTime.now
 	  time_now = Time.now
-	  booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
-	  booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
-	  booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
-	  booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
+    if booking.check_in_date.blank? or booking.check_in_time.blank? or booking.check_out_time.blank? or booking.check_out_date.blank? #set the date/time  if not already set
+	    booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
+	    booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
+	    booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
+	    booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
+    end
 	  number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
 		booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
 
@@ -235,7 +252,7 @@ class User < ActiveRecord::Base
       end_str = ">"
       clean_email = clean_email[/#{start_str}(.*?)#{end_str}/m, 1] #extract out the email part
     end
-    new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com"
+    new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com" #
     self.email = new_email
     self.password = "password"
     self.password_confirmation = "password"
@@ -293,4 +310,72 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def booking_info_between(start_date, end_date)
+    booking_info = self.unavailable_dates_info(start_date, end_date)
+    booking_info += self.booked_dates_info(start_date, end_date)
+    available_dates = (start_date..end_date).to_a - (booking_info.map{ |info| info[:start].to_date }).uniq
+    booking_info += available_dates.collect do |date|
+      { title: "Available", start: date.strftime("%Y-%m-%d") }
+    end
+    booking_info
+  end
+
+  def unavailable_dates_info(start_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(start_date, end_date)
+    unavailable_dates.collect do |unavailable_date|
+      {
+        id: unavailable_date.id,
+        title: "Unavailable",
+        start: unavailable_date.date.strftime("%Y-%m-%d")
+      }
+    end
+  end
+
+  def booked_dates_between(start_date, end_date)
+    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
+    bookings.collect do |booking|
+      if booking.check_out_date == booking.check_in_date 
+        [booking.check_in_date]
+      else
+        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
+        booking_end = booking.check_out_date > end_date ? end_date : booking.check_out_date - 1.day
+        (booking_start..booking_end).to_a
+      end
+    end.flatten.compact.uniq
+  end
+
+  def booked_dates_info(start_date, end_date)
+    self.booked_dates_between(start_date, end_date).collect do|date|
+      { title: "Booked", start: date.strftime("%Y-%m-%d") }
+    end
+  end
+
+  #returns user's booked, unavailable dates
+  def unavailable_dates_between(checkin_date, checkout_date)
+    end_date = checkin_date == checkout_date ? checkout_date : checkout_date - 1.day
+    booked_dates = self.booked_dates_between(checkin_date, end_date)
+    unavailable_dates = self.unavailable_dates.between(checkin_date, end_date).map(&:date)
+    (booked_dates + unavailable_dates).uniq
+  end
+
+  def unavailable_dates_after(start_date)
+    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date >= ? or (check_in_date < ? and check_out_date > ?)", start_date, start_date, start_date)
+    unavailable_dates = bookings.collect do |booking|
+      if booking.check_out_date == booking.check_in_date
+        [booking.check_in_date]
+      else
+        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
+        booking_end = booking.check_out_date - 1.day
+        (booking_start..booking_end).to_a
+      end
+    end.flatten.compact.uniq
+    unavailable_dates += self.unavailable_dates.where("date >= ?", start_date).map(&:date)
+    unavailable_dates.uniq
+  end
+
+  def update_calendar
+    self.update_attribute(:calendar_updated_at, Date.today)
+  end
+
 end

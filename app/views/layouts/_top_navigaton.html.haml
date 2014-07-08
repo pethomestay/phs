@@ -9,6 +9,6 @@
     = link_to 'My Trips', trips_bookings_path
   -if current_user.homestay.present? && current_user.homestay.persisted?
     %li.availability
-      = link_to 'My Avaliablity', availability_path(current_user.homestay)
+      = link_to 'My Calendar', availability_path(current_user.homestay)
   %li.account
     = link_to 'My Account', my_account_path

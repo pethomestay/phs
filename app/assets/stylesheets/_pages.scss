@@ -82,7 +82,7 @@ p.first {
     }
   }
   input {
-    width: 350px;
+    width: 435px;
     height: 42px;
     font-size:22px;
     margin-right:-3px;
@@ -91,6 +91,59 @@ p.first {
     font-size: 22px;
     height: 52px;
   }
+
+  .input-date-range{
+    margin-top: 4px;
+  }
+
+  .input-check-in-date {
+    width: 190px;
+    height: 30px;
+    font-size:14px;
+    margin-right:-3px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .input-check-out-date {
+    width: 190px;
+    height: 30px;
+    font-size:14px;
+    margin-left:5px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .check_in_date{
+    position: relative;
+    margin-right: 5px;
+  }
+
+  .check_out_date{
+    position: relative;
+  }
+
+ .check_in_calendar_icon {
+   z-index: 20;
+   position: absolute;
+   top: 12px;
+   display: block;
+   right: 0;
+   width: 20px;
+   height: 21px;
+   cursor: pointer;
+ }
+
+ .check_out_calendar_icon {
+   z-index: 20;
+   position: absolute;
+   top: 12px;
+   display: block;
+   right: 0;
+   width: 20px;
+   height: 21px;
+   cursor: pointer;
+ }
 }
 
 .header-boxes {
