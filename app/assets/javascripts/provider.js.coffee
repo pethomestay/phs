@@ -24,6 +24,13 @@ $ ->
 
   $('.carousel').carousel()
 
+  # Initialize address preview
+  address_1 = $('#homestay_address_1').val()
+  $('#address-preview-1').text(address_1)
+  suburb = $('#homestay_address_suburb').val()
+  state = $('#homestay_address_city').val()
+  postcode = $('#homestay_address_postcode').val()
+  $('#address-preview-2').text("#{suburb} #{state} #{postcode}")
   # Address autocomplete
   # Initialize
   options =
@@ -39,13 +46,6 @@ $ ->
     fillInAddress()
   )
   fillInAddress = ->
-    # Clear form
-    $('#homestay_address_1').val('')
-    $('#user_homestay_address_2').val('')
-    $('#homestay_address_suburb').val('')
-    $('#homestay_address_city').val('')
-    $('#homestay_address_country').val('')
-    $('#homestay_address_postcode').val('')
     # Get the place details from the autocomplete object
     place = autocomplete.getPlace()
     for component in place.address_components
@@ -55,14 +55,12 @@ $ ->
         when 'route'
           street_route  = component['long_name']
         when 'locality'
-          suburb        = component['long_name']
+          suburb        = component['long_name'].toUpperCase()
         when 'administrative_area_level_1'
-          state         = component['long_name']
-        when 'country'
-          country       = component['long_name']
+          state         = component['short_name']
         when 'postal_code'
           postcode      = component['short_name']
-    # Populate form
+    # Populate hidden form
     if street_number and street_route
       $('#homestay_address_1').val("#{street_number} #{street_route}")
     else if street_route
@@ -72,8 +70,16 @@ $ ->
     $('#user_homestay_address_2').val('')
     $('#homestay_address_suburb').val(suburb)
     $('#homestay_address_city').val(state)
-    $('#homestay_address_country').val(country)
+    $('#homestay_address_country').val('Australia')
     $('#homestay_address_postcode').val(postcode)
+    # update address preview
+    if street_number and street_route
+      $('#address-preview-1').text("#{street_number} #{street_route}")
+    else if street_route
+      $('#address-preview-1').text("#{street_route}")
+    else
+      $('#address-preview-1').text('')
+    $('#address-preview-2').text("#{suburb} #{state} #{postcode}")
 
   $(document).on 'change', ':file', ->
     if this.files[0].size >= (1024 * 500)
