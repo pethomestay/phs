@@ -114,9 +114,8 @@
     %small This will be used to place your listing on the map
   .control-group
     %input{id: 'addressField', placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
-  -# TODO: hide address press when no address presented
   .address-preview
-    %h5 Address Preview
+    %h5 Preview
     %iframe#map-preview{width: "300", height: "300", frameborder: "0", style: "border: 0",
       src: "https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=Australia"}
     %p#address-preview{style: 'padding-top: 10px'}

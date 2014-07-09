@@ -26,7 +26,7 @@ $ ->
 
   MAP_BASE_URL = "https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&zoom=15&q="
   # If address presented
-  if $('#homestay_address_country') != ''
+  if $('#homestay_address_1').val().length > 0
     # Retrive address
     address_1 = $('#homestay_address_1').val()
     suburb = $('#homestay_address_suburb').val()
