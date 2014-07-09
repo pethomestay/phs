@@ -4,18 +4,15 @@
     margin-left:200px;
   }
   #addressField {
-    margin-left: 5.7em;
-    width: 30em;
+    margin-left: 50px;
+    width: 400px;
   }
   .address-preview {
     background-color: #ebebeb;
-    padding-top: 1em;
-    padding-bottom: .5em;
+    margin-left: 50px;
+    padding: 10px 20px;
     border: none;
-    width: 43em;
-  }
-  .address-preview h5 {
-    margin-left: 5em;
+    width: 300px;
   }
 
 
@@ -117,13 +114,17 @@
     %small This will be used to place your listing on the map
   .control-group
     %input{id: 'addressField', placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
+  -# TODO: hide address press when no address presented
   .address-preview
     %h5 Address Preview
-    = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
-    = f.input :address_suburb, label: 'Suburb/City', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
-    = f.input :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
-    = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
-    = f.input :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
+    %iframe#map-preview{width: "300", height: "300", frameborder: "0", style: "border: 0",
+      src: "https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=Australia"}
+    %p#address-preview{style: 'padding-top: 10px'}
+    = f.hidden_field :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+    = f.hidden_field :address_suburb, label: 'Suburb/City', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+    = f.hidden_field :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+    = f.hidden_field :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+    = f.hidden_field :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
   %h3{style: "margin-bottom: 10px;"} Other services offered
   .grouped-checkboxes
     = label_tag "I can also offer", nil, class: 'for-group'
