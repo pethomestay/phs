@@ -112,16 +112,16 @@
       .availability-calendar.span5
         .listing-calendar
           #listing-calendar{data: { homestay_id: @homestay.id }}
-
-      .clear
-        .calendar-legend.span5
-          %span.title Legend
-          -#.legend_item.first
-          %span.tile.available
-          %span Available
-          -#.legend_item.last
-          %span.tile.unavailable
-          %span Unavailable
+        -# Calendar legend
+        .clear
+          .calendar-legend.span5
+            %span.title Legend
+            -#.legend_item.first
+            %span.tile.available
+            %span Available
+            -#.legend_item.last
+            %span.tile.unavailable
+            %span Unavailable
 
 
   - content_for :open_graph_tags do
