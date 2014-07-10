@@ -13,15 +13,8 @@ class ZendeskSessionController < ApplicationController
     if current_user
       sign_into_zendesk(current_user)
     else
-      redirect_to controller:'pages', action: 'home', # TODO: create a log-in page and redirect to it
-        locale_id: params['locale_id'],
-        return_to: params['return_to'],
-        timestamp: params['timestamp']
+      redirect_to controller: 'users', action: 'login'
     end
-  end
-
-  def destroy
-    redirect_to :root # TODO: redirect to a log out page
   end
 
   private
@@ -37,6 +30,8 @@ class ZendeskSessionController < ApplicationController
       :jti   => jti, # Unique token id, helps prevent replay attacks
       :name  => user.first_name,
       :email => user.email,
+      :external_id => user.id,
+      :phone => user.mobile_number,
     }, ZENDESK_SHARED_SECRET)
 
     redirect_to zendesk_sso_url(payload)
