@@ -13,7 +13,8 @@ class ZendeskSessionController < ApplicationController
     if current_user
       sign_into_zendesk(current_user)
     else
-      redirect_to controller: 'users', action: 'login'
+      flash[:notice] = "Sign into your PetHomeStay account"
+      redirect_to controller: 'devise/sessions', action: 'new'
     end
   end
 

@@ -9,7 +9,4 @@ class UsersController < ApplicationController
     current_user.update_calendar
     render json: { message: "Successfully Updated" }, status: 200
   end
-
-  def login
-  end
 end

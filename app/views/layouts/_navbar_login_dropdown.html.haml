@@ -10,7 +10,7 @@
             = email_field_tag 'user[email]', '', :placeholder => 'Email'
             = password_field_tag 'user[password]', '', :placeholder => 'Password'
             %label.checkbox
-              = check_box_tag 'user[remember_me]'
+              = check_box_tag 'user[remember_me]', 'user[remember_me]', true # Checked by default
               Remember me
             = submit_tag 'Sign in', :class => 'btn btn-primary'
             .divider
