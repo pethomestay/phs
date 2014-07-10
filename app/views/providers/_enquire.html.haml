@@ -5,10 +5,10 @@
       %li Click here to send a short message to this Host and request a Meeting
       %li Book the Host from inside your messages for full PetHomeStay insurance and support
   - else
-    = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
+    = link_to 'Send a Meeting Request', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
     = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
-    before you can make an enquiry
+    before you can send a meeting request
 
 .modal.hide.fade#enquire
   .modal-header
