@@ -1,7 +1,7 @@
 .well.enquire-listing
   - if current_user.pets.present?
     = link_to 'Send a Meeting Request', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', id: 'ask_host_a_question'
-    %ol
+    %ol{style: "margin-top: 5px;"}
       %li Click here to send a short message to this Host and request a Meeting
       %li Book the Host from inside your messages for full PetHomeStay insurance and support
   - else
