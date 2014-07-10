@@ -10,10 +10,10 @@
       .control-group
         = password_field_tag 'user[password]', '', :placeholder => 'Password'
         %br/
-      .control-group 
-        = check_box_tag 'user[remember_me]'
+      .control-group
+        = check_box_tag 'user[remember_me]', 'user[remember_me]', true # Checked by default
         Remember me
-      .control-group 
+      .control-group
         = submit_tag 'Sign in', :class => 'btn small primary'
       .control-group
         = link_to "Forgot your password?", new_user_password_path
