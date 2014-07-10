@@ -98,10 +98,14 @@ PetHomestay::Application.routes.draw do
     resources :accounts
   end
 
+  # Zendesk Single Sign-on
+  get 'zendesk_session/:action', to: 'zendesk_session'
+
   mount Ckeditor::Engine => '/ckeditor'
 
   get '/my-account'     => 'users#show', as: :my_account
   get '/my-account'     => 'users#show', as: :user_root
+  get '/login'          => 'users#login'
 
   get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
   get '/what-is'              => 'pages#about_us', as: 'what_is'

@@ -10,4 +10,6 @@ class UsersController < ApplicationController
     render json: { message: "Successfully Updated" }, status: 200
   end
 
+  def login
+  end
 end
