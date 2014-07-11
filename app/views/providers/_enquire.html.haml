@@ -1,9 +1,12 @@
 .well.enquire-listing
   - if current_user.pets.present?
     = link_to 'Send a Meeting Request', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', id: 'ask_host_a_question'
-    %ol{style: "margin-top: 5px;"}
-      %li Click here to send a short message to this Host and request a Meeting
-      %li Book the Host from inside your messages for full PetHomeStay insurance and support
+    %ol{style: "margin-top: 15px;"}
+      %li Send a short message to request a meeting with this Host
+      %li Your Message will be recorded in your My Account area
+      %li Click on the Message to Book via PetHomeStay
+    %p
+      %strong Pay via PetHomeStay to get Full Support & Vet Accident Insurance!
   - else
     = link_to 'Send a Meeting Request', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
