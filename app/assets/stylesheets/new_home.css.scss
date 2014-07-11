@@ -143,12 +143,16 @@ body {
     }
 }
 
-// Why PHS
+// Three features
 #why-phs {
     background-color: rgb(247, 247, 247);
 }
 #why-phs img {
-    width: 90%;
+    width: 280px;
+    // center graphics
+    display: block;
+    margin-left:  auto;
+    margin-right: auto;
 }
 #why-phs h3 {
     margin-top: 55px;
@@ -222,6 +226,40 @@ section.footer {
 }
 
 // Responsive
+@media (max-width: 991px) {
+    #postcode {
+        display: block;
+    }
+    #postcode .input-group {
+        width: 100%;
+    }
+    #search-btn {
+        display: block;
+        width: 100%;
+    }
+    #postcode,
+    #drop-off,
+    #pick-up {
+        margin-bottom: 5px;
+    }
+}
+@media (max-width: 767px) {
+    // Jumbotron
+    #drop-off input,
+    #pick-up input {
+        display: block;
+        width: 100%;
+    }
+    // Why PHS
+    #why-phs {
+        h3 {
+            margin-top: 10px;
+        }
+        img {
+            width: 180px;
+        }
+    }
+}
 @media (max-width: 500px) {
     // Nav bar
     #become-a-host {
@@ -240,6 +278,11 @@ section.footer {
     }
     // Three features
     #why-phs{
+
+        img {
+            width: 100px;
+        }
+
         #first-row {
             margin-top: 30px;
         }
@@ -250,35 +293,6 @@ section.footer {
     // Three stories
     .meet-community .story .caption {
         left: 25%;
-    }
-}
-@media (max-width: 767px) {
-    // Jumbotron
-    #drop-off input,
-    #pick-up input {
-        display: block;
-        width: 100%;
-    }
-    // Why PHS
-    #why-phs h3 {
-        margin-top: 10px;
-    }
-}
-@media (max-width: 991px) {
-    #postcode {
-        display: block;
-    }
-    #postcode .input-group {
-        width: 100%;
-    }
-    #search-btn {
-        display: block;
-        width: 100%;
-    }
-    #postcode,
-    #drop-off,
-    #pick-up {
-        margin-bottom: 5px;
     }
 }
 // iPhone horizontal
