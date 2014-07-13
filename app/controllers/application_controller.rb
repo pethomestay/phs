@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
         welcome_path
       end
     else
-      my_account_path
+      mailboxes_path # Default page after log in
     end
   end
 end
