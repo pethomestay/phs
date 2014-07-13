@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
+  before_filter :protect_in_production, only: [:new_home]
 
   def home
 		@homepage = true
@@ -35,5 +36,16 @@ class PagesController < ApplicationController
 
   def new_home
     render layout: "new_application"
+  end
+
+  protected
+  def protect_in_production
+    if  ENV['RAILS_ENV'] == "production"
+      authenticate_or_request_with_http_basic do | username, password |
+        username == ENV['MY_STAGING_USERNAME'] and password == ENV['MY_STAGING_PASSWORD']
+      end
+    else
+      true
+    end
   end
 end
