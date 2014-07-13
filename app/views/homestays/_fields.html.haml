@@ -4,12 +4,12 @@
     margin-left:200px;
   }
   #addressField {
-    margin-left: 50px;
-    width: 400px;
+
+
   }
   .address-preview {
     background-color: #ebebeb;
-    margin-left: 50px;
+    margin-left: 10px;
     padding: 10px 20px;
     border: none;
     width: 300px;
@@ -113,8 +113,10 @@
   %h3{style: "margin-bottom: 10px;"}
     Your PetHomeStay address
     %small This will be used to place your listing on the map
-  .control-group
-    %input{id: 'addressField', placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
+  .control-group{style: "margin-left: 10px;"}
+    %input#addressField{style:"width: 400px;", placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
+    %p
+      %small{style: "color: #999999;"} (Your exact address will not be displayed on your listing - it is restricted to the general suburb level until a booking is made.)
   .address-preview
     %h5 Preview
     %iframe#map-preview{width: "300", height: "300", frameborder: "0", style: "border: 0",
