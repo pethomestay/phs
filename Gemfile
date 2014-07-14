@@ -40,6 +40,7 @@ gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=>"laserlemon/figaro"
 gem 'state_machine'
 
+gem 'jwt' # For Zendesk Single Sign-on
 group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'

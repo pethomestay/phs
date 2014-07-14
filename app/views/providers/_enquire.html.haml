@@ -1,23 +1,17 @@
 .well.enquire-listing
   - if current_user.pets.present?
-    = link_to 'Ask host a question', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', id: 'ask_host_a_question'
-    %p Contact the owner of the listing with any queries or additional information you might need.
+    = link_to 'Send a Meeting Request', '#enquire', 'data-toggle' => 'modal', class: 'btn btn-primary btn-large', id: 'ask_host_a_question'
+    %ol{style: "margin-top: 15px;"}
+      %li Send a short message to request a meeting with this Host
+      %li Your Message will be recorded in your My Account area
+      %li Click on the Message to Book via PetHomeStay
+    %p
+      %strong Pay via PetHomeStay to get Full Support & Vet Accident Insurance!
   - else
-    = link_to 'Ask host a question', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
+    = link_to 'Send a Meeting Request', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
     = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
-    before you can make an enquiry
-
-%p or, if you are happy with this HomeStay, and want to reserve it now,
-.well.booking-listing
-  - if current_user.pets.present?
-    = link_to 'Book this PetHomeStay', new_booking_path(homestay_id: provider.id), class: 'btn btn-primary btn-large', id: 'direct_booking'
-    Contact the owner of this listing now!
-  - else
-    = link_to 'Book this PetHomeStay', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
-    You need to
-    = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
-    before you can make a reservation
+    before you can send a meeting request
 
 .modal.hide.fade#enquire
   .modal-header

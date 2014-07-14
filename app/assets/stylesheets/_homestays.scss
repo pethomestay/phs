@@ -111,19 +111,12 @@
 .calendar-legend {
   display: block;
   position: relative;
-  padding: 5px 5px;
-  border: 1px solid #CCC;
-  height: 50px;
-  width: 195px;
+  border: 0;
+  width: auto;
   font-family: Arial,Helvetica,sans-serif;
-  font-size: .8em;
+  font-size: 12px;
   margin-top: 5px;
   margin-bottom: 5px;
-}
-
-.calendar-legend .legend_item {
-  float: left;
-  margin-right: 20px;
 }
 
 .calendar-legend>div {
@@ -136,10 +129,8 @@
 
 .calendar-legend .tile {
   display: inline-block;
-  height: 15px;
-  width: 15px;
-  margin-right: 10px;
-  vertical-align: bottom;
+  height: 12px;
+  width: 12px;
 }
 
 .calendar-legend .tile.available {
@@ -150,11 +141,8 @@
   background-color: #A3A09E;
 }
 
-.calendar-legend .legend_item.last {
-  margin-right: 0;
-}
-
-.calendar-legend .legend_item {
-  float: left;
-  margin-right: 20px;
+.calendar-legend .title {
+  font-size: 13px;
+  font-weight: bold;
+  margin-right: 5px;
 }

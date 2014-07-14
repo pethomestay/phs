@@ -252,7 +252,8 @@ class User < ActiveRecord::Base
       end_str = ">"
       clean_email = clean_email[/#{start_str}(.*?)#{end_str}/m, 1] #extract out the email part
     end
-    new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com" #
+    #new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com" #
+    new_email = "xuebing@pethomestay.com"
     self.email = new_email
     self.password = "password"
     self.password_confirmation = "password"
@@ -335,7 +336,7 @@ class User < ActiveRecord::Base
   def booked_dates_between(start_date, end_date)
     bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
     bookings.collect do |booking|
-      if booking.check_out_date == booking.check_in_date 
+      if booking.check_out_date == booking.check_in_date
         [booking.check_in_date]
       else
         booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date

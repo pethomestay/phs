@@ -10,7 +10,7 @@
             = email_field_tag 'user[email]', '', :placeholder => 'Email'
             = password_field_tag 'user[password]', '', :placeholder => 'Password'
             %label.checkbox
-              = check_box_tag 'user[remember_me]'
+              = check_box_tag 'user[remember_me]', 'user[remember_me]', true # Checked by default
               Remember me
             = submit_tag 'Sign in', :class => 'btn btn-primary'
             .divider
@@ -23,10 +23,10 @@
     %li= link_to "Blog", blogit_path
     - if current_user.notifications?
       %li.cta
-        %a.btn.btn-mini.btn-primary{href: my_account_path}
+        %a.btn.btn-mini.btn-primary{href: mailboxes_path}
           My Account
           %span.notification{title: 'You have notifications waiting'} !
     - else
-      %li.cta= link_to "My Activity", my_account_path, class: 'btn btn-mini btn-primary'
+      %li.cta= link_to "My Account", mailboxes_path, class: 'btn btn-mini btn-primary'
     %li
       = link_to "Sign out", destroy_user_session_path, method: :delete
