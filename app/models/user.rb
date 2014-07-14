@@ -380,9 +380,11 @@ class User < ActiveRecord::Base
   end
 
   def response_rate_in_percent
-    total = self.host_mailboxes.count
+    mailboxes = self.host_mailboxes
+                .where(created_at: Time.parse('2014-07-25 00:00:00')..Time.now) # only those created after 25/07/2014
+    total = mailboxes.count
     count = 0
-    self.host_mailboxes.each do |mailbox|
+    mailboxes.each do |mailbox|
       messages = mailbox.messages
       if messages[1].present? # If there exists a response
         first_msg_timestamp = messages[0].created_at
