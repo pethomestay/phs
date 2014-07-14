@@ -106,11 +106,11 @@
         %span.cal-date-span{style: "float: none;"}
           Calendar Updated:&nbsp&nbsp
           = "#{calendar_updation_date(@homestay.user)}"
-
-        %br
-        %span.cal-date-span{style: "float: none;"}
-          24-hour Response Rate:&nbsp&nbsp
-          = if @response_rate_in_percent then "#{@response_rate_in_percent}%" else "N/A" end
+        - if @response_rate_in_percent
+          %br
+          %span.cal-date-span{style: "float: none;"}
+            24-hour Response Rate:&nbsp&nbsp
+            = "#{@response_rate_in_percent}%"
       .clear
 
       .availability-calendar.span5
