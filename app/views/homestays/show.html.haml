@@ -70,12 +70,6 @@
                 %strong I have children under the age of 18 at my house
       .description
         %p= simple_format @homestay.description
-      .homestay-share-buttons
-        .twitter-share
-          %a.twitter-share-button{href: 'https://twitter.com/share', 'data-url' => homestay_url(@homestay, protocol: 'https'), 'data-text' => "Have a pet that needs looking after in #{@homestay.address_suburb}, #{@homestay.address_city}?", 'data-related' => 'pethomestay', 'data-via' => 'pethomestay'} Tweet
-        .facebook-share
-          .fb-like{'data-href' => homestay_url(@homestay, protocol: 'https'), 'data-send' => 'false', 'data-width' => '400', 'data-show-faces' => 'false'}
-        .clearfix
       - unless my_homestay?(@homestay)
         - if user_signed_in?
           = render partial: 'providers/enquire', locals: {provider: @homestay, last_enquiry: @reusable_enquiries}
@@ -84,6 +78,7 @@
             = render partial: 'providers/contact_sign_in_form', locals: {provider: @homestay}
       .clear
       = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
+
     .span5
       - if @homestay.pictures.present?
         #homestay-carousel.carousel.slide.span5.thumbnail
@@ -106,6 +101,29 @@
           zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
         }})
         setupMarker(#{homestay_latitude}, #{homestay_longitude})
+
+      .calendar-updation-date.span5
+        %span.cal-date-span
+          Calendar Updated:&nbsp&nbsp
+          = "#{calendar_updation_date(@homestay.user)}"
+
+      .clear
+
+      .availability-calendar.span5
+        .listing-calendar
+          #listing-calendar{data: { homestay_id: @homestay.id }}
+        -# Calendar legend
+        .clear
+          .calendar-legend.span5
+            %span.title Legend
+            -#.legend_item.first
+            %span.tile.available
+            %span Available
+            -#.legend_item.last
+            %span.tile.unavailable
+            %span Unavailable
+
+
   - content_for :open_graph_tags do
     %meta{property: 'og:title', content: @homestay.title}
     %meta{property: 'og:type', content: 'hotel'}

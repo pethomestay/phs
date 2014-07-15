@@ -29,7 +29,7 @@ class Homestay < ActiveRecord::Base
   geocoded_by :geocoding_address
   after_validation :geocode
 
-  before_validation :titleize_attributes, :create_slug
+  before_validation :create_slug
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
@@ -48,13 +48,6 @@ class Homestay < ActiveRecord::Base
     if self.description.present?
       self.description = strip_tags(self.description)
       self.description = strip_nbsp(self.description)
-    end
-  end
-
-  def titleize_attributes
-    %w{title address_suburb address_city}.each do |attribute|
-      current = send(attribute)
-      send "#{attribute}=", current.titleize if current
     end
   end
 
@@ -94,6 +87,31 @@ class Homestay < ActiveRecord::Base
     elsif emergency_transport
       'I can provide emergency transport'
     end
+  end
+
+  def self.homestay_ids_unavailable_between(start_date, end_date)
+    self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id")
+      .where("unavailable_dates.date between ? and ?", start_date, end_date)
+      .group("homestays.id").map(&:id)
+  end
+
+  def self.available_between(start_date, end_date)
+    unavailable_homestay_ids = self.homestay_ids_unavailable_between(start_date, end_date)
+    return self.scoped if unavailable_homestay_ids.blank?
+    self.where('homestays.id NOT IN (?)', unavailable_homestay_ids)
+  end
+
+  def self.homestay_ids_booked_between(start_date, end_date)
+    booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"
+    self.joins("inner join bookings on bookings.bookee_id = homestays.user_id")
+      .where("state = ? and (#{booked_condition})", :finished_host_accepted, start_date, end_date, start_date, start_date)
+      .group("homestays.id").map(&:id)
+  end
+
+  def self.not_booked_between(start_date, end_date)
+    booked_homestay_ids = self.homestay_ids_booked_between(start_date, end_date)
+    return self.scoped if booked_homestay_ids.blank?
+    self.where("homestays.id not in (?)", booked_homestay_ids)
   end
 
   def property_type

@@ -62,10 +62,15 @@ class Admin::AnalyticsController < Admin::AdminController
       first_response_in_sec = first_response_in_sec_to enquiry
       sum_first_response_in_sec << first_response_in_sec if first_response_in_sec
     end
-    seconds = sum_first_response_in_sec.reduce(:+) / sum_first_response_in_sec.length unless sum_first_response_in_sec.length == 0
-    hours = seconds / 3600
-    seconds -= hours * 3600
-    minutes = seconds / 60
+    if sum_first_response_in_sec.any?
+      seconds = sum_first_response_in_sec.reduce(:+) / sum_first_response_in_sec.length unless sum_first_response_in_sec.length == 0
+      hours = seconds / 3600
+      seconds -= hours * 3600
+      minutes = seconds / 60
+      @average_first_response_time = "#{hours.round(2)} hours #{minutes.round(2)} minutes"
+    else
+      @average_first_response_time = 'N/A'
+    end
 
     @average_booking_length_in_days = get_average_days(booking_lengths)
     @average_enquiry_to_booking_in_days = get_average_days(enquiry_to_booking_lengths)
@@ -73,7 +78,6 @@ class Admin::AnalyticsController < Admin::AdminController
     @number_of_confirmed_bookings =   @confirmed_bookings.count
     @number_of_unconfirmed_to_enquiries = @unconfirmed_enquiries.count
     @number_of_confirmed_to_enquires = @confirmed_enquiries.count
-    @average_first_response_time = "#{hours.round(2)} hours #{minutes.round(2)} minutes"
     @num_of_unresponded_enquiries = num_of_unresponded_enquiries
     @percent_of_unresponded_enquiries = (@num_of_unresponded_enquiries * 100.0 / @enquiries.count).round(2)
     @num_of_responded_enquiries = @enquiries.count - num_of_unresponded_enquiries

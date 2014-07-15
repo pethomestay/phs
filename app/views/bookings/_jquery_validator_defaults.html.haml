@@ -1,0 +1,6 @@
+jQuery.validator.setDefaults({
+debug: false,success: 'valid',
+highlight: function(element, error, valid){$(element).closest('.control-group').addClass('error').removeClass('success');},
+unhighlight: function(element, error, valid) {$(element).closest('.control-group').removeClass('error').addClass('success');}
+});
+

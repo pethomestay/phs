@@ -2,7 +2,7 @@
   = field_set_tag 'Sign in' do
     = f.input :email
     = f.input :password
-    = f.input :remember_me, as: :boolean, inline_label: 'Remember me on this computer', label: false
-    .form-actions 
+    = f.input :remember_me, as: :boolean, inline_label: 'Remember me on this computer', label: false, input_html: { checked: true } # Checked by default
+    .form-actions
       = f.submit "Sign in", class: 'btn btn-primary'
   = link_to 'Forgot my password', new_user_password_path

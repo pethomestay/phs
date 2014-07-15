@@ -7,7 +7,7 @@ class Search
   DEFAULT_RADIUS = 20
 
   attr_accessor :provider_types, :within, :sort_by, :country
-  attr_reader :location, :latitude, :longitude
+  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -17,6 +17,14 @@ class Search
 
   def persisted?
     false
+  end
+
+  def check_in_date=(value)
+    @check_in_date = value.to_date if value.respond_to?(:to_date)
+  end
+
+  def check_out_date=(value)
+    @check_out_date = value.to_date if value.respond_to?(:to_date)
   end
 
   def location=(value)
@@ -41,12 +49,16 @@ class Search
 
   def perform
     perform_geocode unless @latitude.present? && @longitude.present?
-    unless sort_by == 'average_rating'
+    if sort_by != 'average_rating'
       homestays = Homestay.active.near([@latitude, @longitude], within, order: sort_by)
     else
-      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC').includes(:user)
+      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC')
     end
-    homestays
+    if self.check_in_date.present?
+      check_out_date = self.check_out_date || self.check_in_date + 1.day
+      homestays = homestays.available_between(check_in_date, check_out_date).not_booked_between(check_in_date, check_out_date)
+    end
+    homestays.includes(:user)
   end
 
   def perform_geocode
