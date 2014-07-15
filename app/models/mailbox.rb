@@ -25,7 +25,7 @@ class Mailbox < ActiveRecord::Base
 
 	def subject_message
 		message = booking_subject_message unless booking.check_in_date.blank? unless booking.blank?
-		message = enquiry_subject_message if message.blank?
+		message = "Enquiry for #{enquiry.homestay.title}" if message.blank?
 		message
 	end
 
@@ -37,10 +37,6 @@ class Mailbox < ActiveRecord::Base
 		"Booking for #{booking.check_in_date.to_formatted_s(:day_and_month)}"
 	end
 
-	def enquiry_subject_message
-		enquiry.message.blank? ? 'this enquiry has no message' : enquiry.message
-	end
-
 	def subject_dates
 		if subject.check_in_date.blank? || subject.check_out_date.blank?
 			absent_dates_message
@@ -50,13 +46,13 @@ class Mailbox < ActiveRecord::Base
 	end
 
 	def dates_message
-		"Check in date: #{subject.check_in_date.strftime('%d/%m/%Y')} - Check out date: #{subject.check_out_date.strftime('%d/%m/%Y')}"
+		"#{subject.check_in_date.strftime('%d/%m/%Y')} to #{subject.check_out_date.strftime('%d/%m/%Y')}"
 	end
 
 	def absent_dates_message
 		'check-in or check-out date are absent'
 	end
-	
+
 	def host_booking?(current_user)
 		!self.booking.blank? && (current_user == self.host_mailbox) && self.booking.owner_accepted? &&
 				!self.booking.host_accepted? && (!self.booking.state?(:rejected))
