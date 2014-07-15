@@ -29,12 +29,16 @@ body {
         background: none;
         margin-left:  7px;
         margin-right: 7px;
+        color: inherit;
     }
     #sign-up {
         border: 2px solid #FFFFFF;
     }
     .buttons:hover {
-        color: inherit;
+        color: rgba(255,255,255,0.8);
+    }
+    #sign-up:hover {
+        border-color: rgba(255,255,255,0.8);
     }
 }
 
