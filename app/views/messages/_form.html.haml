@@ -8,29 +8,19 @@
       %input.message-mailbox-cancel.btn.btn-link{ value: 'Cancel', type: 'button' }
 
   - guest_view = (current_user == @mailbox.guest_mailbox)
-  .well.booking-listing
-    - if guest_view
-      %input{ value:  'Ask another question', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
-      if you need some more information to make a decision.
-    - else
-      %input{ value: 'Answer guest question', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
-      if you need some more information to make a decision.
+  - if guest_view
+    %input{ value:  'Send a Message', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
+  - else
+    %input{ value: 'Reply', type: 'button', class: 'btn btn-primary btn-large ask-question-mailbox' }
 
 
   - if @mailbox.booking.blank? && guest_view
-    %p OR
-    .well.booking-listing
-      = link_to 'Book this HomeStay', new_booking_path(enquiry_id: @mailbox.enquiry_id), class: 'btn btn-primary btn-large'
-      if you are happy to reserve this HomeStay.
+    %span{style: "margin: auto 15px;"} or
+    = link_to 'Book this HomeStay', new_booking_path(enquiry_id: @mailbox.enquiry_id), class: 'btn btn-primary btn-large'
   - elsif @mailbox.host_booking?(current_user)
-    %p OR
-    .well.booking-listing
-      = link_to 'Confirm this HomeStay', host_confirm_booking_path(@mailbox.booking), class: 'btn btn-primary btn-large'
-      if you are happy to reserve this HomeStay.
-
+    %span{style: "margin: auto 15px;"} or
+    = link_to 'Confirm this HomeStay', host_confirm_booking_path(@mailbox.booking), class: 'btn btn-primary btn-large'
   - elsif !@mailbox.booking.blank? && guest_view && !@mailbox.booking.owner_accepted?
-    %p OR
-    .well.booking-listing
-      - booking_params = @mailbox.enquiry_id.blank? ? { homestay_id: @mailbox.booking.homestay.id } : { enquiry_id: @mailbox.enquiry_id }
-      = link_to 'Book this HomeStay', new_booking_path(booking_params), class: 'btn btn-primary btn-large'
-      if you are happy to reserve this HomeStay.
+    %span{style: "margin: auto 15px;"} or
+    - booking_params = @mailbox.enquiry_id.blank? ? { homestay_id: @mailbox.booking.homestay.id } : { enquiry_id: @mailbox.enquiry_id }
+    = link_to 'Book this HomeStay', new_booking_path(booking_params), class: 'btn btn-primary btn-large'

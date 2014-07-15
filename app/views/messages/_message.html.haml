@@ -1,11 +1,7 @@
 - unless message.message_text.blank?
   .well
     %p
-      %span.pull-right= message.created_at.strftime('%d/%m/%Y %H:%M %p')
-      %span.pull-left
-        %i From:
+      %span.pull-right= "#{time_ago_in_words message.created_at} ago"
+      %span
         %strong= (current_user == message.user) ? 'Me' : message.user.first_name.capitalize
-    %br
-    %p
-      %i Message:
-      %strong= message.message_text
+        %p= message.message_text
