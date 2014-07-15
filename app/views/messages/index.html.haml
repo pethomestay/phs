@@ -1,10 +1,6 @@
 .span12
   .page-header
-    .pull-left
-      %h1= @mailbox.subject_message
-    %br
-    %br
-    %br
+    %h1= @mailbox.subject_message
     %h4= "Booking Date: #{@mailbox.subject_dates}"
     - if current_user == @mailbox.host_mailbox && !@mailbox.booking.blank?
       - booking_status =  @mailbox.booking.host_booking_status
