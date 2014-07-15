@@ -2,8 +2,12 @@
     .container
         .col-sm-5
             %h4 Support
-            %h4 <small>FAQ</small>
-            %h4 <small>Support Center</small>
+            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ"}
+                %h4 <small>Guest FAQ</small>
+            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ"}
+                %h4 <small>Host FAQ</small>
+            %a{href: "http://support.pethomestay.com"}
+                %h4 <small>Support Center</small>
             %h4 <small>Call 1300 660 945</small>
             %h4.connect Connect with Us
             -# Google Plus
@@ -22,7 +26,7 @@
                     %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(81, 124, 193)"}
                     %i.fa.fa-facebook.fa-stack-1x
             -# Linkedin
-            %a{href: "http://www.linkedin.com/company/pethomestay-com", target: "_blank"}
+            %a{href: "https://www.linkedin.com/company/pethomestay-com", target: "_blank"}
                 %span.fa-stack.fa-lg
                     %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(49, 128, 174)"}
                     %i.fa.fa-linkedin.fa-stack-1x
@@ -34,10 +38,13 @@
         .col-sm-7.hidden-xs
             .col-sm-4
                 %h4 Learn More
-                %h4 <small>Read Our Blog</small>
+                %a{href: "#{blogit_path}"}
+                    %h4 <small>Read Our Blog</small>
                 %h4 <small>Become a Sitter</small>
-                %h4 <small>Find a Sitter</small>
-                %h4 <small>Contact Us</small>
+                %a{href: "#{root_path}"}
+                    %h4 <small>Find a Sitter</small>
+                %a{href: "#{new_contact_path}"}
+                    %h4 <small>Contact Us</small>
             .col-sm-4
                 %h4 About
                 %h4 <small>The Team</small>
