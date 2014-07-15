@@ -1,17 +1,17 @@
-%form.center-block.form-inline#host-search-form{role: "form"}
+%form.center-block.form-inline#host-search-form{role: "form", action: "#{homestays_path}", method: "get"}
     .form-group#postcode
         .input-group.input-group-lg.left-merged
             %span.input-group-addon
                 %span.glyphicon.glyphicon-map-marker
-            %input.form-control{type: "text", placeholder: "City or Postcode"}
+            %input.form-control{type: "text", name: "search[location]", placeholder: "City or Postcode"}
     .form-group#drop-off
         .input-group.input-group-lg.right-merged
-            %input.form-control{type: "text", placeholder: "Drop Off"}
+            %input.form-control{type: "text", name: "search[check_in_date]", placeholder: "Drop Off"}
             %span.input-group-addon
                 %span.glyphicon.glyphicon-calendar
     .form-group#pick-up
         .input-group.input-group-lg.right-merged
-            %input.form-control{type: "text", placeholder: "Pick Up"}
+            %input.form-control{type: "text", name: "search[check_out_date]", placeholder: "Pick Up"}
             %span.input-group-addon
                 %span.glyphicon.glyphicon-calendar
     %button#search-btn.btn.btn-lg{type: "submit"} SEARCH
