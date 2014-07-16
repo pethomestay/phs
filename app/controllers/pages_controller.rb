@@ -1,9 +1,10 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
-  before_filter :protect_in_production, only: [:new_home]
+  before_filter :protect_in_production, only: [:legacy_home]
 
   def home
-		@homepage = true
+    render layout: "new_application"
+    @homepage = true
   end
 
   def welcome
@@ -34,8 +35,8 @@ class PagesController < ApplicationController
   def post_to_securepay
   end
 
-  def new_home
-    render layout: "new_application"
+  def legacy_home
+    @homepage = true
   end
 
   protected
