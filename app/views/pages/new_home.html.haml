@@ -1,8 +1,10 @@
-= stylesheet_link_tag 'new_home'
-= render partial: 'home/nav_bar'
+- content_for :head_stylesheet do
+    = stylesheet_link_tag 'new_home'
+- content_for :head_javascript do
+    = render partial: '/layouts/facebook_campaign'
+
 = render partial: 'home/jumbotron'
 = render partial: 'home/three_steps'
 = render partial: 'home/why_phs'
 = render partial: 'home/meet_community'
 = render partial: 'home/bottom_search'
-= render partial: 'home/footer'
