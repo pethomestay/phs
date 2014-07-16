@@ -1,0 +1,7 @@
+// This is only a temporary fix
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+    color: white;
+    background-color: #ea6e28;
+}

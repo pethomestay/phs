@@ -1,7 +1,7 @@
 = simple_form_for [@mailbox, Message.new], html: { class: 'form-horizontal mailbox-messages-form' } do |f|
   = f.input_field :user_id, type: :hidden, value: current_user.id
   = f.input_field :mailbox_id, type: :hidden, value: @mailbox.id
-  .well.message-text-mailbox.hidden
+  .well.message-text-mailbox{style: "display: none;"}
     = f.input :message_text, as: :text , input_html: { rows: 3 }
     .controls
       = f.submit 'Submit', class: 'btn btn-primary'
