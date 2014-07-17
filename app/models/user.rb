@@ -381,7 +381,7 @@ class User < ActiveRecord::Base
 
   def response_rate_in_percent
     mailboxes = self.host_mailboxes
-                .where(created_at: Time.parse('2014-07-25 00:00:00')..Time.now) # only those created after 25/07/2014
+                .where(created_at: Time.parse(ENV['RESPONSE_CUT_OFF_DATE'])..Time.now) # only those created after cut off date
     total = mailboxes.count
     count = 0
     mailboxes.each do |mailbox|
