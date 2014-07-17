@@ -397,7 +397,7 @@ class User < ActiveRecord::Base
       end
     end
     # calculate response rate in PERCENTAGE
-    return (count * 100.0 / total).round 2
+    return (count * 100.0 / total).round 0
   end
 
 end
