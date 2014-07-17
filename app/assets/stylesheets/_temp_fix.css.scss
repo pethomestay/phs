@@ -40,3 +40,13 @@
 section.footer .container {
     width: 1170px;
 }
+
+.search-filters .sort-by {
+    margin-top: 5px;
+    margin-bottom: 0;
+    .radio {
+        margin-top: 0;
+        margin-right: 5px;
+        padding-top: 0;
+    }
+}

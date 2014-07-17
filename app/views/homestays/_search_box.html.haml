@@ -15,15 +15,12 @@
     .search-filters
       %label.sort-by
         %span.sort-text Sort by
-        %label.radio.inline
-          = radio_button :search, :sort_by, 'distance'
-          Distance
-        %label.radio.inline
-          = radio_button :search, :sort_by, 'cost_per_night'
-          Cost
-        %label.radio.inline
-          = radio_button :search, :sort_by, 'average_rating'
-          Rating
+        = radio_button :search, :sort_by, 'distance'
+        %label.radio.inline Distance
+        = radio_button :search, :sort_by, 'cost_per_night'
+        %label.radio.inline Cost
+        = radio_button :search, :sort_by, 'average_rating'
+        %label.radio.inline Rating
     -# = f.label 'Your pet prefers' do |controls|
     -#   = controls.check_box :is_homestay, 'To sleep over at a homestay'
     -#   = controls.check_box :is_sitter, 'To stay at home with a sitter'
