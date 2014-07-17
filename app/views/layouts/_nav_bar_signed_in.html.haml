@@ -1,0 +1,10 @@
+%nav.navbar.nav-custom{role: "navigation", style: unless @homepage then 'background-color: #5f5753' else '' end}
+    .container
+        .navbar-header.pull-left
+            %a.navbar-brand#brand{href: "#{root_path}"} pet<span style="color: rgb(231, 120, 49)">home</span>stay
+        .navbar-header.pull-right
+            - if current_user.admin?
+                = link_to 'Admin Dashboard', admin_dashboard_path, class: 'buttons btn navbar-btn'
+            %a.buttons.btn.navbar-btn#find-a-host{href: "#{root_path}"} Find A Host
+            = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn'
+            %a.buttons.btn.navbar-btn.primary{href: "#{mailboxes_path}"} <span id="my">My</span> Account
