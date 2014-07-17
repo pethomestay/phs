@@ -381,8 +381,9 @@ class User < ActiveRecord::Base
 
   def response_rate_in_percent
     mailboxes = self.host_mailboxes
-                .where(created_at: Time.parse(ENV['RESPONSE_CUT_OFF_DATE'])..Time.now) # only those created after cut off date
+                .where(created_at: Time.parse(ENV['RESPONSE_CUT_OFF_DATE'])..(Time.now - 24.hours)) # only those created after cut off date
     total = mailboxes.count
+    return nil if total == 0 # If no such qualified enquiry
     count = 0
     mailboxes.each do |mailbox|
       messages = mailbox.messages
@@ -393,14 +394,7 @@ class User < ActiveRecord::Base
         if time_diff <= 86400 # 24 hours in seconds
           count += 1
         end
-      elsif mailbox.booking.present? # Still count if no response but booking confirmed
-        count += 1
-      elsif Time.now - messages[0].created_at < 86400 # Give host 24 hours to reply
-        total -= 1
       end
-    end
-    if total == 0 # If no such qualified enquiry
-      return nil
     end
     # calculate response rate in PERCENTAGE
     return (count * 100.0 / total).round 2
