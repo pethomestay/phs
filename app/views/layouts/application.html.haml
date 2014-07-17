@@ -14,7 +14,10 @@
     = yield :head
   %body
     = render partial: 'layouts/facebook_tag'
-    = render partial: 'layouts/navbar'
+    - if user_signed_in?
+      = render partial: 'layouts/nav_bar_signed_in'
+    - else
+      = render partial: 'layouts/nav_bar'
     - current_user_present = !current_user.blank? && @homepage.blank?
     - if current_user_present
       .span2.sidebar-nav

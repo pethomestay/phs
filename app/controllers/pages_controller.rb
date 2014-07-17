@@ -3,8 +3,8 @@ class PagesController < ApplicationController
   before_filter :protect_in_production, only: [:legacy_home]
 
   def home
-    render layout: "new_application"
     @homepage = true
+    render layout: "new_application"
   end
 
   def welcome

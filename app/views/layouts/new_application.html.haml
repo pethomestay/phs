@@ -9,8 +9,12 @@
         = yield :head_stylesheet
         %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
         %script{src: "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
+        = javascript_include_tag 'jquery_ujs'
         = yield :head_javascript
     %body
-        = render partial: 'home/nav_bar'
+        - if user_signed_in?
+            =render partial: 'layouts/nav_bar_signed_in'
+        - else
+            = render partial: 'layouts/nav_bar'
         = yield
         = render partial: 'layouts/footer'
