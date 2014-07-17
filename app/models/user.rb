@@ -379,4 +379,31 @@ class User < ActiveRecord::Base
     self.update_attribute(:calendar_updated_at, Date.today)
   end
 
+  def response_rate_in_percent
+    mailboxes = self.host_mailboxes
+                .where(created_at: Time.parse('2014-07-25 00:00:00')..Time.now) # only those created after 25/07/2014
+    total = mailboxes.count
+    count = 0
+    mailboxes.each do |mailbox|
+      messages = mailbox.messages
+      if messages[1].present? # If there exists a response
+        first_msg_timestamp = messages[0].created_at
+        sec_msg_timestamp   = messages[1].created_at
+        time_diff = sec_msg_timestamp - first_msg_timestamp
+        if time_diff <= 86400 # 24 hours in seconds
+          count += 1
+        end
+      elsif mailbox.booking.present? # Still count if no response but booking confirmed
+        count += 1
+      elsif Time.now - messages[0].created_at < 86400 # Give host 24 hours to reply
+        total -= 1
+      end
+    end
+    if total == 0 # If no such qualified enquiry
+      return nil
+    end
+    # calculate response rate in PERCENTAGE
+    return (count * 100.0 / total).round 2
+  end
+
 end
