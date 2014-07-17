@@ -6,9 +6,17 @@
     background-color: #ea6e28 !important;
 }
 
-.nav-custom .navbar-btn {
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
+
+.nav-custom {
+    div.container {
+        width: 1170px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .navbar-btn {
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+    }
 }
 .buttons {
     display: inline-block !important;
@@ -27,4 +35,8 @@
 }
 .buttons:hover {
     background-color: #5f5753;
+}
+
+section.footer .container {
+    width: 1170px;
 }
