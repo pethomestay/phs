@@ -70,3 +70,14 @@ $(document).ready ->
     bottom_checkin.hide()
     bottom_checkout.show()
   )
+
+  # Temporary
+  # Postcode
+  top_postcode = $('.left-merged').eq 0
+  top_postcode.find('.input-group-addon').on 'click', (e) ->
+    e.preventDefault()
+    top_postcode.find('input').focus()
+  bottom_postcode = $('.left-merged').eq 1
+  bottom_postcode.find('.input-group-addon').on 'click', (e) ->
+    e.preventDefault()
+    bottom_postcode.find('input').focus()
