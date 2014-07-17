@@ -37,6 +37,17 @@
     background-color: #5f5753;
 }
 
+.btn-facebook-sign-in {
+  display:inline-block;
+  text-indent: -9999px;
+  min-width: 198px;
+  min-height: 38px;
+  background: url('facebook-sign-in.png') no-repeat;
+  margin-left: 7px;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
 section.footer .container {
     width: 1170px;
 }
