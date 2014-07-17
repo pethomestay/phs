@@ -12,9 +12,6 @@
         = javascript_include_tag 'jquery_ujs'
         = yield :head_javascript
     %body
-        - if user_signed_in?
-            =render partial: 'layouts/nav_bar_signed_in'
-        - else
-            = render partial: 'layouts/nav_bar'
+        = render partial: 'layouts/nav_bar'
         = yield
         = render partial: 'layouts/footer'
