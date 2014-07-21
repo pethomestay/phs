@@ -397,7 +397,9 @@ class User < ActiveRecord::Base
       end
     end
     # calculate response rate in PERCENTAGE
-    return (count * 100.0 / total).round 0
+    score = (count * 100.0 / total).round 0
+    return nil if score == 0 # Hide host responsiveness if the score is 0
+    score
   end
 
 end
