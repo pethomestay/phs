@@ -73,6 +73,13 @@ class Enquiry < ActiveRecord::Base
     feedback_for_homestay.present?
   end
 
+  def first_host_response
+    return nil if self.mailbox.blank?
+    self.mailbox.messages
+      .where('user_id != ?', self.user.id)
+      .limit(1)[0] # First host response in this enquiry
+  end
+
   private
   def send_new_enquiry_notifications
     ProviderMailer.enquiry(self).deliver
