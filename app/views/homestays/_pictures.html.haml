@@ -4,7 +4,7 @@
       %tr.item
         %td#image
           - if fp.object.file.present?
-            = image_tag(fp.object.file.thumb('200x200').url)
+            = image_tag(fp.object.file.thumb('300x300').url)
           - else
             = fp.input :file, as: :file, label: 'Upload picture'
           = fp.hidden_field :retained_file
@@ -18,3 +18,4 @@
   %table.table#remove.new-picture
     %tr
       %td= link_to '+ Add new picture', '#', class: 'add'
+= javascript_include_tag 'resample' # library for image resizing
