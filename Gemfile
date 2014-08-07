@@ -41,6 +41,7 @@ gem 'figaro', :github=>"laserlemon/figaro"
 gem 'state_machine'
 
 gem 'jwt' # For Zendesk Single Sign-on
+gem 'createsend' # Campaign Monitor API Wrapper
 group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
