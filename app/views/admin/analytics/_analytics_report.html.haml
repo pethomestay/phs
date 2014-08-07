@@ -15,8 +15,23 @@
   %p
     Number of confirmed bookings in date range: #{@number_of_confirmed_bookings}
   %p
-    Number of unconfirmed enquires in date range: #{@number_of_unconfirmed_to_enquiries}
+    Number of unconfirmed enquiries in date range: #{@number_of_unconfirmed_to_enquiries}
   %p
-    Number of confirmed enquires in date range: #{@number_of_confirmed_to_enquires}
+    Number of confirmed enquiries in date range: #{@number_of_confirmed_to_enquires}
+  %br
+  %p
+    Average first response time: #{@average_first_response_time}
+  %p
+    Number of
+    %strong responded
+    enquiries:
+    %strong= @num_of_responded_enquiries
+    \/#{@enquiries.count} (#{@percent_of_responded_enquiries}% of all enquiries)
+  %p
+    Number of
+    %strong unresponded
+    enquiries:
+    %strong= @num_of_unresponded_enquiries
+    \/#{@enquiries.count} (#{@percent_of_unresponded_enquiries}% of all enquiries)
 
 

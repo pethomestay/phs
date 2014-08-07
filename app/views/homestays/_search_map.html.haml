@@ -1,0 +1,15 @@
+.span4.sidebar-search
+  - if @search.latitude.present? && @search.longitude.present?
+    .well#map{class: @homestays.any? ? '' : 'short'}
+      :javascript
+        initMap(#{@search.latitude}, #{@search.longitude}, {
+          zoom: 12,
+          maxZoom: 12,
+          mapTypeControl: false,
+          streetViewControl: false,
+          zoom_changed: function(){if(map.map.getZoom() > 15) { map.setZoom(15); }
+        }})
+      - if @homestays.any?
+        - @homestays.each do |homestay|
+          :javascript
+            setupMarker(#{homestay.latitude.round(3)}, #{homestay.longitude.round(3)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})

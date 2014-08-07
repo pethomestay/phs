@@ -15,7 +15,7 @@ PetHomestay::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -28,7 +28,7 @@ PetHomestay::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
@@ -43,12 +43,15 @@ PetHomestay::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = "d3g119iz6szy5z.cloudfront.net"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
   config.assets.precompile += %w( ckeditor/plugins/youtube/plugin.js )
   config.assets.precompile += %w( ckeditor/plugins/youtube/lang/en.js )
+  config.assets.precompile += %w( new_home.css ) # Temp solution
+  config.assets.precompile += %w( address_autocomplete.js )
+  config.assets.precompile += %w( datepicker.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -68,15 +71,19 @@ PetHomestay::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Use mailgun for ActionMailer
-  ActionMailer::Base.smtp_settings = {
-    :port           => ENV['MAILGUN_SMTP_PORT'],
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'www.pethomsetay.com',
-    :authentication => :plain,
+  # ActionMailer::Base.smtp_settings = {
+  #   :port           => ENV['MAILGUN_SMTP_PORT'],
+  #   :address        => ENV['MAILGUN_SMTP_SERVER'],
+  #   :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+  #   :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+  #   :domain         => 'www.pethomestay.com',
+  #   :authentication => :plain,
+  # }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+      api_key: ENV['MAILGUN_API_KEY'],
+      domain: ENV['MAILGUN_DOMAIN']
   }
-  ActionMailer::Base.delivery_method = :smtp
 
   # Add default mailer URL
   config.action_mailer.default_url_options = { :host => 'www.pethomestay.com' }

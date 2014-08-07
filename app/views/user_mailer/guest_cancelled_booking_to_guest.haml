@@ -1,0 +1,25 @@
+%p.article-content
+  = "Dear #{@guest.first_name.capitalize.strip},"
+%p.article-content
+  We are really sorry to hear that you need to cancel your booking. This note is your receipt of your cancellation request.
+%p.article-content
+  Your booking fee will be refunded as per our #{link_to "cancellation policy", "http://www.pethomestay.com/cancellation-policy"}, and will appear in your bank account in 2-3 days.
+%p.article-content
+  Best regards, and we hope you check out PetHomeStay.com the next time you would like to find an amazing Host!
+%p.article-content
+  The PetHomeStay Team
+%p.article-content
+  %h4 PetHomeStay Cancellation Refund
+%p.article-content
+  PetHomeStay refunds Guest booking fees (excluding credit card charge) based on the date of cancellation to the date of commencement of the HomeStay, minus the applicable PetHomeStay Service Fee.
+%ul.article-content
+  %li
+    More than 14 days in advance – PetHomeStay will refund 100% of remaining fees.
+  %li
+    Between 14 days and 7 days in advance – PetHomeStay will refund the Guest 50% and pay the Host 50% of the remaining fees.
+  %li
+    Less than 7 days – there will be no refund issued and the Host will be paid as standard.
+%p.article-content
+  Number of days before your booked HomeStay commences - #{@days_left_until_booking_commences}.
+  %br
+  Based on the original pre-credit card fee of $#{@subtotal}, you will receive a refund of $#{@booking_fee_refunded} to your nominated bank account.

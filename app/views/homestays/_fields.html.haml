@@ -3,9 +3,21 @@
     float:left;
     margin-left:200px;
   }
+  #addressField {
+
+
+  }
+  .address-preview {
+    background-color: #ebebeb;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    width: 300px;
+  }
 
 
 
+= javascript_include_tag 'address_autocomplete'
 .homestay-form
   - if f.object.persisted?
     %h3 Listing is Active?
@@ -101,13 +113,20 @@
   %h3{style: "margin-bottom: 10px;"}
     Your PetHomeStay address
     %small This will be used to place your listing on the map
-  = f.input :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1)
-  .control-group
-    .controls
-      %input#user_homestay_address_2{name: 'homestay[address_2]', value: (f.object.address_2.present? ? f.object.address_2 : current_user.address_2)}
-  = f.input :address_suburb, label: 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
-  = f.input :address_city, label: 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
-  = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
+  .control-group{style: "margin-left: 10px;"}
+    %input#addressField{style:"width: 400px;", placeholder: 'Enter your address here', type: 'text', autocomplete: 'off', onkeypress: 'return event.keyCode != 13;'}
+    %p
+      %small{style: "color: #999999;"} (Your exact address will not be displayed on your listing - it is restricted to the general suburb level until a booking is made.)
+  .address-preview
+    %h5 Preview
+    %iframe#map-preview{width: "300", height: "300", frameborder: "0", style: "border: 0",
+      src: "https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=Australia"}
+    %p#address-preview{style: 'padding-top: 10px'}
+    = f.hidden_field :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+    = f.hidden_field :address_suburb, label: 'Suburb/City', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+    = f.hidden_field :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+    = f.hidden_field :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+    = f.hidden_field :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
   %h3{style: "margin-bottom: 10px;"} Other services offered
   .grouped-checkboxes
     = label_tag "I can also offer", nil, class: 'for-group'

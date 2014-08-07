@@ -26,6 +26,7 @@ class Enquiry < ActiveRecord::Base
 
   after_create :create_mailbox
   after_create :send_new_enquiry_notifications
+  after_create :send_new_enquiry_notification_SMS
 
   before_save :set_response, on: :create
   after_update :send_enquiry_update_notifications
@@ -72,9 +73,20 @@ class Enquiry < ActiveRecord::Base
     feedback_for_homestay.present?
   end
 
+  def first_host_response
+    return nil if self.mailbox.blank?
+    self.mailbox.messages
+      .where('user_id != ?', self.user.id)
+      .limit(1)[0] # First host response in this enquiry
+  end
+
   private
   def send_new_enquiry_notifications
     ProviderMailer.enquiry(self).deliver
+  end
+
+  def send_new_enquiry_notification_SMS
+    ProviderMailer.new_enquiry_SMS(self).deliver
   end
 
   def send_enquiry_update_notifications

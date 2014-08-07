@@ -1,3 +1,69 @@
 .show-booking-history{
   padding-bottom: 90px;
+  padding-right: 0px !important;
 }
+
+.show-booking-history-guest{
+  padding-bottom: 130px;
+  padding-right: 0px !important;
+}
+
+#booking_cancelled_booking {
+  width: 400px;
+}
+
+.right-panel-btn {
+  width: 100px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#bookingtbl td {
+  width: 100px;
+}
+
+#booking_cancel_reason {
+  width: 500px !important;
+}
+
+ul.extra-line-height li {
+  line-height: 200% !important;
+}
+
+label.error {
+  margin-top: 10px;
+  color: #df382c;
+}
+
+.check_in_error {
+  display: block;
+  margin-bottom: 10px;
+  color: #df382c;
+  margin-top: 5px;
+  margin-left: 180px;
+}
+
+.enabled_datepicker input{
+  cursor: default !important;
+}
+
+.selectable-unavailable-date {
+  color: #C1C1C1 !important;
+}
+
+.datepicker td.day.disabled {
+  color: #C1C1C1 !important;
+}
+
+.datepicker td span.old {
+  color: #8A8A8A !important;
+}
+
+.datepicker td.old,
+.datepicker td.new {
+  color: #8A8A8A !important;
+}
+
+
+

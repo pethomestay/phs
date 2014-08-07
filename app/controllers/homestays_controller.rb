@@ -1,6 +1,6 @@
 class HomestaysController < ApplicationController
   respond_to :html
-  before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :authenticate_user!, except: [:show, :index, :availability]
   before_filter :find_homestay, only: [:edit, :update]
 
   SEARCH_RADIUS = 20
@@ -9,7 +9,7 @@ class HomestaysController < ApplicationController
   def index
     @search = Search.new(params[:search])
     #We are only doing australia, not sure why we are doing the country detect
-    @search.country =  'AU' #request.location.country_code if request.location
+    @search.country =  'Australia' #request.location.country_code if request.location
     @title = "Pet care for #{@search.location}"
     respond_with @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
   end
@@ -35,6 +35,7 @@ class HomestaysController < ApplicationController
     flash.now[:notice] = notice if notice && !@homestay.active?
     @title = @homestay.title
     @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
+    @response_rate_in_percent = @homestay.user.response_rate_in_percent
     if current_user
 	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
       @enquiry = Enquiry.new({
@@ -109,6 +110,14 @@ class HomestaysController < ApplicationController
 
   def favourites
 	  @homestays = current_user.homestays
+  end
+
+  def availability
+    homestay = Homestay.find(params[:id])
+    start_date = Time.at(params[:start].to_i).to_date
+    end_date  = Time.at(params[:end].to_i).to_date
+    info = homestay.user.booking_info_between(start_date, end_date)
+    render json: info.to_json, status: 200
   end
 
   private

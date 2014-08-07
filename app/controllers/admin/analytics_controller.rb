@@ -57,12 +57,28 @@ class Admin::AnalyticsController < Admin::AdminController
       booking_lengths << (booking.updated_at.to_date - booking.created_at.to_date) #Note this will give you the days
     }
 
+    sum_first_response_time = []
+    @enquiries.each do |enquiry|
+      first_response_time = first_response_time_to enquiry
+      sum_first_response_time << first_response_time if first_response_time
+    end
+    if sum_first_response_time.any?
+      seconds = sum_first_response_time.reduce(:+) / sum_first_response_time.length
+      @average_first_response_time = view_context.distance_of_time_in_words(Time.now, Time.now + seconds.seconds)
+    else
+      @average_first_response_time = 'N/A'
+    end
+
     @average_booking_length_in_days = get_average_days(booking_lengths)
     @average_enquiry_to_booking_in_days = get_average_days(enquiry_to_booking_lengths)
     @number_of_unconfirmed_bookings =   @unconfirmed_bookings.count
     @number_of_confirmed_bookings =   @confirmed_bookings.count
     @number_of_unconfirmed_to_enquiries = @unconfirmed_enquiries.count
     @number_of_confirmed_to_enquires = @confirmed_enquiries.count
+    @num_of_unresponded_enquiries = num_of_unresponded_enquiries
+    @percent_of_unresponded_enquiries = (@num_of_unresponded_enquiries * 100.0 / @enquiries.count).round(2)
+    @num_of_responded_enquiries = @enquiries.count - num_of_unresponded_enquiries
+    @percent_of_responded_enquiries = 100 - @percent_of_unresponded_enquiries
 
 
 
@@ -78,5 +94,30 @@ class Admin::AnalyticsController < Admin::AdminController
       @average_length_in_days = day_array.inject{ |sum, el| sum + el }.to_f / day_array.size
     end
     return @average_length_in_days
+  end
+
+  private
+  def first_response_time_to enquiry
+    first_response = enquiry.first_host_response # First host response in this enquiry
+    return nil if first_response.blank? # Return nil if no host response found
+    # calculate diff
+    return first_response.created_at - enquiry.created_at
+  end
+
+  def responded? enquiry
+    first_response = enquiry.first_host_response # First host response in this enquiry
+    if first_response
+      true
+    else
+      false
+    end
+  end
+
+  def num_of_unresponded_enquiries
+    count = 0
+    @enquiries.each do |enquiry|
+      count += 1 unless responded? enquiry
+    end
+    count
   end
 end

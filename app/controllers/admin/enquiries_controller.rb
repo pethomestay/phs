@@ -21,9 +21,15 @@ class Admin::EnquiriesController < Admin::AdminController
   def edit
     @enquiry = Enquiry.find(params[:id])
     if @enquiry.check_out_time.nil?
+      if @enquiry.check_out_date.nil?
+        @enquiry.check_out_date = Date.today
+      end
       @enquiry.check_out_time = DateTime.new(@enquiry.check_out_date.year,@enquiry.check_out_date.month,@enquiry.check_out_date.day,0,0,0)
     end
     if @enquiry.check_in_time.nil?
+      if @enquiry.check_in_date.nil?
+        @enquiry.check_in_date = Date.today
+      end
       @enquiry.check_in_time = DateTime.new(@enquiry.check_in_date.year,@enquiry.check_in_date.month,@enquiry.check_in_date.day,0,0,0)
     end
 
@@ -36,7 +42,14 @@ class Admin::EnquiriesController < Admin::AdminController
 
   def update
     @enquiry = Enquiry.find(params[:id])
+    #Lets find the message
+    @message  = Message.where(:user_id => @enquiry.user_id, :message_text=> @enquiry.message).first
     @enquiry.update_attributes(params[:enquiry])
+    #now enquiry has been updated we can update it's associated Message object also
+    if not @message.blank?
+      @message.message_text = @enquiry.message
+      @message.save
+    end
     respond_with(:admin, @enquiry)
   end
 

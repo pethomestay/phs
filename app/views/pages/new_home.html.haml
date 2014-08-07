@@ -1,0 +1,13 @@
+- content_for :head_stylesheet do
+    = stylesheet_link_tag '_bootstrap-datepicker'
+    = stylesheet_link_tag 'new_home'
+- content_for :head_javascript do
+    = javascript_include_tag 'bootstrap-datepicker-core'
+    = javascript_include_tag 'datepicker'
+    = render partial: '/layouts/facebook_campaign'
+
+= render partial: 'home/jumbotron'
+= render partial: 'home/three_steps'
+= render partial: 'home/why_phs'
+= render partial: 'home/meet_community'
+= render partial: 'home/bottom_search'

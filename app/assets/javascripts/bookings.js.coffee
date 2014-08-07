@@ -10,6 +10,13 @@ $ ->
         minlength: 13,
         maxlength: 16,
         digits: true
+    highlight: (element, error, valid) ->
+      $(element).closest(".control-group").addClass("error").removeClass "success"
+      return
+    unhighlight: (element, error, valid) ->
+      $(element).closest(".control-group").removeClass("error").addClass "success"
+      return
+
 
   fractionalPart = (value) ->
     stringValue = value.toString()
@@ -39,6 +46,16 @@ $ ->
         $('[name="EPS_TIMESTAMP"]').val(data['transaction_time_stamp'])
         $('[name="EPS_AMOUNT"]').val(data['transaction_actual_amount'])
         $('[name="EPS_FINGERPRINT"]').val(data['transaction_merchant_fingerprint'])
+        $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").removeClass("error")
+        $("#check_in_date_error").hide().text("")
+      error: (data) ->
+        error = $.parseJSON(data.responseText).error
+        $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").addClass("error").removeClass "success"
+        $("#check_in_date_error").show().text(error)
+        $("html, body").animate 
+          scrollTop: $(".container.main").offset().top
+          , 500
+        event.stopPropagation
 
   setNumberOfNights = ->
     number_of_nights_input = $('[name="booking[number_of_nights]"]')
@@ -48,72 +65,61 @@ $ ->
     number_of_nights = Math.ceil(time_difference / (1000 * 3600 * 24))
     if parseInt(number_of_nights) <= 0
       number_of_nights = 1
-    if parseInt(number_of_nights_input.val()) != parseInt(number_of_nights)
-      number_of_nights_input.val(number_of_nights)
-      updateTransactionFromServer(number_of_nights_input)
+    number_of_nights_input.val(number_of_nights)
+    updateTransactionFromServer(number_of_nights_input)
 
   if $('#datepicker-check-in-date').length is 0
     $('.date_picker').siblings('span').attr('disabled', 'disabled')
   else
     nowTemp = new Date()
-    nowTemp.setDate nowTemp.getDate() + 1
+    unavailable_dates = []
+    if $("#unavailable_dates").length isnt 0
+      unavailable_dates = (+new Date date for date in $("#unavailable_dates").data("unavailable-dates").split(","))
 
-    $('#datepicker-check-in-date').closest('div').datetimepicker(
-      language: 'en'
-      pickTime: false
-      format: 'dd/MM/yyyy'
+    checkin = $('#datepicker-check-in-date').datepicker(
+      format: 'dd/mm/yyyy'
       startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
+      beforeShowDay: (date) ->
+        if ($.inArray(+date, unavailable_dates) != -1)
+          return enabled: false
     ).on('changeDate', (ev) ->
-      eventTarget = jQuery(ev.target)
-      picker = eventTarget.data('datetimepicker')
-      tempDate = new Date(picker.getLocalDate())
-      tempDate.setDate tempDate.getDate() + 1
-      if $('#datepicker-check-out-date').val() != undefined
-        secondTCurrentDate = new Date($('input.checkout').val().split('/').reverse().join('/'))
-        secondNewDate = secondTCurrentDate
-        if tempDate > secondTCurrentDate
-          secondNewDate = tempDate
-        $('#datepicker-check-out-date').closest('div').datetimepicker 'destroy'
-        $('#datepicker-check-out-date').val new XDate(secondNewDate).toString('dd/MM/yyyy')
-        tempDate.setDate tempDate.getDate() + 1
-        $('#datepicker-check-out-date').closest('div').datetimepicker(
-            language: 'en'
-            pickTime: false
-            format: 'dd/MM/yyyy'
-            startDate: new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0)
-        ).on('changeDate', (ev) ->
-          $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
-          if $('[name="booking[number_of_nights]"]').val() != undefined
-            setNumberOfNights()
-          return
-        ).data('datepicker')
+      newDate = new Date(ev.date)
+      if checkout.date.getTime() < newDate.getTime()
+        checkout.setDate newDate
+      checkout.startDate = newDate
+      checkout.update()
+      checkin.hide()
+      setNumberOfNights()
+    ).data('datepicker')
+
+    checkout = $('#datepicker-check-out-date').datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0)
+      beforeShowDay: (date) ->
+        if ($.inArray(+date, unavailable_dates) != -1)
+          prev_unavailable_date = new Date(date)
+          prev_unavailable_date.setDate(prev_unavailable_date.getDate() - 1)
+          if ($.inArray(+prev_unavailable_date, unavailable_dates) != -1)
+            return enabled: false
+          else
+            return classes: "selectable-unavailable-date"
+    ).on('changeDate', (ev) ->
       if $('[name="booking[number_of_nights]"]').val() != undefined
         setNumberOfNights()
       return
     ).data('datepicker')
+    
+    $(".booking_check_in_date span.add-on, .enquiry_check_in_date span.add-on").on('click', (e) ->
+      e.preventDefault
+      checkin.show()
+      checkout.hide()
+    )
 
-    if $('#datepicker-check-out-date').length isnt 0
-      oldDate = new Date($('#datepicker-check-out-date').val().split('/').reverse().join('/'))
-      if oldDate <= nowTemp
-        $('#datepicker-check-out-date').val new XDate(nowTemp).toString('dd/MM/yyyy')
-
-      $('#datepicker-check-out-date').closest('div').datetimepicker('destroy')
-      startDateSecondPicker = nowTemp
-      startDateSecondPicker.setDate startDateSecondPicker.getDate() + 1
-      $('#datepicker-check-out-date').closest('div').datetimepicker(
-        language: 'en'
-        pickTime: false
-        format: 'dd/MM/yyyy'
-        startDate: new Date(startDateSecondPicker.getFullYear(), startDateSecondPicker.getMonth(), startDateSecondPicker.getDate(), 0, 0)
-      ).on('changeDate', (ev) ->
-        $( this ).val new XDate(ev.date).toString('dd/MM/yyyy')
-        if $('[name="booking[number_of_nights]"]').val() != undefined
-          setNumberOfNights()
-        return
-      ).data('datepicker')
-
-  $('input', 'div.datepicker').on 'click', ->
-    $(this).siblings('span').click()
+    $(".booking_check_out_date span.add-on, .enquiry_check_out_date span.add-on").on('click', (e) ->
+      e.preventDefault
+      checkin.hide()
+      checkout.show()
+    )
 
   $('input', 'div.datepicker').css('cursor', 'default')
   $('input', 'div.timepicker').css('cursor', 'default')
@@ -139,10 +145,22 @@ $ ->
           booking_id: $('[name="booking[id]"]').val(),
           message: $('[name="booking[message]"]').val(),
           check_in_time: $('[name="booking[check_in_time]"]').val(),
-          check_out_time: $('[name="booking[check_out_time]"]').val()
+          check_out_time: $('[name="booking[check_out_time]"]').val(),
+          check_in_date: $('[name="booking[check_in_date]"]').val(),
+          check_out_date: $('[name="booking[check_out_date]"]').val()
         success: () ->
           set_eps_result_url()
+          $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").removeClass("error")
+          $("#check_in_date_error").hide().text("")
           $('.payment_form').submit()
+        error: (data) ->
+          error = $.parseJSON(data.responseText).error
+          $("#datepicker-check-in-date, #datepicker-check-out-date").closest(".control-group").addClass("error").removeClass "success"
+          $("#check_in_date_error").show().text(error)
+          $("html, body").animate 
+            scrollTop: $(".container.main").offset().top
+            , 500
+          event.stopPropagation
 
   $('[name="transaction[store_card]"]').on 'change', ->
     if $(this).prop('checked') == true

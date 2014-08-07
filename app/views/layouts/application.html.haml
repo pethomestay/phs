@@ -3,14 +3,16 @@
   %head
     %title
       = formatted_title(@title)
-    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Ubuntu:400,700'
+    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Ubuntu:400,700'
     = stylesheet_link_tag '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
     = stylesheet_link_tag 'application'
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
     = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == '642031549187678' #this Facebook app id is for the local dev
+    = render partial: 'layouts/crazy_egg' unless ENV['APP_ID'] == '642031549187678' #this Facebook app id is for the local dev
     = yield :open_graph_tags
+    = yield :head
   %body
     = render partial: 'layouts/facebook_tag'
     = render partial: 'layouts/navbar'

@@ -1,3 +1,4 @@
+
 PetHomestay::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -14,7 +15,7 @@ PetHomestay::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = false
 
   # Add default mailer URL
   config.action_mailer.asset_host = 'http://localhost:3000'
@@ -39,8 +40,13 @@ PetHomestay::Application.configure do
 
   #config.serve_static_assets = true
   #ensure we don't send emails on dev
-  config.action_mailer.delivery_method = :test
-  
+  config.action_mailer.delivery_method = :mailgun
+
+  config.action_mailer.mailgun_settings = {
+      api_key: ENV['MAILGUN_API_KEY'],
+      domain: ENV['MAILGUN_DOMAIN']
+  }
+
   # Expands the lines which load the assets
   config.assets.debug = false
   config.assets.prefix = "/assets_dev"
