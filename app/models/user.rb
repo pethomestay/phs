@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
 
+  after_save :release_jobs
+
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
 
@@ -402,4 +404,7 @@ class User < ActiveRecord::Base
     score
   end
 
+  def release_jobs
+    CMNewSubscriberJob.new.async.perform(self)
+  end
 end
