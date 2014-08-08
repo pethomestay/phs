@@ -24,34 +24,7 @@ $ ->
 
   $('.carousel').carousel()
 
-  # listen for input file onchange
-  $(document).on 'change', 'input:file', ->
-    td = $(@).parent().parent().parent()
-    # Try to resize image
-    file = @files[0]
-    reader = new FileReader()
-    # callback: onprogress
-    reader.onprogress = (e) ->
-      console.log "Processing current image.."
-    # callback: preview images
-    set_preview = (data) ->
-      img = $('#preview')
-      if img.length
-        img.attr 'src', data
-      else
-        img = $('<img id="preview" class="preview" alt="preview">')
-        img.attr 'src', data
-        img.appendTo td
-    # callback: onload
-    reader.onload = (e) ->
-      Resample(
-        e.target.result,
-        null,
-        300,
-        set_preview,
-      )
-    # Fired if an error occur (i.e. security)
-    reader.error = (e) ->
-      td.html "Cannot load current image."
-    # Read file
-    reader.readAsDataURL(file);
+  $(document).on 'change', ':file', ->
+    if this.files[0].size >= (1024 * 500)
+      alert "Please only upload files of 500KB and under."
+      $(this).replaceWith($(this).parent().html())
