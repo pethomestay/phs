@@ -4,17 +4,33 @@
   - if @mailboxes.present?
     %table.table.pet-index
       %tr
-        %th.name From
-        %th.name Subject
-        %th.name Type
-        %th.name Date
+        %th.name Guest
+        %th.name Host
+        %th.name Homestay
+        %th.name Booking Date
+        %th.name
+        %th.name
       - @mailboxes.each do |mailbox|
         - if mailbox.subject_is_finished
           %tr{ style: mailbox.read_by?(current_user) ? '' : 'font-weight:bold;' }
-            %td.name= mailbox.guest_mailbox.name.capitalize
+            %td.name= mailbox.guest_mailbox.name.titleize
+            %td.name= mailbox.host_mailbox.name.titleize
             %td.name
-              = link_to mailbox.subject_message, mailbox_messages_path(mailbox)
-            %td.name= mailbox.subject.class.to_s
-            %td.name= mailbox.created_at.strftime("%d/%m/%Y")
+              - if mailbox.host_mailbox.homestay.present?
+                = link_to mailbox.host_mailbox.homestay.title, homestay_path(mailbox.host_mailbox.homestay)
+              - else
+                N/A
+            %td.name= mailbox.subject_dates
+            %td.name
+              = link_to "View Message", mailbox_messages_path(mailbox)
+            %td.name
+              - guest_view = (current_user == mailbox.guest_mailbox)
+              - if mailbox.booking.blank? && guest_view
+                = link_to 'Book HomeStay', new_booking_path(enquiry_id: mailbox.enquiry_id), class: 'btn btn-primary', style: 'font-weight: normal;'
+              - elsif mailbox.host_booking?(current_user)
+                = link_to 'Confirm HomeStay', host_confirm_booking_path(mailbox.booking), class: 'btn btn-primary', style: 'font-weight: normal;'
+              - elsif !mailbox.booking.blank? && guest_view && !mailbox.booking.owner_accepted?
+                - booking_params = mailbox.enquiry_id.blank? ? { homestay_id: mailbox.booking.homestay.id } : { enquiry_id: mailbox.enquiry_id }
+                = link_to 'Book HomeStay', new_booking_path(booking_params), class: 'btn btn-primary', style: 'font-weight: normal;'
   - else
-    %p Your inbox is Empty
+    %p Your inbox is empty

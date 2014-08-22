@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
 
+  after_save :release_jobs
+
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
 
@@ -379,4 +381,30 @@ class User < ActiveRecord::Base
     self.update_attribute(:calendar_updated_at, Date.today)
   end
 
+  def response_rate_in_percent
+    # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
+    # Write down total count of fetched host mailboxes.
+    # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
+    # mailbox if none found.
+    # Check if response time is less than 24 hours. Count if it is.
+    mailboxes = self.host_mailboxes.where(created_at: 30.days.ago..24.hours.ago)
+    return nil if mailboxes.blank? # Current user (as a Host) has not received any message
+    total = mailboxes.count
+    count = 0
+    mailboxes.each do |mailbox|
+      host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
+      if host_response.present? # If there exists a response from current user (as a Host)
+        time_diff = host_response.created_at - mailbox.created_at
+        count += 1 if time_diff <= 24.hours
+      end
+    end
+    # calculate response rate in PERCENTAGE
+    score = (count * 100.0 / total).round 0
+    return nil if score == 0 # Hide host responsiveness if the score is 0
+    score
+  end
+
+  def release_jobs
+    CMNewSubscriberJob.new.async.perform(self)
+  end
 end

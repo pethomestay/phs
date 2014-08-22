@@ -57,17 +57,14 @@ class Admin::AnalyticsController < Admin::AdminController
       booking_lengths << (booking.updated_at.to_date - booking.created_at.to_date) #Note this will give you the days
     }
 
-    sum_first_response_in_sec = []
+    sum_first_response_time = []
     @enquiries.each do |enquiry|
-      first_response_in_sec = first_response_in_sec_to enquiry
-      sum_first_response_in_sec << first_response_in_sec if first_response_in_sec
+      first_response_time = first_response_time_to enquiry
+      sum_first_response_time << first_response_time if first_response_time
     end
-    if sum_first_response_in_sec.any?
-      seconds = sum_first_response_in_sec.reduce(:+) / sum_first_response_in_sec.length unless sum_first_response_in_sec.length == 0
-      hours = seconds / 3600
-      seconds -= hours * 3600
-      minutes = seconds / 60
-      @average_first_response_time = "#{hours.round(2)} hours #{minutes.round(2)} minutes"
+    if sum_first_response_time.any?
+      seconds = sum_first_response_time.reduce(:+) / sum_first_response_time.length
+      @average_first_response_time = view_context.distance_of_time_in_words(Time.now, Time.now + seconds.seconds)
     else
       @average_first_response_time = 'N/A'
     end
@@ -100,20 +97,16 @@ class Admin::AnalyticsController < Admin::AdminController
   end
 
   private
-  def first_response_in_sec_to enquiry
-    # find first response date
-    messages = Message.where(mailbox_id: enquiry.id) # fetch all messages involved in this enquiry
-    return nil unless messages.length > 1 # Must have a response
-    first_res_datetime = Time.now()
-    # search for earliest response
-    messages.each { |m| first_res_datetime = m.created_at if m.created_at < first_res_datetime and m.user_id != enquiry.user_id }
+  def first_response_time_to enquiry
+    first_response = enquiry.first_host_response # First host response in this enquiry
+    return nil if first_response.blank? # Return nil if no host response found
     # calculate diff
-    return first_res_datetime - enquiry.created_at
+    return first_response.created_at - enquiry.created_at
   end
 
   def responded? enquiry
-    messages = Message.where(mailbox_id: enquiry.id)
-    if messages.length > 1
+    first_response = enquiry.first_host_response # First host response in this enquiry
+    if first_response
       true
     else
       false
