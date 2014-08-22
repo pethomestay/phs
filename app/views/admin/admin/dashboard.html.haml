@@ -61,7 +61,10 @@
             %td
               = "From"
               = link_to enquiry.user.name, admin_user_path(enquiry.user.id)
-              = " to #{enquiry.homestay.title}"
+              - if enquiry.homestay.present?
+                = " to #{enquiry.homestay.title}"
+              - else
+                to N/A
             %td
               = "#{time_ago_in_words enquiry.created_at} ago"
 
