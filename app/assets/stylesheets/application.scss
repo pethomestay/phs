@@ -22,9 +22,10 @@
 @import "fullcalendar";
 @import "fullcalendar.print";
 @import "availability";
-@import 'temp_fix'; // only a temporary fix
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+@import 'nav_bar';
 @import 'footer';
+@import 'temp_fix'; // only a temporary fix
 
 .tl { text-align: left }
 .tr { text-align: right }
