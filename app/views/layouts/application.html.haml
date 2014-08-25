@@ -3,7 +3,6 @@
   %head
     %title
       = formatted_title(@title)
-    = stylesheet_link_tag 'new_application'
     = stylesheet_link_tag 'application'
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
@@ -57,4 +56,4 @@
         %div{style: "display:inline;"}
           %img{height: "1",style: "border-style:none;", alt: "", src: "//www.googleadservices.com/pagead/conversion/985769911/?label=2nieCPnE5ggQt8-G1gM&amp;guid=ON&amp;script=0"}
     .clearer{style: "clear: left;"}
-    = render partial: 'layouts/footer'
+    = render partial: 'shared/footer_compatible'
