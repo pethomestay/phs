@@ -107,7 +107,7 @@ PetHomestay::Application.routes.draw do
   get '/my-account'     => 'users#show', as: :user_root
 
   get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
-  get '/what-is'              => 'pages#about_us', as: 'what_is'
+  get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
   get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'

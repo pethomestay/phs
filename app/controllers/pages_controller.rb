@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   def how_does_it_work
   end
 
-  def about_us
+  def the_team
   end
 
   def faqs
