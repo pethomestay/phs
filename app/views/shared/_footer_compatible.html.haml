@@ -41,7 +41,8 @@
                     %h4 Learn More
                     %a{href: "#{blogit_path}"}
                         %h4 <small>Read Our Blog</small>
-                    %h4 <small>Become a Sitter</small>
+                    %a{href: why_join_path}
+                        %h4 <small>Become a Sitter</small>
                     %a{href: "#{root_path}"}
                         %h4 <small>Find a Sitter</small>
                     %a{href: "#{new_contact_path}"}
@@ -57,8 +58,10 @@
                         %h4 <small>Investors</small>
                     %a{href: partners_path}
                         %h4 <small>Partners</small>
-                    %h4 <small>Terms of Service</small>
-                    %h4 <small>Privacy Policy</small>
+                    %a{href: terms_and_conditions_path}
+                        %h4 <small>Terms of Service</small>
+                    %a{href: privacy_policy_path}
+                        %h4 <small>Privacy Policy</small>
                     %a{href: 'http://www.pethomestay.com/robots.txt', hidden: ''} Sitemap
                 .span3
                     %h4 Top Pet Host Cities
