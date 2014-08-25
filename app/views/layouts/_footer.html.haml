@@ -1,21 +1,75 @@
-%footer
-  %ul.social-links.unstyled.span5
-    %li.twitter
-      %a.twitter-follow-button{ href: 'https://twitter.com/pethomestay', 'data-show-count' => 'false', 'data-lang' => 'en', 'data-size' => 'large' } Follow @pethomestay
-      :javascript
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-    %li.facebook
-      .fb-like{ 'data-href' => 'https://www.facebook.com/PetHomeStay', 'data-send' => 'false', 'data-width' => '450', 'data-show-faces' => 'false' }
-  .pull-right.span7
-    %ul.unstyled.footer-menu
-      %li= link_to 'Terms & Conditions', terms_and_conditions_path
-      %li= link_to 'Privacy Policy', privacy_policy_path
-      %li= link_to 'Insurance Policy', insurance_policy_path
-      %li= link_to 'Cancellation Policy', cancellation_policy_path
-      %li= link_to 'House Rules', house_rules_path
-      %li= link_to "How it works", 'http://support.pethomestay.com/hc/en-us/articles/200678169-How-does-PetHomeStay-work-'
-      %li= link_to 'Guest FAQ', 'http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'
-      %li= link_to 'Host FAQ', 'http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'
-      %li= link_to 'Support', 'http://support.pethomestay.com'
-    .clear
-    %p.copyright &copy; PetHomeStay 2014
+%section.footer
+    .container
+        .col-sm-5
+            %h4 Support
+            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ"}
+                %h4 <small>Guest FAQ</small>
+            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ"}
+                %h4 <small>Host FAQ</small>
+            %a{href: "http://support.pethomestay.com"}
+                %h4 <small>Support Center</small>
+            %h4 <small>Call 1300 660 945</small>
+            %h4.connect Connect with Us
+            -# Google Plus
+            %a{href: "https://plus.google.com/+PetHomeStay/", target: "_blank"}
+                %span.fa-stack.fa-lg
+                    %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(235, 97, 96)"}
+                    %i.fa.fa-google-plus.fa-stack-1x
+            -# Twitter
+            %a{href: "https://twitter.com/PetHomeStay", target: "_blank"}
+                %span.fa-stack.fa-lg
+                    %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(98, 205, 241)"}
+                    %i.fa.fa-twitter.fa-stack-1x
+            -# Facebook
+            %a{href: "https://www.facebook.com/PetHomeStay", target: "_blank"}
+                %span.fa-stack.fa-lg
+                    %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(81, 124, 193)"}
+                    %i.fa.fa-facebook.fa-stack-1x
+            -# Linkedin
+            %a{href: "https://www.linkedin.com/company/pethomestay-com", target: "_blank"}
+                %span.fa-stack.fa-lg
+                    %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(49, 128, 174)"}
+                    %i.fa.fa-linkedin.fa-stack-1x
+            -# Email
+            %a{href: "mailto:support@pethomestay.com", target: "_blank"}
+                %span.fa-stack.fa-lg
+                    %i.fa.fa-circle.fa-stack-2x{style: "color: rgb(34, 96, 116)"}
+                    %i.fa.fa-envelope-o.fa-stack-1x
+        .col-sm-7.hidden-xs
+            .col-sm-4
+                %h4 Learn More
+                %a{href: "#{blogit_path}"}
+                    %h4 <small>Read Our Blog</small>
+                %h4 <small>Become a Sitter</small>
+                %a{href: "#{root_path}"}
+                    %h4 <small>Find a Sitter</small>
+                %a{href: "#{new_contact_path}"}
+                    %h4 <small>Contact Us</small>
+            .col-sm-4
+                %h4 About
+                %h4 <small>The Team</small>
+                %h4 <small>In the Press</small>
+                %h4 <small>Jobs</small>
+                %h4 <small>Investors</small>
+                %h4 <small>Partners</small>
+                %h4 <small>Terms of Service</small>
+                %h4 <small>Privacy Policy</small>
+                %a{href: 'http://www.pethomestay.com/robots.txt', hidden: ''} Sitemap
+            .col-sm-4
+                %h4 Top Pet Host Cities
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=3000&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Melbourne</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=2000&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Sydney</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=4000&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Brisbane</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=5000&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Adelaide</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=4217&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Gold Coast</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=6000&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Perth</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=0800&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Darwin</small>
+                %a{href: "https://www.pethomestay.com/homestays?utf8=%E2%9C%93&search%5Blocation%5D=2300&search%5Bcheck_in_date%5D=&search%5Bcheck_out_date%5D="}
+                    %h4 <small>Newcastle</small>

@@ -116,6 +116,6 @@ PetHomestay::Application.routes.draw do
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
-  get '/new_home', to: 'pages#new_home', as: 'new_home'
+  get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
 end

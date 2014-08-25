@@ -1,4 +1,5 @@
-
+@import url('//fonts.googleapis.com/css?family=Ubuntu:400,700');
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import "bootstrap_overrides";
 @import "bootstrap";
 @import 'bootstrap-datetimepicker.min';
@@ -7,7 +8,7 @@
 @import "forms";
 @import "homestays";
 @import "maps";
-@import "navigation";
+//@import "navigation";
 @import "pages";
 @import "pet";
 @import "popup";
@@ -22,6 +23,9 @@
 @import "fullcalendar";
 @import "fullcalendar.print";
 @import "availability";
+@import 'nav_bar';
+@import 'footer';
+@import 'temp_fix'; // only a temporary fix
 
 .tl { text-align: left }
 .tr { text-align: right }
@@ -72,7 +76,7 @@
 }
 
 .main{
-	margin-top: $margins * 3;
+	margin-top: 0;
 }
 
 .main-changes {

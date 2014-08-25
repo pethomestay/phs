@@ -1,5 +1,6 @@
 = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
   = field_set_tag 'Sign in' do
+    = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-in'
     = f.input :email
     = f.input :password
     = f.input :remember_me, as: :boolean, inline_label: 'Remember me on this computer', label: false, input_html: { checked: true } # Checked by default
