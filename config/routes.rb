@@ -119,6 +119,7 @@ PetHomestay::Application.routes.draw do
   get '/investors'            => 'pages#investors', as: 'investors'
   get '/jobs'                 => 'pages#jobs', as: 'jobs'
   get '/partners'             => 'pages#partners', as: 'partners'
+  get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
 end

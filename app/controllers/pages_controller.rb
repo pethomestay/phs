@@ -44,6 +44,9 @@ class PagesController < ApplicationController
   def partners
   end
 
+  def in_the_press
+  end
+
   def legacy_home
     @homepage = true
   end
