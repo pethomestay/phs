@@ -35,6 +35,9 @@ class PagesController < ApplicationController
   def post_to_securepay
   end
 
+  def investors
+  end
+
   def legacy_home
     @homepage = true
   end
