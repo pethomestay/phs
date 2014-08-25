@@ -38,22 +38,30 @@
         .col-sm-7.hidden-xs
             .col-sm-4
                 %h4 Learn More
-                %a{href: "#{blogit_path}"}
+                %a{href: blogit_path}
                     %h4 <small>Read Our Blog</small>
-                %h4 <small>Become a Sitter</small>
-                %a{href: "#{root_path}"}
+                %a{href: why_join_path}
+                    %h4 <small>Become a Sitter</small>
+                %a{href: root_path}
                     %h4 <small>Find a Sitter</small>
-                %a{href: "#{new_contact_path}"}
+                %a{href: new_contact_path}
                     %h4 <small>Contact Us</small>
             .col-sm-4
                 %h4 About
-                %h4 <small>The Team</small>
-                %h4 <small>In the Press</small>
-                %h4 <small>Jobs</small>
-                %h4 <small>Investors</small>
-                %h4 <small>Partners</small>
-                %h4 <small>Terms of Service</small>
-                %h4 <small>Privacy Policy</small>
+                %a{href: the_team_path}
+                    %h4 <small>The Team</small>
+                %a{href: press_path}
+                    %h4 <small>In the Press</small>
+                %a{href: jobs_path}
+                    %h4 <small>Jobs</small>
+                %a{href: investors_path}
+                    %h4 <small>Investors</small>
+                %a{href: partners_path}
+                    %h4 <small>Partners</small>
+                %a{href: terms_and_conditions_path}
+                    %h4 <small>Terms of Service</small>
+                %a{href: privacy_policy_path}
+                    %h4 <small>Privacy Policy</small>
                 %a{href: 'http://www.pethomestay.com/robots.txt', hidden: ''} Sitemap
             .col-sm-4
                 %h4 Top Pet Host Cities
