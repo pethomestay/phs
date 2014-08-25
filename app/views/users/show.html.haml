@@ -1,12 +1,12 @@
 - content_for :sidebar_navigation do
   = render 'layouts/sidebar_navigation'
 
-.span6.my-account
+.span8.my-account
   %h1.page-header My Account
   - if current_user.admin?
     %h3 Admin Dashboard
     .row
-      .span4
+      .span6
         %p
           You can go to admin dashboard and view several statistics and
           %br
@@ -16,7 +16,7 @@
     %hr
   %h3 My Messages
   .row
-    .span4
+    .span6
       %p
         See all current and previous messages here.
         %br
@@ -26,7 +26,7 @@
   %hr
   %h3 My Booking History
   .row
-    .span4
+    .span6
       %p
         See all bookings here.
     .span2.pull-right
@@ -34,7 +34,7 @@
   %hr
   %h3 Payout Details
   .row
-    .span4
+    .span6
       %p
         Wanted to add or change your payout details?
         %br
@@ -47,7 +47,7 @@
   %hr
   %h3 Manage details
   .row
-    .span4
+    .span6
       %p
         Had a change of email or name? Want to change your password?
         %br
@@ -58,13 +58,13 @@
   = render partial: 'pets_link'
   = render partial: 'homestay_link'
   .row
-    .span4
+    .span6
       %h4 Close my PetHomeStay account
     .span2.pull-right
       = link_to 'Close account', user_registration_path, class: 'btn btn-mini', method: 'delete',
         confirm: 'Are you sure you wish to close your PetHomeStay account?'
 
-.span4.notifications.pull-right
+.span4.notifications
   %h2.page-header Notifications
 
   - if @user.notifications?
