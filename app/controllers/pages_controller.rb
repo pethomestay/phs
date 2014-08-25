@@ -41,6 +41,9 @@ class PagesController < ApplicationController
   def jobs
   end
 
+  def partners
+  end
+
   def legacy_home
     @homepage = true
   end

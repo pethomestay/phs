@@ -118,6 +118,7 @@ PetHomestay::Application.routes.draw do
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
   get '/investors'            => 'pages#investors', as: 'investors'
   get '/jobs'                 => 'pages#jobs', as: 'jobs'
+  get '/partners'             => 'pages#partners', as: 'partners'
   get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
 end
