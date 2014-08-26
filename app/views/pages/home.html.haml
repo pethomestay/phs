@@ -6,6 +6,20 @@
     = javascript_include_tag 'datepicker'
     = render partial: '/layouts/facebook_campaign'
 
+%script{type: "text/javascript"}
+    :plain
+        /* <![CDATA[ */
+        var google_conversion_id = 985769911;
+        var google_conversion_value = 0;
+        var google_custom_params = window.google_tag_params;
+        var google_remarketing_only = true;
+        /* ]]> */
+%script{type: "text/javascript", src:"//www.googleadservices.com/pagead/conversion.js"}
+%noscript
+    %div{style: "display:inline;"}
+        %img{height: "1", width: "1", style: "border-style:none;", alt: "", src: "//googleads.g.doubleclick.net/pagead/viewthroughconversion/985769911/?value=0&amp;guid=ON&amp;script=0"}
+
+
 = render partial: 'home/jumbotron'
 = render partial: 'home/three_steps'
 = render partial: 'home/why_phs'
