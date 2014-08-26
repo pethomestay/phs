@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
     if @contact.valid?
       @contact.send_email
       flash[:notice] = 'Your message has been sent'
-      redirect_to new_contact_path
+      redirect_to :back
     else
       render :new
     end
