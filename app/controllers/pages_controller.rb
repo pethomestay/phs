@@ -42,6 +42,7 @@ class PagesController < ApplicationController
   end
 
   def partners
+    @contact = Contact.new
   end
 
   def in_the_press
