@@ -37,7 +37,7 @@ PetHomestay::Application.routes.draw do
   get '/melbourne'  => redirect('/homestays/?search[location]=3000')
   get '/sydney'     => redirect('/homestays/?search[location]=2000')
   get '/brisbane'   => redirect('/homestays/?search[location]=4000')
-  get '/adlaide'    => redirect('/homestays/?search[location]=5000')
+  get '/adelaide'   => redirect('/homestays/?search[location]=5000')
   get '/gold_coast' => redirect('/homestays/?search[location]=4217')
   get '/perth'      => redirect('/homestays/?search[location]=6000')
   get '/darwin'     => redirect('/homestays/?search[location]=0800')
