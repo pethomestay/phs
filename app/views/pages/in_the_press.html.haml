@@ -1,3 +1,60 @@
 .span12
   .page-header
     %h1 In the Press
+  = render partial: 'pages/in_the_press/article', locals: { image: 'smart_company.png',
+      title: 'Pampered pooches dig up massive growth for pet services industry',
+      text:  'A study shows that Australia is requesting more pet services than ever before.',
+      links: [{label: 'Click to read article',
+        url: 'http://www.smartcompany.com.au/growth/43289-pampered-pooches-dig-up-massive-growth-for-pet-services-industry.html',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'startup_smart.png',
+      title: 'Melbourne Couple Aims to be Airbnb for Pets',
+      text: 'PetHomeStay is featured in StartUp Smart outlining why the sharing economy works for pets.',
+      links: [{label: 'Click to read article',
+        url: 'http://www.startupsmart.com.au/growth/start-up-profiles/melbourne-couples-startup-aims-to-be-airbnb-for-pets/2014060212424.html',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'pet_talk_people.png',
+      title: 'Introducing PetHomeStay',
+      text: 'CEO Tom LeGrice chats to Pet Talk People on YouTube about how PetHomeStay got started, and what it means for pets and people across Australia.',
+      links: [{label: 'Click to watch interview',
+        url: 'http://pettalkpeople.com/dogs2/94-lifestyle-grooming/601-what-s-pet-home-stay',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'puppy_tales.jpg',
+      title: 'Power of the Pooch Community',
+      text: 'Tom & Bronwyn tell their story to Pupy Tales, Australia’s largest online blog for pets.',
+      links: [{label: 'Click to read blog post',
+        url: 'http://puppytales.com.au/2014/04/15/power-of-the-pooch-community/',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'daily_telegraph.png',
+      title: 'Send Your Pet to Holiday Paradise',
+      text: 'Journalist Neil Keene checks out PetHomeStay and chats to a couple of our Hosts.',
+      links: [{label: 'Click to read an image of the original article',
+        url: 'https://www.pethomestay.com/blog/posts/22-pethomestay-in-the-daily-telegraph',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'leader.png',
+      title: 'Darebin Sitters Open Hearts and Homes to Pets',
+      text: 'Julia Irwin talks to one of our hosts Jen Brown in Northcote and the local impact of PetHomeStay.',
+      links: [{label: 'Click to read article',
+        url: 'http://www.heraldsun.com.au/leader/north/darebin-pet-sitters-open-hearts-and-homes-to-animal-guests/story-fnglenug-1226885176449',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'herald_sun.png',
+      title: 'Pet Sitter Site Begs to Differ',
+      text: 'Aspiring Vet Siena Miller chats to the Herald Sun about why she pet sits via PetHomeStay.',
+      links: [{label: 'Click to read article',
+        url: 'https://www.pethomestay.com/blog/posts/20-pethomestay-gets-national-press',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'the_awesome_foundation.png',
+      title: 'PetHomeStay Wins an Awesome Foundation Award',
+      text: 'PetHomeStay wins an award for being, well, awesome! We make a video with our $1k award which you can see on our YouTube channel.',
+      links: [{label: 'Click to read article',
+        url: 'http://www.awesomefoundation.org/en/projects/15225-pethomestay-videos-sharing-the-care-of-pets',
+        },
+        {label: 'Click to watch video',
+        url: 'https://www.youtube.com/watch?v=WtPbNLilMac',
+      }]}
+  = render partial: 'pages/in_the_press/article', locals: {image: 'herald_sun_sunday.jpg',
+      title: 'Dogs Sitting Pretty thanks to Carers',
+      text: 'Tianna Nadlin covers our original launch story in 2012, and talks to Tom about how we got started.',
+      links: [{label: 'Click to read article',
+        url: 'http://www.heraldsun.com.au/news/victoria/dogs-sitting-pretty-thanks-to-carers/story-e6frf7kx-1226532433191',
+      }]}

@@ -1,0 +1,11 @@
+.row{style: 'display: table; margin-bottom: 40px;'}
+  .span3{style: 'display: table-cell; float: none; vertical-align: middle;'}
+    = link_to image_tag("in_the_press/#{image}", class: 'pull-right'), links[0][:url]
+  .span8{style: 'margin-left: 30px;'}
+    %h3
+      = title
+    %p
+      = text
+    - links.each do |link|
+      = link_to link[:label], link[:url]
+      %br
