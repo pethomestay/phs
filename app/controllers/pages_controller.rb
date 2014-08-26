@@ -1,9 +1,10 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
-  before_filter :protect_in_production, only: [:new_home]
+  before_filter :protect_in_production, only: [:legacy_home]
 
   def home
-		@homepage = true
+    @homepage = true
+    render layout: "new_application"
   end
 
   def welcome
@@ -16,7 +17,7 @@ class PagesController < ApplicationController
   def how_does_it_work
   end
 
-  def about_us
+  def the_team
   end
 
   def faqs
@@ -34,8 +35,21 @@ class PagesController < ApplicationController
   def post_to_securepay
   end
 
-  def new_home
-    render layout: "new_application"
+  def investors
+  end
+
+  def jobs
+  end
+
+  def partners
+    @contact = Contact.new
+  end
+
+  def in_the_press
+  end
+
+  def legacy_home
+    @homepage = true
   end
 
   protected

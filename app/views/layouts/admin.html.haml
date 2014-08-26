@@ -12,10 +12,10 @@
     = yield :open_graph_tags
   %body
     = render partial: 'layouts/facebook_tag'
-    %div.navbar.navbar-fixed-top
+    %div.navbar
       .navbar-inner
         .container.admin-container-phs
-          = link_to "Pet Homestay", root_path, class: "brand"
+          = link_to "PetHomeStay", root_path, class: "brand"
           %ul.nav.admin-nav-phs
             %li= link_to "Users", admin_users_path
             %li= link_to "Homestays", admin_homestays_path

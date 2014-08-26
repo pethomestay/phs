@@ -9,8 +9,8 @@
  * When including this stylesheet, use the media='print' attribute of the <link> tag.
  * Make sure to include this stylesheet IN ADDITION to the regular fullcalendar.css.
  */
- 
- 
+
+
  /* Events
 -----------------------------------------------------*/
 
@@ -45,10 +45,6 @@
 
   .fc-event .ui-resizable-handle {
     display: none !important;
-  }
-
-  .fc-button{
-    padding: 0.4em !important;
   }
 
   table {
@@ -127,10 +123,6 @@
 }
 
 #listing-calendar {
-
-  .fc-button {
-    padding: 0.3em !important;
-  }
 
   .fc-event {
     display: none;

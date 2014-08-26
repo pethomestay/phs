@@ -40,6 +40,8 @@ $ ->
     $('.bookings', 'ul.nav.nav-pills').addClass('active')
   else if window.location.href.match('mailbox')
     $('.messages', 'ul.nav.nav-pills').addClass('active')
+  else if window.location.href.match('availability')
+    $('.availability', 'ul.nav.nav-pills').addClass('active')
 
   if window.location.href.match('users/edit')
     $('.personal', 'ul.nav.nav-tabs.nav-stacked').addClass('active')

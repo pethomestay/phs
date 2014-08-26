@@ -107,7 +107,7 @@ PetHomestay::Application.routes.draw do
   get '/my-account'     => 'users#show', as: :user_root
 
   get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
-  get '/what-is'              => 'pages#about_us', as: 'what_is'
+  get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
   get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
@@ -116,6 +116,10 @@ PetHomestay::Application.routes.draw do
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
-  get '/new_home', to: 'pages#new_home', as: 'new_home'
+  get '/investors'            => 'pages#investors', as: 'investors'
+  get '/jobs'                 => 'pages#jobs', as: 'jobs'
+  get '/partners'             => 'pages#partners', as: 'partners'
+  get '/in-the-press'         => 'pages#in_the_press', as: 'press'
+  get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
 end

@@ -3,19 +3,17 @@
   %head
     %title
       = formatted_title(@title)
-    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Ubuntu:400,700'
-    = stylesheet_link_tag '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
     = stylesheet_link_tag 'application'
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == '642031549187678' #this Facebook app id is for the local dev
-    = render partial: 'layouts/crazy_egg' unless ENV['APP_ID'] == '642031549187678' #this Facebook app id is for the local dev
+    = render partial: 'layouts/google_analytics' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
+    = render partial: 'layouts/crazy_egg' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
     = yield :open_graph_tags
     = yield :head
   %body
     = render partial: 'layouts/facebook_tag'
-    = render partial: 'layouts/navbar'
+    = render partial: 'shared/nav_bar_compatible'
     - current_user_present = !current_user.blank? && @homepage.blank?
     - if current_user_present
       .span2.sidebar-nav
@@ -57,3 +55,5 @@
       %noscript
         %div{style: "display:inline;"}
           %img{height: "1",style: "border-style:none;", alt: "", src: "//www.googleadservices.com/pagead/conversion/985769911/?label=2nieCPnE5ggQt8-G1gM&amp;guid=ON&amp;script=0"}
+    .clearer{style: "clear: left;"}
+    = render partial: 'shared/footer_compatible'
