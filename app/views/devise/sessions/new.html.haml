@@ -10,9 +10,15 @@
             .form-group
               = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-in'
             .form-group
-              = email_field_tag 'user[email]', nil, class: 'form-control', placeholder: 'Email'
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope.fa-fw
+                = email_field_tag 'user[email]', nil, class: 'form-control', placeholder: 'Email'
             .form-group
-              = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-lock.fa-fw
+                = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
             .checkbox
               %label
                 = check_box_tag 'user[remember_me]', 1, true
