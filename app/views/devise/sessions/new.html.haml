@@ -4,10 +4,12 @@
     .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
       .panel.panel-info
         .panel-heading
-          %h3.panel-title Sign In
+          = image_tag 'home/three_steps/step_one.png'
         .panel-body
           = form_tag session_path(resource_name), method: 'post' do
-            = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-in'
+            %a.btn.facebook{href: user_omniauth_authorize_path(:facebook)}
+              %i.fa.fa-facebook.fa-fw.fa-lg
+              Log In with Facebook
             %hr
             .form-group
               .input-group
@@ -19,7 +21,7 @@
                 %span.input-group-addon
                   %i.fa.fa-lock.fa-fw
                 = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
-            = submit_tag 'Log In', class: 'btn btn-primary form-control'
+            = submit_tag 'Log In', class: 'btn btn-primary form-control submit'
             %label.checkbox-inline
               = check_box_tag 'user[remember_me]', 1, true
               Remember Me
