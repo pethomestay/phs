@@ -4,4 +4,4 @@
 %div{ :class => if @homepage.blank? or !@homepage then 'row' else 'arow' end }
   = yield
 %hr
-= render partial: 'layouts/feedbackify' if @homepage.blank?
+= render partial: 'shared/support_btn' if @homepage.blank?
