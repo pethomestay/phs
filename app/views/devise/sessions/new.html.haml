@@ -1,9 +1,29 @@
-= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  = field_set_tag 'Sign in' do
-    = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-in'
-    = f.input :email
-    = f.input :password
-    = f.input :remember_me, as: :boolean, inline_label: 'Remember me on this computer', label: false, input_html: { checked: true } # Checked by default
-    .form-actions
-      = f.submit "Sign in", class: 'btn btn-primary'
-  = link_to 'Forgot my password', new_user_password_path
+%section.sign-in
+  .container
+    = render partial: 'shared/flash_messages', locals: {flash: flash}
+    .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
+      .panel.panel-info
+        .panel-heading
+          = image_tag 'home/three_steps/step_one.png'
+        .panel-body
+          = form_tag session_path(resource_name), method: 'post' do
+            %a.btn.facebook{href: user_omniauth_authorize_path(:facebook)}
+              %i.fa.fa-facebook.fa-fw.fa-lg
+              Log In with Facebook
+            %h6
+              %span or
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope.fa-fw
+                = email_field_tag 'user[email]', nil, class: 'form-control', placeholder: 'Email'
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-lock.fa-fw
+                = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
+            = submit_tag 'Log In', class: 'btn btn-primary form-control submit'
+            %label.checkbox-inline
+              = check_box_tag 'user[remember_me]', 1, true
+              Remember Me
+            = link_to 'Forgot Password', new_user_password_path, class: 'pull-right'
