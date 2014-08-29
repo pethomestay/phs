@@ -1,32 +1,33 @@
-.span12
-  .page-header
-    %h1
-      Sign up
-      %small Create an account to access all our cool features
-  - html = {:class => 'form-horizontal'}
-  - url = registration_path(resource_name)
-  = simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
-    %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
-    = field_set_tag do
-      .row
-        .span6
-          = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-up'
-          = f.input :first_name, class: 'has-error'
-          = f.input :last_name
-          = f.input :email, label: 'Email address', required: true
-          = f.input :mobile_number, required: true
+%section.sign-up
+  .container
+    .page-header
+      %h1
+        Sign up
+        %small Create an account to access all our cool features
+    - html = {:class => 'form-horizontal'}
+    - url = registration_path(resource_name)
+    = simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
+      %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
+      = field_set_tag do
+        .row
+          .span6
+            = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-up'
+            = f.input :first_name, class: 'has-error'
+            = f.input :last_name
+            = f.input :email, label: 'Email address', required: true
+            = f.input :mobile_number, required: true
 
-          - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
-            = f.input :password, required: true
-            = f.input :password_confirmation, label: 'Confirm your password', required: true
-          - else
-            %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
-            %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
-          %p PetHomeStay introduces pet owners to trusted local pet care services.
-          %p The details above are the absolute minimum we need to make this happen, however they are never publicly visible.
-          %p We will never pass your details onto any third parties. We hate spam too:)
-        .span4
+            - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
+              = f.input :password, required: true
+              = f.input :password_confirmation, label: 'Confirm your password', required: true
+            - else
+              %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
+              %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
+            %p PetHomeStay introduces pet owners to trusted local pet care services.
+            %p The details above are the absolute minimum we need to make this happen, however they are never publicly visible.
+            %p We will never pass your details onto any third parties. We hate spam too:)
+          .span4
 
-      = render partial: 'accept_terms', locals: {f: f, test: 'test'}
-      .form-actions
-        = f.submit 'Create an account', class: 'btn btn-primary'
+        = render partial: 'accept_terms', locals: {f: f, test: 'test'}
+        .form-actions
+          = f.submit 'Create an account', class: 'btn btn-primary'
