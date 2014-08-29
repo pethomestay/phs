@@ -21,6 +21,16 @@
           height: 40px;
           padding-top: 10px;
         }
+        h6 {
+          width: 100%;
+          text-align: center;
+          border-bottom: 1px solid #e2e2e2;
+          line-height: 0.1em;
+          margin: 20px 0;
+          span {
+            padding: 0 10px;
+          }
+        }
         .btn-primary {
           background-color: #ec5c3b;
           color: #f7f7f7;
