@@ -1,0 +1,4 @@
+- flash.each do |type, message|
+  .alert{ :class => new_flash_class_for(type) }
+    %button.close{type: 'button', "data-dismiss" => "alert"} ×
+    = message

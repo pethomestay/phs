@@ -18,6 +18,21 @@ module ApplicationHelper
     end
   end
 
+  def new_flash_class_for(type)
+    case type
+    when :alert
+      'alert-warning'
+    when :error
+      'alert-danger'
+    when :notice
+      'alert-info'
+    when :success
+      'alert-success'
+    else
+      type.to_s
+    end
+  end
+
   def rating_stars(rating)
     5.times.collect do |star|
        haml_tag(:i, class: "icon-star#{'-empty' if star >= rating}")

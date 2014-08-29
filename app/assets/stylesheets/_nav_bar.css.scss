@@ -30,3 +30,20 @@
         border-color: rgba(255,255,255,0.8);
     }
 }
+
+// Responsive
+@media (max-width: 500px) {
+    // Nav bar
+    #become-a-host,
+    #find-a-host {
+        display: none;
+    }
+    .nav-custom #brand {
+        font-size: 18px;
+    }
+}
+@media (max-width: 350px) {
+    #my {
+        display: none;
+    }
+}

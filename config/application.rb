@@ -68,6 +68,11 @@ module PetHomestay
 	    end if File.exists?(env_file)
     end
 
+    # Configure layout for sign-in page
+    config.to_prepare do
+        Devise::SessionsController.layout "new_application"
+    end
+
     config.assets.precompile += Ckeditor.assets
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
