@@ -71,6 +71,7 @@ module PetHomestay
     # Configure layout for sign-in page
     config.to_prepare do
         Devise::SessionsController.layout "new_application"
+        Devise::RegistrationsController.layout "new_application"
     end
 
     config.assets.precompile += Ckeditor.assets
