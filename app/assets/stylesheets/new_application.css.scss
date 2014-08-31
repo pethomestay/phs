@@ -4,4 +4,16 @@
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import 'nav_bar';
 @import 'footer';
-@import 'sign_in'
+@import 'sign_in';
+
+// Font
+body {
+    font-family: 'Ubuntu', sans-serif;
+
+    p {
+        font-size: 15.6px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #777;
+    }
+}
