@@ -40,3 +40,40 @@ body {
     margin-right: 15px;
   }
 }
+// Sign in and Sign out
+.sign-in,
+.sign-up {
+  .container {
+    padding-top: 20px;
+  }
+  .panel {
+    background-color: #e5e5e5;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 80px;
+    .panel-body {
+      .hr {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #3c3835;
+        line-height: 0.1em;
+        margin: 20px 0;
+        span {
+          background-color: #e5e5e5;
+          color: #3c3835;
+          padding: 0 10px;
+        }
+      }
+      .btn-primary {
+          background-color: #ec5c3b;
+          color: #f7f7f7;
+          background-image: none;
+          border: none;
+          font-size: 16px;
+        }
+        .submit {
+          margin-bottom: 20px;
+        }
+    }
+  }
+}
