@@ -1,7 +1,21 @@
 - flash.each do |type, message|
   :coffee
     $.growl
-      message: '#{message}',
+      message: "#{message}",
+        type: 'info'
+        delay: 10000
+        mouse_over: 'pause'
+        offset:
+          x: 5
+          y: 60
+        animate:
+          enter: 'animated fadeInRightBig'
+          exit: 'animated fadeOutRightBig'
+
+- resource.errors.full_messages.each do |message|
+  :coffee
+    $.growl
+      message: "#{message}",
         type: 'info'
         delay: 10000
         mouse_over: 'pause'
