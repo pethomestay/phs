@@ -11,9 +11,10 @@
         = yield :head_stylesheet
         %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
         %script{src: "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
-        = javascript_include_tag 'jquery_ujs'
+        = javascript_include_tag 'new_application'
         = yield :head_javascript
     %body
+        = render partial: 'shared/flash_messages', locals: {flash: flash}
         = render partial: 'layouts/facebook_tag'
         = render partial: 'layouts/nav_bar'
         = yield
