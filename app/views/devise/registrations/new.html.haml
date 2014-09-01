@@ -27,9 +27,10 @@
             .form-group
               .input-group
                 %span.input-group-addon
-                  %i.fa.fa-mobile.fa-fw
-            %p.help-block We need this because blah blah
+                  %i.fa.fa-mobile.fa-fw.fa-lg
                 = f.phone_field :mobile_number, class: 'form-control no-right-border', placeholder: 'Mobile Number'
+                %span.input-group-addon.custom
+                  %i.fa.fa-question-circle{'data-toggle' => 'popover', 'data-content' => "PetHomeStay uses your mobile number to send email & SMS to Guests and Hosts so you can contact each other. Your number is never displayed publicly, we don't use your number for anything else like spam, and we will never pass on your details to 3rd parties.", 'data-placement' => 'auto', 'data-container' => 'body', 'data-trigger' => 'hover click', 'data-template' => '<div class="popover" role="tooltip"><div class="popover-content"></div></div>'}
             .form-group
               .input-group
                 %span.input-group-addon
