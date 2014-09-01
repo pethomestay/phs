@@ -119,7 +119,7 @@ PetHomestay::Application.routes.draw do
   get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
-  get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
+  get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
   get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
   get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
