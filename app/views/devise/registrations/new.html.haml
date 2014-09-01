@@ -39,6 +39,10 @@
               = f.hidden_field :accept_house_rules, value: 1
             .form-group
               = f.hidden_field :accept_terms, value: 1
-            %p.help-block By clicking the button below, you agree to our house rules for the benefit of the community and terms and conditions.
+            %p.help-block
+              By clicking the button below, you agree to our
+              = link_to 'house rules', house_rules_path
+              and
+              = link_to 'terms and conditions', terms_and_conditions_path
             = f.submit 'Sign Up', class: 'btn btn-primary form-control submit'
 
