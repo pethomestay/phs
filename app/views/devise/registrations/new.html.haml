@@ -1,9 +1,9 @@
 %section.sign-up
   .container
-    .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
+    .col-md-5.col-md-offset-3.col-sm-6
       .panel.panel-info
         .panel-heading
-          %h3 Sign up in seconds
+          = image_tag 'home/three_steps/step_three.png'
         .panel-body
           = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
             = hidden_field_tag 'signup_path', params[:signup_path]
@@ -46,4 +46,21 @@
               and
               = link_to 'terms and conditions', terms_and_conditions_path, target: '_blank'
             = f.submit 'Sign Up', class: 'btn btn-primary form-control submit'
-
+    .why-sign-up.hidden-xs
+      %h2
+        Why you'll
+        %em love
+        PetHomeStay
+      %ul
+        %li
+          Trusted local pet carers
+          %p
+            %small Every Host is a pet lover like you.
+        %li
+          One on One Attention
+          %p
+            %small Your pet is treated like one of the family with every Host.
+        %li
+          24x7 Support & Insurance.
+          %p
+            %small We are there when you are away.

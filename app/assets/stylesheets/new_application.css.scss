@@ -52,6 +52,16 @@ body {
     border: none;
     box-shadow: none;
     margin-bottom: 80px;
+    .panel-heading {
+      background-color: white;
+      background-image: none;
+      text-align: center;
+      border: none;
+      img {
+        height: 85px;
+        margin-bottom: 10px;
+      }
+    }
     .panel-body {
       .hr {
         width: 100%;
