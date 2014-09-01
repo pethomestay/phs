@@ -14,3 +14,14 @@
   height: 40px;
   padding-top: 10px;
 }
+// Font
+body {
+    font-family: 'Ubuntu', sans-serif;
+
+    p {
+        font-size: 15.6px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #777;
+    }
+}
