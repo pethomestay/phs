@@ -2,7 +2,9 @@
   :coffee
     $.growl
       message: '#{message}',
-        type: '#{new_flash_class_for(type)}',
+        type: '#{new_flash_class_for(type)}'
+        delay: 10000
+        mouse_over: 'pause'
         offset:
           x: 5
           y: 60
