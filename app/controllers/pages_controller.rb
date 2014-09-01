@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
-  before_filter :protect_in_production, only: [:legacy_home, :terms_and_conditions]
+  before_filter :protect_in_production, only: [:legacy_home, :terms_and_conditions, :privacy_policy]
 
   def home
     @homepage = true
