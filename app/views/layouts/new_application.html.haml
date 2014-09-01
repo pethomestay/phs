@@ -14,7 +14,10 @@
         = javascript_include_tag 'new_application'
         = yield :head_javascript
     %body
-        = render partial: 'shared/flash_messages', locals: {flash: flash, resource: resource}
+        - if defined? resource
+            = render partial: 'shared/flash_messages', locals: {flash: flash, resource: resource}
+        - else
+            = render partial: 'shared/flash_messages', locals: {flash: flash}
         = render partial: 'layouts/facebook_tag'
         = render partial: 'layouts/nav_bar'
         = yield
