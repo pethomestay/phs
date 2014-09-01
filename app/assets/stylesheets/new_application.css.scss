@@ -2,10 +2,24 @@
 @import 'bootstrap-theme_3.2.0.min';
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
+@import 'animate';
 @import 'nav_bar';
 @import 'footer';
 @import 'sign_in';
+@import 'sign_up';
 
+.btn-facebook-sign-up {
+  background-color: rgb(81, 124, 193);
+  background-image: none;
+  color: #f7f7f7;
+  width: 100%;
+  height: 40px;
+  padding-top: 10px;
+  &:hover,
+  &:focus {
+    color: #f7f7f7;
+  }
+}
 // Font
 body {
     font-family: 'Ubuntu', sans-serif;
@@ -16,4 +30,61 @@ body {
         line-height: 1.5;
         color: #777;
     }
+}
+// Alert
+.alert-info {
+  background-image: none;
+  background-color: #5cc1c0;
+  color: #ffffff;
+  border: none;
+  & > span:nth-last-child(2) {
+    margin-right: 15px;
+  }
+}
+// Sign in and Sign out
+.sign-in,
+.sign-up {
+  .container {
+    padding-top: 20px;
+  }
+  .panel {
+    background-color: #e5e5e5;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 80px;
+    .panel-heading {
+      background-color: white;
+      background-image: none;
+      text-align: center;
+      border: none;
+      img {
+        height: 85px;
+        margin-bottom: 10px;
+      }
+    }
+    .panel-body {
+      .hr {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #3c3835;
+        line-height: 0.1em;
+        margin: 20px 0;
+        span {
+          background-color: #e5e5e5;
+          color: #3c3835;
+          padding: 0 10px;
+        }
+      }
+      .btn-primary {
+          background-color: #ec5c3b;
+          color: #f7f7f7;
+          background-image: none;
+          border: none;
+          font-size: 16px;
+        }
+        .submit {
+          margin-bottom: 20px;
+        }
+    }
+  }
 }

@@ -21,13 +21,13 @@ module ApplicationHelper
   def new_flash_class_for(type)
     case type
     when :alert
-      'alert-warning'
+      'warning'
     when :error
-      'alert-danger'
+      'danger'
     when :notice
-      'alert-info'
+      'info'
     when :success
-      'alert-success'
+      'success'
     else
       type.to_s
     end
