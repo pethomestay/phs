@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min
 //= require popover
+//= require_directory ./components
