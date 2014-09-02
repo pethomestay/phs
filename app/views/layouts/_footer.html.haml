@@ -2,13 +2,10 @@
     .container
         .col-sm-5
             %h4 Support
-            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ"}
-                %h4 <small>Guest FAQ</small>
-            %a{href: "http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ"}
-                %h4 <small>Host FAQ</small>
-            %a{href: "http://support.pethomestay.com"}
-                %h4 <small>Support Centre</small>
-            %h4 <small>Call 1300 660 945</small>
+            = render 'layouts/footer/list_item', text: 'Guest FAQ', url: guest_faq_path
+            = render 'layouts/footer/list_item', text: 'Host FAQ', url: host_faq_path
+            = render 'layouts/footer/list_item', text: 'Support Centre', url: 'http://support.pethomestay.com'
+            = render 'layouts/footer/list_item', text: 'Call 1300 660 945', url: 'tel:+61-1300-660-945'
             %h4.connect Connect with Us
             -# Google Plus
             %a{href: "https://plus.google.com/+PetHomeStay/", target: "_blank"}
@@ -38,46 +35,27 @@
         .col-sm-7.hidden-xs
             .col-sm-4
                 %h4 Learn More
-                %a{href: blogit_path}
-                    %h4 <small>Read Our Blog</small>
-                %a{href: why_join_path}
-                    %h4 <small>Become a Sitter</small>
-                %a{href: root_path}
-                    %h4 <small>Find a Sitter</small>
-                %a{href: new_contact_path}
-                    %h4 <small>Contact Us</small>
+                = render 'layouts/footer/list_item', text: 'Read Our Blog', url: blogit_path
+                = render 'layouts/footer/list_item', text: 'Become a Sitter', url: why_join_path
+                = render 'layouts/footer/list_item', text: 'Find a Sitter', url: root_path
+                = render 'layouts/footer/list_item', text: 'Contact Us', url: new_contact_path
             .col-sm-4
                 %h4 About
-                %a{href: the_team_path}
-                    %h4 <small>The Team</small>
-                %a{href: press_path}
-                    %h4 <small>In the Press</small>
-                %a{href: jobs_path}
-                    %h4 <small>Jobs</small>
-                %a{href: investors_path}
-                    %h4 <small>Investors</small>
-                %a{href: partners_path}
-                    %h4 <small>Partners</small>
-                %a{href: terms_and_conditions_path}
-                    %h4 <small>Terms of Service</small>
-                %a{href: privacy_policy_path}
-                    %h4 <small>Privacy Policy</small>
+                = render 'layouts/footer/list_item', text: 'The Team', url: the_team_path
+                = render 'layouts/footer/list_item', text: 'In the Press', url: press_path
+                = render 'layouts/footer/list_item', text: 'Jobs', url: jobs_path
+                = render 'layouts/footer/list_item', text: 'Investors', url: investors_path
+                = render 'layouts/footer/list_item', text: 'Partners', url: partners_path
+                = render 'layouts/footer/list_item', text: 'Terms of Service', url: terms_and_conditions_path
+                = render 'layouts/footer/list_item', text: 'Privacy Policy', url: privacy_policy_path
                 %a{href: 'http://www.pethomestay.com/robots.txt', hidden: ''} Sitemap
             .col-sm-4
                 %h4 Top Pet Host Cities
-                %a{href: melbourne_path}
-                    %h4 <small>Melbourne</small>
-                %a{href: sydney_path}
-                    %h4 <small>Sydney</small>
-                %a{href: brisbane_path}
-                    %h4 <small>Brisbane</small>
-                %a{href: adelaide_path}
-                    %h4 <small>Adelaide</small>
-                %a{href: gold_coast_path}
-                    %h4 <small>Gold Coast</small>
-                %a{href: perth_path}
-                    %h4 <small>Perth</small>
-                %a{href: darwin_path}
-                    %h4 <small>Darwin</small>
-                %a{href: newcastle_path}
-                    %h4 <small>Newcastle</small>
+                = render 'layouts/footer/list_item', text: 'Melbourne', url: melbourne_path
+                = render 'layouts/footer/list_item', text: 'Sydney', url: sydney_path
+                = render 'layouts/footer/list_item', text: 'Brisbane', url: brisbane_path
+                = render 'layouts/footer/list_item', text: 'Adelaide', url: adelaide_path
+                = render 'layouts/footer/list_item', text: 'Gold', url: gold_coast_path
+                = render 'layouts/footer/list_item', text: 'Perth', url: perth_path
+                = render 'layouts/footer/list_item', text: 'Darwin', url: darwin_path
+                = render 'layouts/footer/list_item', text: 'Newcastle', url: newcastle_path
