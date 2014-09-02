@@ -1,17 +1,5 @@
 @import 'home/meet_community';
 
-// Font
-body {
-    font-family: 'Ubuntu', sans-serif;
-
-    p {
-        font-size: 15.6px;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #777;
-    }
-}
-
 // Jumbotron
 .bg {
     background: image-url("home/jumbotron_bg.png") no-repeat center center;

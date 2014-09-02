@@ -1,4 +1,28 @@
 - flash.each do |type, message|
-  .alert{ :class => new_flash_class_for(type) }
-    %button.close{type: 'button', "data-dismiss" => "alert"} ×
-    = message
+  :coffee
+    $.growl
+      message: "#{message}",
+        type: 'info'
+        delay: 10000
+        mouse_over: 'pause'
+        offset:
+          x: 5
+          y: 60
+        animate:
+          enter: 'animated fadeInRightBig'
+          exit: 'animated fadeOutRightBig'
+
+- if defined? resource
+  - resource.errors.full_messages.each do |message|
+    :coffee
+      $.growl
+        message: "#{message}",
+          type: 'info'
+          delay: 10000
+          mouse_over: 'pause'
+          offset:
+            x: 5
+            y: 60
+          animate:
+            enter: 'animated fadeInRightBig'
+            exit: 'animated fadeOutRightBig'

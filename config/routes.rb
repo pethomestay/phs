@@ -115,13 +115,15 @@ PetHomestay::Application.routes.draw do
   get '/my-account'     => 'users#show', as: :my_account
   get '/my-account'     => 'users#show', as: :user_root
 
+  get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
+  get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
   get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
   get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
-  get '/terms-and-conditions' => 'pages#terms_and_conditions', as: 'terms_and_conditions'
+  get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
   get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
-  get '/privacy-policy'       => 'pages#privacy_policy', as: 'privacy_policy'
+  get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'

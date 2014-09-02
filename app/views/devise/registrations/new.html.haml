@@ -1,32 +1,66 @@
-.span12
-  .page-header
-    %h1
-      Sign up
-      %small Create an account to access all our cool features
-  - html = {:class => 'form-horizontal'}
-  - url = registration_path(resource_name)
-  = simple_form_for resource, {:as => resource_name, :url => url, :html => html} do |f|
-    %input{type: 'hidden', name: 'signup_path', value: params[:signup_path]}
-    = field_set_tag do
-      .row
-        .span6
-          = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn-facebook-sign-up'
-          = f.input :first_name, class: 'has-error'
-          = f.input :last_name
-          = f.input :email, label: 'Email address', required: true
-          = f.input :mobile_number, required: true
-
-          - unless request.post? && params[:user] && params[:user][:password].present? && params[:user][:password_confirmation].present? && params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 6
-            = f.input :password, required: true
-            = f.input :password_confirmation, label: 'Confirm your password', required: true
-          - else
-            %input{type: 'hidden', value: params[:user][:password], name: 'user[password]'}
-            %input{type: 'hidden', value: params[:user][:password_confirmation], name: 'user[password_confirmation]'}
-          %p PetHomeStay introduces pet owners to trusted local pet care services.
-          %p The details above are the absolute minimum we need to make this happen, however they are never publicly visible.
-          %p We will never pass your details onto any third parties. We hate spam too:)
-        .span4
-
-      = render partial: 'accept_terms', locals: {f: f, test: 'test'}
-      .form-actions
-        = f.submit 'Create an account', class: 'btn btn-primary'
+%section.sign-up
+  .container
+    .col-md-5.col-md-offset-3.col-sm-6
+      .panel.panel-info
+        .panel-heading
+          = image_tag 'home/three_steps/step_three.png'
+        .panel-body
+          = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+            = hidden_field_tag 'signup_path', params[:signup_path]
+            .form-group
+              %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
+                %i.fa.fa-facebook.fa-fw.fa-lg
+                Sign Up with Facebook
+            %h6.hr
+              %span or
+            .form-group
+              .row
+                .col-xs-6
+                  = f.text_field :first_name, class: 'form-control', placeholder: 'First Name'
+                .col-xs-6
+                  = f.text_field :last_name, class: 'form-control', placeholder: 'Last Name'
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope.fa-fw
+                = f.email_field :email, class: 'form-control', placeholder: 'Email'
+            .form-group
+              .input-group
+                %span.input-group-addon.mobile-icon
+                  %i.fa.fa-mobile.fa-fw.fa-lg
+                = f.phone_field :mobile_number, class: 'form-control no-right-border', placeholder: 'Mobile Number'
+                %span.input-group-addon.custom
+                  %i.fa.fa-question-circle{'data-toggle' => 'popover', 'data-content' => "PetHomeStay uses your mobile number to send email & SMS to Guests and Hosts so you can contact each other. Your number is never displayed publicly, we don't use your number for anything else like spam, and we will never pass on your details to 3rd parties.", 'data-placement' => 'auto', 'data-container' => 'body', 'data-trigger' => 'hover click', 'data-template' => '<div class="popover" role="tooltip"><div class="popover-content"></div></div>'}
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-lock.fa-fw
+                = f.password_field :password, class: 'form-control', placeholder: 'Password'
+            .form-group
+              = f.hidden_field :accept_house_rules, value: 1
+            .form-group
+              = f.hidden_field :accept_terms, value: 1
+            %p.help-block
+              By clicking the button below, you agree to our
+              = link_to 'house rules', house_rules_path, target: '_blank'
+              and
+              = link_to 'terms and conditions', terms_and_conditions_path, target: '_blank'
+            = f.submit 'Sign Up', class: 'btn btn-primary form-control submit'
+    .why-sign-up.hidden-xs
+      %h2
+        Why you'll
+        %em love
+        PetHomeStay
+      %ul
+        %li
+          Trusted local pet carers
+          %p
+            %small Every Host is a pet lover like you.
+        %li
+          One on One Attention
+          %p
+            %small Your pet is treated like one of the family with every Host.
+        %li
+          24x7 Support & Insurance.
+          %p
+            %small We are there when you are away.

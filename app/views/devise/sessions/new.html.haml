@@ -1,16 +1,16 @@
 %section.sign-in
   .container
-    = render partial: 'shared/flash_messages', locals: {flash: flash}
     .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
       .panel.panel-info
         .panel-heading
           = image_tag 'home/three_steps/step_one.png'
         .panel-body
           = form_tag session_path(resource_name), method: 'post' do
-            %a.btn.facebook{href: user_omniauth_authorize_path(:facebook)}
-              %i.fa.fa-facebook.fa-fw.fa-lg
-              Log In with Facebook
-            %h6
+            .form-group
+              %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
+                %i.fa.fa-facebook.fa-fw.fa-lg
+                Log In with Facebook
+            %h6.hr
               %span or
             .form-group
               .input-group
