@@ -4,6 +4,7 @@
   %thead
     %tr
       %th Name
+      %th Owner
       %th Type
       %th Created
       %th Actions
@@ -11,6 +12,11 @@
     - @pets.each do |pet|
       %tr
         %td= link_to pet.name, admin_pet_path(pet)
+        %td
+          - if pet.user.present?
+            = link_to pet.user.name, admin_user_path(pet.user)
+          -else
+            N/A
         %td= pet.pet_type_name
         %td= pet.created_at.to_formatted_s(:year_month_day)
         %td
