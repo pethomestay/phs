@@ -5,7 +5,7 @@ $ ->
 
     @validateNotEmpty = (e) ->
       locationInput = @select('locationInputSelector')
-      if not locationInput.val()
+      unless locationInput.val()
         locationInput.popover('show')
         setTimeout ->
           locationInput.popover('hide')
