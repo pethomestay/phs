@@ -117,7 +117,7 @@ PetHomestay::Application.routes.draw do
 
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
-  get '/how-does-it-work'     => 'pages#how_does_it_work', as: 'how_does_it_work'
+  get '/how-does-it-work'     => redirect('http://support.pethomestay.com/hc/en-us/articles/200678169-How-does-PetHomeStay-work-'), as: 'how_does_it_work'
   get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
