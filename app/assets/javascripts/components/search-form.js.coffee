@@ -16,4 +16,4 @@ $ ->
       @on 'submit', @validateNotEmpty
 
 
-  HostSearchForm.attachTo '#host-search-form'
+  HostSearchForm.attachTo '.search-form'
