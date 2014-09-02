@@ -1,10 +1,10 @@
 $ ->
   HostSearchForm = flight.component ->
-    @attributes =
+    @attributes
       locationInputSelector: 'input[name="search[location]"]'
 
     @validateNotEmpty = (e) ->
-      locationInput = @$node.find 'input[name="search[location]"]'
+      locationInput = @select('locationInputSelector')
       if not locationInput.val()
         locationInput.popover('show')
         setTimeout ->
