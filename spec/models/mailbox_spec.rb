@@ -37,7 +37,7 @@ describe Mailbox do
 			let(:mailbox)  { FactoryGirl.create :mailbox }
 
 			it 'should return enquiry subject message' do
-				subject.should be_eql(mailbox.enquiry_subject_message)
+				subject.should be_eql(mailbox.subject_message)
 			end
 		end
 

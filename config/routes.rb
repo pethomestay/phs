@@ -122,7 +122,7 @@ PetHomestay::Application.routes.draw do
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
   mount Blogit::Engine => '/blog'
   get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
-  get '/house-rules'          => 'pages#house_rules', as: 'house_rules'
+  get '/house-rules'          => redirect('http://support.pethomestay.com/hc/en-us/sections/200341999-House-Rules'), as: 'house_rules'
   get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
   get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'

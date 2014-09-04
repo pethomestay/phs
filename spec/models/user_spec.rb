@@ -44,7 +44,7 @@ describe User do
     context 'when the user has their email sanitised' do
       before { user.sanitise }
       it 'should return the sanitised email address' do
-        subject.email.should include("@tapmint.com")
+        subject.email.should include("@pethomestay.com")
       end
     end
   end
@@ -150,7 +150,7 @@ describe User do
     context "when end date is greater than start date" do
 
       let(:booking_info){ user.booking_info_between(Date.today - 1.day, Date.today + 4.days) }
-    
+
       it "should return info of all dates between start and end dates" do
         expect(booking_info.count).to eq(6)
       end
@@ -211,14 +211,14 @@ describe User do
 
    describe "#booked_dates" do
 
-     let(:booking_date_ranges){ 
+     let(:booking_date_ranges){
        [
          [(Date.today - 1), (Date.today + 1)],
          [(Date.today + 3), (Date.today + 7)],
          [(Date.today + 2), (Date.today + 8)]
        ]
      }
-     let(:all_booked_dates){ 
+     let(:all_booked_dates){
        booking_date_ranges.collect{ |date_arr| (date_arr[0]..(date_arr[1] - 1)).to_a }.flatten.uniq
      }
 
@@ -317,7 +317,7 @@ describe User do
     end
 
     context "when user is booked after start date" do
-      
+
       it "should return booked date" do
         booking = FactoryGirl.create(:booking, state: :finished_host_accepted, bookee: user, check_in_date: start_date , check_out_date: start_date)
         expect(subject).to eq([booking.check_in_date])

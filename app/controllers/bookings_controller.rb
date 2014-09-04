@@ -84,7 +84,7 @@ class BookingsController < ApplicationController
     end
 	end
 
-	def update_message
+  def update_message
 		booking = Booking.find(params[:booking_id])
 		booking.check_in_time = params[:check_in_time]
 		booking.check_out_time = params[:check_out_time]
@@ -115,7 +115,7 @@ class BookingsController < ApplicationController
     end
   end
 
-	def host_paid
+  def host_paid
 		@booking = Booking.find(params[:id])
     @booking.host_was_paid
 		@booking.save!
@@ -133,7 +133,7 @@ class BookingsController < ApplicationController
 		@bookings = current_user.bookers.order('created_at DESC')
 	end
 
-	def admin_view
+  def admin_view
 		@booking = Booking.find(params[:id])
   end
 
