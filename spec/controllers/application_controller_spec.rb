@@ -24,7 +24,7 @@ describe ApplicationController do
 
   describe '#after_sign_in_path_for' do
     subject { controller.after_sign_in_path_for(user) }
-    
+
     context 'when a redirect path is present' do
       let(:user) { nil }
       before do
@@ -51,8 +51,8 @@ describe ApplicationController do
     context 'when the user has either a pet or a homestay' do
       let(:user) { mock(:user, homestay: stub_model(Homestay), pets: nil) }
 
-      it 'should return the users account path' do
-        subject.should == my_account_path
+      it 'should return the mailbox path' do
+        subject.should == mailboxes_path
       end
     end
   end
