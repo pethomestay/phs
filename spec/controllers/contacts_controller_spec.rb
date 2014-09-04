@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ContactsController do
   before do
     controller.stub(:authenticate_user!).and_return true
+    request.env["HTTP_REFERER"] = new_contact_path
   end
 
   def valid_attributes(override_or_add={})
