@@ -27,7 +27,7 @@ describe BookingsController do
 		it 'should make booking and transaction objects' do
 			subject
 			response.should render_template :new
-			assigns(:booking).should == enquiry.booking
+			assigns(:booking).should eq(enquiry.booking)
 			assigns(:transaction).should == enquiry.booking.transaction
 		end
 	end
@@ -57,16 +57,15 @@ describe BookingsController do
   describe 'GET #guest_cancelled' do
     subject { get :guest_cancelled, id: booking.id }
 
-    let(:user) {FactoryGirl.create :user }
-    let(:booking) {  FactoryGirl.create :booking, booker: user }
+    let(:user) { FactoryGirl.create :user }
+    let(:booking) { FactoryGirl.create :booking, booker: user }
 
     before { controller.stub(:current_user).and_return user }
 
     it 'should render the guest_canceled template' do
       subject
-      response.should render_template :guest_cancelled
+      response.should redirect_to trips_bookings_path
     end
-
   end
 
 	describe 'GET #index' do
