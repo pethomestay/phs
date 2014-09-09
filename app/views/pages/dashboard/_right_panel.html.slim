@@ -1,0 +1,14 @@
+h4 Calendar
+
+.switcher.center-block
+  i.fa.fa-chevron-left.left
+  span.month September
+  span.year  2014
+  i.fa.fa-chevron-right.right
+
+table.table.calendar
+  thead
+    tr
+      - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+        th #{day}
+  tbody
