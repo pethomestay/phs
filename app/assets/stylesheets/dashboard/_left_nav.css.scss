@@ -1,0 +1,31 @@
+.left-nav {
+  padding: 0;
+  background-color: $grey-lighter;
+  font-size: 14px;
+  font-weight: 700;
+  li {
+    height: 73px;
+    border-bottom: 1px solid $grey;
+    a {
+      height: 100%;
+      padding-top: 25px;
+      padding-left: 20px;
+      color: $black-light;
+      i {
+        margin-right: 10px;
+        position: relative;
+        bottom: 3px;
+      }
+      span {
+        padding-top: 5px;
+      }
+    }
+    &.active {
+      background-color: $orange;
+      a,
+      a:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

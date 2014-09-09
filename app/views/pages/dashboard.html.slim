@@ -1,0 +1,9 @@
+.container-fluid
+  .row
+    nav.sub-nav
+      = render partial: 'pages/dashboard/pill_profile'
+      .col-md-8
+      = render partial: 'pages/dashboard/pill_guest'
+      = render partial: 'pages/dashboard/pill_host'
+  .row
+    = render partial: 'pages/dashboard/left_nav'

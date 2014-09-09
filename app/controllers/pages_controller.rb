@@ -7,6 +7,10 @@ class PagesController < ApplicationController
     render layout: "new_application"
   end
 
+  def dashboard
+    render layout: 'new_application'
+  end
+
   def welcome
     @welcome = true
   end
