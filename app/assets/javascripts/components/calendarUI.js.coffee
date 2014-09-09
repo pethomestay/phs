@@ -4,7 +4,7 @@ $ ->
       bodySelector:  'tbody'
       todaySelector: "td[data-date='#{moment().format('YYYY-MM-DD')}']"
 
-    @mark_tody = ->
+    @mark_today = ->
       $today = @select('todaySelector')
       $today.addClass 'today'
 
@@ -23,7 +23,7 @@ $ ->
             week += "<td data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
           d.add 1, 'days'
         $body.append "<tr class='week'>#{week}</tr>"
-      @mark_tody()
+      @mark_today()
 
     @after 'initialize', ->
       now = moment()
