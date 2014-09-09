@@ -212,6 +212,8 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
+    momentjs-rails (2.8.1)
+      railties (>= 3.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -404,6 +406,7 @@ DEPENDENCIES
   legato
   libv8 (~> 3.16.14)
   mailgun_rails!
+  momentjs-rails
   net-scp (= 1.2.1)
   newrelic_rpm
   nokogiri (= 1.6.2.1)
