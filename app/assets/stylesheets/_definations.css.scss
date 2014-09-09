@@ -1,3 +1,15 @@
+$screen-xs:     480px;
+$screen-xs-min: $screen-xs;
+$screen-sm:     768px;
+$screen-sm-min: $screen-sm;
+$screen-md:     992px;
+$screen-md-min: $screen-md;
+$screen-lg:     1200px;
+$screen-lg-min: $screen-lg;
+$screen-xs-max: ($screen-xs-min - 1);
+$screen-sm-max: ($screen-sm-min - 1);
+$screen-md-max: ($screen-md-min - 1);
+
 $orange:       #ec5c3b;
 $orange-light: #ef7458;
 
