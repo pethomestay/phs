@@ -8,8 +8,12 @@ $ ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
 
-    @draw = (year, month) ->
+    @draw = (current) ->
+      year  = current.year()
+      month = current.month() + 1
       $body = @select('bodySelector')
+      # Clear existing calendar
+      $body.html('')
       # Move to the first entry of calendar
       d = moment("#{year}-#{month}-01", 'YYYY-MM-DD')
       d.subtract d.day(), 'days'
@@ -26,7 +30,13 @@ $ ->
       @mark_today()
 
     @after 'initialize', ->
-      now = moment()
-      @draw now.year(), (now.month() + 1)
+      current = moment()
+      @draw current
+      @on 'moveToPreviousMonth', ->
+        current.subtract 1, 'months'
+        @draw current
+      @on 'moveToNextMonth', ->
+        current.add 1, 'months'
+        @draw current
 
   CalendarUI.attachTo '.right-panel .calendar'
