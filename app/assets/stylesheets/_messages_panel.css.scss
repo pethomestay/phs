@@ -1,0 +1,95 @@
+.messages-panel {
+  .panel-header {
+    padding: 20px 20px;
+    background-color: $grey;
+    p {
+      font-size: 14px;
+      .unread-count {
+        color: $orange-light;
+      }
+    }
+  }
+
+  .conversation {
+    .header {
+      height: 65px;
+      padding: 15px 30px;
+      border-bottom: 1px solid $grey;
+      img {
+        width: 38px;
+        height: 38px;
+      }
+      .name {
+        margin-left: 20px;
+        display: inline-block;
+      }
+      .right span {
+        float: right;
+        clear: right;
+      }
+      &:first-child {
+        height: 110px;
+        img {
+          width: 60px;
+          height: 60px;
+          margin-top: 10px;
+        }
+        .booking-status {
+          font-weight: 700;
+          &.accepted {
+            // Placeholder
+          }
+          &.canceled {
+            color: $orange;
+          }
+          &.requested {
+            color: $blue-light;
+          }
+        }
+        .message-count {
+          width: 25px;
+          height: 20px;
+          border-radius: 3px;
+          background-color: $grey-dark;
+          color: white;
+          font-weight: 700;
+          text-align: center;
+        }
+        i.fa {
+          margin-top: 10px;
+          color: $grey;
+        }
+      }
+    }
+    .actions {
+      height: 48px;
+      padding: 13px 20px;
+      border-bottom: 1px solid $grey;
+      .sender,
+      .receiver {
+        color: $blue-light;
+      }
+      i.fa {
+        margin-top: 5px;
+        color: $grey;
+      }
+    }
+    .body {
+      padding: 23px;
+      border-bottom: 1px solid $grey;
+    }
+    &.expanded {
+      .header:first-child {
+        background-color: $blue-light;
+        color: white;
+        .message-count {
+          background-color: white;
+          color: $blue-light;
+        }
+        i.fa {
+          color: white;
+        }
+      }
+    }
+  }
+}

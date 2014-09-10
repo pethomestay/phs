@@ -1,0 +1,77 @@
+.messages-panel
+  .panel-header
+    h4 Messages
+    p
+      | You have
+      span.unread-count  3
+      |  unread messages
+
+  .conversation.expanded
+    .header
+      =image_tag 'tom.jpg', class: 'img-circle pull-left'
+      span.h5.name Tom LeGrice
+      .right.pull-right
+        span.date Sep 13, 2014
+        span.booking-status.accepted Accepted
+        span.message-count 2
+        span
+          i.fa.fa-chevron-up.fa-lg
+    .actions
+      span
+        span.sender Me
+        |  to
+        span.receiver  Mike Dekker
+      i.fa.fa-reply.fa-lg.pull-right
+    .body
+      p
+        | Hi Mike
+        br
+        br
+        | No worries what so ever! We would love to look after consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        br
+        br
+        | Cheers,
+        br
+        br
+        | Tom
+    .header
+      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      span.h5.name Mike Dekker
+    .actions
+      span
+        span.sender Mike Dekker
+        |  to
+        span.receiver  Me
+      i.fa.fa-reply.fa-lg.pull-right
+    .body
+      p
+        | Hi Tom,
+        br
+        br
+        | I was wondering if you would be able to look after my dog. I am leaving lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        br
+        br
+        | Cheers,
+        br
+        br
+        | Mike
+  .conversation
+    .header
+      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      span.h5.name Mike Dekker
+      .right.pull-right
+        span.date Sep 10, 2014
+        span.booking-status.canceled Cancelled
+        span.message-count 2
+        span
+          i.fa.fa-chevron-down.fa-lg
+  .conversation
+    .header
+      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      span.h5.name Mike Dekker
+      .right.pull-right
+        span.date Sep 10, 2014
+        span.booking-status.requested Reservation
+        span.message-count 3
+        span
+          i.fa.fa-chevron-down.fa-lg
