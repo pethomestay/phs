@@ -1,13 +1,14 @@
-h4 Calendar
+.calendar-container
+  h4 Calendar
 
-.switcher.center-block
-  i.fa.fa-chevron-left.left
-  span.current-month Loading..
-  i.fa.fa-chevron-right.right
+  .switcher.center-block
+    i.fa.fa-chevron-left.left
+    span.current-month Loading..
+    i.fa.fa-chevron-right.right
 
-table.table.calendar
-  thead
-    tr
-      - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-        th #{day}
-  tbody
+  table.table.calendar
+    thead
+      tr
+        - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+          th #{day}
+    tbody
