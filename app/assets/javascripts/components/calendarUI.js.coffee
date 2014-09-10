@@ -6,7 +6,7 @@ $ ->
 
     @mark_today = ->
       $today = @select('todaySelector')
-      $today.addClass 'today'
+      $today.addClass 'today' unless $today.hasClass('ignored')
 
     @draw = (year, month) ->
       $body = @select('bodySelector')
