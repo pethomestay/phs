@@ -12,7 +12,7 @@ $ ->
       $body = @select('bodySelector')
       # Move to the first entry of calendar
       d = moment("#{year}-#{month}-01", 'YYYY-MM-DD')
-      d.subtract d.day()
+      d.subtract d.day(), 'days'
       # Draw 6 line>
       for _ in [1..6]
         week = ''
