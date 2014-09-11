@@ -37,8 +37,8 @@
         }
         .booking-status {
           font-weight: 700;
-          &.accepted {
-            // Placeholder
+          &.confirmed {
+            color: $blue;
           }
           &.canceled {
             color: $orange;
@@ -84,6 +84,9 @@
       .header:first-child {
         background-color: $blue-light;
         color: white;
+        .booking-status {
+          color: white;
+        }
         .message-count {
           background-color: white;
           color: $blue-light;
