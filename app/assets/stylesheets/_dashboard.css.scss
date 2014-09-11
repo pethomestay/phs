@@ -1,7 +1,12 @@
 @import 'dashboard/sub_nav';
 @import 'dashboard/left_nav';
-@import 'dashboard/main_panel';
 @import 'dashboard/right_panel';
+
+.main-panel {
+  padding: 0;
+  border-left: 1px solid $grey;
+  border-right: 1px solid $grey;
+}
 
 @media (max-width: $screen-xs-max) {
   .sub-nav {
