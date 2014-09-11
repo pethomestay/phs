@@ -1,19 +1,19 @@
 .sub-nav {
-  height: 86px;
+  height: $sub-nav-height;
   background-color: $blue-light;
-  .pill {
+  .pill-profile,
+  .pill-guest,
+  .pill-host {
     height: 100%;
     color: $blue-lighter;
     span {
       font-size: 16px;
     }
-    &.active {
-      background-color: $blue;
-      color: white;
-    }
   }
   .pill-profile {
-    line-height: 86px;
+    line-height: $sub-nav-height;
+    background-color: $blue;
+    color: white;
     img {
       width: 59px;
       margin-top: 15px;
@@ -25,10 +25,15 @@
   .pill-guest,
   .pill-host {
     padding-top: 20px;
+    background-color: $blue-light;
     text-align: center;
     cursor: pointer;
     span {
       display: block;
+    }
+    &.active {
+      background-color: $blue;
+      color: white;
     }
     &:hover{
       color: #5f5753; // Placeholder
