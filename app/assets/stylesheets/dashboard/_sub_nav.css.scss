@@ -12,7 +12,6 @@
   }
   .pill-profile {
     line-height: $sub-nav-height;
-    background-color: $blue;
     color: white;
     img {
       width: 59px;
@@ -25,7 +24,6 @@
   .pill-guest,
   .pill-host {
     padding-top: 20px;
-    background-color: $blue-light;
     text-align: center;
     cursor: pointer;
     span {

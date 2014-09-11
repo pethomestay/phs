@@ -4,8 +4,8 @@
 @import 'dashboard/right_panel';
 
 @media (max-width: $screen-xs-max) {
-  .sub-nav .pill-guest {
-    border-left: 1px solid $blue-light;
+  .sub-nav {
+    background-color: $blue-light;
   }
   .left-nav li {
     text-align: center;
