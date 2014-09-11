@@ -16,9 +16,23 @@
       height: 65px;
       padding: 15px 30px;
       border-bottom: 1px solid $grey;
-      img {
-        width: 38px;
-        height: 38px;
+      .profile {
+        position: relative;
+        img {
+          width: 38px;
+          height: 38px;
+        }
+        span {
+          position: absolute;
+          top: 50px;
+          left: 40px;
+          .fa-square {
+            color: $grey-dark;
+          }
+          .fa-phone {
+            color: white;
+          }
+        }
       }
       .name {
         margin-left: 20px;
@@ -56,7 +70,7 @@
           font-weight: 700;
           text-align: center;
         }
-        i.fa {
+        .chevron {
           margin-top: 10px;
           color: $grey;
         }
@@ -70,7 +84,7 @@
       .receiver {
         color: $blue-light;
       }
-      i.fa {
+      i.fa-reply {
         margin-top: 5px;
         color: $grey;
       }
@@ -91,7 +105,7 @@
           background-color: white;
           color: $blue-light;
         }
-        i.fa {
+        .chevron {
           color: white;
         }
       }

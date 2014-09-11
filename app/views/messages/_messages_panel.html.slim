@@ -8,14 +8,19 @@
 
   .conversation.expanded
     .header
-      =image_tag 'tom.jpg', class: 'img-circle pull-left'
+      a href="tel:1234567890"
+        .profile
+          =image_tag 'tom.jpg', class: 'img-circle pull-left'
+          span.fa-stack
+            i.fa.fa-square.fa-stack-2x
+            i.fa.fa-phone.fa-stack-1x
       span.h5.name Tom LeGrice
       .right.pull-right
         span.date Sep 12 - Sep 19
         span.booking-status.confirmed Confirmed
         span.message-count 2
         span
-          i.fa.fa-chevron-up.fa-lg
+          i.fa.fa-chevron-up.fa-lg.chevron
     .actions
       span
         span.sender Me
@@ -35,7 +40,8 @@
         br
         | Tom
     .header
-      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      .profile
+        =image_tag 'izzy.jpg', class: 'img-circle pull-left'
       span.h5.name Mike Dekker
     .actions
       span
@@ -57,14 +63,15 @@
         | Mike
   .conversation.unread
     .header
-      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      .profile
+        =image_tag 'izzy.jpg', class: 'img-circle pull-left'
       span.h5.name Mike Dekker
       .right.pull-right
         span.date Sep 11
         span.booking-status.canceled Cancelled
         span.message-count 2
         span
-          i.fa.fa-chevron-down.fa-lg
+          i.fa.fa-chevron-down.fa-lg.chevron
     .actions style='display: none'
       span
         span.sender Mike Dekker
@@ -76,14 +83,15 @@
         | I want to cancel.
   .conversation
     .header
-      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      .profile
+        =image_tag 'izzy.jpg', class: 'img-circle pull-left'
       span.h5.name Mike Dekker
       .right.pull-right
         span.date Sep 3 - Sep 10
         span.booking-status.requested Reservation
         span.message-count 3
         span
-          i.fa.fa-chevron-down.fa-lg
+          i.fa.fa-chevron-down.fa-lg.chevron
     .actions style='display: none'
       span
         span.sender Mike Dekker
