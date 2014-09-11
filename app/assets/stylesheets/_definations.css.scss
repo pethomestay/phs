@@ -6,9 +6,9 @@ $screen-md:     992px;
 $screen-md-min: $screen-md;
 $screen-lg:     1200px;
 $screen-lg-min: $screen-lg;
-$screen-xs-max: ($screen-xs-min - 1);
-$screen-sm-max: ($screen-sm-min - 1);
-$screen-md-max: ($screen-md-min - 1);
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-sm-max: ($screen-md-min - 1);
+$screen-md-max: ($screen-lg-min - 1);
 
 $orange:       #ec5c3b;
 $orange-light: #ef7458;
@@ -17,7 +17,7 @@ $blue:         #52b8b7;
 $blue-light:   #5cc1c0;
 $blue-lighter: #68d5d4;
 
-$black:        #e2b8b8;
+//$black:        #3c3835;
 $black-light:  #3c3835;
 $grey-dark:    #ababab;
 $grey:         #e5e5e5;
