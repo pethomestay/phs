@@ -16,3 +16,20 @@
 .upcoming
   .day-section
     = render partial: 'pages/dashboard/date_widget'
+    .events
+      .event.booking.accepted
+        span.type Accepted
+        span.period
+          strong.start 9:00 am
+          |  to
+          strong.end  19 Sept 2014 2:00 pm
+        span.name Mike Dekker
+      .hr
+      .event.inquiry
+        span.type Inquiry
+        span.period
+          strong.start 9:00 am
+          |  to
+          strong.end  2:00 pm
+        span.name Frankie Ratford
+    .hr

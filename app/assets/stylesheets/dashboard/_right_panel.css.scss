@@ -67,7 +67,7 @@
       width: 66px;
       display: inline-block;
       text-align: center;
-      position: relative;
+      position: absolute;
       .decoration {
         width: 4px;
         height: 12px;
@@ -99,6 +99,35 @@
         color: $black-light;
         background-color: $grey-light;
       }
+    }
+    .events {
+      margin-left: 100px;
+      display: inline-block;
+      .event {
+        span {
+          display: block;
+          &.type {
+            font-weight: 700;
+          }
+        }
+        &.booking {
+          &.accepted {
+            .type {
+              color: $blue-light;
+            }
+          }
+        }
+        &.inquiry {
+          .type {
+            color: $grey-dark;
+          }
+        }
+      }
+    }
+    .hr {
+      height: 1px;
+      margin: 5px;
+      background-color: $grey;
     }
   }
 }
