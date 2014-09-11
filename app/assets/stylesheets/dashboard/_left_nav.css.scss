@@ -1,11 +1,11 @@
 .left-nav {
   padding: 0;
-  background-color: $grey-lighter;
   font-size: 14px;
   font-weight: 700;
   li {
     height: 73px;
     border-bottom: 1px solid $grey;
+    background-color: $grey-lighter;
     a {
       height: 100%;
       padding-top: 25px;
@@ -26,6 +26,14 @@
       a:hover {
         background-color: transparent;
       }
+    }
+  }
+  .create-homestay {
+    padding: 20px;
+    text-align: center;
+    a {
+      font-weight: 400;
+      color: $blue-light;
     }
   }
 }
