@@ -15,7 +15,9 @@
 
 .upcoming
   .day-section
-    = render partial: 'pages/dashboard/date_widget'
+    - month = Date.today.strftime('%b')
+    - day   = Date.today.strftime('%d')
+    = render 'pages/dashboard/date_widget', { month: month, day: day }
     .events
       .event.booking.accepted
         span.type Accepted
