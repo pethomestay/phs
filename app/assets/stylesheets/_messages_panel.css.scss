@@ -11,6 +11,7 @@
   }
 
   .conversation {
+    opacity: .6;
     .header {
       height: 65px;
       padding: 15px 30px;
@@ -79,6 +80,7 @@
       border-bottom: 1px solid $grey;
     }
     &.expanded {
+      opacity: 1;
       .header:first-child {
         background-color: $blue-light;
         color: white;
@@ -90,6 +92,9 @@
           color: white;
         }
       }
+    }
+    &.unread {
+      opacity: 1;
     }
   }
 }

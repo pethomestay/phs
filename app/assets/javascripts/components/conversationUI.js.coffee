@@ -10,6 +10,7 @@ $ ->
       $chevron.toggleClass('fa-chevron-down')
 
     @toggleConversation = ->
+      @$node.removeClass('unread') # Mark as read after clicked
       @$node.children().slice(1).slideToggle()
       @toggleChevron()
       @$node.toggleClass 'expanded'
