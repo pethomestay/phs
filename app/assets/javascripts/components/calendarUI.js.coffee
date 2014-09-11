@@ -21,7 +21,7 @@ $ ->
       for _ in [1..6]
         week = ''
         for __ in [1..7]
-          if d.month() != (month-1)
+          if d.month() != (month-1) or d.isBefore(moment(), 'day')
             week += "<td class='ignored' data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
           else
             week += "<td data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
