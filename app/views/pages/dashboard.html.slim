@@ -2,13 +2,13 @@
   .row
     nav.sub-nav
       = render partial: 'pages/dashboard/pill_profile'
-      .col-md-8
+      .col-sm-4.col-md-8
       = render partial: 'pages/dashboard/pill_guest'
       = render partial: 'pages/dashboard/pill_host'
   .row
-    .left-nav.col-md-2
+    .left-nav.col-sm-4.col-md-2
       = render partial: 'pages/dashboard/left_nav'
-    .main-panel.col-md-6.hidden-xs
+    .main-panel.col-sm-8.col-md-6.hidden-xs
       = render partial: 'pages/dashboard/main_panel'
-    .right-panel.col-md-4
+    .right-panel.col-md-4.hidden-sm.hidden-xs
       = render partial: 'pages/dashboard/right_panel'
