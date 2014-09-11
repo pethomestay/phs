@@ -4,6 +4,7 @@
   font-weight: 700;
   li {
     height: 73px;
+    margin-top: 0 !important; // Override Bootstrap's default behavior
     border-bottom: 1px solid $grey;
     background-color: $grey-lighter;
     a {
