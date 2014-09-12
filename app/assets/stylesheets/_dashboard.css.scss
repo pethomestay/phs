@@ -8,12 +8,6 @@
   border-right: 1px solid $grey;
 }
 
-@media (max-width: $screen-xs-max) {
-  .sub-nav {
-    background-color: $blue-light;
-  }
-}
-
 @media (min-width: $screen-sm-min) and (max-width: 1075px) {
   .right-panel .calendar-container {
     padding-left:  10px;
