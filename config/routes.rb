@@ -134,4 +134,8 @@ PetHomestay::Application.routes.draw do
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
+
+  if Rails.env.development?
+    get '/trust'              => 'pages#trust', as: 'trust'
+  end
 end

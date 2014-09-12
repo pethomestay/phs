@@ -4,10 +4,14 @@ class PagesController < ApplicationController
 
   def home
     @homepage = true
-    render layout: "new_application"
+    render layout: 'new_application'
   end
 
   def dashboard
+    render layout: 'new_application'
+  end
+
+  def trust
     render layout: 'new_application'
   end
 
