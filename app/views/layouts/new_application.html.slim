@@ -6,7 +6,7 @@ html lang='en'
     meta name='viewport' content='width=device-width, initial-scale=1'
     title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
     / This Facebook app id is for production
-    = render partial: 'layouts/google_analytics' if ENV['APP_ID'] == '262506980584735'
+    = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735'
     = render partial: 'shared/crazy_egg' if ENV['APP_ID'] == '262506980584735'
     = stylesheet_link_tag 'new_application'
     = yield :head_stylesheet
