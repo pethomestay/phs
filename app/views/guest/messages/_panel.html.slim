@@ -1,0 +1,48 @@
+.messages-panel
+  .panel-header
+    h4 Messages
+    p
+      | You have
+      span.unread-count  3
+      |  unread messages
+
+  .conversation.unread
+    .header
+      .profile
+        =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      span.h5.name Mike Dekker
+      .right.pull-right
+        span.date Sep 11
+        span.booking-status.canceled Cancelled
+        span.message-count 2
+        span
+          i.fa.fa-chevron-down.fa-lg.chevron
+    .actions style='display: none'
+      span
+        span.sender Mike Dekker
+        |  to
+        span.receiver  Me
+      i.fa.fa-reply.fa-lg.pull-right
+    .body  style='display: none'
+      p
+        | I want to cancel.
+  .conversation
+    .header
+      .profile
+        =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+      span.h5.name Mike Dekker
+      .right.pull-right
+        span.date Sep 3 - Sep 10
+        span.booking-status.requested Reservation
+        span.message-count 3
+        span
+          i.fa.fa-chevron-down.fa-lg.chevron
+    .actions style='display: none'
+      span
+        span.sender Mike Dekker
+        |  to
+        span.receiver  Me
+      i.fa.fa-reply.fa-lg.pull-right
+    .body  style='display: none'
+      p
+        | I want to book.

@@ -89,10 +89,12 @@ PetHomestay::Application.routes.draw do
 
   namespace :guest do
     get '/messages', to: 'messages#index'
+    get '/',         to: 'root#index'
   end
 
   namespace :host do
     get '/messages', to: 'messages#index'
+    get '/',         to: 'root#index'
   end
 
   namespace :admin do

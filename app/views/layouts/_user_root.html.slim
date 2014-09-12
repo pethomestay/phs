@@ -1,0 +1,13 @@
+/ Any change made in this page must be reflected in _user.html.slim
+
+.container-fluid
+  .row
+    nav.sub-nav
+      = render partial: 'pages/dashboard/sub_nav'
+  .row
+    .left-nav.col-sm-4.col-md-2
+      = render partial: 'pages/dashboard/left_nav'
+    .main-panel.hidden-xs.col-sm-8.col-md-6
+      = yield
+    .right-panel.hidden-xs.hidden-sm.col-sm-8.col-md-4
+      = render partial: 'pages/dashboard/right_panel'
