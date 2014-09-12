@@ -1,0 +1,18 @@
+/ This partial is rendered as a layout for all other user pages (pets etc.)
+/ It is different from pages/dashboard.html.slim in only three line.
+/ Thus every line in this file must be kept in sync with pages/dashboard.html.slim apart from the intended different ones.
+
+.container-fluid
+  .row
+    nav.sub-nav
+      = render partial: 'pages/dashboard/sub_nav'
+  .row
+    / Hide left nav on xs screen
+    .left-nav.hidden-xs.col-sm-4.col-md-2
+      = render partial: 'pages/dashboard/left_nav'
+    / Keep main panel on xs screen
+    .main-panel.col-sm-8.col-md-6
+      / Yield main panel's content
+      = yield
+    .right-panel.hidden-xs.hidden-sm.col-md-4
+      = render partial: 'pages/dashboard/right_panel'
