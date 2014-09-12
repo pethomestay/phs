@@ -21,4 +21,5 @@ $ ->
         @updateCurrentMonth(current)
         @trigger '.right-panel .calendar', 'moveToNextMonth'
 
+
   SwitcherUI.attachTo '.right-panel .switcher'
