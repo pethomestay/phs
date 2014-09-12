@@ -7,7 +7,7 @@ html lang='en'
     title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
     / This Facebook app id is for production
     = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735'
-    = render partial: 'shared/crazy_egg' if ENV['APP_ID'] == '262506980584735'
+    = render partial: 'shared/tracking/crazy_egg' if ENV['APP_ID'] == '262506980584735'
     = stylesheet_link_tag 'new_application'
     = yield :head_stylesheet
     /! HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -24,7 +24,7 @@ html lang='en'
       = render 'shared/flash_messages', flash: flash, resource: resource
     - else
       = render 'shared/flash_messages', flash: flash
-    = render 'shared/facebook_tag'
+    = render 'shared/tracking/facebook_tag'
     = render 'shared/nav_bar'
     = yield
     = render 'shared/footer'
