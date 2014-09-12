@@ -1,34 +1,70 @@
 ul.nav.nav-pills.nav-stacked
-  li.active
-    a href=""
-      i.fa.fa-envelope.fa-lg.fa-fw
-      | MESSAGES
-  li.calendar.hidden-md.hidden-lg
-    a href=""
-      i.fa.fa-calendar.fa-lg.fa-fw
-      | CALENDAR
-  li
-    a href=""
-      i.fa.fa-heart.fa-lg.fa-fw
-      | MY HOSTS
-  /li
-  /  a href=trust_path
-  /    i.fa.fa-shield.fa-lg.fa-fw
-  /    | TRUST
-  /    span.hidden-md  & FEEDBACK
-  li
-    a href=""
-      i.fa.fa-cog.fa-lg.fa-fw
-      | ACCOUNT
-  li
-    a href=""
-      i.fa.fa-paw.fa-lg.fa-fw
-      | PET PROFILES
-  li
-    a href='http://support.pethomestay.com' target='_blank'
-      i.fa.fa-question-circle.fa-lg.fa-fw
-      | SUPPORT
-      span.hidden-md  CENTRE
+  - if @host_view.present?
+    li.messages.active
+      a href=host_messages_path
+        i.fa.fa-envelope.fa-lg.fa-fw
+        | MESSAGES
+    li.calendar.hidden-md.hidden-lg
+      a href=''
+        i.fa.fa-calendar.fa-lg.fa-fw
+        | CALENDAR
+    li
+      a href=''
+        i.fa.fa-suitcase.fa-lg.fa-fw
+        | BOOKINGS
+    /li
+    /  a href=trust_path
+    /    i.fa.fa-shield.fa-lg.fa-fw
+    /    | TRUST
+    /    span.hidden-md  & FEEDBACK
+    li
+      a href=''
+        i.fa.fa-home.fa-lg.fa-fw
+        | MY HOMESTAY
+    li
+      a href=''
+        i.fa.fa-dollar.fa-lg.fa-fw
+        | PAYOUT DETAILS
+    li
+      a href=""
+        i.fa.fa-cog.fa-lg.fa-fw
+        | ACCOUNT
+    li
+      a href='http://support.pethomestay.com' target='_blank'
+        i.fa.fa-question-circle.fa-lg.fa-fw
+        | HOST SUPPORT
+  - else
+    li.messages.active
+      a href=guest_messages_path
+        i.fa.fa-envelope.fa-lg.fa-fw
+        | MESSAGES
+    li.calendar.hidden-md.hidden-lg
+      a href=""
+        i.fa.fa-calendar.fa-lg.fa-fw
+        | CALENDAR
+    li
+      a href=""
+        i.fa.fa-heart.fa-lg.fa-fw
+        | MY HOSTS
+    /li
+    /  a href=trust_path
+    /    i.fa.fa-shield.fa-lg.fa-fw
+    /    | TRUST
+    /    span.hidden-md  & FEEDBACK
+    li
+      a href=""
+        i.fa.fa-cog.fa-lg.fa-fw
+        | ACCOUNT
+    li
+      a href=""
+        i.fa.fa-paw.fa-lg.fa-fw
+        | PET PROFILES
+    li
+      a href='http://support.pethomestay.com' target='_blank'
+        i.fa.fa-question-circle.fa-lg.fa-fw
+        | SUPPORT
+        span.hidden-md  CENTRE
 
-.create-homestay
-  a href="" Love pets? Create your own HomeStay today!
+- unless @host_view.present?
+  .create-homestay
+    a href="" Love pets? Create your own HomeStay today!
