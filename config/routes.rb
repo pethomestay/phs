@@ -91,6 +91,10 @@ PetHomestay::Application.routes.draw do
     get '/messages', to: 'messages#index'
   end
 
+  namespace :host do
+    get '/messages', to: 'messages#index'
+  end
+
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
