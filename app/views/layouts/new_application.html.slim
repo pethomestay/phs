@@ -1,0 +1,30 @@
+doctype html
+html lang='en'
+  head
+    meta charset='utf-8'
+    meta http-equiv='X-UA-Compatible' content='IE=edge'
+    meta name='viewport' content='width=device-width, initial-scale=1'
+    title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
+    / This Facebook app id is for production
+    = render partial: 'layouts/google_analytics' if ENV['APP_ID'] == '262506980584735'
+    = render partial: 'layouts/crazy_egg' if ENV['APP_ID'] == '262506980584735'
+    = stylesheet_link_tag 'new_application'
+    = yield :head_stylesheet
+    /! HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    /! WARNING: Respond.js doesn't work if you view the page via file://
+    /[if IE]
+      script src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js'
+      script src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js'
+    = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
+    = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
+    = javascript_include_tag 'new_application'
+    = yield :head_javascript
+  body
+    - if defined? resource
+      = render 'shared/flash_messages', flash: flash, resource: resource
+    - else
+      = render 'shared/flash_messages', flash: flash
+    = render 'layouts/facebook_tag'
+    = render 'shared/nav_bar'
+    = yield
+    = render 'shared/footer'
