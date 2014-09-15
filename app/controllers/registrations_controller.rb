@@ -1,5 +1,13 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
+
+  def edit
+    @account_details = true
+    super do |resource|
+      BackgroundWorker.trigger(resource)
+    end
+  end
+
   def update
     @user = User.find(current_user.id)
 

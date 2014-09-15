@@ -26,10 +26,6 @@ ul.nav.nav-pills.nav-stacked
         i.fa.fa-dollar.fa-lg.fa-fw
         | PAYOUT DETAILS
     li
-      a href=""
-        i.fa.fa-cog.fa-lg.fa-fw
-        | ACCOUNT
-    li
       a href='http://support.pethomestay.com' target='_blank'
         i.fa.fa-question-circle.fa-lg.fa-fw
         | HOST SUPPORT
@@ -51,8 +47,8 @@ ul.nav.nav-pills.nav-stacked
     /    i.fa.fa-shield.fa-lg.fa-fw
     /    | TRUST
     /    span.hidden-md  & FEEDBACK
-    li
-      a href=""
+    li class=('active' if defined? @account_details)
+      a href=guest_edit_path
         i.fa.fa-cog.fa-lg.fa-fw
         | ACCOUNT
     li
