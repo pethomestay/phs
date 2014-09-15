@@ -99,6 +99,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :host do
     get '/messages', to: 'messages#index'
+    get '/homestay/edit', to: 'homestays#edit'
     get '/',         to: 'host#index'
   end
 

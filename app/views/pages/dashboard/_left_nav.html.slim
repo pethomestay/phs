@@ -17,8 +17,8 @@ ul.nav.nav-pills.nav-stacked
     /    i.fa.fa-shield.fa-lg.fa-fw
     /    | TRUST
     /    span.hidden-md  & FEEDBACK
-    li
-      a href=''
+    li class=('active' if defined? @my_homestay)
+      a href=(if current_user.homestay then host_homestay_edit_path else new_homestay_path end)
         i.fa.fa-home.fa-lg.fa-fw
         | MY HOMESTAY
     li

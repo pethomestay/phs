@@ -1,0 +1,8 @@
+= render layout: 'layouts/user' do
+  .my-homestay-panel
+    .page-header
+      h1 Update Your PetHomeStay Listing
+    = simple_form_for @my_homestay, html: {class: 'form-horizontal', multipart: true} do |f|
+      = render 'form_fields', f: f
+      .form-actions
+        = f.submit 'Update my listing', class: 'btn btn-primary'
