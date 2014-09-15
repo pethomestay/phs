@@ -4,6 +4,24 @@ $ ->
       bodySelector:  'tbody'
       todaySelector: "td[data-date='#{moment().format('YYYY-MM-DD')}']"
 
+    @mark_dates = (end) ->
+      # Set start and end dates
+      start = moment(end.format('YYYY-MM-DD'), 'YYYY-MM-DD')
+      start.subtract 6, 'weeks'
+      end.subtract 1, 'days'
+      # Retrive status
+      $.get '/availability/booking_info',
+        start: start.unix()
+        end: end.unix()
+        (dates) ->
+          date = dates.shift()
+          while dates.length > 0 and date.title == 'Unavailable'
+            $("td[data-date='#{date.start}']").addClass 'unavailable'
+            date = dates.shift()
+          while dates.length > 0 and date.title == 'Booked'
+            $("td[data-date='#{date.start}']").addClass 'booked'
+            date = dates.shift()
+
     @mark_today = ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
@@ -27,6 +45,8 @@ $ ->
             week += "<td data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
           d.add 1, 'days'
         $body.append "<tr class='week'>#{week}</tr>"
+
+      @mark_dates(d)
       @mark_today()
 
     @after 'initialize', ->
