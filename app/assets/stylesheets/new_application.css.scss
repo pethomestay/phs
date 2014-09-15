@@ -91,13 +91,3 @@ body {
     }
   }
 }
-
-#xs-indicator {
-  display: none;
-}
-@media (max-width: $screen-xs-max) {
-  #xs-indicator {
-    display: block;
-  }
-}
-
