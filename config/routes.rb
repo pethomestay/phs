@@ -89,6 +89,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :guest do
     get '/messages', to: 'messages#index'
+    get '/favorites', to: 'favorites#index'
     get '/',         to: 'guest#index'
   end
 
