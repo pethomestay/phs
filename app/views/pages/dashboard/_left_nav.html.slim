@@ -1,6 +1,6 @@
 ul.nav.nav-pills.nav-stacked
   - if @host_view.present?
-    li.messages.active
+    li.messages class=('active' if defined? @messages)
       a href=host_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
         | MESSAGES
@@ -34,7 +34,7 @@ ul.nav.nav-pills.nav-stacked
         i.fa.fa-question-circle.fa-lg.fa-fw
         | HOST SUPPORT
   - else
-    li.messages.active
+    li.messages class=('active' if defined? @messages)
       a href=guest_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
         | MESSAGES
@@ -42,8 +42,8 @@ ul.nav.nav-pills.nav-stacked
       a href=""
         i.fa.fa-calendar.fa-lg.fa-fw
         | CALENDAR
-    li
-      a href=""
+    li class=('active' if defined? @favorites)
+      a href=guest_favorites_path
         i.fa.fa-heart.fa-lg.fa-fw
         | MY HOSTS
     /li

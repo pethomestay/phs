@@ -5,5 +5,6 @@ class Guest::GuestController < ApplicationController
 
   # GET /guest
   def index
+    @messages = true
   end
 end
