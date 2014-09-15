@@ -1,9 +1,9 @@
-class Host::RootController < ApplicationController
+class Guest::GuestController < ApplicationController
   layout 'new_application'
 
   before_filter :authenticate_user!
 
+  # GET /guest
   def index
-    @host_view = true
   end
 end

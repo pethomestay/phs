@@ -1,8 +1,5 @@
-class Guest::MessagesController < ApplicationController
-  layout 'new_application'
-
-  before_filter :authenticate_user!
-
+class Guest::MessagesController < Guest::GuestController
+  # GET /guest/messages
   def index
   end
 end

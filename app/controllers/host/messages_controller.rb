@@ -1,8 +1,5 @@
-class Host::MessagesController < ApplicationController
-  layout 'new_application'
-
-  before_filter :authenticate_user!
-
+class Host::MessagesController < Host::HostController
+  # GET /host/messages
   def index
     @host_view = true
   end
