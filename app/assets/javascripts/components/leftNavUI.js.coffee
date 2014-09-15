@@ -1,6 +1,7 @@
 $ ->
   LeftNavUI = flight.component ->
     @attributes
+      itemsSelector: 'li'
       calendarItemSelector: 'li.calendar'
 
     @hide = ->
@@ -10,7 +11,12 @@ $ ->
       e.preventDefault()
       @trigger '.main-panel',  'calendarItemClicked'
       @trigger '.right-panel', 'calendarItemClicked'
-      @hide() if $('#xs-indicator').is ':visible'
+      if $('#xs-indicator').is ':visible'
+        @hide()
+      else
+        # Mark calendarItem active
+        @select('itemsSelector').removeClass 'active'
+        @select('calendarItemSelector').addClass 'active'
 
     @after 'initialize', ->
       calendarItem = @select('calendarItemSelector')
