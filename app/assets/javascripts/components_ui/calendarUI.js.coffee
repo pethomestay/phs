@@ -4,23 +4,14 @@ $ ->
       bodySelector:  'tbody'
       todaySelector: "td[data-date='#{moment().format('YYYY-MM-DD')}']"
 
-    @mark_dates = (end) ->
-      # Set start and end dates
-      start = moment(end.format('YYYY-MM-DD'), 'YYYY-MM-DD')
-      start.subtract 6, 'weeks'
-      end.subtract 1, 'days'
-      # Retrive status
-      $.get '/availability/booking_info',
-        start: start.unix()
-        end: end.unix()
-        (dates) ->
-          for date in dates
-            if date.title == 'Unavailable'
-              $("td[data-date='#{date.start}']").addClass 'unavailable'
-            else if date.title == 'Booked'
-              $("td[data-date='#{date.start}']").addClass 'booked'
+    @highlight_info = (dates) ->
+      for date in dates
+        if date.title == 'Unavailable'
+          $("td[data-date='#{date.start}']").addClass 'unavailable'
+        else if date.title == 'Booked'
+          $("td[data-date='#{date.start}']").addClass 'booked'
 
-    @mark_today = ->
+    @highlight_today = ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
 
@@ -43,9 +34,15 @@ $ ->
             week += "<td data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
           d.add 1, 'days'
         $body.append "<tr class='week'>#{week}</tr>"
-
-      @mark_dates(d)
-      @mark_today()
+      # Highlight today
+      @highlight_today()
+      # Request calendar info
+      start = d.subtract(6, 'weeks').unix()
+      end   = d.add(41, 'days').unix()
+      @trigger 'uiNeedsCalendarInfo', {
+        start: start
+        end:   end
+      }
 
     @after 'initialize', ->
       current = moment()
@@ -56,5 +53,7 @@ $ ->
       @on 'uiShowNextMonth', ->
         current.add 1, 'months'
         @draw current
+      @on document, 'dataCalendarInfo', (e, data) ->
+        @highlight_info(data)
 
   CalendarUI.attachTo '.right-panel .calendar'
