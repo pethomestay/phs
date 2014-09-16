@@ -5,24 +5,24 @@ $ ->
       rightChevronSelector: 'i.right'
       currentMonthSelector: '.current-month'
 
-    @updateCurrentMonth = (current) ->
+    @updateHeader = (current) ->
       $currentMonth = @select('currentMonthSelector')
       $currentMonth.text(current.format('MMMM YYYY'))
 
     @after 'initialize', ->
       current = moment()
-      @updateCurrentMonth(current)
+      @updateHeader(current)
       leftChevron = @select('leftChevronSelector')
-      leftChevron.css('visibility', 'hidden')
+      rightChevron = @select('rightChevronSelector')
       @on leftChevron, 'click', ->
         current.subtract 1, 'months'
-        @updateCurrentMonth(current)
-        @trigger '.right-panel .calendar', 'moveToPreviousMonth'
+        @updateHeader(current)
+        @trigger '.right-panel .calendar', 'uiShowPrevMonth'
         leftChevron.css('visibility', 'hidden') if current.month() == moment().month()
-      @on @attr.rightChevronSelector, 'click', ->
+      @on rightChevron, 'click', ->
         current.add 1, 'months'
-        @updateCurrentMonth(current)
-        @trigger '.right-panel .calendar', 'moveToNextMonth'
+        @updateHeader(current)
+        @trigger '.right-panel .calendar', 'uiShowNextMonth'
         leftChevron.css('visibility', 'visible')
 
 

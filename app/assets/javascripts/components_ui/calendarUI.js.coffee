@@ -50,10 +50,10 @@ $ ->
     @after 'initialize', ->
       current = moment()
       @draw current
-      @on 'moveToPreviousMonth', ->
+      @on 'uiShowPrevMonth', ->
         current.subtract 1, 'months'
         @draw current
-      @on 'moveToNextMonth', ->
+      @on 'uiShowNextMonth', ->
         current.add 1, 'months'
         @draw current
 
