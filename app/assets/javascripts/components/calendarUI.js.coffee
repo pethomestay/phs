@@ -14,13 +14,11 @@ $ ->
         start: start.unix()
         end: end.unix()
         (dates) ->
-          date = dates.shift()
-          while dates.length > 0 and date.title == 'Unavailable'
-            $("td[data-date='#{date.start}']").addClass 'unavailable'
-            date = dates.shift()
-          while dates.length > 0 and date.title == 'Booked'
-            $("td[data-date='#{date.start}']").addClass 'booked'
-            date = dates.shift()
+          for date in dates
+            if date.title == 'Unavailable'
+              $("td[data-date='#{date.start}']").addClass 'unavailable'
+            else if date.title == 'Booked'
+              $("td[data-date='#{date.start}']").addClass 'booked'
 
     @mark_today = ->
       $today = @select('todaySelector')
