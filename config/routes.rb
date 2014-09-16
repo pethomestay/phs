@@ -100,6 +100,11 @@ PetHomestay::Application.routes.draw do
   namespace :host do
     get '/messages', to: 'messages#index'
     get '/homestay/edit', to: 'homestays#edit'
+    resources :accounts, only: [:new, :create, :edit, :update, :show] do
+      collection do
+        post 'guest_cancel_save_account_details'
+      end
+    end
     get '/',         to: 'host#index'
   end
 

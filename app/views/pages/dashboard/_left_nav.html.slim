@@ -21,8 +21,8 @@ ul.nav.nav-pills.nav-stacked
       a href=(if current_user.homestay then host_homestay_edit_path else new_homestay_path end)
         i.fa.fa-home.fa-lg.fa-fw
         | MY HOMESTAY
-    li
-      a href=''
+    li class=('active' if defined? @account)
+      a href=(current_user.account.blank? ? new_host_account_path : host_account_path(current_user.account))
         i.fa.fa-dollar.fa-lg.fa-fw
         | PAYOUT DETAILS
     li
