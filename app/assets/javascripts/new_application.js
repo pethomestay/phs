@@ -17,4 +17,4 @@
 //= require bootstrap-growl.min
 //= require popover
 //= require moment
-//= require_directory ./components
+//= require_directory ./components_ui
