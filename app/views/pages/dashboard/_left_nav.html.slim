@@ -61,6 +61,6 @@ ul.nav.nav-pills.nav-stacked
         | SUPPORT
         span.hidden-md  CENTRE
 
-- unless @host_view.present?
+- if current_user.homestay.blank?
   .create-homestay
-    a href="" Love pets? Create your own HomeStay today!
+    a href=new_homestay_path Love pets? Create your own HomeStay today!
