@@ -92,13 +92,13 @@ PetHomestay::Application.routes.draw do
     get '/favorites', to: 'favorites#index'
     get '/',         to: 'guest#index'
   end
-
   devise_scope :user do
     get '/guest/edit', to: 'registrations#edit'
   end
 
   namespace :host do
     get '/messages', to: 'messages#index'
+    get '/bookings', to: 'bookings#index'
     get '/homestay/edit', to: 'homestays#edit'
     resources :accounts, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'

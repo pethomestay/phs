@@ -8,8 +8,8 @@ ul.nav.nav-pills.nav-stacked
       a href=''
         i.fa.fa-calendar.fa-lg.fa-fw
         | CALENDAR
-    li
-      a href=''
+    li class=('active' if defined? @bookings)
+      a href=host_bookings_path
         i.fa.fa-suitcase.fa-lg.fa-fw
         | BOOKINGS
     /li
