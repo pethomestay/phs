@@ -90,6 +90,7 @@ PetHomestay::Application.routes.draw do
   namespace :guest do
     get '/messages', to: 'messages#index'
     get '/favorites', to: 'favorites#index'
+    resources :pets, only: [:index, :new]
     get '/',         to: 'guest#index'
   end
   devise_scope :user do

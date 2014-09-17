@@ -51,8 +51,8 @@ ul.nav.nav-pills.nav-stacked
       a href=guest_edit_path
         i.fa.fa-cog.fa-lg.fa-fw
         | ACCOUNT
-    li
-      a href=""
+    li class=('active' if defined?(@pet) or defined?(@pets))
+      a href=new_guest_pet_path
         i.fa.fa-paw.fa-lg.fa-fw
         | PET PROFILES
     li
