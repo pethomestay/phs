@@ -15,6 +15,7 @@
 //= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min
+//= require bootstrap-slider
 //= require popover
 //= require moment
 //= require_directory ./components_mixin
