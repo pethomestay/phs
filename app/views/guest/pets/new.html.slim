@@ -1,8 +1,8 @@
 = render layout: 'layouts/user' do
   .new-pet-panel
     h3 Add Your Pet in 2 Easy Steps
-    h4 Step 1 - Essentials
     = simple_form_for [:guest, @pet] do |f|
+      h4 Step 1 - Essentials
       .form-group
         label Add a Photo
       .form-group
@@ -53,6 +53,32 @@
         .checkbox
           label
             input type='checkbox' name='pet[personalities][]' value='sad' Sad
+      h4 Step 2 - Emergncy + Medical
+      p.help-block You can fill this in now, or come back later before a booking starts.
+      .form-group
+        label Emergency Contact
+        = f.input_field :emergency_contact_name
+        label Emergency Contact Mobile
+        = f.input_field :emergency_contact_phone
+      .form-group
+        label Vet Surgery
+        = f.input_field :vet_name
+        label Vet Phone
+        = f.input_field :vet_phone
+      .form-group
+        label Council Pet Tag
+        = f.input_field :council_number
+        label Microchip #
+        = f.input_field :microchip_number
+      .form-group
+        p Does you pet need?
+        .checkbox
+          label
+            input type='checkbox' injections
+        .checkbox
+          label
+            input type='checkbox' tablets
+
 
   coffee:
     $('.slider').slider();
