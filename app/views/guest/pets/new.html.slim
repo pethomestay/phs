@@ -42,6 +42,9 @@
         .type-tab
           | Female Desexed
           = f.input_field :sex_id, type: 'radio', value: '4'
+      .form-group
+        label Energy Level
+        = f.input_field :energy_level, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 1, 'data-slider-max' => 5, 'data-slider-step' => 1, 'data-slider-value' => 3, 'data-slider-tooltip' => 'hide'
 
   coffee:
     $('.slider').slider();
