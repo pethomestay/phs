@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140922013132) do
+ActiveRecord::Schema.define(:version => 20140922050924) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(:version => 20140922013132) do
     t.integer  "user_id"
     t.string   "name"
     t.string   "breed"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.boolean  "dislike_loneliness"
     t.boolean  "dislike_children"
     t.boolean  "dislike_animals"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20140922013132) do
     t.integer  "sex_id"
     t.integer  "size_id"
     t.integer  "energy_level"
+    t.text     "personalities",           :default => "--- []\n"
   end
 
   add_index "pets", ["pet_type_id"], :name => "index_pets_on_pet_type_id"
