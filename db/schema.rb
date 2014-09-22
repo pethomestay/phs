@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140604010907) do
+ActiveRecord::Schema.define(:version => 20140922013132) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(:version => 20140604010907) do
     t.integer  "pet_type_id"
     t.integer  "sex_id"
     t.integer  "size_id"
+    t.integer  "energy_level"
   end
 
   add_index "pets", ["pet_type_id"], :name => "index_pets_on_pet_type_id"
