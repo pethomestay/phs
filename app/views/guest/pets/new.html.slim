@@ -1,3 +1,47 @@
 = render layout: 'layouts/user' do
   .new-pet-panel
     h3 Add Your Pet in 2 Easy Steps
+    h4 Step 1 - Essentials
+    = simple_form_for [:guest, @pet] do |f|
+      .form-group
+        label Add a Photo
+      .form-group
+        label Pet Name
+        = f.input_field :name
+      .form-group
+        label Pet Type
+        .type-tab
+          i.fa.fa-paw
+          h5 Dog
+          = f.input_field :pet_type_id, type: 'radio', value: '1'
+        .type-tab
+          i.fa.fa-paw
+          h5 Cat
+          = f.input_field :pet_type_id, type: 'radio', value: '2'
+        .type-tab
+          i.fa.fa-paw
+          h5 Other
+          = f.input_field :pet_type_id, type: 'radio', value: '3'
+      .form-group
+        label Pet Size
+        = f.input_field :size_id, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
+      .form-group
+        label Age
+        = f.input_field :date_of_birth, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
+      .form-group
+        label Sex
+        .type-tab
+          | Male Entire
+          = f.input_field :sex_id, type: 'radio', value: '1'
+        .type-tab
+          | Male Desexed
+          = f.input_field :sex_id, type: 'radio', value: '2'
+        .type-tab
+          | Female Entire
+          = f.input_field :sex_id, type: 'radio', value: '3'
+        .type-tab
+          | Female Desexed
+          = f.input_field :sex_id, type: 'radio', value: '4'
+
+  coffee:
+    $('.slider').slider();
