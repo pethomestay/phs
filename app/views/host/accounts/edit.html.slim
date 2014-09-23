@@ -1,5 +1,5 @@
 = render layout: 'layouts/user' do
-  = simple_form_for [:host, @account] do |f|
+  = simple_form_for [:host, @account], wrapper: :bootstrap3 do |f|
     = render 'fields', f: f
     .form-actions
       = f.submit 'Save', class: 'btn btn-primary'

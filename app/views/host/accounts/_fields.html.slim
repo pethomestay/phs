@@ -1,13 +1,5 @@
-label Account Name
-= f.input_field :name, label: 'Account Name'
-br
-label Bank Name
-= f.input_field :bank, label: 'Bank Name'
-br
-label BSB
-= f.input_field :bsb, label: 'BSB'
-br
-label Account Number
-= f.input_field :account_number
-br
-= f.input_field :user_id, type: :hidden, value: current_user.id
+= f.input :name, label: 'Account Name'
+= f.input :bank, label: 'Bank Name'
+= f.input :bsb, label: 'BSB'
+= f.input :account_number
+= f.hidden_field :user_id, value: current_user.id
