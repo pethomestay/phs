@@ -38,4 +38,9 @@ class RegistrationsController < Devise::RegistrationsController
     sign_out(current_user)
     redirect_to root_path, alert: "Thanks for trying PetHomeStay."
   end
+
+  protected
+  def after_update_path_for(resource)
+    guest_edit_path
+  end
 end
