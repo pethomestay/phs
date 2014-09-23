@@ -1,0 +1,15 @@
+/ Expect params
+/   message: a Message object
+/ Note: message.user is the sender
+
+
+.header style='display: none'
+  .profile
+    / TODO: use user uploaded profile photo
+    =image_tag 'izzy.jpg', class: 'img-circle pull-left'
+  span.h5.name = message.user.name
+.actions style='display: none'
+  i.fa.fa-reply.fa-lg.pull-right
+.body style='display: none'
+  p
+    = message.message_text
