@@ -1,6 +1,6 @@
 ul.nav.nav-pills.nav-stacked
   - if @host_view.present?
-    li.messages class=('active' if defined? @messages)
+    li.messages class=('active' if params[:controller] == 'host/messages' or params[:controller] == 'host/host')
       a href=host_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
         | MESSAGES
@@ -30,7 +30,7 @@ ul.nav.nav-pills.nav-stacked
         i.fa.fa-question-circle.fa-lg.fa-fw
         | HOST SUPPORT
   - else
-    li.messages class=('active' if defined? @messages)
+    li.messages class=('active' if params[:controller] == 'guest/messages' or params[:controller] == 'guest/guest')
       a href=guest_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
         | MESSAGES

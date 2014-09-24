@@ -7,7 +7,6 @@ class Host::HostController < ApplicationController
 
   # GET /host
   def index
-    @messages = true
   end
 
   def host_view
