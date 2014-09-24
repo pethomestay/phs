@@ -20,6 +20,7 @@ html lang='en'
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag 'new_application'
     = yield :head_javascript
+    = csrf_meta_tags
   body
     - if defined? resource
       = render 'shared/flash_messages', flash: flash, resource: resource

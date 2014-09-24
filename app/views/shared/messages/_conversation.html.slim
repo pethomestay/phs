@@ -8,7 +8,7 @@
 - enquiry = conversation.enquiry
 - booking = conversation.booking # Could be nil
 - messages = conversation.messages.reverse
-.conversation class=('unread' unless conversation.read_by?(current_user))
+.conversation class=('unread' unless conversation.read_by?(current_user)) data-id=conversation.id
   .header
     .profile
       / TODO: use user uploaded profile photo
