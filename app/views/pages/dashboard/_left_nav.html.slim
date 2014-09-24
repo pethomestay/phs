@@ -8,7 +8,7 @@ ul.nav.nav-pills.nav-stacked
       a href=''
         i.fa.fa-calendar.fa-lg.fa-fw
         | CALENDAR
-    li class=('active' if defined? @bookings)
+    li class=('active' if params[:controller] == 'host/bookings')
       a href=host_bookings_path
         i.fa.fa-suitcase.fa-lg.fa-fw
         | BOOKINGS
@@ -17,11 +17,11 @@ ul.nav.nav-pills.nav-stacked
     /    i.fa.fa-shield.fa-lg.fa-fw
     /    | TRUST
     /    span.hidden-md  & FEEDBACK
-    li class=('active' if defined? @my_homestay)
+    li class=('active' if params[:controller] == 'host/homestays')
       a href=(if current_user.homestay then host_homestay_edit_path else new_homestay_path end)
         i.fa.fa-home.fa-lg.fa-fw
         | MY HOMESTAY
-    li class=('active' if defined? @account)
+    li class=('active' if params[:controller] == 'host/accounts')
       a href=(current_user.account.blank? ? new_host_account_path : host_account_path(current_user.account))
         i.fa.fa-dollar.fa-lg.fa-fw
         | PAYOUT DETAILS
@@ -38,7 +38,7 @@ ul.nav.nav-pills.nav-stacked
       a href=""
         i.fa.fa-calendar.fa-lg.fa-fw
         | CALENDAR
-    li class=('active' if defined? @favorites)
+    li class=('active' if params[:controller] == 'guest/favorites')
       a href=guest_favorites_path
         i.fa.fa-heart.fa-lg.fa-fw
         | MY HOSTS
@@ -47,11 +47,11 @@ ul.nav.nav-pills.nav-stacked
     /    i.fa.fa-shield.fa-lg.fa-fw
     /    | TRUST
     /    span.hidden-md  & FEEDBACK
-    li class=('active' if defined? @account_details)
+    li class=('active' if params[:controller] == 'registrations')
       a href=guest_edit_path
         i.fa.fa-cog.fa-lg.fa-fw
         | ACCOUNT
-    li class=('active' if defined?(@pet) or defined?(@pets))
+    li class=('active' if params[:controller] == 'guest/pets')
       a href=new_guest_pet_path
         i.fa.fa-paw.fa-lg.fa-fw
         | PET PROFILES
