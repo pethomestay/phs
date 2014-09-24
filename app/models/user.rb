@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
+  dragonfly_accessor :profile_photo, app: :images
 
   has_one :homestay
   has_many :pets
@@ -83,7 +84,7 @@ class User < ActiveRecord::Base
 
   def booking_declined_by_host
 	  self.bookers.declined_by_host
-	end
+  end
 
   def booking_required_response?
 	  booking_required_response.any?
@@ -208,7 +209,7 @@ class User < ActiveRecord::Base
 		transaction
 	end
 
-	def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
+  def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
 		if selected_stored_card.blank?
 			if use_stored_card.blank?
 			  return nil
