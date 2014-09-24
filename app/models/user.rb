@@ -3,7 +3,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
-  attr_accessor :current_password, :accept_house_rules, :accept_terms
+  attr_accessor :current_password, :accept_house_rules, :accept_terms, :profile_photo_uid
   dragonfly_accessor :profile_photo, app: :images
 
   has_one :homestay
