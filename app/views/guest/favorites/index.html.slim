@@ -1,9 +1,8 @@
 = render layout: 'layouts/user' do
   .favorites-panel
-    .page-header
-      h3
-        ' My Hosts
-        small Hosts you have favourited
+    h3
+      ' My Hosts
+      small Hosts you have favourited
     .panel-content
       - if @favorites.blank?
         p
