@@ -5,5 +5,6 @@ class Guest::GuestController < ApplicationController
 
   # GET /guest
   def index
+    @conversations = Mailbox.as_guest(current_user)
   end
 end

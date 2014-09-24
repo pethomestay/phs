@@ -6,6 +6,10 @@
       span.unread-count  3
       |  unread messages
 
+
+  - for conversation in @conversations
+    = render 'shared/messages/conversation', conversation: conversation
+
   .conversation.expanded
     .header
       a href="tel:1234567890"

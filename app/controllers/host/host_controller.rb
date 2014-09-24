@@ -7,6 +7,7 @@ class Host::HostController < ApplicationController
 
   # GET /host
   def index
+    @conversations = Mailbox.as_host(current_user)
   end
 
   def host_view
