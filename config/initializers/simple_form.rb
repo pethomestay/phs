@@ -43,29 +43,43 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: 'span', class: 'help-block has-error' }
   end
 
-  config.wrappers :prepend, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  # Custom horizontal form wrapper from https://gist.github.com/adamico/6510093
+  config.wrappers :bootstrap3_horizontal, tag: 'div', class: 'form-group', error_class: 'has-error',
+      defaults: { input_html: { class: 'default-class '}, wrapper_html: { class: "col-lg-10 col-md-10"} } do |b|
+
     b.use :html5
+    b.use :min_max
+    b.use :maxlength
     b.use :placeholder
-    b.wrapper tag: 'div', class: 'controls' do |input|
-      input.wrapper tag: 'div', class: 'input-group' do |prepend|
-    prepend.use :label , class: 'input-group-addon' ###Please note setting class here fro the label does not currently work (let me know if you know a workaround as this is the final hurdle)
-        prepend.use :input
-      end
-      input.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
-      input.use :error, wrap_with: { tag: 'span', class: 'help-block has-error' }
+
+    b.optional :pattern
+    b.optional :readonly
+
+    b.use :label
+    b.wrapper :right_column, tag: :div do |component|
+      component.use :input
     end
+    b.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
+    b.use :error, wrap_with: { tag: 'span', class: 'help-block has-error' }
   end
 
-  config.wrappers :append, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  # group wrapper from https://gist.github.com/adamico/6510093
+  config.wrappers :group, tag: 'div', class: "form-group", error_class: 'has-error',
+      defaults: { input_html: { class: 'default-class'} }  do |b|
+
     b.use :html5
+    b.use :min_max
+    b.use :maxlength
     b.use :placeholder
-    b.wrapper tag: 'div', class: 'controls' do |input|
-      input.wrapper tag: 'div', class: 'input-group' do |prepend|
-        prepend.use :input
-    prepend.use :label , class: 'input-group-addon' ###Please note setting class here fro the label does not currently work (let me know if you know a workaround as this is the final hurdle)
-      end
-      input.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
-      input.use :error, wrap_with: { tag: 'span', class: 'help-block has-error' }
+
+    b.optional :pattern
+    b.optional :readonly
+
+    b.use :label
+    b.wrapper :right_column, tag: :div do |component|
+      component.use :input, wrap_with: { class: "input-group" }
+      component.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
+      component.use :error, wrap_with: { tag: 'span', class: 'help-block has-error' }
     end
   end
 
