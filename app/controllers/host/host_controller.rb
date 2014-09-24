@@ -3,17 +3,13 @@ class Host::HostController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :verify_homestay_existance!
-  before_filter :host_view
 
   # GET /host
   def index
     @conversations = Mailbox.as_host(current_user)
   end
 
-  def host_view
-    @host_view = true
-  end
-
+  private
   def verify_homestay_existance!
     redirect_to new_homestay_path if current_user.homestay.blank?
   end

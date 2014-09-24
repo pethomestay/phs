@@ -1,5 +1,5 @@
 ul.nav.nav-pills.nav-stacked
-  - if @host_view.present?
+  - if params[:controller].include?('host')
     li.messages class=('active' if params[:controller] == 'host/messages' or params[:controller] == 'host/host')
       a href=host_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
