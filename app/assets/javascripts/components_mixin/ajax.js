@@ -10,6 +10,8 @@
         meta:
             id: 'request-1',
             page: 'index-app'
+
+    Note: event handler should have three parameters: (e, data, meta)
 */
 ajaxMixin = function() {
     this.get = function(options) {

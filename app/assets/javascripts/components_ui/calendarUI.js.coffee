@@ -2,18 +2,36 @@ $ ->
   CalendarUI = flight.component ->
     @attributes
       bodySelector:  'tbody'
+      datesSelector: 'td[data-date]'
       todaySelector: "td[data-date='#{moment().format('YYYY-MM-DD')}']"
 
-    @highlight_info = (dates) ->
+    @highlightInfo = (e, dates) ->
       for date in dates
         if date.title == 'Unavailable'
           $("td[data-date='#{date.start}']").addClass 'unavailable'
         else if date.title == 'Booked'
           $("td[data-date='#{date.start}']").addClass 'booked'
 
-    @highlight_today = ->
+    @highlightToday = ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
+
+    @highlightUnavailableDate = (e, data, meta) ->
+      @$node.find("td[data-date=#{meta.date}]").addClass 'unavailable'
+
+    @updateAvailableDate = (e) ->
+      # Note e.target is often span, so we need to get its parent when this happens
+      if e.target.tagName == 'SPAN'
+        $date = $(e.target).parent()
+      else if e.target.tagName == 'TD'
+        $date = $(e.target)
+      return if $date.hasClass('ignored') or $date.hasClass('booked') or $date.hasClass('today')
+      if $date.hasClass 'unavailable'
+        @trigger 'uiDestroyUnavailableDate',
+          date: $date.data('date')
+      else
+        @trigger 'uiCreateUnavailableDate',
+          date: $date.data('date')
 
     @draw = (current) ->
       $body = @select('bodySelector')
@@ -33,15 +51,14 @@ $ ->
             week += "<td data-date='#{d.format('YYYY-MM-DD')}'><span>#{d.date()}</span></td>"
           d.add 1, 'days'
         $body.append "<tr class='week'>#{week}</tr>"
-      # Highlight today
-      @highlight_today()
+      @highlightToday()
       # Request calendar info
       start = d.subtract(6, 'weeks').unix()
       end   = d.add(41, 'days').unix()
-      @trigger 'uiNeedsCalendarInfo', {
+      @trigger 'uiNeedsCalendarInfo',
         start: start
         end:   end
-      }
+      @on @select('datesSelector'), 'click', @updateAvailableDate
 
     @after 'initialize', ->
       current = moment()
@@ -52,7 +69,8 @@ $ ->
       @on 'uiShowNextMonth', ->
         current.add 1, 'months'
         @draw current
-      @on document, 'dataCalendarInfo', (e, data) ->
-        @highlight_info(data)
+      @on document, 'dataCalendarInfo', @highlightInfo
+      @on document, 'dataUnavailableDateCreated', @highlightUnavailableDate
+
 
   CalendarUI.attachTo '.right-panel .calendar'
