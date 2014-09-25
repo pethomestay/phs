@@ -42,7 +42,7 @@ $ ->
         $textarea.attr 'placeholder', 'Message cannot be empty'
         $textarea.focus()
 
-    @msgSentCallback = (e, xhr, meta) ->
+    @msgSentCallback = (e, data, meta) ->
       if meta.id == @$node.data('id')
         # TODO: add new message without refreshing
         $.growl 'Message sent. Refresh to view the new message.',
@@ -53,7 +53,7 @@ $ ->
         @select('replyBtnSelector').removeClass 'disabled'
         @select('newMsgFormContainerSelector').slideUp()
 
-    @msgFailedCallback = (e, xhr, meta) ->
+    @msgFailedCallback = (e, data, meta) ->
       if meta.id == @$node.data('id')
         $.growl 'Failed to send message. Please check network connection.',
           type: 'danger'
