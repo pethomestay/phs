@@ -9,7 +9,7 @@ $ ->
       for date in dates
         d = $("td[data-date='#{date.start}']")
         if date.title == 'Unavailable'
-          d.attr 'data-unavailability-id', date.id
+          d.data 'unavailability-id', date.id
           d.addClass 'unavailable'
         else if date.title == 'Booked'
           d.addClass 'booked'
@@ -22,7 +22,9 @@ $ ->
       @$node.find("td[data-date=#{meta.date}]").removeClass 'unavailable'
 
     @highlightUnavailableDate = (e, data, meta) ->
-      @$node.find("td[data-date=#{meta.date}]").addClass 'unavailable'
+      d = @$node.find("td[data-date=#{meta.date}]")
+      d.data 'unavailability-id', data.id
+      d.addClass 'unavailable'
 
     @updateAvailableDate = (e) ->
       # Note e.target is often span, so we need to get its parent when this happens
