@@ -27,14 +27,19 @@ $ ->
       @select('newMsgFormSelector').find('textarea').focus()
 
     @sendMsg = (e) ->
-      # TODO: prevent sending empty messages
       e.preventDefault()
       $form = @select('newMsgFormSelector')
-      $form.find('button').addClass 'disabled'
-      message =
-        id: @$node.data('id') # Conversation ID
-        message_text: $form.find('textarea').val()
-      @trigger 'uiSendMessage', message
+      text = $form.find('textarea').val()
+      if text
+        $form.find('button').addClass 'disabled'
+        message =
+          id: @$node.data('id') # Conversation ID
+          message_text: text
+        @trigger 'uiSendMessage', message
+      else
+        $textarea = $form.find('textarea')
+        $textarea.attr 'placeholder', 'Message cannot be empty'
+        $textarea.focus()
 
     @msgSentCallback = (e, xhr, meta) ->
       if meta.id == @$node.data('id')
