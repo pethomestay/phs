@@ -2,6 +2,7 @@ class Guest::MessagesController < Guest::GuestController
   # GET /guest/messages
   def index
     @conversations = Mailbox.as_guest(current_user)
+    @unread_count  = @conversations.where(guest_read: false).count
   end
 
   # POST /guest/conversation/mark_read

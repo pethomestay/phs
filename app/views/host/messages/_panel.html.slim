@@ -1,11 +1,11 @@
 .messages-panel
   .panel-header
     h4 Messages
-    p
-      | You have
-      span.unread-count  3
-      |  unread messages
-
+    - if @unread_count > 0
+      p
+        ' You have
+        span.unread-count = @unread_count
+        |  unread messages
 
   - for conversation in @conversations
     = render 'shared/messages/conversation', conversation: conversation

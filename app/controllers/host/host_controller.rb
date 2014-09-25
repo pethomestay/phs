@@ -7,6 +7,7 @@ class Host::HostController < ApplicationController
   # GET /host
   def index
     @conversations = Mailbox.as_host(current_user)
+    @unread_count  = @conversations.where(host_read: false).count
   end
 
   private

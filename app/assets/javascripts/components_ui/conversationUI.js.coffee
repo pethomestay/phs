@@ -14,6 +14,7 @@ $ ->
 
     @toggleConversation = ->
       if @$node.hasClass 'unread'
+        # TODO: callback to update unread count
         id = @$node.data('id')
         @trigger 'uiMarkConversationRead', id
         @$node.removeClass('unread')

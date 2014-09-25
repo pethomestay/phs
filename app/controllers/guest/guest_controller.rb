@@ -6,5 +6,6 @@ class Guest::GuestController < ApplicationController
   # GET /guest
   def index
     @conversations = Mailbox.as_guest(current_user)
+    @unread_count  = @conversations.where(guest_read: false).count
   end
 end
