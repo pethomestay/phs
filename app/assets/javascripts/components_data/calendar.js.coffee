@@ -26,9 +26,20 @@ $ ->
         meta:
           date: payload.date
 
+    @destroyUnavailableDate = (e, payload) ->
+      @delete
+        xhr:
+          url: "#{@attr.createUnavailableDateURL}/#{payload.unavailability_id}"
+          data: {}
+        events:
+          done: 'dataUnavailableDateDestroyed'
+        meta:
+          date: payload.date
+
     @after 'initialize', ->
       @on 'uiNeedsCalendarInfo', @fetchCalendarInfo
-      @on 'uiCreateUnavailableDate', @createUnavailableDate
+      @on 'uiCreateUnavailableDate',  @createUnavailableDate
+      @on 'uiDestroyUnavailableDate', @destroyUnavailableDate
 
   , ajaxMixin
 

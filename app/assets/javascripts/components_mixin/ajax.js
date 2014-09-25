@@ -22,6 +22,10 @@ ajaxMixin = function() {
         this.ajax(options, 'post');
     };
 
+    this.delete = function(options) {
+        this.ajax(options, 'delete');
+    };
+
     this.ajax = function(options, type) {
         var xhr = $.extend(options.xhr, {
             context: this,

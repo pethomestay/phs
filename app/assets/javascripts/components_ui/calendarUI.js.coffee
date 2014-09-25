@@ -7,14 +7,19 @@ $ ->
 
     @highlightInfo = (e, dates) ->
       for date in dates
+        d = $("td[data-date='#{date.start}']")
         if date.title == 'Unavailable'
-          $("td[data-date='#{date.start}']").addClass 'unavailable'
+          d.attr 'data-unavailability-id', date.id
+          d.addClass 'unavailable'
         else if date.title == 'Booked'
-          $("td[data-date='#{date.start}']").addClass 'booked'
+          d.addClass 'booked'
 
     @highlightToday = ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
+
+    @darkenUnavailableDate = (e, data, meta) ->
+      @$node.find("td[data-date=#{meta.date}]").removeClass 'unavailable'
 
     @highlightUnavailableDate = (e, data, meta) ->
       @$node.find("td[data-date=#{meta.date}]").addClass 'unavailable'
@@ -29,6 +34,7 @@ $ ->
       if $date.hasClass 'unavailable'
         @trigger 'uiDestroyUnavailableDate',
           date: $date.data('date')
+          unavailability_id: $date.data('unavailability-id')
       else
         @trigger 'uiCreateUnavailableDate',
           date: $date.data('date')
@@ -70,7 +76,8 @@ $ ->
         current.add 1, 'months'
         @draw current
       @on document, 'dataCalendarInfo', @highlightInfo
-      @on document, 'dataUnavailableDateCreated', @highlightUnavailableDate
+      @on document, 'dataUnavailableDateCreated',   @highlightUnavailableDate
+      @on document, 'dataUnavailableDateDestroyed', @darkenUnavailableDate
 
 
   CalendarUI.attachTo '.right-panel .calendar'
