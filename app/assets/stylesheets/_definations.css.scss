@@ -26,3 +26,12 @@ $grey-lighter: #f7f7f7;
 
 // Dashboard
 $sub-nav-height: 86px;
+
+// Overrides
+.btn.btn-primary {
+  background-color: $orange;
+  border: none;
+  &:hover {
+    background-color: $orange-light;
+  }
+}

@@ -15,19 +15,36 @@
       =image_tag 'izzy.jpg', class: 'img-circle pull-left'
     span.h5.name = messages.first.user.name
     .right.pull-right
-      span.date = enquiry.period
       - if booking.present?
         span.booking-status class=booking.state
           = booking.state
       - else
         span.booking-status Enquiry
-      span.message-count = messages.count
+      span.date
+        small From:
+        '
+        = enquiry.check_in_date.strftime('%b %e')
+      span.date
+        small To:
+        '
+        = enquiry.check_out_date.strftime('%b %e')
+      /span.message-count = messages.count
       span
         i.fa.fa-chevron-down.fa-lg.chevron
-  .actions style='display: none'
-    i.fa.fa-reply.fa-lg.pull-right
-  .body  style='display: none'
+  /.actions style='display: none'
+  /  i.fa.fa-reply.fa-lg.pull-right
+  .body style='display: none'
     p
       = messages.first.message_text
+    .action-btns
+      a.btn.btn-default.reply
+        i.fa.fa-reply
+        '
+        | Reply
+  .new-msg-form-container style='display: none'
+    form
+      .form-group
+        textarea.form-control rows='4' placeholder='Type in message here and click Send'
+      button type='submit' class='btn btn-primary' Send
   - messages.drop(1).each do |message|
     = render 'shared/messages/message', message: message

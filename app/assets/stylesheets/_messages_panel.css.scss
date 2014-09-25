@@ -63,6 +63,8 @@
             color: $blue-light;
           }
         }
+        // Message count has been depreciated
+        /*
         .message-count {
           width: 25px;
           height: 20px;
@@ -72,6 +74,7 @@
           font-weight: 700;
           text-align: center;
         }
+        */
         .chevron {
           margin-top: 10px;
           color: $grey;
@@ -92,6 +95,10 @@
       }
     }
     .body {
+      padding: 23px;
+      border-bottom: 1px solid $grey;
+    }
+    .new-msg-form-container {
       padding: 23px;
       border-bottom: 1px solid $grey;
     }

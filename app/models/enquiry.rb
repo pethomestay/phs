@@ -80,13 +80,14 @@ class Enquiry < ActiveRecord::Base
       .limit(1)[0] # First host response in this enquiry
   end
 
-  def period
-    if self.check_in_date === self.check_out_date
-      self.check_in_date.strftime('%b %e')
-    else
-      "#{self.check_in_date.strftime('%b %e')} - #{self.check_out_date.strftime('%b %e')}"
-    end
-  end
+  # No longer needed
+  #def period
+  #  if self.check_in_date === self.check_out_date
+  #    self.check_in_date.strftime('%b %e')
+  #  else
+  #    "#{self.check_in_date.strftime('%b %e')} - #{self.check_out_date.strftime('%b %e')}"
+  #  end
+  #end
 
   private
   def send_new_enquiry_notifications

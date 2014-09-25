@@ -88,7 +88,7 @@ PetHomestay::Application.routes.draw do
   end
 
   namespace :guest do
-    get '/messages', to: 'messages#index'
+    resources :messages, only: [:index, :create]
     post '/conversation/mark_read', to: 'messages#mark_read'
     get '/favorites', to: 'favorites#index'
     resources :pets, only: [:index, :new]
