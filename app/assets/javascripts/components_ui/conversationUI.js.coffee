@@ -24,6 +24,7 @@ $ ->
     @showNewMsgForm = ->
       @select('replyBtnSelector').addClass 'disabled'
       @select('newMsgFormContainerSelector').slideDown()
+      @select('newMsgFormSelector').find('textarea').focus()
 
     @sendMsg = (e) ->
       # TODO: prevent sending empty messages
