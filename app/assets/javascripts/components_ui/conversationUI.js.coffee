@@ -40,11 +40,11 @@ $ ->
         # TODO: add new message without refreshing
         $.growl 'Message sent. Refresh to view the new message.',
           type: 'success'
-        @select('newMsgFormContainerSelector').slideUp()
         $form = @select('newMsgFormSelector')
         $form.find('textarea').val ''
         $form.find('button').removeClass 'disabled'
         @select('replyBtnSelector').removeClass 'disabled'
+        @select('newMsgFormContainerSelector').slideUp()
 
     @msgFailedCallback = (e, xhr, meta) ->
       if meta.id == @$node.data('id')
