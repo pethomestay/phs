@@ -13,7 +13,13 @@
     .profile
       / TODO: use user uploaded profile photo
       =image_tag 'izzy.jpg', class: 'img-circle pull-left'
-    span.h5.name = messages.first.user.name
+    span.h5.name
+      = messages.first.user.name
+      - if params[:controller].include? 'host'
+        br
+        = messages.first.user.pet.name
+        - if messages.first.user.pet.breed.present?
+          | , a #{messages.first.user.pet.breed}
     .right.pull-right
       - if booking.present?
         span.booking-status class=booking.state
