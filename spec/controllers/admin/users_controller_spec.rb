@@ -25,9 +25,11 @@ describe Admin::UsersController do
 
   describe "GET index" do
     it "assigns all users as @users" do
-      User.stub(:order).and_return 'all users'
+      u1 = FactoryGirl.create :user
+      u2 = FactoryGirl.create :user
+      u3 = FactoryGirl.create :user
       get :index, {}, valid_session
-      assigns(:users).should eq('all users')
+      assigns(:users).should eq [u3, u2, u1]
     end
   end
 
