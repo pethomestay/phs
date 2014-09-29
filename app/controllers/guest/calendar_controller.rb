@@ -9,7 +9,6 @@ class Guest::CalendarController < Guest::GuestController
   #     [
   #       date: YYYY-MM-DD,
   #       status: 'booked',
-  #       booking_id: corresponding booking id
   #     ]
   #     ..
   #   ]
@@ -25,15 +24,12 @@ class Guest::CalendarController < Guest::GuestController
     availability = bookings.collect do |b|
       b_start = b.check_in_date < start_date ? start_date : b.check_in_date
       b_end   = b.check_out_date > end_date ? end_date : b.check_out_date
-      b_availability = []
-      (b_start..b_end).each do |d|
-        b_availability << {
+      (b_start..b_end).collect do |d|
+        {
           date: d.strftime('%Y-%m-%d'),
           status: 'booked',
-          booking_id: b.id
         }
       end
-      b_availability
     end.flatten.compact
     render json: availability
   end
