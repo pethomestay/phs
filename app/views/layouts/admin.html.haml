@@ -17,7 +17,7 @@
         .container.admin-container-phs
           = link_to "PetHomeStay", root_path, class: "brand"
           %ul.nav.admin-nav-phs
-            %li= link_to "Users", admin_users_path
+            %li= link_to "Users", admin_users_path(letter: 'A')
             %li= link_to "Homestays", admin_homestays_path
             %li= link_to "Pets", admin_pets_path
             %li= link_to "Enquiries", admin_enquiries_path

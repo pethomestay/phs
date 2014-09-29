@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @users = User.order('created_at DESC').paginate(page: params[:page], per_page: 50))
+    respond_with(:admin, (@users, @alphaParams = User.order('created_at DESC').alpha_paginate(params[:letter], js: false){|user| user.last_name}))
   end
 
   def show
