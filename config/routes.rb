@@ -101,6 +101,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :host do
     get '/messages', to: 'messages#index'
+    get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
     get '/homestay/edit', to: 'homestays#edit'
     resources :accounts, only: [:new, :create, :edit, :update, :show]
