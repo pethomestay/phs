@@ -20,7 +20,6 @@
       = f.input :phone_number, label: 'Home phone number'
       = f.input :first_name
       = f.input :last_name
-      = f.input :date_of_birth, as: :date, start_year: Date.today.year - 110, end_year: Date.today.year - 15, discard_day: false, order: [:day, :month, :year]
       = f.input :password, hint: "leave blank if you don't want to change it"
       = f.input :password_confirmation, hint: 'Confirm your password'
       - if current_user.needs_password?
