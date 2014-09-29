@@ -18,6 +18,7 @@ class Booking < ActiveRecord::Base
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
 
+  scope :booked, where(owner_accepted: true, host_accepted: true)
 
 	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0, state: :finished)
 
