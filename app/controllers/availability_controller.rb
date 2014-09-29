@@ -1,3 +1,4 @@
+# Depreciated
 class AvailabilityController < ApplicationController
 
   before_filter :authenticate_user!
