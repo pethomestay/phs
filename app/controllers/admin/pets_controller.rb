@@ -2,7 +2,7 @@ class Admin::PetsController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @pets = Pet.order('created_at DESC'))
+    respond_with(:admin, @pets = Pet.order('created_at DESC').paginate(page: params[:page], per_page: 100))
   end
 
   def show
