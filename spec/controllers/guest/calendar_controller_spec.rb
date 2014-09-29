@@ -5,7 +5,7 @@ describe Guest::CalendarController do
   let(:host) { FactoryGirl.create :confirmed_user }
 
   describe 'GET #availability' do
-    def fetch_availability(in_d, out_d, start_d, end_d)
+    def create_booking_then_fetch(in_d, out_d, start_d, end_d)
       FactoryGirl.create :booked_booking,
                          booker: subject.current_user,
                          check_in_date:  Date.parse(in_d),
@@ -26,7 +26,6 @@ describe Guest::CalendarController do
       it 'returns an empty array in json' do
         in_d    = '2014-10-02'; out_d = '2014-10-07'
         start_d = '2014-10-01'; end_d = '2014-10-08'
-
         FactoryGirl.create :booked_booking,
                          booker: host,
                          bookee: subject.current_user,
@@ -44,7 +43,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-01'; out_d = '2014-10-07'
         start_d = '2014-10-08'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expect(response.body).to eq([].to_json)
       end
@@ -55,7 +54,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-09'; out_d = '2014-10-17'
         start_d = '2014-10-01'; end_d = '2014-10-08'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expect(response.body).to eq([].to_json)
       end
@@ -66,7 +65,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-01'; out_d = '2014-10-15'
         start_d = '2014-10-08'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = (start_d..out_d).collect do |d|
           {
@@ -83,7 +82,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-05'; out_d = '2014-10-30'
         start_d = '2014-10-01'; end_d = '2014-10-15'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = (in_d..end_d).collect do |d|
           {
@@ -100,7 +99,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-08'; out_d = '2014-10-15'
         start_d = '2014-10-01'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = (in_d..out_d).collect do |d|
           {
@@ -117,7 +116,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-01'; out_d = '2014-10-30'
         start_d = '2014-10-05'; end_d = '2014-10-15'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = (start_d..end_d).collect do |d|
           {
@@ -134,7 +133,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-01'; out_d = '2014-10-01'
         start_d = '2014-10-15'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expect(response.body).to eq([].to_json)
       end
@@ -145,7 +144,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-30'; out_d = '2014-10-30'
         start_d = '2014-10-01'; end_d = '2014-10-15'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expect(response.body).to eq([].to_json)
       end
@@ -156,7 +155,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-15'; out_d = '2014-10-15'
         start_d = '2014-10-15'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = [
           {
@@ -173,7 +172,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-30'; out_d = '2014-10-30'
         start_d = '2014-10-15'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = [
           {
@@ -190,7 +189,7 @@ describe Guest::CalendarController do
         in_d    = '2014-10-15'; out_d = '2014-10-15'
         start_d = '2014-10-01'; end_d = '2014-10-30'
 
-        fetch_availability(in_d, out_d, start_d, end_d)
+        create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
         expected = [
           {
