@@ -2,7 +2,7 @@ class Admin::EnquiriesController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @enquiries = Enquiry.order('created_at DESC').includes([{homestay: :user}, :user]))
+    respond_with(:admin, @enquiries = Enquiry.order('created_at DESC').includes([{homestay: :user}, :user]).paginate(page: params[:page], per_page: 50))
   end
 
   def show
