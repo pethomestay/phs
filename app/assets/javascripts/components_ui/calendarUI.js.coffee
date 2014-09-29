@@ -5,14 +5,14 @@ $ ->
       datesSelector: 'td[data-date]'
       todaySelector: "td[data-date='#{moment().format('YYYY-MM-DD')}']"
 
-    @highlightInfo = (e, dates) ->
-      for date in dates
-        d = $("td[data-date='#{date.start}']")
-        if date.title == 'Unavailable'
-          d.data 'unavailability-id', date.id
-          d.addClass 'unavailable'
-        else if date.title == 'Booked'
-          d.addClass 'booked'
+    @highlightDates = (e, data) ->
+      for d in data
+        $date = $("td[data-date='#{d.date}']")
+        if d.status == 'booked'
+          $date.addClass 'booked'
+        else if d.status == 'unavailable'
+          $date.addClass 'unavailable'
+          $date.data 'unavailable-date-id', d.unavailable_date_id
 
     @highlightToday = ->
       $today = @select('todaySelector')
@@ -23,7 +23,7 @@ $ ->
 
     @highlightUnavailableDate = (e, data, meta) ->
       d = @$node.find("td[data-date=#{meta.date}]")
-      d.data 'unavailability-id', data.id
+      d.data 'unavailable-date-id', data.id
       d.addClass 'unavailable'
 
     @updateAvailableDate = (e) ->
@@ -36,7 +36,7 @@ $ ->
       if $date.hasClass 'unavailable'
         @trigger 'uiDestroyUnavailableDate',
           date: $date.data('date')
-          unavailability_id: $date.data('unavailability-id')
+          unavailable_date_id: $date.data('unavailable-date-id')
       else
         @trigger 'uiCreateUnavailableDate',
           date: $date.data('date')
@@ -61,9 +61,9 @@ $ ->
         $body.append "<tr class='week'>#{week}</tr>"
       @highlightToday()
       # Request calendar info
-      start = d.subtract(6, 'weeks').unix()
-      end   = d.add(41, 'days').unix()
-      @trigger 'uiNeedsCalendarInfo',
+      start = d.subtract(6, 'weeks').format('YYYY-MM-DD')
+      end   = d.add(41, 'days').format('YYYY-MM-DD')
+      @trigger 'uiNeedsCalendarAvailability',
         start: start
         end:   end
       @on @select('datesSelector'), 'click', @updateAvailableDate
@@ -77,7 +77,7 @@ $ ->
       @on 'uiShowNextMonth', ->
         current.add 1, 'months'
         @draw current
-      @on document, 'dataCalendarInfo', @highlightInfo
+      @on document, 'dataCalendarAvailability', @highlightDates
       @on document, 'dataUnavailableDateCreated',   @highlightUnavailableDate
       @on document, 'dataUnavailableDateDestroyed', @darkenUnavailableDate
 

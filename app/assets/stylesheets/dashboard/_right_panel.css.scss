@@ -46,12 +46,12 @@
         &.ignored span {
           color: $grey-dark;
         }
-        &.booked span {
-          background-color: $blue-light;
-          color: $grey-light;
-        }
         &.unavailable span {
           background-color: $grey-dark;
+          color: $grey-light;
+        }
+        &.booked span {
+          background-color: $blue-light;
           color: $grey-light;
         }
         &.today span {
