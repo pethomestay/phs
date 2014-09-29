@@ -30,7 +30,7 @@ class Guest::CalendarController < Guest::GuestController
           status: 'booked',
         }
       end
-    end.flatten.compact
+    end.flatten.uniq.sort! { |a,b| a[:date] <=> b[:date] }
     render json: availability
   end
 end

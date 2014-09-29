@@ -201,5 +201,31 @@ describe Guest::CalendarController do
         expect(response.body).to eq expected
       end
     end
+
+    context 'when two bookings overlap' do
+      it 'returns unique combined booking dates in json' do
+        in_d_1  = '2014-10-10'; out_d_1 = '2014-10-20'
+        in_d_2  = '2014-10-05'; out_d_2 = '2014-10-15'
+        start_d = '2014-10-01'; end_d   = '2014-10-30'
+        FactoryGirl.create :booked_booking,
+                           booker: subject.current_user,
+                           check_in_date:  Date.parse(in_d_1),
+                           check_out_date: Date.parse(out_d_1)
+        FactoryGirl.create :booked_booking,
+                           booker: subject.current_user,
+                           check_in_date:  Date.parse(in_d_2),
+                           check_out_date: Date.parse(out_d_2)
+
+        get  :availability, start: start_d, end: end_d
+
+        expected = (in_d_2..out_d_1).collect do |d|
+          {
+            date: d,
+            status: 'booked'
+          }
+        end.to_json
+        expect(response.body).to eq expected
+      end
+    end
   end
 end
