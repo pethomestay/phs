@@ -7,9 +7,13 @@
 a href=guest_path
   .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' unless params[:controller].include?('host'))
     i.fa.fa-user.fa-2x
-    span Guest
+    span
+      | Guest
+      .visible-xs-block Menu
 
 a href=host_path
   .pill-host.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('host'))
     i.fa.fa-home.fa-2x
-    span Host
+    span
+      | Host
+      .visible-xs-block Menu

@@ -36,4 +36,11 @@
       color: #5f5753; // Placeholder
     }
   }
+
+  @media (max-width: $screen-xs-max) {
+    .pill-guest,
+    .pill-host {
+      padding-top: 10px;
+    }
+  }
 }
