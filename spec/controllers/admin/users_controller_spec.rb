@@ -25,9 +25,9 @@ describe Admin::UsersController do
 
   describe "GET index" do
     it "assigns all users as @users" do
-      u1 = FactoryGirl.create :user
-      u2 = FactoryGirl.create :user
-      u3 = FactoryGirl.create :user
+      u1 = FactoryGirl.create :user, last_name: 'c'
+      u2 = FactoryGirl.create :user, last_name: 'b'
+      u3 = FactoryGirl.create :user, last_name: 'a'
       get :index, {}, valid_session
       assigns(:users).should eq [u3, u2, u1]
     end
@@ -130,7 +130,7 @@ describe Admin::UsersController do
 
     it "redirects to the users list" do
       subject
-      response.should redirect_to(admin_users_url)
+      response.should redirect_to admin_users_url(letter: 'A')
     end
   end
 
