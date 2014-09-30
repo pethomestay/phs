@@ -23,9 +23,11 @@ describe Admin::PetsController do
 
   describe "GET index" do
     it "assigns all pets as @pets" do
-      Pet.stub(:order).and_return 'all pets'
+      p1 = FactoryGirl.create :pet
+      p2 = FactoryGirl.create :pet
+      p3 = FactoryGirl.create :pet
       get :index, {}, valid_session
-      assigns(:pets).should eq('all pets')
+      assigns(:pets).should eq [p3, p2, p1]
     end
   end
 

@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   respond_to :html
 
   def index
-    respond_with(:admin, @users = User.order('created_at DESC'))
+    respond_with(:admin, (@users, @alphaParams = User.order('created_at DESC').alpha_paginate(params[:letter], js: false){|user| user.last_name}))
   end
 
   def show
@@ -33,6 +33,6 @@ class Admin::UsersController < Admin::AdminController
     @user = User.find(params[:id])
     @user.destroy
 
-    respond_with(:admin, @user)
+    respond_with(:admin, @user, location: admin_users_path(letter: 'Z'))
   end
 end

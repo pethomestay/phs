@@ -21,6 +21,7 @@ gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 gem "legato"
 
 gem 'will_paginate'
+gem 'alphabetical_paginate'
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'country_select' #Country select
