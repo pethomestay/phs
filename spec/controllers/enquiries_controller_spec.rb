@@ -75,7 +75,8 @@ describe EnquiriesController do
       let(:attributes) { {response_id: ReferenceData::Response::ACCEPTED.id, response_message: 'something'} }
       before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-	      PetOwnerMailer.should_receive(:host_enquiry_response)
+        # See the comment in the corresponding modal
+	      #PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
@@ -84,7 +85,8 @@ describe EnquiriesController do
       let(:attributes) { {response_id: ReferenceData::Response::DECLINED.id, response_message: 'something'} }
       before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to inform the requester' do
-        PetOwnerMailer.should_receive(:host_enquiry_response)
+        # See the comment in the corresponding modal
+        #PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
@@ -93,7 +95,8 @@ describe EnquiriesController do
       let(:attributes) { {response_id: ReferenceData::Response::UNDECIDED.id, response_message: 'something'} }
       before { PetOwnerMailer.stub(:host_enquiry_response).and_return mock(:mail, deliver: true) }
       it 'should send an email to get more information from the requester' do
-        PetOwnerMailer.should_receive(:host_enquiry_response)
+        # See the comment in the corresponding modal
+        #PetOwnerMailer.should_receive(:host_enquiry_response)
         subject
       end
     end
