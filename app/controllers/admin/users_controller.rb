@@ -33,6 +33,6 @@ class Admin::UsersController < Admin::AdminController
     @user = User.find(params[:id])
     @user.destroy
 
-    respond_with(:admin, @user, location: admin_users_path(letter: 'A'))
+    respond_with(:admin, @user, location: admin_users_path(letter: 'Z'))
   end
 end

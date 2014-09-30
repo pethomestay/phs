@@ -130,7 +130,7 @@ describe Admin::UsersController do
 
     it "redirects to the users list" do
       subject
-      response.should redirect_to admin_users_url(letter: 'A')
+      response.should redirect_to admin_users_url(letter: 'Z')
     end
   end
 
