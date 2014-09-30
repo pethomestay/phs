@@ -12,7 +12,7 @@ class PetOwnerMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "Contact details for #{@provider.first_name}")
   end
 
-   def booking_confirmation(booking)
+  def booking_confirmation(booking)
 	  @booking = booking
 	  @guest = @booking.booker
 	  @homestay = @booking.homestay
