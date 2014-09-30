@@ -29,7 +29,9 @@ class Enquiry < ActiveRecord::Base
   after_create :send_new_enquiry_notification_SMS
 
   before_save :set_response, on: :create
-  after_update :send_enquiry_update_notifications
+  # The following line leads to some Guests receiving empty email notification
+  # Thus it has been disabled until further investigation
+  #after_update :send_enquiry_update_notifications
 
   scope :last_five, order('created_at DESC').limit(5)
 
@@ -89,10 +91,11 @@ class Enquiry < ActiveRecord::Base
     ProviderMailer.new_enquiry_SMS(self).deliver
   end
 
-  def send_enquiry_update_notifications
-    return if confirmed?
-    PetOwnerMailer.host_enquiry_response(self).deliver
-  end
+  # See the comment at top
+  #def send_enquiry_update_notifications
+  #  return if confirmed?
+  #  PetOwnerMailer.host_enquiry_response(self).deliver
+  #end
 
   def require_respsonse_message
     response_id == ReferenceData::Response::UNDECIDED.id

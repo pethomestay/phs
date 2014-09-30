@@ -1,3 +1,4 @@
+require 'will_paginate/array'
 require 'spec_helper'
 
 describe Admin::EnquiriesController do

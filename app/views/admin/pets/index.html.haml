@@ -22,6 +22,7 @@
         %td
           =link_to 'Edit', edit_admin_pet_path(pet)
           =link_to 'Destroy', admin_pet_path(pet), :method => :delete, :data => { :confirm => 'Are you sure?' }
+= will_paginate @pets, renderer: BootstrapLinkRenderer
 
 :javascript
   $(document).ready(function(){

@@ -61,6 +61,7 @@
           - if booking.state?(:payment_authorisation_pending)
             = link_to "Reset", reset_booking_state_admin_booking_path(booking), :method=>:post, :style => 'margin-bottom: 4px;', :class=>'trans-btn btn btn-primary'
             = link_to "Update details", edit_admin_transaction_path(transaction), :class=>'trans-btn btn btn-primary'
+= will_paginate @transactions, renderer: BootstrapLinkRenderer
 
 
 :javascript

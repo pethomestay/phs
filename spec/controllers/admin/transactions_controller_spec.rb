@@ -37,9 +37,11 @@ describe Admin::TransactionsController do
 
   describe "GET index" do
     it "assigns all transactions as @transactions" do
-      Transaction.stub(:order).and_return 'all transactions'
+      t1 = FactoryGirl.create :transaction
+      t2 = FactoryGirl.create :transaction
+      t3 = FactoryGirl.create :transaction
       get :index, {}, valid_session
-      assigns(:transactions).should eq('all transactions')
+      assigns(:transactions).should eq [t3, t2, t1]
     end
   end
 

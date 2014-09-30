@@ -22,6 +22,7 @@
           =link_to 'Show', admin_enquiry_path(enquiry)
           =link_to 'Edit', edit_admin_enquiry_path(enquiry)
           =link_to 'Destroy', admin_enquiry_path(enquiry), :method => :delete, :data => { :confirm => 'Are you sure?' }
+= will_paginate @enquiries, renderer: BootstrapLinkRenderer
 
 :javascript
   $(document).ready(function(){
