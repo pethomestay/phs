@@ -4,7 +4,7 @@ css:
     margin-left: 10px;
     padding: 10px 20px;
     border: none;
-    width: 300px;
+    width: 340px;
   }
 = javascript_include_tag 'address_autocomplete'
 
@@ -78,11 +78,11 @@ css:
     h5 Preview
     iframe#map-preview width="300" height="300" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=Australia"}
     p#address-preview style='padding-top: 10px'
-    = f.hidden_field :address_1, label: 'Street address', value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
-    = f.hidden_field :address_suburb, label: 'Suburb/City', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
-    = f.hidden_field :address_city, label: 'State', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
-    = f.hidden_field :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
-    = f.hidden_field :address_postcode, label: 'Postcode', value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
+    = f.hidden_field :address_1, value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+    = f.hidden_field :address_suburb, value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+    = f.hidden_field :address_city, value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+    = f.hidden_field :address_country, priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+    = f.hidden_field :address_postcode, value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
   h3 Other services offered
   .checkbox
     = label_tag "I can also offer", nil
@@ -91,25 +91,15 @@ css:
     = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
     = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
 
-  - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
-    h3 As you are under 18 years old please confirm
-    - error_class = f.object.errors.messages.has_key?(:parental_consent) ? 'error' : ''
-    .control-group.error_class
-      label.inline-checkbox
-        input type='hidden' name='homestay[parental_consent]' value='0'
-        = check_box_tag 'homestay[parental_consent]', '1', (f.object.parental_consent == '1' || !f.object.new_record?)
-        | I have parental consent to look after pets in my home.
-  - if f.object.new_record?
-    h3 Acknowlegement
-    - error_class = f.object.errors.messages.has_key?(:accept_terms) ? 'error' : ''
-    .control-group.error_class
-      label.inline-checkbox
-        input type='hidden' name='homestay[accept_liability]' value='0'
-        = check_box_tag 'homestay[accept_liability]', '1', f.object.accept_liability == '1'
-        | I understand that as by creating this listing, depending my home state or council laws, I may liable for any damages or 3rd party events which may happen while I am in control of others pets. I accept these risks or have suitable insurance to cover these events.
-
   h3 Photo
   p.help-block Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
   p.help-block When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
   p.help-block No photos = no enquiries!!
   = render 'homestays/pictures', f: f
+
+  - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
+    = f.input_field :parental_consent, as: :hidden, value: 1
+    p.help-block As you are under 18 years old, please confirm that you have parental consent to look after pets in your home.
+  - if f.object.new_record?
+    = f.input_field :accept_liability, as: :hidden, value: 1
+    p.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
