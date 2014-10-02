@@ -27,6 +27,7 @@ $ ->
       d.addClass 'unavailable'
 
     @updateAvailableDate = (e) ->
+      return if window.location.pathname.toLowerCase().indexOf('guest') > -1
       # Note e.target is often span, so we need to get its parent when this happens
       if e.target.tagName == 'SPAN'
         $date = $(e.target).parent()
