@@ -18,7 +18,7 @@ ul.nav.nav-pills.nav-stacked
     /    | TRUST
     /    span.hidden-md  & FEEDBACK
     li class=('active' if params[:controller] == 'host/homestays')
-      a href=(if current_user.homestay then host_homestay_edit_path else new_homestay_path end)
+      a href=(current_user.homestay.present? ? edit_host_homestay_path : new_host_homestay_path)
         i.fa.fa-home.fa-lg.fa-fw
         | MY HOMESTAY
     li class=('active' if params[:controller] == 'host/accounts')
