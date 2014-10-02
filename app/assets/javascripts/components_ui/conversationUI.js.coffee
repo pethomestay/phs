@@ -19,7 +19,7 @@ $ ->
         id = @$node.data('id')
         @trigger 'uiMarkConversationRead', id
         @$node.removeClass('unread')
-        @select('messagesSelector').slideToggle()
+      @select('messagesSelector').slideToggle()
       @toggleChevron()
       @$node.toggleClass 'expanded'
 
