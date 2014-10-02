@@ -2,7 +2,7 @@ class Host::HostController < ApplicationController
   layout 'new_application'
 
   before_filter :authenticate_user!
-  before_filter :verify_homestay_existance!
+  before_filter :require_homestay!
 
   # GET /host
   def index
@@ -11,7 +11,7 @@ class Host::HostController < ApplicationController
   end
 
   private
-  def verify_homestay_existance!
+  def require_homestay!
     redirect_to new_homestay_path if current_user.homestay.blank?
   end
 end
