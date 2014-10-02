@@ -1,9 +1,10 @@
 $ ->
   ConversationUI = flight.component ->
     @attributes
-      headerSelector:  '.header:first-child'
-      chevronSelector: '.header:first-child .fa'
-      replyBtnSelector: 'a.reply.btn'
+      headerSelector:  '.header'
+      chevronSelector: '.header .chevron'
+      messagesSelector: '.message'
+      replyIconSelector: '.message .fa-reply'
       newMsgFormContainerSelector: '.new-msg-form-container'
       newMsgFormSelector: '.new-msg-form-container form'
 
@@ -18,12 +19,12 @@ $ ->
         id = @$node.data('id')
         @trigger 'uiMarkConversationRead', id
         @$node.removeClass('unread')
-      @$node.children().slice(1).not(@attr.newMsgFormContainerSelector).slideToggle()
+        @select('messagesSelector').slideToggle()
       @toggleChevron()
       @$node.toggleClass 'expanded'
 
     @showNewMsgForm = ->
-      @select('replyBtnSelector').addClass 'disabled'
+      @select('replyIconSelector').addClass 'disabled'
       @select('newMsgFormContainerSelector').slideDown()
       @select('newMsgFormSelector').find('textarea').focus()
 
@@ -50,7 +51,7 @@ $ ->
         $form = @select('newMsgFormSelector')
         $form.find('textarea').val ''
         $form.find('button').removeClass 'disabled'
-        @select('replyBtnSelector').removeClass 'disabled'
+        @select('replyIconSelector').removeClass 'disabled'
         @select('newMsgFormContainerSelector').slideUp()
 
     @msgFailedCallback = (e, data, meta) ->
@@ -61,7 +62,7 @@ $ ->
 
     @after 'initialize', ->
       @on @select('headerSelector'),     'click',  @toggleConversation
-      @on @select('replyBtnSelector'),   'click',  @showNewMsgForm
+      @on @select('replyIconSelector'),   'click',  @showNewMsgForm
       @on @select('newMsgFormSelector'), 'submit', @sendMsg
       @on document, 'dataMessageSent',   @msgSentCallback
       @on document, 'dataMessageFailed', @msgFailedCallback
