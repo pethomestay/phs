@@ -409,6 +409,14 @@ class User < ActiveRecord::Base
     score
   end
 
+  def avatar
+    if self.profile_photo_stored?
+      self.profile_photo.thumb('60x60').url
+    else
+      'default_profile_photo.jpg'
+    end
+  end
+
   def release_jobs
     CMNewSubscriberJob.new.async.perform(self)
   end
