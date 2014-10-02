@@ -1,5 +1,5 @@
 class Host::HomestaysController < Host::HostController
-  skip_before_filter :require_homestay, only: [:new]
+  skip_before_filter :require_homestay!, only: [:new]
 
   # GET /host/homestays/new
   def new
