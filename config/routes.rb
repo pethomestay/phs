@@ -103,7 +103,7 @@ PetHomestay::Application.routes.draw do
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
-    get '/homestay/edit', to: 'homestays#edit'
+    resource :homestay, only: [:new, :edit]
     resources :accounts, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'
   end
