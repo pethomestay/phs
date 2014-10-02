@@ -1,15 +1,29 @@
 / Expect params
 /   message: a Message object
+/   top: whether this message is the top one in conversation
 / Note: message.user is the sender
 
 
-.header style='display: none'
-  .profile
-    / TODO: use user uploaded profile photo
-    =image_tag 'izzy.jpg', class: 'img-circle pull-left'
-  span.h5.name = message.user.name
-/.actions style='display: none'
-/  i.fa.fa-reply.fa-lg.pull-right
-.body style='display: none'
-  p
-    = message.message_text
+.message
+  .from
+    span.h5
+      ' From:
+      span.sender
+        = message.user.present? ? message.user.name : 'N/A'
+    i.fa.fa-reply.fa-lg.pull-right
+  .body
+    pre
+      = message.message_text
+    - if top
+      .action-btns
+        a.btn.btn-default.reply
+          i.fa.fa-reply
+          '
+          | Reply
+
+- if top
+  .new-msg-form-container style='display: none'
+    form
+      .form-group
+        textarea.form-control rows='4' placeholder='Type in message here and click Send'
+      button type='submit' class='btn btn-primary' Send

@@ -2,30 +2,38 @@
 /   conversation: a Mailbox object
 / Note:
 /   (1) each conversation has a corresponding enquiry, but not necessary a booking
-/   (2) message.user is the sender
+/   (2) message.user is the sender, and could be nil
 
 
 - enquiry = conversation.enquiry
-- booking = conversation.booking # Could be nil
-- messages = conversation.messages.reverse
+- messages = conversation.messages.order('created_at DESC')
 .conversation class=('unread' unless conversation.read_by?(current_user)) data-id=conversation.id
   .header
-    .profile
-      / TODO: use user uploaded profile photo
-      =image_tag 'izzy.jpg', class: 'img-circle pull-left'
-    span.h5.name
-      = messages.first.user.name
-      - if params[:controller].include? 'host'
-        br
-        = messages.first.user.pet.name
-        - if messages.first.user.pet.breed.present?
-          | , a #{messages.first.user.pet.breed}
+    - if params[:controller].include? 'guest'
+      - host = conversation.host_mailbox # Could be nil
+      - if host.present? # TODO: add content to display when host is nil
+        .profile
+          = image_tag host.avatar, class: 'img-circle'
+        .host-info
+          span.h5.name
+            = host.name
+          span
+    - elsif params[:controller].include? 'host'
+      - guest = conversation.guest_mailbox # Could be nil
+      - if guest.present? # TODO: add content to display when guest is nil
+        .profile
+          = image_tag guest.avatar, class: 'img-circle'
+        .guest-info
+          span.h5.name
+            = guest.name
     .right.pull-right
+      - booking = conversation.booking # Could be nil
       - if booking.present?
         span.booking-status class=booking.state
           = booking.state
       - else
-        span.booking-status Enquiry
+        span.booking-status
+          | Enquiry
       span.date
         small From:
         '
@@ -36,20 +44,7 @@
         = enquiry.check_out_date.strftime('%b %e')
       span
         i.fa.fa-chevron-down.fa-lg.chevron
-  /.actions style='display: none'
-  /  i.fa.fa-reply.fa-lg.pull-right
-  .body style='display: none'
-    p
-      = messages.first.message_text
-    .action-btns
-      a.btn.btn-default.reply
-        i.fa.fa-reply
-        '
-        | Reply
-  .new-msg-form-container style='display: none'
-    form
-      .form-group
-        textarea.form-control rows='4' placeholder='Type in message here and click Send'
-      button type='submit' class='btn btn-primary' Send
-  - messages.drop(1).each do |message|
-    = render 'shared/messages/message', message: message
+
+  - render 'shared/messages/message', message:messages.shift, top: true
+  - messages.each do |message|
+    = render 'shared/messages/message', message: message, top: false

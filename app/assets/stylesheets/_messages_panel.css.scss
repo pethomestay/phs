@@ -14,14 +14,17 @@
   .conversation {
     opacity: .6;
     .header {
-      height: 65px;
+      height: 110px;
       padding: 15px 30px;
       border-bottom: 1px solid $grey;
+      cursor: pointer;
       .profile {
+        display: inline-block;
         position: relative;
         img {
-          width: 38px;
-          height: 38px;
+          width: 60px;
+          height: 60px;
+          margin-top: 10px;
         }
         span {
           position: absolute;
@@ -35,22 +38,16 @@
           }
         }
       }
-      .name {
-        margin-left: 20px;
+      .host-info,
+      .guest-info {
         display: inline-block;
+        .name {
+          margin-left: 20px;
+        }
       }
       .right span {
-        float: right;
-        clear: right;
-      }
-      &:first-child {
-        height: 110px;
-        cursor: pointer;
-        img {
-          width: 60px;
-          height: 60px;
-          margin-top: 10px;
-        }
+        display: block;
+        text-align: right;
         .booking-status {
           font-weight: 700;
           &.confirmed {
@@ -69,22 +66,31 @@
         }
       }
     }
-    .actions {
-      height: 48px;
-      padding: 13px 20px;
-      border-bottom: 1px solid $grey;
-      .sender,
-      .receiver {
-        color: $blue-light;
+
+    .message {
+      display: none;
+      .from {
+        height: 48px;
+        padding: 13px 20px;
+        border-bottom: 1px solid $grey;
+        .sender {
+          color: $blue-light;
+        }
+        i.fa-reply {
+          margin-top: 5px;
+          &.disabled {
+            color: $grey;
+          }
+        }
       }
-      i.fa-reply {
-        margin-top: 5px;
-        color: $grey;
+      .body {
+        padding: 23px;
+        border-bottom: 1px solid $grey;
+        pre {
+          border: none;
+          background-color: transparent;
+        }
       }
-    }
-    .body {
-      padding: 23px;
-      border-bottom: 1px solid $grey;
     }
     .new-msg-form-container {
       padding: 23px;
@@ -92,7 +98,7 @@
     }
     &.expanded {
       opacity: 1;
-      .header:first-child {
+      .header {
         background-color: $blue-light;
         color: white;
         .booking-status {
