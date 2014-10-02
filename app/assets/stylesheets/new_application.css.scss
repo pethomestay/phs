@@ -1,5 +1,4 @@
 @import 'bootstrap_3.2.0.min';
-//@import 'bootstrap-theme_3.2.0.min';
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import 'bootstrap-slider';
@@ -10,12 +9,12 @@
 @import 'sign_in';
 @import 'sign_up';
 // Guest View and Host View
-@import 'dashboard/sub_nav';
-@import 'dashboard/left_nav';
-@import 'dashboard/right_panel';
-@import 'messages_panel';
+@import 'my_account/sub_nav';
+@import 'my_account/left_nav';
+@import 'my_account/right_panel';
+@import 'my_account/messages_panel';
 // Guest View
-@import 'new_pets';
+@import 'my_account/guest/pet_panel';
 
 // Font
 body {
