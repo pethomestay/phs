@@ -231,7 +231,7 @@ class User < ActiveRecord::Base
   end
 
   def update_without_password(params, *options)
-    current_password = params.delete(:current_password)
+    #current_password = params.delete(:current_password)
 
     if params[:password].blank?
       params.delete(:password)
