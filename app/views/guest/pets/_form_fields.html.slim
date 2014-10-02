@@ -1,0 +1,53 @@
+h4 Step 1 - Essentials
+.form-group
+  label Add a Photo
+= f.input :name, label: 'Pet Name'
+= f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, include_blank: false
+.form-group
+  label Pet Size
+  = f.input_field :size_id, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
+.form-group
+  label Age
+  = f.input_field :date_of_birth, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
+= f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
+.form-group
+  label Energy Level
+  = f.input_field :energy_level, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 1, 'data-slider-max' => 5, 'data-slider-step' => 1, 'data-slider-value' => 3, 'data-slider-tooltip' => 'hide'
+.form-group
+  label Personality
+  .checkbox
+    label
+      input type='checkbox' name='pet[personalities][]' value='happy' Happy
+  .checkbox
+    label
+      input type='checkbox' name='pet[personalities][]' value='sad' Sad
+h4 Step 2 - Emergncy + Medical
+p.help-block You can fill this in now, or come back later before a booking starts.
+= f.input :emergency_contact_name, label: 'Emergency Contact'
+= f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+= f.input :vet_name,  label: 'Vet Surgery'
+= f.input :vet_phone, label: 'Vet Phone'
+= f.input :council_number, label: 'Council Pet Tag'
+= f.input :microchip_number, label: 'Microchip #'
+.form-group
+  p Does your pet need?
+  .checkbox
+    label
+      input type='checkbox' injections
+  .checkbox
+    label
+      input type='checkbox' tablets
+  laebl Any other medication
+  = f.input_field :medication, rows: 2
+.form-group
+  p My pet is NOT:
+  .checkbox
+    label
+      input type='checkbox' Toilet Trained
+  .checkbox
+    label
+      input type='checkbox' Flea Trained
+  .checkbox
+    label
+      input type='checkbox' Vaccinated
+p PLACEHOLDER
