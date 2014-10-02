@@ -5,8 +5,6 @@
 /   (2) message.user is the sender, and could be nil
 
 
-- enquiry = conversation.enquiry
-- messages = conversation.messages.order('created_at DESC')
 .conversation class=('unread' unless conversation.read_by?(current_user)) data-id=conversation.id
   .header
     - if params[:controller].include? 'guest'
@@ -31,20 +29,30 @@
       - if booking.present?
         span.booking-status class=booking.state
           = booking.state
+        span.date
+          small
+            ' From:
+          = booking.check_in_date.strftime('%b %e')
+        span.date
+          small
+            ' To:
+          = booking.check_out_date.strftime('%b %e')
       - else
+        - enquiry = conversation.enquiry
         span.booking-status
           | Enquiry
-      span.date
-        small From:
-        '
-        = enquiry.check_in_date.strftime('%b %e')
-      span.date
-        small To:
-        '
-        = enquiry.check_out_date.strftime('%b %e')
+        span.date
+          small
+            ' From:
+          = enquiry.check_in_date.strftime('%b %e')
+        span.date
+          small
+            ' To:
+          = enquiry.check_out_date.strftime('%b %e')
       span
         i.fa.fa-chevron-down.fa-lg.chevron
 
+  - messages = conversation.messages.order('created_at DESC')
   - render 'shared/messages/message', message:messages.shift, top: true
   - messages.each do |message|
     = render 'shared/messages/message', message: message, top: false
