@@ -78,7 +78,9 @@
         }
         i.fa-reply {
           margin-top: 5px;
+          cursor: pointer;
           &.disabled {
+            cursor: default;
             color: $grey;
           }
         }
