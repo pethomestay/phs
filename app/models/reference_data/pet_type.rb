@@ -10,6 +10,10 @@ class ReferenceData::PetType
     [DOG, CAT, BIRD, FISH, OTHER]
   end
 
+  def self.dog_cat_other
+    [DOG, CAT, OTHER]
+  end
+
   def self.find(id)
     raise ActiveRecord::RecordNotFound.new unless id <=  all.length
     all[id - 1]

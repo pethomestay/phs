@@ -1,47 +1,19 @@
 = render layout: 'layouts/user' do
   .new-pet-panel
     h3 Add Your Pet in 2 Easy Steps
-    = simple_form_for [:guest, @pet] do |f|
+    = simple_form_for [:guest, @pet], wrapper: :bootstrap3 do |f|
       h4 Step 1 - Essentials
       .form-group
         label Add a Photo
-      .form-group
-        label Pet Name
-        = f.input_field :name
-      .form-group
-        label Pet Type
-        .type-tab
-          i.fa.fa-paw
-          h5 Dog
-          = f.input_field :pet_type_id, type: 'radio', value: '1'
-        .type-tab
-          i.fa.fa-paw
-          h5 Cat
-          = f.input_field :pet_type_id, type: 'radio', value: '2'
-        .type-tab
-          i.fa.fa-paw
-          h5 Other
-          = f.input_field :pet_type_id, type: 'radio', value: '3'
+      = f.input :name, label: 'Pet Name'
+      = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, include_blank: false
       .form-group
         label Pet Size
         = f.input_field :size_id, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
       .form-group
         label Age
         = f.input_field :date_of_birth, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
-      .form-group
-        label Sex
-        .type-tab
-          | Male Entire
-          = f.input_field :sex_id, type: 'radio', value: '1'
-        .type-tab
-          | Male Desexed
-          = f.input_field :sex_id, type: 'radio', value: '2'
-        .type-tab
-          | Female Entire
-          = f.input_field :sex_id, type: 'radio', value: '3'
-        .type-tab
-          | Female Desexed
-          = f.input_field :sex_id, type: 'radio', value: '4'
+      = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
       .form-group
         label Energy Level
         = f.input_field :energy_level, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 1, 'data-slider-max' => 5, 'data-slider-step' => 1, 'data-slider-value' => 3, 'data-slider-tooltip' => 'hide'
@@ -55,21 +27,12 @@
             input type='checkbox' name='pet[personalities][]' value='sad' Sad
       h4 Step 2 - Emergncy + Medical
       p.help-block You can fill this in now, or come back later before a booking starts.
-      .form-group
-        label Emergency Contact
-        = f.input_field :emergency_contact_name
-        label Emergency Contact Mobile
-        = f.input_field :emergency_contact_phone
-      .form-group
-        label Vet Surgery
-        = f.input_field :vet_name
-        label Vet Phone
-        = f.input_field :vet_phone
-      .form-group
-        label Council Pet Tag
-        = f.input_field :council_number
-        label Microchip #
-        = f.input_field :microchip_number
+      = f.input :emergency_contact_name, label: 'Emergency Contact'
+      = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+      = f.input :vet_name,  label: 'Vet Surgery'
+      = f.input :vet_phone, label: 'Vet Phone'
+      = f.input :council_number, label: 'Council Pet Tag'
+      = f.input :microchip_number, label: 'Microchip #'
       .form-group
         p Does you pet need?
         .checkbox
