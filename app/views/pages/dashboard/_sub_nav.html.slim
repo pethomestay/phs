@@ -5,7 +5,7 @@
 .hidden-xs.col-sm-4.col-md-8
 
 a href=guest_path
-  .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' unless params[:controller].include?('host'))
+  .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('guest'))
     i.fa.fa-user.fa-2x
     span
       | Guest
