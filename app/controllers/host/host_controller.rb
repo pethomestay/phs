@@ -8,6 +8,7 @@ class Host::HostController < ApplicationController
   def index
     @conversations = Mailbox.as_host(current_user).paginate(page: params[:page], per_page: 10)
     @unread_count  = @conversations.where(host_read: false).count
+    render 'guest/guest/index'
   end
 
   private
