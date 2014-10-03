@@ -41,6 +41,9 @@
     .pill-guest,
     .pill-host {
       padding-top: 10px;
+      span {
+        font-size: 14px;
+      }
     }
   }
 }
