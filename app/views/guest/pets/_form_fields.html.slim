@@ -2,7 +2,7 @@
   .form-group
     label Add a Photo
   = f.input :name, label: 'Pet Name'
-  = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, include_blank: false
+  = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, include_blank: false, checked: 1
   .form-group
     label Pet Size
     = f.input_field :size_id, class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 0, 'data-slider-max' => 2, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide'
