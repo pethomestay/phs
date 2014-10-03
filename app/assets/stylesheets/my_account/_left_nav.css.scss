@@ -19,6 +19,12 @@
       }
       span {
         padding-top: 5px;
+        &.unread-count {
+          padding: 0 6px;
+          border-radius: 60px;
+          color: $grey-lighter;
+          background-color: $orange;
+        }
       }
     }
     &.active {
@@ -26,6 +32,10 @@
       a,
       a:hover {
         background-color: transparent;
+        .unread-count {
+          color: $orange;
+          background-color: $grey-lighter;
+        }
       }
     }
   }
