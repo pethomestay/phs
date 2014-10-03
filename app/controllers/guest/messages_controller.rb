@@ -2,7 +2,6 @@ class Guest::MessagesController < Guest::GuestController
   # GET /guest/messages
   def index
     @conversations = Mailbox.as_guest(current_user).paginate(page: params[:page], per_page: 10)
-    @unread_count  = @conversations.where(guest_read: false).count
   end
 
   # POST /guest/conversation/mark_read

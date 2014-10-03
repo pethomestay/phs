@@ -36,6 +36,8 @@ ul.nav.nav-pills.nav-stacked
       a href=guest_messages_path
         i.fa.fa-envelope.fa-lg.fa-fw
         | MESSAGES
+        - if defined?(@unread_count) and @unread_count > 0
+          span.unread-count.pull-right = @unread_count
     li.calendar.hidden-md.hidden-lg
       a href=""
         i.fa.fa-calendar.fa-lg.fa-fw

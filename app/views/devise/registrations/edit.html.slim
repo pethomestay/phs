@@ -1,3 +1,5 @@
+/ The following line is needed because though this view is part of My Account, its corresponding controller doesn't inherit from GuestController
+- @unread_count  = Mailbox.as_guest(current_user).where(guest_read: false).count
 = render layout: 'layouts/user' do
   .account-panel
     .page-header
