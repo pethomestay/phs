@@ -10,12 +10,14 @@
     - if params[:controller].include? 'guest'
       - host = conversation.host_mailbox # Could be nil
       - if host.present? # TODO: add content to display when host is nil
-        .profile
+        - number_legal = host.mobile_num_legal?
+        a.profile href=("tel:#{host.mobile_number}" if number_legal)
           = image_tag host.avatar, class: 'img-circle'
-          .phone-icon
-            span.fa-stack
-              i.fa.fa-square.fa-stack-2x
-              i.fa.fa-phone.fa-stack-1x
+          - if number_legal
+            .phone-icon
+              span.fa-stack
+                i.fa.fa-square.fa-stack-2x
+                i.fa.fa-phone.fa-stack-1x
         .host-info
           span.h5.name
             = host.name
@@ -23,12 +25,14 @@
     - elsif params[:controller].include? 'host'
       - guest = conversation.guest_mailbox # Could be nil
       - if guest.present? # TODO: add content to display when guest is nil
-        .profile
+        - number_legal = guest.mobile_num_legal?
+        a.profile href=("tel:#{guest.mobile_number}" if number_legal)
           = image_tag guest.avatar, class: 'img-circle'
-          .phone-icon
-            span.fa-stack
-              i.fa.fa-square.fa-stack-2x
-              i.fa.fa-phone.fa-stack-1x
+          - if number_legal
+            .phone-icon
+              span.fa-stack
+                i.fa.fa-square.fa-stack-2x
+                i.fa.fa-phone.fa-stack-1x
         .guest-info
           span.h5.name
             = guest.name
