@@ -3,6 +3,11 @@
   padding-right: 20px;
   label.checkbox,
   label.radio {
+    display: inline-block;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
     margin-left: 20px;
   }
 }
