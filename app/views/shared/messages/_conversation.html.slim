@@ -19,9 +19,13 @@
                 i.fa.fa-square.fa-stack-2x
                 i.fa.fa-phone.fa-stack-1x
         .host-info
-          span.h5.name
-            = host.name
-          span
+          span.h5 = host.name
+          - homestay = host.homestay
+          - if homestay.present?
+            br
+            span = host.homestay.title
+            br
+            span #{homestay.address_suburb}, $#{homestay.cost_per_night.to_i}
     - elsif params[:controller].include? 'host'
       - guest = conversation.guest_mailbox # Could be nil
       - if guest.present? # TODO: add content to display when guest is nil

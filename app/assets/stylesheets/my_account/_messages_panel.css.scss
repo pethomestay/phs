@@ -23,7 +23,7 @@
       cursor: pointer;
       .profile {
         display: inline-block;
-        position: relative;
+        position: absolute;
         pointer-events: none;
         img {
           width: 60px;
@@ -45,9 +45,8 @@
       .host-info,
       .guest-info {
         display: inline-block;
-        .name {
-          margin-left: 20px;
-        }
+        margin-top:  10px;
+        margin-left: 80px;
       }
       .right span {
         display: block;
