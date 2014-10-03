@@ -9,3 +9,6 @@
 
   - for conversation in @conversations
     = render 'shared/messages/conversation', conversation: conversation
+
+  .paginator
+    = will_paginate @conversations, renderer: BootstrapPagination::Rails
