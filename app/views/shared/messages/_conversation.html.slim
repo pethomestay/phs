@@ -12,6 +12,10 @@
       - if host.present? # TODO: add content to display when host is nil
         .profile
           = image_tag host.avatar, class: 'img-circle'
+          .phone-icon
+            span.fa-stack
+              i.fa.fa-square.fa-stack-2x
+              i.fa.fa-phone.fa-stack-1x
         .host-info
           span.h5.name
             = host.name
@@ -21,6 +25,10 @@
       - if guest.present? # TODO: add content to display when guest is nil
         .profile
           = image_tag guest.avatar, class: 'img-circle'
+          .phone-icon
+            span.fa-stack
+              i.fa.fa-square.fa-stack-2x
+              i.fa.fa-phone.fa-stack-1x
         .guest-info
           span.h5.name
             = guest.name
