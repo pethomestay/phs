@@ -23,11 +23,19 @@ $grey-lighter: #f7f7f7;
 $sub-nav-height: 86px;
 
 // Overrides
-.btn.btn-primary {
-  background-color: $orange;
-  color:            $grey-lighter;
+.btn {
   border: none;
-  &:hover {
-    background-color: $orange-light;
+  color:  $grey-lighter;
+  &.btn-primary {
+    background-color: $orange;
+    &:hover {
+      background-color: $orange-light;
+    }
+  }
+  &.btn-secondary {
+    background-color: $blue-light;
+    &:hover {
+      background-color: $blue-lighter;
+    }
   }
 }
