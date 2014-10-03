@@ -1,6 +1,10 @@
 .pet-panel {
   padding-left:  20px;
   padding-right: 20px;
+  p.header-hint {
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
   label.checkbox,
   label.radio {
     display: inline-block;
