@@ -21,6 +21,7 @@
       .profile {
         display: inline-block;
         position: relative;
+        pointer-events: none;
         img {
           width: 60px;
           height: 60px;
@@ -104,6 +105,9 @@
       .header {
         background-color: $blue-light;
         color: white;
+        .profile {
+          pointer-events: auto;
+        }
         .booking-status {
           color: white;
         }
