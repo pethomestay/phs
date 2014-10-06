@@ -56,16 +56,19 @@
         span {
           display: block;
           text-align: right;
-          .booking-status {
+          &.booking-status {
             font-weight: 700;
-            &.confirmed {
+            &.enquiry {
+              color: $black-light;
+            }
+            &.booked {
               color: $blue;
             }
-            &.canceled {
-              color: $orange;
+            &.cancelled {
+              color: $grey-dark;
             }
             &.requested {
-              color: $blue-light;
+              color: $orange;
             }
           }
           .chevron {
@@ -123,14 +126,8 @@
         .profile {
           pointer-events: auto;
         }
-        .booking-status {
-          color: white;
-        }
-        .message-count {
-          background-color: white;
-          color: $blue-light;
-        }
         .right {
+          span.booking-status,
           .chevron {
             color: white;
           }

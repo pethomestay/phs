@@ -54,8 +54,13 @@
     .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
-        span.booking-status class=booking.state
-          = booking.state
+        - state = case booking.state
+        -         when 'finished'               then 'Requested'
+        -         when 'finished_host_accepted' then 'Booked'
+        -         when 'rejected'               then 'Cancelled'
+        -         else booking.state
+        span.booking-status class=state.downcase
+          = state
         span.date
           small
             ' From:
@@ -66,7 +71,7 @@
           = booking.check_out_date.strftime('%b %e')
       - else
         - enquiry = conversation.enquiry
-        span.booking-status
+        span.booking-status class='enquiry'
           | Enquiry
         span.date
           small
