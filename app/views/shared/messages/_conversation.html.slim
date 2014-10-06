@@ -51,7 +51,7 @@
               span #{pets[0].age}
             - else
               span #{guest.pet_names}
-    .right.pull-right
+    .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
         span.booking-status class=booking.state

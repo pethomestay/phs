@@ -21,6 +21,7 @@
       padding: 15px 30px;
       border-bottom: 1px solid $grey;
       cursor: pointer;
+      position: relative;;
       .profile {
         display: inline-block;
         position: absolute;
@@ -48,24 +49,29 @@
         margin-top:  10px;
         margin-left: 80px;
       }
-      .right span {
-        display: block;
-        text-align: right;
-        .booking-status {
-          font-weight: 700;
-          &.confirmed {
-            color: $blue;
+      .right {
+        position: absolute;
+        top:   15px;
+        right: 20px;
+        span {
+          display: block;
+          text-align: right;
+          .booking-status {
+            font-weight: 700;
+            &.confirmed {
+              color: $blue;
+            }
+            &.canceled {
+              color: $orange;
+            }
+            &.requested {
+              color: $blue-light;
+            }
           }
-          &.canceled {
-            color: $orange;
+          .chevron {
+            margin-top: 10px;
+            color: $grey-dark;
           }
-          &.requested {
-            color: $blue-light;
-          }
-        }
-        .chevron {
-          margin-top: 10px;
-          color: $grey-dark;
         }
       }
     }
