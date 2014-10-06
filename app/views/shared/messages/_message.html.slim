@@ -15,10 +15,25 @@
     pre
       = message.message_text
     - if top
-      .action-btns
-        a.btn.btn-secondary.reply
-          i.fa.fa-check.fa-fw
-          ' Book This Homestay
+      - conversation = message.mailbox
+      - guest_view = (current_user == conversation.guest_mailbox)
+      - if guest_view and conversation.booking.blank?
+        .action-btns
+          a.btn.btn-secondary href=new_booking_path(enquiry_id: conversation.enquiry_id)
+            i.fa.fa-check.fa-fw
+            '
+            | Book This Homestay
+      -  elsif conversation.host_booking?(current_user)
+          a.btn.btn-secondary href=host_confirm_booking_path(conversation.booking)
+            i.fa.fa-check.fa-fw
+            '
+            | Confirm Homestay
+      - elsif guest_view and conversation.booking.present? and !conversation.booking.owner_accepted? # There exists a previous booking cancelled by Guest
+        - booking_params = conversation.enquiry.blank? ? { homestay_id: conversation.booking.homestay.id } : { enquiry_id: conversation.enquiry_id }
+        a.btn.btn-secondary href=new_booking_path(booking_params)
+            i.fa.fa-check.fa-fw
+            '
+            | Book This Homestay
 
 - if top
   .new-msg-form-container
