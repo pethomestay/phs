@@ -412,7 +412,7 @@ class User < ActiveRecord::Base
 
   def avatar
     if self.profile_photo.present?
-      self.profile_photo.file.thumb('60x60').url
+      self.profile_photo.file.thumb('60x60!').url
     else
       'default_profile_photo.jpg'
     end
