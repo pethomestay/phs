@@ -43,7 +43,7 @@ class Booking < ActiveRecord::Base
 
 	after_create :create_mailbox
 
-	def create_mailbox
+  def create_mailbox
 		mailbox = nil
 		if self.enquiry_id.blank?
 			mailbox = Mailbox.find_or_create_by_booking_id self.id
