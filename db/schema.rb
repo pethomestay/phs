@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140924002013) do
+ActiveRecord::Schema.define(:version => 20141006064447) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -342,7 +342,6 @@ ActiveRecord::Schema.define(:version => 20140924002013) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
-    t.string   "profile_photo_uid"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
