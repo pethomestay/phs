@@ -20,7 +20,7 @@ describe Host::CalendarController do
 
     context 'when nothing is in database' do
       it 'returns an empty array in json' do
-        get  :availability, start: '2014-10-01', end: '2014-10-30'
+        get  :availability, start: '2015-10-01', end: '2015-10-30'
 
         expect(response.body).to eq([].to_json)
       end
@@ -28,8 +28,8 @@ describe Host::CalendarController do
 
     context 'when one irrelevent record is in database' do
       it 'returns an empty array in json' do
-        in_d    = '2014-10-02'; out_d = '2014-10-07'
-        start_d = '2014-10-01'; end_d = '2014-10-08'
+        in_d    = '2015-10-02'; out_d = '2015-10-07'
+        start_d = '2015-10-01'; end_d = '2015-10-08'
         FactoryGirl.create :booked_booking,
                          booker: subject.current_user,
                          bookee: guest,
@@ -44,8 +44,8 @@ describe Host::CalendarController do
 
     context 'when check_out_d < start_d' do
       it 'returns an empty array in json ' do
-        in_d    = '2014-10-01'; out_d = '2014-10-07'
-        start_d = '2014-10-08'; end_d = '2014-10-30'
+        in_d    = '2015-10-01'; out_d = '2015-10-07'
+        start_d = '2015-10-08'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -55,8 +55,8 @@ describe Host::CalendarController do
 
     context 'when end_d < check_in_d' do
       it 'returns an empty array in json ' do
-        in_d    = '2014-10-09'; out_d = '2014-10-17'
-        start_d = '2014-10-01'; end_d = '2014-10-08'
+        in_d    = '2015-10-09'; out_d = '2015-10-17'
+        start_d = '2015-10-01'; end_d = '2015-10-08'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -66,8 +66,8 @@ describe Host::CalendarController do
 
     context 'when check_in_d < start_d < check_out_d < end_d' do
       it 'returns start_d..check_out_d in json' do
-        in_d    = '2014-10-01'; out_d = '2014-10-15'
-        start_d = '2014-10-08'; end_d = '2014-10-30'
+        in_d    = '2015-10-01'; out_d = '2015-10-15'
+        start_d = '2015-10-08'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -83,8 +83,8 @@ describe Host::CalendarController do
 
     context 'when start_d < check_in_d < end_d < check_out_d' do
       it 'returns start_d..check_out_d in json' do
-        in_d    = '2014-10-05'; out_d = '2014-10-30'
-        start_d = '2014-10-01'; end_d = '2014-10-15'
+        in_d    = '2015-10-05'; out_d = '2015-10-30'
+        start_d = '2015-10-01'; end_d = '2015-10-15'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -100,8 +100,8 @@ describe Host::CalendarController do
 
     context 'when start_d < check_in_d < check_out_d < end_d' do
       it 'returns check_in_d..check_out_d in json' do
-        in_d    = '2014-10-08'; out_d = '2014-10-15'
-        start_d = '2014-10-01'; end_d = '2014-10-30'
+        in_d    = '2015-10-08'; out_d = '2015-10-15'
+        start_d = '2015-10-01'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -117,8 +117,8 @@ describe Host::CalendarController do
 
     context 'when check_in_d < start_d < end_d < check_out_d' do
       it 'returns start_d..end_d in json' do
-        in_d    = '2014-10-01'; out_d = '2014-10-30'
-        start_d = '2014-10-05'; end_d = '2014-10-15'
+        in_d    = '2015-10-01'; out_d = '2015-10-30'
+        start_d = '2015-10-05'; end_d = '2015-10-15'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -134,8 +134,8 @@ describe Host::CalendarController do
 
     context 'when booking last for only 1 day b/f start_d' do
       it 'returns an empty array in json' do
-        in_d    = '2014-10-01'; out_d = '2014-10-01'
-        start_d = '2014-10-15'; end_d = '2014-10-30'
+        in_d    = '2015-10-01'; out_d = '2015-10-01'
+        start_d = '2015-10-15'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -145,8 +145,8 @@ describe Host::CalendarController do
 
     context 'when booking last for only 1 day after end_d' do
       it 'returns an empty array in json' do
-        in_d    = '2014-10-30'; out_d = '2014-10-30'
-        start_d = '2014-10-01'; end_d = '2014-10-15'
+        in_d    = '2015-10-30'; out_d = '2015-10-30'
+        start_d = '2015-10-01'; end_d = '2015-10-15'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -156,8 +156,8 @@ describe Host::CalendarController do
 
     context 'when booking last for only 1 day on start_d' do
       it 'returns the booking date in json' do
-        in_d    = '2014-10-15'; out_d = '2014-10-15'
-        start_d = '2014-10-15'; end_d = '2014-10-30'
+        in_d    = '2015-10-15'; out_d = '2015-10-15'
+        start_d = '2015-10-15'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -173,8 +173,8 @@ describe Host::CalendarController do
 
     context 'when booking last for only 1 day on end_d' do
       it 'returns the booking date in json' do
-        in_d    = '2014-10-30'; out_d = '2014-10-30'
-        start_d = '2014-10-15'; end_d = '2014-10-30'
+        in_d    = '2015-10-30'; out_d = '2015-10-30'
+        start_d = '2015-10-15'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -190,8 +190,8 @@ describe Host::CalendarController do
 
     context 'when booking last for only 1 day b/w start_d & end_d' do
       it 'returns the booking date in json' do
-        in_d    = '2014-10-15'; out_d = '2014-10-15'
-        start_d = '2014-10-01'; end_d = '2014-10-30'
+        in_d    = '2015-10-15'; out_d = '2015-10-15'
+        start_d = '2015-10-01'; end_d = '2015-10-30'
 
         create_booking_then_fetch(in_d, out_d, start_d, end_d)
 
@@ -207,9 +207,9 @@ describe Host::CalendarController do
 
     context 'when two bookings overlap' do
       it 'returns unique combined booking dates in json' do
-        in_d_1  = '2014-10-10'; out_d_1 = '2014-10-20'
-        in_d_2  = '2014-10-05'; out_d_2 = '2014-10-15'
-        start_d = '2014-10-01'; end_d   = '2014-10-30'
+        in_d_1  = '2015-10-10'; out_d_1 = '2015-10-20'
+        in_d_2  = '2015-10-05'; out_d_2 = '2015-10-15'
+        start_d = '2015-10-01'; end_d   = '2015-10-30'
         FactoryGirl.create :booked_booking,
                            booker: guest,
                            bookee: subject.current_user,
@@ -235,8 +235,8 @@ describe Host::CalendarController do
 
     context 'when unavailable date is b/w start_d & end_d' do
       it 'returns the unavailable date in json' do
-        u_d    = '2014-10-15'; u_d_id = 55
-        start_d = '2014-10-01'; end_d = '2014-10-30'
+        u_d    = '2015-10-15'; u_d_id = 55
+        start_d = '2015-10-01'; end_d = '2015-10-30'
         FactoryGirl.create :unavailable_date,
                            id: u_d_id,
                            date: Date.parse(u_d),
@@ -257,8 +257,8 @@ describe Host::CalendarController do
 
     context 'when unavailable date is on start_d' do
       it 'returns the unavailable date in json' do
-        u_d    = '2014-10-01'; u_d_id = 55
-        start_d = '2014-10-01'; end_d = '2014-10-30'
+        u_d    = '2015-10-01'; u_d_id = 55
+        start_d = '2015-10-01'; end_d = '2015-10-30'
         FactoryGirl.create :unavailable_date,
                            id: u_d_id,
                            date: Date.parse(u_d),
@@ -279,8 +279,8 @@ describe Host::CalendarController do
 
     context 'when unavailable date is on end_d' do
       it 'returns the unavailable date in json' do
-        u_d    = '2014-10-30'; u_d_id = 55
-        start_d = '2014-10-01'; end_d = '2014-10-30'
+        u_d    = '2015-10-30'; u_d_id = 55
+        start_d = '2015-10-01'; end_d = '2015-10-30'
         FactoryGirl.create :unavailable_date,
                            id: u_d_id,
                            date: Date.parse(u_d),
@@ -301,8 +301,8 @@ describe Host::CalendarController do
 
     context 'when unavailable date is b/f start_d' do
       it 'returns an empty array in json' do
-        u_d    = '2014-10-01'; u_d_id = 55
-        start_d = '2014-10-10'; end_d = '2014-10-30'
+        u_d    = '2015-10-01'; u_d_id = 55
+        start_d = '2015-10-10'; end_d = '2015-10-30'
         FactoryGirl.create :unavailable_date,
                            id: u_d_id,
                            date: Date.parse(u_d),
@@ -317,8 +317,8 @@ describe Host::CalendarController do
 
     context 'when unavailable date is after end_d' do
       it 'returns an empty array in json' do
-        u_d    = '2014-11-01'; u_d_id = 55
-        start_d = '2014-10-10'; end_d = '2014-10-30'
+        u_d    = '2015-11-01'; u_d_id = 55
+        start_d = '2015-10-10'; end_d = '2015-10-30'
         FactoryGirl.create :unavailable_date,
                            id: u_d_id,
                            date: Date.parse(u_d),
