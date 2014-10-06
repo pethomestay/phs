@@ -3,7 +3,7 @@ class Host::HostController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :require_homestay!
-  before_filter :unread_count
+  before_filter :set_instance_vars
   # TODO: specify the order that before_filter runs
 
   # GET /host
@@ -20,7 +20,7 @@ class Host::HostController < ApplicationController
     end
   end
 
-  def unread_count
+  def set_instance_vars
     @unread_count  = Mailbox.as_host(current_user).where(host_read: false).count
   end
 end

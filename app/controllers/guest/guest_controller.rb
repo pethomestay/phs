@@ -2,7 +2,7 @@ class Guest::GuestController < ApplicationController
   layout 'new_application'
 
   before_filter :authenticate_user!
-  before_filter :unread_count
+  before_filter :set_instance_vars
   # TODO: specify the order that before_filter runs
 
   # GET /guest
@@ -11,7 +11,7 @@ class Guest::GuestController < ApplicationController
   end
 
   private
-  def unread_count
+  def set_instance_vars
     @unread_count  = Mailbox.as_guest(current_user).where(guest_read: false).count
   end
 end
