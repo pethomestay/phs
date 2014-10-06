@@ -11,8 +11,8 @@ class Mailbox < ActiveRecord::Base
 
 	scope :with_finished_bookings, ->(user) { where("guest_mailbox_id = ? OR host_mailbox_id = ?", user.id, user.id).
 			order('created_at DESC') } # Depreciate this when we move completely to the new dashboard
-	scope :as_guest, ->(user) { where("guest_mailbox_id = ?", user.id).order('guest_read ASC') } # Retrieve all conversations relevant in Guest view
-	scope :as_host,  ->(user) { where("host_mailbox_id = ?", user.id).order('host_read ASC') } # Retrieve all conversations relevant in Host view
+	scope :as_guest, ->(user) { where("guest_mailbox_id = ?", user.id).order('guest_read ASC, created_at DESC') } # Retrieve all conversations relevant in Guest view
+	scope :as_host,  ->(user) { where("host_mailbox_id = ?", user.id).order('host_read ASC, created_at DESC') } # Retrieve all conversations relevant in Host view
 
 	def enquiry_or_booking_presence
 		if enquiry_id.blank? && booking_id.blank?
