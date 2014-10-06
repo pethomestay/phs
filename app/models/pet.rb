@@ -5,7 +5,7 @@ class Pet < ActiveRecord::Base
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank
 
-  validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
+  validates_presence_of :name, :date_of_birth
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 4}
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
