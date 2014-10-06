@@ -26,6 +26,9 @@ $sub-nav-height: 86px;
 .btn {
   border: none;
   color:  $grey-lighter;
+  &:hover {
+    color: $grey-lighter;
+  }
   &.btn-primary {
     background-color: $orange;
     &:hover {
