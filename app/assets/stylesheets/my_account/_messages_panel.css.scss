@@ -95,6 +95,13 @@
           border: none;
           background-color: transparent;
         }
+        .action-btns {
+          .btn {
+            display: block;
+            width: 65%;
+            margin-left: auto;
+          }
+        }
       }
     }
     .new-msg-form-container {
