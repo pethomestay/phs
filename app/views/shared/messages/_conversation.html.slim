@@ -38,8 +38,19 @@
                 i.fa.fa-square.fa-stack-2x
                 i.fa.fa-phone.fa-stack-1x
         .guest-info
-          span.h5.name
-            = guest.name
+          span.h5 = guest.name
+          - pets = guest.pets
+          - if pets.present?
+            br
+            - if pets.count == 1
+              span
+                | #{pets[0].name}
+                - if pets[0].breed.present?
+                  |  , a #{pets[0].breed}
+              br
+              span #{pets[0].age}
+            - else
+              span #{guest.pet_names}
     .right.pull-right
       - booking = conversation.booking # Could be nil
       - if booking.present?
