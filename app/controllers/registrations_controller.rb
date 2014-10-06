@@ -1,6 +1,13 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
 
+  def edit
+    super
+    if current_user.profile_photo.blank?
+      resource.profile_photo = UserPicture.new
+    end
+  end
+
   def update
     @user = User.find(current_user.id)
 

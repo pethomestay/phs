@@ -3,9 +3,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
-  attr_accessor :current_password, :accept_house_rules, :accept_terms, :profile_photo_uid
-  attr_accessible :profile_photo, :mobile_number, :phone_number, :first_name, :last_name, :email, :password, :date_of_birth, :address_1, :address_suburb, :address_city, :address_country
-  dragonfly_accessor :profile_photo, app: :images
+  attr_accessor :current_password, :accept_house_rules, :accept_terms
 
   has_one :homestay
   has_many :pets
@@ -24,6 +22,9 @@ class User < ActiveRecord::Base
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
 
   has_many :unavailable_dates
+
+  has_one :profile_photo, as: 'picturable', class_name: 'UserPicture'
+  accepts_nested_attributes_for :profile_photo, reject_if: :all_blank
 
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
@@ -410,8 +411,8 @@ class User < ActiveRecord::Base
   end
 
   def avatar
-    if self.profile_photo_stored?
-      self.profile_photo.thumb('60x60').url
+    if self.profile_photo.present?
+      self.profile_photo.file.thumb('60x60').url
     else
       'default_profile_photo.jpg'
     end
