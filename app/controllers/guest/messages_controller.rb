@@ -1,8 +1,6 @@
 class Guest::MessagesController < Guest::GuestController
   # GET /guest/messages
-  def index
-    @conversations = Mailbox.as_guest(current_user).paginate(page: params[:page], per_page: 10)
-  end
+  # index action inherited from GuestController
 
   # POST /guest/conversation/mark_read
   # Params
