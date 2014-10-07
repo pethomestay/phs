@@ -4,7 +4,7 @@ $ ->
       headerSelector:  '.header'
       chevronSelector: '.header .chevron'
       messagesSelector: '.message'
-      replyIconSelector: '.message .fa-reply'
+      replybtnSelector: '.message .reply'
       newMsgFormContainerSelector: '.new-msg-form-container'
       newMsgFormSelector: '.new-msg-form-container form'
 
@@ -24,7 +24,7 @@ $ ->
       @$node.toggleClass 'expanded'
 
     @showNewMsgForm = ->
-      @select('replyIconSelector').addClass 'disabled'
+      @select('replybtnSelector').addClass 'disabled'
       @select('newMsgFormContainerSelector').slideDown()
       @select('newMsgFormSelector').find('textarea').focus()
 
@@ -51,7 +51,7 @@ $ ->
         $form = @select('newMsgFormSelector')
         $form.find('textarea').val ''
         $form.find('button').removeClass 'disabled'
-        @select('replyIconSelector').removeClass 'disabled'
+        @select('replybtnSelector').removeClass 'disabled'
         @select('newMsgFormContainerSelector').slideUp()
 
     @msgFailedCallback = (e, data, meta) ->
@@ -62,7 +62,7 @@ $ ->
 
     @after 'initialize', ->
       @on @select('headerSelector'),     'click',  @toggleConversation
-      @on @select('replyIconSelector'),   'click',  @showNewMsgForm
+      @on @select('replybtnSelector'),   'click',  @showNewMsgForm
       @on @select('newMsgFormSelector'), 'submit', @sendMsg
       @on document, 'dataMessageSent',   @msgSentCallback
       @on document, 'dataMessageFailed', @msgFailedCallback

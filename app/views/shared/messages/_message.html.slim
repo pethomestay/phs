@@ -10,7 +10,9 @@
       ' From:
       span.sender
         = message.user.present? ? message.user.name : 'N/A'
-    i.fa.fa-reply.fa-lg.pull-right
+    .reply.pull-right
+      i.fa.fa-reply
+      span  Reply
   .body
     pre
       = message.message_text
