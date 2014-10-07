@@ -12,6 +12,8 @@ class Guest::GuestController < ApplicationController
 
   private
   def set_instance_vars
-    @unread_count  = Mailbox.as_guest(current_user).where(guest_read: false).count
+    @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
+    @upcoming     = current_user.bookers.where('check_in_date >= ?', Date.today)
+                    .order('check_in_date ASC').limit(3)
   end
 end

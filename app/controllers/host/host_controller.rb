@@ -21,6 +21,8 @@ class Host::HostController < ApplicationController
   end
 
   def set_instance_vars
-    @unread_count  = Mailbox.as_host(current_user).where(host_read: false).count
+    @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
+    @upcoming     = current_user.bookees.where('check_in_date >= ?', Date.today)
+                    .order('check_in_date ASC').limit(3)
   end
 end

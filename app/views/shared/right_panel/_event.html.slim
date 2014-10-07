@@ -1,0 +1,23 @@
+/ Expect params
+/   event: a Booking object
+
+
+.event
+  = render 'pages/dashboard/date_widget', date: event.check_in_date
+  .info
+    - state = case event.state
+    -         when 'finished'               then 'Requested'
+    -         when 'finished_host_accepted' then 'Booked'
+    -         when 'rejected'               then 'Cancelled'
+    -         else event.state
+    span.booking-status class=state.downcase #{state}
+    span.period
+      - if event.check_in_date != event.check_out_date
+      strong.start #{event.check_in_date.strftime('%b %e')}
+      |  to
+      strong.end  #{event.check_out_date.strftime('%b %e')}
+    - if params[:controller].include?('guest')
+      span.name #{event.bookee.name}
+    - elsif params[:controller].include?('host')
+      span.name #{event.booker.name}
+  .hr
