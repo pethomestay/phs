@@ -24,6 +24,7 @@ gem "legato"
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+gem 'alphabetical_paginate'
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'country_select' #Country select
