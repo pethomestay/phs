@@ -180,7 +180,7 @@ class Booking < ActiveRecord::Base
 		self.owner_accepted? && (self.state?(:finished) || self.state?(:finished_host_accepted)) && user == self.bookee
 	end
 
-	def owner_view?(user)
+  def owner_view?(user)
 		user == self.booker
   end
 
