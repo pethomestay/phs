@@ -54,13 +54,8 @@
     .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
-        - state = case booking.state
-        -         when 'finished'               then 'Requested'
-        -         when 'finished_host_accepted' then 'Booked'
-        -         when 'rejected'               then 'Cancelled'
-        -         else booking.state
-        span.booking-status class=state.downcase
-          = state
+        - state = translate booking.state
+        span.booking-status class=state.downcase #{state}
         span.date
           small
             ' From:
