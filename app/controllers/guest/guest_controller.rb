@@ -15,5 +15,6 @@ class Guest::GuestController < ApplicationController
     @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
     @upcoming     = current_user.bookers.where('check_in_date >= ?', Date.today)
                     .order('check_in_date ASC').limit(3)
+                    .select('state, check_in_date, check_out_date, bookee_id')
   end
 end
