@@ -27,7 +27,7 @@ describe Booking do
     #let(:start_date){ Date.today - 2.days }
     #let(:end_date){ Date.today + 4.days }
     #let(:booking){ FactoryGirl.create(:booking, check_in_date: start_date, check_out_date: end_date) }
-    
+
     #context "when host is unavailable between check in and check out date" do
       #it "should generate a validation error" do
         #unav_date = FactoryGirl.create(:unavailable_date, user: booking.bookee, date: Date.today)
@@ -323,7 +323,7 @@ describe Booking do
 			end
 
 			it 'should create message in mailbox' do
-				subject.mailbox.messages.first.message_text.should be_eql(@new_message)
+				subject.mailbox.messages.order(:created_at).last.message_text.should be_eql(@new_message)
 			end
 		end
 
@@ -339,7 +339,7 @@ describe Booking do
 			end
 
 			it 'should update the mailbox' do
-				subject.mailbox.messages.first.message_text.should be_eql(@new_message)
+				subject.mailbox.messages.order(:created_at).first.message_text.should be_eql(@new_message)
 			end
 		end
 	end
