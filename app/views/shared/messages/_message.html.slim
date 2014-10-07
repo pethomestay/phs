@@ -32,9 +32,9 @@
       - elsif guest_view and conversation.booking.present? and !conversation.booking.owner_accepted? # There exists a previous booking cancelled by Guest
         - booking_params = conversation.enquiry.blank? ? { homestay_id: conversation.booking.homestay.id } : { enquiry_id: conversation.enquiry_id }
         a.btn.btn-secondary href=new_booking_path(booking_params)
-            i.fa.fa-check.fa-fw
-            '
-            | Book This Homestay
+          i.fa.fa-check.fa-fw
+          '
+          | Book This Homestay
 
 - if top
   .new-msg-form-container
