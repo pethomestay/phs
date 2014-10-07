@@ -64,8 +64,8 @@
 }
 
 .upcoming {
-  .day-section {
-    padding: 20px;
+  padding: 15px 20px 0 20px;
+  .event {
     .date-widget {
       width: 66px;
       display: inline-block;
@@ -103,25 +103,17 @@
         background-color: $grey-light;
       }
     }
-    .events {
+    .info {
       margin-left: 100px;
       display: inline-block;
-      .event {
-        span {
-          display: block;
-          &.type {
-            font-weight: 700;
-          }
-        }
-        &.booking {
+      span {
+        display: block;
+        &.booking-status {
+          font-weight: 700;
           &.accepted {
-            .type {
-              color: $blue-light;
-            }
+            color: $blue-light;
           }
-        }
-        &.inquiry {
-          .type {
+          &.inquiry {
             color: $grey-dark;
           }
         }
@@ -129,7 +121,7 @@
     }
     .hr {
       height: 1px;
-      margin: 5px;
+      margin: 20px 5px;
       background-color: $grey;
     }
   }

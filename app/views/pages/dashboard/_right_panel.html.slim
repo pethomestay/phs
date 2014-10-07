@@ -14,24 +14,15 @@
     tbody
 
 .upcoming
-  .day-section
+  .event
     - month = Date.today.strftime('%b')
     - day   = Date.today.strftime('%d')
     = render 'pages/dashboard/date_widget', { month: month, day: day }
-    .events
-      .event.booking.accepted
-        span.type Accepted
-        span.period
-          strong.start 9:00 am
-          |  to
-          strong.end  19 Sept 2014 2:00 pm
-        span.name Mike Dekker
-      .hr
-      .event.inquiry
-        span.type Enquiry
-        span.period
-          strong.start 9:00 am
-          |  to
-          strong.end  2:00 pm
-        span.name Frankie Ratford
+    .info
+      span.booking-status.accepted Accepted
+      span.period
+        strong.start 9:00 am
+        |  to
+        strong.end  19 Sept 2014 2:00 pm
+      span.name Mike Dekker
     .hr
