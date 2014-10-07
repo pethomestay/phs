@@ -56,21 +56,6 @@
         span {
           display: block;
           text-align: right;
-          &.booking-status {
-            font-weight: 700;
-            &.enquiry {
-              color: $black-light;
-            }
-            &.booked {
-              color: $blue;
-            }
-            &.cancelled {
-              color: $grey-dark;
-            }
-            &.requested {
-              color: $orange;
-            }
-          }
           .chevron {
             margin-top: 10px;
             color: $grey-dark;

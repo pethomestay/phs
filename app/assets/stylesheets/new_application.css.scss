@@ -102,6 +102,21 @@ body {
   border-left: 1px solid $grey;
   border-right: 1px solid $grey;
 }
+span.booking-status {
+  font-weight: 700;
+  &.enquiry {
+    color: $black-light;
+  }
+  &.booked {
+    color: $blue;
+  }
+  &.cancelled {
+    color: $grey-dark;
+  }
+  &.requested {
+    color: $orange;
+  }
+}
 
 @media (min-width: $screen-sm-min) and (max-width: 1075px) {
   .right-panel .calendar-container {
