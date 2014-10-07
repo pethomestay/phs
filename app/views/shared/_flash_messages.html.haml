@@ -2,12 +2,12 @@
   :coffee
     $.growl
       message: "#{message}",
-        type: 'info'
+        type: '#{flash_class_for type}'
         delay: 10000
         mouse_over: 'pause'
         offset:
-          x: 5
-          y: 60
+          x: 0
+          y: 0
         animate:
           enter: 'animated fadeInRightBig'
           exit: 'animated fadeOutRightBig'
@@ -17,12 +17,12 @@
     :coffee
       $.growl
         message: "#{message}",
-          type: 'info'
+          type: '#{flash_class_for type}'
           delay: 10000
           mouse_over: 'pause'
           offset:
-            x: 5
-            y: 60
+            x: 0
+            y: 0
           animate:
             enter: 'animated fadeInRightBig'
             exit: 'animated fadeOutRightBig'
