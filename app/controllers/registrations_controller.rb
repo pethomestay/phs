@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
+  before_filter :set_instance_vars
 
   def edit
     super
@@ -42,5 +43,14 @@ class RegistrationsController < Devise::RegistrationsController
   protected
   def after_update_path_for(resource)
     guest_edit_path
+  end
+
+  private
+  # This method must be kept in sync with Guest::GuestController
+  def set_instance_vars
+    @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
+    @upcoming     = current_user.bookers.where('check_in_date >= ?', Date.today)
+                    .order('check_in_date ASC').limit(3)
+                    .select('state, check_in_date, check_out_date, bookee_id')
   end
 end
