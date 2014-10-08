@@ -2,7 +2,7 @@
   :coffee
     $.growl
       message: "#{message}",
-        type: '#{flash_class_for type}'
+        type: "#{flash_class_for type}"
         delay: 10000
         mouse_over: 'pause'
         offset:
@@ -13,11 +13,11 @@
           exit: 'animated fadeOutRightBig'
 
 - if defined? resource
-  - resource.errors.full_messages.each do |message|
+  - resource.errors.full_messages.each do |type, message|
     :coffee
       $.growl
         message: "#{message}",
-          type: '#{flash_class_for type}'
+          type: "#{flash_class_for type}"
           delay: 10000
           mouse_over: 'pause'
           offset:
