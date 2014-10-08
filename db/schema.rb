@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141008041154) do
+ActiveRecord::Schema.define(:version => 20141008051322) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(:version => 20141008041154) do
     t.string   "vet_phone"
     t.text     "medication"
     t.date     "date_of_birth"
-    t.integer  "pet_type_id"
+    t.integer  "pet_type_id",             :default => 1
     t.integer  "sex_id"
     t.integer  "size_id"
     t.integer  "energy_level"
