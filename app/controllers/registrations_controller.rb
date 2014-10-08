@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
   def edit
     super
     if current_user.profile_photo.blank?
-      resource.profile_photo = UserPicture.new
+      resource.profile_photo = UserPicture.create!
     end
   end
 
