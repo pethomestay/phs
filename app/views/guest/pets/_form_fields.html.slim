@@ -1,7 +1,7 @@
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
-  .form-group
-    label Add a Photo
+  = f.simple_fields_for :pictures do |p|
+    = p.input :file, as: :file, label: 'Add a Photo'
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, include_blank: false, checked: 1
   .form-group

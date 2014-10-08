@@ -10,6 +10,7 @@ class Guest::PetsController < Guest::GuestController
   # GET /guest/pets/new
   def new
     @pet = current_user.pets.build
+    @pet.pictures.build
     respond_with @pet
   end
 
@@ -40,7 +41,7 @@ class Guest::PetsController < Guest::GuestController
     end
   end
 
-  #
+  # DELETE
   def destroy
     @pet = current_user.pets.find(params[:id])
     pet_name = @pet.name
