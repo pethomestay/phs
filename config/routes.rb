@@ -92,7 +92,7 @@ PetHomestay::Application.routes.draw do
     get '/calendar/availability', to: 'calendar#availability'
     post '/conversation/mark_read', to: 'messages#mark_read'
     get '/favorites', to: 'favorites#index'
-    resources :pets, only: [:index, :new]
+    resources :pets
     get '/',         to: 'guest#index'
   end
   devise_scope :user do

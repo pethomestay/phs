@@ -12,5 +12,39 @@ class Guest::PetsController < Guest::GuestController
     @pet = current_user.pets.build
     respond_with @pet
   end
+
+  # POST /guest/pets
+  def create
+    @pet = current_user.pets.build(params[:pet])
+    if @pet.save
+      redirect_to guest_pets_path, alert: "#{@pet.name} has been added to your list of pets."
+    else
+      render :new
+    end
+  end
+
+  # GET
+  def edit
+    @pet = current_user.pets.find(params[:id])
+    respond_with @pet
+  end
+
+  # PUT
+  def update
+    @pet = current_user.pets.find(params[:id])
+    if @pet.update_attributes(params[:pet])
+      flash[:notice] = "#{@pet.name}'s info has been updated."
+      redirect_to guest_pets_path
+    else
+      render :edit
+    end
+  end
+
+  #
+  def destroy
+    @pet = current_user.pets.find(params[:id])
+    pet_name = @pet.name
+    @pet.destroy
+    redirect_to guest_pets_path, alert: "#{pet_name} has been removed from your list of pets."
   end
 end
