@@ -1,9 +1,11 @@
 .messages-panel
   .panel-header
     h4 Inbox
-
-  - for conversation in @conversations
-    = render 'shared/messages/conversation', conversation: conversation
+  - if @conversations.any?
+    - for conversation in @conversations
+      = render 'shared/messages/conversation', conversation: conversation
+  - else
+    # TODO: add content for inbox with no message
 
   .paginator
     = will_paginate @conversations, renderer: BootstrapPagination::Rails
