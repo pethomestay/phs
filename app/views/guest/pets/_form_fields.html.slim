@@ -20,28 +20,11 @@
   = f.input :vet_phone, label: 'Vet Phone'
   = f.input :council_number, label: 'Council Pet Tag'
   = f.input :microchip_number, label: 'Microchip #'
-  .form-group
-    p Does your pet need?
-    .checkbox
-      label
-        input type='checkbox' injections
-    .checkbox
-      label
-        input type='checkbox' tablets
-    laebl Any other medication
-    = f.input_field :medication, rows: 2
-  .form-group
-    p My pet is NOT:
-    .checkbox
-      label
-        input type='checkbox' Toilet Trained
-    .checkbox
-      label
-        input type='checkbox' Flea Trained
-    .checkbox
-      label
-        input type='checkbox' Vaccinated
-p PLACEHOLDER
+  = f.input :medication, input_html: { rows: 2 }
+  label My pet is:
+  = f.input :house_trained, label: 'toilet trained'
+  = f.input :flea_treated, label: 'flea treated'
+  = f.input :vaccinated, label: 'vaccinated'
 
 
 coffee:

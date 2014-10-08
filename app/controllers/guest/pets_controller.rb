@@ -18,7 +18,11 @@ class Guest::PetsController < Guest::GuestController
   def create
     @pet = current_user.pets.build(params[:pet])
     if @pet.save
-      redirect_to guest_pets_path, alert: "#{@pet.name} has been added to your list of pets."
+      if params[:redirect_path].present?
+        redirect_to params[:redirect_path], alert: "#{@pet.name} has been added to your list of pets."
+      else
+        redirect_to guest_pets_path, alert: "#{@pet.name} has been added to your list of pets."
+      end
     else
       render :new
     end
@@ -27,6 +31,7 @@ class Guest::PetsController < Guest::GuestController
   # GET
   def edit
     @pet = current_user.pets.find(params[:id])
+    @pet.pictures.build if @pet.pictures.blank?
     respond_with @pet
   end
 
