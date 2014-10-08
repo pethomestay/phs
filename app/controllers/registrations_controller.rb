@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
-  before_filter :set_instance_vars, only: [:edit]
+  before_filter :set_instance_vars, only: [:edit, :update]
 
   def edit
     super
