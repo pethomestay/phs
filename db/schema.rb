@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141006064447) do
+ActiveRecord::Schema.define(:version => 20141008041154) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -227,9 +227,9 @@ ActiveRecord::Schema.define(:version => 20141006064447) do
     t.boolean  "dislike_children"
     t.boolean  "dislike_animals"
     t.boolean  "dislike_people"
-    t.boolean  "flea_treated",            :default => false
-    t.boolean  "vaccinated",              :default => false
-    t.boolean  "house_trained",           :default => false
+    t.boolean  "flea_treated",            :default => true
+    t.boolean  "vaccinated",              :default => true
+    t.boolean  "house_trained",           :default => true
     t.string   "age"
     t.string   "microchip_number"
     t.string   "council_number"
