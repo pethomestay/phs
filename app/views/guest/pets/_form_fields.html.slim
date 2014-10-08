@@ -1,3 +1,4 @@
+- all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
   = f.simple_fields_for :pictures do |p|
@@ -9,7 +10,7 @@
   = f.input :date_of_birth, label: 'Birth Year', as: :date, start_year: Date.today.year - 15, end_year: Date.today.year, order: [:year], include_blank: true
   = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
   = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', 'data-slider-id' => 'energy_level',  'data-slider-min' => 1, 'data-slider-max' => 5, 'data-slider-step' => 1, 'data-slider-value' => 3, 'data-slider-tooltip' => 'hide' }
-  = f.input :personalities, collection: ['happy', 'sad', 'whatever'], as: :check_boxes, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities'
+  = f.input :personalities, collection: all_personalities, as: :check_boxes, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities'
 
 = field_set_tag 'Step 2 - Emergency + Medical'
   p.header-hint.help-block You can fill this in now, or come back later before a booking starts.
