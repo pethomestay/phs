@@ -1,0 +1,16 @@
+= render layout: 'layouts/user' do
+  .pet-panel
+
+    h3 Your Pets
+    - if @pets.any?
+      table.table.table-hover
+        - for pet in @pets
+          tr
+            td #{pet.name}
+            td = link_to 'Edit', edit_guest_pet_path(pet)
+            td = link_to 'Remove', guest_pet_path(pet), method: 'DELETE', confirm: "Do you really want to remove #{pet.name}? This CANNOT be undone."
+    - else
+      p
+        ' You currently have no pet on your account. Would you like to
+        = link_to 'add one now', new_guest_pet_path
+        | ?

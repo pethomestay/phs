@@ -56,7 +56,7 @@ ul.nav.nav-pills.nav-stacked
         i.fa.fa-cog.fa-lg.fa-fw
         | ACCOUNT
     li class=('active' if params[:controller] == 'guest/pets')
-      a href=new_guest_pet_path
+      a href=(current_user.pets.any? ? guest_pets_path : new_guest_pet_path)
         i.fa.fa-paw.fa-lg.fa-fw
         | PET PROFILES
     li
