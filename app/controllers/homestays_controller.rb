@@ -53,9 +53,9 @@ class HomestaysController < ApplicationController
 
   def update
     if @homestay.update_attributes(params[:homestay])
-      redirect_to my_account_path, alert: 'Your listing has been updated.'
+      redirect_to @homestay, alert: 'Your listing has been updated.'
     else
-      render :edit
+      render '/host/homestays/edit'
     end
   end
 
@@ -87,7 +87,7 @@ class HomestaysController < ApplicationController
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
-      render :new
+      render '/host/homestays/new'
     end
   end
 
@@ -100,12 +100,12 @@ class HomestaysController < ApplicationController
   def non_favourite
 	  @homestay = Homestay.find params[:id]
 	  @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
-	  if @fav
+    if @fav
 		  @fav.destroy
 		  render nothing: true
 	  else
 			render nothing: true, status: 302
-		end
+  	end
   end
 
   def favourites
