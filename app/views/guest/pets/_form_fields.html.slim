@@ -9,8 +9,7 @@
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
   = f.input :other_pet_type, label: 'Please specify pet type'
-  .dog.breeds
-    = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
+  = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
   = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 1, 'data-slider-max' => 4, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide' }
   = f.input :date_of_birth, label: 'Birth Year', as: :date, start_year: Date.today.year - 15, end_year: Date.today.year, order: [:year], include_blank: true
   = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false

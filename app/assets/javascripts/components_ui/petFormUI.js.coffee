@@ -4,7 +4,7 @@ $ ->
       typesSelector:      '.pet_pet_type_id'
       dogTypeSelector:    '#pet_pet_type_id_1'
       otherTypeSelector:  '#pet_pet_type_id_5'
-      dogBreedsSelector:  '.dog.breeds'
+      dogBreedsSelector:  '.pet_breed'
       typeDetailSelector: '.pet_other_pet_type'
 
     @toggleTypeDetail = ->
