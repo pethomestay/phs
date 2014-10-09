@@ -8,5 +8,7 @@ FactoryGirl.define do
     pet_type_id 1
     size_id 2
     sex_id 2
+    energy_level 1
+    personalities ['happy', 'sad', 'whatever']
   end
 end
