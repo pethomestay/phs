@@ -63,6 +63,14 @@ class Pet < ActiveRecord::Base
 		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
 	end
 
+  def avatar
+    if self.pictures.present? and self.pictures.first.file.present?
+      self.pictures.first.file.thumb('50x50!').url
+    else
+      'default_profile_photo.jpg'
+    end
+  end
+
   private
   def at_least_three_personalities
     errors.add(:personalities, 'Please check at least three') if personalities.reject(&:empty?).count < 3
