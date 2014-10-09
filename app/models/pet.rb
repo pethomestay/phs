@@ -3,7 +3,7 @@ class Pet < ActiveRecord::Base
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   has_and_belongs_to_many :enquiries
 
-  accepts_nested_attributes_for :pictures, reject_if: :all_blank
+  accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   validates_presence_of :name, :pet_type_id, :size_id, :date_of_birth, :sex_id, :energy_level, :personalities
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5}

@@ -1,8 +1,11 @@
 - all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
-  = f.simple_fields_for :pictures do |p|
-    = p.input :file, as: :file, label: 'Add a Photo'
+  .form-group#pet-pics
+    label Photos
+    .help-block The first photo will be used as his/her profile photo.
+    = f.fields_for :pictures
+  = f.link_to_add 'Add', :pictures, data: { target: '#pet-pics' }
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
   = f.input :other_pet_type, label: 'Please specify'
