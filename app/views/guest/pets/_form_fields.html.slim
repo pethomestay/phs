@@ -5,7 +5,7 @@
     label Photos
     .help-block The first photo will be used as his/her profile photo.
     = f.fields_for :pictures
-  = f.link_to_add 'Add', :pictures, data: { target: '#pet-pics' }
+    = f.link_to_add 'Add', :pictures, data: { target: '#pet-pics' }
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
   = f.input :other_pet_type, label: 'Please specify'
