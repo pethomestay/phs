@@ -218,6 +218,7 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.1)
@@ -411,6 +412,7 @@ DEPENDENCIES
   libv8 (~> 3.16.14)
   mailgun_rails!
   momentjs-rails
+  nested_form
   net-scp (= 1.2.1)
   newrelic_rpm
   nokogiri (= 1.6.2.1)
