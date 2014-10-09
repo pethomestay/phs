@@ -1,2 +1,9 @@
-= f.file_field :file, class: 'form-control'
+.file-container
+  - if f.object.file.present?
+    = image_tag f.object.file.thumb('60x60!').url
+  - else
+    i.fa.fa-upload.fa-lg
+    span Upload
+    = f.file_field :file, class: 'form-control'
+br
 = f.link_to_remove 'Remove'
