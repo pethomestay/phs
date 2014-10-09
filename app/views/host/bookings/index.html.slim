@@ -6,41 +6,29 @@
       - @bookings.each do |booking|
         div.well.show-booking-history
           - guest = booking.booker
-          .booking-info
+          .booking-info  style='display: inline-block;'
             p
-              strong Guest Name:
+              strong
+                ' Guest:
               = guest.name
               br
               - pet = guest.pet
-              strong Pet Name:
-              = "#{pet.name}, "
-              strong Pet Breed:
-              = "#{pet.breed.blank? ? 'n/a' : pet.breed}, "
-              strong Pet Age:
-              = "#{[pet.age].to_sentence}, "
-              strong Pet Date of Birth:
-              = "#{pet.date_of_birth.strftime('%d/%m/%Y')}."
+              strong
+                ' Pet:
+              | #{pet.name}
+              = pet.breed.present? ? ", a #{pet.breed}" : ''
+              | , #{[pet.age].to_sentence}
               br
-              strong Date:
-              = " #{booking.check_in_date.strftime('%d/%m/%Y')} - #{booking.check_out_date.strftime('%d/%m/%Y')}"
+              ' From
+              strong
+                ' #{booking.check_in_date.strftime('%b %d')}
+              ' to
+              strong
+                | #{booking.check_out_date.strftime('%b %d')}
               br
-              strong Location:
-              = " #{guest.complete_address}"
-              br
-              - if current_user == booking.booker
-                strong Amount Paid:
-                - if booking.unfinished_booking?
-                  = " $0.00"
-                - else
-                  = " $#{booking.actual_amount}"
-                - if booking.state?(:guest_cancelled)
-                  br
-                  = "Trip cancelled #{booking.get_days_before_cancellation} days before Check In Date"
-                  br
-                  = "Amount refunded to Guest as per Cancellation Policy - $#{booking.actual_value_figure(booking.refund)}"
-              - else
-                strong Payout:
-                = " $#{booking.host_payout}"
+              strong
+                ' Payout:
+              | $#{booking.host_payout}
 
           .booking-right-panel.pull-right style='min-width:190px;'
             span.confirmed-block
