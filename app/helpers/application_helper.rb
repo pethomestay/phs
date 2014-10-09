@@ -67,7 +67,9 @@ module ApplicationHelper
     case booking_state
       when 'finished'               then 'Requested'
       when 'finished_host_accepted' then 'Booked'
+      when 'host_requested_cancellation' then 'Booked' # This is a state that happens in the backend. Neither the Host nor the Guest needs to know that.
       when 'rejected'               then 'Cancelled'
+      when 'host_cancelled'         then 'Cancelled'
       when 'unfinished'             then 'Enquiry'
       else booking_state
     end
