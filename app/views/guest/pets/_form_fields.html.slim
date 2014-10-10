@@ -2,7 +2,7 @@
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
   = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
-  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos'
+  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
   = f.input :other_pet_type, label: 'Please specify pet type'
