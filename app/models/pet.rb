@@ -1,7 +1,7 @@
 class Pet < ActiveRecord::Base
   belongs_to :user
   has_attachment  :profile_photo, accept: [:jpg, :png, :bmp, :gif]
-  has_attachments :photos, maximum: 10
+  has_attachments :extra_photos, maximum: 10
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   has_and_belongs_to_many :enquiries
 

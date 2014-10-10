@@ -1,8 +1,8 @@
 - all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
-  = f.input :profile_photo, as: :attachinary
-  = f.input :photos, as: :attachinary
+  = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos'
   = f.input :name, label: 'Pet Name'
   = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
   = f.input :other_pet_type, label: 'Please specify pet type'
@@ -30,7 +30,6 @@
 
 coffee:
   $('.slider').slider();
-  $('.pet_photos .attachinary-input').attachinary()
   $('.pet_profile_photo .attachinary-input').attachinary
     template: """
       <table class="table table-hover">
@@ -65,6 +64,7 @@ coffee:
         <% } %>
       </table class="table">
     """
+  $('.pet_extra_photos .attachinary-input').attachinary()
   $('.chosen-select').chosen
     allow_single_deselect: true
     no_results_text: 'No results matched'
