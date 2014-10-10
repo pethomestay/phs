@@ -132,6 +132,7 @@ PetHomestay::Application.routes.draw do
   get 'zendesk_session/:action', to: 'zendesk_session'
 
   mount Ckeditor::Engine => '/ckeditor'
+  mount Attachinary::Engine => "/attachinary"
 
   get '/my-account'     => 'users#show', as: :my_account
   get '/my-account'     => 'users#show', as: :user_root

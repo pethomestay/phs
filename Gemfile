@@ -33,6 +33,7 @@ gem 'nested_form' # To replace awesome_nested_fields in the future
 gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
 
 gem 'cloudinary'
+gem 'attachinary'
 gem 'dragonfly', '~>1.0.5'
 gem 'dragonfly-s3_data_store'
 gem 'rack-cache'

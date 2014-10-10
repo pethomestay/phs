@@ -2,6 +2,8 @@ require File.expand_path('../boot', __FILE__)
 
 require "rails/all"
 
+require 'attachinary/orm/active_record'
+
 require 'csv'
 
 if defined?(Bundler)
