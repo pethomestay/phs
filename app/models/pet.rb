@@ -1,5 +1,7 @@
 class Pet < ActiveRecord::Base
   belongs_to :user
+  has_attachment  :profile_photo, accept: [:jpg, :png, :bmp, :gif]
+  has_attachments :photos, maximum: 10
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   has_and_belongs_to_many :enquiries
 
@@ -13,6 +15,8 @@ class Pet < ActiveRecord::Base
   validate :at_least_three_personalities
 
   serialize :personalities, Array
+
+  attr_protected # Potential security risk
 
   def dislikes
     dislikes = []
@@ -62,14 +66,6 @@ class Pet < ActiveRecord::Base
 	def any_dislikes?
 		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
 	end
-
-  def avatar
-    if self.pictures.present? and self.pictures.first.file.present?
-      self.pictures.first.file.thumb('50x50!').url
-    else
-      'default_profile_photo.jpg'
-    end
-  end
 
   private
   def at_least_three_personalities

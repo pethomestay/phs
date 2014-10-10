@@ -5,7 +5,7 @@
       table.table.table-hover
         - for pet in @pets
           tr
-            td = image_tag pet.avatar, class: 'img-circle'
+            td = pet.profile_photo? ? cl_image_tag(pet.profile_photo.path, width: 50, height: 50, crop: :thumb, gravity: :face, radius: :max) : image_tag('default_profile_photo.jpg', class: 'img-circle')
             td #{pet.name}
             td = link_to 'Edit', edit_guest_pet_path(pet)
             td = link_to 'Remove', guest_pet_path(pet), method: 'DELETE', confirm: "Do you really want to remove #{pet.name}? This CANNOT be undone."
