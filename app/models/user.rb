@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :phone_number
+
   has_one :homestay
   has_many :pets
   has_many :enquiries
@@ -23,8 +25,7 @@ class User < ActiveRecord::Base
 
   has_many :unavailable_dates
 
-  has_one :profile_photo, as: 'picturable', class_name: 'UserPicture'
-  accepts_nested_attributes_for :profile_photo, reject_if: :all_blank
+  has_attachment :profile_photo, accept: [:jpg, :png, :bmp, :gif]
 
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
@@ -408,14 +409,6 @@ class User < ActiveRecord::Base
     score = (count * 100.0 / total).round 0
     return nil if score == 0 # Hide host responsiveness if the score is 0
     score
-  end
-
-  def avatar
-    if self.profile_photo.present? and self.profile_photo.file.present?
-      self.profile_photo.file.thumb('60x60!').url
-    else
-      'default_profile_photo.jpg'
-    end
   end
 
   def mobile_num_legal?

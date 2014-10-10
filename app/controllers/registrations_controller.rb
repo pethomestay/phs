@@ -2,13 +2,6 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
   before_filter :set_instance_vars, only: [:edit, :update]
 
-  def edit
-    super
-    if current_user.profile_photo.blank?
-      resource.profile_photo = UserPicture.create!
-    end
-  end
-
   def update
     @user = User.find(current_user.id)
 

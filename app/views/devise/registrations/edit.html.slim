@@ -12,8 +12,7 @@
           | Note: Please set a password before unlinking your account.
     br
     = simple_form_for resource, wrapper: :bootstrap3, as: resource_name, url: registration_path(resource_name) do |f|
-      = f.simple_fields_for :profile_photo do |p|
-        = p.input :file, as: :file, label: 'Profile Photo'
+      = f.input :profile_photo, as: :attachinary
       = f.input :email, label: 'Email address', disabled: true
       = f.input :mobile_number
       = f.input :phone_number, label: 'Home phone number'
@@ -26,3 +25,40 @@
           = f.input :current_password, label: 'We need your current password to confirm your changes'
       .form-actions
         = f.submit 'Update account', class: 'btn btn-primary'
+
+
+coffee:
+  $('.user_profile_photo .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Preview</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 50, "height": 50 }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'thumb', "gravity": "face", "width": 50, "height": 50, "radius": "max" }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """

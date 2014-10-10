@@ -10,7 +10,6 @@ class Guest::PetsController < Guest::GuestController
   # GET /guest/pets/new
   def new
     @pet = current_user.pets.build
-    @pet.pictures.build
     respond_with @pet
   end
 
@@ -31,7 +30,6 @@ class Guest::PetsController < Guest::GuestController
   # GET
   def edit
     @pet = current_user.pets.find(params[:id])
-    @pet.pictures.build if @pet.pictures.blank?
     respond_with @pet
   end
 
