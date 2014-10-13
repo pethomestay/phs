@@ -5,7 +5,13 @@
     - for conversation in @conversations
       = render 'shared/messages/conversation', conversation: conversation
   - else
-    # TODO: add content for inbox with no message
+    .empty-inbox
+      - if params[:controller].include? 'guest'
+        .h5
+          | There is currently no message in your Guest Inbox.
+      - elsif params[:controller].include? 'host'
+        .h5
+          | There is currently no message in your Host Inbox.
 
   .paginator
     = will_paginate @conversations, renderer: BootstrapPagination::Rails
