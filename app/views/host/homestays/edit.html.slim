@@ -1,7 +1,7 @@
 = render layout: 'layouts/user' do
   .homestay-panel
     h1 Update Your PetHomeStay Listing
-    = simple_nested_form_for @homestay, html: { multipart: true }, wrapper: :bootstrap3 do |f|
+    = simple_form_for [:host, @homestay], url: host_homestay_path, wrapper: :bootstrap3 do |f|
       = render 'form_fields', f: f
       .form-actions
         = f.submit 'Update my listing', class: 'btn btn-primary'

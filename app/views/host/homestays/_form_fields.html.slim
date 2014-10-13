@@ -95,13 +95,42 @@ css:
   p.help-block Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
   p.help-block When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
   p.help-block No photos = no enquiries!!
-  .form-group#hs-pics
-    = f.fields_for :pictures
-    = f.link_to_add 'Add', :pictures, data: { target: '#hs-pics' }
+  = f.input :photos, as: :attachinary
 
   - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
-    = f.input_field :parental_consent, as: :hidden, value: 1
+    = f.input :parental_consent, as: :hidden, value: 1
     p.help-block As you are under 18 years old, please confirm that you have parental consent to look after pets in your home.
   - if f.object.new_record?
-    = f.input_field :accept_liability, as: :hidden, value: 1
+    = f.input :accept_liability, as: :hidden, value: 1
     p.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
+
+
+coffee:
+  $('.homestay_photos .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fit', "width": 380, "height": 300}) %>"
+                alt="" width="75"/>
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """

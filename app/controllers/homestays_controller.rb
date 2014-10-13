@@ -47,10 +47,12 @@ class HomestaysController < ApplicationController
     end
   end
 
+  # Depreciated
   def edit
     show()
   end
 
+  # Depreciated
   def update
     if @homestay.update_attributes(params[:homestay])
       redirect_to @homestay, alert: 'Your listing has been updated.'
@@ -72,10 +74,12 @@ class HomestaysController < ApplicationController
     end
   end
 
+  # Depreciated
   def new
     @homestay = current_user.build_homestay
   end
 
+  # Depreciated
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
@@ -105,7 +109,7 @@ class HomestaysController < ApplicationController
 		  render nothing: true
 	  else
 			render nothing: true, status: 302
-  	end
+    end
   end
 
   def favourites
