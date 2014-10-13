@@ -24,8 +24,8 @@
                 = ": #{number_to_currency(homestay.cost_per_night)}"
                 br
             .view-actions.pull-right
-              = link_to 'View Listing', homestay, class: 'btn btn-primary fav-homestay-action'
+              = link_to 'View Listing', homestay, class: 'btn btn-default fav-homestay-action', style: 'margin-top: -5px; margin-bottom: 5px;'
               br
-              = link_to 'Make Enquiry', homestay_path(homestay, anchor: 'enquiry'), class: 'btn btn-primary fav-homestay-action fav-make-enquiry'
+              = link_to 'Make Enquiry', homestay_path(homestay, anchor: 'enquiry'), class: 'btn btn-primary fav-homestay-action fav-make-enquiry', style: 'margin-bottom: 5px;'
               br
-              = link_to 'Remove', '#', class: 'btn btn-primary remove-from-favourites'
+              = link_to 'Remove', '#', class: 'remove-from-favourites'
