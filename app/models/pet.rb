@@ -16,7 +16,7 @@ class Pet < ActiveRecord::Base
 
   serialize :personalities, Array
 
-  attr_accessible :name, :pet_type_id, :other_pet_type, :size_id, :date_of_birth, :sex_id, :energy_level,
+  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :date_of_birth, :sex_id, :energy_level,
     :personalities, :emergency_contact_name, :emergency_contact_phone, :vet_name, :vet_phone,
     :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated
 

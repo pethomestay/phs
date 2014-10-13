@@ -17,10 +17,11 @@ class Guest::PetsController < Guest::GuestController
   def create
     @pet = current_user.pets.build(params[:pet])
     if @pet.save
+      flash[:alert] = "#{@pet.name} has been added to your list of pets."
       if params[:redirect_path].present?
-        redirect_to params[:redirect_path], alert: "#{@pet.name} has been added to your list of pets."
+        redirect_to params[:redirect_path]
       else
-        redirect_to guest_pets_path, alert: "#{@pet.name} has been added to your list of pets."
+        redirect_to guest_pets_path
       end
     else
       render :new

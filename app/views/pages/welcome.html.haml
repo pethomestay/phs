@@ -8,10 +8,10 @@
       - if params[:signup_path]
         = link_to "Add your pet's details now", new_pet_path(redirect_path: params[:signup_path]), class: 'btn btn-large btn-primary'
       - else
-        = link_to "Add your pet's details now", new_pet_path, class: 'btn btn-large btn-primary'
+        = link_to "Add your pet's details now", new_guest_pet_path, class: 'btn btn-large btn-primary'
   .span6
     %h2 I want to look after pets
     %p It couldn't be easier to be put in touch with pet owners. Just give us some basic details and we'll create an awesome listings page.
     .form-actions
-      = link_to "Start building your listing now", new_homestay_path, class: 'btn btn-large btn-primary'
+      = link_to "Start building your listing now", new_host_homestay_path, class: 'btn btn-large btn-primary'
 

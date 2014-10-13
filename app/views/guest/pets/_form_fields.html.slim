@@ -1,4 +1,5 @@
 - all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
+= hidden_field_tag 'redirect_path', params[:redirect_path]
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
   = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
