@@ -54,7 +54,7 @@
     .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
-        - state = translate booking.state
+        - state = translate_state booking.state
         span.booking-status class=state.downcase #{state}
         span.date
           small

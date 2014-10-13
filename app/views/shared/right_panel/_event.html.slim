@@ -5,7 +5,7 @@
 .event
   = render 'pages/dashboard/date_widget', date: event.check_in_date
   .info
-    - state = translate event.state
+    - state = translate_state event.state
     span.booking-status class=state.downcase #{state}
     span.period
       - if event.check_in_date != event.check_out_date

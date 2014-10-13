@@ -63,7 +63,7 @@ module ApplicationHelper
     nil_or_not_date(attribute) ? "" : attribute.to_formatted_s(:day_and_month)
   end
 
-  def translate booking_state
+  def translate_state booking_state
     case booking_state
       when 'finished'               then 'Requested'
       when 'finished_host_accepted' then 'Booked'
