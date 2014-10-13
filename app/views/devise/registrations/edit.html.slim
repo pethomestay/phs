@@ -45,13 +45,13 @@ coffee:
           <% } else { %>
             <td>
               <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 50, "height": 50 }) %>"
-                alt="" width="50" height="50" />
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 60, "height": 60 }) %>"
+                alt="" width="60" height="60" />
             </td>
             <td>
               <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'thumb', "gravity": "face", "width": 50, "height": 50, "radius": "max" }) %>"
-                alt="" width="50" height="50" />
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'thumb', "gravity": "face", "width": 60, "height": 60, "radius": "max" }) %>"
+                alt="" width="60" height="60" />
             </td>
             <td>
               <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
