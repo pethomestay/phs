@@ -47,12 +47,12 @@ coffee:
           <% } else { %>
             <td>
               <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 50, "height": 50 }) %>"
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fill', "width": 50, "height": 50 }) %>"
                 alt="" width="50" height="50" />
             </td>
             <td>
               <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'thumb', "gravity": "face", "width": 50, "height": 50, "radius": "max" }) %>"
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "gravity": "face", "width": 50, "height": 50, "radius": "max" }) %>"
                 alt="" width="50" height="50" />
             </td>
             <td>
@@ -64,7 +64,34 @@ coffee:
         <% } %>
       </table class="table">
     """
-  $('.pet_extra_photos .attachinary-input').attachinary()
+  $('.pet_extra_photos .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fit', "width": 75}) %>"
+                alt=""/>
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """
   $('.chosen-select').chosen
     allow_single_deselect: true
     no_results_text: 'No results matched'
