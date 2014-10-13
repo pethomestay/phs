@@ -79,7 +79,8 @@
       span
         i.fa.fa-chevron-down.fa-lg.chevron
 
-  - messages = conversation.messages.order('created_at DESC')
-  = render 'shared/messages/message', message: messages.shift, top: true
+  - messages = conversation.messages.order('created_at DESC') # Could be nil
+  - if messages.any?
+    = render 'shared/messages/message', message: messages.shift, top: true
   - messages.each do |message|
     = render 'shared/messages/message', message: message, top: false

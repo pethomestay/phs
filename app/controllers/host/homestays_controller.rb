@@ -6,6 +6,7 @@ class Host::HomestaysController < Host::HostController
     @homestay = current_user.build_homestay
   end
 
+  # POST
   def create
     @homestay = current_user.build_homestay(params[:homestay])
     if @homestay.save
