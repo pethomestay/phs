@@ -104,12 +104,12 @@
 
       .calendar-updation-date.span5{style: 'padding-top: 15px; padding-bottom: 25px;'}
         %span.cal-date-span
-          Calendar Updated:&nbsp&nbsp
-          = "#{calendar_updation_date(@homestay.user)}"
+          Last Sign In:&nbsp
+          = "#{time_ago_in_words(@homestay.user.last_sign_in_at)}"
         - if @response_rate_in_percent
           %br
           %span.cal-date-span
-            Host Responsiveness:&nbsp&nbsp
+            Host Responsiveness:&nbsp
             = "#{@response_rate_in_percent}%"
           %span.cal-date-span{style: 'font-weight: normal; color: gray;'}
             %small % of messages responded to within 24 hours
