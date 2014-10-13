@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
-  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :phone_number
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :phone_number, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country
 
   has_one :homestay
   has_many :pets
