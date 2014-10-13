@@ -12,7 +12,7 @@ class Homestay < ActiveRecord::Base
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
-  attr_accessible :title, :description, :cost_per_night, :property_type_id, :outdoor_area_id, :is_professional, :insurance, :first_aid, :professional_qualification, :constant_supervision, :supervision_outside_work_hours, :emergency_transport, :fenced, :children_present, :police_check, :website, :address_1, :address_suburb, :address_city, :address_postcode, :pet_feeding, :pet_grooming, :pet_training, :pet_walking, :accept_liability, :parental_consent, :accept_liability
+  attr_accessible :title, :description, :cost_per_night, :property_type_id, :outdoor_area_id, :is_professional, :insurance, :first_aid, :professional_qualification, :constant_supervision, :supervision_outside_work_hours, :emergency_transport, :fenced, :children_present, :police_check, :website, :address_1, :address_suburb, :address_city, :address_postcode, :pet_feeding, :pet_grooming, :pet_training, :pet_walking, :accept_liability, :parental_consent, :accept_liability, :active
 
 
   validates_presence_of :cost_per_night, :address_1, :address_suburb, :address_city, :address_country, :title, :description

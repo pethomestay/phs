@@ -25,7 +25,7 @@ class Host::HomestaysController < Host::HostController
   # GET /host/homestay/edit
   def edit
     @homestay = current_user.homestay
-    raise ActiveRecord::RecordNotFound unless @homestay
+    raise ActiveRecord::RecordNotFound if @homestay.blank?
     if not @homestay.active?
       flash[:alert] = 'This listing is not active.'
     elsif @homestay.locked?
@@ -35,7 +35,7 @@ class Host::HomestaysController < Host::HostController
 
   def update
     @homestay = current_user.homestay
-    raise ActiveRecord::RecordNotFound unless @homestay.slug == params[:id]
+    raise ActiveRecord::RecordNotFound if @homestay.blank?
     if @homestay.update_attributes(params[:homestay])
       redirect_to @homestay, alert: 'Your listing has been updated.'
     else
