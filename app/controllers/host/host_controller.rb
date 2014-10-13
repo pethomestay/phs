@@ -15,7 +15,7 @@ class Host::HostController < ApplicationController
   private
   def require_homestay!
     if current_user.homestay.blank?
-      flash[:info] = 'Just fill in the form to create your Homestay!'
+      flash[:info] = 'Create your Homestay to become a Host'
       redirect_to new_host_homestay_path
     end
   end
