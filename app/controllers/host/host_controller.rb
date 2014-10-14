@@ -11,8 +11,8 @@ class Host::HostController < ApplicationController
 
   private
   def host_filters
-    if user_signed_in?
-      if current_user.homestay.present?
+    if user_signed_in? # User must be signed in
+      if current_user.homestay.present? # User must have a Homestay
         @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
         this_month    = Date.today..Date.today.end_of_month
         upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
