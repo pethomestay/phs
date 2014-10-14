@@ -1,5 +1,6 @@
 class Host::HomestaysController < Host::HostController
-  skip_before_filter :require_homestay!, only: [:new, :create]
+  before_filter :authenticate_user!, only: [:new, :create]
+  skip_before_filter :host_filters,  only: [:new, :create]
 
   # GET /host/homestay/new
   def new

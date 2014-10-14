@@ -1,10 +1,7 @@
 class Host::HostController < ApplicationController
   layout 'new_application'
 
-  before_filter :authenticate_user!
-  before_filter :require_homestay!
-  before_filter :set_instance_vars
-  # TODO: specify the order that before_filter runs
+  before_filter :host_filters
 
   # GET /host
   def index
@@ -13,22 +10,25 @@ class Host::HostController < ApplicationController
   end
 
   private
-  def require_homestay!
-    if current_user.homestay.blank?
-      flash[:info] = 'Create your Homestay to become a Host'
-      redirect_to new_host_homestay_path
+  def host_filters
+    if user_signed_in?
+      if current_user.homestay.present?
+        @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
+        this_month    = Date.today..Date.today.end_of_month
+        upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
+                        .select('state, check_in_date, check_out_date, booker_id')
+        upcoming_e    = current_user.homestay.enquiries.includes(:booking)
+                        .where(check_in_date: this_month)
+                        .where( bookings: { enquiry_id: nil } ).limit(5)
+                        .select('check_in_date, check_out_date')
+        @upcoming     = (upcoming_e + upcoming_b).sort{ |a, b| a.check_in_date <=> b.check_in_date }
+      else
+        flash[:info] = 'Create your Homestay to become a Host'
+        redirect_to new_host_homestay_path
+      end
+    else
+      flash[:info] = 'Please sign in or sign up before continuing :)'
+      redirect_to new_user_session_path, redirect_path: request.env['PATH_INFO']
     end
-  end
-
-  def set_instance_vars
-    @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
-    this_month    = Date.today..Date.today.end_of_month
-    upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
-                    .select('state, check_in_date, check_out_date, booker_id')
-    upcoming_e    = current_user.homestay.enquiries.includes(:booking)
-                    .where(check_in_date: this_month)
-                    .where( bookings: { enquiry_id: nil } ).limit(5)
-                    .select('check_in_date, check_out_date')
-    @upcoming     = (upcoming_e + upcoming_b).sort{ |a, b| a.check_in_date <=> b.check_in_date }
   end
 end

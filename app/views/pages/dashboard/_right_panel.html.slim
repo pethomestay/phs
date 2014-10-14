@@ -14,5 +14,6 @@
     tbody
 
 .upcoming
-  - for event in @upcoming
-    = render 'shared/right_panel/event', event: event
+  - if defined? @upcoming
+    - for event in @upcoming
+      = render 'shared/right_panel/event', event: event
