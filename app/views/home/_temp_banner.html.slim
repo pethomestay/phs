@@ -1,0 +1,108 @@
+#ribbon-container
+  a#ribbon href='http://www.meetup.com/PetHomeStay-Melbourne-Host-Meetup/events/211908462/' target='_blank'
+    | Come to the PHS Melbourne MeetUp!
+    br
+    ' Tuesday 21st
+    span.hidden-xs
+      ' October
+    span.hidden-sm.hidden-md.hidden-lg
+      'Oct
+    | at 6pm! RSVP Here!
+  a#ribbon-xxs href='http://www.meetup.com/PetHomeStay-Melbourne-Host-Meetup/events/211908462/' target='_blank'
+    | Come to our Melbourne MeetUp!
+    br
+    | 21st Oct at 6pm! RSVP Here!
+
+
+scss:
+  * {
+    padding: 0; /* Standard Reset, and we're adding box-sizing:border-box because it's awesome. */
+    margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+  #ribbon-container {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    overflow: visible; /* so we can see the pseudo-elements we're going to add to the anchor */
+    font-size: 15px; /* font-size and line-height must be equal so we can account for the height of the banner */
+    line-height: 20px;
+  }
+
+  #ribbon-container:before {
+    content:"";
+    height: 0;
+    width: 0;
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    border-top: 29px solid rgba(0,0,0,.3); /* These 4 border properties create the first part of our drop-shadow */
+    border-bottom: 29px solid rgba(0,0,0,.3);
+    border-right: 29px solid rgba(0,0,0,.3);
+    border-left: 29px solid transparent;
+  }
+
+  #ribbon-container:after { /* This adds the second part of our dropshadow */
+    content:"";
+    height: 3px;
+    background: rgba(0,0,0,.3);
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 58px;
+    right:3px;
+  }
+
+  #ribbon-container a {
+    display:block;
+    padding: 10px 14px;
+    position:relative; /* allows us to position our pseudo-elements properly */
+    text-align: right;
+    background:#5cc1c0;
+    overflow:visible;
+    height:58px;
+    margin-left:29px;
+    color:#fff;
+    text-decoration:none;
+  }
+
+  #ribbon-container a:before { /* this creates the "forked" part of our ribbon */
+    content:"";
+    height: 0;
+    width: 0;
+    display:block;
+    position:absolute;
+    top:0;
+    left:-29px;
+    border-top: 29px solid #5cc1c0;
+    border-bottom: 29px solid #5cc1c0;
+    border-right: 29px solid transparent;
+    border-left: 29px solid transparent;
+  }
+
+  #ribbon-container a:hover {
+    background:#74cac9;
+  }
+
+  #ribbon-container a:hover:before { /* this makes sure that the "forked" part of the ribbon changes color with the anchor on :hover */
+    border-top: 29px solid #74cac9;
+    border-bottom: 29px solid #74cac9;
+  }
+
+  #ribbon-container #ribbon-xxs {
+    display: none;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    #ribbon-container {
+      top: 350px;
+    }
+  }
+  @media (max-width: 314px) {
+    #ribbon-container {
+      #ribbon { display: none; }
+      #ribbon-xxs { display: block; }
+    }
+  }
