@@ -222,7 +222,7 @@ class Booking < ActiveRecord::Base
 				ProviderMailer.booking_confirmation(self).deliver
         self.mailbox.messages.create! user_id: bookee_id,
           message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date! Thanks for using PetHomestay!"
-     end
+      end
 
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
@@ -238,7 +238,7 @@ class Booking < ActiveRecord::Base
 			self.save!
 			PetOwnerMailer.provider_has_question(self, old_message).deliver
 		end
-    unless self.response_message.present? and self.response_message.empty?
+    if self.response_message.present?
       self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
     end
 		message
