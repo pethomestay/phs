@@ -22,8 +22,13 @@ class Host::HostController < ApplicationController
 
   def set_instance_vars
     @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
-    @upcoming     = current_user.bookees.where('check_in_date >= ?', Date.today)
-                    .order('check_in_date ASC').limit(3)
+    this_month    = Date.today..Date.today.end_of_month
+    upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
                     .select('state, check_in_date, check_out_date, booker_id')
+    upcoming_e    = current_user.homestay.enquiries.includes(:booking)
+                    .where(check_in_date: this_month)
+                    .where( bookings: { enquiry_id: nil } ).limit(5)
+                    .select('check_in_date, check_out_date')
+    @upcoming     = (upcoming_e + upcoming_b).sort{ |a, b| a.check_in_date <=> b.check_in_date }
   end
 end
