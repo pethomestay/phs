@@ -12,8 +12,19 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require jquery.fileupload
+//= require cloudinary/jquery.cloudinary
+//= require attachinary
 //= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min
+//= require bootstrap-slider
 //= require popover
-//= require_directory ./components
+//= require moment
+//= require jquery_nested_form
+//= require chosen-jquery
+//= require_directory ./components_mixin
+//= require_directory ./components_data
+//= require_directory ./components_ui

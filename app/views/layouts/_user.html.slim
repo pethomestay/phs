@@ -1,0 +1,17 @@
+/ This partial is rendered as a layout for all other user pages (pets etc.)
+/ It is different from _user_root.html.slim in only two line.
+/ Thus every line in this file must be kept in sync with _user_root.html.slim apart from the intended different ones.
+
+.container-fluid
+  .row
+    nav.sub-nav
+      = render 'pages/dashboard/sub_nav'
+  .row
+    / Hide left nav on xs screen
+    .left-nav.hidden-xs.col-sm-4.col-md-2
+      = render 'pages/dashboard/left_nav'
+    / Keep main panel on xs screen
+    .main-panel.col-sm-8.col-md-6
+      = yield
+    .right-panel.hidden-xs.hidden-sm.col-sm-8.col-md-4
+      = render 'pages/dashboard/right_panel'

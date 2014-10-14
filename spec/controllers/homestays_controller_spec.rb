@@ -116,7 +116,7 @@ describe HomestaysController do
 
       it 'should redirect back to the user account' do
         subject
-        response.should redirect_to my_account_path
+        response.should redirect_to homestay
       end
     end
 
@@ -185,7 +185,7 @@ describe HomestaysController do
 
     let(:user) { FactoryGirl.build(:user) }
     let(:homestay) { FactoryGirl.build(:homestay, id: 1) }
-    let(:start_date){ Date.today } 
+    let(:start_date){ Date.today }
     let(:end_date){ Date.today + 4.days }
     let(:booking_info){ [1,2,3] }
 

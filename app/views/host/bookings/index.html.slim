@@ -1,0 +1,53 @@
+= render layout: 'layouts/user' do
+  .bookings-panel
+    - if @bookings.blank?
+      p You have no bookings as a host in your history
+    - else
+      - @bookings.each do |booking|
+        div.well.show-booking-history
+          - guest = booking.booker
+          .booking-info  style='display: inline-block;'
+            p
+              strong
+                ' Guest:
+              = guest.name
+              br
+              - pet = guest.pet
+              strong
+                ' Pet:
+              | #{pet.name}
+              = pet.breed.present? ? ", a #{pet.breed}" : ''
+              | , #{[pet.age].to_sentence}
+              br
+              ' From
+              strong
+                ' #{booking.check_in_date.strftime('%b %d')}
+              ' to
+              strong
+                | #{booking.check_out_date.strftime('%b %d')}
+              br
+              strong
+                ' Payout:
+              | $#{booking.host_payout}
+
+          .booking-right-panel.pull-right style='min-width:190px;'
+            span.confirmed-block
+              = booking_status_for_listing(booking)
+            br
+            - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
+              - if current_user == booking.booker
+                = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary right-panel-btn'
+              - else
+                = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary right-panel-btn'
+            - elsif current_user == booking.booker
+              = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary right-panel-btn'
+            - if ((not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0) or (!booking.is_host_view_valid?)) #don't allow a booking to be canceled if it's an old one and paid for
+              br
+              - cancel_classes = 'btn btn-primary right-panel-btn'
+              - if !booking.is_host_view_valid?
+                - cancel_classes += ' confirm-cancel'
+              = link_to 'Cancel', guest_cancelled_booking_path(booking), class: cancel_classes, id: 'cancel-booking_' + booking.id.to_s
+
+
+      - if !@trips and can_host_request_cancel_any_bookings?
+        = link_to 'Need to cancel a booking?', host_cancellation_bookings_path

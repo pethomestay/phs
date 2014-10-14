@@ -8,7 +8,7 @@
                         = link_to 'Admin Dashboard', admin_dashboard_path, class: 'buttons btn navbar-btn'
                     %a.buttons.btn.navbar-btn#find-a-host{ href: root_path } Find A Host
                     = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn'
-                    %a.buttons.btn.navbar-btn.primary{ href: mailboxes_path }
+                    %a.buttons.btn.navbar-btn.primary{ href: guest_path }
                         %span#my
                             %i.fa.fa-user
                             My

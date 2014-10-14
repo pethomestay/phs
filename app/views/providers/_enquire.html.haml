@@ -8,9 +8,9 @@
     %p
       %strong Pay via PetHomeStay to get Full Support & Vet Accident Insurance!
   - else
-    = link_to 'Send a Meeting Request', new_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
+    = link_to 'Send a Meeting Request', new_guest_pet_path(redirect_path: url_for(provider)), class: 'btn btn-primary btn-large disabled'
     You need to
-    = link_to 'add a pet', new_pet_path(redirect_path: url_for(provider))
+    = link_to 'add a pet', new_guest_pet_path(redirect_path: url_for(provider))
     before you can send a meeting request
 
 .modal.hide.fade#enquire

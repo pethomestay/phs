@@ -1,0 +1,146 @@
+.messages-panel {
+  margin: -20px;
+  .panel-header {
+    padding-top: 20px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    background-color: $grey;
+    p {
+      font-size: 14px;
+      .unread-count {
+        color: $orange-light;
+      }
+    }
+  }
+
+  .conversation {
+    opacity: .6;
+    .header {
+      background-color: $grey-light;
+      height: 110px;
+      padding: 15px 30px;
+      border-bottom: 1px solid $grey;
+      cursor: pointer;
+      position: relative;;
+      .profile {
+        display: inline-block;
+        position: absolute;
+        pointer-events: none;
+        img {
+          width: 60px;
+          height: 60px;
+          margin-top: 10px;
+        }
+        .phone-icon {
+          position: absolute;
+          top: 50px;
+          left: 40px;
+          .fa-square {
+            color: $grey-dark;
+          }
+          .fa-phone {
+            color: white;
+          }
+        }
+      }
+      .host-info,
+      .guest-info {
+        display: inline-block;
+        margin-top:  10px;
+        margin-left: 80px;
+      }
+      .right {
+        position: absolute;
+        top:   15px;
+        right: 20px;
+        span {
+          display: block;
+          text-align: right;
+          .chevron {
+            margin-top: 10px;
+            color: $grey-dark;
+          }
+        }
+      }
+    }
+
+    .message {
+      display: none;
+      .from {
+        height: 48px;
+        padding: 13px 20px;
+        border-bottom: 1px solid $grey;
+        .sender {
+          color: $blue-light;
+        }
+        .reply {
+          display: inline-block;
+          cursor: pointer;
+          i.fa-reply {
+            margin-top: 5px;
+          }
+          span {
+            font-size: 15px;
+          }
+          &.disabled {
+            color: $grey;
+            cursor: default;
+          }
+        }
+      }
+      .body {
+        padding: 23px;
+        border-bottom: 1px solid $grey;
+        pre {
+          border: none;
+          background-color: transparent;
+        }
+        .btn {
+          display: block;
+          width: 65%;
+          margin-left: auto;
+        }
+      }
+    }
+    .new-msg-form-container {
+      display: none;
+      padding: 23px;
+      border-bottom: 1px solid $grey;
+    }
+    &.expanded {
+      opacity: 1;
+      .header {
+        background-color: $blue-light;
+        color: white;
+        .profile {
+          pointer-events: auto;
+        }
+        .right {
+          span.booking-status,
+          .chevron {
+            color: white;
+          }
+        }
+      }
+    }
+    &.unread {
+      opacity: 1;
+      .header {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .empty-inbox {
+    padding-top: 30px;
+    .h5 {
+      text-align: center;
+    }
+  }
+
+  .paginator {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -8,10 +8,10 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'layouts/google_analytics' if not ENV['APP_ID'] == "642031549187678" #this Facebook app id is for the local dev
+    = render partial: 'shared/tracking/google_analytics' unless ENV['APP_ID'] == "642031549187678" #this Facebook app id is for the local dev
     = yield :open_graph_tags
   %body
-    = render partial: 'layouts/facebook_tag'
+    = render partial: 'shared/tracking/facebook_tag'
     %div.navbar
       .navbar-inner
         .container.admin-container-phs

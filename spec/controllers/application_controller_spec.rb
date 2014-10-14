@@ -52,7 +52,7 @@ describe ApplicationController do
       let(:user) { mock(:user, homestay: stub_model(Homestay), pets: nil) }
 
       it 'should return the mailbox path' do
-        subject.should == mailboxes_path
+        subject.should == guest_path
       end
     end
   end

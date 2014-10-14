@@ -1,0 +1,136 @@
+css:
+  .address-preview {
+    background-color: #ebebeb;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    width: 340px;
+  }
+= javascript_include_tag 'address_autocomplete'
+
+.homestay-form
+  - if f.object.persisted?
+    h3 Listing is Active?
+    .checkbox
+      - if f.object.locked?
+        = f.input :active, as: :boolean, disabled: true, hint: 'This listing is currently waiting for admin approval.'
+      - else
+        = f.input :active, as: :boolean
+
+  h3 Information for Pet Owners
+  span.help-block More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
+  = f.input :title, label: 'Catchy listing title', maxlength: 50, hint: 'Limit of 50 characters'
+  = f.input :description, label: 'What do you want to tell pet owners about yourself?', input_html: { rows: 12 }
+  p Items to include could be:
+  ul.help-block
+    li Your style of pet care
+    li Are you active? 2 walks per day, lots of fun and attention?
+    li Are you quiet? Evenings in front of the fire?
+    li Do you provide bedding, toys, treats?
+    li Do you provide a pick up or drop off?
+    li Are you specific about certain times?
+  = f.input :cost_per_night do
+    .input-group
+      .input-group-addon $
+      = f.input_field :cost_per_night
+      .input-group-addon .00
+  h3 Tell us about your PetHomeStay
+  = f.input :property_type_id, collection: ReferenceData::PropertyType.all, include_blank: false
+  = f.input :outdoor_area_id, label: 'Size of outdoor area', collection: ReferenceData::OutdoorArea.all, include_blank: false
+
+  .checkbox
+    = label_tag "Professional?", nil
+    = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
+    = f.input :insurance, as: :boolean, inline_label: 'Professional pet-insurance', label: false
+    = f.input :first_aid, as: :boolean, inline_label: 'Pet first-aid training', label: false
+    = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
+
+  .checkbox
+    = label_tag "I can provide" , nil
+    = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
+    = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
+    = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+
+  .checkbox
+    = label_tag "I have", nil
+    = f.input :fenced, as: :boolean, inline_label: 'A fully fenced back yard', label: false
+    = f.input :children_present, as: :boolean, inline_label: 'Children under 18 at the address', label: false
+    = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
+
+  = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
+
+  /h3
+  /  | Do you own pets?
+  /  br
+  /  small If you do, please complete a pet profile after creating your listing
+  /.checkbox
+  /  = f.input :pets_present, as: :boolean, label: 'My pets will be present at this address during PetHomeStay bookings', checked_value: 1, unchecked_value: 2
+
+  h3 style="margin-bottom: 10px;"
+    ' Your PetHomeStay address
+    br
+    small This will be used to place your listing on the map
+  .control-group style="margin-left: 10px;"
+    input#addressField style="width: 400px;" placeholder='Enter your address here' type='text' autocomplete='off' onkeypress='return event.keyCode != 13;'
+    p.help-block
+      | (Your exact address will not be displayed on your listing - it is restricted to the general suburb level until a booking is made.)
+  .address-preview
+    h5 Preview
+    iframe#map-preview width="300" height="300" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=Australia"}
+    p#address-preview style='padding-top: 10px'
+    = f.hidden_field :address_1, value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+    = f.hidden_field :address_suburb, value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+    = f.hidden_field :address_city, value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+    = f.hidden_field :address_country, priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+    = f.hidden_field :address_postcode, value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true
+  h3 Other services offered
+  .checkbox
+    = label_tag "I can also offer", nil
+    = f.input :pet_feeding, as: :boolean, inline_label: 'pet feeding', label: false
+    = f.input :pet_grooming, as: :boolean, inline_label: 'pet grooming', label: false
+    = f.input :pet_training, as: :boolean, inline_label: 'pet training', label: false
+    = f.input :pet_walking, as: :boolean, inline_label: 'pet walking', label: false
+
+  h3 Photo
+  p.help-block Please add at least one photo of the very best thing about your PetHomeStay. What makes your PetHomeStay different and special? This could be your great backyard where the pet will hang out, the cozy spot by the fire, or the cuddles that you will give someone's pet. This photo is very important as it is your main listing photo, and is what draws people to your listing! Add as many as you like!
+  p.help-block When you have added a photo of your PetHomeStay, it's also important to add a photo of yourself (perhaps having fun with your pet if you have one!) so that a potential Pet Owner can check you out and knows what you look like.
+  p.help-block No photos = no enquiries!!
+  = f.input :photos, as: :attachinary
+
+  - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
+    = f.input :parental_consent, as: :hidden, input_html: { value: 1 }
+    p.help-block As you are under 18 years old, please confirm that you have parental consent to look after pets in your home.
+  - if f.object.new_record?
+    = f.input :accept_liability, as: :hidden, input_html: { value: 1 }
+    p.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
+
+
+coffee:
+  $('.homestay_photos .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fill', "width": 380, "height": 300}) %>"
+                alt="" width="75"/>
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """

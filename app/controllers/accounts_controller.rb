@@ -6,8 +6,7 @@ class AccountsController < ApplicationController
 		@account = Account.new
 	end
 
-	def create
-    puts "here instead"
+  def create
 		@account = Account.new(params[:account])
 		if @account.save
 			return redirect_to @account

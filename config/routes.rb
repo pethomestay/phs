@@ -87,6 +87,27 @@ PetHomestay::Application.routes.draw do
     end
   end
 
+  namespace :guest do
+    resources :messages, only: [:index, :create]
+    get '/calendar/availability', to: 'calendar#availability'
+    post '/conversation/mark_read', to: 'messages#mark_read'
+    get '/favorites', to: 'favorites#index'
+    resources :pets, except: [:show]
+    get '/',         to: 'guest#index'
+  end
+  devise_scope :user do
+    get '/guest/edit', to: 'registrations#edit'
+  end
+
+  namespace :host do
+    get '/messages', to: 'messages#index'
+    get '/calendar/availability', to: 'calendar#availability'
+    get '/bookings', to: 'bookings#index'
+    resource :homestay, only: [:new, :create, :edit, :update]
+    resources :accounts, only: [:new, :create, :edit, :update, :show]
+    get '/',         to: 'host#index'
+  end
+
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
@@ -111,6 +132,7 @@ PetHomestay::Application.routes.draw do
   get 'zendesk_session/:action', to: 'zendesk_session'
 
   mount Ckeditor::Engine => '/ckeditor'
+  mount Attachinary::Engine => "/attachinary"
 
   get '/my-account'     => 'users#show', as: :my_account
   get '/my-account'     => 'users#show', as: :user_root
@@ -124,13 +146,24 @@ PetHomestay::Application.routes.draw do
   get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
   get '/house-rules'          => redirect('http://support.pethomestay.com/hc/en-us/sections/200341999-House-Rules'), as: 'house_rules'
   get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
-  get '/faqs'                 => 'pages#faqs', as: 'faqs'
   get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
   get '/investors'            => 'pages#investors', as: 'investors'
   get '/jobs'                 => 'pages#jobs', as: 'jobs'
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
-  get '/legacy_home', to: 'pages#legacy_home', as: 'legacy_home'
   root to: 'pages#home'
+
+  if Rails.env.development?
+    # Deprecated pages. Kept for archives.
+    namespace :deprecated do
+      get '/home', to: 'pages#home'
+      get '/faqs', to: 'pages#faqs'
+      get '/terms-and-conditions', to: 'pages#terms_and_conditions'
+      get '/privacy-policy', to: 'pages#privacy_policy'
+      get '/how-does-it-work', to: 'pages#how_does_it_work'
+      get '/about-us', to: 'pages#about_us'
+      get '/house-rules', to: 'pages#house_rules'
+    end
+  end
 end

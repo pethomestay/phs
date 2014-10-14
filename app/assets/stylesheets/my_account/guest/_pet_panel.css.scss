@@ -1,0 +1,25 @@
+.pet-panel {
+  padding-left:  20px;
+  padding-right: 20px;
+  // index
+  table tbody tr td {
+    vertical-align: middle;
+  }
+  // add & edit
+  p.header-hint {
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+  label.checkbox,
+  label.radio {
+    display: inline-block;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  .slider {
+    margin-left: 20px;
+  }
+}

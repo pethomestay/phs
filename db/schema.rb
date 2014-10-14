@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140604010907) do
+ActiveRecord::Schema.define(:version => 20141010024643) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -22,6 +22,22 @@ ActiveRecord::Schema.define(:version => 20140604010907) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
+
+  create_table "attachinary_files", :force => true do |t|
+    t.integer  "attachinariable_id"
+    t.string   "attachinariable_type"
+    t.string   "scope"
+    t.string   "public_id"
+    t.string   "version"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "format"
+    t.string   "resource_type"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "attachinary_files", ["attachinariable_type", "attachinariable_id", "scope"], :name => "by_scoped_parent"
 
   create_table "blog_comments", :force => true do |t|
     t.string   "name",       :null => false
@@ -221,15 +237,15 @@ ActiveRecord::Schema.define(:version => 20140604010907) do
     t.integer  "user_id"
     t.string   "name"
     t.string   "breed"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.boolean  "dislike_loneliness"
     t.boolean  "dislike_children"
     t.boolean  "dislike_animals"
     t.boolean  "dislike_people"
-    t.boolean  "flea_treated",            :default => false
-    t.boolean  "vaccinated",              :default => false
-    t.boolean  "house_trained",           :default => false
+    t.boolean  "flea_treated",            :default => true
+    t.boolean  "vaccinated",              :default => true
+    t.boolean  "house_trained",           :default => true
     t.string   "age"
     t.string   "microchip_number"
     t.string   "council_number"
@@ -241,9 +257,11 @@ ActiveRecord::Schema.define(:version => 20140604010907) do
     t.string   "vet_phone"
     t.text     "medication"
     t.date     "date_of_birth"
-    t.integer  "pet_type_id"
+    t.integer  "pet_type_id",             :default => 1
     t.integer  "sex_id"
     t.integer  "size_id"
+    t.integer  "energy_level"
+    t.text     "personalities",           :default => "--- []\n"
   end
 
   add_index "pets", ["pet_type_id"], :name => "index_pets_on_pet_type_id"

@@ -1,0 +1,9 @@
+/ Expect params
+/   date: a Date object
+
+
+.date-widget
+  .decoration.left
+  .decoration.right
+  .month.text-uppercase #{date.strftime('%b')}
+  .day #{date.day}

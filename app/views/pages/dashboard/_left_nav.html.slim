@@ -1,0 +1,70 @@
+ul.nav.nav-pills.nav-stacked
+  - if params[:controller].include?('host')
+    li.messages class=('active' if params[:controller] == 'host/messages' or params[:controller] == 'host/host')
+      a href=host_messages_path
+        i.fa.fa-inbox.fa-lg.fa-fw
+        | INBOX
+        - if defined?(@unread_count) and @unread_count > 0
+          span.unread-count.pull-right = @unread_count
+    li.calendar.hidden-md.hidden-lg
+      a href=''
+        i.fa.fa-calendar.fa-lg.fa-fw
+        | CALENDAR
+    li class=('active' if params[:controller] == 'host/bookings')
+      a href=host_bookings_path
+        i.fa.fa-suitcase.fa-lg.fa-fw
+        | BOOKINGS
+    /li
+    /  a href=trust_path
+    /    i.fa.fa-shield.fa-lg.fa-fw
+    /    | TRUST
+    /    span.hidden-md  & FEEDBACK
+    li class=('active' if params[:controller] == 'host/homestays')
+      a href=(current_user.homestay.present? ? edit_host_homestay_path : new_host_homestay_path)
+        i.fa.fa-home.fa-lg.fa-fw
+        | MY HOMESTAY
+    li class=('active' if params[:controller] == 'host/accounts')
+      a href=(current_user.account.blank? ? new_host_account_path : host_account_path(current_user.account))
+        i.fa.fa-dollar.fa-lg.fa-fw
+        | PAYOUT DETAILS
+    li
+      a href='http://support.pethomestay.com' target='_blank'
+        i.fa.fa-question-circle.fa-lg.fa-fw
+        | HOST SUPPORT
+  - else
+    li.messages class=('active' if params[:controller] == 'guest/messages' or params[:controller] == 'guest/guest')
+      a href=guest_messages_path
+        i.fa.fa-inbox.fa-lg.fa-fw
+        | INBOX
+        - if defined?(@unread_count) and @unread_count > 0
+          span.unread-count.pull-right = @unread_count
+    li.calendar.hidden-md.hidden-lg
+      a href=""
+        i.fa.fa-calendar.fa-lg.fa-fw
+        | CALENDAR
+    li class=('active' if params[:controller] == 'guest/favorites')
+      a href=guest_favorites_path
+        i.fa.fa-heart.fa-lg.fa-fw
+        | MY HOSTS
+    /li
+    /  a href=trust_path
+    /    i.fa.fa-shield.fa-lg.fa-fw
+    /    | TRUST
+    /    span.hidden-md  & FEEDBACK
+    li class=('active' if params[:controller] == 'registrations')
+      a href=guest_edit_path
+        i.fa.fa-cog.fa-lg.fa-fw
+        | ACCOUNT
+    li class=('active' if params[:controller] == 'guest/pets')
+      a href=(current_user.pets.any? ? guest_pets_path : new_guest_pet_path)
+        i.fa.fa-paw.fa-lg.fa-fw
+        | PET PROFILES
+    li
+      a href='http://support.pethomestay.com' target='_blank'
+        i.fa.fa-question-circle.fa-lg.fa-fw
+        | SUPPORT
+        span.hidden-md  CENTRE
+
+- if current_user.homestay.blank?
+  .create-homestay
+    a href=new_host_homestay_path Love pets? Create your own HomeStay today!
