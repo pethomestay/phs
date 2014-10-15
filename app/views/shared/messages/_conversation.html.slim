@@ -64,7 +64,7 @@
           small
             ' To:
           = booking.check_out_date.strftime('%b %e')
-      - else
+      - elsif conversation.enquiry.present?
         - enquiry = conversation.enquiry
         span.booking-status class='enquiry'
           | Enquiry
