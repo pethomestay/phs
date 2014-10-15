@@ -47,8 +47,6 @@ PetHomestay::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
-  config.assets.precompile += %w( ckeditor/plugins/youtube/plugin.js )
-  config.assets.precompile += %w( ckeditor/plugins/youtube/lang/en.js )
   config.assets.precompile += %w( new_application.css )
   config.assets.precompile += %w( address_autocomplete.js )
   config.assets.precompile += %w( datepicker.js )

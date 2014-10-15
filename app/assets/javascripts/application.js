@@ -19,7 +19,6 @@
 //= require bootstrap-carousel
 //= require bootstrap-tooltip
 //= require bootstrap-popover
-//= require ckeditor/init
 //= require handlebars
 //= require handlebars.comparison
 //= require jquery.nested-fields

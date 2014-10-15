@@ -1,7 +1,0 @@
-= content_tag(:article, id: "blog_post_#{post.id}", class: "blog_post") do
-  = render "blogit/posts/post_head", post: post
-  = render "blogit/posts/post_body", post: post
-  = render "blogit/posts/post_links", post: post
-  = render "blogit/posts/blogger_information", post: post
-  = render "blogit/posts/comments_count",                               |
-    post: post if defined?(show_comments_count) and show_comments_count |
