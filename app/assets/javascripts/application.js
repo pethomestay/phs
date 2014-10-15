@@ -19,7 +19,6 @@
 //= require bootstrap-carousel
 //= require bootstrap-tooltip
 //= require bootstrap-popover
-//= require ckeditor/init
 //= require handlebars
 //= require handlebars.comparison
 //= require jquery.nested-fields
@@ -37,4 +36,12 @@
 //= require messages
 //= require homestays
 //= require availability
-//= require_tree ../../../vendor/assets/javascripts/.
+//= require bootstrap-datepicker-core
+//= require bootstrap-datetimepicker.min
+//= require gmaps
+//= require handlebars.comparison
+//= require handlebars
+//= require jquery.geocomplete
+//= require jquery.tablesorter
+//= require jquery.validate.min
+//= require xdate

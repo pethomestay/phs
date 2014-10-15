@@ -1,0 +1,107 @@
+- all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
+= hidden_field_tag 'redirect_path', params[:redirect_path]
+= field_set_tag 'Step 1 - Essentials'
+  p.header-hint.help-block Please complete all fields
+  = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
+  = f.input :name, label: 'Pet Name'
+  = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
+  = f.input :other_pet_type, label: 'Please specify pet type'
+  = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
+  = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', 'data-slider-id' => 'size', 'data-slider-min' => 1, 'data-slider-max' => 4, 'data-slider-step' => 1, 'data-slider-value' => 1, 'data-slider-tooltip' => 'hide' }
+  .slider-labels.size
+    span.min under 15kg
+    span.max 46kg+
+  = f.input :date_of_birth, label: 'Birth Year', as: :date, start_year: Date.today.year - 15, end_year: Date.today.year, order: [:year], include_blank: true
+  = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
+  = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', 'data-slider-id' => 'energy_level',  'data-slider-min' => 1, 'data-slider-max' => 5, 'data-slider-step' => 1, 'data-slider-value' => 3, 'data-slider-tooltip' => 'hide' }
+  .slider-labels.energy-level
+    span.min low
+    span.max high
+  = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
+    br
+    = f.input_field :personalities, collection: all_personalities, as: :check_boxes
+
+= field_set_tag 'Step 2 - Emergency + Medical'
+  p.header-hint.help-block You can fill this in now, or come back later before a booking starts.
+  = f.input :emergency_contact_name, label: 'Emergency Contact'
+  = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+  = f.input :vet_name,  label: 'Vet Surgery'
+  = f.input :vet_phone, label: 'Vet Phone'
+  = f.input :council_number, label: 'Council Pet Tag'
+  = f.input :microchip_number, label: 'Microchip #'
+  = f.input :medication, input_html: { rows: 2 }
+  label My pet is:
+  = f.input :house_trained, label: 'toilet trained'
+  = f.input :flea_treated, label: 'flea treated'
+  = f.input :vaccinated, label: 'vaccinated'
+
+
+coffee:
+  $('.slider').slider();
+  $('.pet_profile_photo .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Preview</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fill', "width": 50, "height": 50 }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 50, "height": 50, "radius": "max" }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """
+  $('.pet_extra_photos .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fit', "width": 75}) %>"
+                alt=""/>
+            </td>
+            <td>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """
+  $('.chosen-select').chosen
+    allow_single_deselect: true
+    no_results_text: 'No results matched'
+    width: '200px'

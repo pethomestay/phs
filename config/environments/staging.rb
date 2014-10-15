@@ -76,7 +76,7 @@ PetHomestay::Application.configure do
   #   :domain         => ENV['HOST'],
   #   :authentication => :plain,
   # }
-  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.delivery_method = :test
   config.action_mailer.mailgun_settings = {
       api_key: ENV['MAILGUN_API_KEY'],
       domain: ENV['MAILGUN_DOMAIN']

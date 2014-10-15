@@ -7,12 +7,12 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'layouts/google_analytics' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
-    = render partial: 'layouts/crazy_egg' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
+    = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
+    = render partial: 'shared/tracking/crazy_egg' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
     = yield :open_graph_tags
     = yield :head
   %body
-    = render partial: 'layouts/facebook_tag'
+    = render partial: 'shared/tracking/facebook_tag'
     = render partial: 'shared/nav_bar_compatible'
     - current_user_present = !current_user.blank? && @homepage.blank?
     - if current_user_present

@@ -1,16 +1,25 @@
 class Pet < ActiveRecord::Base
   belongs_to :user
+  has_attachment  :profile_photo, accept: [:jpg, :png, :bmp, :gif]
+  has_attachments :extra_photos, maximum: 10
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
   has_and_belongs_to_many :enquiries
 
-  accepts_nested_attributes_for :pictures, reject_if: :all_blank
+  accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
-  validates_presence_of :name, :date_of_birth, :emergency_contact_name, :emergency_contact_phone
-  validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 4}
+  validates_presence_of :name, :pet_type_id, :size_id, :date_of_birth, :sex_id, :energy_level, :personalities
+  validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5} # when pet type is 'other'
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
+  validate :at_least_three_personalities
 
+  serialize :personalities, Array
+
+  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :date_of_birth, :sex_id, :energy_level,
+    :personalities, :emergency_contact_name, :emergency_contact_phone, :vet_name, :vet_phone,
+    :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
+    :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
   def dislikes
     dislikes = []
@@ -60,4 +69,9 @@ class Pet < ActiveRecord::Base
 	def any_dislikes?
 		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
 	end
+
+  private
+  def at_least_three_personalities
+    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? and personalities.reject(&:empty?).count < 3
+  end
 end

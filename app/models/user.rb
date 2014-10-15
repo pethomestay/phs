@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation
+
   has_one :homestay
   has_many :pets
   has_many :enquiries
@@ -23,6 +25,8 @@ class User < ActiveRecord::Base
 
   has_many :unavailable_dates
 
+  has_attachment :profile_photo, accept: [:jpg, :png, :bmp, :gif]
+
   validates_presence_of :first_name, :last_name, :email, :mobile_number
 
   validates :accept_house_rules, :acceptance => true
@@ -34,8 +38,6 @@ class User < ActiveRecord::Base
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
-
-  blogs
 
   def name
     "#{first_name} #{last_name}"
@@ -83,7 +85,7 @@ class User < ActiveRecord::Base
 
   def booking_declined_by_host
 	  self.bookers.declined_by_host
-	end
+  end
 
   def booking_required_response?
 	  booking_required_response.any?
@@ -208,7 +210,7 @@ class User < ActiveRecord::Base
 		transaction
 	end
 
-	def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
+  def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
 		if selected_stored_card.blank?
 			if use_stored_card.blank?
 			  return nil
@@ -230,7 +232,7 @@ class User < ActiveRecord::Base
   end
 
   def update_without_password(params, *options)
-    current_password = params.delete(:current_password)
+    #current_password = params.delete(:current_password)
 
     if params[:password].blank?
       params.delete(:password)
@@ -314,6 +316,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Depreciated
   def booking_info_between(start_date, end_date)
     booking_info = self.unavailable_dates_info(start_date, end_date)
     booking_info += self.booked_dates_info(start_date, end_date)
@@ -324,6 +327,7 @@ class User < ActiveRecord::Base
     booking_info
   end
 
+  # Depreciated
   def unavailable_dates_info(start_date, end_date)
     unavailable_dates = self.unavailable_dates.between(start_date, end_date)
     unavailable_dates.collect do |unavailable_date|
@@ -348,6 +352,7 @@ class User < ActiveRecord::Base
     end.flatten.compact.uniq
   end
 
+  # Depreciated
   def booked_dates_info(start_date, end_date)
     self.booked_dates_between(start_date, end_date).collect do|date|
       { title: "Booked", start: date.strftime("%Y-%m-%d") }
@@ -402,6 +407,20 @@ class User < ActiveRecord::Base
     score = (count * 100.0 / total).round 0
     return nil if score == 0 # Hide host responsiveness if the score is 0
     score
+  end
+
+  def mobile_num_legal?
+    m = self.mobile_number.gsub(/[^0-9]/, "")
+    case m.length
+    when 10 # 0416 123 456
+      true
+    when 11 # 61 416 291 496
+      true
+    when 13 # 0061 416 123 456
+      true
+    else
+      false
+    end
   end
 
   def release_jobs

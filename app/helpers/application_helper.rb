@@ -62,4 +62,30 @@ module ApplicationHelper
   def date_day_monthname attribute
     nil_or_not_date(attribute) ? "" : attribute.to_formatted_s(:day_and_month)
   end
+
+  def translate_state booking_state
+    case booking_state
+      when 'finished'                    then 'Requested'
+      when 'finished_host_accepted'      then 'Booked'
+      when 'host_paid'                   then 'Booked'
+      when 'host_requested_cancellation' then 'Booked' # This is a state that happens in the backend. Neither the Host nor the Guest needs to know that.
+      when 'rejected'                    then 'Cancelled'
+      when 'guest_cancelled'             then 'Cancelled'
+      when 'host_cancelled'              then 'Cancelled'
+      when 'unfinished'                  then 'Enquiry'
+      else booking_state
+    end
+  end
+
+  def translate_last_sign_in time
+    diff = (Time.now - time).to_i
+    case diff
+      when 0..86400         then 'today'           # within 1 day
+      when 86401..259200    then 'a few days ago'  # within 3 days
+      when 259201..604800   then 'this week'       # within 7 days
+      when 604801..1814400  then 'a few weeks ago' # within 21 days
+      when 1814401..2678400 then 'this month'  # within 31 days
+      else 'more than a month'
+    end
+  end
 end

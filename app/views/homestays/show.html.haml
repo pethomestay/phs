@@ -80,7 +80,17 @@
       = render partial: 'providers/reviews', locals: {provider: @homestay, reviews: @reviewed_ratings}
 
     .span5
-      - if @homestay.pictures.present?
+      - if @homestay.photos?
+        #homestay-carousel.carousel.slide.span5.thumbnail
+          .carousel-inner
+            - @homestay.photos.each_with_index do |p, i|
+              - klass = (i == 0 ? 'active' : '')
+              .item{class: klass}
+                = cl_image_tag p.path, width: 380, height: 300, crop: :fill
+          - if @homestay.photos.count > 1
+            = link_to '‹', '#homestay-carousel', 'data-slide' => 'prev', class: 'carousel-control left'
+            = link_to '›', '#homestay-carousel', 'data-slide' => 'next', class: 'carousel-control right'
+      - elsif @homestay.pictures.present?
         #homestay-carousel.carousel.slide.span5.thumbnail
           .carousel-inner
             - @homestay.pictures.each_with_index do |picture, i|
@@ -104,12 +114,12 @@
 
       .calendar-updation-date.span5{style: 'padding-top: 15px; padding-bottom: 25px;'}
         %span.cal-date-span
-          Calendar Updated:&nbsp&nbsp
-          = "#{calendar_updation_date(@homestay.user)}"
+          Last Sign In:&nbsp
+          = "#{translate_last_sign_in(@homestay.user.last_sign_in_at)}"
         - if @response_rate_in_percent
           %br
           %span.cal-date-span
-            Host Responsiveness:&nbsp&nbsp
+            Host Responsiveness:&nbsp
             = "#{@response_rate_in_percent}%"
           %span.cal-date-span{style: 'font-weight: normal; color: gray;'}
             %small % of messages responded to within 24 hours

@@ -1,0 +1,50 @@
+.left-nav {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 700;
+  li {
+    height: 73px;
+    margin-top: 0 !important; // Override Bootstrap's default behavior
+    border-bottom: 1px solid $grey;
+    background-color: $grey-lighter;
+    a {
+      height: 100%;
+      padding-top: 25px;
+      padding-left: 20px;
+      color: $black-light;
+      i {
+        margin-right: 10px;
+        position: relative;
+        bottom: 3px;
+      }
+      span {
+        padding-top: 5px;
+        &.unread-count {
+          padding: 0 6px;
+          border-radius: 60px;
+          color: $grey-lighter;
+          background-color: $orange;
+        }
+      }
+    }
+    &.active {
+      background-color: $orange;
+      a,
+      a:hover {
+        background-color: transparent;
+        .unread-count {
+          color: $orange;
+          background-color: $grey-lighter;
+        }
+      }
+    }
+  }
+  .create-homestay {
+    padding: 20px;
+    text-align: center;
+    a {
+      font-weight: 400;
+      color: $blue-light;
+    }
+  }
+}

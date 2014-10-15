@@ -3,14 +3,13 @@ ruby '1.9.3'
 gem "strong_parameters"
 gem 'oauth2'
 gem 'redcarpet'
-gem 'blogit'
 gem 'fog', '~>1.2'
-gem 'ckeditor'
 gem 'rails', '3.2.18'
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'flight-for-rails', '~> 1.2.0'
+gem 'momentjs-rails'
 gem 'haml-rails'
 gem 'slim'
 gem 'devise'
@@ -19,16 +18,20 @@ gem 'omniauth-facebook'
 gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
-gem "legato"
+gem 'legato'
 
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'alphabetical_paginate'
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'country_select' #Country select
 gem 'awesome_nested_fields'
+gem 'nested_form' # To replace awesome_nested_fields in the future
 gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
 
+gem 'cloudinary'
+gem 'attachinary'
 gem 'dragonfly', '~>1.0.5'
 gem 'dragonfly-s3_data_store'
 gem 'rack-cache'

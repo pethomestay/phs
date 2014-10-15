@@ -18,6 +18,7 @@ class Booking < ActiveRecord::Base
 	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
 
+  scope :booked, where(owner_accepted: true, host_accepted: true)
 
 	scope :needing_host_confirmation, where(owner_accepted: true, host_accepted: false, response_id: 0, state: :finished)
 
@@ -42,7 +43,7 @@ class Booking < ActiveRecord::Base
 
 	after_create :create_mailbox
 
-	def create_mailbox
+  def create_mailbox
 		mailbox = nil
 		if self.enquiry_id.blank?
 			mailbox = Mailbox.find_or_create_by_booking_id self.id
@@ -63,7 +64,7 @@ class Booking < ActiveRecord::Base
     self.state?(:unfinished) or self.state?(:payment_authorisation_pending)
   end
 
-	def self.to_csv(options = {})
+  def self.to_csv(options = {})
 		CSV.generate(options) do |csv|
 			csv << [
 				'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
@@ -179,7 +180,7 @@ class Booking < ActiveRecord::Base
 		self.owner_accepted? && (self.state?(:finished) || self.state?(:finished_host_accepted)) && user == self.bookee
 	end
 
-	def owner_view?(user)
+  def owner_view?(user)
 		user == self.booker
   end
 
@@ -208,24 +209,27 @@ class Booking < ActiveRecord::Base
       self.host_accepts_booking #trigger host accepts booking event
 			self.host_accepted = true
 		end
-		self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
 
 		if self.response_id == 5
-			message = 'You have confirmed the booking'
-			results = self.complete_transaction(current_user)
-			if results.class == String
-				message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
-				UserMailer.error_report('host confirming transaction', results).deliver
-			else
+      results = self.complete_transaction(current_user)
+      if results.class == String
+        message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
+        UserMailer.error_report('host confirming transaction', results).deliver
+      else
+			  message = 'You have confirmed the booking'
 				self.save!
 				PetOwnerMailer.booking_confirmation(self).deliver
 				ProviderMailer.booking_confirmation(self).deliver
-			end
+        self.mailbox.messages.create! user_id: bookee_id,
+          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date! Thanks for using PetHomestay!"
+      end
 
 		elsif self.response_id == 6
 			message = 'Guest will be informed of your unavailability'
       self.host_rejects_booking
 			self.save!
+      self.mailbox.messages.create! user_id: bookee_id,
+        message_text: "[This is a PetHomestay auto-generated message]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
 			PetOwnerMailer.provider_not_available(self).deliver
 		elsif self.response_id == 7
 			message = 'Your question has been sent to guest'
@@ -234,6 +238,9 @@ class Booking < ActiveRecord::Base
 			self.save!
 			PetOwnerMailer.provider_has_question(self, old_message).deliver
 		end
+    if self.response_message.present?
+      self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
+    end
 		message
 	end
 
@@ -353,7 +360,11 @@ class Booking < ActiveRecord::Base
 		self.save!
 
 		if old_message.blank?
-			self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
+      self.mailbox.messages.create! user_id: self.booker_id,
+        message_text: "[This is a PetHomeStay auto-generated message]\n\nThis Guest has requested to book your Homestay!\nPlease confirm or reject by clicking the button below."
+      unless new_message.empty?
+			 self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
+      end
 		else
 			message = Message.find_by_user_id_and_mailbox_id(self.booker_id, self.mailbox.id)
 			message.message_text = new_message

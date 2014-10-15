@@ -49,7 +49,6 @@ module BookingsHelper
   end
 
   def booking_status_for_listing(booking)
-
     if (is_canceled_booking?(booking)) then
       if booking.state?(:host_requested_cancellation)
         return 'Host requested cancellation'
@@ -64,7 +63,4 @@ module BookingsHelper
       return 'Unconfirmed'
     end
   end
-
-
-
 end

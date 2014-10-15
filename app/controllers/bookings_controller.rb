@@ -22,7 +22,7 @@ class BookingsController < ApplicationController
 		@booking = Booking.find(params[:id])
 		if @booking.update_attributes!(params[:booking])
 			message = @booking.confirmed_by_host(current_user)
-			return redirect_to my_account_path, alert: message
+			return redirect_to host_path, alert: message
 		else
 			return redirect_to host_confirm_booking_path(@booking)
 		end
@@ -164,7 +164,7 @@ class BookingsController < ApplicationController
       @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
       flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
-      return redirect_to my_account_path
+      return redirect_to host_path
     end
   end
 

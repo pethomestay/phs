@@ -13,7 +13,9 @@ describe Admin::PetsController do
       emergency_contact_phone: '12345678',
       pet_type_id: ReferenceData::PetType::DOG.id,
       size_id: ReferenceData::Size::SMALL.id,
-      sex_id: ReferenceData::Sex::MALE_DESEXED.id
+      sex_id: ReferenceData::Sex::MALE_DESEXED.id,
+      energy_level: 1,
+      personalities: ['happy', 'sad', 'whatever']
     }
   end
 

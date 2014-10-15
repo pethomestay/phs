@@ -1,0 +1,19 @@
+.pill-profile.col-xs-6.col-sm-4.col-md-2
+  = current_user.profile_photo? ? cl_image_tag(current_user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+  span.hidden-xs Hi, #{current_user.name}!
+
+.hidden-xs.col-sm-4.col-md-8
+
+a href=guest_path
+  .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('guest') or params[:controller] == 'registrations')
+    i.fa.fa-user.fa-2x
+    span
+      | Guest
+      .visible-xs-block Menu
+
+a href=host_path
+  .pill-host.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('host'))
+    i.fa.fa-home.fa-2x
+    span
+      | Host
+      .visible-xs-block Menu

@@ -1,0 +1,31 @@
+= render layout: 'layouts/user' do
+  .favorites-panel
+    h3
+      ' My Hosts
+      small Hosts you have favourited
+    .panel-content
+      - if @favorites.blank?
+        p
+          ' You have no favorite host at the moment. Why not
+          = link_to 'find a trusted host in your area', root_path
+          | ?
+      - else
+        - @favorites.each do |homestay|
+          .well.well-lg.favorite-host data-homestay-id=homestay.id
+            .homestay-info style='display: inline-block;'
+              p
+                strong Listing Title
+                = ": #{homestay.title.capitalize}"
+                br
+                strong Location
+                = ": #{homestay.location}"
+                br
+                strong Price
+                = ": #{number_to_currency(homestay.cost_per_night)}"
+                br
+            .view-actions.pull-right
+              = link_to 'View Listing', homestay, class: 'btn btn-default fav-homestay-action', style: 'margin-top: -5px; margin-bottom: 5px;'
+              br
+              = link_to 'Make Enquiry', homestay_path(homestay, anchor: 'enquiry'), class: 'btn btn-primary fav-homestay-action fav-make-enquiry', style: 'margin-bottom: 5px;'
+              br
+              = link_to 'Remove', '#', class: 'remove-from-favourites'

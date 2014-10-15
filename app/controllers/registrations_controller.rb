@@ -1,5 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_user!
+  before_filter :set_instance_vars, only: [:edit]
+
   def update
     @user = User.find(current_user.id)
 
@@ -18,7 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_in @user, :bypass => true
       redirect_to after_update_path_for(@user)
     else
-      render "edit"
+      render :edit
     end
   end
 
@@ -29,5 +31,20 @@ class RegistrationsController < Devise::RegistrationsController
     end
     sign_out(current_user)
     redirect_to root_path, alert: "Thanks for trying PetHomeStay."
+  end
+
+  protected
+  def after_update_path_for(resource)
+    guest_edit_path
+  end
+
+  private
+  # This method must be kept in sync with Guest::GuestController
+  def set_instance_vars
+    @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
+    this_month    = Date.today..Date.today.end_of_month
+    @upcoming     = current_user.bookers.where(check_in_date: this_month)
+                    .order('check_in_date ASC').limit(5)
+                    .select('state, check_in_date, check_out_date, bookee_id')
   end
 end

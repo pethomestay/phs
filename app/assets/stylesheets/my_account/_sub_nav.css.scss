@@ -1,0 +1,50 @@
+.sub-nav {
+  height: $sub-nav-height;
+  background-color: $blue-light;
+  .pill-profile,
+  .pill-guest,
+  .pill-host {
+    height: 100%;
+    color: $blue-lighter;
+    span {
+      font-size: 16px;
+    }
+  }
+  .pill-profile {
+    line-height: $sub-nav-height;
+    color: white;
+    img {
+      width: 59px;
+      margin-top: 15px;
+      margin-right: 10px;
+      float: left;
+    }
+    span {
+    }
+  }
+  .pill-guest,
+  .pill-host {
+    padding-top: 20px;
+    text-align: center;
+    span {
+      display: block;
+    }
+    &.active {
+      background-color: $blue;
+      color: white;
+    }
+    &:hover{
+      color: #5f5753; // Placeholder
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    .pill-guest,
+    .pill-host {
+      padding-top: 10px;
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}

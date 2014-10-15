@@ -1,0 +1,85 @@
+/ Expect params
+/   conversation: a Mailbox object
+/ Note:
+/   (1) each conversation has a corresponding enquiry, but not necessary a booking
+/   (2) message.user is the sender, and could be nil
+
+
+.conversation class=('unread' unless conversation.read_by?(current_user)) data-id=conversation.id
+  .header
+    - if params[:controller].include? 'guest'
+      - host = conversation.host_mailbox # Could be nil
+      - if host.present? # TODO: add content to display when host is nil
+        - number_legal = host.mobile_num_legal?
+        a.profile href=("tel:#{host.mobile_number}" if number_legal)
+          = host.profile_photo? ? cl_image_tag(host.profile_photo.path, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+          - if number_legal
+            .phone-icon
+              span.fa-stack
+                i.fa.fa-square.fa-stack-2x
+                i.fa.fa-phone.fa-stack-1x
+        .host-info
+          span.h5 = host.name
+          - homestay = host.homestay
+          - if homestay.present?
+            br
+            span.title = host.homestay.title
+            span #{homestay.address_suburb}, $#{homestay.cost_per_night.to_i}
+    - elsif params[:controller].include? 'host'
+      - guest = conversation.guest_mailbox # Could be nil
+      - if guest.present? # TODO: add content to display when guest is nil
+        - number_legal = guest.mobile_num_legal?
+        a.profile href=("tel:#{guest.mobile_number}" if number_legal)
+          = guest.profile_photo? ? cl_image_tag(guest.profile_photo.path, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+          - if number_legal
+            .phone-icon
+              span.fa-stack
+                i.fa.fa-square.fa-stack-2x
+                i.fa.fa-phone.fa-stack-1x
+        .guest-info
+          span.h5 = guest.name
+          - pets = guest.pets
+          - if pets.present?
+            br
+            - if pets.count == 1
+              span
+                | #{pets[0].name}
+                - if pets[0].breed.present?
+                  span.breed , a #{pets[0].breed}
+              br
+              span #{pets[0].age}
+            - else
+              span.pets-name #{guest.pet_names}
+    .right
+      - booking = conversation.booking # Could be nil
+      - if booking.present?
+        - state = translate_state booking.state
+        span.booking-status class=state.downcase #{state}
+        span.date
+          small
+            ' From:
+          = booking.check_in_date.strftime('%b %e')
+        span.date
+          small
+            ' To:
+          = booking.check_out_date.strftime('%b %e')
+      - elsif conversation.enquiry.present?
+        - enquiry = conversation.enquiry
+        span.booking-status class='enquiry'
+          | Enquiry
+        span.date
+          small
+            ' From:
+          = enquiry.check_in_date.strftime('%b %e')
+        span.date
+          small
+            ' To:
+          = enquiry.check_out_date.strftime('%b %e')
+      span
+        i.fa.fa-chevron-down.fa-lg.chevron
+
+  - messages = conversation.messages.order('created_at DESC') # Could be nil
+  - if messages.any?
+    = render 'shared/messages/message', message: messages.shift, top: true
+    - messages.each do |message|
+      = render 'shared/messages/message', message: message, top: false
