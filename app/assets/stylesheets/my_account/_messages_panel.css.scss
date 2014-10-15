@@ -49,6 +49,12 @@
         margin-top:  10px;
         margin-left: 80px;
       }
+      .host-info .title {
+        display: block;
+        max-height: 40px;
+        margin-right: 80px;
+        overflow: hidden;
+      }
       .right {
         position: absolute;
         top:   15px;
