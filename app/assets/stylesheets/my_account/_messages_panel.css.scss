@@ -143,5 +143,38 @@
     width: 300px;
     margin-left: auto;
     margin-right: auto;
+    ul {
+      li {
+        a,
+        span {
+          color: $black-light;
+        }
+        &.disabled {
+          display: none;
+        }
+        &.active {
+          span {
+            border: 1px solid transparent;
+            color: $grey-lighter;
+            background-color: $blue-light;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .messages-panel {
+    .conversation {
+      .header {
+        .guest-info{
+          .breed,
+          .pets-name {
+            display: none;
+          }
+        }
+      }
+    }
   }
 }
