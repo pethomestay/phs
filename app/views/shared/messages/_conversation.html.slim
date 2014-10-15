@@ -46,11 +46,11 @@
               span
                 | #{pets[0].name}
                 - if pets[0].breed.present?
-                  |  , a #{pets[0].breed}
+                  span.breed , a #{pets[0].breed}
               br
               span #{pets[0].age}
             - else
-              span #{guest.pet_names}
+              span.pets-name #{guest.pet_names}
     .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
@@ -82,5 +82,5 @@
   - messages = conversation.messages.order('created_at DESC') # Could be nil
   - if messages.any?
     = render 'shared/messages/message', message: messages.shift, top: true
-  - messages.each do |message|
-    = render 'shared/messages/message', message: message, top: false
+    - messages.each do |message|
+      = render 'shared/messages/message', message: message, top: false

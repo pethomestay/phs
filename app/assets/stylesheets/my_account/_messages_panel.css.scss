@@ -144,3 +144,18 @@
     margin-right: auto;
   }
 }
+
+@media (max-width: 370px) {
+  .messages-panel {
+    .conversation {
+      .header {
+        .guest-info{
+          .breed,
+          .pets-name {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
