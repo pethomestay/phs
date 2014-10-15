@@ -1,0 +1,29 @@
+.welcome
+  .page-header
+    h1.text-center Welcome to PetHomeStay!
+  .container
+    .col-sm-6.left
+      h2 I want to find pet care
+      p To start finding great, local and trustworthy pet sitters: the first step is to enter some basic details about your pet!
+      .form-actions
+        - if params[:signup_path]
+          = link_to 'Add your pet\'s details now', new_guest_pet_path(redirect_path: params[:signup_path]), class: 'btn btn-lg btn-secondary'
+        - else
+          = link_to 'Add your pet\'s details now', new_guest_pet_path, class: 'btn btn-lg btn-secondary'
+    .col-sm-6.right
+      h2 I want to look after pets
+      p It couldn't be easier to be put in touch with pet owners. Just give us some basic details and we'll create an awesome listings page.
+      .form-actions
+        = link_to "Start building your listing now", new_host_homestay_path, class: 'btn btn-lg btn-secondary'
+
+
+javascript:
+  /* <![CDATA[ */
+  var google_conversion_id = 985769911;
+  var google_conversion_language = "en";
+  var google_conversion_format = "1";
+  var google_conversion_color = "ffffff";
+  var google_conversion_label = "2nieCPnE5ggQt8-G1gM";
+  var google_remarketing_only = false;
+  var google_conversion_value = 0;
+  /* ]]> */

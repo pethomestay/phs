@@ -19,7 +19,22 @@
     cursor: pointer;
     margin-left: 20px;
   }
+  .pet_personalities label.checkbox {
+    padding-bottom: 10px;
+  }
   .slider {
-    margin-left: 20px;
+    margin-left: 30px;
+  }
+  .slider-labels {
+    margin-top: -20px;
+    padding-bottom: 10px;
+    &.size {
+      margin-left: 60px;
+      .max { margin-left: 160px; }
+    }
+    &.energy-level {
+      margin-left: 120px;
+      .max { margin-left: 180px; }
+    }
   }
 }

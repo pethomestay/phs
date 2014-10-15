@@ -115,7 +115,7 @@
       .calendar-updation-date.span5{style: 'padding-top: 15px; padding-bottom: 25px;'}
         %span.cal-date-span
           Last Sign In:&nbsp
-          = "#{time_ago_in_words(@homestay.user.last_sign_in_at)} ago"
+          = "#{translate_last_sign_in(@homestay.user.last_sign_in_at)}"
         - if @response_rate_in_percent
           %br
           %span.cal-date-span

@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   end
 
   def welcome
-    @welcome = true
+    render layout: 'new_application'
   end
 
   def why_join_pethomestay

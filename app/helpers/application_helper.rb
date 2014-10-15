@@ -76,4 +76,16 @@ module ApplicationHelper
       else booking_state
     end
   end
+
+  def translate_last_sign_in time
+    diff = (Time.now - time).to_i
+    case diff
+      when 0..86400         then 'today'           # within 1 day
+      when 86401..259200    then 'a few days ago'  # within 3 days
+      when 259201..604800   then 'this week'       # within 7 days
+      when 604801..1814400  then 'a few weeks ago' # within 21 days
+      when 1814401..2678400 then 'this month'  # within 31 days
+      else 'more than a month'
+    end
+  end
 end
