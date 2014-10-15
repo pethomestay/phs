@@ -18,7 +18,9 @@
   .slider-labels.energy-level
     span.min low
     span.max high
-  = f.input :personalities, collection: all_personalities, as: :check_boxes, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities'
+  = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
+    br
+    = f.input_field :personalities, collection: all_personalities, as: :check_boxes
 
 = field_set_tag 'Step 2 - Emergency + Medical'
   p.header-hint.help-block You can fill this in now, or come back later before a booking starts.
