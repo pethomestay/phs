@@ -8,10 +8,10 @@
     .empty-inbox
       - if params[:controller].include? 'guest'
         .h5
-          | There is currently no message in your Guest Inbox.
+          | You have no messages as a Guest!
       - elsif params[:controller].include? 'host'
         .h5
-          | There is currently no message in your Host Inbox.
+          | You have no messages as a Host!
 
   .paginator
     = will_paginate @conversations, renderer: BootstrapPagination::Rails

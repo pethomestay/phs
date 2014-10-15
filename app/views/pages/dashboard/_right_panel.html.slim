@@ -12,7 +12,11 @@
         - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
           th #{day}
     tbody
-  p.text-center Click dates to toggle availability
+  p.text-center
+    - if params[:controller].include? 'host'
+      | Click dates to toggle availability
+    - else
+      | All of your upcoming bookings are shown here
 
 .upcoming
   - if defined? @upcoming
