@@ -25,3 +25,4 @@ production:
   database: pet_homestay
   username:  <%= ENV['DB_USERNAME'] %>
   password:  <%= ENV['DB_PASSWORD'] %>
+  sslmode: "disable"
