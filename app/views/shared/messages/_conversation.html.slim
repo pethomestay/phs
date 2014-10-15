@@ -23,8 +23,7 @@
           - homestay = host.homestay
           - if homestay.present?
             br
-            span = host.homestay.title
-            br
+            span.title = host.homestay.title
             span #{homestay.address_suburb}, $#{homestay.cost_per_night.to_i}
     - elsif params[:controller].include? 'host'
       - guest = conversation.guest_mailbox # Could be nil
