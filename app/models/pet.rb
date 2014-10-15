@@ -18,7 +18,8 @@ class Pet < ActiveRecord::Base
 
   attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :date_of_birth, :sex_id, :energy_level,
     :personalities, :emergency_contact_name, :emergency_contact_phone, :vet_name, :vet_phone,
-    :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated
+    :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
+    :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
   def dislikes
     dislikes = []
