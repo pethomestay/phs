@@ -75,8 +75,5 @@ module PetHomestay
         Devise::SessionsController.layout "new_application"
         Devise::RegistrationsController.layout "new_application"
     end
-
-    config.assets.precompile += Ckeditor.assets
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
 end

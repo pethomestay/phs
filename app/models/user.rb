@@ -39,8 +39,6 @@ class User < ActiveRecord::Base
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
 
-  blogs
-
   def name
     "#{first_name} #{last_name}"
   end

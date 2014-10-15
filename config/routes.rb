@@ -131,7 +131,6 @@ PetHomestay::Application.routes.draw do
   # Zendesk Single Sign-on
   get 'zendesk_session/:action', to: 'zendesk_session'
 
-  mount Ckeditor::Engine => '/ckeditor'
   mount Attachinary::Engine => "/attachinary"
 
   get '/my-account'     => 'users#show', as: :my_account
@@ -142,7 +141,7 @@ PetHomestay::Application.routes.draw do
   get '/how-does-it-work'     => redirect('http://support.pethomestay.com/hc/en-us/articles/200678169-How-does-PetHomeStay-work-'), as: 'how_does_it_work'
   get '/the-team'             => 'pages#the_team', as: 'the_team'
   get '/why-join-pethomestay' => 'pages#why_join_pethomestay', as: 'why_join'
-  mount Blogit::Engine => '/blog'
+  match '/blog'               => redirect('http://blog.pethomestay.com'), as: 'blogit'
   get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
   get '/house-rules'          => redirect('http://support.pethomestay.com/hc/en-us/sections/200341999-House-Rules'), as: 'house_rules'
   get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
