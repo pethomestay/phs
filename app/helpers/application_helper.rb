@@ -72,6 +72,7 @@ module ApplicationHelper
       when 'rejected'                    then 'Cancelled'
       when 'guest_cancelled'             then 'Cancelled'
       when 'host_cancelled'              then 'Cancelled'
+      when 'payment_authorisation_pending' then 'Enquiry'
       when 'unfinished'                  then 'Enquiry'
       else booking_state
     end
