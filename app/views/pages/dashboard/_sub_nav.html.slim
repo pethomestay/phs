@@ -1,5 +1,10 @@
 .pill-profile.col-xs-6.col-sm-4.col-md-2
-  = current_user.profile_photo? ? cl_image_tag(current_user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+  - if current_user.profile_photo?
+    = cl_image_tag current_user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+  - elsif current_user.uid.present?
+    = facebook_profile_image_tag current_user.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+  - else
+    = image_tag 'default_profile_photo.jpg', class: 'img-circle'
   span.hidden-xs Hi, #{current_user.name}!
 
 .hidden-xs.col-sm-4.col-md-8
