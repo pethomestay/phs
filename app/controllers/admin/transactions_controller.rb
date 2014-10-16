@@ -23,7 +23,6 @@ class Admin::TransactionsController < Admin::AdminController
     end
     @transaction.update_attributes(params[:transaction])
     if @transaction.nil?
-      binding.pry
     else
       if not params[:transaction][:pre_authorisation_id].blank?
         @transaction.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED
@@ -31,7 +30,6 @@ class Admin::TransactionsController < Admin::AdminController
         @transaction.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED
       end
       if @transaction.booking.nil?
-        binding.pry
       else
       @transaction.booking.payment_check_succeed
       @transaction.booking.save!
