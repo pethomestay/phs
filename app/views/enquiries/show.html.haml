@@ -3,7 +3,7 @@
 %table.table.table-striped.table-condensed
   - unless @enquiry.check_in_date.blank?
     %tr
-      %td Start date
+      %td Check in date
       %td= date_day_month_year_format(@enquiry.check_in_date)
   - unless @enquiry.check_out_date.blank?
     %tr
@@ -60,8 +60,29 @@
             %td More information about dislikes
             %td= pet.explain_dislikes
   .clearfix
+%h2 Price
+- total_cost = @enquiry.stay_length * @enquiry.homestay.cost_per_night
+%table.table.table-striped.table-condensed
+  %tr
+    %td.current-daily-price Daily Price
+    %td= number_to_currency(@enquiry.homestay.cost_per_night)
+  %tr
+    %td.current-total-price Total Price
+    %td= "#{@enquiry.stay_length} days x #{number_to_currency(@enquiry.homestay.cost_per_night)} per night = #{number_to_currency(total_cost)}"
+  %tr.modify-pricing{:id => "proposed-per-night"}
+    %td Proposed Per Night Price
+    %td
+      %input{:type => "number", :step => "any", :min => 0, :placeholder => "#{number_to_currency(@enquiry.homestay.cost_per_night)}", :id => "per-night"}
+  %tr.modify-pricing{:id => "proposed-total-price"}
+    %td Proposed Total Price
+    %td
+      %input{:type => "number", :step => "any", :min => 0, :placeholder => "#{number_to_currency(total_cost)}", :id => "total-stay"}
+  %tr
+    %td{:colspan => 2}
+      %span.btn.btn-primary{:id => 'modify-price-button'} Click here to modify pricing
 %p Accepting this request does not confirm a booking, it just lets the Pet Owner know that you are available on the dates requested for their pet. The next step is for the Owner to contact the Host and confirm a booking if they wish to proceed.
 = simple_form_for @enquiry, html: {class: 'form-button'} do |f|
+  = f.input :proposed_per_day_price, as: :hidden
   .row
     .span5
       = f.input :response_id, required: true, as: :radio_buttons, label_method: :description, checked: 2,
@@ -71,3 +92,34 @@
 
   .form-actions
     =f.submit 'Send Response', class: 'btn btn-primary'
+:javascript
+  $(document).ready(function(){
+    $(".modify-pricing").hide();
+    $("#modify-price-button").on("click", function() {
+      $(".modify-pricing").toggle();
+      $(".current-total-price").text("Current Total Price");
+      $(".current-daily-price").text("Current Daily Price");
+    });
+    $("#per-night").bind("change keyup input", function(){
+      var number_of_nights = parseFloat("#{@enquiry.stay_length}");
+      var per_night = parseFloat($(this).val()).toFixed(2);
+      var total = per_night * number_of_nights
+      $("#total-stay").val(total);
+      $("#total-stay").attr("disabled", "disabled");
+    });
+    $("#total-stay").bind("keyup", function(){
+      var number_of_nights = parseFloat("#{@enquiry.stay_length}");
+      var total = parseFloat($(this).val()).toFixed(2);
+      var per_night = (total/number_of_nights).toFixed(2);
+      $("#per-night").val(per_night);
+      $("#per-night").attr("disabled", "disabled");
+    });
+    $('form').on("submit", function(){
+      if ($("#per-night").val() != "") {
+        var proposed_per_night_price = parseFloat($("#per-night").val()).toFixed(2);
+        $("#enquiry_proposed_per_day_price").val(proposed_per_night_price);
+      }
+    });
+  });
+
+
