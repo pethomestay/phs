@@ -56,7 +56,8 @@ class BookingsController < ApplicationController
 
   def book_reservation
     @booking = Booking.find(params[:id])
-    @booking.update_attributes(params[:booking]);
+    @booking.update_attributes(params[:booking])
+    @booking.enquiry.update_attribute(:owner_accepted, true)
     try_pay = @booking.try_payment #try to upgrade status
 
     respond_to do |format|
