@@ -56,7 +56,8 @@ class BookingsController < ApplicationController
 
   def book_reservation
     @booking = Booking.find(params[:id])
-    @booking.update_attributes(params[:booking]);
+    @booking.update_attributes(params[:booking])
+    @booking.enquiry.update_attribute(:owner_accepted, true)
     try_pay = @booking.try_payment #try to upgrade status
 
     respond_to do |format|
@@ -134,6 +135,7 @@ class BookingsController < ApplicationController
 	end
 
   def admin_view
+    redirect_to root_path, notice: 'Sorry, No access' and return unless current_user.admin
 		@booking = Booking.find(params[:id])
   end
 
