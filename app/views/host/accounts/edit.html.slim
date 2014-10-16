@@ -1,5 +1,8 @@
 = render layout: 'layouts/user' do
-  = simple_form_for [:host, @account], wrapper: :bootstrap3 do |f|
+  .page-header
+    h3 Payout Details
+  p PetHomeStay will use these details to transfer any Host Payouts to your account
+  = simple_form_for [:host, @account], url: host_account_path, wrapper: :bootstrap3 do |f|
     = render 'fields', f: f
     .form-actions
       = f.submit 'Save', class: 'btn btn-primary'

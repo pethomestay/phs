@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
       else
         welcome_path
       end
+    elsif resource.pets.blank?
+      host_path
     else
       guest_path # Default page after log in
     end

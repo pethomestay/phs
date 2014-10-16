@@ -1,6 +1,6 @@
 .messages-panel {
-  margin: -20px;
   .panel-header {
+    margin: 0 -20px;
     padding-top: 20px;
     padding-bottom: 13px;
     padding-left: 20px;
@@ -14,6 +14,7 @@
   }
 
   .conversation {
+    margin: 0 -20px;
     opacity: .6;
     .header {
       background-color: $grey-light;

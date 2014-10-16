@@ -1,6 +1,7 @@
 = render layout: 'layouts/user' do
   .homestay-panel
-    h1 Create Your PetHomeStay Listing
+    .page-header
+      h3 Create Your PetHomeStay Listing
     = simple_form_for [:host, @homestay], url: host_homestay_path, wrapper: :bootstrap3 do |f|
       = render 'form_fields', f: f
       .form-actions

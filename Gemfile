@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
 gem "strong_parameters"
+gem 'auto_strip_attributes', '~> 2.0'
 gem 'oauth2'
 gem 'redcarpet'
 gem 'fog', '~>1.2'

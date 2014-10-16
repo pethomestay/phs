@@ -1,6 +1,7 @@
 = render layout: 'layouts/user' do
   .pet-panel
-    h3 Your Pets
+    .page-header
+      h3 Your Pets
     - if @pets.any?
       table.table.table-hover
         - for pet in @pets
