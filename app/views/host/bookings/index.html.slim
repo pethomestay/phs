@@ -1,7 +1,9 @@
 = render layout: 'layouts/user' do
   .bookings-panel
+    .page-header
+      h3 Bookings
     - if @bookings.blank?
-      p You have no bookings as a host in your history
+      p You have no past bookings as a host
     - else
       - @bookings.each do |booking|
         div.well.show-booking-history

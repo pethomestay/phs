@@ -1,12 +1,11 @@
 = render layout: 'layouts/user' do
   .favorites-panel
-    h3
-      ' My Hosts
-      small Hosts you have favourited
+    .page-header
+      h3 My Hosts
     .panel-content
       - if @favorites.blank?
         p
-          ' You have no favorite host at the moment. Why not
+          ' Hosts you have Favourited will appear here. Why not
           = link_to 'find a trusted host in your area', root_path
           | ?
       - else
