@@ -7,7 +7,7 @@ class HomestaysController < ApplicationController
 
   #This is the action that results from a search
   def index
-    params.merge!(search: {location: '3000'}) if params[:search].blank? # default to Melbourne CBD
+    redirect_to root_path and return unless params[:search]
     @search = Search.new(params[:search])
     #We are only doing australia, not sure why we are doing the country detect
     @search.country =  'Australia' #request.location.country_code if request.location
