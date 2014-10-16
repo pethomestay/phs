@@ -12,7 +12,12 @@
       - if host.present? # TODO: add content to display when host is nil
         - number_legal = host.mobile_num_legal?
         a.profile href=("tel:#{host.mobile_number}" if number_legal)
-          = host.profile_photo? ? cl_image_tag(host.profile_photo.path, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+          - if host.profile_photo?
+            = cl_image_tag host.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - elsif host.uid.present?
+            = facebook_profile_image_tag host.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - else
+            = image_tag 'default_profile_photo.jpg', class: 'img-circle'
           - if number_legal
             .phone-icon
               span.fa-stack
@@ -30,7 +35,12 @@
       - if guest.present? # TODO: add content to display when guest is nil
         - number_legal = guest.mobile_num_legal?
         a.profile href=("tel:#{guest.mobile_number}" if number_legal)
-          = guest.profile_photo? ? cl_image_tag(guest.profile_photo.path, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max) : image_tag('default_profile_photo.jpg', class: 'img-circle')
+          - if guest.profile_photo?
+            = cl_image_tag guest.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - elsif guest.uid.present?
+            = facebook_profile_image_tag guest.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - else
+            = image_tag 'default_profile_photo.jpg', class: 'img-circle'
           - if number_legal
             .phone-icon
               span.fa-stack
