@@ -1,15 +1,18 @@
 = render layout: 'layouts/user' do
-  = simple_form_for [:host, @account] do |f|
-    label Account Name
-    = f.input_field :name, label: 'Account Name', readonly: true
-    br
-    label Bank Name
-    = f.input_field :bank, label: 'Bank Name', readonly: true
-    br
-    label BSB
-    = f.input_field :bsb, label: 'BSB', readonly: true
-    br
-    label Account Number
-    = f.input_field :account_number, readonly: true
-
-  = link_to 'Edit', edit_host_account_path(current_user.account)
+  h1 Payout Details
+  p PetHomeStay will use these details to transfer any Host Payouts to your account
+  table.table.table-striped
+    tbody
+      tr
+        td Bank Name
+        td #{ @account.bank }
+      tr
+        td BSB
+        td #{ @account.bsb }
+      tr
+        td Account Name
+        td #{ @account.name }
+      tr
+        td Account Number
+        td #{ @account.account_number }
+  = link_to 'Edit', edit_host_account_path, class: 'btn btn-secondary '
