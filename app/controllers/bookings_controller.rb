@@ -134,6 +134,7 @@ class BookingsController < ApplicationController
 	end
 
   def admin_view
+    redirect_to root_path, notice: 'Sorry, No access' and return unless current_user.admin
 		@booking = Booking.find(params[:id])
   end
 

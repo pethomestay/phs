@@ -26,8 +26,8 @@ class ApplicationController < ActionController::Base
       else
         welcome_path
       end
-    elsif resource.pets.blank?
-      host_path
+    elsif resource.homestay.present?
+      host_path # Defaults to host page if homestay is present
     else
       guest_path # Default page after log in
     end
