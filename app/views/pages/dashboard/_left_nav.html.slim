@@ -24,7 +24,7 @@ ul.nav.nav-pills.nav-stacked
         i.fa.fa-home.fa-lg.fa-fw
         | MY HOMESTAY
     li class=('active' if params[:controller] == 'host/accounts')
-      a href=(current_user.account.blank? ? new_host_account_path : host_account_path(current_user.account))
+      a href=(current_user.account.blank? ? new_host_account_path : host_account_path)
         i.fa.fa-dollar.fa-lg.fa-fw
         | PAYOUT DETAILS
     li

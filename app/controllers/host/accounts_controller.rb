@@ -8,7 +8,7 @@ class Host::AccountsController < Host::HostController
   def create
     @account = Account.new(params[:account])
     if @account.save
-      redirect_to host_account_path(@account)
+      redirect_to host_account_path
     else
       render :new
     end
@@ -25,7 +25,7 @@ class Host::AccountsController < Host::HostController
       if params.has_key?(:booking_id)
         canceled params[:booking_id], false
       end
-      redirect_to host_account_path(@account)
+      redirect_to host_account_path
     else
       render :edit
     end
