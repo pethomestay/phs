@@ -12,7 +12,7 @@
   .slider-labels.size
     span.min under 15kg
     span.max 46kg+
-  = f.input :date_of_birth, label: 'Birth Year', as: :date, start_year: Date.today.year - 15, end_year: Date.today.year, order: [:year], include_blank: true
+  = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
   = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
   = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
   .slider-labels.energy-level
@@ -55,6 +55,12 @@ coffee:
         when 4 then 'high medium'
         when 5 then 'high'
         else 'invalid value'
+  $('.pet_pet_age .slider').slider
+    formatter: (age) ->
+      switch age
+        when 1  then 'under 18 months'
+        when 15 then '15+ years'
+        else "#{age} years old"
   $('.pet_profile_photo .attachinary-input').attachinary
     template: """
       <table class="table table-hover">
