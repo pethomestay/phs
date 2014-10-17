@@ -7,19 +7,41 @@ class Pet < ActiveRecord::Base
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
-  validates_presence_of :name, :pet_type_id, :size_id, :date_of_birth, :sex_id, :energy_level, :personalities
+  validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id, :energy_level, :personalities
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5} # when pet type is 'other'
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
+  validates :energy_level, inclusion: { in: 1..5 } # Low, low medium, medium, high medium, and high
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
+  validates :pet_age, inclusion: { in: 1..15 }
   validate :at_least_three_personalities
 
   serialize :personalities, Array
 
-  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :date_of_birth, :sex_id, :energy_level,
+  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :pet_age, :sex_id, :energy_level,
     :personalities, :emergency_contact_name, :emergency_contact_phone, :vet_name, :vet_phone,
     :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
+
+  def pet_age
+    if self.date_of_birth.present?
+      diff = Date.today.year - self.date_of_birth.year
+      case diff
+      when 0..1 # Under 18 months
+        1
+      when 2..14 # 2 to 14 years old
+        diff
+      else # 15+
+        15
+      end
+    else
+      5
+    end
+  end
+
+  def pet_age=(age)
+    self.date_of_birth = Date.parse "#{age.to_i.years.ago.year}-01-01"
+  end
 
   def dislikes
     dislikes = []
