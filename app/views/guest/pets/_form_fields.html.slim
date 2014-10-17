@@ -10,9 +10,12 @@
   = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
   = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
   .slider-labels.size
-    span.min under 15kg
+    span.min <15kg
     span.max 46kg+
   = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+  .slider-labels.pet-age
+    span.min <18 months
+    span.max 15+ years
   = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
   = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
   .slider-labels.energy-level
