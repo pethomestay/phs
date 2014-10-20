@@ -1,6 +1,8 @@
 %tr.listing{'data-listing' => homestay.id}
   %td.image-cell
-    - if homestay.pictures.any?
+    - if homestay.photos?
+      = link_to cl_image_tag(homestay.photos.first.path, width: 120, height: 120, crop: :fill), homestay
+    - elsif homestay.pictures.any?
       = link_to image_tag(homestay.pictures.first.file.thumb('120x120#').url, alt: homestay.title), homestay
     - else
       = link_to image_tag("results-placeholder.png"), homestay
