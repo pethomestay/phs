@@ -1,0 +1,38 @@
+p#notice= notice
+
+dl.dl-horizontal
+  dt Title
+  dd= @homestay.title
+  dt Created
+  dd= l @homestay.created_at
+  dt Provider
+  dd= @homestay.user.name
+  dt Cost per night
+  dd= @homestay.cost_per_night
+  dt Description
+  dd= @homestay.description
+  dt Is professional
+  dd= @homestay.is_professional?
+  dt Address
+  dd= @homestay.address_1
+  dt Is Active?
+  dd= @homestay.active
+
+table.pictures
+  caption Pictures
+  - if @homestay.photos?
+    - @homestay.photos.each_slice(2) do |photos|
+      tr
+      - photos.each do |p|
+        td
+          = cl_image_tag p.path, width: 380, height: 300, crop: :fill
+  - else
+    - @homestay.pictures.each_slice(2) do |pictures|
+      tr
+      - pictures.each do |picture|
+        td
+          = image_tag(picture.file.thumb('380x300').url)
+
+.form-actions
+  = link_to 'Edit', edit_admin_homestay_path(@homestay), class: 'btn btn-primary'
+  = link_to 'Back to homestay list', admin_homestays_path, class: 'btn'
