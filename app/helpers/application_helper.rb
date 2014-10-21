@@ -78,7 +78,7 @@ module ApplicationHelper
     end
   end
 
-  def translate_last_sign_in time
+  def translate_current_sign_in time
     diff = (Time.now - time).to_i
     case diff
       when 0..86400         then 'today'           # within 1 day
