@@ -13,11 +13,12 @@
           exit: 'animated fadeOutRightBig'
 
 - if defined? resource
-  - resource.errors.full_messages.each do |type, message|
+  / Full_messages only have messages, no type
+  - resource.errors.full_messages.each do |message|
     :coffee
       $.growl
         message: "#{message}",
-          type: "#{flash_class_for type}"
+          type: 'warning'
           delay: 10000
           mouse_over: 'pause'
           offset:
