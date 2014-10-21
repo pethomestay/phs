@@ -86,7 +86,7 @@ module ApplicationHelper
       when 259201..604800   then 'this week'       # within 7 days
       when 604801..1814400  then 'a few weeks ago' # within 21 days
       when 1814401..2678400 then 'this month'  # within 31 days
-      else 'more than a month'
+      else 'more than a month ago'
     end
   end
 end
