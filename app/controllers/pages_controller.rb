@@ -11,6 +11,7 @@ class PagesController < ApplicationController
   end
 
   def why_join_pethomestay
+    render layout: 'new_application'
   end
 
   def the_team
