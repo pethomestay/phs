@@ -3,7 +3,7 @@ html lang='en'
   head
     meta charset='utf-8'
     meta http-equiv='X-UA-Compatible' content='IE=edge'
-    meta name='viewport' content='width=device-width, initial-scale=1'
+    meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
     title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
     / This Facebook app id is for production
     = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735'
