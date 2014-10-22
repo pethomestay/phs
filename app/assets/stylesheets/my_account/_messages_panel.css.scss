@@ -23,27 +23,6 @@
       border-bottom: 1px solid $grey;
       cursor: pointer;
       position: relative;;
-      .profile {
-        display: inline-block;
-        position: absolute;
-        pointer-events: none;
-        img {
-          width: 60px;
-          height: 60px;
-          margin-top: 10px;
-        }
-        .phone-icon {
-          position: absolute;
-          top: 50px;
-          left: 40px;
-          .fa-square {
-            color: $grey-dark;
-          }
-          .fa-phone {
-            color: white;
-          }
-        }
-      }
       .host-info,
       .guest-info {
         display: inline-block;
