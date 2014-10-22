@@ -8,12 +8,12 @@
                         = link_to 'Admin Dashboard', admin_dashboard_path, class: 'buttons btn navbar-btn'
                     %a.buttons.btn.navbar-btn#find-a-host{ href: root_path } Find A Host
                     = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn'
-                    %a.buttons.btn.navbar-btn.primary{ href: guest_path }
+                    %a.buttons.btn.navbar-btn.primary{ href: current_user.homestay.present? ? host_path : guest_path }
                         %span#my
                             %i.fa.fa-user
                             My
                         Account
                 - else
-                    %a.buttons.btn.navbar-btn#become-a-host{ href: why_join_path } Become A Host
+                    %a.buttons.btn.navbar-btn#become-a-host{ href: why_join_path } Become a Host
                     %a.buttons.btn.navbar-btn{href: new_user_session_path } Log In
                     %a.buttons.btn.navbar-btn.primary{href: new_user_registration_path } Sign Up

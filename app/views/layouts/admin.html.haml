@@ -10,6 +10,7 @@
     = csrf_meta_tags
     = render partial: 'shared/tracking/google_analytics' unless ENV['APP_ID'] == "642031549187678" #this Facebook app id is for the local dev
     = yield :open_graph_tags
+    = cloudinary_js_config
   %body
     = render partial: 'shared/tracking/facebook_tag'
     %div.navbar

@@ -26,9 +26,18 @@
   .slider-labels {
     margin-top: -20px;
     padding-bottom: 10px;
+    span {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+    }
     &.size {
       margin-left: 60px;
       .max { margin-left: 160px; }
+    }
+    &.pet-age {
+      margin-left: 60px;
+      .max { margin-left: 150px; }
     }
     &.energy-level {
       margin-left: 120px;
