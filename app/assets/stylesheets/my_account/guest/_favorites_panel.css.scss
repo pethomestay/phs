@@ -46,6 +46,9 @@
     &.expanded {
       .profile {
         pointer-events: auto;
+        .fa-square {
+          color: #43B51F;
+        }
       }
     }
   }
