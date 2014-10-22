@@ -1,0 +1,43 @@
+.favorites-panel {
+  .host {
+    border: 1px solid $grey-light;
+    .header {
+      background-color: $grey-light;
+      height: 110px;
+      padding: 15px 30px;
+      border-bottom: 1px solid $grey;
+      cursor: pointer;
+      position: relative;;
+      .host-info {
+        display: inline-block;
+        margin-top:  10px;
+        margin-left: 80px;
+        .title {
+          display: block;
+          max-height: 40px;
+          margin-right: 80px;
+          overflow: hidden;
+        }
+      }
+    }
+    .right {
+      position: absolute;
+      top:   15px;
+      right: 20px;
+      text-align: right;
+    }
+    .booking {
+      position: relative;
+      border-bottom: 1px solid $grey-light;
+      span {
+        display: block;
+        &.feedback {
+          margin-top: -15px;
+        }
+      }
+      .left {
+        margin: 20px 180px 20px 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+/ Expect params
+/   host
+/   bookings: an array of bookings made between current user (as a Guest) and the host
+
+
+.host
+  .header
+    - if host.present? # TODO: add content to display when host is nil
+      = render 'shared/avatar_with_phone', user: host
+      .host-info
+        span.h5 = host.name
+        br
+        span.title = host.try(:homestay).try(:title)
+        span #{host.try(:homestay).address_suburb}, #{host.try(:homestay).address_city} #{host.try(:homestay).address_postcode}
+    .right
+      - if host.homestay.present?
+        = link_to 'Make Enquiry', homestay_path(host.homestay, anchor: 'enquiry'), class: 'btn btn-primary', style: 'margin-bottom: 5px;'
+      br
+      br
+      span
+        i.fa.fa-chevron-down.fa-lg.chevron
+
+  - for booking in bookings
+    .booking
+      .left
+        span From: #{booking.check_in_date.strftime('%b %e')}
+        span To: #{booking.check_out_date.strftime('%b %e')}
+        span Amount: $#{booking.amount}
+      .right
+        span.feedback Feedback
+        span
+          - if booking.try(:enquiry).try(:feedbacks).empty?
+            a.btn.btn-secondary href=new_enquiry_feedbacks_path(booking.enquiry)
+              i.fa.fa-check.fa-fw
+              |  Leave Feedback
+          - else
+            / Note: we assume only Guest can leave a feedback
+            - booking.try(:enquiry).try(:feedbacks).first.rating.times
+              i.fa.fa-star
+            - (5 - booking.try(:enquiry).try(:feedbacks).first.rating).times
+              i.fa.fa-star-o
+

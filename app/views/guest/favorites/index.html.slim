@@ -28,3 +28,9 @@
               = link_to 'Make Enquiry', homestay_path(homestay, anchor: 'enquiry'), class: 'btn btn-primary fav-homestay-action fav-make-enquiry', style: 'margin-bottom: 5px;'
               br
               = link_to 'Remove', '#', class: 'remove-from-favourites'
+    - if @hosts_with_bookings.any?
+      .page-header
+        h3 My Bookings
+      .panel-content
+        - for host_with_bookings in @hosts_with_bookings
+          = render 'host_with_bookings', host: host_with_bookings[0], bookings: host_with_bookings[1]
