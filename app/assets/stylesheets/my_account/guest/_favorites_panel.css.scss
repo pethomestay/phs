@@ -19,24 +19,27 @@
           overflow: hidden;
         }
       }
-    }
-    .right {
-      position: absolute;
-      top:   15px;
-      right: 20px;
-      text-align: right;
+      .right {
+        position: absolute;
+        top:   15px;
+        right: 20px;
+        text-align: right;
+      }
     }
     .booking {
       position: relative;
       border-bottom: 1px solid $grey-light;
       span {
         display: block;
-        &.feedback {
-          margin-top: -15px;
-        }
       }
       .left {
+        display: inline-block;
         margin: 20px 180px 20px 20px;
+      }
+      .right {
+        display: inline-block;
+        margin-top: 20px;
+        margin-right: 20px;
       }
     }
   }

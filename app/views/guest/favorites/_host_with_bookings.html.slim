@@ -26,14 +26,14 @@
         span From: #{booking.check_in_date.strftime('%b %e')}
         span To: #{booking.check_out_date.strftime('%b %e')}
         span Amount: $#{booking.amount}
-      .right
-        span.feedback Feedback
+      .right.pull-right
         span
           - if booking.try(:enquiry).try(:feedbacks).empty?
             a.btn.btn-secondary href=new_enquiry_feedbacks_path(booking.enquiry)
               i.fa.fa-check.fa-fw
               |  Leave Feedback
           - else
+            span Feedback
             / Note: we assume only Guest can leave a feedback
             - booking.try(:enquiry).try(:feedbacks).first.rating.times
               i.fa.fa-star
