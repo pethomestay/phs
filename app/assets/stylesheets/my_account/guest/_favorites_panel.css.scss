@@ -27,6 +27,7 @@
       }
     }
     .booking {
+      display: none;
       position: relative;
       border-bottom: 1px solid $grey-light;
       span {
@@ -40,6 +41,11 @@
         display: inline-block;
         margin-top: 20px;
         margin-right: 20px;
+      }
+    }
+    &.expanded {
+      .profile {
+        pointer-events: auto;
       }
     }
   }
