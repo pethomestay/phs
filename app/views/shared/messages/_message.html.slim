@@ -23,24 +23,20 @@
         - if guest_view and conversation.booking.blank?
           a.btn.btn-secondary href=new_booking_path(enquiry_id: conversation.enquiry_id)
             i.fa.fa-check.fa-fw
-            '
-            | Book This Homestay
+            |  Book This Homestay
         - elsif conversation.host_booking?(current_user)
           a.btn.btn-secondary href=host_confirm_booking_path(conversation.booking)
             i.fa.fa-check.fa-fw
-            '
-            | Confirm or Reject
+            |  Confirm or Reject
         - elsif conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && guest_view && conversation.try(:booking).try(:enquiry).try(:owner_accepted)
-           a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.booking.enquiry)
+          a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.booking.enquiry)
             i.fa.fa-check.fa-fw
-            '
-            | Leave Feedback
+            |  Leave Feedback
         - elsif guest_view and conversation.booking.present? and !conversation.booking.owner_accepted? # There exists a previous booking cancelled by Guest
           - booking_params = conversation.enquiry.blank? ? { homestay_id: conversation.booking.homestay.id } : { enquiry_id: conversation.enquiry_id }
           a.btn.btn-secondary href=new_booking_path(booking_params)
             i.fa.fa-check.fa-fw
-            '
-            | Book This Homestay
+            |  Book This Homestay
 
 - if top
   .new-msg-form-container
