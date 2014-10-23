@@ -56,9 +56,9 @@ class Search
     end
     if self.check_in_date.present?
       check_out_date = self.check_out_date || self.check_in_date + 1.day
-      homestays = homestays.available_between(check_in_date, check_out_date).not_booked_between(check_in_date, check_out_date)
+      homestays = homestays.select {|homestay| homestay if homestay.available_between(check_in_date, check_out_date)}.compact.uniq
     end
-    homestays.includes(:user)
+    Homestay.where(id: homestays.map(&:id))
   end
 
   def perform_geocode

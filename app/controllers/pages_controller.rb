@@ -34,5 +34,6 @@ class PagesController < ApplicationController
   end
 
   def in_the_press
+    render layout: 'new_application'
   end
 end

@@ -17,6 +17,7 @@
 @import 'my_account/messages_panel';
 // Guest View
 @import 'my_account/guest/pet_panel';
+@import 'my_account/guest/favorites_panel';
 
 // Font
 body {
@@ -117,6 +118,30 @@ span.booking-status {
   }
   &.requested {
     color: $orange;
+  }
+}
+
+// Guest View
+// Avatar with phone
+a.profile {
+  display: inline-block;
+  position: absolute;
+  pointer-events: none;
+  img {
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
+  }
+  .phone-icon {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    .fa-square {
+      color: $grey-dark;
+    }
+    .fa-phone {
+      color: white;
+    }
   }
 }
 
