@@ -46,6 +46,7 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
+    render layout: 'new_application'
   end
 
   # Depreciated
