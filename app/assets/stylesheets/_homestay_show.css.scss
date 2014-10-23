@@ -1,5 +1,8 @@
 .homestay-show {
   .carousel {
+    ol li {
+      margin-left: 5px;
+    }
     img {
       width:  100%; // Fill screen with photo
       height: auto; // Keep photo's original ratio
