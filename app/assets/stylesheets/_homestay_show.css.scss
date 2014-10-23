@@ -9,10 +9,11 @@
       max-height: 568px;
     }
     .carousel-control {
-      i {
+      .chevron {
         display: inline-block;
+        width: 37px;
         position: absolute;
-        top: 50%;
+        top: 45%;
         z-index: 5;
       }
     }
