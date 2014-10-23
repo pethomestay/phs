@@ -1,0 +1,18 @@
+.homestay-show.container-fluid
+  .row
+    #hero.carousel.slide data-ride='carousel'
+      ol.carousel-indicators
+        li.active data-slide-to='0' data-target='#hero'
+        li data-slide-to='1' data-target='#hero'
+        li data-slide-to='2' data-target='#hero'
+      .carousel-inner
+        .item.active
+          = image_tag 'placeholder.png'
+        .item
+          = image_tag 'placeholder.png'
+      a.left.carousel-control data-slide='prev' href='#hero' role='button'
+        span
+          i.fa.fa-chevron-circle-left.fa-lg
+      a.right.carousel-control data-slide='next' href='#hero' role='button'
+        span
+          i.fa.fa-chevron-circle-right.fa-lg

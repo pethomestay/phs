@@ -1,0 +1,17 @@
+.homestay-show {
+  .carousel {
+    img {
+      width:  100%; // Fill screen with photo
+      height: auto; // Keep photo's original ratio
+      max-height: 568px;
+    }
+    .carousel-control {
+      i {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        z-index: 5;
+      }
+    }
+  }
+}
