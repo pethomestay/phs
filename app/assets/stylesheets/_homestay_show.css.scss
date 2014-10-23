@@ -13,5 +13,26 @@
         z-index: 5;
       }
     }
+    .price-tag {
+      width: 18%;
+      max-width: 160px;
+      height: 40px;
+      position: absolute;
+      left: 21.5686275%;
+      bottom: 0;
+      padding-left: 10px;
+      background-color: $orange;
+      span {
+        font-weight: 700;
+        &.price {
+          font-size: 26px;
+          color: $grey-lighter;
+        }
+        &.per-night {
+          font-size: 16px;
+          color: #c04d33;
+        }
+      }
+    }
   }
 }
