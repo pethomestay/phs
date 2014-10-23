@@ -25,6 +25,7 @@
 //= require moment
 //= require jquery_nested_form
 //= require chosen-jquery
+//= require gmaps
 //= require_directory ./components_mixin
 //= require_directory ./components_data
 //= require_directory ./components_ui

@@ -19,4 +19,22 @@
       .price-tag
         span.price $50
         span.per-night.hidden-xs
-          |  /Night
+          |  /24h
+
+  .row
+    .col-sm-8
+    .map-container.col-sm-4
+      #map
+
+
+coffee:
+  map = new GMaps
+    div: '#map'
+    lat: -37.818738
+    lng: 144.957118
+    minZoom: 6
+    maxZoom: 15
+    disableDefaultUI: true
+  map.addMarker
+    lat: -37.818738
+    lng: 144.957118
