@@ -410,6 +410,7 @@ class User < ActiveRecord::Base
   end
 
   def mobile_num_legal?
+    return if self.mobile_number.blank?
     m = self.mobile_number.gsub(/[^0-9]/, "")
     case m.length
     when 10 # 0416 123 456
