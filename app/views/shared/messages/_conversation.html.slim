@@ -10,19 +10,7 @@
     - if params[:controller].include? 'guest'
       - host = conversation.host_mailbox # Could be nil
       - if host.present? # TODO: add content to display when host is nil
-        - number_legal = host.mobile_num_legal?
-        a.profile href=("tel:#{host.mobile_number}" if number_legal)
-          - if host.profile_photo?
-            = cl_image_tag host.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
-          - elsif host.uid.present?
-            = facebook_profile_image_tag host.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
-          - else
-            = image_tag 'default_profile_photo.jpg', class: 'img-circle'
-          - if number_legal
-            .phone-icon
-              span.fa-stack
-                i.fa.fa-square.fa-stack-2x
-                i.fa.fa-phone.fa-stack-1x
+        = render 'shared/avatar_with_phone', user: host
         .host-info
           span.h5 = host.name
           - homestay = host.homestay
@@ -33,19 +21,7 @@
     - elsif params[:controller].include? 'host'
       - guest = conversation.guest_mailbox # Could be nil
       - if guest.present? # TODO: add content to display when guest is nil
-        - number_legal = guest.mobile_num_legal?
-        a.profile href=("tel:#{guest.mobile_number}" if number_legal)
-          - if guest.profile_photo?
-            = cl_image_tag guest.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
-          - elsif guest.uid.present?
-            = facebook_profile_image_tag guest.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png
-          - else
-            = image_tag 'default_profile_photo.jpg', class: 'img-circle'
-          - if number_legal
-            .phone-icon
-              span.fa-stack
-                i.fa.fa-square.fa-stack-2x
-                i.fa.fa-phone.fa-stack-1x
+        = render 'shared/avatar_with_phone', user: guest
         .guest-info
           span.h5 = guest.name
           - pets = guest.pets

@@ -1,7 +1,7 @@
-.row{style: 'display: table; margin-bottom: 40px;'}
-  .span3{style: 'display: table-cell; float: none; vertical-align: middle;'}
-    = link_to image_tag("in_the_press/#{image}", class: 'pull-right'), links[0][:url], target: '_blank'
-  .span8{style: 'margin-left: 30px;'}
+.row{style: 'margin-bottom: 40px;'}
+  .col-sm-3{style: 'vertical-align: middle;'}
+    = link_to image_tag("in_the_press/#{image}", class: 'pull-right img-responsive'), links[0][:url], target: '_blank'
+  .col-sm-8{style: 'margin-left: 30px;'}
     %h3
       = title
     %p
