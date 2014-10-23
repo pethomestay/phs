@@ -19,7 +19,7 @@
     - if top
       - conversation = message.mailbox
       - guest_view = (current_user == conversation.guest_mailbox)
-      - if conversation.try(:enquiry).check_out_date >= Date.today
+      - if conversation.enquiry.present? and conversation.enquiry.check_out_date >= Date.today
         - if guest_view and conversation.booking.blank?
           a.btn.btn-secondary href=new_booking_path(enquiry_id: conversation.enquiry_id)
             i.fa.fa-check.fa-fw
