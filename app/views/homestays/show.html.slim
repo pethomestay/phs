@@ -1,4 +1,4 @@
-.homestay-show.container-fluid
+.container-fluid.homestay-show
   .row
     #hero.carousel.slide data-ride='carousel' date-interval='10000'
       ol.carousel-indicators
@@ -22,7 +22,53 @@
           |  /24h
 
   .row
-    .col-sm-8
+    .col-sm-8.hs-upper-section
+      .row.basic-info
+        .col-xs-4.avatar
+          = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle img-responsive pull-right'
+        .col-xs-8.info
+          span.title Animal Haven Doggy Vacation
+          span.suburb Cremorne, VIC
+          span.ratings
+            i.fa.fa-star
+            i.fa.fa-star
+            i.fa.fa-star
+            i.fa.fa-star
+            i.fa.fa-star-o
+            span.count
+              |  (33)
+      .row.details-title
+        .col-xs-5
+          span.pull-right Listing Details
+      .row.details
+        .col-xs-5.entries
+          span.pull-right Property type
+          br
+          span.pull-right Outdoor area size
+          br
+          span.pull-right Extra services
+          br
+          span.pull-right After work hour supervision
+          br
+          span.pull-right Emergency transport
+        .col-xs-7.info
+          span
+            i.fa.fa-home
+            |  House
+          br
+          span
+            i.fa.fa-tree
+            |  Meduim
+          br
+          span
+            | Pet grooming and pet walking
+          br
+          span.after-work
+            i.fa.fa-check-circle
+          br
+          span.emergency
+            i.fa.fa-check-circle
+
     .map-container.col-sm-4
       #map
 
