@@ -1,5 +1,5 @@
 $ ->
-  CalendarUI = flight.component ->
+  UserCalendarUI = flight.component ->
     @attributes
       bodySelector:  'tbody'
       datesSelector: 'td[data-date]'
@@ -83,4 +83,4 @@ $ ->
       @on document, 'dataUnavailableDateDestroyed', @darkenUnavailableDate
 
 
-  CalendarUI.attachTo '.right-panel .calendar'
+  UserCalendarUI.attachTo '.right-panel .calendar'
