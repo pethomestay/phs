@@ -128,5 +128,22 @@
         color: $blue-light;
       }
     }
+
+    .review {
+      .left,
+      .right {
+        padding-top: 20px;
+      }
+      .left {
+        padding-bottom: 20px;
+        .reviewer {
+          display: block;
+          text-align: center;
+        }
+      }
+      .hr {
+        border-bottom: 1px solid $grey;
+      }
+    }
   }
 }
