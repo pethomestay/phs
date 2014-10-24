@@ -6,7 +6,6 @@ html lang='en'
     meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
     title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
     / This Facebook app id is for production
-    = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735'
     = stylesheet_link_tag 'new_application'
     = yield :head_stylesheet
     /! HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
