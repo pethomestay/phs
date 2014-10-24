@@ -7,12 +7,10 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
-    = render partial: 'shared/tracking/crazy_egg' if ENV['APP_ID'] == '262506980584735' #this Facebook app id is for production
     = yield :open_graph_tags
     = yield :head
   %body
-    = render partial: 'shared/tracking/facebook_tag'
+    = render 'shared/tag_manager'
     = render partial: 'shared/nav_bar_compatible'
     - current_user_present = !current_user.blank? && @homepage.blank?
     - if current_user_present
@@ -25,35 +23,5 @@
     -else
       .main{ class: current_user_present ? 'main-changes' :  '' }
         = render partial: 'layouts/nav_layouts', :locals => {:flash => flash, :current_user_present => current_user_present}
-      %script{type: "text/javascript"}
-        :plain
-           /* <![CDATA[ */
-           var google_conversion_id = 985769911;
-           var google_conversion_value = 0;
-           var google_custom_params = window.google_tag_params;
-           var google_remarketing_only = true;
-           /* ]]> */
-
-      %script{type: "text/javascript", src:"//www.googleadservices.com/pagead/conversion.js"}
-      %noscript
-        %div{style: "display:inline;"}
-          %img{height: "1", width: "1", style: "border-style:none;", alt: "", src: "//googleads.g.doubleclick.net/pagead/viewthroughconversion/985769911/?value=0&amp;guid=ON&amp;script=0"}
-    -if @welcome
-      %script{type: "text/javascript"}
-        :plain
-          /* <![CDATA[ */
-          var google_conversion_id = 985769911;
-          var google_conversion_language = "en";
-          var google_conversion_format = "1";
-          var google_conversion_color = "ffffff";
-          var google_conversion_label = "2nieCPnE5ggQt8-G1gM";
-          var google_remarketing_only = false;
-          var google_conversion_value = 0;
-          /* ]]> */
-
-      %script{type: "text/javascript", src: "//www.googleadservices.com/pagead/conversion.js"}
-      %noscript
-        %div{style: "display:inline;"}
-          %img{height: "1",style: "border-style:none;", alt: "", src: "//www.googleadservices.com/pagead/conversion/985769911/?label=2nieCPnE5ggQt8-G1gM&amp;guid=ON&amp;script=0"}
     .clearer{style: "clear: left;"}
     = render partial: 'shared/footer_compatible'

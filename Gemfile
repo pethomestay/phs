@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
-gem "strong_parameters"
+gem 'strong_parameters'
 gem 'auto_strip_attributes', '~> 2.0'
 gem 'oauth2'
 gem 'redcarpet'
@@ -45,21 +45,20 @@ gem 'rest-client', '1.6.7'
 gem 'nokogiri', '1.6.2.1'
 gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
-gem 'figaro', :github=>"laserlemon/figaro"
+gem 'figaro', :github=> 'laserlemon/figaro'
 gem 'state_machine'
 
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'createsend' # Campaign Monitor API Wrapper
+gem 'smsglobal' # API support for smsglobal.com
 group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
-  unless ENV['RM_INFO']
-    gem 'pry'
-    gem 'pry-remote'
-    gem 'pry-stack_explorer'
-    gem 'pry-debugger'
-  end
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 2.6.1'
@@ -83,6 +82,6 @@ group :assets do
 end
 
 group :production, :staging do
-  gem "rails_12factor"
+  gem 'rails_12factor'
   gem 'heroku-deflater'
 end
