@@ -22,6 +22,5 @@
     -else
       .main{ class: current_user_present ? 'main-changes' :  '' }
         = render partial: 'layouts/nav_layouts', :locals => {:flash => flash, :current_user_present => current_user_present}
-    -if @welcome
     .clearer{style: "clear: left;"}
     = render partial: 'shared/footer_compatible'
