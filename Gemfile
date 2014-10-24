@@ -55,12 +55,10 @@ group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
-  unless ENV['RM_INFO']
-    gem 'pry'
-    gem 'pry-remote'
-    gem 'pry-stack_explorer'
-    gem 'pry-debugger'
-  end
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 2.6.1'
