@@ -18,6 +18,7 @@ html lang='en'
     = yield :head_javascript
     = csrf_meta_tags
   body
+    = render 'shared/tag_manager'
     - if defined? resource
       = render 'shared/flash_messages', flash: flash, resource: resource
     - else

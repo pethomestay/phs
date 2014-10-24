@@ -10,6 +10,7 @@
     = yield :open_graph_tags
     = yield :head
   %body
+    = render 'shared/tag_manager'
     = render partial: 'shared/nav_bar_compatible'
     - current_user_present = !current_user.blank? && @homepage.blank?
     - if current_user_present
