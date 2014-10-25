@@ -60,7 +60,7 @@ group :test, :development do
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.99'
   gem 'shoulda-matchers', '~> 2.6.1'
   gem 'thin'
 end
