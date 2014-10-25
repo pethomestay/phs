@@ -37,7 +37,7 @@ describe Admin::HomestaysController do
 
   describe "GET show" do
     it "assigns the requested homestay as @homestay" do
-      homestay = Homestay.create! valid_attributes(user:user)
+      homestay = Homestay.create! valid_attributes
       get :show, {:id => homestay.to_param}, valid_session
       assigns(:homestay).should eq(homestay)
     end
@@ -45,14 +45,14 @@ describe Admin::HomestaysController do
 
   describe "GET edit" do
     it "assigns the requested homestay as @homestay" do
-      homestay = Homestay.create! valid_attributes(user:user)
+      homestay = Homestay.create! valid_attributes
       get :edit, {:id => homestay.to_param}, valid_session
       assigns(:homestay).should eq(homestay)
     end
   end
 
   describe "PUT update" do
-    let(:homestay) { Homestay.create! valid_attributes(user:user) }
+    let(:homestay) { Homestay.create! valid_attributes }
     describe "with valid params" do
       subject { put :update, {:id => homestay.to_param, :homestay => valid_attributes}, valid_session }
       it "updates the requested homestay" do
@@ -86,7 +86,7 @@ describe Admin::HomestaysController do
 
   describe "DELETE destroy" do
     subject { delete :destroy, {:id => homestay.to_param}, valid_session }
-    let!(:homestay) { Homestay.create! valid_attributes(user:user) }
+    let!(:homestay) { Homestay.create! valid_attributes }
     it "destroys the requested homestay" do
       expect { subject }.to change(Homestay, :count).by(-1)
     end

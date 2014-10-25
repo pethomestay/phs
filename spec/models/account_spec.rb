@@ -16,8 +16,6 @@ describe Account do
 		subject { account.hidden_account_number }
 		let(:account) { FactoryGirl.create :account }
 
-		before { account.account_number = '1234567' }
-
 		it 'should return account number hidden by *' do
 			subject.should be_eql('***4567')
 		end

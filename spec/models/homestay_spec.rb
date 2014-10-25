@@ -100,7 +100,7 @@ describe Homestay do
     context "when none of the users are booked between start_date and end_date" do
       let(:booking){ "" }
       it "should return all homestays" do
-        expect(subject & homestays).to eq(homestays)
+        (subject & homestays).should match_array(homestays)
       end
     end
 

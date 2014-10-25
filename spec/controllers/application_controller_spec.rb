@@ -48,12 +48,16 @@ describe ApplicationController do
       end
     end
 
-    context 'when the user has either a pet or a homestay' do
+    context 'when the user has a homestay' do
       let(:user) { mock(:user, homestay: stub_model(Homestay), pets: nil) }
 
-      it 'should return the mailbox path' do
-        subject.should == guest_path
-      end
+      it('should return the mailbox path') { subject.should eq(host_path) }
+    end
+
+    context 'when the user has a pets' do
+      let(:user) { mock(:user, homestay: nil, pets: double(:pets)) }
+
+      it('should return the mailbox path') { subject.should eq(guest_path)  }
     end
   end
 

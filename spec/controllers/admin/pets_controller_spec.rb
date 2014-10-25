@@ -6,9 +6,9 @@ describe Admin::PetsController do
     controller.stub(:require_admin!).and_return true
   end
 
-  def valid_attributes
+  def pet_attributes
     { name: Faker::Name.first_name,
-      date_of_birth: Time.zone.now - 18.years,
+      pet_age: '18',
       emergency_contact_name: Faker::Name.first_name,
       emergency_contact_phone: '12345678',
       pet_type_id: ReferenceData::PetType::DOG.id,
@@ -35,7 +35,7 @@ describe Admin::PetsController do
 
   describe "GET show" do
     it "assigns the requested pet as @pet" do
-      pet = Pet.create! valid_attributes
+      pet = Pet.create! pet_attributes
       get :show, {:id => pet.to_param}, valid_session
       assigns(:pet).should eq(pet)
     end
@@ -50,7 +50,7 @@ describe Admin::PetsController do
 
   describe "GET edit" do
     it "assigns the requested pet as @pet" do
-      pet = Pet.create! valid_attributes
+      pet = Pet.create! pet_attributes
       get :edit, {:id => pet.to_param}, valid_session
       assigns(:pet).should eq(pet)
     end
@@ -58,7 +58,7 @@ describe Admin::PetsController do
 
   describe "POST create" do
     context "with valid params" do
-      subject { post :create, {:pet => valid_attributes}, valid_session }
+      subject { post :create, {:pet => pet_attributes}, valid_session }
       it "creates a new Pet" do
         expect { subject }.to change(Pet, :count).by(1)
       end
@@ -70,7 +70,7 @@ describe Admin::PetsController do
       end
 
       it "redirects to the created pet" do
-        post :create, {:pet => valid_attributes}, valid_session
+        post :create, {:pet => pet_attributes}, valid_session
         response.should redirect_to(admin_pet_path(Pet.last))
       end
     end
@@ -89,9 +89,9 @@ describe Admin::PetsController do
   end
 
   describe "PUT update" do
-    let(:pet) { Pet.create! valid_attributes }
+    let(:pet) { Pet.create! pet_attributes }
     describe "with valid params" do
-      subject { put :update, {:id => pet.to_param, :pet => valid_attributes}, valid_session }
+      subject { put :update, {:id => pet.to_param, :pet => pet_attributes}, valid_session }
       it "updates the requested pet" do
         Pet.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
         put :update, {:id => pet.to_param, :pet => { "these" => "params" }}, valid_session
@@ -123,7 +123,7 @@ describe Admin::PetsController do
 
   describe "DELETE destroy" do
     subject { delete :destroy, {:id => pet.to_param}, valid_session }
-    let!(:pet) { Pet.create! valid_attributes }
+    let!(:pet) { Pet.create! pet_attributes }
     it "destroys the requested pet" do
       expect { subject }.to change(Pet, :count).by(-1)
     end
