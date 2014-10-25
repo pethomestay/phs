@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe PetsController do
+describe PetsController, :type => :controller do
   before do
-    controller.stub(:authenticate_user!).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
   end
 
   def valid_attributes(override_or_add={})
@@ -15,7 +15,7 @@ describe PetsController do
     it 'should assigns current_user s pets to the pets variable' do
       controller.stub_chain(:current_user, :pets).and_return 'my pets'
       subject
-      assigns(:pets).should == 'my pets'
+      expect(assigns(:pets)).to eq('my pets')
     end
   end
 
@@ -25,12 +25,12 @@ describe PetsController do
 
     it 'should make a new pet object available to views' do
       subject
-      assigns(:pet).should == 'New Pet'
+      expect(assigns(:pet)).to eq('New Pet')
     end
 
     it 'should render the new template' do
       subject
-      response.should render_template :new
+      expect(response).to render_template :new
     end
   end
 
@@ -38,7 +38,7 @@ describe PetsController do
     subject { post :create, pet: attributes }
     let(:user) { FactoryGirl.create :user }
     before do
-      controller.stub(:current_user).and_return user
+      allow(controller).to receive(:current_user).and_return user
     end
     context 'with valid attributes' do
       let(:attributes) { valid_attributes }
@@ -48,7 +48,7 @@ describe PetsController do
 
       it 'should redirect back to the pets list' do
         subject
-        response.should redirect_to pets_path
+        expect(response).to redirect_to pets_path
       end
     end
 
@@ -60,7 +60,7 @@ describe PetsController do
 
       it 'should re-render the new template' do
         subject
-        response.should render_template :new
+        expect(response).to render_template :new
       end
     end
   end
@@ -72,12 +72,12 @@ describe PetsController do
 
     it 'should make a the pet object available to views for editing' do
       subject
-      assigns(:pet).should == pet
+      expect(assigns(:pet)).to eq(pet)
     end
 
     it 'should render the edit template' do
       subject
-      response.should render_template :edit
+      expect(response).to render_template :edit
     end
   end
 
@@ -86,7 +86,7 @@ describe PetsController do
     let(:user) { FactoryGirl.create :user }
     let(:pet) { FactoryGirl.create :pet }
     before do
-      controller.stub(:current_user).and_return user
+      allow(controller).to receive(:current_user).and_return user
       user.pets << pet
     end
 
@@ -94,12 +94,12 @@ describe PetsController do
       let(:attributes) { valid_attributes }
       it 'should update the pets details' do
         subject
-        pet.reload.name.should == valid_attributes[:name]
+        expect(pet.reload.name).to eq(valid_attributes[:name])
       end
 
       it 'should redirect back to the pets list' do
         subject
-        response.should redirect_to pets_path
+        expect(response).to redirect_to pets_path
       end
     end
 
@@ -107,12 +107,12 @@ describe PetsController do
       let(:attributes) { valid_attributes(name: nil) }
       it 'should not update the pet attributes' do
         subject
-        pet.size.should_not == valid_attributes[:size]
+        expect(pet.size).not_to eq(valid_attributes[:size])
       end
 
       it 'should re-render the edit template' do
         subject
-        response.should render_template :edit
+        expect(response).to render_template :edit
       end
     end
   end
@@ -122,7 +122,7 @@ describe PetsController do
     let(:user) { FactoryGirl.create :user }
     let(:pet) { FactoryGirl.create :pet }
     before do
-      controller.stub(:current_user).and_return user
+      allow(controller).to receive(:current_user).and_return user
       user.pets << pet
     end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Host::CalendarController do
+describe Host::CalendarController, :type => :controller do
   login_user
   before :each do
     subject.current_user.homestay = FactoryGirl.create(:homestay)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "admin/users/index" do
+describe "admin/users/index", :type => :view do
   before(:each) do
     assign(:users, [
       stub_model(User,pets: [], created_at: Time.zone.now),
@@ -9,7 +9,7 @@ describe "admin/users/index" do
   end
 
   it "renders a list of users" do
-    pending 'This does not like will_paginate for some reason'
+    skip 'This does not like will_paginate for some reason'
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
   end

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe HomestaysController do
+describe HomestaysController, :type => :controller do
   before do
-    controller.stub(:authenticate_user!).and_return true
-    Homestay.any_instance.stub(:geocode).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
+    allow_any_instance_of(Homestay).to receive(:geocode).and_return true
   end
 
   def valid_attributes(override_or_add={})
@@ -25,11 +25,11 @@ describe HomestaysController do
   describe 'GET #show' do
     subject { get :show, id: homestay.slug }
     let(:homestay) { FactoryGirl.create :homestay }
-    before { controller.stub(:current_user).and_return homestay.user }
+    before { allow(controller).to receive(:current_user).and_return homestay.user }
 
     it 'should make homestay to the pets variable' do
       subject
-      assigns(:homestay).should == homestay
+      expect(assigns(:homestay)).to eq(homestay)
     end
   end
 
@@ -39,12 +39,12 @@ describe HomestaysController do
 
     it 'should make a new homestay object available to views' do
       subject
-      assigns(:homestay).should == 'New Homestay'
+      expect(assigns(:homestay)).to eq('New Homestay')
     end
 
     it 'should render the new template' do
       subject
-      response.should render_template :new
+      expect(response).to render_template :new
     end
   end
 
@@ -52,18 +52,18 @@ describe HomestaysController do
     subject { post :create, homestay: attributes }
     let(:user) { FactoryGirl.create :user }
     before do
-      controller.stub(:current_user).and_return user
+      allow(controller).to receive(:current_user).and_return user
     end
     context 'with valid attributes' do
       let(:attributes) { valid_attributes }
       it 'should create a new homestay for the current user' do
         subject
-        user.homestay.should_not be_nil
+        expect(user.homestay).not_to be_nil
       end
 
       it 'should redirect back to the pets list' do
         subject
-        response.should redirect_to homestay_path(user.homestay.reload)
+        expect(response).to redirect_to homestay_path(user.homestay.reload)
       end
     end
 
@@ -71,12 +71,12 @@ describe HomestaysController do
       let(:attributes) { valid_attributes(address_1: nil) }
       it 'should not add a homestay for the current user' do
         subject
-        user.reload.homestay.should be_nil
+        expect(user.reload.homestay).to be_nil
       end
 
       it 'should re-render the new template' do
         subject
-        response.should render_template :new
+        expect(response).to render_template :new
       end
     end
   end
@@ -85,17 +85,17 @@ describe HomestaysController do
     subject { get :edit, id: homestay.slug }
     let(:homestay) { FactoryGirl.create :homestay }
     before do
-      controller.stub(:current_user).and_return homestay.user
+      allow(controller).to receive(:current_user).and_return homestay.user
       controller.stub_chain(:current_user, :homestay).and_return homestay
     end
     it 'should make a the homestay object available to views for editing' do
       subject
-      assigns(:homestay).should == homestay
+      expect(assigns(:homestay)).to eq(homestay)
     end
 
     it 'should render the edit template' do
       subject
-      response.should render_template :edit
+      expect(response).to render_template :edit
     end
   end
 
@@ -104,19 +104,19 @@ describe HomestaysController do
     let(:user) { FactoryGirl.create(:user, homestay: homestay) }
     let(:homestay) { FactoryGirl.create :homestay }
     before do
-      controller.stub(:current_user).and_return user
+      allow(controller).to receive(:current_user).and_return user
     end
 
     context 'with valid attributes' do
       let(:attributes) { valid_attributes }
       it 'should update the homestays details' do
         subject
-        homestay.reload.description.should == attributes[:description]
+        expect(homestay.reload.description).to eq(attributes[:description])
       end
 
       it 'should redirect back to the user account' do
         subject
-        response.should redirect_to homestay
+        expect(response).to redirect_to homestay
       end
     end
 
@@ -124,12 +124,12 @@ describe HomestaysController do
       let(:attributes) { valid_attributes(address_1: nil) }
       it 'should not update the homestay attributes' do
         subject
-        homestay.title.should_not == valid_attributes[:title]
+        expect(homestay.title).not_to eq(valid_attributes[:title])
       end
 
       it 'should re-render the edit template' do
         subject
-        response.should render_template :edit
+        expect(response).to render_template :edit
       end
     end
   end
@@ -138,11 +138,11 @@ describe HomestaysController do
 		subject { get :favourite, id: homestay.id }
 		let(:homestay) { FactoryGirl.create :homestay }
 
-		before { controller.stub(:current_user).and_return homestay.user }
+		before { allow(controller).to receive(:current_user).and_return homestay.user }
 
 		it 'should favourite this homestay' do
 			subject
-			response.status.should be_eql(200)
+			expect(response.status).to be_eql(200)
 		end
 	end
 
@@ -151,12 +151,12 @@ describe HomestaysController do
 		subject { get :non_favourite, id: homestay.id }
 		let(:homestay) { FactoryGirl.create :homestay }
 
-		before { controller.stub(:current_user).and_return homestay.user }
+		before { allow(controller).to receive(:current_user).and_return homestay.user }
 
 		context 'when homestay is not favourite' do
 			it 'should sent 302' do
 				subject
-				response.status.should be_eql(302)
+				expect(response.status).to be_eql(302)
 			end
 		end
 
@@ -165,7 +165,7 @@ describe HomestaysController do
 
 			it 'should sent 200 ok message' do
 				subject
-				response.status.should be_eql(200)
+				expect(response.status).to be_eql(200)
 			end
 		end
 	end
@@ -174,10 +174,10 @@ describe HomestaysController do
 		subject { get :favourites }
 		let(:homestay) { FactoryGirl.create :homestay }
 
-		before { controller.stub(:current_user).and_return homestay.user }
+		before { allow(controller).to receive(:current_user).and_return homestay.user }
 		it 'should render favourites list' do
 			subject
-			response.should render_template :favourites
+			expect(response).to render_template :favourites
 		end
 	end
 
@@ -190,13 +190,13 @@ describe HomestaysController do
     let(:booking_info){ [1,2,3] }
 
     before do
-      Homestay.stub(:find).with("1").and_return(homestay)
-      homestay.stub(:user).and_return(user)
-      user.stub(:booking_info_between).with(start_date, end_date).and_return(booking_info)
+      allow(Homestay).to receive(:find).with("1").and_return(homestay)
+      allow(homestay).to receive(:user).and_return(user)
+      allow(user).to receive(:booking_info_between).with(start_date, end_date).and_return(booking_info)
     end
 
     it "should pass booking info message to current user" do
-      user.should_receive(:booking_info_between).with(start_date, end_date)
+      expect(user).to receive(:booking_info_between).with(start_date, end_date)
       get :availability, id: homestay.id, start: start_date.to_time.to_i, end: end_date.to_time.to_i
     end
 

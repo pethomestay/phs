@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "admin/pets/show" do
+describe "admin/pets/show", :type => :view do
   before(:each) do
     #@user = assign(:pet, stub_model(Pet))
 	  @pet = FactoryGirl.create :pet

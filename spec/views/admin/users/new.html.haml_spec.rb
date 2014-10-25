@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "admin/users/new" do
+describe "admin/users/new", :type => :view do
   before(:each) do
     @user = FactoryGirl.build :user
   end

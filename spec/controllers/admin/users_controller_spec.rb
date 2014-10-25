@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Admin::UsersController do
+describe Admin::UsersController, :type => :controller do
   before do
-    controller.stub(:authenticate_user!).and_return true
-    controller.stub(:require_admin!).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
+    allow(controller).to receive(:require_admin!).and_return true
   end
 
   def valid_attributes
@@ -29,7 +29,7 @@ describe Admin::UsersController do
       u2 = FactoryGirl.create :user, last_name: 'b'
       u3 = FactoryGirl.create :user, last_name: 'a'
       get :index, {}, valid_session
-      assigns(:users).should eq [u3, u2, u1]
+      expect(assigns(:users)).to eq [u3, u2, u1]
     end
   end
 
@@ -37,14 +37,14 @@ describe Admin::UsersController do
     it "assigns the requested user as @user" do
       user = User.create! valid_attributes
       get :show, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
+      expect(assigns(:user)).to eq(user)
     end
   end
 
   describe "GET new" do
     it "assigns a new user as @user" do
       get :new, {}, valid_session
-      assigns(:user).should be_a_new(User)
+      expect(assigns(:user)).to be_a_new(User)
     end
   end
 
@@ -52,7 +52,7 @@ describe Admin::UsersController do
     it "assigns the requested user as @user" do
       user = User.create! valid_attributes
       get :edit, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
+      expect(assigns(:user)).to eq(user)
     end
   end
 
@@ -65,25 +65,25 @@ describe Admin::UsersController do
 
       it "assigns a newly created user as @user" do
         subject
-        assigns(:user).should be_a(User)
-        assigns(:user).should be_persisted
+        expect(assigns(:user)).to be_a(User)
+        expect(assigns(:user)).to be_persisted
       end
 
       it "redirects to the created user" do
         post :create, {:user => valid_attributes}, valid_session
-        response.should redirect_to(admin_user_path(User.last))
+        expect(response).to redirect_to(admin_user_path(User.last))
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user" do
         post :create, {:user => {  }}, valid_session
-        assigns(:user).should be_a_new(User)
+        expect(assigns(:user)).to be_a_new(User)
       end
 
       it "re-renders the 'new' template" do
         post :create, {:user => {  }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -93,30 +93,30 @@ describe Admin::UsersController do
     describe "with valid params" do
       subject { put :update, {:id => user.to_param, :user => valid_attributes}, valid_session }
       it "updates the requested user" do
-        User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        expect_any_instance_of(User).to receive(:update_attributes).with({ "these" => "params" })
         put :update, {:id => user.to_param, :user => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested user as @user" do
         subject
-        assigns(:user).should eq(user)
+        expect(assigns(:user)).to eq(user)
       end
 
       it "redirects to the user" do
         subject
-        response.should redirect_to(admin_user_path(user))
+        expect(response).to redirect_to(admin_user_path(user))
       end
     end
 
     describe "with invalid params" do
       it "assigns the user as @user" do
         put :update, {:id => user.to_param, :user => {email: '' }}, valid_session
-        assigns(:user).should eq(user)
+        expect(assigns(:user)).to eq(user)
       end
 
       it "re-renders the 'edit' template" do
         put :update, {:id => user.to_param, :user => { email: '' }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -130,7 +130,7 @@ describe Admin::UsersController do
 
     it "redirects to the users list" do
       subject
-      response.should redirect_to admin_users_url(letter: 'Z')
+      expect(response).to redirect_to admin_users_url(letter: 'Z')
     end
   end
 

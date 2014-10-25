@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe UnavailableDatesController do
+describe UnavailableDatesController, :type => :controller do
 
   let(:user){ FactoryGirl.build(:user, id: 1) }
   let(:unavailable_date) { FactoryGirl.build(:unavailable_date, user: user, id: 1) }
 
   before do
-    controller.stub(:current_user).and_return(user)
-    controller.stub(:authenticate_user!).and_return(true)
+    allow(controller).to receive(:current_user).and_return(user)
+    allow(controller).to receive(:authenticate_user!).and_return(true)
   end
 
   describe "Post #Create" do
@@ -21,12 +21,12 @@ describe UnavailableDatesController do
       end
 
       it "should return 200 status code" do
-        UnavailableDate.any_instance.stub(:save).and_return(true)
+        allow_any_instance_of(UnavailableDate).to receive(:save).and_return(true)
         expect(subject.code).to eq("200")
       end
 
       it "should return appropriate message" do
-        UnavailableDate.any_instance.stub(:save).and_return(true)
+        allow_any_instance_of(UnavailableDate).to receive(:save).and_return(true)
         res = JSON.parse subject.body
         expect(res["message"]).to eq(I18n.t("unavailable_date.successfully_created"))
       end

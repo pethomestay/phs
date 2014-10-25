@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe ReferenceData::Size do
+describe ReferenceData::Size, :type => :model do
   describe '#all' do
     it 'should return 5 Sizes' do
-      ReferenceData::Size.all.should have(4).items
+      expect(ReferenceData::Size.all.size).to eq(4)
     end
   end
 
   describe '#find' do
     it 'should return the Size with the id provided' do
-      ReferenceData::Size.find(4).id.should == 4
+      expect(ReferenceData::Size.find(4).id).to eq(4)
     end
 
     it 'should raise RecordNotFound id there is no Size with the id provided' do
@@ -19,11 +19,11 @@ describe ReferenceData::Size do
 
   describe '#find_by_id' do
     it 'should return the Size with the id provided' do
-      ReferenceData::Size.find_by_id(4).id.should == 4
+      expect(ReferenceData::Size.find_by_id(4).id).to eq(4)
     end
 
     it 'should return nil if there is no Size with the id provided' do
-      ReferenceData::Size.find_by_id(20).should be_nil
+      expect(ReferenceData::Size.find_by_id(20)).to be_nil
     end
   end
 end

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe ReferenceData::Sex do
+describe ReferenceData::Sex, :type => :model do
   describe '#all' do
     it 'should return 5 Sexs' do
-      ReferenceData::Sex.all.should have(4).items
+      expect(ReferenceData::Sex.all.size).to eq(4)
     end
   end
 
   describe '#find' do
     it 'should return the Sex with the id provided' do
-      ReferenceData::Sex.find(4).id.should == 4
+      expect(ReferenceData::Sex.find(4).id).to eq(4)
     end
 
     it 'should raise RecordNotFound id there is no Sex with the id provided' do
@@ -19,11 +19,11 @@ describe ReferenceData::Sex do
 
   describe '#find_by_id' do
     it 'should return the Sex with the id provided' do
-      ReferenceData::Sex.find_by_id(4).id.should == 4
+      expect(ReferenceData::Sex.find_by_id(4).id).to eq(4)
     end
 
     it 'should return nil if there is no Sex with the id provided' do
-      ReferenceData::Sex.find_by_id(20).should be_nil
+      expect(ReferenceData::Sex.find_by_id(20)).to be_nil
     end
   end
 end

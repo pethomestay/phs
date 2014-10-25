@@ -49,7 +49,7 @@ RSpec.configure do |config|
   )
 
   config.before(:each) do
-    Homestay.any_instance.stub(:geocoding_address).and_return("Melbourne, MB")
+    allow_any_instance_of(Homestay).to receive(:geocoding_address).and_return("Melbourne, MB")
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
