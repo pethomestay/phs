@@ -74,4 +74,6 @@ RSpec.configure do |config|
     config.include Devise::TestHelpers, :type => :controller
     config.extend ControllerMacros, :type => :controller
   end
+
+  config.infer_spec_type_from_file_location!
 end

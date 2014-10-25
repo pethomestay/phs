@@ -63,6 +63,9 @@ group :test, :development do
   gem 'rspec-rails', '2.99'
   gem 'shoulda-matchers', '~> 2.6.1'
   gem 'thin'
+
+  # Support for stubbing model
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do

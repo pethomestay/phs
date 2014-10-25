@@ -55,7 +55,7 @@ describe PetsController, :type => :controller do
     context 'with invalid attributes' do
       let(:attributes) { valid_attributes(name: nil) }
       it 'should not add a new pet to the current user' do
-        expect {subject}.not_to change{user.pets.count}.by(1)
+        expect {subject}.not_to change{user.pets.count}
       end
 
       it 'should re-render the new template' do

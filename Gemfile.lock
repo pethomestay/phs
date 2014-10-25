@@ -267,6 +267,10 @@ GEM
     ref (1.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rspec-activemodel-mocks (1.0.1)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (2.99.2)
@@ -396,6 +400,7 @@ DEPENDENCIES
   raygun4ruby
   redcarpet
   rest-client (= 1.6.7)
+  rspec-activemodel-mocks
   rspec-rails (= 2.99)
   sass-rails
   shoulda-matchers (~> 2.6.1)
