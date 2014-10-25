@@ -60,7 +60,7 @@ group :test, :development do
   # gem 'pry-stack_explorer'
   # gem 'pry-debugger'
 
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '~>3.0.0'
   gem 'shoulda-matchers', '~> 2.6.1'
   gem 'thin'
 
@@ -73,7 +73,7 @@ group :test do
   gem 'timecop'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
-  gem 'webrat'
+  gem 'capybara'
 end
 
 group :assets do

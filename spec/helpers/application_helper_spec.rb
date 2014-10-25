@@ -30,7 +30,7 @@ describe ApplicationHelper, :type => :helper do
       (1..5).each do |rating|
         expect(helper.capture_haml do
           helper.rating_stars rating 
-        end).to have_selector('i', class: 'icon-star', count: rating)
+        end).to have_selector('i.icon-star', count: rating)
       end
     end
 
@@ -38,7 +38,7 @@ describe ApplicationHelper, :type => :helper do
       (1..5).each do |rating|
         expect(helper.capture_haml do
           helper.rating_stars rating 
-        end).to have_selector('i', class: 'icon-star-empty', count: (5 - rating))
+        end).to have_selector('i.icon-star-empty', count: (5 - rating))
       end
     end
   end

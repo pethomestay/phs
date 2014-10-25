@@ -17,42 +17,34 @@ describe 'admin/admin/dashboard', :type => :view do
   end
 
   it 'should display stats for the user count' do
-    expect(rendered).to have_selector(:tr) do |content|
-      expect(content).to have_selector(:td, content: 'User Count')
-      expect(content).to have_selector(:td, content: "#{stats[:user_count]}")
-    end
+    expect(rendered).to have_selector('tr td', text: 'User Count')
+    expect(rendered).to have_selector('tr td', text: "#{stats[:user_count]}")
   end
 
   it 'should display stats for the homestay count' do
-    expect(rendered).to have_selector(:tr) do |content|
-      expect(content).to have_selector(:td, content: 'Homestay Count')
-      expect(content).to have_selector(:td, content: "#{stats[:homestay_count]}")
-    end
+    expect(rendered).to have_selector('tr td', text: 'Homestay Count')
+    expect(rendered).to have_selector('tr td', text: "#{stats[:homestay_count]}")
   end
 
   it 'should display stats for the pet count' do
-    expect(rendered).to have_selector(:tr) do |content|
-      expect(content).to have_selector(:td, content: 'Pet Count')
-      expect(content).to have_selector(:td, content: "#{stats[:pet_count]}")
-    end
+    expect(rendered).to have_selector('tr td', text: 'Pet Count')
+    expect(rendered).to have_selector('tr td', text: "#{stats[:pet_count]}")
   end
 
   it 'should display stats for the enquiry count' do
-    expect(rendered).to have_selector(:tr) do |content|
-      expect(content).to have_selector(:td, content: 'Enquiries Count')
-      expect(content).to have_selector(:td, content: "#{stats[:enquiry_count]}")
-    end
+    expect(rendered).to have_selector('tr td', text: 'Enquiries Count')
+    expect(rendered).to have_selector('tr td', text: "#{stats[:enquiry_count]}")
   end
 
   it 'should have a table for showing the recent signups' do
-    expect(rendered).to have_selector('table caption', content: 'Recent Signups')
+    expect(rendered).to have_selector('table caption', text: 'Recent Signups')
   end
 
   it 'should have a table for showing the recent homestays' do
-    expect(rendered).to have_selector('table caption', content: 'Recent Homestays')
+    expect(rendered).to have_selector('table caption', text: 'Recent Homestays')
   end
 
   it 'should have a table for showing the recent enquiries' do
-    expect(rendered).to have_selector('table caption', content: 'Recent Enquiries')
+    expect(rendered).to have_selector('table caption', text: 'Recent Enquiries')
   end
 end
