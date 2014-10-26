@@ -1,11 +1,11 @@
 require 'will_paginate/array'
-require 'spec_helper'
 
-describe Admin::EnquiriesController do
+
+describe Admin::EnquiriesController, :type => :controller do
   before do
-    controller.stub(:authenticate_user!).and_return true
-    controller.stub(:require_admin!).and_return true
-    Homestay.any_instance.stub(:geocode).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
+    allow(controller).to receive(:require_admin!).and_return true
+    allow_any_instance_of(Homestay).to receive(:geocode).and_return true
   end
   let(:homestay) { FactoryGirl.create :homestay }
   let(:user) { FactoryGirl.create :user_with_pet }
@@ -27,25 +27,25 @@ describe Admin::EnquiriesController do
   describe "GET index" do
     let(:enquiry) { stub_model(Enquiry) }
     it "assigns all enquiries as @enquiries" do
-      Enquiry.stub_chain(:order, :includes).and_return([enquiry])
+      allow(Enquiry).to receive_message_chain(:order, :includes => [enquiry])
       get :index, {}, valid_session
-      assigns(:enquiries).should eq([enquiry])
+      expect(assigns(:enquiries)).to eq([enquiry])
     end
   end
 
   describe "GET show" do
     let(:enquiry) { stub_model(Enquiry) }
     it "assigns the requested enquiry as @enquiry" do
-      Enquiry.stub(:find).with(enquiry.to_param).and_return enquiry
+      allow(Enquiry).to receive(:find).with(enquiry.to_param).and_return enquiry
       get :show, {:id => enquiry.to_param}, valid_session
-      assigns(:enquiry).should eq(enquiry)
+      expect(assigns(:enquiry)).to eq(enquiry)
     end
   end
 
   describe "GET new" do
     it "assigns a new enquiry as @enquiry" do
       get :new, {}, valid_session
-      assigns(:enquiry).should be_a_new(Enquiry)
+      expect(assigns(:enquiry)).to be_a_new(Enquiry)
     end
   end
 
@@ -54,9 +54,9 @@ describe Admin::EnquiriesController do
     it "assigns the requested enquiry as @enquiry" do
 	    enquiry.check_in_date = Time.now
 	    enquiry.check_out_date = Time.now
-      Enquiry.stub(:find).with(enquiry.to_param).and_return enquiry
+      allow(Enquiry).to receive(:find).with(enquiry.to_param).and_return enquiry
       get :edit, {:id => enquiry.to_param}, valid_session
-      assigns(:enquiry).should eq(enquiry)
+      expect(assigns(:enquiry)).to eq(enquiry)
     end
   end
 
@@ -69,25 +69,25 @@ describe Admin::EnquiriesController do
 
       it "assigns a newly created enquiry as @enquiry" do
         subject
-        assigns(:enquiry).should be_a(Enquiry)
-        assigns(:enquiry).should be_persisted
+        expect(assigns(:enquiry)).to be_a(Enquiry)
+        expect(assigns(:enquiry)).to be_persisted
       end
 
       it "redirects to the created enquiry" do
         post :create, {:enquiry => valid_attributes}, valid_session
-        response.should redirect_to(admin_enquiry_path(Enquiry.last))
+        expect(response).to redirect_to(admin_enquiry_path(Enquiry.last))
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved enquiry as @enquiry" do
         post :create, {:enquiry => {  }}, valid_session
-        assigns(:enquiry).should be_a_new(Enquiry)
+        expect(assigns(:enquiry)).to be_a_new(Enquiry)
       end
 
       it "re-renders the 'new' template" do
         post :create, {:enquiry => {  }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -97,30 +97,30 @@ describe Admin::EnquiriesController do
     describe "with valid params" do
       subject { put :update, {:id => enquiry.to_param, :enquiry => valid_attributes}, valid_session }
       it "updates the requested enquiry" do
-        Enquiry.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        expect_any_instance_of(Enquiry).to receive(:update_attributes).with({ "these" => "params" })
         put :update, {:id => enquiry.to_param, :enquiry => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested enquiry as @enquiry" do
         subject
-        assigns(:enquiry).should eq(enquiry)
+        expect(assigns(:enquiry)).to eq(enquiry)
       end
 
       it "redirects to the enquiry" do
         subject
-        response.should redirect_to(admin_enquiry_path(enquiry))
+        expect(response).to redirect_to(admin_enquiry_path(enquiry))
       end
     end
 
     describe "with invalid params" do
       it "assigns the enquiry as @enquiry" do
         put :update, {:id => enquiry.to_param, :enquiry => {duration_id: '' }}, valid_session
-        assigns(:enquiry).should eq(enquiry)
+        expect(assigns(:enquiry)).to eq(enquiry)
       end
 
       it "re-renders the 'edit' template" do
         put :update, {:id => enquiry.to_param, :enquiry => { duration_id: '' }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -128,15 +128,15 @@ describe Admin::EnquiriesController do
   describe "DELETE destroy" do
     subject { delete :destroy, {:id => enquiry.to_param}, valid_session }
     let(:enquiry) { stub_model(Enquiry, destroy: true) }
-    before { Enquiry.stub(:find).and_return enquiry}
+    before { allow(Enquiry).to receive(:find).and_return enquiry}
     it "destroys the requested enquiry" do
-      enquiry.should_receive :destroy
+      expect(enquiry).to receive :destroy
       subject
     end
 
     it "redirects to the enquiries list" do
       subject
-      response.should redirect_to(admin_enquiry_url(enquiry))
+      expect(response).to redirect_to(admin_enquiry_url(enquiry))
     end
   end
 

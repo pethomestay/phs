@@ -1,9 +1,9 @@
-require 'spec_helper'
 
-describe Admin::PetsController do
+
+describe Admin::PetsController, :type => :controller do
   before do
-    controller.stub(:authenticate_user!).and_return true
-    controller.stub(:require_admin!).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
+    allow(controller).to receive(:require_admin!).and_return true
   end
 
   def pet_attributes
@@ -29,7 +29,7 @@ describe Admin::PetsController do
       p2 = FactoryGirl.create :pet
       p3 = FactoryGirl.create :pet
       get :index, {}, valid_session
-      assigns(:pets).should eq [p3, p2, p1]
+      expect(assigns(:pets)).to eq [p3, p2, p1]
     end
   end
 
@@ -37,14 +37,14 @@ describe Admin::PetsController do
     it "assigns the requested pet as @pet" do
       pet = Pet.create! pet_attributes
       get :show, {:id => pet.to_param}, valid_session
-      assigns(:pet).should eq(pet)
+      expect(assigns(:pet)).to eq(pet)
     end
   end
 
   describe "GET new" do
     it "assigns a new pet as @pet" do
       get :new, {}, valid_session
-      assigns(:pet).should be_a_new(Pet)
+      expect(assigns(:pet)).to be_a_new(Pet)
     end
   end
 
@@ -52,7 +52,7 @@ describe Admin::PetsController do
     it "assigns the requested pet as @pet" do
       pet = Pet.create! pet_attributes
       get :edit, {:id => pet.to_param}, valid_session
-      assigns(:pet).should eq(pet)
+      expect(assigns(:pet)).to eq(pet)
     end
   end
 
@@ -65,25 +65,25 @@ describe Admin::PetsController do
 
       it "assigns a newly created pet as @pet" do
         subject
-        assigns(:pet).should be_a(Pet)
-        assigns(:pet).should be_persisted
+        expect(assigns(:pet)).to be_a(Pet)
+        expect(assigns(:pet)).to be_persisted
       end
 
       it "redirects to the created pet" do
         post :create, {:pet => pet_attributes}, valid_session
-        response.should redirect_to(admin_pet_path(Pet.last))
+        expect(response).to redirect_to(admin_pet_path(Pet.last))
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved pet as @pet" do
         post :create, {:pet => {  }}, valid_session
-        assigns(:pet).should be_a_new(Pet)
+        expect(assigns(:pet)).to be_a_new(Pet)
       end
 
       it "re-renders the 'new' template" do
         post :create, {:pet => {  }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -93,30 +93,30 @@ describe Admin::PetsController do
     describe "with valid params" do
       subject { put :update, {:id => pet.to_param, :pet => pet_attributes}, valid_session }
       it "updates the requested pet" do
-        Pet.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        expect_any_instance_of(Pet).to receive(:update_attributes).with({ "these" => "params" })
         put :update, {:id => pet.to_param, :pet => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested pet as @pet" do
         subject
-        assigns(:pet).should eq(pet)
+        expect(assigns(:pet)).to eq(pet)
       end
 
       it "redirects to the pet" do
         subject
-        response.should redirect_to(admin_pet_path(pet))
+        expect(response).to redirect_to(admin_pet_path(pet))
       end
     end
 
     describe "with invalid params" do
       it "assigns the pet as @pet" do
         put :update, {:id => pet.to_param, :pet => {name: '' }}, valid_session
-        assigns(:pet).should eq(pet)
+        expect(assigns(:pet)).to eq(pet)
       end
 
       it "re-renders the 'edit' template" do
         put :update, {:id => pet.to_param, :pet => { name: '' }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -130,7 +130,7 @@ describe Admin::PetsController do
 
     it "redirects to the pets list" do
       subject
-      response.should redirect_to(admin_pets_url)
+      expect(response).to redirect_to(admin_pets_url)
     end
   end
 

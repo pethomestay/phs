@@ -1,6 +1,6 @@
-require 'spec_helper'
 
-describe Guest::CalendarController do
+
+describe Guest::CalendarController, :type => :controller do
   login_user
   let(:host) { FactoryGirl.create :confirmed_user }
 

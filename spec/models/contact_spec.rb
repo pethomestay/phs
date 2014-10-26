@@ -1,23 +1,23 @@
-require 'spec_helper'
 
-describe Contact do
+
+describe Contact, :type => :model do
   it 'shoud be able to be initialized with a name' do
-    Contact.new(name: 'a name').name.should == 'a name'
+    expect(Contact.new(name: 'a name').name).to eq('a name')
   end
 
   it 'shoud be able to be initialized with an email' do
-    Contact.new(email: 'test@test.net').email.should == 'test@test.net'
+    expect(Contact.new(email: 'test@test.net').email).to eq('test@test.net')
   end
 
   it 'shoud be able to be initialized with a message' do
-    Contact.new(message: 'hi there').message.should == 'hi there'
+    expect(Contact.new(message: 'hi there').message).to eq('hi there')
   end
 
   it 'should not be persisted' do
-    Contact.new.should_not be_persisted
+    expect(Contact.new).not_to be_persisted
   end
 
-  it { should validate_presence_of :name }
-  it { should validate_presence_of :email }
-  it { should validate_presence_of :message }
+  it { is_expected.to validate_presence_of :name }
+  it { is_expected.to validate_presence_of :email }
+  it { is_expected.to validate_presence_of :message }
 end

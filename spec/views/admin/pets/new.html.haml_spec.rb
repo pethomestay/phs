@@ -1,6 +1,6 @@
-require 'spec_helper'
 
-describe "admin/pets/new" do
+
+describe "admin/pets/new", :type => :view do
   before(:each) do
     @pet = FactoryGirl.build :pet
   end

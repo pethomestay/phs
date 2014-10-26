@@ -1,12 +1,12 @@
-require 'spec_helper'
 
-describe AvailabilityController do
+
+describe AvailabilityController, :type => :controller do
 
   let(:user){ FactoryGirl.build(:user, id: 1) }
 
   before do
-    controller.stub(:current_user).and_return(user)
-    controller.stub(:authenticate_user!).and_return(true)
+    allow(controller).to receive(:current_user).and_return(user)
+    allow(controller).to receive(:authenticate_user!).and_return(true)
   end
 
   describe "Get #booking_info" do
@@ -16,11 +16,11 @@ describe AvailabilityController do
     let(:booking_info){ [1,2,3] }
 
     before do
-      user.stub(:booking_info_between).with(start_date, end_date).and_return(booking_info)
+      allow(user).to receive(:booking_info_between).with(start_date, end_date).and_return(booking_info)
     end
 
     it "should pass booking info message to current user" do
-      user.should_receive(:booking_info_between).with(start_date, end_date)
+      expect(user).to receive(:booking_info_between).with(start_date, end_date)
       get :booking_info, start: start_date.to_time.to_i, end: end_date.to_time.to_i
     end
 

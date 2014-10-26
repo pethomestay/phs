@@ -1,10 +1,10 @@
-require 'spec_helper'
 
-describe UnavailableDate do
 
-  it { should belong_to(:user) }
-  it { should validate_presence_of(:date) }
-  it { should validate_uniqueness_of(:date).scoped_to(:user_id) }
+describe UnavailableDate, :type => :model do
+
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to validate_presence_of(:date) }
+  it { is_expected.to validate_uniqueness_of(:date).scoped_to(:user_id) }
 
   let(:user){ FactoryGirl.create(:confirmed_user) }
   let(:unavailable_date){ FactoryGirl.create(:unavailable_date, user: user) }

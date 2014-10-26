@@ -55,14 +55,17 @@ group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
-  gem 'pry'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
+  # gem 'pry'
+  # gem 'pry-remote'
+  # gem 'pry-stack_explorer'
+  # gem 'pry-debugger'
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~>3.0.0'
   gem 'shoulda-matchers', '~> 2.6.1'
   gem 'thin'
+
+  # Support for stubbing model
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do
@@ -70,7 +73,7 @@ group :test do
   gem 'timecop'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
-  gem 'webrat'
+  gem 'capybara'
 end
 
 group :assets do

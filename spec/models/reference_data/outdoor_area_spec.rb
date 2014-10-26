@@ -1,15 +1,15 @@
-require 'spec_helper'
 
-describe ReferenceData::OutdoorArea do
+
+describe ReferenceData::OutdoorArea, :type => :model do
   describe '#all' do
     it 'should return 3 OutdoorAreas' do
-      ReferenceData::OutdoorArea.all.should have(3).items
+      expect(ReferenceData::OutdoorArea.all.size).to eq(3)
     end
   end
 
   describe '#find' do
     it 'should return the OutdoorArea with the id provided' do
-      ReferenceData::OutdoorArea.find(3).id.should == 3
+      expect(ReferenceData::OutdoorArea.find(3).id).to eq(3)
     end
 
     it 'should raise RecordNotFound id there is no OutdoorArea with the id provided' do
@@ -19,11 +19,11 @@ describe ReferenceData::OutdoorArea do
 
   describe '#find_by_id' do
     it 'should return the OutdoorArea with the id provided' do
-      ReferenceData::OutdoorArea.find_by_id(3).id.should == 3
+      expect(ReferenceData::OutdoorArea.find_by_id(3).id).to eq(3)
     end
 
     it 'should return nil if there is no OutdoorArea with the id provided' do
-      ReferenceData::OutdoorArea.find_by_id(4).should be_nil
+      expect(ReferenceData::OutdoorArea.find_by_id(4)).to be_nil
     end
   end
 end
