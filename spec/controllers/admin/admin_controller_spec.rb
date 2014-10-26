@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::AdminController, :type => :controller do
   before { allow(controller).to receive(:authenticate_user!).and_return true }

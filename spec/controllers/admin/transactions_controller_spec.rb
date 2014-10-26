@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Admin::TransactionsController, :type => :controller do
   let(:booking) { FactoryGirl.create :booking }

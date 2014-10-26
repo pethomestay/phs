@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe FeedbacksController, :type => :controller do
   let(:enquiry) { stub_model(Enquiry) }

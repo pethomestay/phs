@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe HomestaysHelper, :type => :helper do
   describe '#my_homestay?' do

@@ -1,10 +1,8 @@
-require 'spec_helper'
-
 describe "admin/pets/index", :type => :view do
   before(:each) do
     assign(:pets, [
-      stub_model(Pet, pets: [], created_at: Time.zone.now),
-      stub_model(Pet, pets: [], created_at: Time.zone.now)
+      stub_model(Pet, created_at: Time.zone.now),
+      stub_model(Pet, created_at: Time.zone.now)
     ])
   end
 

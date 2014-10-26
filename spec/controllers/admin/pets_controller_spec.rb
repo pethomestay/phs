@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Admin::PetsController, :type => :controller do
   before do

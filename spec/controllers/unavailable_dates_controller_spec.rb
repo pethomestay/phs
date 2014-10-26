@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe UnavailableDatesController, :type => :controller do
 
   let(:user){ FactoryGirl.build(:user, id: 1) }

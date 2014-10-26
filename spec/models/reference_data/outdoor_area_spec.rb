@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ReferenceData::OutdoorArea, :type => :model do
   describe '#all' do

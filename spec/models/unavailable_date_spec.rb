@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe UnavailableDate, :type => :model do
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe "admin/users/index", :type => :view do
   before(:each) do

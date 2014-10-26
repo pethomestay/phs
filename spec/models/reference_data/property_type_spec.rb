@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ReferenceData::PropertyType, :type => :model do
   describe '#all' do

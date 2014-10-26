@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Admin::EnquiriesHelper, :type => :helper do
   before do

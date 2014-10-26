@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe "admin/pets/new", :type => :view do
   before(:each) do

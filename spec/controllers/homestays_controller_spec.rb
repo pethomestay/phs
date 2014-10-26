@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe HomestaysController, :type => :controller do
   before do

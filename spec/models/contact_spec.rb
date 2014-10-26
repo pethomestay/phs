@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Contact, :type => :model do
   it 'shoud be able to be initialized with a name' do

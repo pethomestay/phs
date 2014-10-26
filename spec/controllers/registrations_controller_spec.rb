@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe RegistrationsController, :type => :controller do
   before do

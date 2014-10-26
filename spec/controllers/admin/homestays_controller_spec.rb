@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Admin::HomestaysController, :type => :controller do
   let(:user) { FactoryGirl.create :user }

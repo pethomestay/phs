@@ -1,5 +1,5 @@
 require 'will_paginate/array'
-require 'spec_helper'
+
 
 describe Admin::EnquiriesController, :type => :controller do
   before do

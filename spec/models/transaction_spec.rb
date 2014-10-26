@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Transaction, :type => :model do
 	it { is_expected.to belong_to :booking }

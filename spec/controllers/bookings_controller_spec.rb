@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe BookingsController, :type => :controller do
 	it {expect({get: "bookings/new"}).to route_to(action: "new", controller: "bookings")}

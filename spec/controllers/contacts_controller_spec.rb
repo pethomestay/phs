@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ContactsController, :type => :controller do
   before do

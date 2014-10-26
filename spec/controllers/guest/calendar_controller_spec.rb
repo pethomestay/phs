@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Guest::CalendarController, :type => :controller do
   login_user

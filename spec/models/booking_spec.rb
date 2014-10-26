@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Booking, :type => :model do
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ApplicationController, :type => :controller do
   login_admin_user

@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe 'admin/admin/dashboard', :type => :view do
   let(:stats) { {user_count: 2, homestay_count: 3, pet_count: 4, bookings_count: 2, enquiries_count: 5} }

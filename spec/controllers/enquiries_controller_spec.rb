@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe EnquiriesController, :type => :controller do
   before do

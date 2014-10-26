@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ReferenceData::Size, :type => :model do
   describe '#all' do

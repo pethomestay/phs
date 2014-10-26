@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ApplicationHelper, :type => :helper do
   describe '#formatted_title' do

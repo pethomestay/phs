@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe "admin/enquiries/edit", :type => :view do
   before(:each) do

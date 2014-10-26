@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ReferenceData::Duration, :type => :model do
   describe '#all' do

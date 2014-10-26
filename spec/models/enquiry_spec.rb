@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe Enquiry, :type => :model do
   before do

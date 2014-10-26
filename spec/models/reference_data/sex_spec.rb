@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe ReferenceData::Sex, :type => :model do
   describe '#all' do

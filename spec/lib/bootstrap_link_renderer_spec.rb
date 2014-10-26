@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe BootstrapLinkRenderer do
   let(:link_renderer) { BootstrapLinkRenderer.new }
