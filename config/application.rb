@@ -70,10 +70,11 @@ module PetHomestay
 	    end if File.exists?(env_file)
     end
 
-    # Configure layout for sign-in page
+    # Configure layout for devise pages
     config.to_prepare do
-        Devise::SessionsController.layout "new_application"
-        Devise::RegistrationsController.layout "new_application"
+        Devise::SessionsController.layout 'new_application'
+        Devise::RegistrationsController.layout 'new_application'
+        Devise::PasswordsController.layout 'new_application'
     end
   end
 end
