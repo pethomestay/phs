@@ -16,7 +16,7 @@ describe FeedbacksController, :type => :controller do
     context 'when the current user is not an involved party' do
       before do
         allow(enquiry).to receive(:user).and_return stub_model(User)
-        enquiry.stub_chain(:homestay, :user).and_return stub_model(User)
+        allow(enquiry).to receive_message_chain(:homestay, :user => stub_model(User))
       end
       it 'should render a 404' do
         subject
@@ -27,7 +27,7 @@ describe FeedbacksController, :type => :controller do
     context 'when the current user is an involved party' do
       before do
         allow(enquiry).to receive(:user).and_return user
-        enquiry.stub_chain(:homestay, :user).and_return stub_model(User)
+        allow(enquiry).to receive_message_chain(:homestay, :user => stub_model(User))
       end
       it 'should render the new template' do
         subject
@@ -56,7 +56,7 @@ describe FeedbacksController, :type => :controller do
       let(:feedback_params) { {'rating' => nil, 'review' => 'something' } }
       before do
         allow(enquiry).to receive(:user).and_return user
-        enquiry.stub_chain(:homestay, :user).and_return stub_model(User)
+        allow(enquiry).to receive_message_chain(:homestay, :user => stub_model(User))
       end
 
       it 'should render the new template' do

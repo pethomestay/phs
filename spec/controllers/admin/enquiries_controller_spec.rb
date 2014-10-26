@@ -27,7 +27,7 @@ describe Admin::EnquiriesController, :type => :controller do
   describe "GET index" do
     let(:enquiry) { stub_model(Enquiry) }
     it "assigns all enquiries as @enquiries" do
-      Enquiry.stub_chain(:order, :includes).and_return([enquiry])
+      allow(Enquiry).to receive_message_chain(:order, :includes => [enquiry])
       get :index, {}, valid_session
       expect(assigns(:enquiries)).to eq([enquiry])
     end

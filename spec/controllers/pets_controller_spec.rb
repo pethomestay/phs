@@ -13,7 +13,7 @@ describe PetsController, :type => :controller do
   describe 'GET #index' do
     subject { get :index }
     it 'should assigns current_user s pets to the pets variable' do
-      controller.stub_chain(:current_user, :pets).and_return 'my pets'
+      allow(controller).to receive_message_chain(:current_user, :pets => 'my pets')
       subject
       expect(assigns(:pets)).to eq('my pets')
     end
@@ -21,7 +21,7 @@ describe PetsController, :type => :controller do
 
   describe 'GET #new' do
     subject { get :new }
-    before { controller.stub_chain(:current_user, :pets, :build).and_return 'New Pet' }
+    before { allow(controller).to receive_message_chain(:current_user, :pets, :build => 'New Pet') }
 
     it 'should make a new pet object available to views' do
       subject
@@ -68,7 +68,7 @@ describe PetsController, :type => :controller do
   describe 'GET #edit' do
     subject { get :edit, id: pet.id }
     let(:pet) { stub_model(Pet) }
-    before { controller.stub_chain(:current_user, :pets, :find).and_return pet }
+    before { allow(controller).to receive_message_chain(:current_user, :pets, :find => pet) }
 
     it 'should make a the pet object available to views for editing' do
       subject

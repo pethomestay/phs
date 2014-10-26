@@ -35,7 +35,7 @@ describe HomestaysController, :type => :controller do
 
   describe 'GET #new' do
     subject { get :new }
-    before { controller.stub_chain(:current_user, :build_homestay).and_return 'New Homestay' }
+    before { allow(controller).to receive_message_chain(:current_user, :build_homestay) { 'New Homestay' } }
 
     it 'should make a new homestay object available to views' do
       subject
@@ -86,7 +86,7 @@ describe HomestaysController, :type => :controller do
     let(:homestay) { FactoryGirl.create :homestay }
     before do
       allow(controller).to receive(:current_user).and_return homestay.user
-      controller.stub_chain(:current_user, :homestay).and_return homestay
+      allow(controller).to receive_message_chain(:current_user, :homestay) { homestay }
     end
     it 'should make a the homestay object available to views for editing' do
       subject

@@ -11,7 +11,7 @@ describe EnquiriesController, :type => :controller do
 
     context 'when the enquiry homesay belongs to the current user' do
       before do
-        controller.stub_chain(:current_user, :homestay, :id).and_return 2
+        allow(controller).to receive_message_chain(:current_user, :homestay, :id) { 2 }
         allow(Enquiry).to receive(:find_by_homestay_id_and_id!).and_return enquiry
       end
       it 'should make the enquiry available for rendering' do
@@ -65,8 +65,8 @@ describe EnquiriesController, :type => :controller do
     subject { put :update, id: enquiry.id, enquiry: attributes }
     before do
       allow(ProviderMailer).to receive(:enquiry).and_return double(:mail, deliver: true)
-      controller.stub_chain(:current_user, :homestay, :id).and_return 2
-      controller.stub_chain(:current_user, :id).and_return 2
+      allow(controller).to receive_message_chain(:current_user, :homestay, :id) { 2 }
+      allow(controller).to receive_message_chain(:current_user, :id) { 2 }
       allow(Enquiry).to receive(:find_by_homestay_id_and_id!).and_return enquiry
     end
     let(:enquiry) { FactoryGirl.create :enquiry }

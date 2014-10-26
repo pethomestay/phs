@@ -21,7 +21,7 @@ describe BookingsController, :type => :controller do
 
 		before do
 			allow(controller).to receive(:current_user).and_return user
-			user.stub_chain(:enquiries, :find).with(enquiry.id.to_s).and_return enquiry
+      allow(user).to receive_message_chain(:enquiries, :find).with(enquiry.id.to_s) { enquiry }
 		end
 
 		it 'should make booking and transaction objects' do

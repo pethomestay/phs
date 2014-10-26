@@ -67,7 +67,7 @@ describe Search, :type => :model do
       let(:search_params){ { location: 'Collingwood', latitude: 123, longitude: -37, check_in_date: check_in_date, check_out_date: check_in_date + 2.days } }
 
       before do
-        Homestay.stub_chain(:active, :near).and_return(active_scope)
+        expect(Homestay).to receive_message_chain(:active, :near) { active_scope }
         allow(active_scope).to receive(:available_between).and_return(available_scope)
         allow(available_scope).to receive(:not_booked_between).and_return(homestay_arel)
         allow(homestay_arel).to receive(:includes).with(:user)
