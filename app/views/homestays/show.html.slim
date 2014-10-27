@@ -39,7 +39,7 @@
               = render 'stars', rating: @homestay.average_rating
               span.count
                 |  (#{@reviews.count})
-      span.section-title.details-title Listing Details
+      span.section-title.details-title Summary
       .row.details
         .col-xs-4.entries
           span.pull-right Property type
@@ -96,7 +96,7 @@ coffee:
     lat: $map.data('lat')
     lng: $map.data('lng')
     minZoom: 10
-    maxZoom: 15
+    maxZoom: 14
     disableDefaultUI: true
   map.addMarker
     lat: $map.data('lat')
