@@ -25,6 +25,17 @@ $ ->
           events:
             done: 'dataCalendarAvailability'
 
+    @getHomestayAvailability = (e, data) ->
+      @get
+        xhr:
+          url: @attr.hostAvailabilityURL
+          data:
+            start: data.start # YYYY-MM-DD
+            end:   data.end   # YYYY-MM-DD
+            user_id: data.user_id # user's id
+        events:
+          done: 'dataHomestayAvailability'
+
     @createUnavailableDate = (e, payload) ->
       @post
         xhr:
@@ -49,6 +60,7 @@ $ ->
 
     @after 'initialize', ->
       @on 'uiNeedsCalendarAvailability', @getCalendarAvailability
+      @on 'uiNeedsHomestayAvailability', @getHomestayAvailability
       @on 'uiCreateUnavailableDate',  @createUnavailableDate
       @on 'uiDestroyUnavailableDate', @destroyUnavailableDate
 

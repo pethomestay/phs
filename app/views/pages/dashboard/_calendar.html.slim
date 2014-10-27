@@ -1,9 +1,12 @@
+/ Optional param
+/   host_id: user id of homestay owner
+
 .switcher.center-block
   i.fa.fa-chevron-left.left
   span.current-month Loading..
   i.fa.fa-chevron-right.right
 
-table.table.calendar
+table.table.calendar host_id=(host_id if defined? host_id)
   thead
     tr
       - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']

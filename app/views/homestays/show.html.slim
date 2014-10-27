@@ -92,7 +92,7 @@
       = render 'review_row', first: false
 
     .col-sm-4.calendar-container
-      = render 'pages/dashboard/calendar'
+      = render 'pages/dashboard/calendar', host_id: @homestay.user.id
 
 coffee:
   $map = $('#map')
