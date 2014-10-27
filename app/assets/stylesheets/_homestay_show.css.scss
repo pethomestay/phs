@@ -105,9 +105,10 @@
   .hs-lower-section {
     padding-left: 10%;
     padding-right: 8%;
-    p {
-      font-size: 14px;
-      color: #333333;
+    pre {
+      background: none;
+      border: none;
+      padding: 0;
     }
 
     .rating {
