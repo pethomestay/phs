@@ -55,10 +55,10 @@ group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
 
-  # gem 'pry'
-  # gem 'pry-remote'
-  # gem 'pry-stack_explorer'
-  # gem 'pry-debugger'
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 
   gem 'rspec-rails', '~>3.0.0'
   gem 'shoulda-matchers', '~> 2.6.1'
