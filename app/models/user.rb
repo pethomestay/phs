@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_attachment :profile_photo, accept: [:jpg, :png, :bmp, :gif]
 
   validates_presence_of :first_name, :last_name, :email, :mobile_number
+  phony_normalize :mobile_number, :default_country_code => 'AU'
 
   validates :accept_house_rules, :acceptance => true
   validates :accept_terms, :acceptance => true

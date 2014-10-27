@@ -1,4 +1,3 @@
-
 describe User, :type => :model do
 
   it { is_expected.to have_one :homestay }
@@ -21,9 +20,30 @@ describe User, :type => :model do
     end
   end
 
+  describe '#mobile_number' do
+    subject {user.mobile_number}
+    describe 'should be normalized' do
+      describe 'from +61 04 5555 5555 ' do
+        before { user.mobile_number = '+61 04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from 61 04 5555 5555 ' do
+        before { user.mobile_number = '61 04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from 04 5555 5555 ' do
+        before { user.mobile_number = '04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from asdfasdf' do
+        before { user.mobile_number = 'dsafasd'; user.valid?; }
+        it { should be_nil}
+      end
+    end
+  end
+
   describe '#pet_name' do
     subject { user.pet_name }
-    let(:user) { User.new }
     context 'when the user has multiple pets' do
       before { 2.times{user.pets << Pet.new(name: 'fred')} }
       it { is_expected.to eq('your pets')}
@@ -43,7 +63,7 @@ describe User, :type => :model do
     context 'when the user has their email sanitised' do
       before { user.sanitise }
       it 'should return the sanitised email address' do
-        expect(subject.email).to include("@pethomestay.com")
+        expect(subject.email).to include('@pethomestay.com')
       end
     end
   end
