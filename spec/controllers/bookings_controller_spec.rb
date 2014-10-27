@@ -1,16 +1,16 @@
-require 'spec_helper'
 
-describe BookingsController do
-	it {{get: "bookings/new"}.should route_to(action: "new", controller: "bookings")}
-	it {{get: 'bookings/result'}.should route_to(action: 'result', controller: 'bookings')}
-	it {{get: 'bookings/update_transaction'}.should route_to(action: 'update_transaction', controller: 'bookings')}
-	it {{get: 'bookings/update_message'}.should route_to(action: 'update_message', controller: 'bookings')}
-	it {{get: 'bookings/1/host_confirm'}.should route_to(action: 'host_confirm', controller: 'bookings', id: '1')}
-	it {{get: 'bookings/1'}.should route_to(action: 'show', controller: 'bookings', id: '1')}
-	it {{put: 'bookings/1'}.should route_to(action: 'update', controller: 'bookings', id: '1')}
+
+describe BookingsController, :type => :controller do
+	it {expect({get: "bookings/new"}).to route_to(action: "new", controller: "bookings")}
+	it {expect({get: 'bookings/result'}).to route_to(action: 'result', controller: 'bookings')}
+	it {expect({get: 'bookings/update_transaction'}).to route_to(action: 'update_transaction', controller: 'bookings')}
+	it {expect({get: 'bookings/update_message'}).to route_to(action: 'update_message', controller: 'bookings')}
+	it {expect({get: 'bookings/1/host_confirm'}).to route_to(action: 'host_confirm', controller: 'bookings', id: '1')}
+	it {expect({get: 'bookings/1'}).to route_to(action: 'show', controller: 'bookings', id: '1')}
+	it {expect({put: 'bookings/1'}).to route_to(action: 'update', controller: 'bookings', id: '1')}
 
 	before do
-		controller.stub(:authenticate_user!).and_return true
+		allow(controller).to receive(:authenticate_user!).and_return true
 	end
 
 	describe 'GET #new' do
@@ -20,15 +20,15 @@ describe BookingsController do
 		let(:enquiry) { FactoryGirl.create(:enquiry, homestay: FactoryGirl.create(:homestay), user: user)  }
 
 		before do
-			controller.stub(:current_user).and_return user
-			user.stub_chain(:enquiries, :find).with(enquiry.id.to_s).and_return enquiry
+			allow(controller).to receive(:current_user).and_return user
+      allow(user).to receive_message_chain(:enquiries, :find).with(enquiry.id.to_s) { enquiry }
 		end
 
 		it 'should make booking and transaction objects' do
 			subject
-			response.should render_template :new
-			assigns(:booking).should eq(enquiry.booking)
-			assigns(:transaction).should == enquiry.booking.transaction
+			expect(response).to render_template :new
+			expect(assigns(:booking)).to eq(enquiry.booking)
+			expect(assigns(:transaction)).to eq(enquiry.booking.transaction)
 		end
 	end
 
@@ -43,14 +43,14 @@ describe BookingsController do
 		before do
 			secure_pay_fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|transaction_id=#{booking.
 					transaction.id}|1.00|timestamp|00"
-			Digest::SHA1.stub(:hexdigest).with(secure_pay_fingerprint_string).and_return('secure_pay_fingerprint_string')
-			PetOwnerMailer.stub(:booking_receipt).and_return mock(:mail, deliver: true)
-			ProviderMailer.stub(:owner_confirmed).and_return mock(:mail, deliver: true)
+			allow(Digest::SHA1).to receive(:hexdigest).with(secure_pay_fingerprint_string).and_return('secure_pay_fingerprint_string')
+			allow(PetOwnerMailer).to receive(:booking_receipt).and_return double(:mail, deliver: true)
+			allow(ProviderMailer).to receive(:owner_confirmed).and_return double(:mail, deliver: true)
 		end
 
 		it 'should display successful booking and transaction details' do
 			subject
-			response.should redirect_to booking_path(booking, confirmed_by: 'guest')
+			expect(response).to redirect_to booking_path(booking, confirmed_by: 'guest')
 		end
   end
 
@@ -60,11 +60,11 @@ describe BookingsController do
     let(:user) { FactoryGirl.create :user }
     let(:booking) { FactoryGirl.create :booking, booker: user }
 
-    before { controller.stub(:current_user).and_return user }
+    before { allow(controller).to receive(:current_user).and_return user }
 
     it 'should render the guest_canceled template' do
       subject
-      response.should redirect_to trips_bookings_path
+      expect(response).to redirect_to trips_bookings_path
     end
   end
 
@@ -73,11 +73,11 @@ describe BookingsController do
 
 		let(:user) { FactoryGirl.create :user }
 
-		before { controller.stub(:current_user).and_return user }
+		before { allow(controller).to receive(:current_user).and_return user }
 
 		it 'should render the index template' do
 			subject
-			response.should render_template :index
+			expect(response).to render_template :index
 		end
 	end
 
@@ -85,11 +85,11 @@ describe BookingsController do
 		subject { get :show, id: booking.id }
 		let(:user) { FactoryGirl.create :user }
 		let(:booking) {  FactoryGirl.create :booking, booker: user }
-		before { controller.stub(:current_user).and_return user }
+		before { allow(controller).to receive(:current_user).and_return user }
 
 		it 'should render the show template' do
 			subject
-			response.should render_template :show
+			expect(response).to render_template :show
 		end
 	end
 
@@ -99,11 +99,11 @@ describe BookingsController do
 		let(:user) { FactoryGirl.create :user }
 		let(:booking) {  FactoryGirl.create :booking, booker: user }
 
-		before { controller.stub(:current_user).and_return user }
+		before { allow(controller).to receive(:current_user).and_return user }
 
 		it 'should render the host confirm template' do
 			subject
-			response.should render_template :host_confirm
+			expect(response).to render_template :host_confirm
 		end
 	end
 
@@ -113,11 +113,11 @@ describe BookingsController do
 		let(:user) { FactoryGirl.create :user }
 		let(:booking) {  FactoryGirl.create :booking, booker: user }
 
-		before { controller.stub(:current_user).and_return user }
+		before { allow(controller).to receive(:current_user).and_return user }
 
 		it 'should redirect to inbox' do
 			subject
-			response.should redirect_to mailbox_messages_path(booking.mailbox)
+			expect(response).to redirect_to mailbox_messages_path(booking.mailbox)
 		end
 	end
 end

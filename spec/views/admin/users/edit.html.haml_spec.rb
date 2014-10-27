@@ -1,6 +1,6 @@
-require 'spec_helper'
 
-describe "admin/users/edit" do
+
+describe "admin/users/edit", :type => :view do
   before(:each) do
 	  @user = FactoryGirl.create :user
   end

@@ -1,5 +1,5 @@
-require 'spec_helper'
 
-describe UserPicture do
-  it { should belong_to :picturable }
+
+describe UserPicture, :type => :model do
+  it { is_expected.to belong_to :picturable }
 end

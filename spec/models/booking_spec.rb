@@ -1,25 +1,25 @@
-require 'spec_helper'
 
-describe Booking do
+
+describe Booking, :type => :model do
 
   before do
-    Homestay.any_instance.stub(:geocoding_address).and_return("Melbourne, MB")
+    allow_any_instance_of(Homestay).to receive(:geocoding_address).and_return("Melbourne, MB")
   end
 
-	it { should belong_to :booker }
-	it { should belong_to :bookee }
-	it { should belong_to :enquiry }
-	it { should belong_to :homestay }
-	it { should have_one :transaction }
+	it { is_expected.to belong_to :booker }
+	it { is_expected.to belong_to :bookee }
+	it { is_expected.to belong_to :enquiry }
+	it { is_expected.to belong_to :homestay }
+	it { is_expected.to have_one :transaction }
 
-	it { should validate_presence_of :booker_id }
-	it { should validate_presence_of :bookee_id }
-	it { should validate_presence_of :check_in_date }
-	it { should validate_presence_of :check_out_date }
+	it { is_expected.to validate_presence_of :booker_id }
+	it { is_expected.to validate_presence_of :bookee_id }
+	it { is_expected.to validate_presence_of :check_in_date }
+	it { is_expected.to validate_presence_of :check_out_date }
 
   it 'should be valid with valid attributes' do
 		booking = FactoryGirl.create :booking
-		booking.should be_valid
+		expect(booking).to be_valid
 	end
 
   #describe "host's availability validation" do
@@ -61,15 +61,15 @@ describe Booking do
 		end
 
 		it 'should have transacton' do
-			subject.transaction.persisted?.should be_true
+			expect(subject.transaction.persisted?).to be_truthy
 		end
 
 		it 'should have enquiry' do
-			subject.enquiry.persisted?.should be_true
+			expect(subject.enquiry.persisted?).to be_truthy
 		end
 
 		it 'should have mailbox' do
-			subject.mailbox.persisted?.should be_true
+			expect(subject.mailbox.persisted?).to be_truthy
 		end
 
 		context 'when subject is destroyed' do
@@ -77,11 +77,11 @@ describe Booking do
 				subject.destroy
 			end
 			it 'should destroy it transaction' do
-				Transaction.all.should be_blank
+				expect(Transaction.all).to be_blank
 			end
 
 			it 'should destroy its mailboxes' do
-				Mailbox.all.should be_blank
+				expect(Mailbox.all).to be_blank
 			end
 		end
   end
@@ -98,7 +98,7 @@ describe Booking do
       three_days_time = Date.today + 3 #add 3 days
       @booking.check_in_date = three_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql("0.00")
+      expect(@booking.calculate_refund).to be_eql("0.00")
     end
 
 
@@ -106,14 +106,14 @@ describe Booking do
       eight_days_time = Date.today + 8  #add 8 days
       @booking.check_in_date = eight_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql("6.08")
+      expect(@booking.calculate_refund).to be_eql("6.08")
     end
 
     it 'should be 100% refund for booking minus phs service fee' do
       fifteen_days_time = Date.today + 15 #add 15 days
       @booking.check_in_date = fifteen_days_time
       @booking.check_in_time = @time
-      @booking.calculate_refund.should be_eql("12.08")
+      expect(@booking.calculate_refund).to be_eql("12.08")
     end
 
   end
@@ -130,7 +130,7 @@ describe Booking do
       three_days_time = Date.today + 3 #add 3 days
       @booking.check_in_date = three_days_time
       @booking.check_in_time = @time
-      @booking.get_days_left.should be_eql(3)
+      expect(@booking.get_days_left).to be_eql(3)
     end
   end
 
@@ -148,7 +148,7 @@ describe Booking do
       @booking.check_in_date = eight_days_time
       @booking.check_in_time = @time
       @booking.cancel_date = Date.today
-      @booking.get_days_before_cancellation.should be_eql(8)
+      expect(@booking.get_days_before_cancellation).to be_eql(8)
     end
   end
 
@@ -163,7 +163,7 @@ describe Booking do
     end
 
     it 'should be 11.92 for booking when subtotal is 14.00' do
-      @booking.amount_minus_fees.should be_eql(11.92)
+      expect(@booking.amount_minus_fees).to be_eql(11.92)
     end
   end
 
@@ -175,17 +175,17 @@ describe Booking do
     end
 
     it 'should be true when we have create a booking' do
-      @booking.unfinished_booking?.should be_true
+      expect(@booking.unfinished_booking?).to be_truthy
     end
 
     it 'should be true when we have a payment pending' do
       @booking.try_payment
-      @booking.unfinished_booking?.should be_true
+      expect(@booking.unfinished_booking?).to be_truthy
     end
 
     it 'should be false when booking succeeds' do
       @booking.payment_check_succeed
-      @booking.unfinished_booking?.should be_false
+      expect(@booking.unfinished_booking?).to be_falsey
     end
   end
 
@@ -201,7 +201,7 @@ describe Booking do
       fifteen_days_time = Date.today + 15 #add 15 days
       @booking.check_in_date = fifteen_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql("0.00")
+      expect(@booking.calculate_host_amount_after_guest_cancel).to be_eql("0.00")
     end
 
 
@@ -209,14 +209,14 @@ describe Booking do
       eight_days_time = Date.today + 8  #add 8 days
       @booking.check_in_date = eight_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql("5.08")
+      expect(@booking.calculate_host_amount_after_guest_cancel).to be_eql("5.08")
     end
 
     it 'should be 100% amount for host for booking minus phs service fee' do
       three_days_time = Date.today + 3 #add 3 days
       @booking.check_in_date = three_days_time
       @booking.check_in_time = @time
-      @booking.calculate_host_amount_after_guest_cancel.should be_eql("11.08")
+      expect(@booking.calculate_host_amount_after_guest_cancel).to be_eql("11.08")
     end
 
   end
@@ -229,7 +229,7 @@ describe Booking do
 
 
     it 'should cancel the booking by guest' do
-      @booking.human_state_name(@booking.state).should be_eql('guest has cancelled the booking')
+      expect(@booking.human_state_name(@booking.state)).to be_eql('guest has cancelled the booking')
     end
 
   end
@@ -243,13 +243,13 @@ describe Booking do
 
     it 'should have a request for admin to cancel booking for host' do
       @booking.host_requested_cancellation
-      Booking.human_state_name(@booking.state).should be_eql('host has requested cancellation of this booking')
+      expect(Booking.human_state_name(@booking.state)).to be_eql('host has requested cancellation of this booking')
     end
 
     it 'should cancel the booking' do
       @booking.host_requested_cancellation
       @booking.admin_cancel_booking
-      @booking.human_state_name(@booking.state).should be_eql('host has cancelled the booking')
+      expect(@booking.human_state_name(@booking.state)).to be_eql('host has cancelled the booking')
     end
   end
 
@@ -264,13 +264,13 @@ describe Booking do
       }
 
       it 'should return awaiting host response' do
-        Booking.human_state_name(subject.state.to_sym).should be_eql("awaiting host response")
+        expect(Booking.human_state_name(subject.state.to_sym)).to be_eql("awaiting host response")
       end
     end
 
     context 'when a booking is unfinished' do
       it 'should return "unfinished"' do
-        Booking.human_state_name(subject.state.to_sym).should be_eql("unfinished")
+        expect(Booking.human_state_name(subject.state.to_sym)).to be_eql("unfinished")
       end
     end
 
@@ -280,7 +280,7 @@ describe Booking do
         booking.host_accepts_booking
       }
       it 'should return "host accepted but not paid"' do
-        Booking.human_state_name(subject.state.to_sym).should be_eql("host accepted but not paid")
+        expect(Booking.human_state_name(subject.state.to_sym)).to be_eql("host accepted but not paid")
       end
     end
 
@@ -291,7 +291,7 @@ describe Booking do
         booking.update_attributes owner_accepted: true, host_accepted: false
       }
       it 'should return "host rejected"' do
-        Booking.human_state_name(subject.state.to_sym).should be_eql("host rejected")
+        expect(Booking.human_state_name(subject.state.to_sym)).to be_eql("host rejected")
       end
     end
 
@@ -303,7 +303,7 @@ describe Booking do
         booking.update_attributes owner_accepted: true, host_accepted: true
       }
       it 'should return "host has been paid"' do
-        Booking.human_state_name(subject.state.to_sym).should be_eql("host has been paid")
+        expect(Booking.human_state_name(subject.state.to_sym)).to be_eql("host has been paid")
       end
     end
 
@@ -319,11 +319,11 @@ describe Booking do
 			before { subject.message_update(@new_message) }
 
 			it 'should update the booking message' do
-				subject.message.should be_eql(@new_message)
+				expect(subject.message).to be_eql(@new_message)
 			end
 
 			it 'should create message in mailbox' do
-				subject.mailbox.messages.order(:created_at).last.message_text.should be_eql(@new_message)
+				expect(subject.mailbox.messages.order(:created_at).last.message_text).to be_eql(@new_message)
 			end
 		end
 
@@ -335,11 +335,11 @@ describe Booking do
 			end
 
 			it 'should update the message' do
-				subject.message.should be_eql(@new_message)
+				expect(subject.message).to be_eql(@new_message)
 			end
 
 			it 'should update the mailbox' do
-				subject.mailbox.messages.order(:created_at).first.message_text.should be_eql(@new_message)
+				expect(subject.mailbox.messages.order(:created_at).first.message_text).to be_eql(@new_message)
 			end
 		end
 	end
@@ -350,7 +350,7 @@ describe Booking do
 
     context 'When a booking has been created booking can not be host canceled by admin' do
       it 'should return host can not cancel' do
-        subject.host_cancel?.should be_false
+        expect(subject.host_cancel?).to be_falsey
       end
     end
 
@@ -361,7 +361,7 @@ describe Booking do
         booking.host_requested_cancellation
       }
       it 'should return host can cancel' do
-        subject.host_cancel?.should be_true
+        expect(subject.host_cancel?).to be_truthy
       end
     end
   end
@@ -372,7 +372,7 @@ describe Booking do
 
     context 'When a booking has been created booking can be canceled by guest' do
       it 'should return host can cancel' do
-        subject.guest_cancel?.should be_true
+        expect(subject.guest_cancel?).to be_truthy
       end
     end
 
@@ -382,7 +382,7 @@ describe Booking do
         booking.host_rejects_booking
       }
       it 'should return guest cannot cancel' do
-        subject.guest_cancel?.should be_false
+        expect(subject.guest_cancel?).to be_falsey
       end
     end
   end
@@ -394,14 +394,14 @@ describe Booking do
 
     context 'When a booking has been created it is not canceled' do
       it 'should not be canceled' do
-        subject.is_cancelled?.should be_false
+        expect(subject.is_cancelled?).to be_falsey
       end
     end
 
     context 'When a booking has been canceled by a guest it should be canceled' do
       before { booking.guest_cancels_booking }
       it 'should return canceled booking' do
-        subject.is_cancelled?.should be_true
+        expect(subject.is_cancelled?).to be_truthy
       end
     end
 
@@ -414,7 +414,7 @@ describe Booking do
 
       }
       it 'should return canceled booking' do
-        subject.is_cancelled?.should be_true
+        expect(subject.is_cancelled?).to be_truthy
       end
     end
   end
@@ -425,11 +425,11 @@ describe Booking do
 		end
 
 		it 'should have booker i.e. guest' do
-			@booking.booker.id.should_not be_blank
+			expect(@booking.booker.id).not_to be_blank
 		end
 
 		it 'should have bookee i.e. host' do
-			@booking.bookee.id.should_not be_blank
+			expect(@booking.bookee.id).not_to be_blank
 		end
 	end
 
@@ -437,14 +437,14 @@ describe Booking do
 		subject { Booking.unfinished }
 		context 'when there is no unfinished booking' do
 			it 'should return []' do
-				subject.should be_blank
+				expect(subject).to be_blank
 			end
 		end
 
 		context 'when there is an unfinished booking' do
 			before { FactoryGirl.create :booking }
 			it 'should return unfinished booking' do
-				subject.size.should be_eql(1)
+				expect(subject.size).to be_eql(1)
 			end
 		end
 	end
@@ -454,14 +454,14 @@ describe Booking do
 		context 'when no booking needed host confirmation' do
 			before { FactoryGirl.create :booking }
 			it 'should not return any booking' do
-				subject.should be_blank
+				expect(subject).to be_blank
 			end
 		end
 
 		context 'when there is a booking needed host confirmation' do
 			before { FactoryGirl.create :booking, owner_accepted: true, response_id: 0, state: :finished }
 			it 'there should be one booking' do
-				subject.size.should be_eql(1)
+				expect(subject.size).to be_eql(1)
 			end
 		end
 	end
@@ -471,14 +471,14 @@ describe Booking do
 		context 'when no booking declined by host' do
 			before { FactoryGirl.create :booking }
 			it 'should not return any booking' do
-				subject.should be_blank
+				expect(subject).to be_blank
 			end
 		end
 
 		context 'when there is a booking declined by host' do
 			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::UNAVAILABLE.id, state: :finished }
 			it 'should return one booking' do
-				subject.size.should be_eql(1)
+				expect(subject.size).to be_eql(1)
 			end
 		end
 	end
@@ -488,14 +488,14 @@ describe Booking do
 		context 'when no host requires owner to answer his question' do
 			before { FactoryGirl.create :booking }
 			it 'should not return any booking' do
-				subject.any?.should be_false
+				expect(subject.any?).to be_falsey
 			end
 		end
 
 		context 'when host wants owner to answer his question' do
 			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::QUESTION.id,  state: :finished}
 			it 'should return booking' do
-				subject.any?.should be_true
+				expect(subject.any?).to be_truthy
 			end
 		end
 	end
@@ -505,14 +505,14 @@ describe Booking do
 		context 'when no host accepts booking' do
 			before { FactoryGirl.create :booking }
 			it 'should not return any booking' do
-				subject.any?.should be_false
+				expect(subject.any?).to be_falsey
 			end
 		end
 
 		context 'when host accepts booking' do
 			before { FactoryGirl.create :booking, response_id: ReferenceData::Response::AVAILABLE.id, host_accepted: true, state: :finished_host_accepted }
 			it 'should return booking' do
-				subject.any?.should be_true
+				expect(subject.any?).to be_truthy
 			end
 		end
 	end
@@ -522,13 +522,13 @@ describe Booking do
 		let(:booking) { FactoryGirl.create :booking }
 		context 'when current user is booker i.e. guest' do
 			it 'should return false' do
-				subject.host_view?(subject.booker).should be_false
+				expect(subject.host_view?(subject.booker)).to be_falsey
 			end
 		end
 
 		context 'when current user is bookee i.e. host. And guest did not complete the booking.' do
 			it 'should return false' do
-				subject.host_view?(subject.bookee).should be_false
+				expect(subject.host_view?(subject.bookee)).to be_falsey
 			end
 		end
 
@@ -538,7 +538,7 @@ describe Booking do
         booking.update_attributes owner_accepted: true
       }
 			it 'should return true' do
-				subject.host_view?(subject.bookee).should be_true
+				expect(subject.host_view?(subject.bookee)).to be_truthy
 			end
 		end
 	end
@@ -551,13 +551,13 @@ describe Booking do
         booking.payment_check_succeed
       }
 			it 'should return false' do
-				subject.owner_view?(subject.bookee).should be_false
+				expect(subject.owner_view?(subject.bookee)).to be_falsey
 			end
 		end
 
 		context 'when current user is booker or owner or guest' do
 			it 'should return true' do
-				subject.owner_view?(subject.booker).should be_true
+				expect(subject.owner_view?(subject.booker)).to be_truthy
 			end
 		end
 	end
@@ -573,13 +573,13 @@ describe Booking do
 			end
 
 			it 'should return false' do
-				subject.editable_datetime?(subject.booker).should be_false
+				expect(subject.editable_datetime?(subject.booker)).to be_falsey
 			end
 		end
 
 		context 'when booking is not finished and it has no enquiry and owner is logged in' do
 			it 'should return true' do
-				subject.editable_datetime?(subject.booker).should be_true
+				expect(subject.editable_datetime?(subject.booker)).to be_truthy
 			end
 		end
 	end
@@ -589,18 +589,18 @@ describe Booking do
 		let(:booking) { FactoryGirl.create :booking }
 
 		before :each do
-			subject.stub(:complete_transaction).with(booking.bookee).and_return true
+			allow(subject).to receive(:complete_transaction).with(booking.bookee).and_return true
 		end
 
 		context 'when host confirmed the booking' do
 			it 'should return success message' do
-				PetOwnerMailer.stub(:booking_receipt).with(subject).and_return mock(:mail, deliver: true)
+				allow(PetOwnerMailer).to receive(:booking_receipt).with(subject).and_return double(:mail, deliver: true)
 				booking.check_in_date = Time.now
 				booking.check_out_date = Time.now
 				booking.homestay = FactoryGirl.create :homestay
 				pet = FactoryGirl.create :pet
 				booking.booker.pets << pet
-				subject.confirmed_by_host(booking.bookee).should be_eql('You have confirmed the booking')
+				expect(subject.confirmed_by_host(booking.bookee)).to be_eql('You have confirmed the booking')
 			end
 		end
 
@@ -608,8 +608,8 @@ describe Booking do
 			before { booking.response_id = ReferenceData::Response::UNAVAILABLE.id }
 
 			it 'should return message that guest will be known of your unavailability' do
-				PetOwnerMailer.stub(:provider_not_available).with(subject).and_return mock(:mail, deliver: true)
-				subject.confirmed_by_host(booking.bookee).should be_eql('Guest will be informed of your unavailability')
+				allow(PetOwnerMailer).to receive(:provider_not_available).with(subject).and_return double(:mail, deliver: true)
+				expect(subject.confirmed_by_host(booking.bookee)).to be_eql('Guest will be informed of your unavailability')
 			end
 		end
 
@@ -617,8 +617,8 @@ describe Booking do
 			before { booking.response_id = ReferenceData::Response::QUESTION.id }
 
 			it 'should return message that guest will have your question' do
-				PetOwnerMailer.stub(:provider_has_question).with(subject, nil).and_return mock(:mail, deliver: true)
-				subject.confirmed_by_host(booking.bookee).should be_eql('Your question has been sent to guest')
+				allow(PetOwnerMailer).to receive(:provider_has_question).with(subject, nil).and_return double(:mail, deliver: true)
+				expect(subject.confirmed_by_host(booking.bookee)).to be_eql('Your question has been sent to guest')
 			end
 		end
 	end
@@ -633,12 +633,12 @@ describe Booking do
         booking.update_attributes owner_accepted: true
 				booking.homestay = FactoryGirl.create :homestay, user: booking.bookee
 				booking.save
-				booking.bookee.notifications?.should be_true
+				expect(booking.bookee.notifications?).to be_truthy
 			end
 
 			it 'should remove all notification' do
-				subject.should be_true
-				booking.bookee.notifications?.should be_false
+				expect(subject).to be_truthy
+				expect(booking.bookee.notifications?).to be_falsey
 			end
 		end
 	end
@@ -651,7 +651,7 @@ describe Booking do
 		context 'when required parameters are provided' do
 			it 'should update transaction and will return response hash' do
 				result = subject.update_transaction_by(1, Time.now, Time.now + 2.days)
-				result.keys.should be_eql([:booking_subtotal, :booking_amount, :transaction_fee, :transaction_actual_amount,
+				expect(result.keys).to be_eql([:booking_subtotal, :booking_amount, :transaction_fee, :transaction_actual_amount,
 				                           :transaction_time_stamp, :transaction_merchant_fingerprint])
 			end
 		end
@@ -659,7 +659,7 @@ describe Booking do
 		context 'when any of the required parameters is absent' do
 			it 'should return error hash' do
 				result = subject.update_transaction_by(nil, Time.now, Time.now + 2.days)
-				result.keys.should be_eql([:error])
+				expect(result.keys).to be_eql([:error])
 			end
 		end
 	end
@@ -677,14 +677,14 @@ describe Booking do
           booking.update_attributes host_accepted: true, owner_accepted: true
         }
 				it 'should complete the payment' do
-					subject.transaction.stub(:complete_payment).and_return true
-					subject.complete_transaction(subject.bookee).should be_true
+					allow(subject.transaction).to receive(:complete_payment).and_return true
+					expect(subject.complete_transaction(subject.bookee)).to be_truthy
 				end
 			end
 
 			context 'when booking is not finished' do
 				it 'should return nil' do
-					subject.complete_transaction(subject.bookee).should be_nil
+					expect(subject.complete_transaction(subject.bookee)).to be_nil
 				end
 			end
 		end
@@ -697,13 +697,13 @@ describe Booking do
           booking.update_attributes host_accepted: true, owner_accepted: true }
 
 				it 'should remove the notification' do
-					subject.complete_transaction(subject.booker).should be_true
+					expect(subject.complete_transaction(subject.booker)).to be_truthy
 				end
 			end
 
 			context 'when booking is not finished' do
 				it 'should return nil' do
-					subject.complete_transaction(subject.booker).should be_nil
+					expect(subject.complete_transaction(subject.booker)).to be_nil
 				end
 			end
 		end
@@ -722,11 +722,11 @@ describe Booking do
 			subject { booking.host_payout }
 
 			it 'will deduct PetHomeStay service charge and public liability insurance and transaction fee' do
-				booking.amount.should be_eql(61.08)
-				booking.phs_service_charge.should be_eql('9.00')
-				booking.public_liability_insurance.should be_eql('4.00')
-				booking.transaction_fee.should be_eql('1.08')
-				subject.should be_eql('47.00')
+				expect(booking.amount).to be_eql(61.08)
+				expect(booking.phs_service_charge).to be_eql('9.00')
+				expect(booking.public_liability_insurance).to be_eql('4.00')
+				expect(booking.transaction_fee).to be_eql('1.08')
+				expect(subject).to be_eql('47.00')
 			end
 		end
 
@@ -737,7 +737,7 @@ describe Booking do
 				before { booking.host_accepted = true }
 
 				it 'should return "Accepted"' do
-					subject.should be_eql('Booking $47.00 - Accepted')
+					expect(subject).to be_eql('Booking $47.00 - Accepted')
 				end
 			end
 
@@ -745,7 +745,7 @@ describe Booking do
 				before { booking.host_accepted = false }
 
 				it 'should return "Pending"' do
-					subject.should be_eql('Booking $47.00 - Pending')
+					expect(subject).to be_eql('Booking $47.00 - Pending')
 				end
 			end
 
@@ -758,7 +758,7 @@ describe Booking do
 				}
 
 				it 'should return "Rejected"' do
-					subject.should be_eql('Booking $47.00 - Rejected')
+					expect(subject).to be_eql('Booking $47.00 - Rejected')
 				end
 			end
 		end
@@ -770,7 +770,7 @@ describe Booking do
 				before { booking.host_accepted = true }
 
 				it 'should return "Accepted"' do
-					subject.should be_eql('Booking $61.08 - Accepted')
+					expect(subject).to be_eql('Booking $61.08 - Accepted')
 				end
 			end
 
@@ -778,7 +778,7 @@ describe Booking do
 				before { booking.host_accepted = false }
 
 				it 'should return "Pending"' do
-					subject.should be_eql('Booking $61.08 - Pending')
+					expect(subject).to be_eql('Booking $61.08 - Pending')
 				end
 			end
 
@@ -790,7 +790,7 @@ describe Booking do
 				}
 
 				it 'should return "Rejected"' do
-					subject.should be_eql('Booking $61.08 - Rejected')
+					expect(subject).to be_eql('Booking $61.08 - Rejected')
 				end
 			end
 		end
@@ -799,7 +799,7 @@ describe Booking do
 			subject { booking.fees }
 
 			it 'should return transaction fees paid by guest' do
-				subject.should be_eql('1.08')
+				expect(subject).to be_eql('1.08')
 			end
 		end
 
@@ -807,7 +807,7 @@ describe Booking do
 			subject { booking.actual_amount }
 
 			it 'will return the transaction amount in string format' do
-				subject.should be_eql('61.08')
+				expect(subject).to be_eql('61.08')
 			end
 		end
 
@@ -815,18 +815,18 @@ describe Booking do
 			subject { booking.transaction_fee }
 
 			context 'live mode' do
-				before { booking.stub(:live_mode_rounded_value?).and_return(true) }
+				before { allow(booking).to receive(:live_mode_rounded_value?).and_return(true) }
 
 				it 'will return transaction value rounded 2 digit with actual cents value' do
-					subject.should be_eql('1.50')
+					expect(subject).to be_eql('1.50')
 				end
 			end
 
 			context 'test mode' do
-				before { booking.stub(:live_mode_rounded_value?).and_return(false) }
+				before { allow(booking).to receive(:live_mode_rounded_value?).and_return(false) }
 
 				it 'will return transaction value rounded 2 digit with actual cents value' do
-					subject.should be_eql(1.08.to_s)
+					expect(subject).to be_eql(1.08.to_s)
 				end
 			end
 		end

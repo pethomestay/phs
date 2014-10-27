@@ -1,12 +1,12 @@
-require 'spec_helper'
 
-describe Transaction do
-	it { should belong_to :booking }
-	it { should belong_to :card }
+
+describe Transaction, :type => :model do
+	it { is_expected.to belong_to :booking }
+	it { is_expected.to belong_to :card }
 
 	it 'should be valid with valid attributes' do
 		transaction = FactoryGirl.create :transaction
-		transaction.should be_valid
+		expect(transaction).to be_valid
 	end
 
 	describe '#actual_amount' do
@@ -14,14 +14,14 @@ describe Transaction do
 		let(:transaction) { FactoryGirl.create :transaction, booking: FactoryGirl.create(:booking) }
 		context 'when transaction has no amount' do
 			it 'should return nil' do
-				subject.should be_eql('1.00')
+				expect(subject).to be_eql('1.00')
 			end
 		end
 
 		context 'when transaction has amount' do
 			before { transaction.booking.amount = 20 }
 			it 'should return actual amount' do
-				subject.should be_eql('20.00')
+				expect(subject).to be_eql('20.00')
 			end
 		end
 	end
@@ -34,25 +34,25 @@ describe Transaction do
 			#before {@response = {time_stamp: Time.now.gmtime.strftime('%Y%m%d%H%M%S'), summary_code: '00', reference_id:
 			#	"transaction_id=#{transaction.id}", fingerprint: }}
 			it 'should return transaction with no error' do
-				pending
+				skip
 			end
 		end
 
 		context 'when failure response from secure pay' do
 			it 'should return transaction with errors' do
-				pending
+				skip
 			end
 		end
 
 		context 'when successful response with card storage success' do
 			it 'should return transaction with no errors and with stored card' do
-				pending
+				skip
 			end
 		end
 
 		context 'when successful response with card storage failure' do
 			it 'should return transaction with no errors but no card is saved' do
-				pending
+				skip
 			end
 		end
 	end
@@ -66,15 +66,15 @@ describe Transaction do
       transaction.booking.payment_check_succeed
     }
 		it 'should mark the booking as finish' do
-			subject.should be_true
-			transaction.booking.state.should be_eql("finished")
+			expect(subject).to be_truthy
+			expect(transaction.booking.state).to be_eql("finished")
 		end
 
 		context 'when booking has enquiry' do
 			before { transaction.booking.enquiry = FactoryGirl.create :enquiry }
 			it 'should finish booking and update enquiry' do
-				subject.should be_true
-				transaction.booking.enquiry.confirmed.should be_true
+				expect(subject).to be_truthy
+				expect(transaction.booking.enquiry.confirmed).to be_truthy
 			end
 		end
 	end
@@ -85,8 +85,8 @@ describe Transaction do
 
 		before { transaction.booking = FactoryGirl.create :booking }
 		it 'should update the transaction' do
-			subject.should be_true
-			transaction.status.should eql(TRANSACTION_HOST_CONFIRMATION_REQUIRED)
+			expect(subject).to be_truthy
+			expect(transaction.status).to eql(TRANSACTION_HOST_CONFIRMATION_REQUIRED)
 		end
 
 		context 'when transaction have stored card' do
@@ -94,7 +94,7 @@ describe Transaction do
 			let(:card) { FactoryGirl.create :card }
 
 			it 'should update the transaction with card' do
-				subject.update_status(card.id).should be_true
+				expect(subject.update_status(card.id)).to be_truthy
 			end
 		end
 	end
@@ -105,14 +105,14 @@ describe Transaction do
 
 		context 'when there is no error message' do
 			it 'should return nil' do
-				subject.should be_blank
+				expect(subject).to be_blank
 			end
 		end
 
 		context 'when there are errors' do
 			before { transaction.errors.add(:response_text, 'Credit Card is not Valid') }
 			it 'should return string containing error message' do
-				subject.should include('Credit Card is not Valid')
+				expect(subject).to include('Credit Card is not Valid')
 			end
 		end
 	end
@@ -124,7 +124,7 @@ describe Transaction do
 		before { transaction.booking = FactoryGirl.create :booking }
 		it 'should confirm the host booking' do
 			subject
-			transaction.booking.host_accepted?.should be_true
+			expect(transaction.booking.host_accepted?).to be_truthy
 		end
 	end
 
@@ -134,7 +134,7 @@ describe Transaction do
 
 		before { transaction.booking = FactoryGirl.create :booking }
 		it 'should return the booking status' do
-			subject.should eq("unfinished")
+			expect(subject).to eq("unfinished")
 		end
 	end
 
@@ -159,19 +159,19 @@ describe Transaction do
 			let(:card) { FactoryGirl.create :card, user: user, transaction: transaction }
 
 			before { transaction.status = TRANSACTION_HOST_CONFIRMATION_REQUIRED }
-			before { RestClient.stub(:post) { response } }
+			before { allow(RestClient).to receive(:post) { response } }
 
 			it 'should complete the payment transaction' do
-				subject.should be_true
+				expect(subject).to be_truthy
 			end
 		end
 
 		context 'when credit card is used' do
 			before { transaction.status = TRANSACTION_PRE_AUTHORIZATION_REQUIRED }
-			before { RestClient.stub(:post) { response } }
+			before { allow(RestClient).to receive(:post) { response } }
 
 			it 'should complete the payment transaction' do
-				subject.should be_true
+				expect(subject).to be_truthy
 			end
 		end
 	end
@@ -185,7 +185,7 @@ describe Transaction do
 
 		context 'when credit card transaction' do
 			it 'should return booker id' do
-				subject.should be_eql(user.id)
+				expect(subject).to be_eql(user.id)
 			end
 		end
 
@@ -195,7 +195,7 @@ describe Transaction do
 			before { user.cards << card }
 
 			it 'should return card token' do
-				subject.should be_eql(card.token)
+				expect(subject).to be_eql(card.token)
 			end
 		end
 	end
@@ -206,17 +206,17 @@ describe Transaction do
 		let(:transaction) { FactoryGirl.create :transaction }
 
 		it 'should return transaction amount' do
-			subject.should be_eql((transaction.amount * 100).to_i)
+			expect(subject).to be_eql((transaction.amount * 100).to_i)
 		end
 
 		it 'should return valid transaction amount in cents for all valid amounts' do
-			((1..999).inject(true) do |boolean, dollar|
+			expect((1..999).inject(true) do |boolean, dollar|
 				boolean && (0..99).inject(true) do |bool, cent|
 					transaction.amount = dollar + (BigDecimal.new(cent.to_s) * BigDecimal.new('0.01'))
 					result_amount =  transaction.transaction_amount
 					bool && result_amount.to_s.include?(dollar.to_s) && result_amount.to_s.include?(cent.to_s)
 				end
-			end).should be_true
+			end).to be_truthy
 		end
 	end
 end
