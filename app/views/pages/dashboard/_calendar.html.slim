@@ -6,7 +6,7 @@
   span.current-month Loading..
   i.fa.fa-chevron-right.right
 
-table.table.calendar host_id=(host_id if defined? host_id)
+table.table.calendar data-host-id=(host_id if defined? host_id)
   thead
     tr
       - for day in ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']

@@ -43,7 +43,7 @@ $ ->
       @trigger 'uiNeedsHomestayAvailability',
         start: start
         end:   end
-        host_id: @$node.data('host_id')
+        host_id: @$node.data('host-id')
 
     @after 'initialize', ->
       current = moment()

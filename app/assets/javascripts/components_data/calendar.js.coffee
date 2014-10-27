@@ -32,7 +32,7 @@ $ ->
           data:
             start: data.start # YYYY-MM-DD
             end:   data.end   # YYYY-MM-DD
-            user_id: data.user_id # user's id
+            host_id: data.host_id # user id of homestay owner
         events:
           done: 'dataHomestayAvailability'
 
