@@ -134,7 +134,11 @@ class Homestay < ActiveRecord::Base
   end
 
   def location
-    "#{address_suburb}, #{address_city}"
+    if self.address_suburb != self.address_city # Avoid "Melbourne, Melbourne"
+      "#{address_suburb}, #{address_city}"
+    else
+      "#{address_suburb}"
+    end
   end
 
   def average_rating

@@ -17,7 +17,7 @@
       a.right.carousel-control data-slide='next' href='#hero' role='button'
         = image_tag 'homestay/chevron_right.png', class: 'chevron'
       .price-tag
-        span.price $50
+        span.price $#{@homestay.cost_per_night.to_i}
         span.per-night.hidden-xs
           |  /24h
 
@@ -32,8 +32,8 @@
           - else
             = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle', class: 'img-responsive pull-right'
         .col-xs-8.info
-          span.title Animal Haven Doggy Vacation
-          span.suburb Cremorne, VIC
+          span.title #{@homestay.title}
+          span.suburb #{@homestay.location}
           span.ratings
             i.fa.fa-star
             i.fa.fa-star
