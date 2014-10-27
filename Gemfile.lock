@@ -434,11 +434,11 @@ DEPENDENCIES
   oauth2
   omniauth-facebook
   pg
+  phony_rails
   pry
   pry-debugger
   pry-remote
   pry-stack_explorer
-  phony_rails
   rack-cache
   rails (= 3.2.18)
   rails_12factor
