@@ -34,7 +34,7 @@ class HomestaysController < ApplicationController
 
     flash.now[:notice] = notice if notice && !@homestay.active?
     @title = @homestay.title
-    @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
+    @reviews = @homestay.user.received_feedbacks.reviewed
     @response_rate_in_percent = @homestay.user.response_rate_in_percent
     if current_user
 	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)

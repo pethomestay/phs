@@ -35,11 +35,10 @@
           span.title #{@homestay.title}
           span.suburb #{@homestay.location}
           span.ratings
-            - if @homestay.average_rating > 0
-              - reviews = @homestay.user.received_feedbacks
+            - if @reviews.any?
               = render 'stars', rating: @homestay.average_rating
               span.count
-                |  (#{reviews.count})
+                |  (#{@reviews.count})
       span.section-title.details-title Listing Details
       .row.details
         .col-xs-4.entries
@@ -78,13 +77,13 @@
     .col-sm-8.hs-lower-section
       span.section-title About this listing
       pre.description.readmore #{@homestay.description}
-      - if @homestay.average_rating > 0
+      - if @reviews.any?
         .rating
-          .count #{pluralize reviews.count, 'Review'}
+          .count #{pluralize @reviews.count, 'Review'}
           .stars
             = render 'stars', rating: @homestay.average_rating
-        = render 'review_row', review: reviews.shift ,top: true
-        - for review in reviews
+        = render 'review_row', review: @reviews.shift ,top: true
+        - for review in @reviews
           = render 'review_row', review: review, top: false
 
     .col-sm-4.calendar-container
@@ -106,7 +105,9 @@ coffee:
 
   $('.readmore').readmore
     lessLink: '<a href="#">Collapse</a>'
+    sectionCSS: 'display: block; width: 100%; margin-bottom: 20px;'
     maxHeight: 170
   $('.review .readmore').readmore
     lessLink: '<a href="#">Collapse</a>'
+    sectionCSS: 'display: block; width: 100%; margin-bottom: 20px;'
     maxHeight: 108
