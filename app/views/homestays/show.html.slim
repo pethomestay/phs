@@ -74,7 +74,7 @@
       a.btn.btn-primary.inquiry REQUEST A MEETING
 
     .map-container.col-sm-4
-      #map
+      #map data-lat=@homestay.latitude data-lng=@homestay.longitude
 
   .row
     .col-sm-8.hs-lower-section
@@ -98,13 +98,14 @@
       = render 'pages/dashboard/calendar'
 
 coffee:
+  $map = $('#map')
   map = new GMaps
     div: '#map'
-    lat: -37.818738
-    lng: 144.957118
+    lat: $map.data('lat')
+    lng: $map.data('lng')
     minZoom: 6
     maxZoom: 15
     disableDefaultUI: true
   map.addMarker
-    lat: -37.818738
-    lng: 144.957118
+    lat: $map.data('lat')
+    lng: $map.data('lng')
