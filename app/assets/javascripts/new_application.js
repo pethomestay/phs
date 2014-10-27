@@ -29,3 +29,4 @@
 //= require_directory ./components_mixin
 //= require_directory ./components_data
 //= require_directory ./components_ui
+//= require readmore.min
