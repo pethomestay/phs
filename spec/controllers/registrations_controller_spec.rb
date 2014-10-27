@@ -1,10 +1,10 @@
-require 'spec_helper'
 
-describe RegistrationsController do
+
+describe RegistrationsController, :type => :controller do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    controller.stub(:current_user).and_return user
-    controller.stub(:authenticate_user!).and_return true
+    allow(controller).to receive(:current_user).and_return user
+    allow(controller).to receive(:authenticate_user!).and_return true
   end
   let(:user) { stub_model(User, update_attributes: true, email: 'test@test.com')}
   describe 'DELETE #destroy' do
@@ -13,20 +13,20 @@ describe RegistrationsController do
     after { Timecop.return }
 
     it 'should set the user active field to false' do
-      user.should_receive(:update_attributes).with(hash_including(active: false))
+      expect(user).to receive(:update_attributes).with(hash_including(active: false))
       subject
     end
 
     it 'should alter the email field appending .timestamp.old' do
-      user.should_receive(:update_attributes).with(hash_including(email: "test@test.com.#{Time.zone.now.to_i}.old"))
+      expect(user).to receive(:update_attributes).with(hash_including(email: "test@test.com.#{Time.zone.now.to_i}.old"))
       subject
     end
 
     context 'when the user has a homestay' do
       let(:homestay) { stub_model(Homestay, :active= => true) }
-      before { user.stub(:homestay).and_return(homestay) }
+      before { allow(user).to receive(:homestay).and_return(homestay) }
       it 'should set the homestay active field to false' do
-        homestay.should_receive(:active=).with false
+        expect(homestay).to receive(:active=).with false
         subject
       end
     end

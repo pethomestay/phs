@@ -1,15 +1,14 @@
-require 'spec_helper'
-describe User do
+describe User, :type => :model do
 
-  it { should have_one :homestay }
-  it { should have_many :pets }
-  it { should have_many :enquiries }
-  it { should have_many :given_feedbacks }
-  it { should have_many :received_feedbacks }
-  it { should have_many :bookers }
-  it { should have_many :bookees }
-  it { should have_many :cards }
-  it { should have_many :unavailable_dates }
+  it { is_expected.to have_one :homestay }
+  it { is_expected.to have_many :pets }
+  it { is_expected.to have_many :enquiries }
+  it { is_expected.to have_many :given_feedbacks }
+  it { is_expected.to have_many :received_feedbacks }
+  it { is_expected.to have_many :bookers }
+  it { is_expected.to have_many :bookees }
+  it { is_expected.to have_many :cards }
+  it { is_expected.to have_many :unavailable_dates }
 
   let(:user) { FactoryGirl.create :user }
   let(:confirmed_user){ FactoryGirl.create :confirmed_user }
@@ -17,21 +16,42 @@ describe User do
 
   describe '#name' do
     it 'should concatenate first and last name' do
-      User.new(first_name: 'Van', last_name: 'Halen').name.should == 'Van Halen'
+      expect(User.new(first_name: 'Van', last_name: 'Halen').name).to eq('Van Halen')
+    end
+  end
+
+  describe '#mobile_number' do
+    subject {user.mobile_number}
+    describe 'should be normalized' do
+      describe 'from +61 04 5555 5555 ' do
+        before { user.mobile_number = '+61 04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from 61 04 5555 5555 ' do
+        before { user.mobile_number = '61 04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from 04 5555 5555 ' do
+        before { user.mobile_number = '04 5555 5555'; user.valid?; }
+        it { should eq('61455555555')}
+      end
+      describe 'from asdfasdf' do
+        before { user.mobile_number = 'dsafasd'; user.valid?; }
+        it { should be_nil}
+      end
     end
   end
 
   describe '#pet_name' do
     subject { user.pet_name }
-    let(:user) { User.new }
     context 'when the user has multiple pets' do
       before { 2.times{user.pets << Pet.new(name: 'fred')} }
-      it { should == 'your pets'}
+      it { is_expected.to eq('your pets')}
     end
     context 'when the user has one pet' do
       before { user.pets << Pet.new(name: 'fred') }
       it 'should return the pets name' do
-        subject.should == 'fred'
+        expect(subject).to eq('fred')
       end
     end
   end
@@ -43,7 +63,7 @@ describe User do
     context 'when the user has their email sanitised' do
       before { user.sanitise }
       it 'should return the sanitised email address' do
-        subject.email.should include("@pethomestay.com")
+        expect(subject.email).to include('@pethomestay.com')
       end
     end
   end
@@ -62,7 +82,7 @@ describe User do
         user.uid =  "78787878"
       end
       it 'if account linked with Facebook we do not need to enter password' do
-          subject.needs_password?.should be_false
+          expect(subject.needs_password?).to be_falsey
       end
     end
 
@@ -79,7 +99,7 @@ describe User do
         user.unlink_from_facebook
       end
       it 'if account un linked with Facebook we do need to enter password' do
-        subject.needs_password?.should be_true
+        expect(subject.needs_password?).to be_truthy
       end
     end
 
@@ -89,7 +109,7 @@ describe User do
 
     context 'when signed with website password required' do
       it 'if we have no facebook link we need to enter a password' do
-        confirmed_user.needs_password?.should be_true
+        expect(confirmed_user.needs_password?).to be_truthy
       end
     end
   end
@@ -101,7 +121,7 @@ describe User do
 		context 'when the user booking is not accepted by the host' do
 			before { confirmed_user.bookers.create host_accepted: false }
 			it 'should not return any booking' do
-				subject.any?.should be_false
+				expect(subject.any?).to be_falsey
 			end
 		end
 
@@ -113,7 +133,7 @@ describe User do
 			end
 
 			it 'should return user booking which has been accepted by the host' do
-				subject.any?.should be_true
+				expect(subject.any?).to be_truthy
 			end
 
 		end
@@ -126,14 +146,14 @@ describe User do
 
 		context 'when user has selected stored card' do
 			it 'should return selected card id' do
-				subject.find_stored_card_id(card.id, nil).should eq(card.id)
+				expect(subject.find_stored_card_id(card.id, nil)).to eq(card.id)
 			end
 		end
 
 		context 'when user has not selected stored card' do
 			before { confirmed_user.cards << card }
 			it 'should return first card id' do
-				subject.find_stored_card_id(nil, '1').should eq(card.id)
+				expect(subject.find_stored_card_id(nil, '1')).to eq(card.id)
 			end
 		end
 	end

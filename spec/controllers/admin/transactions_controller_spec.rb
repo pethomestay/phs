@@ -1,10 +1,10 @@
-require 'spec_helper'
 
-describe Admin::TransactionsController do
+
+describe Admin::TransactionsController, :type => :controller do
   let(:booking) { FactoryGirl.create :booking }
   before do
-    controller.stub(:authenticate_user!).and_return true
-    controller.stub(:require_admin!).and_return true
+    allow(controller).to receive(:authenticate_user!).and_return true
+    allow(controller).to receive(:require_admin!).and_return true
   end
 
   def valid_attributes(override_or_add={})
@@ -41,7 +41,7 @@ describe Admin::TransactionsController do
       t2 = FactoryGirl.create :transaction
       t3 = FactoryGirl.create :transaction
       get :index, {}, valid_session
-      assigns(:transactions).should eq [t3, t2, t1]
+      expect(assigns(:transactions)).to eq [t3, t2, t1]
     end
   end
 
@@ -49,7 +49,7 @@ describe Admin::TransactionsController do
     it "assigns the requested transaction as @transaction" do
       transaction = Transaction.create! valid_attributes(booking:booking)
       get :show, {:id => transaction.to_param}, valid_session
-      assigns(:transaction).should eq(transaction)
+      expect(assigns(:transaction)).to eq(transaction)
     end
   end
 
@@ -58,7 +58,7 @@ describe Admin::TransactionsController do
     it "assigns the requested transaction as @transaction" do
       transaction = Transaction.create! valid_attributes(booking:booking)
       get :edit, {:id => transaction.to_param}, valid_session
-      assigns(:transaction).should eq(transaction)
+      expect(assigns(:transaction)).to eq(transaction)
     end
   end
 
@@ -70,18 +70,18 @@ describe Admin::TransactionsController do
     describe "with valid params" do
       subject { put :update, {:id => transaction.to_param, :transaction => valid_attributes(booking:booking)}, valid_session }
       it "updates the requested transaction" do
-        Transaction.any_instance.should_receive(:update_attributes).with({ "response_text" => "TRANSACTION DENINED" })
+        expect_any_instance_of(Transaction).to receive(:update_attributes).with({ "response_text" => "TRANSACTION DENINED" })
         put :update, {:id => transaction.to_param, :transaction => { "response_text" => "TRANSACTION DENINED" }}, valid_session
       end
 
       it "assigns the requested transaction as @transaction" do
         subject
-        assigns(:transaction).should eq(transaction)
+        expect(assigns(:transaction)).to eq(transaction)
       end
 
       it "redirects to the transaction" do
         subject
-        response.should redirect_to(admin_transaction_path(transaction))
+        expect(response).to redirect_to(admin_transaction_path(transaction))
       end
     end
   end
