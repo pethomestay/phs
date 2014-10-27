@@ -35,13 +35,11 @@
           span.title #{@homestay.title}
           span.suburb #{@homestay.location}
           span.ratings
-            i.fa.fa-star
-            i.fa.fa-star
-            i.fa.fa-star
-            i.fa.fa-star
-            i.fa.fa-star-o
-            span.count
-              |  (33)
+            - if @homestay.average_rating > 0
+              - reviews = @homestay.user.received_feedbacks
+              = render 'stars', rating: @homestay.average_rating
+              span.count
+                |  (#{reviews.count})
       span.section-title.details-title Listing Details
       .row.details
         .col-xs-4.entries
@@ -80,16 +78,14 @@
     .col-sm-8.hs-lower-section
       span.section-title About this listing
       pre.description #{@homestay.description}
-      .rating
-        .count 33 Reviews
-        .stars
-          i.fa.fa-star
-          i.fa.fa-star
-          i.fa.fa-star
-          i.fa.fa-star
-          i.fa.fa-star-o
-      = render 'review_row', first: true
-      = render 'review_row', first: false
+      - if @homestay.average_rating > 0
+        .rating
+          .count #{pluralize reviews.count, 'Review'}
+          .stars
+            = render 'stars', rating: @homestay.average_rating
+        = render 'review_row', review: reviews.shift ,top: true
+        - for review in reviews
+          = render 'review_row', review: review, top: false
 
     .col-sm-4.calendar-container
       = render 'pages/dashboard/calendar', host_id: @homestay.user.id
