@@ -1,4 +1,6 @@
 class Host::CalendarController < Host::HostController
+  skip_before_filter :host_filters
+
   # GET /host/calendar/availability
   # Params
   #   start: start date in the format of YYYY-MM-DD
