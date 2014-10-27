@@ -73,11 +73,11 @@
         }
       }
     }
-    .details-title {
-      padding-top: 15px;
-    }
-    .details {
+    .summary {
       line-height: 1.5;
+      &.section-title {
+        padding-top: 15px;
+      }
       .entries span {
         font-weight: 500;
       }
