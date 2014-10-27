@@ -25,7 +25,12 @@
     .col-sm-8.hs-upper-section
       .row.basic-info
         .col-xs-4.avatar
-          = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle img-responsive pull-right'
+          - if @homestay.user.profile_photo?
+            = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-responsive pull-right'
+          - elsif @homestay.user.uid.present?
+            = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-responsive pull-right'
+          - else
+            = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle', class: 'img-responsive pull-right'
         .col-xs-8.info
           span.title Animal Haven Doggy Vacation
           span.suburb Cremorne, VIC
