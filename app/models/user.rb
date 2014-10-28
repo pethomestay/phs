@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :email, :mobile_number
   phony_normalize :mobile_number, :default_country_code => 'AU'
-  validates_plausible_phone :mobile_number
+  # validates_plausible_phone :mobile_number
 
   validates :accept_house_rules, :acceptance => true
   validates :accept_terms, :acceptance => true

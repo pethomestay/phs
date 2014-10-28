@@ -1,5 +1,5 @@
 - flash.each do |type, message|
-  :coffee
+  coffee:
     $.growl
       message: "#{message}",
         type: "#{new_flash_class_for type}"
@@ -15,7 +15,7 @@
 - if defined? resource
   / Full_messages only have messages, no type
   - resource.errors.full_messages.each do |message|
-    :coffee
+    coffee:
       $.growl
         message: "#{message}",
           type: 'warning'
