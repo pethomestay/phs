@@ -151,6 +151,7 @@ PetHomestay::Application.routes.draw do
   get '/jobs'                 => 'pages#jobs', as: 'jobs'
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
+  get '/about-us'             => 'pages#about_us', as: 'about_us'
   root to: 'pages#home'
 
   if Rails.env.development?

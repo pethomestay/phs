@@ -14,6 +14,10 @@ class PagesController < ApplicationController
     render layout: 'new_application'
   end
 
+  def about_us
+    render layout: 'new_application'
+  end
+
   def the_team
   end
 
