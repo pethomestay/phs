@@ -20,7 +20,7 @@ describe User, :type => :model do
     end
   end
 
-  describe '#mobile_number' do
+  describe '#mobile_number=' do
     subject {user.mobile_number}
     describe 'should be normalized' do
       describe 'from +61 04 5555 5555 ' do
@@ -38,6 +38,20 @@ describe User, :type => :model do
       describe 'from asdfasdf' do
         before { user.mobile_number = 'dsafasd'; user.valid?; }
         it { should be_nil}
+      end
+    end
+    describe 'should validate' do
+      describe 'number +61 04 5555 5555 to be valid' do
+        before { user.mobile_number = '+61 04 5555 5555';user.valid?;}
+        fit { expect(user.errors[:mobile_number]).not_to include('is an invalid number') }
+      end
+      describe 'number +61 04 5555 555 to invalid' do
+        before { user.mobile_number = '+61 04 5555 555';user.valid?;}
+        fit { expect(user.errors[:mobile_number]).to include('is an invalid number') }
+      end
+      describe 'number +61 04 5555 5555 5 to invalid' do
+        before { user.mobile_number = '+61 04 5555 5555 5';user.valid?;}
+        fit { expect(user.errors[:mobile_number]).to include('is an invalid number') }
       end
     end
   end
