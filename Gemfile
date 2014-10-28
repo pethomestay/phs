@@ -52,6 +52,7 @@ gem 'state_machine'
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'createsend' # Campaign Monitor API Wrapper
 gem 'smsglobal' # API support for smsglobal.com
+gem 'phony_rails' # validate and normalize phone number
 group :test, :development do
   gem 'capistrano'
   #gem 'ruby-debug-ide'
