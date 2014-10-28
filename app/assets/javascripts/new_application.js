@@ -21,6 +21,7 @@
 //= require bootstrap.min
 //= require bootstrap-growl.min
 //= require bootstrap-slider
+//= require owl.carousel
 //= require popover
 //= require moment
 //= require jquery_nested_form
