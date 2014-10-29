@@ -18,7 +18,7 @@
       = message.message_text
     - if top
       - conversation = message.mailbox
-      - guest_view = (current_user == conversation.guest_mailbox)
+      - guest_view = params[:controller].include? 'guest'
       - if conversation.enquiry.present? and conversation.enquiry.check_out_date >= Date.today
         - if guest_view and conversation.booking.blank?
           a.btn.btn-secondary href=new_booking_path(enquiry_id: conversation.enquiry_id)
@@ -33,7 +33,7 @@
           a.btn.btn-secondary href=new_booking_path(booking_params)
             i.fa.fa-check.fa-fw
             |  Book this homestay
-      - elsif conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && guest_view && conversation.try(:booking).try(:enquiry).try(:owner_accepted)
+      - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && guest_view && conversation.try(:booking).try(:enquiry).try(:owner_accepted) && translate_state(conversation.try(:booking).try(:state)) == 'Booked'
         a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.booking.enquiry)
           | Leave feedback
           br
