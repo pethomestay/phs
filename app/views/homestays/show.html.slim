@@ -1,12 +1,21 @@
 .container-fluid.homestay-show
   .row
-    - photos = @homestay.photos
-    - photos ||= @homestay.pictures
-    - if photos.present?
-      .owl-carousel#photos
-        - photos.each do |photo|
-          .item
-            = cl_image_tag photo.public_id, width: 380, height: 300, crop: :fill
+    #hero.carousel.slide data-ride='carousel' date-interval='10000'
+      ol.carousel-indicators
+        li.active data-slide-to='0' data-target='#hero'
+        li data-slide-to='1' data-target='#hero'
+        li data-slide-to='2' data-target='#hero'
+      .carousel-inner
+        .item.active
+          = image_tag 'placeholder.png'
+        .item
+          = image_tag 'placeholder.png'
+        .item
+          = image_tag 'placeholder.png'
+      a.left.carousel-control data-slide='prev' href='#hero' role='button'
+        = image_tag 'homestay/chevron_left.png', class: 'chevron'
+      a.right.carousel-control data-slide='next' href='#hero' role='button'
+        = image_tag 'homestay/chevron_right.png', class: 'chevron'
       .price-tag
         span.price $#{@homestay.cost_per_night.to_i}
         span.per-night.hidden-xs
@@ -15,14 +24,14 @@
   .row
     .col-sm-8.hs-upper-section
       .row.basic-info
-        .col-xs-3.avatar
+        .col-xs-4.avatar
           - if @homestay.user.profile_photo?
             = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-responsive pull-right'
           - elsif @homestay.user.uid.present?
             = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-responsive pull-right'
           - else
             = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle', class: 'img-responsive pull-right'
-        .col-xs-9.info
+        .col-xs-8.info
           span.title #{@homestay.title}
           span.suburb #{@homestay.location}
           span.ratings
@@ -112,19 +121,6 @@
       = render 'pages/dashboard/calendar', host_id: @homestay.user.id
 
 coffee:
-  owl = $('#photos')
-  owl.owlCarousel
-    autoPlay: 5000
-    stopOnHover: true
-    pagination: false
-    item: 5
-    itemsCustom: [
-      [479,1],
-      [600,2],
-      [800, 3],
-      [979,3],
-      [1199,4]
-    ]
   $map = $('#map')
   map = new GMaps
     div: '#map'
