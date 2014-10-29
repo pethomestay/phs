@@ -129,10 +129,27 @@ coffee:
     minZoom: 10
     maxZoom: 14
     disableDefaultUI: true
+    scrollwheel: false
+    draggable: false
   map.addMarker
     lat: $map.data('lat')
     lng: $map.data('lng')
     icon: 'http://res.cloudinary.com/hxnfgf9c2/image/upload/v1414374978/map_marker.png'
+  $('#map').mouseenter (evt) ->
+    if !map.hover
+      map.hover = true
+      map.setOptions
+        panControl: true
+        zoomControl: true
+        zoomControlOptions:
+          style: google.maps.ZoomControlStyle.LARGE
+  $('body').mouseover (evt) ->
+    if map.hover
+      if $(evt.target).closest('#map').length == 0
+        map.hover = false
+        map.setOptions
+          panControl: false
+          zoomControl: false
 
   $('.readmore').readmore
     lessLink: '<a href="#">Collapse</a>'
