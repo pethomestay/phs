@@ -35,22 +35,12 @@
         .col-xs-4.entry
           span Property type
         .col-xs-8.info
-          span
-            i.fa.fa-home
-            |  House
+          span #{ ReferenceData::PropertyType.find(@homestay.property_type_id).title }
       .row.summary
         .col-xs-4.entry
           span Outdoor area size
         .col-xs-8.info
-          span
-            i.fa.fa-tree
-            |  Medium
-      .row.summary
-        .col-xs-4.entry
-          span Extra services
-        .col-xs-8.info
-          span
-            | Pet grooming and pet walking
+          span #{ ReferenceData::OutdoorArea.find(@homestay.outdoor_area_id).title }
       .row.summary
         .col-xs-4.entry
           span After hour supervision
