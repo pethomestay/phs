@@ -33,7 +33,7 @@
         .right.pull-right
           span
             - if booking.enquiry.owner_accepted
-              - if booking.enquiry.try(:feedbacks).empty?
+              - if booking.enquiry.try(:feedbacks).empty? && translate_state(booking.state) == 'Booked'
                 a.btn.btn-secondary href=new_enquiry_feedbacks_path(booking.enquiry) Leave Feedback
               - else
                 span Feedback
