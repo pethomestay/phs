@@ -1,29 +1,35 @@
 - flash.each do |type, message|
-  coffee:
-    $.growl
-      message: "#{message}",
-        type: "#{new_flash_class_for type}"
-        delay: 10000
-        mouse_over: 'pause'
-        offset:
-          x: 0
-          y: 0
-        animate:
-          enter: 'animated fadeInRightBig'
-          exit: 'animated fadeOutRightBig'
+  javascript:
+    $.growl({
+      message: "#{{message}}",
+      type: "#{new_flash_class_for type}",
+      delay: 10000,
+      mouse_over: 'pause',
+      offset: {
+        x: 0,
+        y: 0
+      },
+      animate: {
+        enter: 'animated fadeInRightBig',
+        exit: 'animated fadeOutRightBig'
+      }
+    })
 
 - if defined? resource
   / Full_messages only have messages, no type
   - resource.errors.full_messages.each do |message|
-    coffee:
-      $.growl
-        message: "#{message}",
-          type: 'warning'
-          delay: 10000
-          mouse_over: 'pause'
-          offset:
-            x: 0
-            y: 0
-          animate:
-            enter: 'animated fadeInRightBig'
-            exit: 'animated fadeOutRightBig'
+    javascript:
+      $.growl({
+        message: "#{{message}}",
+        type: 'warning',
+        delay: 10000,
+        mouse_over: 'pause',
+        offset: {
+          x: 0,
+          y: 0
+        },
+        animate: {
+          enter: 'animated fadeInRightBig',
+          exit: 'animated fadeOutRightBig'
+        }
+      })

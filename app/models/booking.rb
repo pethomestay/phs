@@ -221,7 +221,7 @@ class Booking < ActiveRecord::Base
 				PetOwnerMailer.booking_confirmation(self).deliver
 				ProviderMailer.booking_confirmation(self).deliver
         self.mailbox.messages.create! user_id: bookee_id,
-          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date! Thanks for using PetHomestay!"
+          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
       end
 
 		elsif self.response_id == 6
@@ -361,7 +361,7 @@ class Booking < ActiveRecord::Base
 
 		if old_message.blank?
       self.mailbox.messages.create! user_id: self.booker_id,
-        message_text: "[This is a PetHomeStay auto-generated message]\n\nThis Guest has requested to book your Homestay!\nPlease confirm or reject by clicking the button below."
+        message_text: "[This is a PetHomeStay auto-generated message]\n\nIf you are a Guest, then this is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
       unless new_message.empty?
 			 self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
       end
