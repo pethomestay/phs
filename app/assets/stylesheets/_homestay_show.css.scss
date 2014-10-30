@@ -167,4 +167,14 @@
     padding-right: 5px;
     padding-top: 10px;
   }
+  .calendar-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    .calendar{
+      th,
+      td {
+        padding: 5px;
+      }
+    }
+  }
 }
