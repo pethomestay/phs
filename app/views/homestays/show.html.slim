@@ -41,6 +41,17 @@
           span Outdoor area
         .col-xs-5.col-sm-7.info
           span #{ ReferenceData::OutdoorArea.find(@homestay.outdoor_area_id).title }
+      .row.summary
+        .col-xs-7.col-sm-5.entry
+          span Last sign in
+        .col-xs-5.col-sm-7.info
+          span #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
+      - if @response_rate_in_percent
+        .row.summary
+          .col-xs-7.col-sm-5.entry
+            span Host Responsiveness
+          .col-xs-5.col-sm-7.info
+            span #{ @response_rate_in_percent }%
       - if @homestay.constant_supervision
         .row.summary
           .col-xs-7.col-sm-5.entry
