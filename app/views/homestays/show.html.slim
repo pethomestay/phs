@@ -53,7 +53,11 @@
       - if @response_rate_in_percent
         .row.summary
           .col-xs-7.col-sm-5.entry
-            span Host Responsiveness
+            span
+              span.hidden-xs
+               ' Host
+              ' Responsiveness
+              i.fa.fa-question-circle data-toggle='popover' data-content='% of messages responded to within 24 hours' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
           .col-xs-5.col-sm-7.info
             span #{ @response_rate_in_percent }%
       - if @homestay.constant_supervision
