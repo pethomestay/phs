@@ -5,6 +5,10 @@
         - for photo in @homestay.photos
           .item
             = cl_image_tag photo.public_id, height: 404, crop: :fill
+      - elsif @homestay.pictures.present?
+        - for picture in @homestay.pictures
+          .item
+            = image_tag picture.file.thumb('x404').url
       - else
         .item
           = image_tag 'placeholder.png'
