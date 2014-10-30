@@ -30,7 +30,6 @@
 //= require chosen-jquery
 //= require_tree ./gmaps4rails
 //= require jquery.popup
-//= require jquery.fullcalendar
 //= require bootbox.min
 //= require maps
 //= require searches
@@ -40,7 +39,6 @@
 //= require provider
 //= require messages
 //= require homestays
-//= require availability
 //= require bootstrap-datepicker-core
 //= require bootstrap-datetimepicker.min
 //= require gmaps
