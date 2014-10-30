@@ -153,17 +153,4 @@ PetHomestay::Application.routes.draw do
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/our-company'          => 'pages#our_company', as: 'our_company'
   root to: 'pages#home'
-
-  if Rails.env.development?
-    # Deprecated pages. Kept for archives.
-    namespace :deprecated do
-      get '/home', to: 'pages#home'
-      get '/faqs', to: 'pages#faqs'
-      get '/terms-and-conditions', to: 'pages#terms_and_conditions'
-      get '/privacy-policy', to: 'pages#privacy_policy'
-      get '/how-does-it-work', to: 'pages#how_does_it_work'
-      get '/about-us', to: 'pages#about_us'
-      get '/house-rules', to: 'pages#house_rules'
-    end
-  end
 end
