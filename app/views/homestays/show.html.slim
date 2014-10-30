@@ -125,6 +125,13 @@
 
     .col-sm-5.col-md-4.calendar-container
       = render 'pages/dashboard/calendar', host_id: @homestay.user.id
+      p.legends
+        span.square.today
+        '  Today
+        span.square.available
+        '  Available
+        span.square.unavailable
+        |  Unavailable
 
 coffee:
   $ ->

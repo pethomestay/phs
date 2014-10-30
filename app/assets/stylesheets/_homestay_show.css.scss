@@ -169,6 +169,48 @@
       }
     }
   }
+  .calendar-container {
+    .calendar {
+      td {
+        cursor: auto;
+        span {
+          color: $blue-light;
+        }
+        &.ignored span {
+          color: $grey;
+        }
+        &.unavailable span {
+          color: $grey-dark;
+          background: none;
+        }
+        &.booked span {
+          color: $grey;
+          background: none;
+        }
+        &.today span {
+          background-color: $orange;
+          color: $grey-light;
+        }
+      }
+    }
+    .legends {
+      .square {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-left: 6px;
+        &.today {
+          background: $orange;
+        }
+        &.available {
+          background: $blue-light;
+        }
+        &.unavailable {
+          background: $grey-dark;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: $screen-sm-max) {
