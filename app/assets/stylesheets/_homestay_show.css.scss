@@ -6,43 +6,55 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  .carousel {
-    ol li {
-      margin-left: 5px;
-    }
-    img {
-      width:  100%; // Fill screen with photo
-      height: auto; // Keep photo's original ratio
-      max-height: 568px;
-    }
-    .carousel-control {
-      .chevron {
-        display: inline-block;
-        width: 37px;
-        position: absolute;
-        top: 45%;
-        z-index: 5;
+  #hero {
+    .owl-wrapper {
+      background: $grey-light;
+      .owl-item img {
+        // center-block
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        // img-responsive
+        max-width: 100%;
+        height: auto;
       }
     }
-    .price-tag {
-      width: 18%;
-      max-width: 160px;
-      height: 40px;
-      position: absolute;
-      left: 21.5686275%;
-      bottom: 0;
-      padding-left: 10px;
-      background-color: $orange;
-      span {
-        font-weight: 700;
-        &.price {
-          font-size: 26px;
-          color: $grey-lighter;
+    .owl-controls {
+      .owl-buttons {
+        div {
+          position: absolute;
+          padding: 5px 9px;
         }
-        &.per-night {
-          font-size: 16px;
-          color: #c04d33;
+        .owl-prev{
+          left: 5%;
+          top: 45%;
         }
+        .owl-next{
+          right: 5%;
+          top: 45%;
+        }
+      }
+    }
+  }
+  .price-tag {
+    // width: 20%;
+    display: inline-block;
+    max-width: 160px;
+    height: 40px;
+    position: relative;
+    bottom: 77px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $orange;
+    span {
+      font-weight: 700;
+      &.price {
+        font-size: 2em;
+        color: $grey-lighter;
+      }
+      &.per-24-hours {
+        font-size: 16px;
+        color: #c04d33;
       }
     }
   }
