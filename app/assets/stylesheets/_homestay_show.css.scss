@@ -6,6 +6,12 @@
     margin-top: 15px;
     margin-bottom: 5px;
   }
+  .readmore-js-toggle {
+    color: $blue;
+    &:hover {
+      text-decoration: none;
+    }
+  }
   .first.row {
     margin-bottom: -40px;
     #hero {
