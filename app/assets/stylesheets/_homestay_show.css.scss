@@ -3,58 +3,60 @@
     display: block;
     font-size: 20px;
     font-weight: 500;
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 5px;
   }
-  #hero {
-    .owl-wrapper {
-      background: $grey-light;
-      .owl-item img {
-        // center-block
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        // img-responsive
-        max-width: 100%;
-        height: auto;
+  .first.row {
+    margin-bottom: -40px;
+    #hero {
+      .owl-wrapper {
+        background: $grey-light;
+        .owl-item img {
+          // center-block
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          // img-responsive
+          max-width: 100%;
+          height: auto;
+        }
+      }
+      .owl-controls {
+        .owl-buttons {
+          div {
+            position: absolute;
+            padding: 5px 9px;
+          }
+          .owl-prev{
+            left: 5%;
+            top: 45%;
+          }
+          .owl-next{
+            right: 5%;
+            top: 45%;
+          }
+        }
       }
     }
-    .owl-controls {
-      .owl-buttons {
-        div {
-          position: absolute;
-          padding: 5px 9px;
+    .price-tag {
+      display: inline-block;
+      max-width: 160px;
+      height: 40px;
+      position: relative;
+      bottom: 77px;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: $orange;
+      span {
+        font-weight: 700;
+        &.price {
+          font-size: 2em;
+          color: $grey-lighter;
         }
-        .owl-prev{
-          left: 5%;
-          top: 45%;
+        &.per-24-hours {
+          font-size: 16px;
+          color: #c04d33;
         }
-        .owl-next{
-          right: 5%;
-          top: 45%;
-        }
-      }
-    }
-  }
-  .price-tag {
-    // width: 20%;
-    display: inline-block;
-    max-width: 160px;
-    height: 40px;
-    position: relative;
-    bottom: 77px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: $orange;
-    span {
-      font-weight: 700;
-      &.price {
-        font-size: 2em;
-        color: $grey-lighter;
-      }
-      &.per-24-hours {
-        font-size: 16px;
-        color: #c04d33;
       }
     }
   }
@@ -62,6 +64,7 @@
   .hs-upper-section {
     padding-top: 10px;
     padding-left: 10%;
+    padding-right: 10%;
     .basic-info .info {
       .title,
       .suburb,
@@ -100,10 +103,11 @@
         }
       }
     }
-    a.inquiry.btn {
-      position: relative;
-      left: 60%;
-      bottom: 10px;
+    .inquire.btn {
+      display: block;
+      max-width: 500px;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
   }
   .map-container {
@@ -116,7 +120,7 @@
   }
   .hs-lower-section {
     padding-left: 10%;
-    padding-right: 8%;
+    padding-right: 10%;
     pre {
       background: none;
       border: none;
@@ -162,19 +166,30 @@
 }
 
 @media (max-width: $screen-sm-max) {
-  .hs-upper-section .basic-info .avatar {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 10px;
-  }
-  .calendar-container {
-    padding-left: 10px;
-    padding-right: 10px;
-    .calendar{
-      th,
-      td {
-        padding: 5px;
+  .homestay-show{
+    .hs-upper-section {
+      .basic-info .avatar {
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 10px;
       }
+    }
+    .calendar-container {
+      padding-left: 10px;
+      padding-right: 10px;
+      .calendar{
+        th,
+        td {
+          padding: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .homestay-show {
+    .hs-upper-section {
     }
   }
 }

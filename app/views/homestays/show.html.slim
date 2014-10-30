@@ -1,5 +1,5 @@
 .container-fluid.homestay-show
-  .row
+  .row.first
     #hero.owl-carousel.owl-theme
       - if @homestay.photos?
         - for photo in @homestay.photos
@@ -32,65 +32,65 @@
                 |  (#{@reviews.count})
       span.section-title.summary Summary
       .row.summary
-        .col-xs-7.col-sm-4.entry
+        .col-xs-7.col-sm-5.entry
           span Property type
-        .col-xs-5.col-sm-8.info
+        .col-xs-5.col-sm-7.info
           span #{ ReferenceData::PropertyType.find(@homestay.property_type_id).title }
       .row.summary
-        .col-xs-7.col-sm-4.entry
+        .col-xs-7.col-sm-5.entry
           span Outdoor area
-        .col-xs-5.col-sm-8.info
+        .col-xs-5.col-sm-7.info
           span #{ ReferenceData::OutdoorArea.find(@homestay.outdoor_area_id).title }
       - if @homestay.constant_supervision
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span 24/7 supervision
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.after-work
               i.fa.fa-check-circle.fa-fw
       - elsif @homestay.supervision_outside_work_hours
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span After hour supervision
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.after-work
               i.fa.fa-check-circle.fa-fw
       - if @homestay.fenced
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span Fenced back yard
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.after-work
               i.fa.fa-check-circle.fa-fw
       - if @homestay.professional_qualification
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span Professional Qualification
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.after-work
               i.fa.fa-check-circle.fa-fw
       - if @homestay.emergency_transport
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span Emergency transport
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.emergency
               i.fa.fa-ambulance.fa-fw
       - if @homestay.first_aid
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span First-aid Training
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.emergency
               i.fa.fa-medkit.fa-fw
       - if @homestay.police_check
         .row.summary
-          .col-xs-7.col-sm-4.entry
+          .col-xs-7.col-sm-5.entry
             span Police Check
-          .col-xs-5.col-sm-8.info
+          .col-xs-5.col-sm-7.info
             span.emergency
               i.fa.fa-shield.fa-fw
-      a.btn.btn-primary.inquiry REQUEST A MEETING
+      a.btn.btn-lg.btn-primary.inquire REQUEST A MEETING
 
     .map-container.col-sm-5.col-md-4
       #map data-lat=@homestay.latitude data-lng=@homestay.longitude
