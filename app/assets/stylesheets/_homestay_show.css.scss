@@ -160,3 +160,11 @@
     }
   }
 }
+
+@media (max-width: $screen-sm-max) {
+  .hs-upper-section .basic-info .avatar {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+  }
+}
