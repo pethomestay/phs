@@ -28,8 +28,7 @@
 //= require jquery_nested_form
 //= require chosen-jquery
 //= require gmaps
-//= require readmore.min
-//= require_directory ./homestays
 //= require_directory ./components_mixin
 //= require_directory ./components_data
 //= require_directory ./components_ui
+//= require readmore.min
