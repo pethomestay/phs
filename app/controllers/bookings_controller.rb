@@ -4,10 +4,6 @@ class BookingsController < ApplicationController
 	before_filter :homestay_required, only: :new
 	before_filter :secure_pay_response, only: :result
 
-	def index
-		@bookings = current_user.bookees.valid_host_view_booking_states
-	end
-
 	def new
 		@booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
 		@transaction = current_user.find_or_create_transaction_by(@booking)
@@ -129,10 +125,6 @@ class BookingsController < ApplicationController
     @booking.save!
     render nothing: true
   end
-
-	def trips
-		@bookings = current_user.bookers.order('created_at DESC')
-	end
 
   def admin_view
     redirect_to root_path, notice: 'Sorry, No access' and return unless current_user.admin
