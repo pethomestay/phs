@@ -6,6 +6,7 @@
           = image_tag 'home/three_steps/step_one.png'
         .panel-body
           = form_tag session_path(resource_name), method: 'post' do
+            = hidden_field_tag :redirect_path, params[:redirect_path]
             .form-group
               %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
                 %i.fa.fa-facebook.fa-fw.fa-lg
