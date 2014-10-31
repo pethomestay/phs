@@ -3,5 +3,6 @@
     .page-header
       h3 Add Your Pet in 2 Easy Steps
     = simple_form_for [:guest, @pet], wrapper: :bootstrap3 do |f|
+      = hidden_field_tag :redirect_path, params[:redirect_path]
       = render 'guest/pets/form_fields', f: f
       = f.submit 'Add Pet', class: 'btn btn-primary'
