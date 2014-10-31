@@ -60,7 +60,7 @@
         .row.summary
           .col-xs-7.col-sm-5.entry
             span
-              span.hidden-xs
+              span.hidden-xs.hidden-sm
                ' Host
               ' Responsiveness
               i.fa.fa-question-circle data-toggle='popover' data-content='% of messages responded to within 24 hours' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
@@ -160,7 +160,7 @@
         button type='button' class='close' data-dismiss='modal'
           span aria-hidden='true' &times;
           span.sr-only Close
-        h4.modal-title.request-label Modal title
+        h4.modal-title.request-label Request a meeting
       = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
         .modal-body
           input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
@@ -179,7 +179,7 @@
           br
           .row
             .col-xs-12
-              = f.input :message, placeholder: 'Please blah blah blah blah blah', input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
+              = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
               = f.check_box :reuse_message, options = { checked: false }
               span  Reuse this message next time I contact a host
         .modal-footer
