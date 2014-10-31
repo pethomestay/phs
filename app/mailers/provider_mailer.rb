@@ -22,6 +22,24 @@ class ProviderMailer < ActionMailer::Base
     mail(to: address, subject: "New Enquiry Notification")
   end
 
+  def enquiry_first_sms_reminder_to_host(enquiry)
+    host   = enquiry.homestay.user
+    host_mobile = trim(host.mobile_number)
+    return unless host_mobile # abort if mobile number is illegal
+    @sender = enquiry.user
+    address = "#{host_mobile}@email.smsglobal.com"
+    mail(to: address, subject: "Enquiry First SMS Reminder To Host")
+  end
+
+  def enquiry_second_sms_reminder_to_host(enquiry)
+    host   = enquiry.homestay.user
+    host_mobile = trim(host.mobile_number)
+    return unless host_mobile # abort if mobile number is illegal
+    @sender = enquiry.user
+    address = "#{host_mobile}@email.smsglobal.com"
+    mail(to: address, subject: "Enquiry Second SMS Reminder To Host")
+  end
+
   def owner_confirmed(booking)
     @booking = booking
     @enquiry = @booking.enquiry

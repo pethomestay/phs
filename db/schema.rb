@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141027001356) do
+ActiveRecord::Schema.define(:version => 20141031023454) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -78,21 +78,23 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.integer  "homestay_id"
     t.text     "message"
-    t.boolean  "confirmed",           :default => false
-    t.boolean  "owner_accepted",      :default => false
-    t.boolean  "sent_feedback_email", :default => false
+    t.boolean  "confirmed",                   :default => false
+    t.boolean  "owner_accepted",              :default => false
+    t.boolean  "sent_feedback_email",         :default => false
     t.integer  "duration_id"
     t.text     "response_message"
-    t.integer  "response_id",         :default => 0
+    t.integer  "response_id",                 :default => 0
     t.date     "check_in_date"
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.boolean  "reuse_message"
+    t.datetime "send_first_sms_reminder_at"
+    t.datetime "send_second_sms_reminder_at"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
