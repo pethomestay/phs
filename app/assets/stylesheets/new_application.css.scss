@@ -45,6 +45,10 @@ body {
     margin-right: 15px;
   }
 }
+// Datepicker
+.datepicker {
+  z-index: 9999 !important;
+}
 // Sign in and Sign out
 .sign-in,
 .sign-up {
