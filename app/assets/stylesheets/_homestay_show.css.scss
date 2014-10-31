@@ -1,0 +1,250 @@
+.homestay-show {
+  .section-title {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  .readmore-js-toggle {
+    color: $blue;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .first.row {
+    margin-bottom: -50px;
+    #hero {
+      .owl-wrapper {
+        background: $grey-light;
+        .owl-item img {
+          // center-block
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          // img-responsive
+          max-width: 100%;
+          height: auto;
+        }
+      }
+      .owl-controls {
+        .owl-buttons {
+          div {
+            position: absolute;
+            padding: 5px 9px;
+          }
+          .owl-prev{
+            left: 5%;
+            top: 45%;
+          }
+          .owl-next{
+            right: 5%;
+            top: 45%;
+          }
+        }
+      }
+    }
+    .price-tag {
+      display: inline-block;
+      max-width: 160px;
+      height: 50px;
+      position: relative;
+      bottom: 87px;
+      padding: 5px 30px;
+      background-color: $orange;
+      span {
+        font-weight: 700;
+        &.price {
+          font-size: 2em;
+          color: $grey-lighter;
+        }
+        &.per-24-hours {
+          font-size: 16px;
+          color: #c04d33;
+        }
+      }
+    }
+  }
+
+  .hs-upper-section {
+    padding-top: 10px;
+    padding-left: 10%;
+    padding-right: 10%;
+    .basic-info .info {
+      .title,
+      .suburb,
+      .ratings {
+        display: block;
+      }
+      .title {
+        margin-top: 15px;
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .suburb {
+        font-size: 14px;
+        font-weight: 500;
+        color: $grey-dark;
+      }
+      .ratings {
+        color: $blue-light;
+        .count {
+          color: $grey-dark;
+        }
+      }
+    }
+    .summary {
+      line-height: 1.5;
+      &.section-title {
+        padding-top: 15px;
+      }
+      .entry span {
+        font-weight: 500;
+      }
+      .info {
+        .after-work,
+        .emergency {
+          color: $blue-light;
+        }
+      }
+    }
+    .inquire {
+      display: block;
+      max-width: 500px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      &.sign-in {
+        margin-top: -10px;
+        a { color: $blue-light; }
+      }
+    }
+  }
+  .map-container {
+    padding: 0;
+    #map {
+      display: block;
+      width: 100%;
+      height: 330px;
+    }
+  }
+  .hs-lower-section {
+    padding-left: 10%;
+    padding-right: 10%;
+    pre {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .rating {
+      border-top: 1px solid $grey;
+      border-bottom: 1px solid $grey;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .count,
+      .stars {
+        display: inline-block;
+      }
+      .count {
+        font-size: 16px;
+        font-weight: 700;
+        margin-right: 20px;
+      }
+      .stars {
+        color: $blue-light;
+      }
+    }
+
+    .review {
+      .left,
+      .right {
+        padding-top: 20px;
+      }
+      .left {
+        padding-bottom: 20px;
+        .reviewer {
+          display: block;
+          text-align: center;
+        }
+      }
+      .hr {
+        border-bottom: 1px solid $grey;
+      }
+    }
+  }
+  .calendar-container {
+    .calendar {
+      td {
+        cursor: auto;
+        span {
+          color: $blue-light;
+        }
+        &.unavailable span {
+          color: $grey-dark;
+          background: none;
+        }
+        &.booked span {
+          color: $grey-dark;
+          background: none;
+        }
+        &.ignored span {
+          color: $grey;
+        }
+        &.today span {
+          background-color: $orange;
+          color: $grey-light;
+        }
+      }
+    }
+    .legends {
+      .square {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-left: 6px;
+        &.today {
+          background: $orange;
+        }
+        &.available {
+          background: $blue-light;
+        }
+        &.unavailable {
+          background: $grey-dark;
+        }
+      }
+    }
+  }
+}
+#enquiry_check_in_date,
+#enquiry_check_out_date {
+  background: #fff;
+}
+
+@media (max-width: $screen-sm-max) {
+  .homestay-show{
+    .hs-upper-section {
+      .basic-info .avatar {
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 10px;
+      }
+    }
+    .calendar-container {
+      padding-left: 10px;
+      padding-right: 10px;
+      .calendar{
+        th,
+        td {
+          padding: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .homestay-show {
+    .hs-upper-section {
+    }
+  }
+}

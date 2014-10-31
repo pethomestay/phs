@@ -17,13 +17,13 @@ $ ->
       @on leftChevron, 'click', ->
         current.subtract 1, 'months'
         @updateHeader(current)
-        @trigger '.right-panel .calendar', 'uiShowPrevMonth'
+        @trigger '.calendar-container .calendar', 'uiShowPrevMonth'
         leftChevron.css('visibility', 'hidden') if current.month() == moment().month()
       @on rightChevron, 'click', ->
         current.add 1, 'months'
         @updateHeader(current)
-        @trigger '.right-panel .calendar', 'uiShowNextMonth'
+        @trigger '.calendar-container .calendar', 'uiShowNextMonth'
         leftChevron.css('visibility', 'visible')
 
 
-  SwitcherUI.attachTo '.right-panel .switcher'
+  SwitcherUI.attachTo '.calendar-container .switcher'

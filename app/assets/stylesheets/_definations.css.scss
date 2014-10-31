@@ -12,7 +12,7 @@ $blue:         #52b8b7;
 $blue-light:   #5cc1c0;
 $blue-lighter: #68d5d4;
 
-//$black:        #3c3835;
+$black:        #333333;
 $black-light:  #3c3835;
 $grey-dark:    #ababab;
 $grey:         #e5e5e5;
@@ -28,6 +28,7 @@ $sub-nav-height: 86px;
     background-color: $orange;
     color:  $grey-lighter;
     border: none;
+    padding: 7px 12px; // Overwrites 6px 12px
     &:hover {
       background-color: $orange-light;
       color: $grey-lighter;
@@ -37,6 +38,7 @@ $sub-nav-height: 86px;
     background-color: $blue-light;
     color:  $grey-lighter;
     border: none;
+    padding: 7px 12px; // Overwrites 6px 12px
     &:hover {
       background-color: $blue-lighter;
       color: $grey-lighter;

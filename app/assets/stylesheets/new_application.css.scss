@@ -2,15 +2,19 @@
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import 'bootstrap-slider';
+@import 'owl.carousel';
+@import 'owl.theme';
 @import 'animate';
 @import 'chosen'; // jQuery chosen
 @import 'definations';
+@import 'my_account/calendar';
 @import 'nav_bar';
 @import 'footer';
 @import 'homepage';
 @import 'sign_in';
 @import 'sign_up';
 @import 'welcome';
+@import 'homestay_show';
 // Guest View and Host View
 @import 'my_account/sub_nav';
 @import 'my_account/left_nav';
@@ -40,6 +44,10 @@ body {
   & > span:nth-last-child(2) {
     margin-right: 15px;
   }
+}
+// Datepicker
+.datepicker {
+  z-index: 9999 !important;
 }
 // Sign in and Sign out
 .sign-in,

@@ -6,11 +6,9 @@
       = link_to image_tag(homestay.pictures.first.file.thumb('120x120#').url, alt: homestay.title), homestay
     - else
       = link_to image_tag("results-placeholder.png"), homestay
-    %p.rating
-      - if homestay.user.received_feedbacks.present?
+    - if homestay.user.received_feedbacks.present?
+      %p.rating
         - rating_stars homestay.average_rating
-      - else
-        (Not yet rated)
   %td.main-info
     %table
       %tr
