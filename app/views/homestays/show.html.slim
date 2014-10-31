@@ -152,39 +152,40 @@
         |  Unavailable
 
 
-/ Request a meeting modal
-.modal.fade#request-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
-  .modal-dialog
-    .modal-content
-      .modal-header
-        button type='button' class='close' data-dismiss='modal'
-          span aria-hidden='true' &times;
-          span.sr-only Close
-        h4.modal-title.request-label Request a meeting
-      = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
-        .modal-body
-          input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
-          = f.input_field :duration_id, as: :hidden, value: 1
-          .row
-            .col-sm-6
-              .input-group.input-group-lg.left-merged.enquiry_check_in_date
-                span.input-group-addon
-                  i.fa.fa-calendar
-                = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: ''
-            .col-sm-6
-              .input-group.input-group-lg.left-merged.enquiry_check_out_date
-                span.input-group-addon
-                  i.fa.fa-calendar
-                = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: ''
-          br
-          .row
-            .col-xs-12
-              = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-              = f.check_box :reuse_message, options = { checked: false }
-              span  Reuse this message next time I contact a host
-        .modal-footer
-          button type='button' class='btn btn-default' data-dismiss='modal' Cancel
-          = f.submit 'Submit', class: 'btn btn-primary'
+- if user_signed_in? and current_user.pets.present?
+  / Request a meeting modal
+  .modal.fade#request-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button type='button' class='close' data-dismiss='modal'
+            span aria-hidden='true' &times;
+            span.sr-only Close
+          h4.modal-title.request-label Request a meeting
+        = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
+          .modal-body
+            input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
+            = f.input_field :duration_id, as: :hidden, value: 1
+            .row
+              .col-sm-6
+                .input-group.input-group-lg.left-merged.enquiry_check_in_date
+                  span.input-group-addon
+                    i.fa.fa-calendar
+                  = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: ''
+              .col-sm-6
+                .input-group.input-group-lg.left-merged.enquiry_check_out_date
+                  span.input-group-addon
+                    i.fa.fa-calendar
+                  = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: ''
+            br
+            .row
+              .col-xs-12
+                = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
+                = f.check_box :reuse_message, options = { checked: false }
+                span  Reuse this message next time I contact a host
+          .modal-footer
+            button type='button' class='btn btn-default' data-dismiss='modal' Cancel
+            = f.submit 'Submit', class: 'btn btn-primary'
 
 coffee:
   $ ->
