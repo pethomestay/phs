@@ -121,8 +121,11 @@
             button.btn.btn-primary.btn-lg.inquire.btn-block type='button' data-toggle="modal" data-target="#request-modal" REQUEST A MEETING
           - else # Ask current user to add a pet first
             = link_to 'ADD A PET TO ENQUIRE', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary inquire'
-        - else # ask user to sign in
-          = link_to 'SIGN IN TO ENQUIRE', new_user_session_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary inquire'
+        - else # ask user to sign up or sign in
+          = link_to 'SIGN UP TO ENQUIRE', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary inquire'
+          .sign-in.inquire.text-center
+            ' or
+            = link_to 'Sign in', new_user_session_path(redirect_path: homestay_path(@homestay))
           / TODO: use a modal to prompt user to sign in so redirect_path can be set
 
     .map-container.col-sm-5.col-md-4

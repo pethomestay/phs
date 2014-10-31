@@ -109,11 +109,15 @@
         }
       }
     }
-    .inquire.btn {
+    .inquire {
       display: block;
       max-width: 500px;
       margin-top: 10px;
       margin-bottom: 20px;
+      &.sign-in {
+        margin-top: -10px;
+        a { color: $blue-light; }
+      }
     }
   }
   .map-container {
