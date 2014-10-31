@@ -166,17 +166,16 @@
           input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
           .row
             .col-sm-6
-              = f.input :check_in_date do
-                .input-group
-                  = f.input_field :check_in_date, as: :string, readonly: true, value: ''
-                  span.input-group-addon
-                    i.fa.fa-calendar
+              .input-group.input-group-lg.left-merged.enquiry_check_in_date
+                span.input-group-addon
+                  i.fa.fa-calendar
+                = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: ''
             .col-sm-6
-              = f.input :check_out_date do
-                .input-group
-                  = f.input_field :check_out_date, as: :string, readonly: true, value: ''
-                  span.input-group-addon
-                    i.fa.fa-calendar
+              .input-group.input-group-lg.left-merged.enquiry_check_out_date
+                span.input-group-addon
+                  i.fa.fa-calendar
+                = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: ''
+          br
           .row
             .col-xs-12
               = f.input :message, placeholder: 'Please blah blah blah blah blah', input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
