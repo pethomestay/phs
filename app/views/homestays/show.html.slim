@@ -161,9 +161,10 @@
           span aria-hidden='true' &times;
           span.sr-only Close
         h4.modal-title.request-label Modal title
-      .modal-body
-        = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
+      = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
+        .modal-body
           input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
+          = f.input_field :duration_id, as: :hidden, value: 1
           .row
             .col-sm-6
               .input-group.input-group-lg.left-merged.enquiry_check_in_date
@@ -179,9 +180,11 @@
           .row
             .col-xs-12
               = f.input :message, placeholder: 'Please blah blah blah blah blah', input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-      .modal-footer
-        button type='button' class='btn btn-default' data-dismiss='modal' Cancel
-        button type='button' class='btn btn-primary' Send
+              = f.check_box :reuse_message, options = { checked: false }
+              span  Reuse this message next time I contact a host
+        .modal-footer
+          button type='button' class='btn btn-default' data-dismiss='modal' Cancel
+          = f.submit 'Submit', class: 'btn btn-primary'
 
 coffee:
   $ ->
