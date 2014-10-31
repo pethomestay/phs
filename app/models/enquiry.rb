@@ -91,26 +91,6 @@ class Enquiry < ActiveRecord::Base
   #  end
   #end
 
-  def replied_by_host?
-    host_replies = mailbox.messages.select { |m|
-      m.user.id == homestay.user.id
-    }
-    host_replies.count > 0
-  end
-
-  def send_first_sms_reminder
-    ProviderMailer.enquiry_first_sms_reminder_to_host(self).deliver
-    send_first_sms_reminder_at= DateTime.now
-    self.save
-  end
-
-  def send_second_sms_reminder
-    ProviderMailer.create_enquiry_second_sms_reminder_to_host(self).deliver
-    send_second_sms_reminder_at= DateTime.now
-    self.save
-  end
-
-
   private
   def send_new_enquiry_notifications
     ProviderMailer.enquiry(self).deliver
