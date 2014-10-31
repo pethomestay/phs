@@ -28,6 +28,7 @@ $sub-nav-height: 86px;
     background-color: $orange;
     color:  $grey-lighter;
     border: none;
+    padding: 7px 12px; // Overwrites 6px 12px
     &:hover {
       background-color: $orange-light;
       color: $grey-lighter;
@@ -37,6 +38,7 @@ $sub-nav-height: 86px;
     background-color: $blue-light;
     color:  $grey-lighter;
     border: none;
+    padding: 7px 12px; // Overwrites 6px 12px
     &:hover {
       background-color: $blue-lighter;
       color: $grey-lighter;
