@@ -1,5 +1,5 @@
 $ ->
-  CalendarUI = flight.component ->
+  HomestayCalendarUI = flight.component ->
     @attributes
       bodySelector:  'tbody'
       datesSelector: 'td[data-date]'
@@ -17,30 +17,6 @@ $ ->
     @highlightToday = ->
       $today = @select('todaySelector')
       $today.addClass 'today' unless $today.hasClass('ignored')
-
-    @darkenUnavailableDate = (e, data, meta) ->
-      @$node.find("td[data-date=#{meta.date}]").removeClass 'unavailable'
-
-    @highlightUnavailableDate = (e, data, meta) ->
-      d = @$node.find("td[data-date=#{meta.date}]")
-      d.data 'unavailable-date-id', data.id
-      d.addClass 'unavailable'
-
-    @updateAvailableDate = (e) ->
-      return if window.location.pathname.toLowerCase().indexOf('guest') > -1
-      # Note e.target is often span, so we need to get its parent when this happens
-      if e.target.tagName == 'SPAN'
-        $date = $(e.target).parent()
-      else if e.target.tagName == 'TD'
-        $date = $(e.target)
-      return if $date.hasClass('ignored') or $date.hasClass('booked') or $date.hasClass('today')
-      if $date.hasClass 'unavailable'
-        @trigger 'uiDestroyUnavailableDate',
-          date: $date.data('date')
-          unavailable_date_id: $date.data('unavailable-date-id')
-      else
-        @trigger 'uiCreateUnavailableDate',
-          date: $date.data('date')
 
     @draw = (current) ->
       $body = @select('bodySelector')
@@ -64,10 +40,10 @@ $ ->
       # Request calendar info
       start = d.subtract(6, 'weeks').format('YYYY-MM-DD')
       end   = d.add(41, 'days').format('YYYY-MM-DD')
-      @trigger 'uiNeedsCalendarAvailability',
+      @trigger 'uiNeedsHomestayAvailability',
         start: start
         end:   end
-      @on @select('datesSelector'), 'click', @updateAvailableDate
+        host_id: @$node.data('host-id')
 
     @after 'initialize', ->
       current = moment()
@@ -78,9 +54,7 @@ $ ->
       @on 'uiShowNextMonth', ->
         current.add 1, 'months'
         @draw current
-      @on document, 'dataCalendarAvailability', @highlightDates
-      @on document, 'dataUnavailableDateCreated',   @highlightUnavailableDate
-      @on document, 'dataUnavailableDateDestroyed', @darkenUnavailableDate
+      @on document, 'dataHomestayAvailability', @highlightDates
 
 
-  CalendarUI.attachTo '.right-panel .calendar'
+  HomestayCalendarUI.attachTo '.homestay-show .calendar'

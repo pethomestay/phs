@@ -1,8 +1,12 @@
 class Host::CalendarController < Host::HostController
+  skip_before_filter :host_filters
+
   # GET /host/calendar/availability
   # Params
   #   start: start date in the format of YYYY-MM-DD
   #   end  : end date in the format of YYYY-MM-DD
+  # Optional params
+  #   host_id: user id of homestay owner
   # Response
   #   [
   #     ..
@@ -23,7 +27,9 @@ class Host::CalendarController < Host::HostController
     end_date   = Date.parse(params[:end])
     # Booked dates
     # Note: Most of this part needs to be kept in sync with Guest's CalendarController
-    bookings = current_user.bookees # This line is an exception
+    host = params[:host_id].present? ? User.find(params[:host_id]) : current_user # This line is an exception
+    head :internal_server_error and return unless host.present?
+    bookings = host.bookees # This line is an exception
                .booked
                .where("check_in_date <= ? and check_out_date >= ?", end_date, start_date)
                .select('id, check_in_date, check_out_date')
@@ -38,7 +44,7 @@ class Host::CalendarController < Host::HostController
       end
     end.flatten.uniq.sort! { |a,b| a[:date] <=> b[:date] }
     # Unavailable dates
-    unavailable_dates = current_user.unavailable_dates
+    unavailable_dates = host.unavailable_dates
                     .between(start_date, end_date)
                     .collect do |u_d|
                       {

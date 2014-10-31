@@ -23,7 +23,7 @@ class Host::HostController < ApplicationController
                         .select('check_in_date, check_out_date')
         @upcoming     = (upcoming_e + upcoming_b).sort{ |a, b| a.check_in_date <=> b.check_in_date }
       else
-        flash[:info] = 'Create your Homestay to become a Host'
+        flash[:info] = 'Wanna share the love and be an awesome Host yourself? Create your own Homestay by simply filling the form!'
         redirect_to new_host_homestay_path
       end
     else

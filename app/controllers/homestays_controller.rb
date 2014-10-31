@@ -1,7 +1,6 @@
 class HomestaysController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!, except: [:show, :index, :availability]
-  before_filter :find_homestay, only: [:edit, :update]
 
   SEARCH_RADIUS = 20
 
@@ -35,7 +34,7 @@ class HomestaysController < ApplicationController
 
     flash.now[:notice] = notice if notice && !@homestay.active?
     @title = @homestay.title
-    @reviewed_ratings = @homestay.user.received_feedbacks.reviewed
+    @reviews = @homestay.user.received_feedbacks.reviewed
     @response_rate_in_percent = @homestay.user.response_rate_in_percent
     if current_user
 	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
@@ -46,20 +45,7 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
-  end
-
-  # Depreciated
-  def edit
-    show()
-  end
-
-  # Depreciated
-  def update
-    if @homestay.update_attributes(params[:homestay])
-      redirect_to @homestay, alert: 'Your listing has been updated.'
-    else
-      render '/host/homestays/edit'
-    end
+    render layout: 'new_application'
   end
 
   def activate
@@ -72,27 +58,6 @@ class HomestaysController < ApplicationController
     @homestay.save
     respond_to do | format|
       format.js
-    end
-  end
-
-  # Depreciated
-  def new
-    @homestay = current_user.build_homestay
-  end
-
-  # Depreciated
-  def create
-    @homestay = current_user.build_homestay(params[:homestay])
-    if @homestay.save
-      flash[:notice] = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
-      #Send email to let them know that their homestay has been created and is ready for approval
-      HomestayCreatedJob.new.async.perform(@homestay)
-      #Send email to admin to let them know currently not needed but can be activated later
-      #AdminMailer.delay.homestay_created_admin(@homestay.id)
-      redirect_to @homestay
-    else
-      flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
-      render '/host/homestays/new'
     end
   end
 
@@ -113,21 +78,11 @@ class HomestaysController < ApplicationController
     end
   end
 
-  def favourites
-	  @homestays = current_user.homestays
-  end
-
   def availability
     homestay = Homestay.find(params[:id])
     start_date = Time.at(params[:start].to_i).to_date
     end_date  = Time.at(params[:end].to_i).to_date
     info = homestay.user.booking_info_between(start_date, end_date)
     render json: info.to_json, status: 200
-  end
-
-  private
-  def find_homestay
-    @homestay = current_user.homestay
-    raise ActiveRecord::RecordNotFound unless @homestay.slug == params[:id]
   end
 end
