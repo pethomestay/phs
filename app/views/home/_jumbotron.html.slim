@@ -1,0 +1,45 @@
+.bg
+.jumbotron
+  .container
+    h1 Find Trusted, Local<br id="line-breaker"> Pet Sitters
+    = render 'home/host_search_bar', autofocus: true
+    .highlights.hidden-xs
+      .highlight
+        = image_tag 'home/highlights/kangaroo.png'
+        span
+          | Made with love
+          br
+          | in Australia
+      .highlight.hidden-sm
+        span.peace.icon
+          strong $10m
+        span
+         | Host Insurance as
+         br
+         | Required by AU Law
+      .highlight
+        = image_tag 'home/highlights/peace.png'
+        span.cover
+          | Pet Accident Cover for
+          br
+          | Peace of Mind
+      .highlight
+        = image_tag 'home/highlights/support.png'
+        span
+          | 24 x 7
+          br
+          | Support
+      .highlight
+        span.percent.icon
+          strong 100%
+        span
+          | Satisfaction
+          br
+          | Money Back Guarantee
+    / .highlights.visible-xs-block
+    /   .highlight
+    /     = image_tag 'home/highlights/peace.png', style: 'height: 50px;'
+    /     span.cover
+    /       | PetHomeStay
+    /       br
+    /       | Guarantee
