@@ -43,15 +43,15 @@ describe User, :type => :model do
     describe 'should validate' do
       describe 'number +61 04 5555 5555 to be valid' do
         before { user.mobile_number = '+61 04 5555 5555';user.valid?;}
-        fit { expect(user.errors[:mobile_number]).not_to include('is an invalid number') }
+        it { expect(user.errors[:mobile_number]).not_to include('is an invalid number') }
       end
       describe 'number +61 04 5555 555 to invalid' do
         before { user.mobile_number = '+61 04 5555 555';user.valid?;}
-        fit { expect(user.errors[:mobile_number]).to include('is an invalid number') }
+        it { expect(user.errors[:mobile_number]).to include('is an invalid number') }
       end
       describe 'number +61 04 5555 5555 5 to invalid' do
         before { user.mobile_number = '+61 04 5555 5555 5';user.valid?;}
-        fit { expect(user.errors[:mobile_number]).to include('is an invalid number') }
+        it { expect(user.errors[:mobile_number]).to include('is an invalid number') }
       end
     end
   end

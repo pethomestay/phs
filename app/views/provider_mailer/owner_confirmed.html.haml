@@ -41,7 +41,7 @@
   %i= @booking.message.blank? ? '-' : @booking.message
 %p.article-content
   Reply to this message
-  %strong= link_to 'here', mailbox_messages_url(@booking.mailbox)
+  %strong= link_to 'here', host_messages_url
 %br
 
 %p.article-content
