@@ -107,12 +107,14 @@
         }
     }
 }
-// Media
-.media {
-    margin-top: 110px;
 
+// Press coverage
+.press-coverage {
+    height: 110px;
+    padding-top: 20px;
+    background: $grey-dark;
     img {
-        margin: 0 15px;
+       margin: 0 3%;
     }
 }
 
@@ -178,6 +180,9 @@ section.bottom-search {
 @media (max-width: $screen-md-max) {
     #postcode {
         width: 330px;
+    }
+    .press-coverage  img {
+        margin: 0 2%;
     }
 }
 @media (max-width: $screen-sm-max) {
@@ -268,9 +273,6 @@ section.bottom-search {
             display: inline-block;
             width: 50%;
             float: left;
-        }
-        .media {
-            margin-top: 20px;
         }
     }
 }
