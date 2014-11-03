@@ -77,12 +77,44 @@
     background-color: #ec5c3b;
     color: #FFFFFF;
 }
-// Media
-.media {
-    margin-top: 110px;
+// Highlights
+.highlights {
+    margin-top: 7em;
+    text-shadow: none;
+    .highlight {
+        display: inline-block;
+        margin-left: 5%;
+    }
+    span {
+        display: block;
+        &.cover {
+            // padd
+        }
+    }
+    img,
+    .icon {
+        margin-bottom: 0.5em;
+    }
+    .icon {
+        &.peace strong {
+            font-size: 37px;
+        }
+        &.percent {
+            margin-bottom: 0em;
+            strong{
+                font-size: 40px;
+            }
+        }
+    }
+}
 
+// Press coverage
+.press-coverage {
+    height: 110px;
+    padding-top: 20px;
+    background: $grey-dark;
     img {
-        margin: 0 15px;
+       margin: 0 3%;
     }
 }
 
@@ -145,9 +177,22 @@ section.bottom-search {
 }
 
 // Responsive
-@media (max-width: 991px) {
+@media (max-width: $screen-md-max) {
+    #postcode {
+        width: 330px;
+    }
+    .press-coverage  img {
+        margin: 0 2%;
+    }
+}
+@media (max-width: $screen-sm-max) {
+    .jumbotron h1 {
+        font-size: 48px;
+        margin-top: 20px;
+    }
     #postcode {
         display: block;
+        width: 100%;
     }
     #postcode .input-group {
         width: 100%;
@@ -161,9 +206,15 @@ section.bottom-search {
     #pick-up {
         margin-bottom: 5px;
     }
+    .highlights {
+        margin-top: 4.5em;
+    }
 }
-@media (max-width: 767px) {
+@media (max-width: $screen-xs-max) {
     // Jumbotron
+    .jumbotron h1 {
+        font-size: 36px;
+    }
     #drop-off input,
     #pick-up input {
         display: block;
@@ -187,6 +238,9 @@ section.bottom-search {
     .jumbotron {
         padding-left:  0;
         padding-right: 0;
+        .highlights {
+            margin-top: 15px;
+        }
     }
     // Three features
     #why-phs{
@@ -219,9 +273,6 @@ section.bottom-search {
             display: inline-block;
             width: 50%;
             float: left;
-        }
-        .media {
-            margin-top: 20px;
         }
     }
 }
