@@ -49,6 +49,7 @@ gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=> 'laserlemon/figaro'
 gem 'state_machine'
 
+gem 'intercom-rails' # Intercom.io integration
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'createsend' # Campaign Monitor API Wrapper
 gem 'smsglobal' # API support for smsglobal.com
