@@ -4,6 +4,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
 
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
+    # The next line eliminates nil mobile numbers
+    @user.update_attribute :mobile_number, 'n/a' if @user.mobile_number.blank?
     if @user.persisted?
       if current_user #we are already signed in
         redirect_to '/users/edit', notice: "Your Facebook account has been linked to your profile."
