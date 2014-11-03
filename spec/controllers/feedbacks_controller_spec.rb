@@ -48,7 +48,7 @@ describe FeedbacksController, :type => :controller do
 
       it 'should redirect to the my account page' do
         subject
-        expect(response).to redirect_to my_account_path
+        expect(response).to redirect_to guest_path
       end
     end
 

@@ -187,7 +187,7 @@ class BookingsController < ApplicationController
 
   def homestay_required
     if params[:enquiry_id].blank? && params[:homestay_id].blank?
-      return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
+      return redirect_to guest_path, alert: 'You are not authorised to make this request!'
     end
     @enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
     @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
@@ -196,7 +196,7 @@ class BookingsController < ApplicationController
   def secure_pay_response
     invalid_response = %w(timestamp summarycode refid fingerprint restext rescode txnid preauthid)
       .inject(false) { |boolean, key| boolean || params[key].blank? }
-    return redirect_to my_account_path, alert: 'This transaction is not authorized' if invalid_response
+    return redirect_to guest_path, alert: 'This transaction is not authorized' if invalid_response
     response = {
       time_stamp: params['timestamp'],
       summary_code: params['summarycode'],

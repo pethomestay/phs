@@ -6,7 +6,7 @@ class FeedbacksController < ApplicationController
     @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
-      redirect_to my_account_path, alert: 'Thanks for your feedback!'
+      redirect_to guest_path, alert: 'Thanks for your feedback!'
     else
       render :new
     end
