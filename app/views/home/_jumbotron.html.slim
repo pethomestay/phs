@@ -3,10 +3,49 @@
   .container
     h1 Find Trusted, Local<br id="line-breaker"> Pet Sitters
     = render partial: 'home/host_search_bar'
-    .media.hidden-xs
-      = image_tag "home/media/herald_sun.png",       style: "height: 50px;"
-      = image_tag "home/media/news_com_au.png",      style: "height: 40px;"
-      = image_tag "home/media/huffington_post.png",  style: "height: 70px;"
-      = image_tag "home/media/startup_smart.gif",    style: "height: 40px;"
-      = image_tag "home/media/daily_telegraph.png",  style: "height: 30px;"
-      = image_tag "home/media/financial_review.png", style: "height: 65px;"
+    .highlights.hidden-xs
+      .highlight
+        = image_tag 'home/highlights/kangaroo.png', style: 'height: 50px;'
+        span
+          | Made with love
+          br
+          | in Australia
+      .highlight
+        span.peace.icon
+          strong $10m
+        span
+         | Host Insurance as
+         br
+         | Required by AU Law
+      .highlight
+        = image_tag 'home/highlights/peace.png', style: 'height: 50px;'
+        span.cover
+          | Pet Accident Cover for
+          br
+          | Peace of Mind
+      .highlight
+        = image_tag 'home/highlights/support.png', style: 'height: 50px;'
+        span
+          | 24 x 7
+          br
+          | Support
+      .highlight
+        span.percent.icon
+          strong 100%
+        span
+          | Satisfaction
+          br
+          | Money Back Guarantee
+    .highlights.visible-xs-block
+      .highlight
+        = image_tag 'home/highlights/peace.png', style: 'height: 50px;'
+        span.cover
+          | PetHomeStay
+          br
+          | Guarantee
+      / = image_tag "home/media/herald_sun.png",       style: "height: 50px;"
+      / = image_tag "home/media/news_com_au.png",      style: "height: 40px;"
+      / = image_tag "home/media/huffington_post.png",  style: "height: 70px;"
+      / = image_tag "home/media/startup_smart.gif",    style: "height: 40px;"
+      / = image_tag "home/media/daily_telegraph.png",  style: "height: 30px;"
+      / = image_tag "home/media/financial_review.png", style: "height: 65px;"
