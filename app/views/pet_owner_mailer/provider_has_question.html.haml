@@ -17,7 +17,7 @@
   %i= @message.blank? ? '-' : @message
 
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', mailbox_messages_url(@booking.mailbox), style: 'color:#444444;'
+  %strong= link_to 'Reply to this message', guest_messages_url, style: 'color:#444444;'
 
 %p.article-content
   %strong

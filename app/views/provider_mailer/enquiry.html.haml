@@ -20,7 +20,7 @@
 %p.article-content
   %i= @enquiry.message.blank? ? '-' : @enquiry.message
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', mailbox_messages_url(@enquiry.mailbox), style: 'color:#444444;'
+  %strong= link_to 'Reply to this message', host_messages_url, style: 'color:#444444;'
   and answer any queries the guest may have.
 %br
 

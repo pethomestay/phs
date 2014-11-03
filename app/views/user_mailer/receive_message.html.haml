@@ -21,7 +21,7 @@
   %i= " #{@message.message_text}"
 
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', mailbox_messages_url(@message.mailbox), style: 'color:#444444;'
+  %strong= link_to 'Reply to this message', new_user_session_url, style: 'color:#444444;'
 
 %p.article-content Many thanks!
 %p.article-content The PetHomeStay Team
