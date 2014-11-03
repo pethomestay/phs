@@ -2,7 +2,7 @@
 .jumbotron
   .container
     h1 Find Trusted, Local<br id="line-breaker"> Pet Sitters
-    = render partial: 'home/host_search_bar'
+    = render 'home/host_search_bar', autofocus: true
     .highlights.hidden-xs
       .highlight
         = image_tag 'home/highlights/kangaroo.png'
