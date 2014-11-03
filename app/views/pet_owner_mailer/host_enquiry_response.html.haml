@@ -41,7 +41,7 @@
 
 %p.article-title What Happens Next?
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', mailbox_messages_url(@enquiry.mailbox), style: 'color:#444444;'
+  %strong= link_to 'Reply to this message', guest_messages_url, style: 'color:#444444;'
 
 %p.article-content.enquiry-message-reply
   %strong= link_to 'Book This HomeStay', new_booking_url(enquiry_id: @enquiry.id)
