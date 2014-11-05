@@ -1,0 +1,34 @@
+.homestay-index {
+  .search-box {
+    .search.btn {
+      margin-bottom: 15px;
+    }
+    .sort-order {
+      span.sort-by {
+        margin-right: 15px;
+      }
+    }
+
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  #new_search {
+    .form-group {
+      margin-bottom: 15px;
+      input {
+        &#search_location {
+          width: 300px;
+        }
+        &#search_check_in_date,
+        &#search_check_out_date {
+          width: 200px;
+          margin-left: 20px;
+        }
+      }
+    }
+    .search.btn {
+      margin-left: 20px;
+    }
+  }
+}

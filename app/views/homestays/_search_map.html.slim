@@ -1,6 +1,6 @@
 - if @search.latitude.present? && @search.longitude.present?
-  .well#map{class: @homestays.any? ? '' : 'short'}
-    :javascript
+  .well#map class=( @homestays.any? ? '' : 'short' )
+    javascript:
       initMap(#{@search.latitude}, #{@search.longitude}, {
         zoom: 12,
         maxZoom: 12,
@@ -10,5 +10,5 @@
       }})
     - if @homestays.any?
       - @homestays.each do |homestay|
-        :javascript
+        javascript:
           setupMarker(#{homestay.latitude.round(3)}, #{homestay.longitude.round(3)}, "#{homestay.title}", function(){scrollToListing(#{homestay.id})})

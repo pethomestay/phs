@@ -1,9 +1,9 @@
-.span12
+.container.homestay-index
   = render 'search_box'
   .row
-    .span4.sidebar-search
+    .col-sm-4.sidebar-search
       = render 'search_map'
-    .span8.results
+    .col-sm-8.results
       - if @homestays.present?
         table.table.table-bordered.table-striped
           tbody

@@ -11,7 +11,8 @@ class HomestaysController < ApplicationController
     #We are only doing australia, not sure why we are doing the country detect
     @search.country =  'Australia' #request.location.country_code if request.location
     @title = "Pet care for #{@search.location}"
-    respond_with @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
+    respond_with @homestays = @search.perform.paginate(page: params[:page], per_page: 10),
+      layout: 'new_application'
   end
 
   def rotate_image
