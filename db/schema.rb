@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141027001356) do
+ActiveRecord::Schema.define(:version => 20141030003247) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -39,6 +39,31 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
 
   add_index "attachinary_files", ["attachinariable_type", "attachinariable_id", "scope"], :name => "by_scoped_parent"
 
+  create_table "blog_comments", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "email",      :null => false
+    t.string   "website"
+    t.text     "body",       :null => false
+    t.integer  "post_id",    :null => false
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "blog_comments", ["post_id"], :name => "index_blog_comments_on_post_id"
+
+  create_table "blog_posts", :force => true do |t|
+    t.string   "title",                         :null => false
+    t.text     "body",                          :null => false
+    t.integer  "blogger_id"
+    t.string   "blogger_type"
+    t.integer  "comments_count", :default => 0, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "blog_posts", ["blogger_type", "blogger_id"], :name => "index_blog_posts_on_blogger_type_and_blogger_id"
+
   create_table "bookings", :force => true do |t|
     t.integer  "booker_id"
     t.integer  "bookee_id"
@@ -52,9 +77,9 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.integer  "number_of_nights", :default => 1
-    t.float    "cost_per_night",   :default => 1.0
-    t.float    "subtotal",         :default => 1.0
-    t.float    "amount",           :default => 1.0
+    t.decimal  "cost_per_night",   :default => 1.0
+    t.decimal  "subtotal",         :default => 1.0
+    t.decimal  "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
     t.string   "state",            :default => "unfinished"
@@ -63,7 +88,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.string   "cancel_reason"
-    t.float    "refund"
+    t.decimal  "refund"
     t.boolean  "refunded",         :default => false
     t.date     "cancel_date"
   end
@@ -76,23 +101,53 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "ckeditor_assets", :force => true do |t|
+    t.string   "data_uid",                     :null => false
+    t.string   "data_name",                    :null => false
+    t.string   "data_mime_type"
+    t.integer  "data_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type", :limit => 30
+    t.string   "type",           :limit => 30
+    t.integer  "data_width"
+    t.integer  "data_height"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
+  create_table "coupons", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "account_id"
+    t.string   "code"
+    t.boolean  "percentage"
+    t.decimal  "value"
+    t.boolean  "credits_host"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "homestay_id"
     t.text     "message"
-    t.boolean  "confirmed",           :default => false
-    t.boolean  "owner_accepted",      :default => false
-    t.boolean  "sent_feedback_email", :default => false
+    t.boolean  "confirmed",              :default => false
+    t.boolean  "owner_accepted",         :default => false
+    t.boolean  "sent_feedback_email",    :default => false
     t.integer  "duration_id"
     t.text     "response_message"
-    t.integer  "response_id",         :default => 0
+    t.integer  "response_id",            :default => 0
     t.date     "check_in_date"
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.boolean  "reuse_message"
+    t.decimal  "proposed_per_day_price"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
@@ -130,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
 
   create_table "homestays", :force => true do |t|
     t.string   "title"
-    t.float    "cost_per_night"
+    t.decimal  "cost_per_night"
     t.text     "description"
     t.integer  "user_id"
     t.string   "address_1"
@@ -189,6 +244,17 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.text     "message_text"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "payments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "booking_id"
+    t.string   "status"
+    t.decimal  "amount"
+    t.string   "braintree_token"
+    t.boolean  "paid_to_host"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "pets", :force => true do |t|
@@ -316,6 +382,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
+    t.integer  "braintree_customer_id"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

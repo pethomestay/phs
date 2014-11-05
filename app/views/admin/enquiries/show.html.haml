@@ -15,6 +15,8 @@
   %dd= date_day_month_year_format(@enquiry.check_in_date)
   %dt Check out date/time
   %dd= date_day_month_year_format(@enquiry.check_out_date)
+  %dt Custom Price (per night)
+  %dd= number_to_currency(@enquiry.proposed_per_day_price)
   %dt Duration
   %dd= @enquiry.duration_name
   %dt Response

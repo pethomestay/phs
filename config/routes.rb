@@ -12,6 +12,7 @@ PetHomestay::Application.routes.draw do
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedbacks, only: [:new, :create]
+    get "show_for_guest"
   end
   resources :homestays do
 	  member do

@@ -1,27 +1,100 @@
 class BookingsController < ApplicationController
   include BookingsHelper
 	before_filter :authenticate_user!
-	before_filter :homestay_required, only: :new
+	before_filter :homestay_required, only: :index
 	before_filter :secure_pay_response, only: :result
 
-	def new
-		@booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
-		@transaction = current_user.find_or_create_transaction_by(@booking)
-    @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
-    if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
-      PaymentFailedJob.new.async.perform(@booking, @transaction)
-      render "bookings/payment_issue"
-    end
+	def index
+		@bookings = current_user.bookees.valid_host_view_booking_states
 	end
 
+  def new
+  end
+
+	def edit
+    @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
+    @host_view = @booking.bookee == current_user
+    if !@host_view
+      @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
+    end
+    return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
+    render :edit, :layout => 'new_application'
+		# @transaction = current_user.find_or_create_transaction_by(@booking)
+    # @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
+    # if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
+    #   PaymentFailedJob.new.async.perform(@booking, @transaction)
+    #   render "bookings/payment_issue"
+    # end
+	end
+
+  def owner_receipt
+    @booking = current_user.bookers.find_by_id(params[:id])
+    redirect_to guest_path, :notice => "Sorry no receipt found" if @booking.nil?
+  end
+
 	def update
-		@booking = Booking.find(params[:id])
-		if @booking.update_attributes!(params[:booking])
-			message = @booking.confirmed_by_host(current_user)
-			return redirect_to host_path, alert: message
-		else
-			return redirect_to host_confirm_booking_path(@booking)
-		end
+		@booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
+    if @booking.bookee == current_user # Host booking modifications
+      if @booking.owner_accepted
+        message = @booking.confirmed_by_host(current_user)
+        return redirect_to host_path, alert: message
+      else
+        if @booking.update_attributes!(params[:booking])
+          @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
+          @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message])
+          @booking.update_attribute(:host_accepted, true)
+  			  return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
+    		else
+    			return redirect_to host_path
+        end
+      end
+    else # Guest booking modifications (or payment)
+      if params[:payment_method_nonce].present? # Payment was made
+        # Create a customer in BrainTree if the user has never paid via BrainTree before
+        if current_user.braintree_customer_id.nil?
+          customer_create_result = Braintree::Customer.create(
+              :first_name => current_user.first_name,
+              :last_name => current_user.last_name,
+              :payment_method_nonce => params[:payment_method_nonce]
+          )
+          if customer_create_result.success?
+            current_user.update_attribute(:braintree_customer_id, customer_create_result.customer.id)
+            result = Braintree::Transaction.sale(
+              :amount => @booking.amount,
+              :customer_id => customer_create_result.customer.id
+            )
+          # Process payment if failed to create customer
+          else
+            result = Braintree::Transaction.sale(
+              :amount => @booking.amount,
+              :payment_method_nonce => params[:payment_method_nonce]
+            )
+            Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
+          end
+        else
+          result = Braintree::Transaction.sale(
+              :amount => @booking.amount,
+              :payment_method_nonce => params[:payment_method_nonce]
+          )
+        end
+        
+        if result.success?
+          # Create Payment record
+          current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status)
+          @booking.update_attribute(:owner_accepted, true)
+          @booking.mailbox.messages.create! user_id: @booking.bookee_id,
+          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! You have paid for the booking!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
+          @booking.mailbox.messages.create! user_id: @booking.booker_id,
+          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! #{current_user.name} has paid for the booking!"
+          render :owner_receipt, :layout => 'new_application' and return
+        else
+          Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
+          render :edit, :layout => 'new_application' and return
+        end
+      else
+        current_user.find_or_create_transaction_by(@booking)
+      end
+    end
 	end
 
 	def show
@@ -40,7 +113,8 @@ class BookingsController < ApplicationController
 	end
 
 	def host_confirm
-		@booking = Booking.find(params[:id])
+		@booking = current_user.bookees.find_by_id(params[:id])
+    # @booking.confirmed_by_host() if @booking.enquiry.proposed_per_day_price.present?
     if @booking.state?(:guest_cancelled)
       flash[:notice] = "This booking has been canceled by the guest"
     elsif @booking.state?(:host_cancelled)

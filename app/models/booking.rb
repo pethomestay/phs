@@ -6,16 +6,22 @@ class Booking < ActiveRecord::Base
 	belongs_to :homestay
 	belongs_to :enquiry
 
+  MINIMUM_SUBTOTAL_PRICE = 10.0
+  CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.025 # 2.5% = 0.025
+  PER_NIGHT_LIABILITY_INSURANCE_COST = 2 # Modify this to change insurance cost per night
+
   @@valid_host_view_booking_states_list  = [:finished, :finished_host_accepted, :host_paid, :rejected, :host_requested_cancellation, :host_cancelled, :guest_cancelled]
 
   has_one :transaction, dependent: :destroy
+  has_one :payment
 	has_one :mailbox, dependent: :destroy
 
 	validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
+  validate :subtotal, :numericality => { :greater_than => MINIMUM_SUBTOTAL_PRICE }, :presence => true
   #validate :is_host_available_btw_check_in_and_check_out_date, if: "check_in_date && check_out_date"
 
-	attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
+	attr_accessor :fees, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
 	              :pet_date_of_birth
 
   scope :booked, where(owner_accepted: true, host_accepted: true)
@@ -42,6 +48,7 @@ class Booking < ActiveRecord::Base
 	scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
 	after_create :create_mailbox
+  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted != true}
 
   def create_mailbox
 		mailbox = nil
@@ -54,7 +61,6 @@ class Booking < ActiveRecord::Base
 		                           host_mailbox_id: self.bookee_id
 		mailbox.reload
   end
-
 
   def is_host_view_valid?
    not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
@@ -212,7 +218,7 @@ class Booking < ActiveRecord::Base
 
 		if self.response_id == 5
       results = self.complete_transaction(current_user)
-      if results.class == String
+      if results.class == String && Rails.env != "development"
         message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
         UserMailer.error_report('host confirming transaction', results).deliver
       else
@@ -256,7 +262,7 @@ class Booking < ActiveRecord::Base
 		self.number_of_nights = number_of_nights.to_i
 		self.check_in_date = check_in_date
 		self.check_out_date = check_out_date
-
+ 
 		self.subtotal = self.number_of_nights * self.cost_per_night
 		self.amount = self.calculate_amount
 		self.save!
@@ -279,6 +285,12 @@ class Booking < ActiveRecord::Base
 		}
 	end
 
+  def update_transaction_by_daily_price(price)
+    self.subtotal = self.number_of_nights * price.to_i
+    self.amount   = self.calculate_amount
+    self.save!
+  end
+
 	def complete_transaction(current_user)
 		if self.host_accepted?
 			if self.host_view?(current_user)
@@ -289,6 +301,12 @@ class Booking < ActiveRecord::Base
 			end
 		end
 	end
+
+  def trigger_host_accept
+    self.host_accepts_booking
+    self.host_accepted = true
+    self.save!
+  end
 
 	def phs_service_charge
 		actual_value_figure(transaction_mode_value(self.subtotal * 0.15))
@@ -307,11 +325,11 @@ class Booking < ActiveRecord::Base
 	end
 
 	def transaction_fee
-		actual_value_figure(credit_card_fee)
+		self.subtotal * CREDIT_CARD_SURCHARGE_IN_DECIMAL
 	end
 
 	def credit_card_fee
-		transaction_mode_value(subtotal * 0.025)
+		self.subtotal * CREDIT_CARD_SURCHARGE_IN_DECIMAL
 	end
 
 	def fees
@@ -336,7 +354,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def calculate_amount
-		transaction_mode_value(self.subtotal + self.transaction_fee.to_f)
+		return self.subtotal*CREDIT_CARD_SURCHARGE_IN_DECIMAL + self.subtotal
 	end
 
 	def transaction_mode_value(value)
@@ -371,6 +389,30 @@ class Booking < ActiveRecord::Base
 			message.save!
 		end
 	end
+
+  # Designed to eventually replace state_machine or update booking states
+  def get_status
+    if self.owner_accepted
+      # Booking 'booked' if both owner & host accepted, payment made, but stay not completed
+      return "Booked" if self.host_accepted && self.payment.present? && self.check_out_date.to_time > Time.now
+      # Booking 'completed' if both owner & host accepted, payment made and stay completed
+      return "Completed" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.present?
+      # Booking 'Leave feedback' if completed, paid, but no feedback
+      return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
+      # Booking 'Waiting on host' if owner accepted but not host accepted
+      return "Pending action - #{self.bookee.name}"
+    elsif self.host_accepted && !self.owner_accepted
+      return "Pending action - #{self.booker.name}"
+    else
+      return "Enquiry"
+    end
+  end
+
+  def get_status_css
+    return "enquiry" if self.owner_accepted.nil? || self.host_accepted.nil?
+    return "requested" if (self.owner_accepted || self.host_accepted) && self.payment.nil?
+    return "booked" if self.payment.present?
+  end
 
 	def host_booking_status
 		pending_or_rejected = (self.state?(:rejected)) ? 'Rejected' : 'Pending'

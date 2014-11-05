@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
-  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation, :braintree_customer_id
 
   has_one :homestay
   has_many :pets
@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :favourites
   has_many :homestays, through: :favourites, dependent: :destroy
   has_one :account
+  has_many :payments
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -166,18 +167,16 @@ class User < ActiveRecord::Base
   end
 
   def find_or_create_booking_by(enquiry=nil, homestay=nil)
-    if homestay
-      homestay_id = homestay.id
-    else
-      homestay_id = enquiry.homestay.id
-    end
-	  unfinished_bookings = self.bookers.unfinished.where(:homestay_id=>homestay_id).all()
-	  booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
+    homestay = enquiry.homestay if homestay.nil?
+    booking = enquiry.booking || Booking.new
+	  # unfinished_bookings = self.bookers.unfinished.where(:homestay_id=>homestay_id).all()
+	  # booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
 
 		booking.enquiry = enquiry
 	  booking.homestay = homestay
 	  booking.bookee = homestay.user
 	  booking.cost_per_night = homestay.cost_per_night
+    booking.booker = enquiry.user
 
 	  date_time_now = DateTime.now
 	  time_now = Time.now
@@ -193,6 +192,7 @@ class User < ActiveRecord::Base
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
 	  booking.amount = booking.calculate_amount
 	  booking.save!
+    booking.mailbox.update_attribute(:booking_id, booking.id)
 	  booking
   end
 

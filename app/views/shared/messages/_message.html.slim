@@ -18,27 +18,37 @@
       = message.message_text
     - if top
       - conversation = message.mailbox
-      - guest_view = params[:controller].include? 'guest'
-      - if conversation.enquiry.present? and conversation.enquiry.check_out_date >= Date.today
-        - if guest_view and conversation.booking.blank?
-          a.btn.btn-secondary href=new_booking_path(enquiry_id: conversation.enquiry_id)
+      - guest_view = (current_user == conversation.guest_mailbox)
+      - host_view = (current_user == conversation.host_mailbox)
+      - if guest_view
+        - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && (conversation.try(:booking).try(:enquiry).try(:owner_accepted) || conversation.booking.payment.present?) && conversation.booking.check_in_time < Time.now # Guest view - leave feedback button
+           a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.enquiry)
             i.fa.fa-check.fa-fw
-            |  Book this homestay
-        - elsif conversation.host_booking?(current_user)
+            '
+            | Leave Feedback
+            br
+            | for completed stays
+        - elsif conversation.try(:booking).try(:owner_accepted) != true # Guest view - book homestay button if they haven't already booked
+          a.btn.btn-secondary href=edit_booking_path(conversation.booking)
+            i.fa.fa-check.fa-fw
+            '
+            | Book This Homestay
+      - else
+        - if conversation.try(:booking).try(:owner_accepted) && conversation.try(:booking).try(:host_accepted) != true # Host view - Confirm/Reject button
           a.btn.btn-secondary href=host_confirm_booking_path(conversation.booking)
             i.fa.fa-check.fa-fw
-            |  Confirm or reject
-        - elsif guest_view and conversation.booking.present? and !conversation.booking.owner_accepted? # There exists a previous booking cancelled by Guest
-          - booking_params = conversation.enquiry.blank? ? { homestay_id: conversation.booking.homestay.id } : { enquiry_id: conversation.enquiry_id }
-          a.btn.btn-secondary href=new_booking_path(booking_params)
+            '
+            | Confirm or Reject
+        - elsif !conversation.try(:booking).try(:owner_accepted) # Host can customise request
+          a.btn.btn-secondary href=edit_booking_path(conversation.booking)
             i.fa.fa-check.fa-fw
-            |  Book this homestay
-      - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && guest_view && conversation.try(:booking).try(:enquiry).try(:owner_accepted) && translate_state(conversation.try(:booking).try(:state)) == 'Booked'
-        a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.booking.enquiry)
-          | Leave feedback
-          br
-          | for completed stays
-
+            '
+            | Customise request
+        - elsif conversation.try(:booking).try(:owner_accepted) && conversation.try(:booking).try(:host_accepted)
+          a.btn.btn-secondary href=booking_path(conversation.booking)
+            i.fa.fa-check.fa-fw
+            '
+            | #{conversation.booking.booker.name} accepted, see details here
 - if top
   .new-msg-form-container
     form

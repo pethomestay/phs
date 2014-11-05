@@ -48,6 +48,7 @@ gem 'sucker_punch'
 gem 'mailgun_rails', git: 'git://github.com/darmou/mailgun_rails.git'
 gem 'figaro', :github=> 'laserlemon/figaro'
 gem 'state_machine'
+gem 'braintree'
 
 gem 'intercom-rails' # Intercom.io integration
 gem 'jwt' # For Zendesk Single Sign-on
@@ -62,6 +63,7 @@ group :test, :development do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
+  gem 'pry-rails'
 
   gem 'rspec-rails', '~>3.0.0'
   gem 'shoulda-matchers', '~> 2.6.1'
