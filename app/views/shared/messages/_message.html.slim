@@ -33,7 +33,7 @@
           a.btn.btn-secondary href=new_booking_path(booking_params)
             i.fa.fa-check.fa-fw
             |  Book this homestay
-      - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && guest_view && conversation.try(:booking).try(:enquiry).try(:owner_accepted) && translate_state(conversation.try(:booking).try(:state)) == 'Booked'
+      - if guest_view && conversation.try(:booking).try(:host_accepted) && conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?)
         a.btn.btn-secondary href=new_enquiry_feedbacks_path(conversation.booking.enquiry)
           | Leave feedback
           br
