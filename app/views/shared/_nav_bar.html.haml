@@ -11,7 +11,8 @@
                 - if current_user.homestay.present?
                     %a.buttons.btn.navbar-btn.primary{ href: host_path }
                         %i.fa.fa-home
-                        Host View
+                        %span#my
+                            Host View
                 - else
                     %a.buttons.btn.navbar-btn.primary{ href: guest_path }
                         %span#my
