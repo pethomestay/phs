@@ -1,0 +1,14 @@
+.span12
+  = render 'search_box'
+  .row
+    .span4.sidebar-search
+      = render 'search_map'
+    .span8.results
+      - if @homestays.present?
+        table.table.table-bordered.table-striped
+          tbody
+            - @homestays.each do |homestay|
+              = render 'result_row', homestay: homestay
+        = will_paginate @homestays, renderer: BootstrapLinkRenderer
+      - else
+        = render 'no_results'
