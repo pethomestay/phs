@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   include BookingsHelper
 	before_filter :authenticate_user!
-	before_filter :homestay_required, only: :index
+	before_filter :homestay_required, only: [:index, :new]
 	before_filter :secure_pay_response, only: :result
 
 	def index
@@ -9,6 +9,8 @@ class BookingsController < ApplicationController
 	end
 
   def new
+    @booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
+    redirect_to edit_booking_path(@booking)
   end
 
 	def edit

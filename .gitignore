@@ -33,3 +33,5 @@ coverage/
 
 # Ignore Vagrant generated files
 .vagrant/
+
+*.dump
