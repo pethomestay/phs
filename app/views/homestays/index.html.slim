@@ -9,6 +9,6 @@
           tbody
             - @homestays.each do |homestay|
               = render 'result_row', homestay: homestay
-        = will_paginate @homestays, renderer: BootstrapLinkRenderer
+        = will_paginate @homestays, renderer: BootstrapPagination::Rails
       - else
         = render 'no_results'
