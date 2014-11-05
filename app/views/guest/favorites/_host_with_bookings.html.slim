@@ -32,13 +32,9 @@
             p #{ booking.enquiry.try(:feedbacks).first.review }
         .right.pull-right
           span
-            - if booking.enquiry.owner_accepted
-              - if booking.enquiry.try(:feedbacks).empty? && translate_state(booking.state) == 'Booked'
+            - if booking.host_accepted && booking.try(:enquiry).try(:feedbacks).try(:empty?)
                 a.btn.btn-secondary href=new_enquiry_feedbacks_path(booking.enquiry) Leave Feedback
-              - else
-                span Feedback
-                / Note: we assume only Guest can leave a feedback
-                - booking.enquiry.try(:feedbacks).first.rating.times
-                  i.fa.fa-star
-                - (5 - booking.enquiry.try(:feedbacks).first.rating).times
-                  i.fa.fa-star-o
+            - else
+              span Feedback
+              / Note: we assume only Guest can leave a feedback
+              == rating_stars_awesome booking.enquiry.try(:feedbacks).first.rating

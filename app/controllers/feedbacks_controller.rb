@@ -3,19 +3,27 @@ class FeedbacksController < ApplicationController
   before_filter :authenticate_user!
 
   def create
-    @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
+    @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
+    if @enquiry.booking.nil? or @enquiry.booking.host_accepted == false
+      redirect_to guest_path, alert: 'Host has not confirmed this Homestay!'
+      reutrn
+    end
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
-      redirect_to my_account_path, alert: 'Thanks for your feedback!'
+      redirect_to guest_path, alert: 'Thanks for your feedback!'
     else
       render :new
     end
   end
 
   def new
-    @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
+    @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
+    if @enquiry.booking.nil? or @enquiry.booking.host_accepted == false
+      redirect_to guest_path, alert: 'Host has not confirmed this Homestay!'
+      reutrn
+    end
     if involved_party(@enquiry)
-      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry))
+      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
     else
       render file: "#{Rails.root}/public/404", format: :html, status: 404
     end

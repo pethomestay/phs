@@ -1,0 +1,17 @@
+.container
+  .page-header
+    h1 = "Leave feedback for #{@feedback.subject.first_name}"
+  = simple_form_for([@enquiry, @feedback]) do |f|
+    .row
+      .col-sm-6 style='padding-top:30px;'
+        = f.hidden_field :rating, value: f.object.rating || 0
+        - if f.object.errors.present?
+          p.tc.red= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+        - else
+          p.tc= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+        .rater
+          == rating_stars_awesome 0
+      .col-sm-6
+        =f.input :review, placeholder: "Type your review here", input_html: {rows: 6, class: 'review-text span6'}
+    .form-actions
+      = f.submit 'Submit feedback', class: 'btn btn-primary', style: 'margin-bottom: 30px;'
