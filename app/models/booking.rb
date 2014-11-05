@@ -302,10 +302,12 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
+  # Sends email to host saying that payment made, they just need to accept
   def trigger_host_accept
-    self.host_accepts_booking
-    self.host_accepted = true
-    self.save!
+    ProviderMailer.owner_confirmed(self).deliver
+    # self.host_accepts_booking
+    # self.host_accepted = true
+    # self.save!
   end
 
 	def phs_service_charge
@@ -313,7 +315,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def public_liability_insurance
-		actual_value_figure(transaction_mode_value(self.number_of_nights * 2))
+		self.number_of_nights * PER_NIGHT_LIABILITY_INSURANCE_COST
 	end
 
 	def host_payout_deduction

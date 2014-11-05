@@ -17,6 +17,7 @@ class BookingsController < ApplicationController
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     @host_view = @booking.bookee == current_user
     if !@host_view
+      @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
     end
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
@@ -32,14 +33,29 @@ class BookingsController < ApplicationController
   def owner_receipt
     @booking = current_user.bookers.find_by_id(params[:id])
     redirect_to guest_path, :notice => "Sorry no receipt found" if @booking.nil?
+    render :owner_receipt, :layout => 'new_application'
+  end
+
+  def host_receipt
+    @booking = current_user.bookees.find_by_id(params[:booking_id])
+    redirect_to host_path, :notice => "Sorry no receipt found" if @booking.nil?
+    render :host_receipt, :layout => 'new_application'
   end
 
 	def update
 		@booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     if @booking.bookee == current_user # Host booking modifications
       if @booking.owner_accepted
-        message = @booking.confirmed_by_host(current_user)
-        return redirect_to host_path, alert: message
+        if params[:booking][:host_accepted] == "false"
+          Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
+          AdminMailer.host_rejected_paid_booking(@booking).deliver
+          @booking.mailbox.messages.create! user_id: @booking.booker_id,
+          message_text: "[This is a PetHomestay auto-generated message]\n\n#{current_user.name} has declined the booking!\n\n#{params[:booking][:message]}"
+        else
+          message = @booking.confirmed_by_host(current_user)
+          return redirect_to host_path, alert: message
+        end
+        @booking.update_attributes!(params[:booking])
       else
         if @booking.update_attributes!(params[:booking])
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
@@ -91,6 +107,7 @@ class BookingsController < ApplicationController
           render :owner_receipt, :layout => 'new_application' and return
         else
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
+          AdminMailer.braintree_payment_failure_admin(@booking, result).deliver
           render :edit, :layout => 'new_application' and return
         end
       else

@@ -56,6 +56,7 @@ PetHomestay::Application.routes.draw do
       post 'host_cancel'
 		  get 'update_message'
 	  end
+  get 'host_receipt'
 	  member do
 		  get 'host_confirm'
       put 'book_reservation'

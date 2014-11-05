@@ -32,7 +32,7 @@
             p #{ booking.enquiry.try(:feedbacks).first.review }
         .right.pull-right
           span
-            - if booking.try(:enquiry).try(:feedbacks).try(:blank?) and ( booking.host_accepted || booking.payment.present? ) and booking.check_in_date < Date.today
+            - if booking.try(:enquiry).try(:feedbacks).try(:blank?)
                 a.btn.btn-secondary href=new_enquiry_feedbacks_path(booking.enquiry) Leave Feedback
             - else
               span Feedback
