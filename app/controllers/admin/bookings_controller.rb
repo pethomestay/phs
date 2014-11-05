@@ -3,7 +3,7 @@ class Admin::BookingsController < Admin::AdminController
 	respond_to :html
 
 	def index
-		respond_with(:admin, @bookings = Booking.with_state(:finished_host_accepted).all(:order => 'created_at DESC'))
+		respond_with(:admin, @bookings = Booking.all.select {|b| b.transaction.present? || b.payment.present? }.sort_by(&:created_at).reverse)
 	end
 
   def host_cancel
