@@ -170,6 +170,11 @@ GEM
       multi_json (~> 1.0)
     formatador (0.2.5)
     gmaps4rails (1.5.6)
+    gon (5.2.3)
+      actionpack (>= 2.3.0)
+      json
+      multi_json
+      request_store (>= 1.0.5)
     haml (4.0.0)
       tilt
     haml-rails (0.4)
@@ -312,6 +317,7 @@ GEM
       json (~> 1.4)
     redcarpet (3.0.0)
     ref (1.0.2)
+    request_store (1.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-activemodel-mocks (1.0.1)
@@ -426,6 +432,7 @@ DEPENDENCIES
   fog (~> 1.2)
   geocoder!
   gmaps4rails
+  gon
   haml-rails
   heroku-deflater
   intercom-rails
