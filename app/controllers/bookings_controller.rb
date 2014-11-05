@@ -68,6 +68,7 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
+      submit_payment = @booking.host_accepted == true ? true : false
       if params[:payment_method_nonce].present? # Payment was made
         # Create a customer in BrainTree if the user has never paid via BrainTree before
         if current_user.braintree_customer_id.nil?
@@ -80,26 +81,35 @@ class BookingsController < ApplicationController
             current_user.update_attribute(:braintree_customer_id, customer_create_result.customer.id)
             result = Braintree::Transaction.sale(
               :amount => @booking.amount,
-              :customer_id => customer_create_result.customer.id
+              :customer_id => customer_create_result.customer.id,
+              :options => {
+                :submit_for_settlement => submit_payment
+              }
             )
           # Process payment if failed to create customer
           else
             result = Braintree::Transaction.sale(
               :amount => @booking.amount,
-              :payment_method_nonce => params[:payment_method_nonce]
+              :payment_method_nonce => params[:payment_method_nonce],
+              :options => {
+                :submit_for_settlement => submit_payment
+              }
             )
             Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
           end
         else
           result = Braintree::Transaction.sale(
               :amount => @booking.amount,
-              :payment_method_nonce => params[:payment_method_nonce]
+              :payment_method_nonce => params[:payment_method_nonce],
+              :options => {
+                :submit_for_settlement => submit_payment
+              }
           )
         end
         
         if result.success?
           # Create Payment record
-          current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status)
+          current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
           @booking.update_attribute(:owner_accepted, true)
           @booking.mailbox.messages.create! user_id: @booking.bookee_id,
           message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! You have paid for the booking!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
