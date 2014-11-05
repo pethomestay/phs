@@ -46,16 +46,17 @@ class BookingsController < ApplicationController
 		@booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     if @booking.bookee == current_user # Host booking modifications
       if @booking.owner_accepted
+        @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
           AdminMailer.host_rejected_paid_booking(@booking).deliver
           @booking.mailbox.messages.create! user_id: @booking.booker_id,
           message_text: "[This is a PetHomestay auto-generated message]\n\n#{current_user.name} has declined the booking!\n\n#{params[:booking][:message]}"
+          return redirect_to host_path, :alert => "Informed #{@booking.booker.name} of rejected booking"
         else
           message = @booking.confirmed_by_host(current_user)
           return redirect_to host_path, alert: message
         end
-        @booking.update_attributes!(params[:booking])
       else
         if @booking.update_attributes!(params[:booking])
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])

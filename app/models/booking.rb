@@ -402,7 +402,7 @@ class Booking < ActiveRecord::Base
       # Booking 'Leave feedback' if completed, paid, but no feedback
       return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Pending action - #{self.bookee.name}"
+      return "Declined by #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
     elsif self.host_accepted && !self.owner_accepted
       return "Pending action - #{self.booker.name}"
     else
@@ -413,7 +413,8 @@ class Booking < ActiveRecord::Base
   def get_status_css
     return "enquiry" if self.owner_accepted.nil? || self.host_accepted.nil?
     return "requested" if (self.owner_accepted || self.host_accepted) && self.payment.nil?
-    return "booked" if self.payment.present?
+    return "cancelled" if self.host_accepted == false && self.payment.present?
+    return "booked" if self.payment.present? && self.host_accepted
   end
 
 	def host_booking_status

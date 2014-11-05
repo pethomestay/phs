@@ -41,7 +41,7 @@
             | Book This Homestay
       - else
         - if conversation.booking.present?
-          - if conversation.booking.owner_accepted && conversation.booking.host_accepted != true # Host view - Confirm/Reject button
+          - if conversation.booking.owner_accepted && conversation.booking.host_accepted.nil? # Host view - Confirm/Reject button
             a.btn.btn-secondary href=host_confirm_booking_path(conversation.booking)
               i.fa.fa-check.fa-fw
               '
