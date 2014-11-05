@@ -116,6 +116,11 @@
       = f.input :host_accepted, required: true, as: :radio_buttons, :label => "Do you accept the booking", :input_html => {:class => "form-control"}
     .col-md-8.col-xs-12
       =f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
+      %br/
+    .row
+      .col-xs-12
+        = f.submit 'Update Booking', class: 'btn btn-primary', style: 'width: 95%;'
+    %br/
   - else
     .col-xs-12
       = f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "Please leave a message"
