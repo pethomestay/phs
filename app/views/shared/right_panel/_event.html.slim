@@ -1,5 +1,6 @@
 / Expect params
 /   event: a Booking object or an Enquiry object
+/   awaits_feedback: whether the Booking awaits feedback
 
 
 .event
@@ -23,4 +24,9 @@
         |  to
         strong.end  #{event.check_out_date.strftime('%b %e')}
         span.name #{event.user.name}
+  - if awaits_feedback
+    a.btn.btn-secondary.pull-right.leave-feedback href=new_enquiry_feedbacks_path(event.enquiry)
+      | Leave
+      br
+      | feedback
   .hr
