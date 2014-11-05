@@ -32,6 +32,7 @@ class Enquiry < ActiveRecord::Base
   # The following line leads to some Guests receiving empty email notification
   # Thus it has been disabled until further investigation
   #after_update :send_enquiry_update_notifications
+  after_save :create_or_modify_booking
 
   scope :last_five, order('created_at DESC').limit(5)
 
@@ -47,8 +48,16 @@ class Enquiry < ActiveRecord::Base
     ReferenceData::Duration.find_by_id(duration_id) if duration_id
   end
 
+  def stay_length
+    (self.check_out_date - self.check_in_date) <= 1 ? 1 : (self.check_out_date - self.check_in_date).to_i
+  end
+
   def duration_name
     duration.title if duration_id
+  end
+
+  def create_or_modify_booking
+    self.user.find_or_create_booking_by(self, self.homestay)
   end
 
   def response

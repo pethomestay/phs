@@ -77,6 +77,10 @@
     %td Proposed Total Price
     %td
       %input{:type => "number", :step => "any", :min => 0, :placeholder => "#{number_to_currency(total_cost)}", :id => "total-stay"}
+  %tr.modify-pricing
+    %td Total Host Payout
+    %td
+      %input{:type => "number", :disabled => true, :id => "host-payout"}
   %tr
     %td{:colspan => 2}
       %span.btn.btn-primary{:id => 'modify-price-button'} Click here to modify pricing
@@ -99,20 +103,25 @@
       $(".modify-pricing").toggle();
       $(".current-total-price").text("Current Total Price");
       $(".current-daily-price").text("Current Daily Price");
+      $(this).hide();
     });
     $("#per-night").bind("change keyup input", function(){
       var number_of_nights = parseFloat("#{@enquiry.stay_length}");
       var per_night = parseFloat($(this).val()).toFixed(2);
       var total = per_night * number_of_nights
+      var payout = total - (total * 0.15) - 2 * number_of_nights;
       $("#total-stay").val(total);
       $("#total-stay").attr("disabled", "disabled");
+      $("#host-payout").val(payout);
     });
     $("#total-stay").bind("keyup", function(){
       var number_of_nights = parseFloat("#{@enquiry.stay_length}");
       var total = parseFloat($(this).val()).toFixed(2);
       var per_night = (total/number_of_nights).toFixed(2);
+      var payout = total - (total * 0.15) - 2 * number_of_nights;
       $("#per-night").val(per_night);
       $("#per-night").attr("disabled", "disabled");
+      $("#host-payout").val(payout);
     });
     $('form').on("submit", function(){
       if ($("#per-night").val() != "") {

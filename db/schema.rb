@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141027001356) do
+ActiveRecord::Schema.define(:version => 20141030003247) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -52,9 +52,9 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.integer  "number_of_nights", :default => 1
-    t.float    "cost_per_night",   :default => 1.0
-    t.float    "subtotal",         :default => 1.0
-    t.float    "amount",           :default => 1.0
+    t.decimal  "cost_per_night",   :default => 1.0
+    t.decimal  "subtotal",         :default => 1.0
+    t.decimal  "amount",           :default => 1.0
     t.boolean  "host_accepted",    :default => false
     t.boolean  "owner_accepted",   :default => false
     t.string   "state",            :default => "unfinished"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.string   "cancel_reason"
-    t.float    "refund"
+    t.decimal  "refund"
     t.boolean  "refunded",         :default => false
     t.date     "cancel_date"
   end
@@ -78,21 +78,22 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "homestay_id"
     t.text     "message"
-    t.boolean  "confirmed",           :default => false
-    t.boolean  "owner_accepted",      :default => false
-    t.boolean  "sent_feedback_email", :default => false
+    t.boolean  "confirmed",              :default => false
+    t.boolean  "owner_accepted",         :default => false
+    t.boolean  "sent_feedback_email",    :default => false
     t.integer  "duration_id"
     t.text     "response_message"
-    t.integer  "response_id",         :default => 0
+    t.integer  "response_id",            :default => 0
     t.date     "check_in_date"
     t.time     "check_in_time"
     t.date     "check_out_date"
     t.time     "check_out_time"
     t.boolean  "reuse_message"
+    t.decimal  "proposed_per_day_price"
   end
 
   add_index "enquiries", ["homestay_id"], :name => "index_enquiries_on_homestay_id"
@@ -130,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
 
   create_table "homestays", :force => true do |t|
     t.string   "title"
-    t.float    "cost_per_night"
+    t.decimal  "cost_per_night"
     t.text     "description"
     t.integer  "user_id"
     t.string   "address_1"
@@ -189,6 +190,17 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.text     "message_text"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "payments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "booking_id"
+    t.string   "status"
+    t.decimal  "amount"
+    t.string   "braintree_token"
+    t.boolean  "paid_to_host"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "pets", :force => true do |t|
@@ -316,6 +328,7 @@ ActiveRecord::Schema.define(:version => 20141027001356) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
+    t.integer  "braintree_customer_id"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

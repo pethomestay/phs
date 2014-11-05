@@ -4,9 +4,9 @@ class FeedbacksController < ApplicationController
 
   def create
     @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.booking.nil? or @enquiry.booking.host_accepted == false
+    if @enquiry.booking.nil? or @enquiry.booking.payment.nil?
       redirect_to guest_path, alert: 'Host has not confirmed this Homestay!'
-      reutrn
+      return
     end
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
@@ -18,9 +18,9 @@ class FeedbacksController < ApplicationController
 
   def new
     @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.booking.nil? or @enquiry.booking.host_accepted == false
+    if @enquiry.booking.nil? or @enquiry.booking.payment.nil?
       redirect_to guest_path, alert: 'Host has not confirmed this Homestay!'
-      reutrn
+      return
     end
     if involved_party(@enquiry)
       respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
