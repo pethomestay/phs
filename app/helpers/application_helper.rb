@@ -39,6 +39,18 @@ module ApplicationHelper
     end
   end
 
+  def rating_stars_awesome(rating)
+    html = ''
+    5.times.collect do |star|
+      if star < rating
+        html += '<i class="fa fa-star"></i>'
+      else
+        html += '<i class="fa fa-star-o"></i>'
+      end
+    end
+    html
+  end
+
   def google_maps_source_url
     "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true&libraries=places"
   end
