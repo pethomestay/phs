@@ -15,7 +15,7 @@ class FeedbacksController < ApplicationController
   def new
     @enquiry = Enquiry.find_by_id_and_owner_accepted!(params[:enquiry_id], true)
     if involved_party(@enquiry)
-      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry))
+      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
     else
       render file: "#{Rails.root}/public/404", format: :html, status: 404
     end
