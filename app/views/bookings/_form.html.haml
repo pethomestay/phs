@@ -42,7 +42,7 @@
           %tr
             %td 
               %strong Check Out
-            %td= @booking.check_out_date.strftime("%A, %d/%n/%Y")
+            %td= @booking.check_out_date.strftime("%A, %d/%m/%Y")
       %tr
         %td
           %strong Number of nights
@@ -67,7 +67,7 @@
   .row
     .col-xs-12
       - if @booking.payment.present?
-        %h3.text-center= "Payment successfully made on #{@booking.payment.created_at.strftime("%A, %d/%m/%Y at %H:%M %p")}"
+        %h3.text-center= "Payment successfully made on #{@booking.payment.created_at.in_time_zone('Melbourne').strftime("%A, %d/%m/%Y at %l:%M %p %Z")}"
       - else
         %p You can make the payment securely either through Paypal or via Credit Card below. All transactions are encrypted.
         %form#checkout{:url => booking_path(@booking), :method => "put"}
