@@ -7,8 +7,8 @@ class Booking < ActiveRecord::Base
 	belongs_to :enquiry
 
   MINIMUM_SUBTOTAL_PRICE = 10.0
-  CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.025 # 2.5% = 0.025
-  PER_NIGHT_LIABILITY_INSURANCE_COST = 2 # Modify this to change insurance cost per night
+  CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.0 # 2.5% = 0.025
+  PER_NIGHT_LIABILITY_INSURANCE_COST = 0 # Modify this to change insurance cost per night
 
   @@valid_host_view_booking_states_list  = [:finished, :finished_host_accepted, :host_paid, :rejected, :host_requested_cancellation, :host_cancelled, :guest_cancelled]
 
