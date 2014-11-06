@@ -5,7 +5,7 @@ PetHomestay::Application.routes.draw do
   resources :users do
     collection do
       post :update_calendar
-      get  :set_coupon
+      post :set_coupon
     end
   end
 

@@ -62,14 +62,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Checks if the code entered is valid, then creates a coupon based on the code
-  def valid_coupon_code?(code)
-    return false if self.used_coupon.present?
-    referrer = User.find_by_coupon_code(code)
-    return false if referrer.nil?
-    Coupon.create!(:code => code, :referrer_id => referrer.id, :used_by_id => self.id, :discount_amount => Coupon::DEFAULT_DISCOUNT_AMOUNT, :credit_referrer_amount => Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT)
-  end
-
   def booking_host_request_cancellation?
     if self.admin?
       @bookings = Booking.where(:state=>:host_requested_cancellation)
@@ -94,12 +86,12 @@ class User < ActiveRecord::Base
 		self.bookers.accepted_by_host
   end
 
-  def validate_code(code)
-    binding.pry
-    return if self.used_coupon.present?
+  def validate_code?(code)
+    return false if self.used_coupon.present?
     referrer = User.find_by_coupon_code(code)
-    return if referrer.nil?
+    return false if referrer.nil?
     Coupon.create(:code => code, :referrer_id => referrer.id, :used_by_id => self.id, :discount_amount => Coupon::DEFAULT_DISCOUNT_AMOUNT, :credit_referrer_amount => Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT)
+    return true
   end
 
   def booking_declined_by_host?

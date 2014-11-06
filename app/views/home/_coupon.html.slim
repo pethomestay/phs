@@ -6,7 +6,7 @@
             span aria-hidden='true' &times;
             span.sr-only Close
           h4.modal-title.request-label Do you have a referral code?
-        = simple_form_for current_user, :url => set_coupon_users_path, :method => :get, wrapper: :bootstrap3 do |f|
+        = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3 do |f|
           .modal-body
             .row
               .col-sm-6
