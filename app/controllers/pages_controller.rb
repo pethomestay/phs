@@ -35,6 +35,7 @@ class PagesController < ApplicationController
 
   def partners
     @contact = Contact.new
+    render layout: 'new_application'
   end
 
   def in_the_press
