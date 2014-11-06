@@ -4,8 +4,9 @@ class FeedbacksController < ApplicationController
 
   def create
     @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.booking.nil? or @enquiry.booking.payment.nil?
-      redirect_to guest_path, alert: 'Host has not confirmed this Homestay!'
+    redirect_to guest_path, alert: "Thanks, you have already left feedback" and return if @enquiry.feedbacks.any?
+    if @enquiry.booking.host_accepted != true && @enquiry.booking.owner_accepted != true
+      redirect_to guest_path, alert: 'The Homestay booking has not been completed yet.'
       return
     end
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
