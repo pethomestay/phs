@@ -1,7 +1,5 @@
 .well.search-box
   = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|
-    = f.hidden_field :latitude
-    = f.hidden_field :longitude
     .form-group
       .input-group
         span.input-group-addon
