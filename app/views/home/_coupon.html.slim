@@ -1,0 +1,20 @@
+.modal.fade#coupon-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button type='button' class='close' data-dismiss='modal'
+            span aria-hidden='true' &times;
+            span.sr-only Close
+          h4.modal-title.request-label Do you have a referral code?
+        = simple_form_for current_user, :url => set_coupon_users_path, :method => :get, wrapper: :bootstrap3 do |f|
+          .modal-body
+            .row
+              .col-sm-6
+                p Do you have a coupon code?
+                .input-group.input-group-lg.left-merged.enquiry_check_in_date
+                    span.input-group-addon.custom
+                      i.fa.fa-share-alt
+                    = f.input_field :coupon_code, as: :string, :label => "Coupon code"
+          .modal-footer
+            button type='button' class='btn btn-default' data-dismiss='modal' Cancel
+            = f.submit 'Submit', class: 'btn btn-primary'
