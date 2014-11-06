@@ -2,8 +2,9 @@ module GuestHelper
   def set_instance_vars
     @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
     @awaits_feedback = current_user.bookers.select do |b|
-      b.try(:enquiry).try(:feedbacks).try(:blank?) and
-      ( b.host_accepted || b.payment.present? ) and
+      b.try(:enquiry).try(:feedbacks).try(:empty?) and
+      ( b.host_accepted or b.payment.present? ) and
+      b.state.exclude? 'cancelled' and
       b.check_in_date < Date.today
     end
     this_month    = Date.today..Date.today.end_of_month
