@@ -1,5 +1,5 @@
 ul.nav.nav-pills.nav-stacked
-  - if params[:controller].include?('host')
+  - if params[:controller].include?('host') or request.url.include?("/host")
     li.messages class=('active' if params[:controller] == 'host/messages' or params[:controller] == 'host/host')
       a href=host_messages_path
         i.fa.fa-inbox.fa-lg.fa-fw
@@ -14,6 +14,10 @@ ul.nav.nav-pills.nav-stacked
       a href=host_bookings_path
         i.fa.fa-suitcase.fa-lg.fa-fw
         | BOOKINGS
+    li class=('active' if params[:controller] == 'registrations' && request.url.include?("/host"))
+      a href=host_edit_path(:host => true)
+        i.fa.fa-cog.fa-lg.fa-fw
+        | ACCOUNT
     /li
     /  a href=trust_path
     /    i.fa.fa-shield.fa-lg.fa-fw
