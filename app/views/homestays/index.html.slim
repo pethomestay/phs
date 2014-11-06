@@ -1,10 +1,8 @@
-.container.homestay-index
+.container-fluid.homestay-index
   = render 'search_box'
-  .row
-    .col-sm-4.sidebar-search
-      = render 'search_map'
+  .row.below-search-box
     .col-sm-8.results
-      - if @homestays.present?
+      - if @homestays.any?
         table.table.table-bordered.table-striped
           tbody
             - @homestays.each do |homestay|
@@ -12,3 +10,28 @@
         = will_paginate @homestays, renderer: BootstrapPagination::Rails
       - else
         = render 'no_results'
+    - if @homestays.any?
+      .col-sm-4.sidebar-search
+        - if @search.latitude.present? && @search.longitude.present?
+          .search-map-container
+            .search-map-wrapper
+              #search-map class=( @homestays.any? ? '' : 'short' )
+          coffee:
+            $ ->
+              $mapWrapper = $('.search-map-wrapper')
+              $mapContainer = $('.search-map-container')
+              $(window).on 'scroll', (evt) ->
+                if $(window).scrollTop() < $mapContainer.offset().top
+                  $mapWrapper.removeClass 'fixed'
+                  $mapWrapper.removeClass 'fixed-bottom'
+                  $mapWrapper.css 'top', 0
+                else if ( $(window).scrollTop() + $(window).height() ) < $('section.footer').offset().top
+                  $mapWrapper.addClass 'fixed'
+                  $mapWrapper.removeClass 'fixed-bottom'
+                  $mapWrapper.css 'top', 0
+                else
+                  if $mapWrapper.hasClass 'fixed'
+                    top = $('.row.below-search-box').height() - $mapWrapper.height()
+                    $mapWrapper.removeClass 'fixed'
+                  $mapWrapper.addClass 'fixed-bottom'
+                  $mapWrapper.css 'top', top
