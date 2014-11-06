@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to :user
   belongs_to :booking
+  has_one :coupon
   
   attr_accessible :amount, :booking_id, :braintree_token, :status, :user_id, :paid_to_host, :braintree_transaction_id
   validates_uniqueness_of :braintree_token

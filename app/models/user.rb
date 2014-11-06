@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
-  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation, :braintree_customer_id
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation, :braintree_customer_id, :coupon_code
 
   has_one :homestay
   has_many :pets
@@ -18,8 +18,10 @@ class User < ActiveRecord::Base
   has_many :messages
   has_many :favourites
   has_many :homestays, through: :favourites, dependent: :destroy
-  has_one :account
+  has_one  :account
   has_many :payments
+  has_one  :used_coupon, class_name: "Coupon", foreign_key: :used_by_id
+  has_many :referred_coupons, class_name: "Coupon", foreign_key: :referrer_id
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -37,6 +39,7 @@ class User < ActiveRecord::Base
   validates :accept_terms, :acceptance => true
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
+  validates_uniqueness_of :coupon_code
 
   after_save :release_jobs
 
@@ -57,6 +60,14 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  # Checks if the code entered is valid, then creates a coupon based on the code
+  def valid_coupon_code?(code)
+    return false if self.used_coupon.present?
+    referrer = User.find_by_coupon_code(code)
+    return false if referrer.nil?
+    Coupon.create!(:code => code, :referrer_id => referrer.id, :used_by_id => self.id, :discount_amount => Coupon::DEFAULT_DISCOUNT_AMOUNT, :credit_referrer_amount => Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT)
   end
 
   def booking_host_request_cancellation?
