@@ -36,13 +36,15 @@ body {
     }
 }
 // Alert
-.alert-info {
-  background-image: none;
-  background-color: #5cc1c0;
-  color: #ffffff;
-  border: none;
-  & > span:nth-last-child(2) {
-    margin-right: 15px;
+.alert {
+  .alert-info {
+    background-image: none;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    border: none;
+    & > span:nth-last-child(2) {
+      margin-right: 15px;
+    }
   }
 }
 // Datepicker
