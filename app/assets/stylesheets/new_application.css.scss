@@ -1,6 +1,7 @@
 @import "bootstrap-sprockets_3_3_0";
 @import "bootstrap_3_3_0";
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+@import "font-awesome-sprockets";
+@import "font-awesome";
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import "bootstrap-slider";
 @import "owl.carousel";
