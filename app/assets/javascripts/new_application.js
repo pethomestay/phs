@@ -18,7 +18,7 @@
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
 //= require flight-for-rails
-//= require bootstrap.min
+//= require bootstrap-sprockets_3_3_0
 //= require bootstrap-growl.min
 //= require bootstrap-slider
 //= require bootbox.min

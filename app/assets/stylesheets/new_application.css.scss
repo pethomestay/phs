@@ -1,29 +1,30 @@
-@import 'bootstrap_3.2.0.min';
+@import "bootstrap-sprockets_3_3_0";
+@import "bootstrap_3_3_0";
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
-@import 'bootstrap-slider';
-@import 'owl.carousel';
-@import 'owl.theme';
-@import 'animate';
-@import 'chosen'; // jQuery chosen
-@import 'definations';
-@import 'my_account/calendar';
-@import 'nav_bar';
-@import 'footer';
-@import 'homepage';
-@import 'sign_in';
-@import 'sign_up';
-@import 'welcome';
-@import 'homestay_index';
-@import 'homestay_show';
+@import "bootstrap-slider";
+@import "owl.carousel";
+@import "owl.theme";
+@import "animate";
+@import "chosen"; // jQuery chosen
+@import "definations";
+@import "my_account/calendar";
+@import "nav_bar";
+@import "footer";
+@import "homepage";
+@import "sign_in";
+@import "sign_up";
+@import "welcome";
+@import "homestay_index";
+@import "homestay_show";
 // Guest View and Host View
-@import 'my_account/sub_nav';
-@import 'my_account/left_nav';
-@import 'my_account/right_panel';
-@import 'my_account/messages_panel';
+@import "my_account/sub_nav";
+@import "my_account/left_nav";
+@import "my_account/right_panel";
+@import "my_account/messages_panel";
 // Guest View
-@import 'my_account/guest/pet_panel';
-@import 'my_account/guest/favorites_panel';
+@import "my_account/guest/pet_panel";
+@import "my_account/guest/favorites_panel";
 
 // Font
 body {
