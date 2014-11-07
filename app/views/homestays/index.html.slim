@@ -3,10 +3,8 @@
   .row.below-search-box
     .col-sm-8.results
       - if @homestays.any?
-        table.table.table-bordered.table-striped
-          tbody
-            - @homestays.each do |homestay|
-              = render 'result_row', homestay: homestay
+        - @homestays.each do |homestay|
+          = render 'result_row', homestay: homestay
         = will_paginate @homestays, renderer: BootstrapPagination::Rails
       - else
         = render 'no_results'
