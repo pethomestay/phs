@@ -13,6 +13,9 @@ class Host::HostController < ApplicationController
   def host_filters
     if user_signed_in? # User must be signed in
       if current_user.homestay.present? # User must have a Homestay
+        flash[:alert] = 'Your Homestay is not active yet. We will contact you\
+                          within two business days to introduce PetHomeStay and\
+                          approve your listing!' unless current_user.homestay.active?
         @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
         this_month    = Date.today..Date.today.end_of_month
         upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
