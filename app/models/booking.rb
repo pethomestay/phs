@@ -48,7 +48,7 @@ class Booking < ActiveRecord::Base
 	scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
 	after_create :create_mailbox
-  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted != true}
+  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
   before_save  :update_state
 
   def create_mailbox
@@ -418,7 +418,7 @@ class Booking < ActiveRecord::Base
       # Booking 'Leave feedback' if completed, paid, but no feedback
       return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Declined by #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
+      return "Pending action - #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
     elsif self.host_accepted && !self.owner_accepted
       return "Pending action - #{self.booker.name}"
     else
