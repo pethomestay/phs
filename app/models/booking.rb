@@ -49,6 +49,7 @@ class Booking < ActiveRecord::Base
 
 	after_create :create_mailbox
   after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted != true}
+  before_save  :update_state
 
   def create_mailbox
 		mailbox = nil
@@ -60,6 +61,17 @@ class Booking < ActiveRecord::Base
 		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
 		                           host_mailbox_id: self.bookee_id
 		mailbox.reload
+  end
+
+  def update_state
+    booking_state = "unfinished"
+    booking_state = "finished_host_accepted" if self.host_accepted && self.owner_accepted && self.payment.present?
+    booking_state = "finished" if self.host_accepted && (self.payment.present? || self.transaction.present?) && self.owner_accepted != true
+    booking_state = "payment_authorisation_pending" if self.host_accepted && self.owner_accepted && (self.transaction.nil? && self.payment.nil?)
+    booking_state = "host_cancelled" if self.cancel_date.present? && self.cancel_reason == "Admin cancelled"
+    booking_state = "guest_cancelled" if self.cancel_date.present? && self.cancel_reason != "Admin cancelled"
+    self.state    = booking_state
+    return true
   end
 
   def is_host_view_valid?

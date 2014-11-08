@@ -1,0 +1,45 @@
+scss:
+  img {
+    &.to-left {
+      position: absolute;
+      left: -59px;
+      top: 273px;
+      // Flip image
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+      -ms-filter: "FlipH";
+    }
+  }
+  li {
+    line-height: 170%;
+  }
+  .simple_form.new_contact {
+    margin: 21px;
+  }
+
+.container
+  .row
+    .col-sm-5.col-sm-offset-1
+      .page-header
+        h1 Partners
+      p
+        PetHomeStay is keen to partner with firms that share our mission of making pet care easier and better quality.
+      p
+        Specific areas we are keen to hear about would be:-
+      ul
+        li Vet Clinics - who would like to join our Host scheme
+        li Pet Food & Accessory Manufacturers - who have amazing products they would like to offer our community!
+        li Pet Industry Non-profits - how we can use our awesome members to help your charity
+        li Complementary Partners - who could be anyone we have not thought about yet but who share our vision!
+    .col-sm-5.col-sm-offset-1
+      = simple_form_for @contact, wrapper: :bootstrap3 do |f|
+        h4 We would love to talk about partnering with you!
+        = f.input :name
+        = f.input :email
+        = f.input :message, as: :text, input_html: { rows: 10 }
+        = f.submit 'Send', class: 'btn btn-primary send'
+  = image_tag 'home/three_features/feature_one.png', class: 'visible-lg-block to-left'
+  = image_tag 'home/three_features/feature_one.png', class: 'pull-right visible-xs-block'

@@ -19,7 +19,7 @@
                 ' Pet:
               | #{pet.name}
               = pet.breed.present? ? ", a #{pet.breed}" : ''
-              | , #{[pet.age].to_sentence}
+              | , #{truncate([pet.age].to_sentence, length: 15)}
               br
               ' From
               strong
@@ -37,12 +37,11 @@
               = booking_status_for_listing(booking)
             br
             - if Booking.valid_host_view_booking_states_list.include?(booking.state.to_sym)
-              - if current_user == booking.booker
-                = link_to 'View Receipt', booking_path(booking, anchor: 'trips'), class: 'btn btn-primary right-panel-btn'
-              - else
-                = link_to 'View Receipt', booking_path(booking), class: 'btn btn-primary right-panel-btn'
-            - elsif current_user == booking.booker
-              = link_to 'Finish Payment', new_booking_path(homestay_id: booking.homestay.id), class: 'btn btn-primary right-panel-btn'
+              - if booking.payment.present? || booking.transaction.present?
+                = link_to 'View Receipt', booking_host_receipt_path(booking), class: 'btn btn-primary right-panel-btn'
+            - else
+              = link_to "Custom Quote", edit_booking_path(booking), class: 'btn btn-primary right-panel-btn'
+              br
             - if ((not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0) or (!booking.is_host_view_valid?)) #don't allow a booking to be canceled if it's an old one and paid for
               br
               - cancel_classes = 'btn btn-primary right-panel-btn'

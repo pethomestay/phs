@@ -99,6 +99,7 @@ PetHomestay::Application.routes.draw do
   end
   devise_scope :user do
     get '/guest/edit', to: 'registrations#edit'
+    get '/host/edit', to: 'registrations#edit'
   end
 
   namespace :host do

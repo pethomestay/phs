@@ -29,11 +29,12 @@
             %td Name
             %td= pet.name
           %tr
-            %td Type
-            %td= pet.pet_type_name
-          %tr
-            %td Age
-            %td= pet.age
+            %td Type & Age
+            %td= "#{pet.pet_type_name} - #{pet.age}"
+          -if pet.breed
+            %tr
+              %td Breed
+              %td= pet.breed
           - if pet.size
             %tr
               %td Size
@@ -42,13 +43,18 @@
             %tr
               %td Gender
               %td= pet.sex_name
-          %tr
-            %td Dislikes
-            %td= pet.dislikes
-          - unless pet.dislikes.blank?
+          - if pet.dislikes.present?
             %tr
-              %td More information about dislikes
-              %td= pet.explain_dislikes
+              %td Dislikes
+              %td= pet.dislikes
+            - if pet.explain_dislikes.present?
+              %tr
+                %td More information about dislikes
+                %td= pet.explain_dislikes
+          - if pet.personalities.any?
+            %tr
+              %td Personality
+              %td= "#{pet.personalities.join(", ")}"
 .row
   .col-xs-12.col-md-6
     %h3.text-center Booking Details
@@ -142,7 +148,7 @@
           var per_night = parseFloat($(this).val()).toFixed(2);
           var total = (per_night * number_of_nights).toFixed(2);
           var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - 2 * number_of_nights).toFixed(2);
+          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
           $("#total-stay").val(total);
           $("#host-payout").text("$" + payout);
           $("#phs-charge").text("$" + fee);

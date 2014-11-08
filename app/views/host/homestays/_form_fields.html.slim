@@ -99,10 +99,10 @@ css:
 
   - if current_user.date_of_birth.present? && current_user.date_of_birth > 18.years.ago.to_date
     = f.input :parental_consent, as: :hidden, input_html: { value: 1 }
-    p.help-block As you are under 18 years old, please confirm that you have parental consent to look after pets in your home.
+    small.help-block As you are under 18 years old, please confirm that you have parental consent to look after pets in your home.
   - if f.object.new_record?
     = f.input :accept_liability, as: :hidden, input_html: { value: 1 }
-    p.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
+    small.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
 
 
 coffee:
