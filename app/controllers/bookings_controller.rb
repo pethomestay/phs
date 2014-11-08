@@ -32,7 +32,7 @@ class BookingsController < ApplicationController
 
   def owner_receipt
     @booking = current_user.bookers.find_by_id(params[:id])
-    redirect_to guest_path, :notice => "Sorry no receipt found" if @booking.nil?
+    redirect_to guest_path, :notice => "Sorry no receipt found" and return if @booking.nil?
     render :owner_receipt, :layout => 'new_application'
   end
 
