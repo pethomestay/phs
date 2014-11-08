@@ -310,7 +310,7 @@ class Booking < ActiveRecord::Base
 	def complete_transaction(current_user)
 		if self.host_accepted?
 			if self.host_view?(current_user)
-				return self.transaction.complete_payment
+				return self.transaction.complete_payment if self.transaction.present?
 			end
 			if self.owner_view?(current_user)
 				self.remove_notification
