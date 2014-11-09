@@ -48,7 +48,8 @@ class Booking < ActiveRecord::Base
 	scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
 	after_create :create_mailbox
-  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted != true}
+  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
+  before_save  :update_state
 
   def create_mailbox
 		mailbox = nil
@@ -60,6 +61,17 @@ class Booking < ActiveRecord::Base
 		mailbox.update_attributes! booking_id: self.id, enquiry_id: self.enquiry_id, guest_mailbox_id: self.booker_id,
 		                           host_mailbox_id: self.bookee_id
 		mailbox.reload
+  end
+
+  def update_state
+    booking_state = "unfinished"
+    booking_state = "finished_host_accepted" if self.host_accepted && self.owner_accepted && self.payment.present?
+    booking_state = "finished" if self.host_accepted && (self.payment.present? || self.transaction.present?) && self.owner_accepted != true
+    booking_state = "payment_authorisation_pending" if self.host_accepted && self.owner_accepted && (self.transaction.nil? && self.payment.nil?)
+    booking_state = "host_cancelled" if self.cancel_date.present? && self.cancel_reason == "Admin cancelled"
+    booking_state = "guest_cancelled" if self.cancel_date.present? && self.cancel_reason != "Admin cancelled"
+    self.state    = booking_state
+    return true
   end
 
   def is_host_view_valid?
@@ -298,7 +310,7 @@ class Booking < ActiveRecord::Base
 	def complete_transaction(current_user)
 		if self.host_accepted?
 			if self.host_view?(current_user)
-				return self.transaction.complete_payment
+				return self.transaction.complete_payment if self.transaction.present?
 			end
 			if self.owner_view?(current_user)
 				self.remove_notification
@@ -406,7 +418,7 @@ class Booking < ActiveRecord::Base
       # Booking 'Leave feedback' if completed, paid, but no feedback
       return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Declined by #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
+      return "Pending action - #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
     elsif self.host_accepted && !self.owner_accepted
       return "Pending action - #{self.booker.name}"
     else

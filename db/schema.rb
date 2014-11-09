@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141105060244) do
+ActiveRecord::Schema.define(:version => 20141108065914) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -74,6 +74,19 @@ ActiveRecord::Schema.define(:version => 20141105060244) do
     t.string   "token"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "coupons", :force => true do |t|
+    t.string   "code"
+    t.integer  "payment_id"
+    t.integer  "referrer_id"
+    t.integer  "used_by_id"
+    t.decimal  "discount_amount"
+    t.decimal  "credit_referrer_amount"
+    t.date     "valid_from"
+    t.date     "valid_to"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "enquiries", :force => true do |t|
@@ -201,7 +214,7 @@ ActiveRecord::Schema.define(:version => 20141105060244) do
     t.boolean  "paid_to_host"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.integer  "braintree_transaction_id"
+    t.string   "braintree_transaction_id"
   end
 
   create_table "pets", :force => true do |t|
@@ -330,6 +343,7 @@ ActiveRecord::Schema.define(:version => 20141105060244) do
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
+    t.string   "coupon_code"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

@@ -15,12 +15,12 @@ class BookingsController < ApplicationController
 
 	def edit
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
+    return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
     if !@host_view
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
     end
-    return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     render :edit, :layout => 'new_application'
 		# @transaction = current_user.find_or_create_transaction_by(@booking)
     # @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
@@ -32,7 +32,7 @@ class BookingsController < ApplicationController
 
   def owner_receipt
     @booking = current_user.bookers.find_by_id(params[:id])
-    redirect_to guest_path, :notice => "Sorry no receipt found" if @booking.nil?
+    redirect_to guest_path, :notice => "Sorry no receipt found" and return if @booking.nil?
     render :owner_receipt, :layout => 'new_application'
   end
 
