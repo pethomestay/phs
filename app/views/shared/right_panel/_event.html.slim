@@ -21,7 +21,7 @@
       | Leave
       br
       | feedback
-  - elsif translate_state(event.state) == 'Enquiry' && guest_view
+  - elsif guest_view && event.get_status == 'Enquiry'
       a.btn.btn-secondary.pull-right.leave-feedback href=edit_booking_path(event)
         | Book
   .hr
