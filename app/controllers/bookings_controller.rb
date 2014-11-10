@@ -1,19 +1,19 @@
 class BookingsController < ApplicationController
   include BookingsHelper
-	before_filter :authenticate_user!
-	before_filter :homestay_required, only: [:index, :new]
-	before_filter :secure_pay_response, only: :result
+  before_filter :authenticate_user!
+  before_filter :homestay_required, only: [:index, :new]
+  before_filter :secure_pay_response, only: :result
 
-	def index
-		@bookings = current_user.bookees.valid_host_view_booking_states
-	end
+  def index
+    @bookings = current_user.bookees.valid_host_view_booking_states
+  end
 
   def new
     @booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
     redirect_to edit_booking_path(@booking)
   end
 
-	def edit
+  def edit
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
@@ -22,13 +22,13 @@ class BookingsController < ApplicationController
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
     end
     render :edit, :layout => 'new_application'
-		# @transaction = current_user.find_or_create_transaction_by(@booking)
+    # @transaction = current_user.find_or_create_transaction_by(@booking)
     # @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
     # if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
     #   PaymentFailedJob.new.async.perform(@booking, @transaction)
     #   render "bookings/payment_issue"
     # end
-	end
+  end
 
   def owner_receipt
     @booking = current_user.bookers.find_by_id(params[:id])
@@ -42,8 +42,8 @@ class BookingsController < ApplicationController
     render :host_receipt, :layout => 'new_application'
   end
 
-	def update
-		@booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
+  def update
+    @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     if @booking.bookee == current_user # Host booking modifications
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
@@ -62,9 +62,9 @@ class BookingsController < ApplicationController
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message])
           @booking.update_attribute(:host_accepted, true)
-  			  return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
-    		else
-    			return redirect_to host_path
+          return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
+        else
+          return redirect_to host_path
         end
       end
     else # Guest booking modifications (or payment)
@@ -106,7 +106,7 @@ class BookingsController < ApplicationController
               }
           )
         end
-        
+
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
@@ -125,25 +125,25 @@ class BookingsController < ApplicationController
         current_user.find_or_create_transaction_by(@booking)
       end
     end
-	end
+  end
 
-	def show
-		@booking = Booking.find(params[:id])
-		@booking.remove_notification if @booking.host_accepted? && @booking.owner_view?(current_user)
-	end
+  def show
+    @booking = Booking.find(params[:id])
+    @booking.remove_notification if @booking.host_accepted? && @booking.owner_view?(current_user)
+  end
 
-	def result
-		if @transaction.errors.blank?
-			PetOwnerMailer.booking_receipt(@transaction.booking).deliver
-			ProviderMailer.owner_confirmed(@transaction.booking).deliver
-			return redirect_to booking_path(@transaction.booking, confirmed_by: 'guest')
-		else
-			return redirect_to(new_booking_path(homestay_id: @transaction.booking.homestay.id), alert: @transaction.error_messages)
-		end
-	end
+  def result
+    if @transaction.errors.blank?
+      PetOwnerMailer.booking_receipt(@transaction.booking).deliver
+      ProviderMailer.owner_confirmed(@transaction.booking).deliver
+      return redirect_to booking_path(@transaction.booking, confirmed_by: 'guest')
+    else
+      return redirect_to(new_booking_path(homestay_id: @transaction.booking.homestay.id), alert: @transaction.error_messages)
+    end
+  end
 
-	def host_confirm
-		@booking = current_user.bookees.find_by_id(params[:id])
+  def host_confirm
+    @booking = current_user.bookees.find_by_id(params[:id])
     # @booking.confirmed_by_host() if @booking.enquiry.proposed_per_day_price.present?
     if @booking.state?(:guest_cancelled)
       flash[:notice] = "This booking has been canceled by the guest"
@@ -152,7 +152,7 @@ class BookingsController < ApplicationController
     elsif @booking.state?(:host_requested_cancellation)
       flash[:notice] = "You have requested to cancel this booking"
     end
-	end
+  end
 
   def book_reservation
     @booking = Booking.find(params[:id])
@@ -167,14 +167,14 @@ class BookingsController < ApplicationController
     end
   end
 
-	def host_message
-		@booking = Booking.find(params[:id])
-		@booking.remove_notification
-		redirect_to mailbox_messages_path(@booking.mailbox)
-	end
+  def host_message
+    @booking = Booking.find(params[:id])
+    @booking.remove_notification
+    redirect_to mailbox_messages_path(@booking.mailbox)
+  end
 
-	def update_transaction
-		booking = Booking.find(params[:booking_id])
+  def update_transaction
+    booking = Booking.find(params[:booking_id])
     unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date].to_date, params[:check_out_date].to_date)
     if unavailable_dates.blank?
       transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
@@ -183,12 +183,12 @@ class BookingsController < ApplicationController
       unavailable_dates.collect!{ |date| date.strftime('%d/%m/%Y') }
       render json: { error: t("booking.unavailable", dates: unavailable_dates.join(", ")) }, status: 400
     end
-	end
+  end
 
   def update_message
-		booking = Booking.find(params[:booking_id])
-		booking.check_in_time = params[:check_in_time]
-		booking.check_out_time = params[:check_out_time]
+    booking = Booking.find(params[:booking_id])
+    booking.check_in_time = params[:check_in_time]
+    booking.check_out_time = params[:check_out_time]
     unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date].to_date, params[:check_out_date].to_date)
     if unavailable_dates.blank?
       booking.message_update(params[:message])
@@ -217,10 +217,10 @@ class BookingsController < ApplicationController
   end
 
   def host_paid
-		@booking = Booking.find(params[:id])
+    @booking = Booking.find(params[:id])
     @booking.host_was_paid
-		@booking.save!
-		render nothing: true
+    @booking.save!
+    render nothing: true
   end
 
   def guest_refunded
@@ -232,7 +232,7 @@ class BookingsController < ApplicationController
 
   def admin_view
     redirect_to root_path, notice: 'Sorry, No access' and return unless current_user.admin
-		@booking = Booking.find(params[:id])
+    @booking = Booking.find(params[:id])
   end
 
   def host_cancellation
@@ -287,36 +287,36 @@ class BookingsController < ApplicationController
 
 
 
-	private
+  private
 
-	def homestay_required
-		if params[:enquiry_id].blank? && params[:homestay_id].blank?
-			return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
-		end
-		@enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
-		@homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
-	end
+  def homestay_required
+    if params[:enquiry_id].blank? && params[:homestay_id].blank?
+      return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
+    end
+    @enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
+    @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
+  end
 
-	def secure_pay_response
-		invalid_response = %w(timestamp summarycode refid fingerprint restext rescode txnid preauthid)
-			.inject(false) { |boolean, key| boolean || params[key].blank? }
-		return redirect_to my_account_path, alert: 'This transaction is not authorized' if invalid_response
-		response = {
-			time_stamp: params['timestamp'],
-			summary_code: params['summarycode'],
-			reference_id: params['refid'],
-			fingerprint: params['fingerprint'],
+  def secure_pay_response
+    invalid_response = %w(timestamp summarycode refid fingerprint restext rescode txnid preauthid)
+      .inject(false) { |boolean, key| boolean || params[key].blank? }
+    return redirect_to my_account_path, alert: 'This transaction is not authorized' if invalid_response
+    response = {
+      time_stamp: params['timestamp'],
+      summary_code: params['summarycode'],
+      reference_id: params['refid'],
+      fingerprint: params['fingerprint'],
 
-			card_storage_response_code: params['strescode'],
-			card_number: params['pan'],
-			token: params['token'],
-			card_storage_response_text: params['strestext'],
+      card_storage_response_code: params['strescode'],
+      card_number: params['pan'],
+      token: params['token'],
+      card_storage_response_text: params['strestext'],
 
-			response_text: invalid_response ? 'Something has went wrong, please contact support' : params['restext'],
-			response_code: invalid_response ? 'invalid' : params['rescode'],
-			transaction_id: params['txnid'],
-			pre_authorization_id: params['preauthid']
-		}
-		@transaction = Transaction.find(response[:reference_id].split('=')[1]).update_by_response(response)
-	end
+      response_text: invalid_response ? 'Something has went wrong, please contact support' : params['restext'],
+      response_code: invalid_response ? 'invalid' : params['rescode'],
+      transaction_id: params['txnid'],
+      pre_authorization_id: params['preauthid']
+    }
+    @transaction = Transaction.find(response[:reference_id].split('=')[1]).update_by_response(response)
+  end
 end
