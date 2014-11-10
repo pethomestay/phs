@@ -1,32 +1,27 @@
 / Expect params
-/   event: a Booking object or an Enquiry object
+/   event: a Booking object
 /   awaits_feedback: whether the Booking awaits feedback
 
 
 .event
   = render 'pages/dashboard/date_widget', date: event.check_in_date
   .info
-    - if event.instance_of? Booking
-      - state = translate_state event.state
-      span.booking-status class=state.downcase #{state}
-      span.period
-        strong.start #{event.check_in_date.strftime('%b %e')}
-        |  to
-        strong.end  #{event.check_out_date.strftime('%b %e')}
-      - if params[:controller].include?('host')
-        span.name #{event.booker.name}
-      - else
-        span.name #{event.bookee.name}
-    - elsif event.instance_of? Enquiry
-      span.booking-status.enquiry Enquiry
-      span.period
-        strong.start #{event.check_in_date.strftime('%b %e')}
-        |  to
-        strong.end  #{event.check_out_date.strftime('%b %e')}
-        span.name #{event.user.name}
-  - if awaits_feedback
+    - state = translate_state event.state
+    span.booking-status class=state.downcase #{state}
+    span.period
+      strong.start #{event.check_in_date.strftime('%b %e')}
+      |  to
+      strong.end  #{event.check_out_date.strftime('%b %e')}
+    - if params[:controller].include?('host')
+      span.name #{event.booker.name}
+    - else
+      span.name #{event.bookee.name}
+  - if awaits_feedback # A booking that awaits feedback
     a.btn.btn-secondary.pull-right.leave-feedback href=new_enquiry_feedbacks_path(event.enquiry)
       | Leave
       br
       | feedback
+  - elsif guest_view && event.get_status == 'Enquiry'
+      a.btn.btn-secondary.pull-right.leave-feedback href=edit_booking_path(event)
+        | Book
   .hr

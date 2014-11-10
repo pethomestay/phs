@@ -101,4 +101,12 @@ module ApplicationHelper
       else 'more than a month ago'
     end
   end
+
+  def guest_view
+    params[:controller].include?('guest') || ( params[:controller] == 'registrations' && !request.url.include?('/host') )
+  end
+
+  def host_view
+    params[:controller].include?('host') || ( params[:controller] == 'registrations' && request.url.include?('/host') )
+  end
 end
