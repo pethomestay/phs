@@ -68,7 +68,7 @@ class Booking < ActiveRecord::Base
     booking_state = "finished_host_accepted" if self.host_accepted && self.owner_accepted && self.payment.present?
     booking_state = "finished" if self.host_accepted && (self.payment.present? || self.transaction.present?) && self.owner_accepted != true
     booking_state = "payment_authorisation_pending" if self.host_accepted && self.owner_accepted && (self.transaction.nil? && self.payment.nil?)
-    booking_state = "host_cancelled" if self.cancel_date.present? && self.cancel_reason == "Admin cancelled"
+    booking_state = "host_cancelled" if ((self.cancel_date.present? && self.cancel_reason == "Admin cancelled") || (self.owner_accepted && self.host_accepted == false))
     booking_state = "guest_cancelled" if self.cancel_date.present? && self.cancel_reason != "Admin cancelled"
     self.state    = booking_state
     return true
