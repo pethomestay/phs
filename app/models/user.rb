@@ -191,6 +191,8 @@ class User < ActiveRecord::Base
 
 	  booking.subtotal = booking.cost_per_night * booking.number_of_nights
 	  booking.amount = booking.calculate_amount
+    booking.host_accepted = nil
+    booking.owner_accepted = nil
 	  booking.save!
     booking.mailbox.update_attribute(:booking_id, booking.id)
 	  booking

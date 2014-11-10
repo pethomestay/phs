@@ -423,9 +423,11 @@ class Booking < ActiveRecord::Base
       return "Completed" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.present?
       # Booking 'Leave feedback' if completed, paid, but no feedback
       return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
+      # Booking rejected
+      return "Booking rejected" if self.host_accepted == false && self.owner_accepted
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Pending action - #{self.bookee.name}" if self.host_accepted == false && self.payment.present?
-    elsif self.host_accepted && !self.owner_accepted
+      return "Pending action - #{self.bookee.name}" if self.host_accepted != true && self.payment.present?
+    elsif self.host_accepted && self.owner_accepted != true
       return "Pending action - #{self.booker.name}"
     else
       return "Enquiry"
