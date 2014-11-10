@@ -7,7 +7,7 @@ module GuestHelper
     #   b.state.exclude? 'cancelled' and
     #   b.check_in_date < Date.today
     # end
-    @awaits_feedback = current_user.bookers.sort_by(&:check_in_date).select {|b| b.check_out_date < Date.today && b.try(:enquiry).try(:feedbacks).try(:empty?) && b.state != "unfinished"}
+    @awaits_feedback = current_user.bookers.sort_by(&:check_in_date).select {|b| b.check_out_date < Date.today && b.try(:enquiry).try(:feedbacks).try(:empty?) && view_context.translate_state(b.state) == 'Booked' }
     # this_month    = Date.today..Date.today.end_of_month
     # @upcoming     = current_user.bookers.where(check_in_date: this_month)
     #                 .order('check_in_date ASC').limit(5)
