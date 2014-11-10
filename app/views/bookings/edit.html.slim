@@ -1,10 +1,10 @@
 .container
   .col-md-12.hidden-xs
-    %h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : "Confirm your reservation"
+    h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : 'Confirm your reservation'
   .hidden-md.hidden-sm.hidden-lg.col-xs-12
-    %h1.text-center Booking
+    h1.text-center Booking
   - if @host_view
     = render 'host_form'
   - else
     = render 'form'
-    %hr
+    hr
