@@ -67,6 +67,27 @@
   ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
   ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
 
+  .form {
+    background: $grey;
+    margin-bottom: 20px;
+  }
+  .host-details {
+    .profile-photo img {
+      margin: 10px;
+    }
+  }
+  table.table {
+    width: 100%;
+    tbody tr td {
+      vertical-align: middle;
+    }
+
+    #booking_check_in_date,
+    #booking_check_out_date {
+      width: 100px;
+    }
+  }
+
   @media  (max-width: 400px) {
     ol.progtrckr li {
       font-size: 11px;

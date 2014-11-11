@@ -1,78 +1,76 @@
-.row
 = simple_form_for @booking do |f|
   - host = @booking.bookee
-  .col-xs-12
-    table.table.table-striped.table-condensed
-      tr
-        td
-          strong Host
-        td= host.name
-      - if host.received_feedbacks.present?
-        - rating_stars host.average_rating
-        tr
-          td
-            strong Feedback
-          td= "#{host.average_rating} #{'star'.pluralize(host.average_rating)}"
-      tr
-        td
-          strong Description
-        td= host.homestay.description
-      - if !@booking.host_accepted # Dates can be edited
-        tr
-          td
-            strong Check in date
-          td
-            = f.input :check_in_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'span2 checkin', :id => "datepicker-check-in-date" }
-
-            / f.input :check_in_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
-        tr
-          td
-            strong Check out date
-          td
-            = f.input :check_out_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'span2 checkout', id: "datepicker-check-out-date" }
-
-            / f.input :check_out_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
-      - else
-        - unless @booking.check_in_date.blank?
-          tr
-            td
-              strong Check In
-            td= @booking.check_in_date.strftime("%A, %d/%m/%Y")
-        - unless @booking.check_out_date.blank?
-          tr
-            td
-              strong Check Out
-            td= @booking.check_out_date.strftime("%A, %d/%m/%Y")
-      tr
-        td
-          strong Number of nights
-        td= @booking.number_of_nights
   .row
-    .col-xs-12
+    .col-sm-10.col-sm-offset-1
+      h3.text-center Host Details
+      table.table
+        tr
+          td rowspan='3'
+            = image_tag 'default_profile_photo.jpg', style: 'width: 60px;'
+          td
+            strong = host.name
+        / TODO: move feedback stars to media left below profile photo
+        - if host.received_feedbacks.present?
+          - rating_stars host.average_rating
+          tr
+            td
+              strong Feedback
+            td = "#{host.average_rating} #{'star'.pluralize(host.average_rating)}"
+        tr
+          td = host.homestay.title
+        tr
+          td = host.homestay.address_suburb
+        - if !@booking.host_accepted # Dates can be edited
+          tr
+            td Check in
+            td
+              = f.input_field :check_in_date, as: :date_picker, readonly: true, value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'form-control'
+              / = f.input :check_in_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'checkin', :id => "datepicker-check-in-date" }
+              / f.input :check_in_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+          tr
+            td Check out
+            td
+              = f.input_field :check_out_date, as: :date_picker, readonly: true, value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'form-control'
+              / = f.input :check_out_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'checkout', id: "datepicker-check-out-date" }
+              / f.input :check_out_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+        - else
+          - unless @booking.check_in_date.blank?
+            tr
+              td Check in
+              td = @booking.check_in_date.strftime("%A, %d/%m/%Y")
+          - unless @booking.check_out_date.blank?
+            tr
+              td Check out
+              td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
+        / tr
+        /   td #{ @booking.number_of_nights } nights
+
+  .row
+    .col-xs-10.col-xs-offset-1
       h3.text-center Booking Details
-      table.table.table-striped
+      table.table
         tr
           td Daily Rate
           td= number_to_currency(@booking.cost_per_night)
-        tr
-          td Total Rate
-          td= number_to_currency(@booking.subtotal)
-        tr
-          td Credit Card Fee
-          td= number_to_currency(@booking.transaction_fee)
+        / tr
+        /   td Total Rate
+        /   td= number_to_currency(@booking.subtotal)
+        / tr
+        /   td Credit Card Fee
+        /   td= number_to_currency(@booking.transaction_fee)
         tr
           td Total
           td= number_to_currency(@booking.amount)
     hr
   .row
-    .col-xs-12
+    .col-xs-10.col-xs-offset-1
       - if @booking.payment.present?
         h3.text-center= "Payment successfully made on #{@booking.payment.created_at.in_time_zone('Melbourne').strftime("%A, %d/%m/%Y at %l:%M %p %Z")}"
       - else
         p You can make the payment securely either through Paypal or via Credit Card below. All transactions are encrypted.
         form#checkout url=booking_path(@booking) method="put"
           #dropin
-          input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class=("btn btn-primary btn-large")
+          input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class='btn btn-primary btn-lg btn-block'
         script type="text/javascript" src="https://js.braintreegateway.com/v2/braintree.js"
         javascript:
           braintree.setup("#{@client_token}", 'dropin', {
