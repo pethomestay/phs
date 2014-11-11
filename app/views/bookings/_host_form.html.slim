@@ -62,7 +62,7 @@
             td Personality
             td = "#{ pet.personalities.join(', ') }"
 .row
-  .col-xs-10.col-sm-9.col-sm-offset-1
+  .col-xs-10.col-sm-9.col-sm-offset-1.booking-details-container
     h3.text-center Booking Details
     table.table
       tr
@@ -143,7 +143,8 @@
       $(document).ready(function(){
         $(".modify-pricing").hide();
         $("#modify-price-button").on("click", function() {
-          $(".modify-pricing").toggle();
+          $('.booking-details-container').hide();
+          $(".modify-pricing").show();
           $(".current-total-price").text("Current Total Price");
           $(".current-daily-price").text("Current Daily Price");
           $(this).hide();
