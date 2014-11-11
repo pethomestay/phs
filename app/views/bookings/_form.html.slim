@@ -79,3 +79,10 @@
           braintree.setup("#{@client_token}", 'dropin', {
             container: 'dropin'
           });
+
+  .row
+    br
+    p.small.text-center Powered by
+    = image_tag 'braintree_logo.png', class: 'center-block'
+    br
+    = image_tag 'comodo_ssl_logo.png', class: 'center-block'
