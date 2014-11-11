@@ -61,7 +61,9 @@
         /   td Credit Card Fee
         /   td= number_to_currency(@booking.transaction_fee)
         tr
-          td Total
+          td
+            ' Total
+            i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
           td= number_to_currency(@booking.amount)
     hr
   .row
@@ -83,6 +85,6 @@
   .row
     br
     p.small.text-center Powered by
-    = image_tag 'braintree_logo.png', class: 'center-block'
+    = image_tag 'braintree_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', html: 'true', content: '<p>PetHomeStay uses Braintree for processing, a Paypal firm used by Uber, Airbnb and other sharing econony firms for their trusted user data.</p><p>Braintree remembers your card (excluding the CVV) on our behalf using a token under banking grade PCI compliance, however PetHomeStay does not store and never has access to these details.</p>' }
     br
-    = image_tag 'comodo_ssl_logo.png', class: 'center-block'
+    = image_tag 'comodo_ssl_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', content: 'We use Comodo SSL for full website encryption.' }
