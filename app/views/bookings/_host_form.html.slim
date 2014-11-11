@@ -62,7 +62,7 @@
             td Personality
             td = "#{ pet.personalities.join(', ') }"
 .row
-  .col-xs-10.col-sm-9.col-sm-offset-1.col-md-6
+  .col-xs-10.col-sm-9.col-sm-offset-1
     h3.text-center Booking Details
     table.table
       tr
@@ -76,36 +76,38 @@
           | PetHomeStay Service Charge
           br
           | (15% of total stay)
-        td= number_to_currency(@booking.phs_service_charge)
+        td = number_to_currency(@booking.phs_service_charge)
       tr
         td $10 million Host Public Liability and Pet Accident Insurance
-        td= number_to_currency(@booking.public_liability_insurance)
+        td = number_to_currency(@booking.public_liability_insurance)
       tr
         td Total Host Payout
         td
-          strong= number_to_currency(@booking.host_payout)
-    - if !@booking.owner_accepted
-      .btn.btn-primary.btn-large id='modify-price-button' style=("width: 100%;")  Click here to modify pricing
-  - if !@booking.owner_accepted
-    .col-xs-10.col-sm-10.col-sm-offset-1.col-md-6.modify-pricing
+          strong = number_to_currency(@booking.host_payout)
+  .col-xs-10.col-xs-offset-1
+    - unless @booking.owner_accepted
+      .btn.btn-secondary.btn-block#modify-price-button Click here to modify pricing
+    br
+  - unless @booking.owner_accepted
+    .col-xs-10.col-sm-10.col-sm-offset-1.modify-pricing
       h3.text-center Custom Quote
       table.table
-        tr id="proposed-per-night"
+        tr#proposed-per-night
           td
             em Proposed Daily Rate
           td
-            input class="form-control" type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}" id="per-night"
+            input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}"
         tr id="proposed-total-price"
           td
             em Proposed Total Rate
           td
-            input class="form-control" type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}" id="total-stay"
+            input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}"
         tr
           td
             em Proposed PetHomeStay Service Charge
             br
             | (15% of total stay)
-          td#phs-charge= number_to_currency(@booking.phs_service_charge)
+          td#phs-charge = number_to_currency(@booking.phs_service_charge)
         tr
           td $10 million host Public Liability and Pet Liability Insurance
           td= number_to_currency(@booking.public_liability_insurance)
@@ -113,14 +115,7 @@
           td
             em Proposed Total Host Payout
           td
-            strong#host-payout= number_to_currency(@booking.host_payout)
-.row
-  .col-xs-12
-    hr
-    - if @booking.owner_accepted
-      p Accepting this request will confirm the booking.
-    - else
-      p Once submitted, the terms of the stay will be presented to # @booking.booker.name  to confirm and make payment.
+            strong#host-payout = number_to_currency(@booking.host_payout)
 .row
 = simple_form_for @booking, wrapper: :bootstrap3 do |f|
   = f.input :cost_per_night, as: :hidden
@@ -131,16 +126,19 @@
       = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
       br
     .row
-      .col-xs-12
-        = f.submit 'Update Booking', class: 'btn btn-primary btn-block'
+      = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
     br
   - else
-    .col-xs-12
-      = f.input :message, input_html: {rows: 5}, placeholder: "Please leave a message"
-      br
-      = f.submit 'Update Booking', class: 'btn btn-primary btn-block'
-      br
-      br
+    = f.input :message, input_html: {rows: 5}, placeholder: "Please leave a message"
+    br
+    = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
+    br
+    - if @booking.owner_accepted
+      p.small Accepting this request will confirm the booking.
+    - else
+      p.small Once submitted, the terms of the stay will be presented to #{@booking.booker.first_name} to confirm and make payment.
+    br
+    br
     javascript:
       $(document).ready(function(){
         $(".modify-pricing").hide();
