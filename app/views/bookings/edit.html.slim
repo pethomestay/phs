@@ -1,8 +1,19 @@
-.container
+.container.bookings-edit
   .col-md-12.hidden-xs
     h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : 'Confirm your reservation'
   .hidden-md.hidden-sm.hidden-lg.col-xs-12
     h1.text-center Booking
+  / Pregress bar
+  / 3 states: done, next, and todo
+  .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
+    ol.progtrckr data-progtrckr-steps='3'
+      li.progtrckr-next
+        span.hidden-xs Booking
+        |  Request
+      li.progtrckr-done
+        span.hidden-xs Host
+        |  Confirmation
+      li.progtrckr-todo Done!
   - if @host_view
     = render 'host_form'
   - else
