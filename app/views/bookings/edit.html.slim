@@ -1,6 +1,6 @@
 .container.bookings-edit
   .page-header.hidden-xs
-    h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : 'Confirm your reservation'
+    h1.text-center= @host_view ? "#{@booking.booker.first_name} wants to make a booking" : 'Confirm your reservation'
   .page-header.visible-xs-block
     h1.text-center Booking
   / Pregress bar
