@@ -47,7 +47,7 @@
         /   td #{ @booking.number_of_nights } nights
 
   .row
-    .col-xs-10.col-xs-offset-1
+    .col-sm-10.col-sm-offset-1
       h3.text-center Booking Details
       table.table
         tr
@@ -64,7 +64,7 @@
           td= number_to_currency(@booking.amount)
     hr
   .row
-    .col-xs-10.col-xs-offset-1
+    .col-sm-10.col-sm-offset-1
       - if @booking.payment.present?
         h3.text-center= "Payment successfully made on #{@booking.payment.created_at.in_time_zone('Melbourne').strftime("%A, %d/%m/%Y at %l:%M %p %Z")}"
       - else
