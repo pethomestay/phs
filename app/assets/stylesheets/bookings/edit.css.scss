@@ -20,11 +20,11 @@
       }
 
       &.progtrckr-done {
-        border-bottom: 4px solid yellowgreen;
+        border-bottom: 4px solid $blue;
         &:before {
           content: "\2713";
           color: white;
-          background-color: yellowgreen;
+          background-color: $blue;
           height: 1.2em;
           width: 1.2em;
           line-height: 1.2em;
@@ -33,10 +33,10 @@
         }
       }
       &.progtrckr-next {
-        border-bottom: 4px solid yellowgreen;
+        border-bottom: 4px solid $blue;
         &:before {
           color: white;
-          background-color: yellowgreen;
+          background-color: $blue;
           height: 1.2em;
           width: 1.2em;
           line-height: 1.2em;
