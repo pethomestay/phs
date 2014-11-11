@@ -6,12 +6,13 @@
       table.table
         tr
           td rowspan='3'
+            - photo_size = 70
             - if host.profile_photo?
               = cl_image_tag host.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
             - elsif host.uid.present?
               = facebook_profile_image_tag host.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
             - else
-              = image_tag 'default_profile_photo.jpg', class: 'img-circle'
+              = image_tag 'default_profile_photo.jpg', style: 'width: 70px;', class: 'img-circle'
             - if host.received_feedbacks.present?
               br
               == rating_stars_awesome host.average_rating
