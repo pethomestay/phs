@@ -6,7 +6,12 @@
       table.table
         tr
           td rowspan='3'
-            = image_tag 'default_profile_photo.jpg', style: 'width: 60px;'
+            - if host.profile_photo?
+              = cl_image_tag host.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+            - elsif host.uid.present?
+              = facebook_profile_image_tag host.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+            - else
+              = image_tag 'default_profile_photo.jpg', class: 'img-circle'
           td
             strong = host.name
         / TODO: move feedback stars to media left below profile photo
