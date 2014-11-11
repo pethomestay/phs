@@ -1,7 +1,7 @@
-.container
+.container.bookings-edit
   .page-header
-      h1 Confirm reservation
-  .pull-right
-    = link_to 'Back to Inbox', host_messages_path, class: 'btn'
+      h1.text-center Confirm reservation
 
-  = render 'host_form'
+  .row
+    .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form
+      = render 'host_form'

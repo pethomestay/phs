@@ -1,69 +1,75 @@
+- guest = @booking.booker
 .row
-  .col-md-12.hidden-xs
-    h3 Stay Details
-  .col-md-12.col-xs-12
-    table.table.table-striped.table-condensed
-      - unless @booking.check_in_date.blank?
+  .col-sm-9.col-sm-offset-1
+    h3.text-center Guest Details
+    table.table
+      tr
+        td rowspan='3'
+          - photo_size = 70
+          - if guest.profile_photo?
+            = cl_image_tag guest.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - elsif guest.uid.present?
+            = facebook_profile_image_tag guest.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - else
+            = image_tag 'default_profile_photo.jpg', style: 'width: 70px;', class: 'img-circle'
+        td
+          strong = guest.name
+      - if @booking.check_in_date.present?
         tr
-          td
-            strong Check in Date
-          td= @booking.check_in_date.strftime("%A, %d/%m/%Y")
-      - unless @booking.check_out_date.blank?
+          td Check in
+          td = @booking.check_in_date.strftime("%A, %d/%m/%Y")
+      - if @booking.check_out_date.present?
         tr
-          td
-            strong Check out Date
-          td= @booking.check_out_date.strftime("%A, %d/%m/%Y")
+          td Check out
+          td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
       tr
         td
-          strong Number of Nights
-        td= @booking.number_of_nights
+        td Number of Nights
+        td = @booking.number_of_nights
 .row
-  .col-xs-12
-    h3 Pets
-    table.table.table-striped.table-condensed
-    - @booking.booker.pets.each do |pet|
-      tr
-        td
-        table.table.table-striped.table-condensed
+  .col-sm-10.col-sm-offset-1
+    h3.text-center Pets
+    table.table
+      - guest.pets.each do |pet|
+        tr
+          td Name
+          td = pet.name
+        tr
+          td Type & Age
+          td = "#{pet.pet_type_name} - #{pet.age}"
+        -if pet.breed.present?
           tr
-            td Name
-            td= pet.name
+            td Breed
+            td = pet.breed
+        - if pet.size
           tr
-            td Type & Age
-            td= "#{pet.pet_type_name} - #{pet.age}"
-          -if pet.breed.present?
+            td Size
+            td = pet.size_name
+        - if pet.sex
+          tr
+            td Gender
+            td = pet.sex_name
+        - if pet.dislikes.present?
+          tr
+            td Dislikes
+            td = pet.dislikes
+          - if pet.explain_dislikes.present?
             tr
-              td Breed
-              td= pet.breed
-          - if pet.size
-            tr
-              td Size
-              td= pet.size_name
-          - if pet.sex
-            tr
-              td Gender
-              td= pet.sex_name
-          - if pet.dislikes.present?
-            tr
-              td Dislikes
-              td= pet.dislikes
-            - if pet.explain_dislikes.present?
-              tr
-                td More information about dislikes
-                td= pet.explain_dislikes
-          - if pet.personalities.any?
-            tr
-              td Personality
-              td= "#{ pet.personalities.join(', ') }"
+              td More information about dislikes
+              td = pet.explain_dislikes
+        - if pet.personalities.any?
+          tr
+            td Personality
+            td = "#{ pet.personalities.join(', ') }"
 .row
-  .col-xs-12.col-md-6
+  .col-xs-10.col-sm-9.col-sm-offset-1.col-md-6
     h3.text-center Booking Details
-    table.table.table-striped
+    table.table
       tr
         td.current-daily-price Daily Rate
         td= number_to_currency(@booking.cost_per_night)
       tr
-        td.current-total-price Total Rate (to be paid by # @booking.booker.name )
+        td.current-total-price Total Rate (to be paid by #{@booking.booker.name})
         td= number_to_currency(@booking.subtotal)
       tr
         td
@@ -81,9 +87,9 @@
     - if !@booking.owner_accepted
       .btn.btn-primary.btn-large id='modify-price-button' style=("width: 100%;")  Click here to modify pricing
   - if !@booking.owner_accepted
-    .col-xs-12.col-md-6.modify-pricing
+    .col-xs-10.col-sm-10.col-sm-offset-1.col-md-6.modify-pricing
       h3.text-center Custom Quote
-      table.table.table-striped.table-condensed
+      table.table
         tr id="proposed-per-night"
           td
             em Proposed Daily Rate
@@ -120,9 +126,9 @@
   = f.input :cost_per_night, as: :hidden
   - if @booking.owner_accepted
     .col-md-4.col-xs-12
-      = f.input :host_accepted, required: true, as: :radio_buttons, :label => "Do you accept the booking", :input_html => {:class => "form-control"}
+      = f.input :host_accepted, required: true, as: :radio_buttons, label: 'Do you accept the booking?'
     .col-md-8.col-xs-12
-      =f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "If you respond 'I might be able to look after the pet', a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
+      = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
       br
     .row
       .col-xs-12
@@ -130,7 +136,7 @@
     br
   - else
     .col-xs-12
-      = f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "Please leave a message"
+      = f.input :message, input_html: {rows: 5}, placeholder: "Please leave a message"
       br
       = f.submit 'Update Booking', class: 'btn btn-primary btn-block'
       br
