@@ -154,6 +154,7 @@ class BookingsController < ApplicationController
     elsif @booking.state?(:host_requested_cancellation)
       flash[:notice] = "You have requested to cancel this booking"
     end
+    render layout: 'new_application'
   end
 
   def book_reservation
