@@ -1,7 +1,7 @@
 .container.bookings-edit
-  .col-md-12.hidden-xs
+  .page-header.hidden-xs
     h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : 'Confirm your reservation'
-  .hidden-md.hidden-sm.hidden-lg.col-xs-12
+  .page-header.visible-xs-block
     h1.text-center Booking
   / Pregress bar
   / 3 states: done, next, and todo
