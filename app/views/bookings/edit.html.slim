@@ -1,0 +1,34 @@
+.container.bookings-edit
+  .page-header.hidden-xs
+    h1.text-center= @host_view ? "#{@booking.booker.name} wants to make a booking" : 'Confirm your reservation'
+  .page-header.visible-xs-block
+    h1.text-center Booking
+  / Pregress bar
+  / 3 states: done, next, and todo
+  .row
+    .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
+      - if @host_view
+        ol.progtrckr data-progtrckr-steps='3'
+          li.progtrckr-next
+            ' Review
+            span.hidden-xs Booking
+          li.progtrckr-todo
+            | Confirm
+            span.hidden-xs  Booking
+          li.progtrckr-todo Done!
+      - else
+        ol.progtrckr data-progtrckr-steps='3'
+          li class=( @booking.payment.present? ? 'progtrckr-done' : 'progtrckr-next' )
+            span.hidden-xs Booking
+            |  Request
+          li.progtrckr-todo
+            span.hidden-xs Host
+            |  Confirmation
+          li.progtrckr-todo Done!
+  .row
+    .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form
+      - if @host_view
+        = render 'host_form'
+      - else
+        = render 'form'
+        hr

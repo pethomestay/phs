@@ -1,0 +1,90 @@
+= simple_form_for @booking do |f|
+  - host = @booking.bookee
+  .row
+    .col-sm-10.col-sm-offset-1
+      h3.text-center Host Details
+      table.table
+        tr
+          td rowspan='3'
+            - photo_size = 70
+            - if host.profile_photo?
+              = cl_image_tag host.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+            - elsif host.uid.present?
+              = facebook_profile_image_tag host.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+            - else
+              = image_tag 'default_profile_photo.jpg', style: 'width: 70px;', class: 'img-circle'
+            - if host.received_feedbacks.present?
+              br
+              == rating_stars_awesome host.average_rating
+          td
+            strong = host.name
+        tr
+          td = truncate host.homestay.title
+        tr
+          td = host.homestay.address_suburb
+        - if !@booking.host_accepted # Dates can be edited
+          tr
+            td Check in
+            td
+              = f.input_field :check_in_date, as: :date_picker, readonly: true, value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'form-control'
+              / = f.input :check_in_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'checkin', :id => "datepicker-check-in-date" }
+              / f.input :check_in_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+          tr
+            td Check out
+            td
+              = f.input_field :check_out_date, as: :date_picker, readonly: true, value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'form-control'
+              / = f.input :check_out_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'checkout', id: "datepicker-check-out-date" }
+              / f.input :check_out_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+        - else
+          - unless @booking.check_in_date.blank?
+            tr
+              td Check in
+              td = @booking.check_in_date.strftime("%A, %d/%m/%Y")
+          - unless @booking.check_out_date.blank?
+            tr
+              td Check out
+              td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
+        / tr
+        /   td #{ @booking.number_of_nights } nights
+
+  .row
+    .col-sm-10.col-sm-offset-1
+      h3.text-center Booking Details
+      table.table.booking-details
+        tr
+          td Daily Rate
+          td= number_to_currency(@booking.cost_per_night)
+        / tr
+        /   td Total Rate
+        /   td= number_to_currency(@booking.subtotal)
+        / tr
+        /   td Credit Card Fee
+        /   td= number_to_currency(@booking.transaction_fee)
+        tr
+          td
+            ' Total
+            i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
+          td= number_to_currency(@booking.amount)
+    hr
+  .row
+    .col-sm-10.col-sm-offset-1
+      - if @booking.payment.present?
+        h3.text-center= "Payment successfully made on #{@booking.payment.created_at.in_time_zone('Melbourne').strftime("%A, %d/%m/%Y at %l:%M %p %Z")}"
+      - else
+        p.help-block.text-center You are only charged when the Host confirms this booking.
+        p.help-block.text-center We accept Paypal or any credit card.
+        form#checkout url=booking_path(@booking) method="put"
+          #dropin
+          input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class='btn btn-primary btn-lg btn-block'
+        script type="text/javascript" src="https://js.braintreegateway.com/v2/braintree.js"
+        javascript:
+          braintree.setup("#{@client_token}", 'dropin', {
+            container: 'dropin'
+          });
+
+  .row
+    br
+    p.small.text-center Powered by
+    = image_tag 'braintree_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', html: 'true', content: '<p>PetHomeStay uses Braintree for processing, a Paypal firm used by Uber, Airbnb and other sharing econony firms for their trusted user data.</p><p>Braintree remembers your card (excluding the CVV) on our behalf using a token under banking grade PCI compliance, however PetHomeStay does not store and never has access to these details.</p>' }
+    br
+    = image_tag 'comodo_ssl_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', content: 'We use Comodo SSL for full website encryption.' }
