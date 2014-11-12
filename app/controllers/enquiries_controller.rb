@@ -3,7 +3,7 @@ class EnquiriesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_enquiry, only: [:show, :update]
 
-	def create
+  def create
     if params[:enquiry][:reuse_message] == '1'
       @old_reused_enquiry = current_user.enquiries.where(reuse_message: true)
       if @old_reused_enquiry.present?
@@ -28,8 +28,8 @@ class EnquiriesController < ApplicationController
 
   def update
     if @enquiry.update_attributes(params[:enquiry])
-	    @enquiry.mailbox.messages.create!(user_id: current_user.id, message_text: @enquiry.response_message) unless @enquiry.response_message.blank?
-			return redirect_to mailbox_messages_path(@enquiry.mailbox)
+      @enquiry.mailbox.messages.create!(user_id: current_user.id, message_text: @enquiry.response_message) unless @enquiry.response_message.blank?
+      return redirect_to mailbox_messages_path(@enquiry.mailbox)
     else
       flash[:alert] = 'Please fill in a response message if your are not answering yes or no'
       @user = @enquiry.user
