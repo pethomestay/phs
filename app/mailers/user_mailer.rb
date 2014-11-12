@@ -10,14 +10,14 @@ class UserMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "#{@subject.first_name} would love some feedback!")
   end
 
-	def receive_message(message)
-		@from = message.user
-		@user = message.to_user
-		@message = message
-		@reservation = message.mailbox.enquiry.blank? ? message.mailbox.booking : message.mailbox.enquiry
-		email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-		email = mail(to: email_with_name, subject: "#{@from.first_name.capitalize} has sent you a message!")
-    email.mailgun_operations = {tag: "receive_message", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
+  def receive_message(message)
+    @from = message.user
+    @user = message.to_user
+    @message = message
+    @reservation = message.mailbox.enquiry.blank? ? message.mailbox.booking : message.mailbox.enquiry
+    email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
+    email = mail(to: email_with_name, subject: "#{@from.first_name.capitalize} has sent you a message!")
+    # email.mailgun_operations = {tag: "receive_message", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
   def homestay_created(homestay)
@@ -35,10 +35,10 @@ class UserMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "Your Homestay listing has been approved!")
   end
 
-	def error_report(situation, error)
-		@situation = situation
-		@error = error
-		mail(to: ENV['DEVELOPER_EMAIL'], subject: 'An error has been occurred')
+  def error_report(situation, error)
+    @situation = situation
+    @error = error
+    mail(to: ENV['DEVELOPER_EMAIL'], subject: 'An error has been occurred')
   end
 
   def admin_cancelled_booking(booking)
