@@ -126,7 +126,6 @@ class BookingsController < ApplicationController
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
-          binding.pry
           @coupon.update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           @booking.mailbox.messages.create! user_id: @booking.booker_id,
