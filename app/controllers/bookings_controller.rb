@@ -120,7 +120,7 @@ class BookingsController < ApplicationController
           @booking.mailbox.messages.create! user_id: @booking.booker_id,
           message_text: "[This is an auto-generated message for Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happens within a few days.\nThanks for using PetHomestay!"
           @booking.mailbox.messages.create! user_id: @booking.bookee_id,
-          message_text: "[This is an auto-generated message for Host]\n\nGreat! #{current_user.name} has paid for the booking! Please confirm your availability as soon as possible."
+          message_text: "[This is an auto-generated message for Host]\n\nGreat! #{current_user.name} has paid for the booking!"
           render :owner_receipt, :layout => 'new_application' and return
         else
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
