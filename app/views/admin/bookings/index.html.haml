@@ -10,6 +10,7 @@
     %tr
       %td.table-header-text{ colspan: '3' } General Information
       %td.table-header-text{ colspan: '3' } Guest Paid
+      %td.table-header-text{ colspan: '2' } Coupon
       %td.table-header-text{ colspan: '3' } Host Payout
 
     %tr
@@ -19,6 +20,8 @@
       %th Subtotal
       %th Fee
       %th Total
+      %th Guest discount
+      %th Code Source
       %th Insurance Fee
       %th PHS Fee
       %th total
@@ -33,6 +36,8 @@
       %td S
       %td F
       %td = S + F
+      %td
+      %td
       %td I
       %td P
       %td = S - I - P
@@ -42,7 +47,8 @@
 
   %tbody
     - @bookings.each do |booking|
-      -if booking.payment.present?
+      - if booking.payment.present?
+        - discount = booking.coupon.present? ? booking.coupon.discount_amount : 0
         %tr{ "data-id" => booking.id }
         %td= booking.booker.name.capitalize
         %td= booking.check_out_date.strftime('%d/%m/%Y')
@@ -50,8 +56,11 @@
           = "#{booking.payment.status} (BrainTree)"
 
         %td= number_to_currency(booking.subtotal)
-        %td= number_to_currency(booking.payment.amount - booking.subtotal)
+        %td= number_to_currency(booking.payment.amount - booking.subtotal + discount)
         %td= number_to_currency(booking.payment.amount)
+
+        %td= number_to_currency(discount)
+        %td= booking.try(:coupon).try(:referred_by).try(:name)
 
         %td= number_to_currency(booking.public_liability_insurance)
         %td= number_to_currency(booking.phs_service_charge)

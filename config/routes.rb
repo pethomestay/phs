@@ -129,6 +129,7 @@ PetHomestay::Application.routes.draw do
     resources :analytics
     resources :users
     resources :accounts
+    resources :coupons
   end
 
   # Zendesk Single Sign-on
