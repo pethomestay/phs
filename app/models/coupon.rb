@@ -8,4 +8,12 @@ class Coupon < ActiveRecord::Base
   DEFAULT_DISCOUNT_AMOUNT = 10
   DEFAULT_CREDIT_REFERRER_AMOUNT = 5
 
+  def used?
+    return self.booking.present?
+  end
+
+  def unused?
+    return self.booking.nil?
+  end
+
 end

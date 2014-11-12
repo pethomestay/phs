@@ -14,8 +14,8 @@
     %div.navbar
       .navbar-inner
         .container.admin-container-phs
-          = link_to "PetHomeStay", root_path, class: "brand"
           %ul.nav.admin-nav-phs
+            %li= link_to "PetHomeStay", root_path, class: "brand"
             %li= link_to "Users", admin_users_path(letter: 'Z')
             %li= link_to "Homestays", admin_homestays_path
             %li= link_to "Pets", admin_pets_path
