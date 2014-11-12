@@ -76,6 +76,19 @@ ActiveRecord::Schema.define(:version => 20141108065914) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "coupons", :force => true do |t|
+    t.string   "code"
+    t.integer  "booking_id"
+    t.integer  "referrer_id"
+    t.integer  "used_by_id"
+    t.decimal  "discount_amount"
+    t.decimal  "credit_referrer_amount"
+    t.date     "valid_from"
+    t.date     "valid_to"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at",                                :null => false
@@ -330,6 +343,7 @@ ActiveRecord::Schema.define(:version => 20141108065914) do
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
+    t.string   "coupon_code"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

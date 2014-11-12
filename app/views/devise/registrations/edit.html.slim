@@ -11,6 +11,10 @@
           br
           | Note: Please set a password before unlinking your account.
     br
+    .page-header
+      h4 Your referral code:
+      = current_user.coupon_code.try(:upcase)
+    br
     = simple_form_for resource, wrapper: :bootstrap3, as: resource_name, url: registration_path(resource_name) do |f|
       = f.input :profile_photo, as: :attachinary
       = f.input :email, label: 'Email address', disabled: true
