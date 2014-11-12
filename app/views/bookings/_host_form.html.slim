@@ -168,7 +168,7 @@
           var total = parseFloat($(this).val()).toFixed(2);
           var per_night = (total/number_of_nights).toFixed(2);
           var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - 2 * number_of_nights).toFixed(2);
+          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
           $("#per-night").val(per_night);
           $("#host-payout").text("$" + payout);
           $("#phs-charge").text("$" + fee);
