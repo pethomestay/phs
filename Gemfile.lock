@@ -5,14 +5,6 @@ GIT
     geocoder (1.1.6)
 
 GIT
-  remote: git://github.com/darmou/mailgun_rails.git
-  revision: de14df178df4000371818254353508c0c284b5d2
-  specs:
-    mailgun_rails (0.6.1)
-      rails (>= 3.2.13)
-      rest-client (~> 1.6.7)
-
-GIT
   remote: git://github.com/laserlemon/figaro.git
   revision: ae200e44e8f2770ce1037753865985b02ee0048f
   specs:
@@ -210,6 +202,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailgun_rails (0.6.2)
+      rails (>= 3.2.13)
+      rest-client (>= 1.6.7)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
@@ -430,7 +425,7 @@ DEPENDENCIES
   koala (~> 1.8.0rc1)
   legato
   libv8 (~> 3.16.14)
-  mailgun_rails!
+  mailgun_rails
   momentjs-rails
   nested_form
   net-scp (= 1.2.1)
