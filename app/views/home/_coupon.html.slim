@@ -14,7 +14,7 @@
                 .input-group.input-group-lg.left-merged.enquiry_check_in_date
                     span.input-group-addon.custom
                       i.fa.fa-share-alt
-                    = f.input_field :coupon_code, as: :string, :label => "Coupon code"
+                    = f.input_field :coupon_code, value: "", placeholder: "ABC123", as: :string, :label => "Coupon code"
           .modal-footer
             button type='button' class='btn btn-default' data-dismiss='modal' Cancel
             = f.submit 'Submit', class: 'btn btn-primary'

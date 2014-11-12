@@ -47,10 +47,14 @@
         %tr
           %td Credit Card Fee
           %td= number_to_currency(@booking.transaction_fee)
+        - if @booking.coupon
+          %tr
+            %td Discount (code: #{@booking.coupon.code})
+            %td= number_to_currency(@booking.coupon.discount_amount)
         %tr
           %td
             %strong Total
-          %td= number_to_currency(@booking.amount)
+          %td= number_to_currency(@booking.payment.amount)
     %hr
   .row
     .col-xs-12

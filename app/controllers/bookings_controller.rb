@@ -17,6 +17,9 @@ class BookingsController < ApplicationController
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     @host_view = @booking.bookee == current_user
     if !@host_view
+      if current_user.used_coupon.present? && current_user.used_coupon.booking.nil?
+        @coupon = current_user.used_coupon
+      end
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
     end
@@ -68,8 +71,15 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
+      if current_user.used_coupon.present? && current_user.used_coupon.booking.nil?
+        @coupon = current_user.used_coupon
+        payment_amount = @booking.amount - @coupon.discount_amount
+      else
+        payment_amount = @booking.amount
+      end
       submit_payment = @booking.host_accepted == true ? true : false
       if params[:payment_method_nonce].present? # Payment was made
+        final_amount = @booking.coupon.present? ? @booking.amount - @booking.coupon.discount_amount : @booking.amount
         # Create a customer in BrainTree if the user has never paid via BrainTree before
         if current_user.braintree_customer_id.nil?
           customer_create_result = Braintree::Customer.create(
@@ -80,7 +90,7 @@ class BookingsController < ApplicationController
           if customer_create_result.success?
             current_user.update_attribute(:braintree_customer_id, customer_create_result.customer.id)
             result = Braintree::Transaction.sale(
-              :amount => @booking.amount,
+              :amount => payment_amount,
               :customer_id => customer_create_result.customer.id,
               :options => {
                 :submit_for_settlement => submit_payment
@@ -89,7 +99,7 @@ class BookingsController < ApplicationController
           # Process payment if failed to create customer
           else
             result = Braintree::Transaction.sale(
-              :amount => @booking.amount,
+              :amount => payment_amount,
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
@@ -99,7 +109,7 @@ class BookingsController < ApplicationController
           end
         else
           result = Braintree::Transaction.sale(
-              :amount => @booking.amount,
+              :amount => payment_amount,
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
@@ -110,6 +120,8 @@ class BookingsController < ApplicationController
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
+          binding.pry
+          @coupon.update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           @booking.mailbox.messages.create! user_id: @booking.bookee_id,
           message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! You have paid for the booking!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"

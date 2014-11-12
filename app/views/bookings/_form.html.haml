@@ -60,9 +60,17 @@
         %tr
           %td Credit Card Fee
           %td= number_to_currency(@booking.transaction_fee)
-        %tr
-          %td Total
-          %td= number_to_currency(@booking.amount)
+        - if @coupon
+          %tr
+            %td Discount (code: #{@coupon.code})
+            %td= number_to_currency(@coupon.discount_amount)
+          %tr
+            %td Total
+            %td= number_to_currency(@booking.amount - @coupon.discount_amount)
+        - else
+          %tr
+            %td Total
+            %td= number_to_currency(@booking.amount)
     %hr
   .row
     .col-xs-12
@@ -72,7 +80,10 @@
         %p You can make the payment securely either through Paypal or via Credit Card below. All transactions are encrypted.
         %form#checkout{:url => booking_path(@booking), :method => "put"}
           #dropin
-          %input{:type => "submit", :value => "Pay #{number_to_currency(@booking.amount)}", :class => "btn btn-primary btn-large"}
+          - if @coupon
+            %input{:type => "submit", :value => "Pay #{number_to_currency(@booking.amount - @coupon.discount_amount)}", :class => "btn btn-primary btn-large"}
+          - else
+            %input{:type => "submit", :value => "Pay #{number_to_currency(@booking.amount)}", :class => "btn btn-primary btn-large"}
         %script{:type => "text/javascript", :src  => "https://js.braintreegateway.com/v2/braintree.js"}
         :javascript
           braintree.setup("#{@client_token}", 'dropin', {

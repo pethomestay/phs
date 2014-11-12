@@ -50,11 +50,12 @@ class User < ActiveRecord::Base
   # Creates the coupon code that users can share with others: First three letters of last name + first two letters of first name +
   def generate_referral_code(force = false)
     return if !force && self.coupon_code.present?
-    suggested_code = self.last_name.slice(0..2) + self.first_name.slice(0)
+    suggested_code = self.last_name.gsub(/[^a-z]/i, '').slice(0..2) + self.first_name.gsub(/[^a-z]/i, '').slice(0)
+    suggested_code+= "X"*(4 - suggested_code.length) if suggested_code.length != 4
     non_unique = User.where("coupon_code like ?", suggested_code + "%").count
     unique_num = non_unique > 0 ? non_unique.to_s : ""
     final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
-    self.update_attribute(:coupon_code, final_code)
+    self.update_attribute(:coupon_code, final_code.upcase)
   end
 
   def name
@@ -98,6 +99,7 @@ class User < ActiveRecord::Base
   end
 
   def validate_code?(code)
+    code.upcase!
     return false if self.used_coupon.present?
     referrer = User.find_by_coupon_code(code)
     return false if referrer.nil?
