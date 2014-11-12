@@ -426,9 +426,9 @@ class Booking < ActiveRecord::Base
       # Booking rejected
       return "Booking rejected" if self.host_accepted == false && self.owner_accepted
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Pending action - #{self.bookee.name}" if self.host_accepted != true && self.payment.present?
+      return "Pending action - #{self.bookee.first_name}" if self.host_accepted != true && self.payment.present?
     elsif self.host_accepted && self.owner_accepted != true
-      return "Pending action - #{self.booker.name}"
+      return "Pending action - #{self.booker.first_name}"
     else
       return "Enquiry"
     end
