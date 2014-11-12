@@ -148,8 +148,9 @@
         $("#modify-price-button").on("click", function() {
           $('.booking-details-container').hide();
           $(".modify-pricing").show();
-          $(".current-total-price").text("Current Total Price");
-          $(".current-daily-price").text("Current Daily Price");
+          // $(".current-total-price").text("Current Total Price");
+          // $(".current-daily-price").text("Current Daily Price");
+          $('#total-stay').focus()
           $(this).hide();
         });
         $("#per-night").bind("change keyup input", function(){
