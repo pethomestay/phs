@@ -42,9 +42,20 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :coupon_code, :allow_blank => true, :allow_nil => true
 
   after_save :release_jobs
+  after_create :generate_referral_code
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
+
+  # Creates the coupon code that users can share with others: First three letters of last name + first two letters of first name +
+  def generate_referral_code(force = false)
+    return if !force && self.coupon_code.present?
+    suggested_code = self.last_name.slice(0..2) + self.first_name.slice(0)
+    non_unique = User.where("coupon_code like ?", suggested_code + "%").count
+    unique_num = non_unique > 0 ? non_unique.to_s : ""
+    final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
+    self.update_attribute(:coupon_code, final_code)
+  end
 
   def name
     "#{first_name} #{last_name}"
