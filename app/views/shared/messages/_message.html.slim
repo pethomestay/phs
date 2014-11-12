@@ -52,7 +52,7 @@
               i.fa.fa-check.fa-fw
               '
               | Confirm or Reject
-          - elsif conversation.booking && !conversation.booking.owner_accepted && conversation.booking.check_in_date > Date.today # Host can customise request
+          - elsif conversation.booking && !conversation.booking.owner_accepted && conversation.booking.check_in_date >= Date.today # Host can customise request
             a.btn.btn-secondary href=edit_booking_path(conversation.booking)
               '
               | Customise Request
