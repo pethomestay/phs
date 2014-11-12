@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
   auto_strip_attributes :account_number, :bsb, delete_whitespaces: true
 
   validates_presence_of :account_number, :bank, :bsb, :name
-  validates_size_of :account_number, minimum: 7, maximum: 20
+  validates_size_of :account_number, minimum: 6, maximum: 20
   validates_numericality_of :account_number, only_integer: true
   validates :bsb, length: { in: 6..12 }, numericality: { only_integer: true }
 
