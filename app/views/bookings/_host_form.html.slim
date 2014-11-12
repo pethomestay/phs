@@ -62,7 +62,7 @@
             td Personality
             td = "#{ pet.personalities.join(', ') }"
 .row
-  .col-xs-10.col-sm-9.col-sm-offset-1.booking-details-container
+  .col-xs-11.col-sm-9.col-sm-offset-1.booking-details-container
     h3.text-center Booking Details
     table.table
       tr
@@ -73,7 +73,8 @@
         td= number_to_currency(@booking.subtotal)
       tr
         td
-          | PetHomeStay Service Charge
+          span.hidden-xs PetHomeStay
+          |  Service Charge
           br
           | (15% of total stay)
         td = number_to_currency(@booking.phs_service_charge)
@@ -89,7 +90,7 @@
       .btn.btn-secondary.btn-block#modify-price-button Click here to modify pricing
     br
   - unless @booking.owner_accepted
-    .col-xs-10.col-sm-10.col-sm-offset-1.modify-pricing
+    .col-xs-11.col-sm-10.col-sm-offset-1.modify-pricing
       h3.text-center Custom Quote
       table.table
         tr#proposed-per-night
@@ -104,7 +105,9 @@
             input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}"
         tr
           td
-            em Proposed PetHomeStay Service Charge
+            em
+              span.hidden-xs PetHomeStay
+              |  Service Charge
             br
             | (15% of total stay)
           td#phs-charge = number_to_currency(@booking.phs_service_charge)
@@ -113,7 +116,7 @@
           td= number_to_currency(@booking.public_liability_insurance)
         tr
           td
-            em Proposed Total Host Payout
+            em Total Host Payout
           td
             strong#host-payout = number_to_currency(@booking.host_payout)
 .row
