@@ -62,7 +62,11 @@ class BookingsController < ApplicationController
       else
         if @booking.update_attributes!(params[:booking])
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
-          @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message])
+          @booking.mailbox.messages.create user_id: @booking.booker_id,
+          message_text: "[This is an auto-generated message for Guest]\n\n#{current_user.first_name} has proposed a custom rate at #{view_context.number_to_currency(@booking.amount)} in total. Go ahead and book this Homestay if you're happy with it.\n\n#{params[:booking][:message]}"
+          @booking.mailbox.messages.create user_id: @booking.bookee_id,
+          message_text: "[This is an auto-generated message for Host]\n\nCustom Rate proposed to #{@booking.booker.first_name} for #{view_context.number_to_currency(@booking.amount)} for #{@booking.number_of_nights} days."
+          @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
           return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
         else
