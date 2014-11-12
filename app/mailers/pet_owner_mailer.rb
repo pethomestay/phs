@@ -13,12 +13,12 @@ class PetOwnerMailer < ActionMailer::Base
   end
 
   def booking_confirmation(booking)
-	  @booking = booking
-	  @guest = @booking.booker
-	  @homestay = @booking.homestay
-	  @host = @booking.bookee
-	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  email = mail(to: email_with_name, subject: "#{@host.first_name} has confirmed the booking!")
+    @booking = booking
+    @guest = @booking.booker
+    @homestay = @booking.homestay
+    @host = @booking.bookee
+    email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
+    email = mail(to: email_with_name, subject: "#{@host.first_name} has confirmed the booking!")
     email.mailgun_operations = {tag: "booking_confirmation_for_guest", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
@@ -33,35 +33,35 @@ class PetOwnerMailer < ActionMailer::Base
   end
 
   def host_enquiry_response(enquiry)
-	  @enquiry = enquiry
-	  @guest = @enquiry.user
-	  @homestay = @enquiry.homestay
-	  @host = @homestay.user
-	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  email = mail(to: email_with_name, subject: "#{@host.first_name.capitalize} has sent you a message!")
+    @enquiry = enquiry
+    @guest = @enquiry.user
+    @homestay = @enquiry.homestay
+    @host = @homestay.user
+    email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
+    email = mail(to: email_with_name, subject: "#{@host.first_name.capitalize} has sent you a message!")
     email.mailgun_operations = {tag: "host_enquiry_response", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
   def provider_not_available(booking)
-	  @booking = booking
-	  @guest = booking.booker
-	  @homestay = booking.homestay
-	  @host = booking.bookee
-	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
-	  email = mail(to: email_with_name, subject: subject)
+    @booking = booking
+    @guest = booking.booker
+    @homestay = booking.homestay
+    @host = booking.bookee
+    email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
+    subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
+    email = mail(to: email_with_name, subject: subject)
     email.mailgun_operations = {tag: "provider_not_available", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
   def provider_has_question(booking, message)
-	  @booking = booking
-	  @guest = booking.booker
-	  @homestay = booking.homestay
-	  @host = booking.bookee
-	  @message = message
-	  email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
-	  subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
-	  email = mail(to: email_with_name, subject: subject)
+    @booking = booking
+    @guest = booking.booker
+    @homestay = booking.homestay
+    @host = booking.bookee
+    @message = message
+    email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
+    subject = "#{@guest.first_name.capitalize} - You have a new PetHomeStay Message!"
+    email = mail(to: email_with_name, subject: subject)
     email.mailgun_operations = {tag: "provider_has_question", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
