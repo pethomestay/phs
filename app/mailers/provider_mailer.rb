@@ -60,7 +60,7 @@ class ProviderMailer < ActionMailer::Base
     @host = @homestay.user
     email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
     email = mail(to: email_with_name, subject: "Booking for #{@guest.first_name.capitalize} completed!")
-    email.mailgun_operations = {tag: "booking_made_for_host", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
+    # email.mailgun_operations = {tag: "booking_made_for_host", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
   private
