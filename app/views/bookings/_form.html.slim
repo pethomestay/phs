@@ -60,21 +60,20 @@
         tr
           td Credit Card Fee
           td= number_to_currency(@booking.transaction_fee)
+        tr
+          td
+            ' Total
+            i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
+          td= number_to_currency(@booking.amount)
         - if @coupon
           tr
             td Discount (code: #{@coupon.code})
-            td= number_to_currency(@coupon.discount_amount)
+            td= "- #{number_to_currency(@coupon.discount_amount)}"
           tr
             td
-              ' Total
+              ' Final Total
               i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
             td= number_to_currency(@booking.amount - @coupon.discount_amount)
-        - else
-          tr
-            td
-              ' Total
-              i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
-            td= number_to_currency(@booking.amount)
     hr
   .row
     .col-sm-10.col-sm-offset-1
