@@ -306,7 +306,7 @@ class Booking < ActiveRecord::Base
 	end
 
   def update_transaction_by_daily_price(price)
-    self.subtotal = self.number_of_nights * price.to_i
+    self.subtotal = self.number_of_nights * price.to_f
     self.amount   = self.calculate_amount
     self.save!
   end
