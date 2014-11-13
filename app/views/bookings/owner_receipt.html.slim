@@ -1,19 +1,33 @@
 .container.bookings-edit
   .page-header
     h1.text-center
-      span.hidden-xs Booking
-      |  Receipt
+      | Thank you for Booking
+      span.hidden-xs  via PetHomeStay
+      | !
   .row
     .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
       ol.progtrckr data-progtrckr-steps='3'
         li.progtrckr-done
           span.hidden-xs Booking
           |  Request
-        li.progtrckr-todo
+        li.progtrckr-next
           span.hidden-xs Host
           |  Confirmation
         li.progtrckr-todo Done!
   .row
     .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form
-      = render 'form'
-      hr
+      br
+      .instruction style='background: #f7f7f7; padding: 10px;'
+        p The next step is for the Host to accept your Booking Request.
+        p When they do:
+        p Your card will be charged the quoted HomeStay amount
+        p You and the Host are committed to the Booking under PetHomeStay Terms & Conditions.
+        p You will receive an email and a text when the Booking is confirmed!
+      br
+      = link_to 'Go to My Inbox', guest_messages_path, class: 'btn btn-primary btn-block'
+      br
+      / = link_to 'Search for another Host', root_path, class: 'btn btn-primary btn-block'
+      p.small
+        | Pre-authorisation
+        br
+        | If you used a credit card, we have placed a $1 pre-authorisation to check your card is valid, however this is not completed and returned in 5 days to your card.
