@@ -35,6 +35,32 @@
               = f.input_field :check_out_date, as: :date_picker, readonly: true, value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'form-control'
               / = f.input :check_out_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'checkout', id: "datepicker-check-out-date" }
               / f.input :check_out_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
+          / - content_for :head_stylesheet do
+          /   = stylesheet_link_tag '_bootstrap-datepicker'
+          / - content_for :head_javascript do
+          /   = javascript_include_tag 'bootstrap-datepicker-core'
+          / coffee:
+          /   $ ->
+          /     # Datepicker for check in and out date
+          /     $check_in = $('#booking_check_in_date')
+          /     check_in_picker = $check_in.datepicker(
+          /       format: 'dd/mm/yyyy'
+          /       startDate: '0d'
+          /       autoclose: true # False by default
+          /     ).on('changeDate', (evt) ->
+          /       # Set check out date no earlier than check in date
+          /       inDate = new Date(evt.date)
+          /       check_out_picker.setDate inDate
+          /       check_out_picker.startDate = inDate
+          /       check_out_picker.update()
+          /       $check_out.focus()
+          /     ).data('datepicker')
+          /     $check_out = $('#booking_check_out_date')
+          /     check_out_picker = $check_out.datepicker(
+          /       format: 'dd/mm/yyyy'
+          /       startDate: '0d'
+          /       autoclose: true
+          /     ).data('datepicker')
         - else
           - unless @booking.check_in_date.blank?
             tr
