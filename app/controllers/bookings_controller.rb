@@ -54,9 +54,9 @@ class BookingsController < ApplicationController
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
           AdminMailer.host_rejected_paid_booking(@booking).deliver
           @booking.mailbox.messages.create! user_id: @booking.booker_id,
-          message_text: "[This is an auto-generated message for Guest]\n\nUnfortunately #{current_user.name} has declined the booking. You can try other Hosts in your area.\n\n#{params[:booking][:message]}"
+          message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately #{current_user.name} has declined the booking. You can try other Hosts in your area.\n\n#{params[:booking][:message]}"
           @booking.mailbox.messages.create! user_id: @booking.bookee_id,
-          message_text: "[This is an auto-generated message for Host]\n\nYou have declined the booking.\n\n#{params[:booking][:message]}"
+          message_text: "[This is an auto-generated message for the Host]\n\nYou have declined the booking.\n\n#{params[:booking][:message]}"
           return redirect_to host_path, :alert => "Informed #{@booking.booker.name} of rejected booking"
         else
           message = @booking.confirmed_by_host(current_user)
@@ -65,10 +65,10 @@ class BookingsController < ApplicationController
       else
         if @booking.update_attributes!(params[:booking])
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
-          @booking.mailbox.messages.create user_id: @booking.booker_id,
-          message_text: "[This is an auto-generated message for Guest]\n\n#{current_user.first_name} has proposed a custom rate at #{view_context.number_to_currency(@booking.amount)} in total. Go ahead and book this Homestay if you're happy with it.\n\n#{params[:booking][:message]}"
           @booking.mailbox.messages.create user_id: @booking.bookee_id,
-          message_text: "[This is an auto-generated message for Host]\n\nCustom Rate proposed to #{@booking.booker.first_name} for #{view_context.number_to_currency(@booking.amount)} for #{@booking.number_of_nights} days."
+          message_text: "[This is an auto-generated message for the Host]\n\nCustom Rate proposed to #{@booking.booker.first_name} for #{view_context.number_to_currency(@booking.amount)} for #{@booking.number_of_nights} days."
+          @booking.mailbox.messages.create user_id: @booking.booker_id,
+          message_text: "[This is an auto-generated message for the Guest]\n\n#{current_user.first_name} has proposed a custom rate at #{view_context.number_to_currency(@booking.amount)} in total. Go ahead and book this Homestay if you're happy with it.\n\n#{params[:booking][:message]}"
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
           return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
@@ -129,9 +129,9 @@ class BookingsController < ApplicationController
           @coupon.update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           @booking.mailbox.messages.create! user_id: @booking.booker_id,
-          message_text: "[This is an auto-generated message for Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happen within a few days. \nThanks for using PetHomestay!"
+          message_text: "[This is an auto-generated message for the Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happens within a few days.\nThanks for using PetHomestay!"
           @booking.mailbox.messages.create! user_id: @booking.bookee_id,
-          message_text: "[This is an auto-generated message for Host]\n\nGreat! #{current_user.name} has paid for the booking! Please confirm your availability as soon as possible."
+          message_text: "[This is an auto-generated message for the Host]\n\nGreat! #{current_user.name} has paid for the booking!"
           render :owner_receipt, :layout => 'new_application' and return
         else
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})

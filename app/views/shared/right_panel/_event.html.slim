@@ -21,7 +21,7 @@
       | Leave
       br
       | feedback
-  - elsif guest_view && event.get_status == 'Enquiry'
+  - elsif guest_view && ['Enquiry', "Pending action - #{event.booker.first_name}"].include?(event.get_status)
       a.btn.btn-secondary.pull-right.leave-feedback href=edit_booking_path(event)
         | Book
   .hr

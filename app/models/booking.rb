@@ -244,9 +244,9 @@ class Booking < ActiveRecord::Base
         PetOwnerMailer.booking_confirmation(self).deliver
         ProviderMailer.booking_confirmation(self).deliver
         self.mailbox.messages.create! user_id: booker_id,
-          message_text: "[This is an auto-generated message for Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
+          message_text: "[This is an auto-generated message for the Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
         self.mailbox.messages.create! user_id: bookee_id,
-          message_text: "[This is an auto-generated message for Host]\n\nYou have confirmed the booking.\nThe Guest will drop their pet off on the check-in date & leave a feedback once the stay has been completed! \nThanks for using PetHomestay!"
+          message_text: "[This is an auto-generated message for the Host]\n\nYou have confirmed the booking.\nThe Guest will drop their pet off on the check-in date & leave a feedback once the stay has been completed! \nThanks for using PetHomestay!"
       end
 
     elsif self.response_id == 6
@@ -254,9 +254,9 @@ class Booking < ActiveRecord::Base
       self.host_rejects_booking
       self.save!
       self.mailbox.messages.create! user_id: booker_id,
-        message_text: "[This is an auto-generated message for Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
+        message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
       self.mailbox.messages.create! user_id: bookee_id,
-        message_text: "[This is an auto-generated message for Host]\n\nYou have declined this booking."
+        message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
       PetOwnerMailer.provider_not_available(self).deliver
     elsif self.response_id == 7
       message = 'Your question has been sent to guest'
@@ -402,9 +402,9 @@ class Booking < ActiveRecord::Base
 
     if old_message.blank?
       self.mailbox.messages.create! user_id: self.booker_id,
-        message_text: "[This is an auto-generated message for Guest]\n\nThis is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
+        message_text: "[This is an auto-generated message for the Guest]\n\nThis is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
       self.mailbox.messages.create! user_id: self.bookee_id,
-        message_text: "[This is an auto-generated message for Host]\n\nPlease confirm or edit this booking by clicking the button below."
+        message_text: "[This is an auto-generated message for the Host]\n\nPlease confirm or edit this booking by clicking the button below."
       unless new_message.empty?
        self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
       end
@@ -427,9 +427,9 @@ class Booking < ActiveRecord::Base
       # Booking rejected
       return "Booking rejected" if self.host_accepted == false && self.owner_accepted
       # Booking 'Waiting on host' if owner accepted but not host accepted
-      return "Pending action - #{self.bookee.name}" if self.host_accepted != true && self.payment.present?
+      return "Pending action - #{self.bookee.first_name}" if self.host_accepted != true && self.payment.present?
     elsif self.host_accepted && self.owner_accepted != true
-      return "Pending action - #{self.booker.name}"
+      return "Pending action - #{self.booker.first_name}"
     else
       return "Enquiry"
     end
