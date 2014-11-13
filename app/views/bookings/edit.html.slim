@@ -12,7 +12,7 @@
           li class=( @booking.host_accepted ? 'progtrckr-done' : 'progtrckr-next' )
             ' Review
             span.hidden-xs Booking
-          li.progtrckr-todo
+          li.progtrckr-todo class=( @booking.host_accepted ? 'progtrckr-next' : 'progtrckr-done' )
             | Confirm
             span.hidden-xs  Booking
           li.progtrckr-todo Done!
@@ -21,7 +21,7 @@
           li class=( @booking.payment.present? ? 'progtrckr-done' : 'progtrckr-next' )
             span.hidden-xs Booking
             |  Request
-          li.progtrckr-todo
+          li class=( @booking.payment.present? ? 'progtrckr-next' : 'progtrckr-todo' )
             span.hidden-xs Host
             |  Confirmation
           li.progtrckr-todo Done!
