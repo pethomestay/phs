@@ -79,6 +79,37 @@ class Booking < ActiveRecord::Base
    not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
   end
 
+  def refund_payment(guest_cancel = false)
+    return if self.payment.nil?
+    if self.payment.status == "authorized"
+      result = Braintree::Transaction.void(self.payment.braintree_transaction_id)
+    end
+    if self.payment.status == "submitted_for_settlement"
+      amount = self.calculate_payment_refund
+      result = Braintree::Transaction.refund(self.payment.braintree_transaction_id, amount)
+      result = Braintree::Transaction.void(self.payment.braintree_transaction_id) unless result.success?
+    end
+    if result.success?
+      self.refund        = self.payment.amount
+      self.cancel_reason = self.cancel_reason || "Admin cancelled"
+      self.cancel_date = Date.today
+      self.save
+    else
+      Raygun.track_exception(custom_data: {time: Time.now, booking: self.id, reason: "Refund failed"})
+    end
+    if guest_cancel
+      GuestCancelledBookingHostJob.new.async.perform(self.id) #Let the host know booking has been cancelled
+      GuestCancelledBookingGuestJob.new.async.perform(self.id) #Confirm for the guest that their booking has been cancelled
+    end
+    return result.success?
+  end
+
+  def calculate_payment_refund
+    return if self.payment.nil?
+    days = self.check_in_date.mjd - Date.today.mjd
+    days > 14 ? self.payment.amount : days >= 0 ? self.payment.amount * 0.5 : 0
+  end
+
   def unfinished_booking?
     self.state?(:unfinished) or self.state?(:payment_authorisation_pending)
   end
@@ -126,16 +157,16 @@ class Booking < ActiveRecord::Base
   def calculate_refund
     days = get_days_left
     if days > 14
-      return actual_value_figure(transaction_mode_value(amount_minus_fees))
+      return self.subtotal - self.phs_service_charge
     elsif days >= 7
-      return actual_value_figure(transaction_mode_value(self.amount_minus_fees * 0.5))
+      return (self.subtotal - self.phs_service_charge) * 0.5
     else
-      return "0.00"
+      return 0
     end
   end
 
   def amount_minus_fees
-    return (self.subtotal - self.phs_service_charge.to_f)
+    self.subtotal - self.phs_service_charge
   end
 
   def calculate_host_amount_after_guest_cancel

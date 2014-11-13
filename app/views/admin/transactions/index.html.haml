@@ -2,22 +2,62 @@
 %h1 Listing Transactions
 %table.table.tablesorter
   %thead
-    %tr
-      %th Guest
-      %th Host
-      %th Reference Id
-      %th Date
-      %th Pre-auth Id
-      %th Response Text
-      %th Amount
-      %th Status
-      %th Cancel Reason
-      %th Cancel Date
-      %th Refund Amount
-      %th Is Refunded?
-      %th Actions
-
+    %th Guest
+    %th Host
+    %th Braintree ID
+    %th Date
+    %th Payment amount
+    %th Coupon
+    %th Status
+    %th Cancel Reason
+    %th Cancel Date
+    %th Refund Amount
+    %th Is refunded
+    %th Actions
   %tbody
+    %tr
+      %td{:colspan => "12", :style => "font-weight:bold;text-align:center;"} BRAINTREE TRANSACTIONS
+    - @payments.each do |payment|
+      - booking = payment.booking
+      - guest = booking.booker
+      - host  = booking.bookee
+      %tr
+        %td= link_to "#{guest.name} (#{guest.mobile_number})", admin_user_path(guest)
+        %td= link_to "#{host.name} (#{host.mobile_number})", admin_user_path(host)
+        %td= payment.braintree_transaction_id
+        %td= payment.created_at.in_time_zone("Melbourne").strftime("%l:%M %P, %d/%m/%y")
+        %td= number_to_currency(payment.amount)
+        %td= booking.coupon.present? ? booking.coupon.code : ""
+        %td
+          %strong= booking.state
+        - if booking.is_cancelled? or booking.state?(:host_requested_cancellation)
+          %td= booking.cancel_reason
+          %td= booking.cancel_date
+          %td= booking.refund
+          %td= check_box_tag "is_refunded_" + booking.id.to_s,  1, booking.refunded, {:class => 'is_refunded'}
+        - else
+          %td{:colspan => "4"}
+        %td
+          - if booking.host_accepted && booking.cancel_date.nil?
+            = link_to "Host Cancel", admin_host_cancel_booking_path(booking),:method=>:post, :class=>'trans-btn btn btn-primary'
+          - if booking.owner_accepted && booking.cancel_date.nil?
+            = link_to "Guest Cancel", admin_guest_cancel_booking_path(booking), :method=>:post, :class=>'trans-btn btn btn-primary'
+    %tr
+      %td{:colspan => "13", :style => "font-weight:bold;text-align:center;"} SECUREPAY TRANSACTIONS
+    %tr
+      %td Guest
+      %td Host
+      %td Reference Id
+      %td Date
+      %td Pre-auth Id
+      %td Response Text
+      %td Amount
+      %td Status
+      %td Cancel Reason
+      %td Cancel Date
+      %td Refund Amount
+      %td Is Refunded?
+      %td Actions
     - @transactions.each do |transaction|
       - booking = transaction.booking
       - booking_state = Booking.human_state_name(booking.state)
