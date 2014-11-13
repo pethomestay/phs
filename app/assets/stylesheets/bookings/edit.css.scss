@@ -35,6 +35,7 @@
       &.progtrckr-next {
         border-bottom: 4px solid $blue;
         &:before {
+          content: "\039F";
           color: white;
           background-color: $blue;
           height: 1.2em;
