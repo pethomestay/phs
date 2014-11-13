@@ -79,9 +79,9 @@ class BookingsController < ApplicationController
     else # Guest booking modifications (or payment)
       if current_user.used_coupon.present? && current_user.used_coupon.booking.nil? && current_user.admin
         @coupon = current_user.used_coupon
-        payment_amount = @booking.amount - @coupon.discount_amount
+        payment_amount = (@booking.amount - @coupon.discount_amount).to_s
       else
-        payment_amount = @booking.amount
+        payment_amount = @booking.amount.to_s
       end
       submit_payment = @booking.host_accepted == true ? true : false
       if params[:payment_method_nonce].present? # Payment was made
@@ -100,6 +100,15 @@ class BookingsController < ApplicationController
               :customer_id => customer_create_result.customer.id,
               :options => {
                 :submit_for_settlement => submit_payment
+              },
+              :descriptor => {
+                :name => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
+                :phone => "1300660945",
+              },
+              :custom_fields => {
+                :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
+                :enddate   => "#{@booking.check_out_date.strftime("%a, %d %b, %Y")}",
+                :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
             )
           # Process payment if failed to create customer
@@ -109,6 +118,15 @@ class BookingsController < ApplicationController
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
+              },
+              :descriptor => {
+                :name => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
+                :phone => "1300660945",
+              },
+              :custom_fields => {
+                :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
+                :enddate   => "#{@booking.check_out_date.strftime("%a, %d %b, %Y")}",
+                :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
             )
             Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
@@ -119,6 +137,15 @@ class BookingsController < ApplicationController
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
+              },
+              :descriptor => {
+                :name     => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
+                :phone    => "1300660945",
+              },
+              :custom_fields => {
+                :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
+                :enddate   => "#{@booking.check_out_date.strftime("%a, %d %b, %Y")}",
+                :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
           )
         end
