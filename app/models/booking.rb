@@ -448,6 +448,7 @@ class Booking < ActiveRecord::Base
 
   # Designed to eventually replace state_machine or update booking states
   def get_status
+    return "Cancelled" if self.cancel_date.present?
     if self.owner_accepted
       # Booking 'booked' if both owner & host accepted, payment made, but stay not completed
       return "Booked" if self.host_accepted && self.payment.present? && self.check_out_date.to_time > Time.now
@@ -469,7 +470,7 @@ class Booking < ActiveRecord::Base
   def get_status_css
     return "enquiry" if self.owner_accepted.nil? || self.host_accepted.nil?
     return "requested" if (self.owner_accepted || self.host_accepted) && self.payment.nil?
-    return "cancelled" if self.host_accepted == false && self.payment.present?
+    return "cancelled" if (self.host_accepted == false && self.payment.present?) || self.cancel_date.present?
     return "booked" if self.payment.present? && self.host_accepted
   end
 
