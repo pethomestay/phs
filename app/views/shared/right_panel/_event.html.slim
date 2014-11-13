@@ -3,7 +3,7 @@
 /   awaits_feedback: whether the Booking awaits feedback
 
 
-.event
+.event data-month= "#{event.check_in_date.strftime("%b")}"
   = render 'pages/dashboard/date_widget', date: event.check_in_date
   .info
     - state = translate_state event.state
