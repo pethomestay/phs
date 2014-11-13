@@ -101,10 +101,6 @@ class BookingsController < ApplicationController
               :options => {
                 :submit_for_settlement => submit_payment
               },
-              :descriptor => {
-                :name => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
-                :phone => "1300660945",
-              },
               :custom_fields => {
                 :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
                 :enddate   => "#{@booking.check_out_date.strftime("%a, %d %b, %Y")}",
@@ -118,10 +114,6 @@ class BookingsController < ApplicationController
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
-              },
-              :descriptor => {
-                :name => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
-                :phone => "1300660945",
               },
               :custom_fields => {
                 :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
@@ -137,10 +129,6 @@ class BookingsController < ApplicationController
               :payment_method_nonce => params[:payment_method_nonce],
               :options => {
                 :submit_for_settlement => submit_payment
-              },
-              :descriptor => {
-                :name     => "Stay #{@booking.check_in_date.strftime("%-d/%-m/%y")} - #{@booking.check_out_date.strftime('%-d/%-m/%y')}",
-                :phone    => "1300660945",
               },
               :custom_fields => {
                 :startdate => "#{@booking.check_in_date.strftime("%a, %d %b, %Y")}",
