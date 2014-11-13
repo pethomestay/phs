@@ -17,11 +17,11 @@
     - else
       span.name #{event.bookee.name}
   - if awaits_feedback # A booking that awaits feedback
-    a.btn.btn-secondary.pull-right.leave-feedback href=new_enquiry_feedbacks_path(event.enquiry)
+    a.btn.btn-primary.pull-right.leave-feedback href=new_enquiry_feedbacks_path(event.enquiry)
       | Leave
       br
       | feedback
   - elsif guest_view && ['Enquiry', "Pending action - #{event.booker.first_name}"].include?(event.get_status)
-      a.btn.btn-secondary.pull-right.leave-feedback href=edit_booking_path(event)
+      a.btn.btn-primary.pull-right.leave-feedback href=edit_booking_path(event)
         | Book
   .hr
