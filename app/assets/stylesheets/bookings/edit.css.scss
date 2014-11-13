@@ -85,6 +85,15 @@
     }
   }
 
+  .booking_host_accepted {
+    label.radio {
+      display: inline-block;
+      padding-left: 15px;
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+  }
+
   @media  (max-width: 400px) {
     ol.progtrckr li {
       font-size: 11px;

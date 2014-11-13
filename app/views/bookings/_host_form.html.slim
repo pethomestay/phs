@@ -123,9 +123,9 @@
 = simple_form_for @booking, wrapper: :bootstrap3 do |f|
   = f.input :cost_per_night, as: :hidden
   - if @booking.owner_accepted
-    .col-md-4.col-xs-12
+    .col-xs-11.col-sm-10.col-sm-offset-1
       = f.input :host_accepted, required: true, as: :radio_buttons, label: 'Do you accept the booking?'
-    .col-md-8.col-xs-12
+    .col-xs-11.col-sm-10.col-sm-offset-1
       = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
       br
     .row
