@@ -17,18 +17,24 @@
           ol.progtrckr data-progtrckr-steps='3'
             li class=(@booking.host_accepted ? 'progtrckr-done' : 'progtrckr-current' )
               ' Propose
-              span.hidden-xs rate
+              span.hidden-xs Rate
             li class=(@booking.host_accepted ? 'progtrckr-current' : 'progtrckr-todo') Confirm
             li.progtrckr-todo Done!
-      - else
-        ol.progtrckr data-progtrckr-steps='3'
-          li class=( @booking.payment.present? ? 'progtrckr-done' : 'progtrckr-current' )
-            span.hidden-xs Booking
-            |  Request
-          li class=( @booking.payment.present? ? 'progtrckr-current' : 'progtrckr-todo' )
-            span.hidden-xs Host
-            |  Confirmation
-          li.progtrckr-todo Done!
+      - else # Guest view
+        - if @booking.host_accepted # Host has proposed a custom rate
+          ol.progtrckr data-progtrckr-steps='3'
+            li.progtrckr-done
+              ' Propose
+              span.hidden-xs Rate
+            li.progtrckr-current Confirm
+            li.progtrckr-todo Done!
+        - else
+          ol.progtrckr data-progtrckr-steps='3'
+            li class=( @booking.payment.present? ? 'progtrckr-done' : 'progtrckr-current' )
+              | Book
+            li class=( @booking.payment.present? ? 'progtrckr-current' : 'progtrckr-todo' )
+              | Confirm
+            li.progtrckr-todo Done!
   .row
     .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form
       - if @host_view
