@@ -50,9 +50,7 @@
               | Review Booking
           - elsif conversation.booking.host_accepted && conversation.booking.payment.present?
             a.btn.btn-primary href=booking_host_receipt_path(conversation.booking)
-              i.fa.fa-check.fa-fw
-              '
-              | #{conversation.booking.booker.name} accepted, see details here
+              | View Booking
 - if top
   .new-msg-form-container
     form
