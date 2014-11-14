@@ -274,20 +274,22 @@ class Booking < ActiveRecord::Base
         self.save!
         PetOwnerMailer.booking_confirmation(self).deliver
         ProviderMailer.booking_confirmation(self).deliver
-        self.mailbox.messages.create! user_id: booker_id,
-          message_text: "[This is an auto-generated message for the Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
-        self.mailbox.messages.create! user_id: bookee_id,
-          message_text: "[This is an auto-generated message for the Host]\n\nYou have confirmed the booking.\nThe Guest will drop their pet off on the check-in date & leave a feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        # self.mailbox.messages.create! user_id: booker_id,
+        #   message_text: "[This is an auto-generated message for the Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        # self.mailbox.messages.create! user_id: bookee_id,
+        #   message_text: "[This is an auto-generated message for the Host]\n\nYou have confirmed the booking.\nThe Guest will drop their pet off on the check-in date & leave a feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        self.mailbox.update_attributes host_read: false, guest_read: false
       end
 
     elsif self.response_id == 6
       message = 'Guest will be informed of your unavailability'
       self.host_rejects_booking
       self.save!
-      self.mailbox.messages.create! user_id: booker_id,
-        message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
-      self.mailbox.messages.create! user_id: bookee_id,
-        message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
+      # self.mailbox.messages.create! user_id: booker_id,
+      #   message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
+      # self.mailbox.messages.create! user_id: bookee_id,
+      #   message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
+      self.mailbox.update_attributes host_read: false, guest_read: false
       PetOwnerMailer.provider_not_available(self).deliver
     elsif self.response_id == 7
       message = 'Your question has been sent to guest'
@@ -432,10 +434,11 @@ class Booking < ActiveRecord::Base
     self.save!
 
     if old_message.blank?
-      self.mailbox.messages.create! user_id: self.booker_id,
-        message_text: "[This is an auto-generated message for the Guest]\n\nThis is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
-      self.mailbox.messages.create! user_id: self.bookee_id,
-        message_text: "[This is an auto-generated message for the Host]\n\nPlease confirm or edit this booking by clicking the button below."
+      # self.mailbox.messages.create! user_id: self.booker_id,
+      #   message_text: "[This is an auto-generated message for the Guest]\n\nThis is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
+      # self.mailbox.messages.create! user_id: self.bookee_id,
+      #   message_text: "[This is an auto-generated message for the Host]\n\nPlease confirm or edit this booking by clicking the button below."
+      self.mailbox.update_attributes host_read: false, guest_read: false
       unless new_message.empty?
        self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
       end
