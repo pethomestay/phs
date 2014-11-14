@@ -31,16 +31,28 @@
     h3.text-center Pet Details
     table.table
       - guest.pets.each do |pet|
-        tr
-          td Name
-          td = pet.name
-        tr
-          td Type & Age
-          td = "#{pet.pet_type_name} - #{pet.age}"
-        -if pet.breed.present?
+        - if pet.pet_type_name != 'Dog' # Only display type if it's not a dog
           tr
-            td Breed
-            td = pet.breed
+            td Type
+            td #{pet.pet_type_name}
+        - if pet.profile_photo?
+          tr
+            td
+              = cl_image_tag pet.profile_photo.public_id, width: 50, height: 50, crop: :thumb, radius: :max, format: :png
+            td.lead
+              | #{pet.name}
+              - if pet.breed.present?
+                |, a #{pet.breed}
+              br
+              | #{pet.age}
+        - else
+          tr
+            td.lead colspan='2'
+              | #{pet.name}
+              - if pet.breed.present?
+                |, a #{pet.breed}
+              br
+              | #{pet.age}
         - if pet.size
           tr
             td Size
