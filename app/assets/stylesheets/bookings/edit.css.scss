@@ -32,7 +32,7 @@
           border-radius: 1.2em;
         }
       }
-      &.progtrckr-next {
+      &.progtrckr-current {
         border-bottom: 4px solid $blue;
         &:before {
           content: "\039F";

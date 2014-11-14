@@ -35,13 +35,13 @@ class BookingsController < ApplicationController
 
   def owner_receipt
     @booking = current_user.bookers.find_by_id(params[:id])
-    redirect_to guest_path, :notice => "Sorry no receipt found" and return if @booking.nil?
+    redirect_to guest_messages_path, :notice => "Sorry no receipt found" and return if @booking.nil?
     render :owner_receipt, :layout => 'new_application'
   end
 
   def host_receipt
     @booking = current_user.bookees.find_by_id(params[:booking_id])
-    redirect_to host_path, :notice => "Sorry no receipt found" if @booking.nil?
+    redirect_to host_messages_path, :notice => "Sorry no receipt found" if @booking.nil?
     render :host_receipt, :layout => 'new_application'
   end
 
@@ -58,10 +58,10 @@ class BookingsController < ApplicationController
           # @booking.mailbox.messages.create! user_id: @booking.bookee_id,
           # message_text: "[This is an auto-generated message for the Host]\n\nYou have declined the booking.\n\n#{params[:booking][:message]}"
           @booking.mailbox.update_attributes host_read: false, guest_read: false
-          return redirect_to host_path, :alert => "Informed #{@booking.booker.name} of rejected booking"
+          return redirect_to host_messages_path, :alert => "Informed #{@booking.booker.name} of rejected booking"
         else
           message = @booking.confirmed_by_host(current_user)
-          return redirect_to host_path, alert: message
+          return redirect_to host_messages_path, alert: message
         end
       else
         if @booking.update_attributes!(params[:booking])
@@ -73,9 +73,9 @@ class BookingsController < ApplicationController
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
-          return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
+          return redirect_to host_messages_path, alert: "Custom rate has been sent to #{@booking.booker.name}"
         else
-          return redirect_to host_path
+          return redirect_to host_messages_path
         end
       end
     else # Guest booking modifications (or payment)
@@ -300,7 +300,7 @@ class BookingsController < ApplicationController
       @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
       flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
-      return redirect_to host_path
+      return redirect_to host_messages_path
     end
   end
 
