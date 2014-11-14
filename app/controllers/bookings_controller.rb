@@ -73,7 +73,7 @@ class BookingsController < ApplicationController
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
-          return redirect_to host_path, alert: "Details sent to #{@booking.booker.name}"
+          return redirect_to host_path, alert: "Custom rate has been sent to #{@booking.booker.name}"
         else
           return redirect_to host_path
         end
