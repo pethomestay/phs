@@ -250,7 +250,7 @@ class BookingsController < ApplicationController
       end
       @booking.destroy
       flash[:notice] = 'Your incomplete booking was cancelled.'
-      return redirect_to trips_bookings_path
+      redirect_to guest_messages_path and return
     end
   end
 
