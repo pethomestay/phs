@@ -154,7 +154,8 @@ class BookingsController < ApplicationController
         else
           Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
           AdminMailer.braintree_payment_failure_admin(@booking, result).deliver
-          render :edit, :layout => 'new_application' and return
+          flash[:error] = result.message
+          redirect_to action: :edit and return
         end
       else
         current_user.find_or_create_transaction_by(@booking)
