@@ -17,14 +17,14 @@ class Host::HostController < ApplicationController
                           within two business days to introduce PetHomeStay and\
                           approve your listing!' unless current_user.homestay.active?
         @unread_count = Mailbox.as_host(current_user).where(host_read: false).count
-        this_month    = Date.today..Date.today.end_of_month
-        upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
-                        .select('state, check_in_date, check_out_date, booker_id')
-        upcoming_e    = current_user.homestay.enquiries.includes(:booking)
-                        .where(check_in_date: this_month)
-                        .where( bookings: { enquiry_id: nil } ).limit(5)
-                        .select('check_in_date, check_out_date')
-        @upcoming     = (upcoming_e + upcoming_b).sort{ |a, b| a.check_in_date <=> b.check_in_date }
+        # this_month    = Date.today..Date.today.end_of_month
+        # upcoming_b    = current_user.bookees.where(check_in_date: this_month).limit(5)
+        #                 .select('state, check_in_date, check_out_date, booker_id')
+        # upcoming_e    = current_user.homestay.enquiries.includes(:booking)
+        #                 .where(check_in_date: this_month)
+        #                 .where( bookings: { enquiry_id: nil } ).limit(5)
+        #                 .select('check_in_date, check_out_date')
+        @upcoming     = current_user.bookees.sort_by(&:check_in_date).select {|b| b.check_out_date >= Date.today}
       else
         flash[:info] = 'Wanna share the love and be an awesome Host yourself? Create your own Homestay by simply filling the form!'
         redirect_to new_host_homestay_path

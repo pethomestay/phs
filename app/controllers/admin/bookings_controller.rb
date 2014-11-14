@@ -3,19 +3,29 @@ class Admin::BookingsController < Admin::AdminController
 	respond_to :html
 
 	def index
-		respond_with(:admin, @bookings = Booking.with_state(:finished_host_accepted).all(:order => 'created_at DESC'))
+		respond_with(:admin, @bookings = Booking.all.select {|b| b.transaction.present? || b.payment.present? }.sort_by(&:created_at).reverse)
 	end
 
   def host_cancel
-    canceled(params[:booking_id], true)
+    @booking = Booking.find(params[:booking_id])
+    if @booking.payment.present?
+      @booking.refund_payment
+    else
+      canceled(params[:booking_id], true)
+    end
     #we want to sent to the guest to let them know their booking is canceled
-  flash[:notice] = "Booking with transaction reference: #{Booking.find(params[:booking_id]).transaction.reference}, has been cancelled by host"
+    flash[:notice] = "Booking with transaction reference: #{Booking.find(params[:booking_id]).transaction.reference}, has been cancelled by host"
     AdminCancelledBookingJob.new.async.perform(params[:booking_id])
     return redirect_to admin_transactions_path
   end
 
   def guest_cancel
-    canceled(params[:booking_id], false)
+    @booking = Booking.find(params[:booking_id])
+    if @booking.payment.present?
+      @booking.refund_payment(true)
+    else
+      canceled(params[:booking_id], false)
+    end
     return redirect_to admin_transactions_path
   end
 

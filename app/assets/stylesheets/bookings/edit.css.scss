@@ -1,0 +1,103 @@
+.bookings-edit {
+  ol.progtrckr {
+    margin: 10px 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+      display: inline-block;
+      text-align: center;
+      line-height: 3em;
+
+      &:after {
+        content: "\00a0\00a0";
+      }
+      &:before {
+        position: relative;
+        bottom: -2.5em;
+        float: left;
+        left: 50%;
+        line-height: 1em;
+      }
+
+      &.progtrckr-done {
+        border-bottom: 4px solid $blue;
+        &:before {
+          content: "\2713";
+          color: white;
+          background-color: $blue;
+          height: 1.2em;
+          width: 1.2em;
+          line-height: 1.2em;
+          border: none;
+          border-radius: 1.2em;
+        }
+      }
+      &.progtrckr-next {
+        border-bottom: 4px solid $blue;
+        &:before {
+          content: "\039F";
+          color: white;
+          background-color: $blue;
+          height: 1.2em;
+          width: 1.2em;
+          line-height: 1.2em;
+          border: none;
+          border-radius: 1.2em;
+        }
+      }
+      &.progtrckr-todo {
+        color: silver;
+        border-bottom: 4px solid silver;
+        &:before {
+          content: "\039F";
+          color: silver;
+          background-color: white;
+          font-size: 1.5em;
+          bottom: -1.6em;
+        }
+      }
+    }
+  }
+  // Make progress bar span the whole width
+  ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
+  ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
+  ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
+  ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
+  ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
+  ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
+  ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
+  ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+
+  .form {
+    background: $grey;
+    margin-bottom: 20px;
+  }
+  table.table {
+    width: 100%;
+    margin-left: 5%;
+    tbody tr td {
+      vertical-align: middle;
+    }
+
+    #booking_check_in_date,
+    #booking_check_out_date {
+      width: 100px;
+    }
+  }
+
+  .booking_host_accepted {
+    label.radio {
+      display: inline-block;
+      padding-left: 15px;
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+  }
+
+  @media  (max-width: 400px) {
+    ol.progtrckr li {
+      font-size: 11px;
+    }
+  }
+}
+

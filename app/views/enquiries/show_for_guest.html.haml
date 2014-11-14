@@ -1,0 +1,55 @@
+.page-header
+  %h1= "Please check the details"
+%table.table.table-striped.table-condensed
+  %tr
+    %td
+      %h3= @enquiry.homestay.title
+      %h4= @enquiry.homestay.geocoding_address
+      - if @host.received_feedbacks.present?
+        - rating_stars @host.average_rating
+        = "(#{@host.average_rating} #{'star'.pluralize(@host.average_rating)})"
+      - else
+        User has not been rated yet...
+    %td= @enquiry.homestay.description
+  - unless @enquiry.check_in_date.blank?
+    %tr
+      %td Check in date
+      %td= date_day_month_year_format(@enquiry.check_in_date)
+  - unless @enquiry.check_out_date.blank?
+    %tr
+      %td Check out date
+      %td= date_day_month_year_format(@enquiry.check_out_date)
+  %tr
+    %td Duration
+    %td= @enquiry.duration_name
+  %tr
+    %td Total Proposed Cost
+    %td= number_to_currency(@enquiry.stay_length * (@enquiry.proposed_per_day_price || @enquiry.homestay.cost_per_night))
+%h2 Pets
+- current_user.pets.each do |pet|
+  .row
+    .span3
+      - if pet.pictures.present?
+        = image_tag(pet.pictures.first.file.thumb('220x').url)
+    - width_class = pet.pictures.present? ? 'span9' : 'span12'
+    %div{class: width_class}
+      %table.table.table-striped.table-condensed
+        %tr
+          %td Name
+          %td= pet.name
+        %tr
+          %td Type
+          %td= pet.pet_type_name
+  .clearfix
+%p Accepting this request will take you to the booking page, if you wish to change the details of the enquiry, please send the host a message below.
+- link_to "Accept", new_booking_path(enquiry_id: @enquiry.id), class: 'btn btn-primary btn-large'
+%form{:id => "checkout", :method => "post", :action => "/checkout"}
+  #dropin
+  %input{:type => "submit", :value => "#{@enquiry.stay_length * @enquiry.stay_length * (@enquiry.proposed_per_day_price || @enquiry.homestay.cost_per_night)}"}
+= link_to "Send Message", new_booking_path(enquiry_id: @enquiry.id), class: 'btn btn-primary btn-large pull-right'
+%script{:type => "text/javascript",
+        :src  => "https://js.braintreegateway.com/v2/braintree.js"}
+:javascript
+  braintree.setup("eyJ2ZXJzaW9uIjoxLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIyZWRkZWY1ZTBhOTc3MjgyYzgyNmVmNWRiNWZlMGFmNWIzN2Q4OTlmMjg0ODE5OTNhZThlZTRiOWU1YjdiMTlifGNyZWF0ZWRfYXQ9MjAxNC0xMC0yMlQwNTozNzowMi40NjA3MDE1NjIrMDAwMFx1MDAyNm1lcmNoYW50X2lkPWRjcHNweTJicndkanIzcW5cdTAwMjZwdWJsaWNfa2V5PTl3d3J6cWszdnIzdDRuYzgiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGNwc3B5MmJyd2RqcjNxbi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwicGF5bWVudEFwcHMiOltdLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGNwc3B5MmJyd2RqcjNxbi9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20ifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6ZmFsc2UsInBheXBhbEVuYWJsZWQiOnRydWUsInBheXBhbCI6eyJkaXNwbGF5TmFtZSI6IkFjbWUgV2lkZ2V0cywgTHRkLiAoU2FuZGJveCkiLCJjbGllbnRJZCI6bnVsbCwicHJpdmFjeVVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS9wcCIsInVzZXJBZ3JlZW1lbnRVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vdG9zIiwiYmFzZVVybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9jaGVja291dC5wYXlwYWwuY29tIiwiZGlyZWN0QmFzZVVybCI6bnVsbCwiYWxsb3dIdHRwIjp0cnVlLCJlbnZpcm9ubWVudE5vTmV0d29yayI6dHJ1ZSwiZW52aXJvbm1lbnQiOiJvZmZsaW5lIiwibWVyY2hhbnRBY2NvdW50SWQiOiJzdGNoMm5mZGZ3c3p5dHc1IiwiY3VycmVuY3lJc29Db2RlIjoiVVNEIn0sImNvaW5iYXNlRW5hYmxlZCI6ZmFsc2V9", 'dropin', {
+  container: 'dropin'
+  });

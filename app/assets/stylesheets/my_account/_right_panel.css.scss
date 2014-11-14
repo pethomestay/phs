@@ -2,23 +2,26 @@
   padding: 0;
   .upcoming {
     padding: 15px 20px 0 20px;
+    max-height: 809px;
+    overflow-y: scroll;
     .event {
       .date-widget {
         width: 66px;
         display: inline-block;
         text-align: center;
-        position: absolute;
         .decoration {
           width: 4px;
           height: 12px;
           background-color: black;
-          position: absolute;
+          position: relative;
           z-index: 2;
           &.left {
             left: 9px;
+            float: left;
           }
           &.right {
             right: 9px;
+            float: right;
           }
         }
         .month {
@@ -41,7 +44,7 @@
         }
       }
       .info {
-        margin-left: 100px;
+        margin-left: 34px;
         display: inline-block;
         span {
           display: block;
@@ -55,6 +58,9 @@
             }
           }
         }
+      }
+      .leave-feedback.btn {
+        margin-top: 10px;
       }
       .hr {
         height: 1px;

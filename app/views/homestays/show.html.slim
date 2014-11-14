@@ -251,7 +251,7 @@ coffee:
     # Datepicker for check in and out date
     $check_in = $('#enquiry_check_in_date')
     check_in_picker = $check_in.datepicker(
-      format: 'dd-mm-yyyy'
+      format: 'dd/mm/yyyy'
       startDate: '0d'
       autoclose: true # False by default
     ).on('changeDate', (evt) ->
@@ -264,7 +264,7 @@ coffee:
     ).data('datepicker')
     $check_out = $('#enquiry_check_out_date')
     check_out_picker = $check_out.datepicker(
-      format: 'dd-mm-yyyy'
+      format: 'dd/mm/yyyy'
       startDate: '0d'
       autoclose: true
     ).data('datepicker')

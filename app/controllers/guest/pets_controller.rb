@@ -24,6 +24,7 @@ class Guest::PetsController < Guest::GuestController
         redirect_to guest_pets_path
       end
     else
+      flash[:error] = @pet.errors.full_messages.first
       render :new
     end
   end
@@ -41,6 +42,7 @@ class Guest::PetsController < Guest::GuestController
       flash[:notice] = "#{@pet.name}'s info has been updated."
       redirect_to guest_pets_path
     else
+      flash[:error] = @pet.errors.full_messages.first
       render :edit
     end
   end

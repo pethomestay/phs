@@ -5,17 +5,24 @@ class Booking < ActiveRecord::Base
   belongs_to :bookee, class_name: 'User', foreign_key: :bookee_id
   belongs_to :homestay
   belongs_to :enquiry
+  has_one    :coupon
+
+  MINIMUM_SUBTOTAL_PRICE = 10.0
+  CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.0 # 2.5% = 0.025
+  PER_NIGHT_LIABILITY_INSURANCE_COST = 0 # Modify this to change insurance cost per night
 
   @@valid_host_view_booking_states_list  = [:finished, :finished_host_accepted, :host_paid, :rejected, :host_requested_cancellation, :host_cancelled, :guest_cancelled]
 
   has_one :transaction, dependent: :destroy
+  has_one :payment
   has_one :mailbox, dependent: :destroy
 
   validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
+  validate :subtotal, :numericality => { :greater_than => MINIMUM_SUBTOTAL_PRICE }, :presence => true
   #validate :is_host_available_btw_check_in_and_check_out_date, if: "check_in_date && check_out_date"
 
-  attr_accessor :fees, :payment, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
+  attr_accessor :fees, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
                 :pet_date_of_birth
 
   scope :booked, where(owner_accepted: true, host_accepted: true)
@@ -42,6 +49,8 @@ class Booking < ActiveRecord::Base
   scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
   after_create :create_mailbox
+  after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
+  before_save  :update_state
 
   def create_mailbox
     mailbox = nil
@@ -55,9 +64,50 @@ class Booking < ActiveRecord::Base
     mailbox.reload
   end
 
+  def update_state
+    booking_state = "unfinished"
+    booking_state = "finished_host_accepted" if self.host_accepted && self.owner_accepted && self.payment.present?
+    booking_state = "finished" if self.host_accepted && (self.payment.present? || self.transaction.present?) && self.owner_accepted != true
+    booking_state = "payment_authorisation_pending" if self.host_accepted && self.owner_accepted && (self.transaction.nil? && self.payment.nil?)
+    booking_state = "host_cancelled" if ((self.cancel_date.present? && self.cancel_reason == "Admin cancelled") || (self.owner_accepted && self.host_accepted == false))
+    booking_state = "guest_cancelled" if self.cancel_date.present? && self.cancel_reason != "Admin cancelled"
+    self.state    = booking_state
+    return true
+  end
 
   def is_host_view_valid?
    not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
+  end
+
+  def refund_payment(guest_cancel = false)
+    return if self.payment.nil?
+    if self.payment.status == "authorized"
+      result = Braintree::Transaction.void(self.payment.braintree_transaction_id)
+    end
+    if self.payment.status == "submitted_for_settlement"
+      amount = self.calculate_payment_refund
+      result = Braintree::Transaction.refund(self.payment.braintree_transaction_id, amount)
+      result = Braintree::Transaction.void(self.payment.braintree_transaction_id) unless result.success?
+    end
+    if result.success?
+      self.refund        = self.payment.amount
+      self.cancel_reason = self.cancel_reason || "Admin cancelled"
+      self.cancel_date = Date.today
+      self.save
+    else
+      Raygun.track_exception(custom_data: {time: Time.now, booking: self.id, reason: "Refund failed"})
+    end
+    if guest_cancel
+      GuestCancelledBookingHostJob.new.async.perform(self.id) #Let the host know booking has been cancelled
+      GuestCancelledBookingGuestJob.new.async.perform(self.id) #Confirm for the guest that their booking has been cancelled
+    end
+    return result.success?
+  end
+
+  def calculate_payment_refund
+    return if self.payment.nil?
+    days = self.check_in_date.mjd - Date.today.mjd
+    days > 14 ? self.payment.amount : days >= 0 ? self.payment.amount * 0.5 : 0
   end
 
   def unfinished_booking?
@@ -107,16 +157,16 @@ class Booking < ActiveRecord::Base
   def calculate_refund
     days = get_days_left
     if days > 14
-      return actual_value_figure(transaction_mode_value(amount_minus_fees))
+      return self.subtotal - self.phs_service_charge
     elsif days >= 7
-      return actual_value_figure(transaction_mode_value(self.amount_minus_fees * 0.5))
+      return (self.subtotal - self.phs_service_charge) * 0.5
     else
-      return "0.00"
+      return 0
     end
   end
 
   def amount_minus_fees
-    return (self.subtotal - self.phs_service_charge.to_f)
+    self.subtotal - self.phs_service_charge
   end
 
   def calculate_host_amount_after_guest_cancel
@@ -201,6 +251,10 @@ class Booking < ActiveRecord::Base
   end
 
   def confirmed_by_host(current_user)
+    if self.payment.present?
+       result = Braintree::Transaction.submit_for_settlement(self.payment.braintree_transaction_id)
+       Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
+    end
     message = nil
     if [6, 7].include?(self.response_id)
       self.host_accepted = false
@@ -212,7 +266,7 @@ class Booking < ActiveRecord::Base
 
     if self.response_id == 5
       results = self.complete_transaction(current_user)
-      if results.class == String
+      if results.class == String && Rails.env != "development"
         message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
         UserMailer.error_report('host confirming transaction', results).deliver
       else
@@ -220,16 +274,22 @@ class Booking < ActiveRecord::Base
         self.save!
         PetOwnerMailer.booking_confirmation(self).deliver
         ProviderMailer.booking_confirmation(self).deliver
-        self.mailbox.messages.create! user_id: bookee_id,
-          message_text: "[This is a PetHomestay auto-generated message]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        # self.mailbox.messages.create! user_id: booker_id,
+        #   message_text: "[This is an auto-generated message for the Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        # self.mailbox.messages.create! user_id: bookee_id,
+        #   message_text: "[This is an auto-generated message for the Host]\n\nYou have confirmed the booking.\nThe Guest will drop their pet off on the check-in date & leave a feedback once the stay has been completed! \nThanks for using PetHomestay!"
+        self.mailbox.update_attributes host_read: false, guest_read: false
       end
 
     elsif self.response_id == 6
       message = 'Guest will be informed of your unavailability'
       self.host_rejects_booking
       self.save!
-      self.mailbox.messages.create! user_id: bookee_id,
-        message_text: "[This is a PetHomestay auto-generated message]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
+      # self.mailbox.messages.create! user_id: booker_id,
+      #   message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
+      # self.mailbox.messages.create! user_id: bookee_id,
+      #   message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
+      self.mailbox.update_attributes host_read: false, guest_read: false
       PetOwnerMailer.provider_not_available(self).deliver
     elsif self.response_id == 7
       message = 'Your question has been sent to guest'
@@ -279,10 +339,16 @@ class Booking < ActiveRecord::Base
     }
   end
 
+  def update_transaction_by_daily_price(price)
+    self.subtotal = self.number_of_nights * price.to_f
+    self.amount   = self.calculate_amount
+    self.save!
+  end
+
   def complete_transaction(current_user)
     if self.host_accepted?
       if self.host_view?(current_user)
-        return self.transaction.complete_payment
+        return self.transaction.complete_payment if self.transaction.present?
       end
       if self.owner_view?(current_user)
         self.remove_notification
@@ -290,12 +356,20 @@ class Booking < ActiveRecord::Base
     end
   end
 
+  # Sends email to host saying that payment made, they just need to accept
+  def trigger_host_accept
+    ProviderMailer.owner_confirmed(self).deliver
+    # self.host_accepts_booking
+    # self.host_accepted = true
+    # self.save!
+  end
+
   def phs_service_charge
     actual_value_figure(transaction_mode_value(self.subtotal * 0.15))
   end
 
   def public_liability_insurance
-    actual_value_figure(transaction_mode_value(self.number_of_nights * 2))
+    self.number_of_nights * PER_NIGHT_LIABILITY_INSURANCE_COST
   end
 
   def host_payout_deduction
@@ -307,11 +381,11 @@ class Booking < ActiveRecord::Base
   end
 
   def transaction_fee
-    actual_value_figure(credit_card_fee)
+    self.subtotal * CREDIT_CARD_SURCHARGE_IN_DECIMAL
   end
 
   def credit_card_fee
-    transaction_mode_value(subtotal * 0.025)
+    self.subtotal * CREDIT_CARD_SURCHARGE_IN_DECIMAL
   end
 
   def fees
@@ -336,7 +410,7 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_amount
-    transaction_mode_value(self.subtotal + self.transaction_fee.to_f)
+    return self.subtotal*CREDIT_CARD_SURCHARGE_IN_DECIMAL + self.subtotal
   end
 
   def transaction_mode_value(value)
@@ -360,8 +434,11 @@ class Booking < ActiveRecord::Base
     self.save!
 
     if old_message.blank?
-      self.mailbox.messages.create! user_id: self.booker_id,
-        message_text: "[This is a PetHomeStay auto-generated message]\n\nIf you are a Guest, then this is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
+      # self.mailbox.messages.create! user_id: self.booker_id,
+      #   message_text: "[This is an auto-generated message for the Guest]\n\nThis is a record of your booking request. No further action is required.\n\nIf you are a Host, please confirm or edit by clicking the button below."
+      # self.mailbox.messages.create! user_id: self.bookee_id,
+      #   message_text: "[This is an auto-generated message for the Host]\n\nPlease confirm or edit this booking by clicking the button below."
+      self.mailbox.update_attributes host_read: false, guest_read: false
       unless new_message.empty?
        self.mailbox.messages.create! message_text: new_message, user_id: self.booker_id
       end
@@ -370,6 +447,34 @@ class Booking < ActiveRecord::Base
       message.message_text = new_message
       message.save!
     end
+  end
+
+  # Designed to eventually replace state_machine or update booking states
+  def get_status
+    return "Cancelled" if self.cancel_date.present?
+    if self.owner_accepted
+      # Booking 'booked' if both owner & host accepted, payment made, but stay not completed
+      return "Booked" if self.host_accepted && self.payment.present? && self.check_out_date.to_time > Time.now
+      # Booking 'completed' if both owner & host accepted, payment made and stay completed
+      return "Completed" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.present?
+      # Booking 'Leave feedback' if completed, paid, but no feedback
+      return "Leave Feedback" if self.host_accepted && self.payment.present? && self.check_out_date.to_time < Time.now && self.enquiry.feedbacks.empty?
+      # Booking rejected
+      return "Booking rejected" if self.host_accepted == false && self.owner_accepted
+      # Booking 'Waiting on host' if owner accepted but not host accepted
+      return "Pending action - #{self.bookee.first_name}" if self.host_accepted != true && self.payment.present?
+    elsif self.host_accepted && self.owner_accepted != true
+      return "Pending action - #{self.booker.first_name}"
+    else
+      return "Enquiry"
+    end
+  end
+
+  def get_status_css
+    return "enquiry" if self.owner_accepted.nil? || self.host_accepted.nil?
+    return "requested" if (self.owner_accepted || self.host_accepted) && self.payment.nil?
+    return "cancelled" if (self.host_accepted == false && self.payment.present?) || self.cancel_date.present?
+    return "booked" if self.payment.present? && self.host_accepted
   end
 
   def host_booking_status

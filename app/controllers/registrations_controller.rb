@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  include GuestHelper
   before_filter :authenticate_user!
   before_filter :set_instance_vars, only: [:edit]
 
@@ -38,13 +39,7 @@ class RegistrationsController < Devise::RegistrationsController
     guest_edit_path
   end
 
-  private
-  # This method must be kept in sync with Guest::GuestController
-  def set_instance_vars
-    @unread_count = Mailbox.as_guest(current_user).where(guest_read: false).count
-    this_month    = Date.today..Date.today.end_of_month
-    @upcoming     = current_user.bookers.where(check_in_date: this_month)
-                    .order('check_in_date ASC').limit(5)
-                    .select('state, check_in_date, check_out_date, bookee_id')
+  def after_sign_up_path_for(resource)
+    root_path(:check_for_coupon => true)
   end
 end

@@ -100,7 +100,7 @@
       %h4 Accepted bookings
       - @user.booking_accepted_by_host.each do |booking|
         %p.pull-left= link_to "#{booking.bookee.first_name} has accepted your booking", booking_path(booking)
-        %p.pull-right #{booking.transaction.created_at.to_formatted_s(:day_and_month)}
+        %p.pull-right #{booking.transaction ? booking.transaction.created_at.to_formatted_s(:day_and_month) : booking.payment.created_at.strftime("%d/%M/%y @ %h:%M")}
         .clear
       %hr
     - if @user.booking_declined_by_host?

@@ -1,0 +1,78 @@
+.container
+  .row
+    .col-md-12.hidden-xs
+      %h3 Stay Details
+    .col-md-12.col-xs-12
+      %table.table.table-striped.table-condensed
+        %tr
+          %td
+            %strong Check in Date
+          %td= @booking.check_in_date.strftime("%A, %d/%m/%Y")
+        %tr
+          %td
+            %strong Check out Date
+          %td= @booking.check_out_date.strftime("%A, %d/%m/%Y")
+        %tr
+          %td
+            %strong 24h Stays
+          %td= @booking.number_of_nights
+  .row
+    .col-xs-12
+      %h3 Pets
+      %table.table.table-striped.table-condensed
+      - @booking.booker.pets.each do |pet|
+        %tr
+          %td
+          %table.table.table-striped.table-condensed
+            %tr
+              %td Name
+              %td= pet.name
+            %tr
+              %td Type
+              %td= pet.pet_type_name
+            %tr
+              %td Age
+              %td= pet.age
+            - if pet.size
+              %tr
+                %td Size
+                %td= pet.size_name
+            - if pet.sex
+              %tr
+                %td Gender
+                %td= pet.sex_name
+            %tr
+              %td Dislikes
+              %td= pet.dislikes
+            - unless pet.dislikes.blank?
+              %tr
+                %td More information about dislikes
+                %td= pet.explain_dislikes
+  .row
+    .col-xs-12.col-md-6
+      %h3.text-center Booking Details
+      %table.table.table-striped
+        %tr
+          %td.current-daily-price Daily Rate
+          %td= number_to_currency(@booking.cost_per_night)
+        %tr
+          %td.current-total-price Total Rate (to be paid by #{@booking.booker.name})
+          %td= number_to_currency(@booking.subtotal)
+        %tr
+          %td
+            PetHomeStay Service Charge
+            %br
+            (15% of total stay)
+          %td= number_to_currency(@booking.phs_service_charge)
+        %tr
+          %td $10 million Host Public Liability and Pet Accident Insurance
+          %td= number_to_currency(@booking.public_liability_insurance)
+        %tr
+          %td Total Host Payout
+          %td
+            %strong= number_to_currency(@booking.host_payout)
+  .row
+    .col-xs-12
+      %hr
+      - if @booking.payment
+        %p= "Paid by #{@booking.booker.name}"

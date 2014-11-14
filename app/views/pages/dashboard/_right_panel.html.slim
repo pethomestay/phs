@@ -8,6 +8,9 @@
       | All of your upcoming bookings are shown here
 
 .upcoming
+  - if defined? @awaits_feedback
+    - for booking in @awaits_feedback
+      = render 'shared/right_panel/event', event: booking, awaits_feedback: true
   - if defined? @upcoming
     - for event in @upcoming
-      = render 'shared/right_panel/event', event: event
+      = render 'shared/right_panel/event', event: event, awaits_feedback: false

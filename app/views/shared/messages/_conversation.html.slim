@@ -17,7 +17,7 @@
           - if homestay.present?
             br
             span.title = host.homestay.title
-            span #{homestay.address_suburb}, $#{homestay.cost_per_night.to_i}
+            span #{homestay.address_suburb}
     - elsif params[:controller].include? 'host'
       - guest = conversation.guest_mailbox # Could be nil
       - if guest.present? # TODO: add content to display when guest is nil
@@ -39,8 +39,9 @@
     .right
       - booking = conversation.booking # Could be nil
       - if booking.present?
-        - state = translate_state booking.state
-        span.booking-status class=state.downcase #{state}
+        - state = booking.get_status
+        - state_style = booking.get_status_css
+        span.booking-status class=state_style #{state}
         span.date
           small
             ' From:
@@ -56,10 +57,10 @@
         span.date
           small
             ' From:
-          = enquiry.check_in_date.strftime('%b %e')
+          = "#{enquiry.check_in_date.strftime('%b %e')} "
         span.date
           small
-            ' To:
+            ' to:
           = enquiry.check_out_date.strftime('%b %e')
       span
         i.fa.fa-chevron-down.fa-lg.chevron

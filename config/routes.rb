@@ -5,6 +5,7 @@ PetHomestay::Application.routes.draw do
   resources :users do
     collection do
       post :update_calendar
+      post :set_coupon
     end
   end
 
@@ -12,17 +13,18 @@ PetHomestay::Application.routes.draw do
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedbacks, only: [:new, :create]
+    get "show_for_guest"
   end
   resources :homestays do
-	  member do
-		  get 'favourite'
-		  get 'non_favourite'
+    member do
+      get 'favourite'
+      get 'non_favourite'
       get 'availability'
-	  end
+    end
 
-	  collection do
-		  get 'favourites'
-	  end
+    collection do
+      get 'favourites'
+    end
   end
   resources :transactions
   resources :pets, except: [:show]
@@ -47,29 +49,30 @@ PetHomestay::Application.routes.draw do
 
 
   resources :bookings do
-	  collection do
-		  post 'result'
-		  get 'result'
-		  get 'update_transaction'
+    collection do
+      post 'result'
+      get 'result'
+      get 'update_transaction'
       get 'host_cancellation'
       post 'host_cancel'
-		  get 'update_message'
-	  end
-	  member do
-		  get 'host_confirm'
+      get 'update_message'
+    end
+  get 'host_receipt'
+    member do
+      get 'host_confirm'
       put 'book_reservation'
-		  get 'host_message'
-		  get 'host_paid'
+      get 'host_message'
+      get 'host_paid'
       get 'guest_refunded'
       put 'host_confirm_cancellation'
       put 'guest_save_cancel_reason'
       get 'guest_cancelled'
-		  get 'admin_view'
-	  end
+      get 'admin_view'
+    end
   end
 
   resources :mailboxes, only: :index do
-	  resources :messages, only: [:index, :create]
+    resources :messages, only: [:index, :create]
   end
 
   resources :availability do
@@ -96,6 +99,7 @@ PetHomestay::Application.routes.draw do
   end
   devise_scope :user do
     get '/guest/edit', to: 'registrations#edit'
+    get '/host/edit', to: 'registrations#edit'
   end
 
   namespace :host do
@@ -111,8 +115,8 @@ PetHomestay::Application.routes.draw do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
     resources :enquiries
     resources :bookings do
-	    collection do
-		    get :reconciliations_file
+      collection do
+        get :reconciliations_file
       end
       member do
         post :reset_booking_state
@@ -125,6 +129,7 @@ PetHomestay::Application.routes.draw do
     resources :analytics
     resources :users
     resources :accounts
+    resources :coupons
   end
 
   # Zendesk Single Sign-on

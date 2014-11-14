@@ -19,12 +19,19 @@ class Guest::MessagesController < Guest::GuestController
   #     id: id of conversation
   #     message_text: content of message
   def create
-    # TODO: make sure current user is part of conversation
-    # Minor security impact. Low priority.
-    @conversation = Mailbox.find(params[:id])
-    @message = @conversation.messages.new
-    @message.message_text = params[:message_text]
-    @message.user_id = current_user.id
+    if params[:message]
+      @conversation = Mailbox.find(params[:message][:mailbox_id])
+      @message = @conversation.messages.new
+      @message.message_text = params[:message][:message]
+      @message.user_id = current_user.id
+    else
+      # TODO: make sure current user is part of conversation
+      # Minor security impact. Low priority.
+      @conversation = Mailbox.find(params[:id])
+      @message = @conversation.messages.new
+      @message.message_text = params[:message_text]
+      @message.user_id = current_user.id
+    end
     if @message.save
       # TODO: Transform email notification into a SuckerPunch job
       UserMailer.receive_message(@conversation.messages.last).deliver

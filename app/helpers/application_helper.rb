@@ -39,6 +39,18 @@ module ApplicationHelper
     end
   end
 
+  def rating_stars_awesome(rating)
+    html = ''
+    5.times.collect do |star|
+      if star < rating
+        html += '<i class="fa fa-star"></i>'
+      else
+        html += '<i class="fa fa-star-o"></i>'
+      end
+    end
+    html
+  end
+
   def google_maps_source_url
     "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&sensor=true&libraries=places"
   end
@@ -88,5 +100,13 @@ module ApplicationHelper
       when 1814401..2678400 then 'this month'  # within 31 days
       else 'more than a month ago'
     end
+  end
+
+  def guest_view
+    params[:controller].include?('guest') || ( params[:controller] == 'registrations' && !request.url.include?('/host') )
+  end
+
+  def host_view
+    params[:controller].include?('host') || ( params[:controller] == 'registrations' && request.url.include?('/host') )
   end
 end

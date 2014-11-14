@@ -53,6 +53,16 @@ class ProviderMailer < ActionMailer::Base
     # email.mailgun_operations = {tag: "booking_confirmation_for_host", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
+  def booking_made(booking)
+    @booking = booking
+    @guest = @booking.booker
+    @homestay = @booking.homestay
+    @host = @homestay.user
+    email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
+    email = mail(to: email_with_name, subject: "Booking for #{@guest.first_name.capitalize} completed!")
+    # email.mailgun_operations = {tag: "booking_made_for_host", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
+  end
+
   private
   def trim(mobile)
     mobile.gsub(/[^0-9]/, "")
