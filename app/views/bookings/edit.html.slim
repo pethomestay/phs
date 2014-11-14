@@ -18,7 +18,7 @@
             li class=(@booking.host_accepted ? 'progtrckr-done' : 'progtrckr-current' )
               ' Propose
               span.hidden-xs Rate
-            li class=(@booking.host_accepted ? 'progtrckr-current' : 'progtrckr-todo') Confirm
+            li.progtrckr-todo Confirm
             li.progtrckr-todo Done!
       - else # Guest view
         - if @booking.host_accepted # Host has proposed a custom rate
