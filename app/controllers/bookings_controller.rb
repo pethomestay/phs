@@ -164,6 +164,7 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
+    redirect_to root_path and return unless current_user == @booking.booker || current_user == @booking.bookee
     @booking.remove_notification if @booking.host_accepted? && @booking.owner_view?(current_user)
   end
 
