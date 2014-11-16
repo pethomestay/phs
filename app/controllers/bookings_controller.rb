@@ -13,6 +13,12 @@ class BookingsController < ApplicationController
     redirect_to edit_booking_path(@booking)
   end
 
+  def update_dates
+    @booking = current_user.bookers.find_by_id(params[:booking_id])
+    @booking.update_transaction_by(nil, params[:new_check_in], params[:new_check_out])
+    render json: {:nights => @booking.number_of_nights, :total_cost => sprintf('%.2f', @booking.amount.to_s)}
+  end
+
   def edit
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?

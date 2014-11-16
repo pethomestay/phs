@@ -310,32 +310,32 @@ class Booking < ActiveRecord::Base
   end
 
   def update_transaction_by(number_of_nights=nil, check_in_date=nil, check_out_date=nil)
-    if number_of_nights.blank? || check_in_date.blank? || check_out_date.blank?
+    if number_of_nights.blank? && check_in_date.blank? && check_out_date.blank?
       return { error: true }
     end
-    self.number_of_nights = number_of_nights.to_i
-    self.check_in_date = check_in_date
-    self.check_out_date = check_out_date
+    self.check_in_date = check_in_date.try(:to_date) if check_in_date.present?
+    self.check_out_date = check_out_date.try(:to_date) if check_out_date.present?
+    self.number_of_nights = (self.check_out_date - self.check_in_date).to_i > 0 ? (self.check_out_date - self.check_in_date).to_i : 1
 
     self.subtotal = self.number_of_nights * self.cost_per_night
     self.amount = self.calculate_amount
     self.save!
 
-    self.transaction.amount = self.amount
-    self.transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
-    fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{self.transaction.type_code}|#{self.transaction.
-        reference}|#{self.transaction.actual_amount}|#{self.transaction.time_stamp}"
+    # self.transaction.amount = self.amount
+    # self.transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
+    # fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{self.transaction.type_code}|#{self.transaction.
+    #     reference}|#{self.transaction.actual_amount}|#{self.transaction.time_stamp}"
 
-    self.transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
-    self.transaction.save!
+    # self.transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
+    # self.transaction.save!
 
     {
         booking_subtotal: self.subtotal.to_s,
-        booking_amount: self.amount.to_s,
-        transaction_fee: self.transaction_fee,
-        transaction_actual_amount: self.transaction.actual_amount,
-        transaction_time_stamp: self.transaction.time_stamp,
-        transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
+        booking_amount: self.amount.to_s #,
+        # transaction_fee: self.transaction_fee,
+        # transaction_actual_amount: self.transaction.actual_amount,
+        # transaction_time_stamp: self.transaction.time_stamp,
+        # transaction_merchant_fingerprint: self.transaction.merchant_fingerprint
     }
   end
 
