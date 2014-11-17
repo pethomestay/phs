@@ -29,8 +29,8 @@
   .container.bookings-edit
     .page-header
       h1.text-center
-        | Thank you for Booking
-        span.hidden-xs  via PetHomeStay
+        | Booking Request Sent
+        span.hidden-xs  to #{@booking.bookee.first_name}
         | !
     .row
       .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
@@ -46,7 +46,10 @@
           p When he or she does:
           ul style='color: #777;'
             li Your card will be charged the quoted HomeStay amount
-            li You and the Host are committed to the Booking under PetHomeStay Terms & Conditions.
+            li
+              ' You and #{@booking.bookee.first_name} are committed to the Booking under
+              = link_to 'PetHomeStay Terms & Conditions', terms_and_conditions_path
+              | .
             li You will receive an email and a text when the Booking is confirmed!
         br
         = link_to 'Go to My Inbox', guest_messages_path, class: 'btn btn-primary btn-block'
