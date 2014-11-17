@@ -124,7 +124,7 @@ coffee:
       success: (response, status, xhr) ->
         $('#num_nights').text(response.nights)
         $('.payment-button').val("Pay $" + response.total_cost)
-        $('#display_total').text("Pay $" + response.total_cost)
+        $('#display_total').text("$#{response.total_cost}")
     # Set check out date no earlier than check in date
     inDate = new Date(evt.date)
     check_out_picker.setDate inDate
@@ -148,7 +148,7 @@ coffee:
       success: (response, status, xhr) ->
         $('#num_nights').text(response.nights)
         $('.payment-button').val("Pay $" + response.total_cost)
-        $('#display_total').text("Pay $" + response.total_cost)
+        $('#display_total').text("$#{response.total_cost}")
   ).data('datepicker')
   $('.booking_check_in_date .input-group-addon'). on 'click', (evt) ->
     evt.preventDefault()
