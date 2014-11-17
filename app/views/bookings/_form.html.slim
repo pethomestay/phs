@@ -25,42 +25,18 @@
         - if !@booking.host_accepted # Dates can be edited
           tr
             td Check in
-            td
-              = f.input_field :check_in_date, as: :date_picker, readonly: true, value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'form-control'
-              / = f.input :check_in_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_in_date.strftime('%d/%m/%Y'), class: 'checkin', :id => "datepicker-check-in-date" }
-              / f.input :check_in_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_in_time.strftime("%H:%M") }
+            td.booking_check_in_date
+              .input-group
+                = f.input_field :check_in_date, as: :string, readonly: true, value: @booking.check_in_date.strftime('%d/%m/%Y')
+                span.input-group-addon(style = "width:0;background:white;")
+                  i.fa.fa-calendar
           tr
             td Check out
-            td
-              = f.input_field :check_out_date, as: :date_picker, readonly: true, value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'form-control'
-              / = f.input :check_out_date, label: false, as: :date_picker, wrapper_html: { class: "input-append enabled_datepicker" }, readonly: true, input_html: { value: @booking.check_out_date.strftime('%d/%m/%Y'), class: 'checkout', id: "datepicker-check-out-date" }
-              / f.input :check_out_time, label: false, as: :time_picker, wrapper_html: { class: "input-append timepicker" }, readonly: true, input_html: { value: @booking.check_out_time.strftime("%H:%M") }
-          / - content_for :head_stylesheet do
-          /   = stylesheet_link_tag '_bootstrap-datepicker'
-          / - content_for :head_javascript do
-          /   = javascript_include_tag 'bootstrap-datepicker-core'
-          / coffee:
-          /   $ ->
-          /     # Datepicker for check in and out date
-          /     $check_in = $('#booking_check_in_date')
-          /     check_in_picker = $check_in.datepicker(
-          /       format: 'dd/mm/yyyy'
-          /       startDate: '0d'
-          /       autoclose: true # False by default
-          /     ).on('changeDate', (evt) ->
-          /       # Set check out date no earlier than check in date
-          /       inDate = new Date(evt.date)
-          /       check_out_picker.setDate inDate
-          /       check_out_picker.startDate = inDate
-          /       check_out_picker.update()
-          /       $check_out.focus()
-          /     ).data('datepicker')
-          /     $check_out = $('#booking_check_out_date')
-          /     check_out_picker = $check_out.datepicker(
-          /       format: 'dd/mm/yyyy'
-          /       startDate: '0d'
-          /       autoclose: true
-          /     ).data('datepicker')
+            td.booking_check_out_date
+              .input-group
+                = f.input_field :check_out_date, as: :string, readonly: true, value: @booking.check_out_date.strftime('%d/%m/%Y')
+                span.input-group-addon(style = "width:0;background:white;")
+                  i.fa.fa-calendar
         - else
           - unless @booking.check_in_date.blank?
             tr
@@ -70,8 +46,13 @@
             tr
               td Check out
               td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
-        / tr
-        /   td #{ @booking.number_of_nights } nights
+        tr
+          td
+            | Total Stays
+            br
+            | (x 24h)
+          td
+            span#num_nights= @booking.number_of_nights
 
   .row
     .col-sm-10.col-sm-offset-1
@@ -90,7 +71,7 @@
           td
             ' Total
             i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
-          td= number_to_currency(@booking.amount)
+          td#display_total= number_to_currency(@booking.amount)
         - if @coupon
           tr
             td Discount (code: #{@coupon.code})
@@ -111,9 +92,9 @@
         form#checkout url=booking_path(@booking) method="put"
           #dropin
           - if @coupon
-            input type="submit" value=("Pay #{number_to_currency(@booking.amount - @coupon.discount_amount)}") class='btn btn-primary btn-lg btn-block'
+            input type="submit" value=("Pay #{number_to_currency(@booking.amount - @coupon.discount_amount)}") class='btn btn-primary btn-lg btn-block payment-button'
           - else
-            input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class='btn btn-primary btn-lg btn-block'
+            input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class='btn btn-primary btn-lg btn-block payment-button'
         script type="text/javascript" src="https://js.braintreegateway.com/v2/braintree.js"
         javascript:
           braintree.setup("#{@client_token}", 'dropin', {
@@ -126,3 +107,58 @@
     = image_tag 'braintree_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', html: 'true', content: '<p>PetHomeStay uses Braintree for processing, a Paypal firm used by Uber, Airbnb and other sharing econony firms for their trusted user data.</p><p>Braintree remembers your card (excluding the CVV) on our behalf using a token under banking grade PCI compliance, however PetHomeStay does not store and never has access to these details.</p>' }
     br
     = image_tag 'comodo_ssl_logo.png', class: 'center-block', data: { toggle: 'popover', trigger: 'click hover', content: 'We use Comodo SSL for full website encryption.' }
+javascript:
+  target_path = "#{booking_update_dates_path(@booking)}"
+coffee:
+  $check_in = $('#booking_check_in_date')
+  check_in_picker = $check_in.datepicker(
+    format: 'dd/mm/yyyy'
+    startDate: '0d'
+    autoclose: true
+    todayHighlight: true
+  ).on('changeDate', (evt) ->
+    new_date = $(this).val()
+    #Sends ajax to inform of date change
+    $.ajax
+      url: target_path
+      type: "POST"
+      data:
+        new_check_in: new_date
+        new_check_out: new_date
+      success: (response, status, xhr) ->
+        $('#num_nights').text(response.nights)
+        $('.payment-button').val("Pay $" + response.total_cost)
+        $('#display_total').text("$#{response.total_cost}")
+    # Set check out date no earlier than check in date
+    inDate = new Date(evt.date)
+    check_out_picker.setDate inDate
+    check_out_picker.startDate = inDate
+    check_out_picker.update()
+    $check_out.focus()
+  ).data('datepicker')
+  $check_out = $('#booking_check_out_date')
+  check_out_picker = $check_out.datepicker(
+    format: 'dd/mm/yyyy'
+    startDate: '0d'
+    autoclose: true
+    todayHighlight: true
+  ).on('changeDate', (evt) ->
+    # Sends ajax to inform of date change
+    new_date = $(this).val()
+    $.ajax
+      url: target_path
+      type: "POST"
+      data: {new_check_out: new_date}
+      success: (response, status, xhr) ->
+        $('#num_nights').text(response.nights)
+        $('.payment-button').val("Pay $" + response.total_cost)
+        $('#display_total').text("$#{response.total_cost}")
+  ).data('datepicker')
+  $('.booking_check_in_date .input-group-addon'). on 'click', (evt) ->
+    evt.preventDefault()
+    check_out_picker.hide()
+    check_in_picker.show()
+  $('.booking_check_out_date .input-group-addon'). on 'click', (evt) ->
+    evt.preventDefault()
+    check_in_picker.hide()
+    check_out_picker.show()

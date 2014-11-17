@@ -174,12 +174,12 @@
                 .input-group.input-group-lg.left-merged.enquiry_check_in_date
                   span.input-group-addon
                     i.fa.fa-calendar
-                  = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: ''
+                  = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
               .col-sm-6
                 .input-group.input-group-lg.left-merged.enquiry_check_out_date
                   span.input-group-addon
                     i.fa.fa-calendar
-                  = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: ''
+                  = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
             br
             .row
               .col-xs-12

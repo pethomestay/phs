@@ -1,7 +1,6 @@
 FactoryGirl.define do
-
   factory :user do
-    first_name  { Faker::Name.first_name }
+    first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password 'abcdefghij'
@@ -21,10 +20,10 @@ FactoryGirl.define do
   end
 
   factory :user_with_pet, :parent => :confirmed_user do |f|
-	  f.pets { [FactoryGirl.create(:pet)] }
+    f.pets { [FactoryGirl.create(:pet)] }
   end
 
   factory :user_with_homestay, :parent => :confirmed_user do |f|
-	  f.homestay { FactoryGirl.create(:homestay) }
+    f.homestay { FactoryGirl.create(:homestay) }
   end
 end
