@@ -51,7 +51,7 @@ class BookingsController < ApplicationController
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
-          Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
+          # Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
           AdminMailer.host_rejected_paid_booking(@booking).deliver
           # @booking.mailbox.messages.create! user_id: @booking.booker_id,
           # message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately #{current_user.name} has declined the booking. You can try other Hosts in your area.\n\n#{params[:booking][:message]}"
