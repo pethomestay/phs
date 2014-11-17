@@ -24,7 +24,10 @@
           td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
       tr
         td
-        td 24h Stays
+        td
+          | Total Stays
+          br
+          | (x 24h)
         td = @booking.number_of_nights
 .row
   .col-sm-10.col-sm-offset-1
