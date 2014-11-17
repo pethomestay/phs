@@ -120,7 +120,9 @@ coffee:
     $.ajax
       url: target_path
       type: "POST"
-      data: {new_check_in: new_date}
+      data:
+        new_check_in: new_date
+        new_check_out: new_date
       success: (response, status, xhr) ->
         $('#num_nights').text(response.nights)
         $('.payment-button').val("Pay $" + response.total_cost)
