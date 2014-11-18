@@ -79,9 +79,9 @@ class BookingsController < ApplicationController
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
-          return redirect_to host_messages_path, alert: "Custom rate has been sent to #{@booking.booker.name}"
+          return redirect_to host_messages_path, alert: "Custom rate has been sent to #{@booking.booker.first_name}"
         else
-          return redirect_to host_messages_path
+          return redirect_to host_messages_path, error: 'Sorry, your custom rate did not go through for some reason. Please try again or contact us at 1300 660 945.'
         end
       end
     else # Guest booking modifications (or payment)
