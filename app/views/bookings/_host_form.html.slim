@@ -112,12 +112,12 @@
           td
             em Proposed Daily Rate
           td
-            input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}"
+            input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}" value=@booking.cost_per_night
         tr id="proposed-total-price"
           td
             em Proposed Total Rate
           td
-            input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}"
+            input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}" value=@booking.subtotal
         tr
           td
             em
@@ -149,7 +149,7 @@
   - else
     = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
     br
-    = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
+    = f.submit 'Accept Booking', class: 'btn btn-primary btn-lg btn-block'
     br
     - if @booking.owner_accepted
       p.small Accepting this request will confirm the booking.
