@@ -46,6 +46,9 @@ IntercomRails.config do |config|
   #   :plan => Proc.new { |current_user| current_user.plan.name },
   #   :favorite_color => :favorite_color
   # }
+  config.user.custom_data = {
+    mobile_number: :mobile_number
+  }
 
   # == User -> Company association
   # A Proc that given a user returns an array of companies
