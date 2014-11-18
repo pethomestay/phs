@@ -144,10 +144,10 @@
       = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
       br
     .row
-      = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
+      = f.submit 'Submit', class: 'btn btn-primary btn-lg btn-block'
     br
   - else
-    = f.input :message, input_html: {rows: 5}, placeholder: "Please leave a message"
+    = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
     br
     = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
     br
