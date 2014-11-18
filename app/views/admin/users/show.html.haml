@@ -32,6 +32,13 @@
     = @user.address_2
     %br
     = "#{@user.address_suburb}, #{@user.address_postcode}"
+  - if @user.unavailable_dates.any?
+    %dt Unavailable dates
+    - @user.unavailable_dates.sort_by!(&:date).each_with_index do |unavailable, index|
+      - next if unavailable.date < Date.today
+      %dd
+        = unavailable.date.to_date.strftime("%A, %d/%m/%Y")
+
 
 = link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-primary'
 = link_to 'Back to user list', admin_users_path(letter: 'Z'), class: 'btn'

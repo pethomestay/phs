@@ -7,6 +7,8 @@ class HomestaysController < ApplicationController
   #This is the action that results from a search
   def index
     redirect_to root_path and return unless params[:search]
+    session[:check_in_date]  = params[:search][:check_in_date]
+    session[:check_out_date] = params[:search][:check_out_date]
     @search = Search.new(params[:search])
     #We are only doing australia, not sure why we are doing the country detect
     @search.country =  'Australia' #request.location.country_code if request.location

@@ -10,6 +10,7 @@
     %tr
       %td.table-header-text{ colspan: '3' } General Information
       %td.table-header-text{ colspan: '3' } Guest Paid
+      %td.table-header-text{ colspan: '2' } Coupon
       %td.table-header-text{ colspan: '3' } Host Payout
 
     %tr
@@ -19,6 +20,8 @@
       %th Subtotal
       %th Fee
       %th Total
+      %th Guest discount
+      %th Code Source
       %th Insurance Fee
       %th PHS Fee
       %th total
@@ -33,6 +36,8 @@
       %td S
       %td F
       %td = S + F
+      %td
+      %td
       %td I
       %td P
       %td = S - I - P
@@ -42,20 +47,24 @@
 
   %tbody
     - @bookings.each do |booking|
-      %tr{ "data-id" => booking.id }
+      - if booking.payment.present?
+        - discount = booking.coupon.present? ? booking.coupon.discount_amount : 0
+        %tr{ "data-id" => booking.id }
         %td= booking.booker.name.capitalize
         %td= booking.check_out_date.strftime('%d/%m/%Y')
-        - reference = booking.transaction.reference
-        %td{ class: "#{reference.include?('transaction_id') ? 'credit-card-color' : 'stored-card-color'}" }
-          = booking.transaction.reference
+        %td{ class: "stored-card-color" }
+          = "#{booking.payment.status} (BrainTree)"
 
-        %td= currency_formatter(booking.subtotal)
-        %td= currency_formatter(booking.credit_card_fee)
-        %td= currency_formatter(booking.transaction.amount)
+        %td= number_to_currency(booking.subtotal)
+        %td= number_to_currency(booking.payment.amount - booking.subtotal + discount)
+        %td= number_to_currency(booking.payment.amount)
 
-        %td= currency_formatter(booking.public_liability_insurance)
-        %td= currency_formatter(booking.phs_service_charge)
-        %td= currency_formatter(booking.host_payout)
+        %td= number_to_currency(discount)
+        %td= booking.try(:coupon).try(:referred_by).try(:name)
+
+        %td= number_to_currency(booking.public_liability_insurance)
+        %td= number_to_currency(booking.phs_service_charge)
+        %td= number_to_currency(booking.host_payout)
         %td
           %input.booking_paid_confirm{ type: 'button', value: 'YES' }
           - account = booking.bookee.account
@@ -63,6 +72,28 @@
             %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
           - else
             = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
+      - else 
+        %tr{ "data-id" => booking.id }
+          %td= booking.booker.name.capitalize
+          %td= booking.check_out_date.strftime('%d/%m/%Y')
+          - reference = booking.transaction.reference
+          %td{ class: "#{reference.include?('transaction_id') ? 'credit-card-color' : 'stored-card-color'}" }
+            = booking.transaction.reference
+
+          %td= currency_formatter(booking.subtotal)
+          %td= currency_formatter(booking.credit_card_fee)
+          %td= currency_formatter(booking.transaction.amount)
+
+          %td= currency_formatter(booking.public_liability_insurance)
+          %td= currency_formatter(booking.phs_service_charge)
+          %td= currency_formatter(booking.host_payout)
+          %td
+            %input.booking_paid_confirm{ type: 'button', value: 'YES' }
+            - account = booking.bookee.account
+            - if account.blank?
+              %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
+            - else
+              = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
 
 
 :javascript

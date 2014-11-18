@@ -4,6 +4,7 @@ class Host::HomestaysController < Host::HostController
 
   # GET /host/homestay/new
   def new
+    redirect_to edit_host_homestay_path and return if current_user.homestay.present?
     @homestay = current_user.build_homestay
   end
 

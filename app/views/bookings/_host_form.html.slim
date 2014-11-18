@@ -1,0 +1,205 @@
+- guest = @booking.booker
+.row
+  .col-sm-9.col-sm-offset-1
+    h3.text-center Guest Details
+    table.table
+      tr
+        td rowspan='3'
+          - photo_size = 70
+          - if guest.profile_photo?
+            = cl_image_tag guest.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - elsif guest.uid.present?
+            = facebook_profile_image_tag guest.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
+          - else
+            = image_tag 'default_profile_photo.jpg', style: 'width: 70px;', class: 'img-circle'
+        td
+          strong = guest.name
+      - if @booking.check_in_date.present?
+        tr
+          td Check in
+          td = @booking.check_in_date.strftime("%A, %d/%m/%Y")
+      - if @booking.check_out_date.present?
+        tr
+          td Check out
+          td = @booking.check_out_date.strftime("%A, %d/%m/%Y")
+      tr
+        td
+        td
+          | Total Stays
+          br
+          | (x 24h)
+        td = @booking.number_of_nights
+.row
+  .col-sm-10.col-sm-offset-1
+    h3.text-center Pet Details
+    table.table
+      - guest.pets.each do |pet|
+        - if pet.pet_type_name != 'Dog' # Only display type if it's not a dog
+          tr
+            td Type
+            td #{pet.pet_type_name}
+        - if pet.profile_photo?
+          tr
+            td
+              = cl_image_tag pet.profile_photo.public_id, width: 50, height: 50, crop: :thumb, radius: :max, format: :png
+            td.lead
+              | #{pet.name}
+              - if pet.breed.present?
+                |, a #{pet.breed}
+              br
+              | #{pet.age}
+        - else
+          tr
+            td.lead colspan='2'
+              | #{pet.name}
+              - if pet.breed.present?
+                |, a #{pet.breed}
+              br
+              | #{pet.age}
+        - if pet.size
+          tr
+            td Size
+            td = pet.size_name
+        - if pet.sex
+          tr
+            td Gender
+            td = pet.sex_name
+        - if pet.dislikes.present?
+          tr
+            td Dislikes
+            td = pet.dislikes
+          - if pet.explain_dislikes.present?
+            tr
+              td More information about dislikes
+              td = pet.explain_dislikes
+        - if pet.personalities.any?
+          tr
+            td Personality
+            td = "#{ pet.personalities.join(', ') }"
+.row
+  .col-xs-11.col-sm-9.col-sm-offset-1.booking-details-container
+    h3.text-center Booking Details
+    table.table
+      tr
+        td.current-daily-price Daily Rate
+        td= number_to_currency(@booking.cost_per_night)
+      tr
+        td.current-total-price Total Rate (to be paid by #{@booking.booker.name})
+        td= number_to_currency(@booking.subtotal)
+      tr
+        td
+          span.hidden-xs PetHomeStay
+          |  Service Charge
+          br
+          | (15% of total stay)
+        td = number_to_currency(@booking.phs_service_charge)
+      tr
+        td $10 million Host Public Liability and Pet Accident Insurance
+        td = number_to_currency(@booking.public_liability_insurance)
+      tr
+        td Total Host Payout
+        td
+          strong = number_to_currency(@booking.host_payout)
+  .col-xs-10.col-xs-offset-1
+    - unless @booking.owner_accepted
+      .btn.btn-secondary.btn-block#modify-price-button Click Here to Offer a Custom Rate
+    br
+  - unless @booking.owner_accepted
+    .col-xs-11.col-sm-10.col-sm-offset-1.modify-pricing
+      h3.text-center Custom Quote
+      table.table
+        tr#proposed-per-night
+          td
+            em Proposed Daily Rate
+          td
+            input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}"
+        tr id="proposed-total-price"
+          td
+            em Proposed Total Rate
+          td
+            input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}"
+        tr
+          td
+            em
+              span.hidden-xs PetHomeStay
+              |  Service Charge
+            br
+            | (15% of total stay)
+          td#phs-charge = number_to_currency(@booking.phs_service_charge)
+        tr
+          td $10 million host Public Liability and Pet Liability Insurance
+          td= number_to_currency(@booking.public_liability_insurance)
+        tr
+          td
+            em Total Host Payout
+          td
+            strong#host-payout = number_to_currency(@booking.host_payout)
+.row
+= simple_form_for @booking, wrapper: :bootstrap3 do |f|
+  = f.input :cost_per_night, as: :hidden
+  - if @booking.owner_accepted
+    .col-xs-11.col-sm-10.col-sm-offset-1
+      = f.input :host_accepted, required: true, as: :radio_buttons, label: 'Do you accept the booking?'
+    .col-xs-11.col-sm-10.col-sm-offset-1
+      = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
+      br
+    .row
+      = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
+    br
+  - else
+    = f.input :message, input_html: {rows: 5}, placeholder: "Please leave a message"
+    br
+    = f.submit 'Update Booking', class: 'btn btn-primary btn-lg btn-block'
+    br
+    - if @booking.owner_accepted
+      p.small Accepting this request will confirm the booking.
+    - else
+      p.small
+        ' If you offer a Custom Rate, and #{@booking.booker.first_name} accepts,
+        strong both parties are locked into the Booking.
+      p.small
+        ' Only offer Custom Rates that you are happy to commit to as they cannot
+        | be changed once accepted by #{@booking.booker.first_name}!
+    br
+    br
+    javascript:
+      $(document).ready(function(){
+        $(".modify-pricing").hide();
+        $("#modify-price-button").on("click", function() {
+          $('.booking-details-container').hide();
+          $(".modify-pricing").show();
+          // $(".current-total-price").text("Current Total Price");
+          // $(".current-daily-price").text("Current Daily Price");
+          $('#total-stay').focus()
+          $(this).hide();
+        });
+        $("#per-night").bind("change keyup input", function(){
+          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
+          var per_night = parseFloat($(this).val()).toFixed(2);
+          var total = (per_night * number_of_nights).toFixed(2);
+          var fee = (total * 0.15).toFixed(2);
+          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
+          $("#total-stay").val(total);
+          $("#host-payout").text("$" + payout);
+          $("#phs-charge").text("$" + fee);
+        });
+        $("#total-stay").bind("keyup", function(){
+          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
+          var total = parseFloat($(this).val()).toFixed(2);
+          var per_night = (total/number_of_nights).toFixed(2);
+          var fee = (total * 0.15).toFixed(2);
+          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
+          $("#per-night").val(per_night);
+          $("#host-payout").text("$" + payout);
+          $("#phs-charge").text("$" + fee);
+        });
+        $('form').on("submit", function(){
+          if (parseFloat($("#per-night").val()) >= 0) {
+            var proposed_per_night_price = parseFloat($("#per-night").val()).toFixed(2);
+            $("#booking_cost_per_night").val(proposed_per_night_price);
+          } else {
+            alert("Sorry, please enter a different price");
+            return false;
+          }
+        });
+      });

@@ -10,14 +10,14 @@
 .hidden-xs.col-sm-4.col-md-8
 
 a href=guest_path
-  .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('guest') or params[:controller] == 'registrations')
+  .pill-guest.col-xs-3.col-sm-2.col-md-1 class=('active' if guest_view)
     i.fa.fa-user.fa-2x
     span
       | Guest
       .visible-xs-block Menu
 
 a href=host_path
-  .pill-host.col-xs-3.col-sm-2.col-md-1 class=('active' if params[:controller].include?('host'))
+  .pill-host.col-xs-3.col-sm-2.col-md-1 class=('active' if host_view)
     i.fa.fa-home.fa-2x
     span
       | Host

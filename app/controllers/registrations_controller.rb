@@ -38,4 +38,8 @@ class RegistrationsController < Devise::RegistrationsController
   def after_update_path_for(resource)
     guest_edit_path
   end
+
+  def after_sign_up_path_for(resource)
+    root_path(:check_for_coupon => true)
+  end
 end

@@ -2,7 +2,8 @@ class Admin::TransactionsController < Admin::AdminController
 	respond_to :html
 
 	def index
-		respond_with(:admin, @transactions = Transaction.order('created_at DESC').paginate(page: params[:page], per_page: 100))
+		@transactions = Transaction.order('created_at DESC').paginate(page: params[:page], per_page: 100)
+    @payments     = Payment.order('created_at DESC').paginate(page: params[:page], per_page: 100)
 	end
 
   def show

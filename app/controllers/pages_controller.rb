@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   before_filter :authenticate_user!, only: [:welcome]
 
   def home
+    @check_for_coupon = params[:check_for_coupon].present? && current_user.try(:admin)
     @homepage = true
     render layout: 'new_application'
   end
@@ -35,6 +36,7 @@ class PagesController < ApplicationController
 
   def partners
     @contact = Contact.new
+    render layout: 'new_application'
   end
 
   def in_the_press

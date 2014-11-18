@@ -1,164 +1,78 @@
-.row
-  .col-md-12.hidden-xs
-    %h3 Stay Details
-  .col-md-12.col-xs-12
-    %table.table.table-striped.table-condensed
-      - unless @booking.check_in_date.blank?
+.container
+  .row
+    .col-md-12.hidden-xs
+      %h3 Stay Details
+    .col-md-12.col-xs-12
+      %table.table.table-striped.table-condensed
         %tr
           %td
             %strong Check in Date
           %td= @booking.check_in_date.strftime("%A, %d/%m/%Y")
-      - unless @booking.check_out_date.blank?
         %tr
           %td
             %strong Check out Date
           %td= @booking.check_out_date.strftime("%A, %d/%m/%Y")
-      %tr
-        %td
-          %strong Number of Nights
-        %td= @booking.number_of_nights
-.row
-  .col-xs-12
-    %h3 Pets
-    %table.table.table-striped.table-condensed
-    - @booking.booker.pets.each do |pet|
-      %tr
-        %td
-        %table.table.table-striped.table-condensed
-          %tr
-            %td Name
-            %td= pet.name
-          %tr
-            %td Type
-            %td= pet.pet_type_name
-          %tr
-            %td Age
-            %td= pet.age
-          - if pet.size
-            %tr
-              %td Size
-              %td= pet.size_name
-          - if pet.sex
-            %tr
-              %td Gender
-              %td= pet.sex_name
-          %tr
-            %td Dislikes
-            %td= pet.dislikes
-          - unless pet.dislikes.blank?
-            %tr
-              %td More information about dislikes
-              %td= pet.explain_dislikes
-.row
-  .col-xs-12.col-md-6
-    %h3.text-center Booking Details
-    %table.table.table-striped
-      %tr
-        %td.current-daily-price Daily Rate
-        %td= number_to_currency(@booking.cost_per_night)
-      %tr
-        %td.current-total-price Total Rate (to be paid by #{@booking.booker.name})
-        %td= number_to_currency(@booking.subtotal)
-      %tr
-        %td
-          PetHomeStay Service Charge
-          %br
-          (15% of total stay)
-        %td= number_to_currency(@booking.phs_service_charge)
-      %tr
-        %td $10 million Host Public Liability and Pet Accident Insurance
-        %td= number_to_currency(@booking.public_liability_insurance)
-      %tr
-        %td Total Host Payout
-        %td
-          %strong= number_to_currency(@booking.host_payout)
-    - if !@booking.owner_accepted
-      .btn.btn-primary.btn-large{:id => 'modify-price-button', :style => "width: 100%;"} Click here to modify pricing
-  - if !@booking.owner_accepted
-    .col-xs-12.col-md-6.modify-pricing
-      %h3.text-center Custom Quote
+        %tr
+          %td
+            %strong 24h Stays
+          %td= @booking.number_of_nights
+  .row
+    .col-xs-12
+      %h3 Pets
       %table.table.table-striped.table-condensed
-        %tr{:id => "proposed-per-night"}
-          %td
-            %em Proposed Daily Rate
-          %td
-            %input{:class => "form-control", :type => "number", :step => "any", :min => 0, :placeholder => "#{number_to_currency(@booking.cost_per_night)}", :id => "per-night"}
-        %tr{:id => "proposed-total-price"}
-          %td
-            %em Proposed Total Rate
-          %td
-            %input{:class => "form-control", :type => "number", :step => "any", :min => 0, :placeholder => "#{number_to_currency(@booking.subtotal)}", :id => "total-stay"}
+      - @booking.booker.pets.each do |pet|
         %tr
           %td
-            %em Proposed PetHomeStay Service Charge
-            %br (15% of total stay)
-          %td#phs-charge= number_to_currency(@booking.phs_service_charge)
+          %table.table.table-striped.table-condensed
+            %tr
+              %td Name
+              %td= pet.name
+            %tr
+              %td Type
+              %td= pet.pet_type_name
+            %tr
+              %td Age
+              %td= pet.age
+            - if pet.size
+              %tr
+                %td Size
+                %td= pet.size_name
+            - if pet.sex
+              %tr
+                %td Gender
+                %td= pet.sex_name
+            %tr
+              %td Dislikes
+              %td= pet.dislikes
+            - unless pet.dislikes.blank?
+              %tr
+                %td More information about dislikes
+                %td= pet.explain_dislikes
+  .row
+    .col-xs-12.col-md-6
+      %h3.text-center Booking Details
+      %table.table.table-striped
         %tr
-          %td $10 million host Public Liability and Pet Liability Insurance
+          %td.current-daily-price Daily Rate
+          %td= number_to_currency(@booking.cost_per_night)
+        %tr
+          %td.current-total-price Total Rate (to be paid by #{@booking.booker.name})
+          %td= number_to_currency(@booking.subtotal)
+        %tr
+          %td
+            PetHomeStay Service Charge
+            %br
+            (15% of total stay)
+          %td= number_to_currency(@booking.phs_service_charge)
+        %tr
+          %td $10 million Host Public Liability and Pet Accident Insurance
           %td= number_to_currency(@booking.public_liability_insurance)
         %tr
+          %td Total Host Payout
           %td
-            %em Proposed Total Host Payout
-          %td
-            %strong#host-payout= number_to_currency(@booking.host_payout)
-.row
-  .col-xs-12
-    %hr
-    - if @booking.owner_accepted
-      %p Accepting this request will confirm the booking.
-    - else
-      %p Once submitted, the terms of the stay will be presented to #{@booking.booker.name} to confirm and make payment.
-.row
-= simple_form_for @booking do |f|
-  = f.input :cost_per_night, as: :hidden
-  - if @booking.owner_accepted
-    .col-md-4.col-xs-12
-      = f.input :host_accepted, required: true, as: :radio_buttons, :label => "Do you accept the booking", :input_html => {:class => "form-control"}
-    .col-md-8.col-xs-12
-      =f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "If you respond 'I might be able to look after the pet' a message is required to explain to the pet owner what you mean. For yes or no answers you can also provide a message if you wish to give the pet owner more information. Responding 'No' or 'maybe' will end this enquiry and the pet owner will have to enquire again to get your details and confirm a booking."
-  - else
+            %strong= number_to_currency(@booking.host_payout)
+  .row
     .col-xs-12
-      = f.input :message, input_html: {rows: 5, class: 'input-xxlarge form-control'}, placeholder: "Please leave a message"
-      %br
-      = f.submit 'Update Booking', class: 'btn btn-primary', style: 'width: 100%;'
-      %br
-      %br
-    :javascript
-      $(document).ready(function(){
-        $(".modify-pricing").hide();
-        $("#modify-price-button").on("click", function() {
-          $(".modify-pricing").toggle();
-          $(".current-total-price").text("Current Total Price");
-          $(".current-daily-price").text("Current Daily Price");
-          $(this).hide();
-        });
-        $("#per-night").bind("change keyup input", function(){
-          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
-          var per_night = parseFloat($(this).val()).toFixed(2);
-          var total = (per_night * number_of_nights).toFixed(2);
-          var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - 2 * number_of_nights).toFixed(2);
-          $("#total-stay").val(total);
-          $("#host-payout").text("$" + payout);
-          $("#phs-charge").text("$" + fee);
-        });
-        $("#total-stay").bind("keyup", function(){
-          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
-          var total = parseFloat($(this).val()).toFixed(2);
-          var per_night = (total/number_of_nights).toFixed(2);
-          var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - 2 * number_of_nights).toFixed(2);
-          $("#per-night").val(per_night);
-          $("#host-payout").text("$" + payout);
-          $("#phs-charge").text("$" + fee);
-        });
-        $('form').on("submit", function(){
-          if (parseFloat($("#per-night").val()) >= 0) {
-            var proposed_per_night_price = parseFloat($("#per-night").val()).toFixed(2);
-            $("#booking_cost_per_night").val(proposed_per_night_price);
-          } else {
-            alert("Sorry, please enter a different price");
-            return false;
-          }
-        });
-      });
+      %hr
+      - if @booking.payment
+        %p= "Paid by #{@booking.booker.name}"

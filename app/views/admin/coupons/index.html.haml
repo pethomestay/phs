@@ -1,0 +1,23 @@
+%h1 Coupon Usage
+%table.table.tablesorter
+  %thead
+    %tr
+      %th Referrer Name
+      %th Code
+      %th Used by
+      %th Applied by (booking_id)
+      %th Credit pending / Credits earned
+  %tbody
+  - @coupons.each do |coupon|
+    %tr
+      %td
+        = User.find(coupon[0]).name
+      %td= coupon[1].collect(&:code).uniq.join(", ")
+      %td= "Used by: #{coupon[1].collect {|u| u.used_by.name if u.booking.nil? }.compact.count} people<br>#{coupon[1].collect {|u| u.used_by.name if u.booking.nil? }.compact.join("<br>")}".html_safe
+      %td= "Applied by: #{coupon[1].collect {|u| u.used_by.name if u.booking.present? }.compact.count} people<br>#{coupon[1].collect {|u| "#{u.used_by.name} (#{link_to u.booking.id, admin_view_booking_url(u.booking)})" if u.booking.present? }.compact.join("<br>")}".html_safe
+      %td= "#{number_to_currency(coupon[1].select(&:unused?).sum(&:credit_referrer_amount))} / #{number_to_currency(coupon[1].select(&:used?).sum(&:credit_referrer_amount))}"
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+  });

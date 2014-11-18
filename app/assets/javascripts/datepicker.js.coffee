@@ -9,7 +9,7 @@ $(document).ready ->
 
   # Top
   top_checkin = checkin_l.eq(0).datepicker(
-    format: "dd-mm-yyyy"
+    format: "dd/mm/yyyy"
     startDate: now
   ).on("changeDate", (ev) ->
     newDate = new Date(ev.date)
@@ -21,7 +21,7 @@ $(document).ready ->
     return
   ).data("datepicker")
   top_checkout = checkout_l.eq(0).datepicker(
-    format: "dd-mm-yyyy"
+    format: "dd/mm/yyyy"
     startDate: checkin_l.eq(0).val() || now
   ).on("changeDate", (ev) ->
     top_checkout.hide()
@@ -41,7 +41,7 @@ $(document).ready ->
 
   # Bottom
   bottom_checkin = checkin_l.eq(1).datepicker(
-    format: "dd-mm-yyyy"
+    format: "dd/mm/yyyy"
     startDate: now
   ).on("changeDate", (ev) ->
     newDate = new Date(ev.date)
@@ -53,7 +53,7 @@ $(document).ready ->
     return
   ).data("datepicker")
   bottom_checkout = checkout_l.eq(1).datepicker(
-    format: "dd-mm-yyyy"
+    format: "dd/mm/yyyy"
     startDate: checkin_l.eq(1).val() || now
   ).on("changeDate", (ev) ->
     bottom_checkout.hide()

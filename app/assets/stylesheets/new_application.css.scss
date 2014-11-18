@@ -2,6 +2,7 @@
 @import "bootstrap_3_3_0.min";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+@import "bootstrap-datepicker";
 @import "bootstrap-slider";
 @import "owl.carousel";
 @import "owl.theme";
@@ -22,6 +23,7 @@
 @import "my_account/left_nav";
 @import "my_account/right_panel";
 @import "my_account/messages_panel";
+@import "bookings/edit";
 // Guest View
 @import "my_account/guest/pet_panel";
 @import "my_account/guest/favorites_panel";
@@ -38,13 +40,15 @@ body {
     }
 }
 // Alert
-.alert-info {
-  background-image: none;
-  background-color: #5cc1c0;
-  color: #ffffff;
-  border: none;
-  & > span:nth-last-child(2) {
-    margin-right: 15px;
+.alert {
+  .alert-info {
+    background-image: none;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    border: none;
+    & > span:nth-last-child(2) {
+      margin-right: 15px;
+    }
   }
 }
 // Datepicker
