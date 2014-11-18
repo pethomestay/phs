@@ -5,12 +5,12 @@
         span.input-group-addon
           i.fa.fa-map-marker
         = f.input_field :location, placeholder: 'Postcode or City'
-    .form-group
+    .form-group.search_check_in_date
       .input-group
         = f.input_field :check_in_date, placeholder: 'Drop Off', readonly: true, value: check_in_date
         span.input-group-addon
           i.fa.fa-calendar
-    .form-group
+    .form-group.search_check_out_date
       .input-group
         = f.input_field :check_out_date, placeholder: 'Pick Up', readonly: true, value: check_out_date
         span.input-group-addon
@@ -32,3 +32,36 @@
     / #   = controls.check_box :is_sitter, 'To stay at home with a sitter'
     / # = f.label 'Grooming, walking, training, feeding' do |controls|
     / #   = controls.check_box :is_services, 'Show additional pet services listings'
+
+coffee:
+  $ ->
+    $check_in  = $('#search_check_in_date')
+    check_in_picker = $check_in.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true
+      todayHighlight: true
+    ).on('changeDate', (evt) ->
+      new_date = $(this).val()
+      # Set check out date no earlier than check in date
+      inDate = new Date(evt.date)
+      check_out_picker.setDate inDate
+      check_out_picker.startDate = inDate
+      check_out_picker.update()
+      $check_out.focus()
+    ).data('datepicker')
+    $check_out = $('#search_check_out_date')
+    check_out_picker = $check_out.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true
+      todayHighlight: true
+    ).data('datepicker')
+    $('.search_check_in_date .input-group-addon'). on 'click', (evt) ->
+      evt.preventDefault()
+      check_out_picker.hide()
+      check_in_picker.show()
+    $('.search_check_out_date .input-group-addon'). on 'click', (evt) ->
+      evt.preventDefault()
+      check_in_picker.hide()
+      check_out_picker.show()
