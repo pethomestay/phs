@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
     non_unique = User.where("coupon_code like ?", suggested_code + "%").count
     unique_num = non_unique > 0 ? non_unique.to_s : ""
     final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
+    self.skip_reconfirmation! # Do this to eliminate duplicate confirmation emails caused by next line
     self.update_attribute(:coupon_code, final_code.upcase)
   end
 
