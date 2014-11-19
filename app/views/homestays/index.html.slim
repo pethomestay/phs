@@ -19,18 +19,21 @@
             $ ->
               $mapWrapper = $('.search-map-wrapper')
               $mapContainer = $('.search-map-container')
-              $(window).on 'scroll', (evt) ->
-                if $(window).scrollTop() < $mapContainer.offset().top
-                  $mapWrapper.removeClass 'fixed'
-                  $mapWrapper.removeClass 'fixed-bottom'
-                  $mapWrapper.css 'top', 0
-                else if ( $(window).scrollTop() + $(window).height() ) < $('section.footer').offset().top
-                  $mapWrapper.addClass 'fixed'
-                  $mapWrapper.removeClass 'fixed-bottom'
-                  $mapWrapper.css 'top', 0
-                else
-                  if $mapWrapper.hasClass 'fixed'
-                    top = $('.row.below-search-box').height() - $mapWrapper.height()
+              if $('#xs-indicator').is ':visible'
+                $mapWrapper.addClass 'on-mobile'
+              else
+                $(window).on 'scroll', (evt) ->
+                  if $(window).scrollTop() < $mapContainer.offset().top
                     $mapWrapper.removeClass 'fixed'
-                  $mapWrapper.addClass 'fixed-bottom'
-                  $mapWrapper.css 'top', top
+                    $mapWrapper.removeClass 'fixed-bottom'
+                    $mapWrapper.css 'top', 0
+                  else if ( $(window).scrollTop() + $(window).height() ) < $('section.footer').offset().top
+                    $mapWrapper.addClass 'fixed'
+                    $mapWrapper.removeClass 'fixed-bottom'
+                    $mapWrapper.css 'top', 0
+                  else
+                    if $mapWrapper.hasClass 'fixed'
+                      top = $('.row.below-search-box').height() - $mapWrapper.height()
+                      $mapWrapper.removeClass 'fixed'
+                    $mapWrapper.addClass 'fixed-bottom'
+                    $mapWrapper.css 'top', top

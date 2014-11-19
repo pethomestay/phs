@@ -45,6 +45,9 @@
       &.fixed-bottom {
         position: absolute;
       }
+      &.on-mobile {
+        max-height: 500px;
+      }
     }
   }
 }
