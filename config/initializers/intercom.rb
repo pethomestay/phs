@@ -47,7 +47,23 @@ IntercomRails.config do |config|
   #   :favorite_color => :favorite_color
   # }
   config.user.custom_data = {
-    mobile_number: :mobile_number
+    :mobile_number                           => :mobile_number,
+    :coupons_referred                        => Proc.new { |user| user.referred_coupons.count},
+    :number_of_pending_bookings              => Proc.new { |user| (user.bookees.unfinished + user.bookers.unfinished).select {|b| b.check_in_date > Date.today}.count},
+    :is_a_host                               => Proc.new { |user| user.homestay.present? },
+    :number_of_pets                          => Proc.new { |user| user.pets.count },
+    :number_of_bookings_as_guest             => Proc.new { |user| user.bookers.count},
+    :accepted_booking_percentage_as_guest    => Proc.new { |user| user.bookers.any? ? (user.bookers.finished_or_host_accepted.count*100 / user.bookers.count.to_f).round(2).to_s + "%" : "0" },
+    :number_of_feedback_given                => Proc.new { |user| user.given_feedbacks.count},
+    :amount_spent                            => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.transaction.present? ? b.transaction.amount : 0} + user.payments.sum("amount")},
+    :has_active_homestay                     => Proc.new { |user| user.homestay.present? ? user.homestay.active? : "N/A" },
+    :number_of_bookings_as_host              => Proc.new { |user| user.bookees.count},
+    :accepted_booking_percentage_as_host     => Proc.new { |user| user.bookees.any? ? (user.bookees.finished_or_host_accepted.count*100 / user.bookees.count.to_f).round(2).to_s + "%" : "0" },
+    :number_of_feedback_received             => Proc.new { |user| user.received_feedbacks.count},
+    :amount_earned_from_homestay_hostings    => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.host_payout.to_f}.round(2)},
+    :amount_earned_from_coupons              => Proc.new { |user| user.referred_coupons.select {|c| c.booking.present?}.inject(0) {|sum, c| sum + c.credit_referrer_amount }},
+    :average_feedback_as_host                => Proc.new { |user| user.average_rating}
+
   }
 
   # == User -> Company association
