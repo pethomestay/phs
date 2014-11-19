@@ -29,7 +29,6 @@ gem 'bootstrap-sass'
 gem 'font-awesome-sass', '~> 4.2.0'
 gem 'owlcarousel-rails' # For carousel on Homestay listing page
 gem 'simple_form'
-gem 'country_select' #Country select
 gem 'awesome_nested_fields'
 gem 'nested_form' # To replace awesome_nested_fields in the future
 gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
