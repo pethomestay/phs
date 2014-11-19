@@ -62,8 +62,8 @@ IntercomRails.config do |config|
     :number_of_feedback_received             => Proc.new { |user| user.received_feedbacks.count},
     :amount_earned_from_homestay_hostings    => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.host_payout.to_f}.round(2)},
     :amount_earned_from_coupons              => Proc.new { |user| user.referred_coupons.select {|c| c.booking.present?}.inject(0) {|sum, c| sum + c.credit_referrer_amount }},
-    :average_feedback_as_host                => Proc.new { |user| user.average_rating}
-
+    :average_feedback_as_host                => Proc.new { |user| user.average_rating},
+    :has_bank_account                        => Proc.new { |user| user.account.present?}
   }
 
   # == User -> Company association
