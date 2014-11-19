@@ -7,14 +7,14 @@
     - else
       = link_to image_tag('results-placeholder.png', style: 'width: 150px;'), homestay
     - if homestay.user.received_feedbacks.present?
-      p.rating
+      p.rating.text-center
         == rating_stars_awesome homestay.average_rating
   .media-body.info
-    h2 = link_to homestay.user.first_name, homestay
+    h2.first_name = link_to homestay.user.first_name, homestay
     h3.title = link_to truncate(homestay.title, length: 50, separator: ' '), homestay
     p.cost-per-night
       strong
         = number_to_currency(homestay.cost_per_night)
-      |  / 24h
-    p.location= homestay.location
-    p.excerpt= truncate(homestay.description, length: 200)
+      '  / 24h
+      | in #{homestay.location}
+    p.excerpt = truncate(homestay.description, length: 200)
