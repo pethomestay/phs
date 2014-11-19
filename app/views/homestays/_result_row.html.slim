@@ -1,20 +1,20 @@
-.row data-listing=homestay.id
-  .col-xs-3.image
+.media data-listing=homestay.id
+  .media-left.media-middle.image
     - if homestay.photos?
-      = link_to cl_image_tag(homestay.photos.first.path, width: 120, height: 120, crop: :fill), homestay
+      = link_to cl_image_tag(homestay.photos.first.path, width: 150, height: 150, crop: :fill), homestay
     - elsif homestay.pictures.any?
-      = link_to image_tag(homestay.pictures.first.file.thumb('120x120#').url, alt: homestay.title), homestay
+      = link_to image_tag(homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title), homestay
     - else
-      = link_to image_tag("results-placeholder.png"), homestay
+      = link_to image_tag('results-placeholder.png', style: 'width: 150px;'), homestay
     - if homestay.user.received_feedbacks.present?
       p.rating
         == rating_stars_awesome homestay.average_rating
-  .col-xs-9.info
+  .media-body.info
     h2 = link_to homestay.user.first_name, homestay
-    p= link_to truncate(homestay.title, length: 50, separator: ' '), homestay
+    h3 = link_to truncate(homestay.title, length: 50, separator: ' '), homestay
     p.cost-per-night
       strong
         = number_to_currency(homestay.cost_per_night)
-        per night
+      |  / 24h
     p.location= homestay.location
-    p.excerpt= truncate(homestay.description, length: 300)
+    p.excerpt= truncate(homestay.description, length: 200)
