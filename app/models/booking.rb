@@ -119,20 +119,23 @@ class Booking < ActiveRecord::Base
       csv << [
         'Guest name', 'Guest address', 'Pet name', 'Pet breed', 'Pet age', 'Check-in Date', 'Check-in Time',
         'Check-out Date', 'Check-out Time', 'Host name', 'Homestay Title', 'Host Address', '# of 24 hour period',
-        'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee', 'Host Payout', 'Status'
+        'Transaction Reference', 'Total', 'Insurance Fees', 'PHS Fee', 'Host Payout', 'Coupon' 'Status'
       ]
 
       all.each do |booking|
         booker = booking.booker
         pet = booker.pet
         host = booking.bookee
+        booking_reference = booking.transaction.present? ? booking.transaction.reference.to_s : booking.payment.braintree_transaction_id
+        booking_payment_amount = booking.transaction.present? ? "$#{booking.transaction.amount}" : "$#{booking.payment.amount.to_s}"
+        booking_coupon = booking.coupon.present? ? "#{booking.coupon.code} ($#{booking.coupon.discount_amount.to_s} off)" : "none"
         csv << [
           booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
           booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
           booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
           host.name.capitalize, booking.homestay.nil? ? "" : booking.homestay.title, host.complete_address, booking.number_of_nights,
-          booking.transaction.reference.to_s, "$#{booking.transaction.amount}", "$#{booking.public_liability_insurance}",
-          "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
+          booking_reference, booking_payment_amount, "$#{booking.public_liability_insurance}",
+          "$#{booking.phs_service_charge}", "$#{booking.host_payout}", booking_coupon,
           (booking.state?(:host_paid)) ? 'Paid' : 'Not Paid'
         ]
       end
