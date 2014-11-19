@@ -17,4 +17,4 @@
         = number_to_currency(homestay.cost_per_night)
       '  / 24h
       | in #{homestay.location}
-    p.excerpt = truncate(homestay.description, length: 200)
+    p.excerpt.hidden-xs = truncate(homestay.description, length: 200)
