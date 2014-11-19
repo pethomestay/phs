@@ -14,68 +14,54 @@
       %td.table-header-text{ colspan: '3' } Host Payout
 
     %tr
-      %th Guest
+      %th Host
+      %th BSB/Acc
       %th Checkout Date
       %th Transaction Reference
-      %th Subtotal
-      %th Fee
-      %th Total
+      %th Subtotal (S)
+      %th Fee (F)
+      %th Total (S+F)
       %th Guest discount
       %th Code Source
-      %th Insurance Fee
-      %th PHS Fee
-      %th total
+      %th Insurance Fee (I)
+      %th PHS Fee (P)
+      %th total (S - I - P)
       %th Host Paid
-    %tr.table-row-bold-text
-      %td Username
-      %td (day/month/year)
-      %td
-        %span.stored-card-color stored card
-        %i.icon-minus
-        %span.credit-card-color credit card
-      %td S
-      %td F
-      %td = S + F
-      %td
-      %td
-      %td I
-      %td P
-      %td = S - I - P
-      %td
-        payout
-        %i.icon-eye-open
-
   %tbody
     - @bookings.each do |booking|
       - if booking.payment.present?
         - discount = booking.coupon.present? ? booking.coupon.discount_amount : 0
         %tr{ "data-id" => booking.id }
-        %td= booking.booker.name.capitalize
-        %td= booking.check_out_date.strftime('%d/%m/%Y')
-        %td{ class: "stored-card-color" }
-          = "#{booking.payment.status} (BrainTree)"
+          %td= booking.bookee.name.capitalize
+          %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
+          %td= booking.check_out_date.strftime('%d %b %y')
+          %td{ class: "stored-card-color" }
+            = booking.payment.braintree_transaction_id
+            %br
+            = "#{booking.payment.status} (BrainTree)"
 
-        %td= number_to_currency(booking.subtotal)
-        %td= number_to_currency(booking.payment.amount - booking.subtotal + discount)
-        %td= number_to_currency(booking.payment.amount)
+          %td= number_to_currency(booking.subtotal)
+          %td= number_to_currency(booking.payment.amount - booking.subtotal + discount)
+          %td= number_to_currency(booking.payment.amount)
 
-        %td= number_to_currency(discount)
-        %td= booking.try(:coupon).try(:referred_by).try(:name)
+          %td= number_to_currency(discount)
+          %td= booking.try(:coupon).try(:referred_by).try(:name)
 
-        %td= number_to_currency(booking.public_liability_insurance)
-        %td= number_to_currency(booking.phs_service_charge)
-        %td= number_to_currency(booking.host_payout)
-        %td
-          %input.booking_paid_confirm{ type: 'button', value: 'YES' }
-          - account = booking.bookee.account
-          - if account.blank?
-            %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
-          - else
-            = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
+          %td= number_to_currency(booking.public_liability_insurance)
+          %td= number_to_currency(booking.phs_service_charge)
+          %td= number_to_currency(booking.host_payout)
+          %td
+            %input.booking_paid_confirm{ type: 'button', value: 'YES' }
+            - account = booking.bookee.account
+            - if account.blank?
+              %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
+            - else
+              = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
       - else 
         %tr{ "data-id" => booking.id }
           %td= booking.booker.name.capitalize
-          %td= booking.check_out_date.strftime('%d/%m/%Y')
+          %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
+          %td= booking.check_out_date.strftime('%d %b %y')
           - reference = booking.transaction.reference
           %td{ class: "#{reference.include?('transaction_id') ? 'credit-card-color' : 'stored-card-color'}" }
             = booking.transaction.reference
@@ -83,6 +69,9 @@
           %td= currency_formatter(booking.subtotal)
           %td= currency_formatter(booking.credit_card_fee)
           %td= currency_formatter(booking.transaction.amount)
+
+          %td
+          %td
 
           %td= currency_formatter(booking.public_liability_insurance)
           %td= currency_formatter(booking.phs_service_charge)
@@ -98,14 +87,15 @@
 
 :javascript
   $(document).ready(function(){
-    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+    $('table.tablesorter').tablesorter({headers:{2:{sorter:false}}});
     $('.booking_paid_confirm').on('click', function(){
-      $this = $(this)
-      row = $this.parent().parent();
+      target_row = $(this).closest('tr');
+      booking_id = target_row.data('id');
+      debugger;
       $.ajax({
-        url: '/bookings/' + $this.parent().parent().data("id") + '/host_paid'
+        url: '/bookings/' + booking_id + '/host_paid'
       }).done(function(){
-        row.slideUp();
+        target_row.hide();
       });
     });
   });
