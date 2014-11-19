@@ -55,7 +55,7 @@ IntercomRails.config do |config|
     :number_of_bookings_as_guest             => Proc.new { |user| user.bookers.count},
     :accepted_booking_percentage_as_guest    => Proc.new { |user| user.bookers.any? ? (user.bookers.finished_or_host_accepted.count*100 / user.bookers.count.to_f).round(2).to_s + "%" : "0" },
     :number_of_feedback_given                => Proc.new { |user| user.given_feedbacks.count},
-    :amount_spent                            => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.transaction.present? ? b.transaction.amount : 0} + user.payments.sum("amount")},
+    :amount_spent                            => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + (b.transaction.present? ? b.transaction.amount : 0)} + user.payments.sum("amount")},
     :has_active_homestay                     => Proc.new { |user| user.homestay.present? ? user.homestay.active? : "N/A" },
     :number_of_bookings_as_host              => Proc.new { |user| user.bookees.count},
     :accepted_booking_percentage_as_host     => Proc.new { |user| user.bookees.any? ? (user.bookees.finished_or_host_accepted.count*100 / user.bookees.count.to_f).round(2).to_s + "%" : "0" },
