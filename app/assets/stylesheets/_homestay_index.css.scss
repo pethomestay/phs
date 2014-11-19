@@ -4,6 +4,11 @@
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    #search_check_in_date,
+    #search_check_out_date {
+      background-color: #fff;
+      cursor: pointer;
+    }
     .search.btn {
       margin-bottom: 15px;
     }
