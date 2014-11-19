@@ -40,6 +40,14 @@
     }
 
     @media (max-width: $screen-xs-max) {
+      .media:nth-child(even) {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left:  -10px;
+        margin-right: -10px;
+        background-color: $grey-light;
+      }
+
       .media-left {
         display: block;
         img {
