@@ -28,7 +28,7 @@
       %th total (S - I - P)
       %th Host Paid
   %tbody
-    - @bookings.each do |booking|
+    - @bookings.sort_by(&:check_out_date).each do |booking|
       - if booking.payment.present?
         - discount = booking.coupon.present? ? booking.coupon.discount_amount : 0
         %tr{ "data-id" => booking.id }
@@ -87,7 +87,18 @@
 
 :javascript
   $(document).ready(function(){
-    $('table.tablesorter').tablesorter({headers:{2:{sorter:false}}});
+    $.tablesorter.addParser({
+      id: "date",
+      is: function (s) {
+          return false;
+      },
+      format: function (s, table) {
+        var date = (s + '').match(/\d{1,2}\s+\w{3}\s+\d{2}/);
+        return date ? new Date(date[0]).getTime() || s : s;
+      },
+      type: "numeric"
+    });
+    $('table.tablesorter').tablesorter({headers:{2:{sorter:'date'},3:{sorter:false}},dateFormat: "uk"});
     $('.booking_paid_confirm').on('click', function(){
       target_row = $(this).closest('tr');
       booking_id = target_row.data('id');
