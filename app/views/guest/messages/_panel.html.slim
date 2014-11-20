@@ -15,3 +15,8 @@
 
   .paginator
     = will_paginate @conversations, renderer: BootstrapPagination::Rails
+- if Rails.env == "production"
+  javascript:
+    Intercom('trackEvent', 'visit-inbox', {
+      conversations_number: "#{@conversation.count}"
+    });
