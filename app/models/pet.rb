@@ -15,7 +15,6 @@ class Pet < ActiveRecord::Base
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
   validates :pet_age, inclusion: { in: 1..15 }
   validate :at_least_three_personalities
-  after_create :notify_intercom, if: Rails.env == "production"
 
   serialize :personalities, Array
 
@@ -38,12 +37,6 @@ class Pet < ActiveRecord::Base
     else
       5
     end
-  end
-
-  def notify_intercom
-    Intercom::Event.create(:event_name => "pet-created", :email => self.user.email, :created_at => self.created_at.to_i, :metadata => {
-      :emergency_contact_phone => self.emergency_contact_phone.present?
-    })
   end
 
   def pet_age=(age)
