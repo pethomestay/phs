@@ -51,6 +51,7 @@ gem 'state_machine'
 gem 'braintree'
 
 gem 'intercom-rails' # Intercom.io integration
+gem 'intercom' # Intercom.io library for events
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'createsend' # Campaign Monitor API Wrapper
 gem 'smsglobal' # API support for smsglobal.com
