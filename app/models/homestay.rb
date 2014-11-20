@@ -36,19 +36,7 @@ class Homestay < ActiveRecord::Base
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
-  after_create :notify_intercom
   after_initialize :set_country_Australia # set country as Australia no matter what
-
-  def notify_intercom
-    Intercom::Event.create(:event_name => "homestay-created", :email => self.user.email, :created_at => self.created_at.to_i, :metadata => {
-      :suburb          => self.address_suburb,
-      :postcode        => self.address_postcode,
-      :has_pictures    => self.pictures.present?,
-      :has_cover_photo => self.photo.present?,
-      :price_per_night => self.cost_per_night,
-      :title_is_unique => Homestay.where(:title => self.title).count == 1
-      })
-  end
 
   def to_param
     self.slug
