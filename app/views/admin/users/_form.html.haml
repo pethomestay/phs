@@ -5,7 +5,7 @@
     =f.input :first_name
     =f.input :last_name
     =f.input :email
-    =f.input :password, required: true
+    / =f.input :password, required: true
     - input_html = {}
     - input_html[:class] = 'span2 checkin'
     - if ! @user.date_of_birth.nil?
@@ -15,7 +15,7 @@
       =f.input :facebook_location, disabled: true
       =f.input :age_range_min, disabled: true
       =f.input :age_range_max, disabled: true
-    =f.input :phone_number
+    / =f.input :phone_number
     =f.input :mobile_number
     = f.input :address_1
     = f.input :address_2
@@ -27,6 +27,3 @@
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
     = link_to 'Cancel', admin_users_path(letter: 'Z'), class: 'btn'
-
-:javascript
-  $('.mydatepicker').datetimepicker({ language: 'en', pickTime: false, format: 'dd/MM/yyyy' });

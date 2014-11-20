@@ -39,6 +39,41 @@
       %dd
         = unavailable.date.to_date.strftime("%A, %d/%m/%Y")
 
+.control-group
+  %label Unavailable Dates
+  .controls
+    From
+    %input#from{ type: 'text' }
+    to
+    %input#to{ type: 'text' }
+    %button.btn.btn-primary#mark-unavailable{ 'data-user-id' => @user.id } Mark Unavailable
+%br
 
 = link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-primary'
 = link_to 'Back to user list', admin_users_path(letter: 'Z'), class: 'btn'
+
+:coffee
+  $ ->
+    # Enable datepicker
+    $from = $('#from')
+    $to = $('#to')
+    $from.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true # False by default
+    ).data('datepicker')
+    $to.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true # False by default
+    ).data('datepicker')
+
+    $('#mark-unavailable').on 'click', ->
+      $.ajax '/unavailable_dates',
+        type: 'POST'
+        data:
+          user_id: $('#mark-unavailable').data('user-id')
+          from: $from.val()
+          to: $to.val()
+        success: ->
+          alert 'Success'
