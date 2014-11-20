@@ -44,7 +44,7 @@ class Homestay < ActiveRecord::Base
       :suburb          => self.address_suburb,
       :postcode        => self.address_postcode,
       :has_pictures    => self.pictures.present?,
-      :has_cover_photo => self.photo.present?,
+      :has_cover_photo => self.photos.present?,
       :price_per_night => self.cost_per_night,
       :title_is_unique => Homestay.where(:title => self.title).count == 1
       })
