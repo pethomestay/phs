@@ -7,7 +7,7 @@ class Booking < ActiveRecord::Base
   belongs_to :enquiry
   has_one    :coupon
 
-  MINIMUM_SUBTOTAL_PRICE = 10.0
+  MINIMUM_DAILY_PRICE = 10.0
   CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.0 # 2.5% = 0.025
   PER_NIGHT_LIABILITY_INSURANCE_COST = 0 # Modify this to change insurance cost per night
 
@@ -19,7 +19,8 @@ class Booking < ActiveRecord::Base
 
   validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
-  validate :subtotal, :numericality => { :greater_than => MINIMUM_SUBTOTAL_PRICE }, :presence => true
+  validate :is_above_minimum_daily_rate
+  validate :subtotal, :presence => true
   #validate :is_host_available_btw_check_in_and_check_out_date, if: "check_in_date && check_out_date"
 
   attr_accessor :fees, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
@@ -51,6 +52,10 @@ class Booking < ActiveRecord::Base
   after_create :create_mailbox
   after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
   before_save  :update_state
+
+  def is_above_minimum_daily_rate
+    errors.add(:subtotal, "Must be at least $10/night") if self.cost_per_night < (self.subtotal / self.number_of_nights)
+  end
 
   def create_mailbox
     mailbox = nil
