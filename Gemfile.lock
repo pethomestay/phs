@@ -180,6 +180,8 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
     inflecto (0.0.2)
+    intercom (2.4.2)
+      json
     intercom-rails (0.2.27)
       activesupport (> 3.0)
     ipaddress (0.8.0)
@@ -423,6 +425,7 @@ DEPENDENCIES
   gmaps4rails
   haml-rails
   heroku-deflater
+  intercom
   intercom-rails
   jquery-rails
   jquery-ui-rails
