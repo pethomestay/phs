@@ -72,6 +72,8 @@
       = render 'shared/messages/message', message: message, top: false
 - if Rails.env == "production"
   javascript:
-    Intercom('trackEvent', 'visit-conversation', {
-      messages_number: "#{conversation.messages.count}"
+    $(document).ready(function(){
+      Intercom('trackEvent', 'visit-conversation', {
+        messages_number: "#{conversation.messages.count}"
+      });
     });
