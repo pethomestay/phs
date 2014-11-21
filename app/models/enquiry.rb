@@ -1,7 +1,7 @@
 require 'rest_client'
 
 class Enquiry < ActiveRecord::Base
-  SMSGLOBAL_URL = 'http://www.smsglobal.com/http-api.php'
+  include SMS
 
   belongs_to :user
   belongs_to :homestay
@@ -109,15 +109,8 @@ class Enquiry < ActiveRecord::Base
   end
 
   def send_new_enquiry_notification_SMS
-    params = {
-      action: 'sendsms',
-      user: ENV['SMSGLOBAL_USERNAME'],
-      password: ENV['SMSGLOBAL_PASSWORD'],
-      from: 'PetHomeStay',
-      to: self.homestay.user.mobile_number,
-      text: 'You have a new PetHomeStay Message from ' + self.user.first_name + '! Please log in your PetHomeStay account to reply. Thanks! :)'
-    }
-    RestClient.get SMSGLOBAL_URL, params: params
+    send_sms to: self.homestay.user.mobile_number,
+      text: "You have a new PetHomeStay Message from #{ self.user.first_name }! Please log in your PetHomeStay account to reply. Thanks! :)"
   end
 
   # See the comment at top
