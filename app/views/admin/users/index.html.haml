@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Email
+      %th Mobile
       %th Joined
       %th Homestay
       %th Active
@@ -15,6 +16,7 @@
       %tr
         %td= link_to user.name, admin_user_path(user)
         %td= user.email
+        %td= user.mobile_number if user.mobile_number.present?
         %td= user.created_at.to_formatted_s(:year_month_day)
         %td= user.homestay.present? ? 'Yes' : 'No'
         %td= user.active
