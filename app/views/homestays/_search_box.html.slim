@@ -1,0 +1,70 @@
+.well.search-box
+  = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|
+    .form-group
+      .input-group
+        span.input-group-addon
+          i.fa.fa-map-marker
+        = f.input_field :location, placeholder: 'Postcode or City'
+    .form-group.search_check_in_date
+      .input-group
+        = f.input_field :check_in_date, placeholder: 'Drop Off', readonly: true, value: check_in_date
+        span.input-group-addon
+          i.fa.fa-calendar
+    .form-group.search_check_out_date
+      .input-group
+        = f.input_field :check_out_date, placeholder: 'Pick Up', readonly: true, value: check_out_date
+        span.input-group-addon
+          i.fa.fa-calendar
+    = f.button :submit, 'Search', class: 'btn btn-primary search'
+    .sort-order
+      span.sort-by Sort by
+      label.radio-inline
+        = radio_button :search, :sort_by, 'distance'
+        | Distance
+      label.radio-inline
+        = radio_button :search, :sort_by, 'cost_per_night'
+        | Cost
+        / %label.radio.inline
+        /   = radio_button :search, :sort_by, 'average_rating'
+        /   Rating
+    / # = f.label 'Your pet prefers' do |controls|
+    / #   = controls.check_box :is_homestay, 'To sleep over at a homestay'
+    / #   = controls.check_box :is_sitter, 'To stay at home with a sitter'
+    / # = f.label 'Grooming, walking, training, feeding' do |controls|
+    / #   = controls.check_box :is_services, 'Show additional pet services listings'
+
+.toggler.hidden-sm.hidden-md.hidden-lg.text-center
+  i.fa.fa-caret-down.fa-2x
+
+coffee:
+  $ ->
+    $check_in  = $('#search_check_in_date')
+    check_in_picker = $check_in.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true
+      todayHighlight: true
+    ).on('changeDate', (evt) ->
+      new_date = $(this).val()
+      # Set check out date no earlier than check in date
+      inDate = new Date(evt.date)
+      check_out_picker.setDate inDate
+      check_out_picker.startDate = inDate
+      check_out_picker.update()
+      $check_out.focus()
+    ).data('datepicker')
+    $check_out = $('#search_check_out_date')
+    check_out_picker = $check_out.datepicker(
+      format: 'dd/mm/yyyy'
+      startDate: '0d'
+      autoclose: true
+      todayHighlight: true
+    ).data('datepicker')
+    $('.search_check_in_date .input-group-addon'). on 'click', (evt) ->
+      evt.preventDefault()
+      check_out_picker.hide()
+      check_in_picker.show()
+    $('.search_check_out_date .input-group-addon'). on 'click', (evt) ->
+      evt.preventDefault()
+      check_in_picker.hide()
+      check_out_picker.show()

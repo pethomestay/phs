@@ -1,5 +1,6 @@
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,700');
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+@import "font-awesome-sprockets";
+@import "font-awesome";
 @import "bootstrap_overrides";
 @import "bootstrap";
 @import 'bootstrap-datetimepicker.min';
@@ -7,7 +8,6 @@
 @import "forms";
 @import "homestays";
 @import "maps";
-//@import "navigation";
 @import "pages";
 @import "pet";
 @import "popup";
