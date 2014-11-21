@@ -27,6 +27,10 @@
 
     a {
       color: $black;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
 
     p.rating {

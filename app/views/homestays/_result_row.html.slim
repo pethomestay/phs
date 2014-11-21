@@ -1,33 +1,34 @@
-.media data-listing=homestay.id
-  .media-left.media-middle.image.hidden-xs
-    - if homestay.photos?
-      = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill
-    - elsif homestay.pictures.any?
-      = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title
-    - else
-      = image_tag 'default_profile_photo.png', style: 'width: 150px;'
-    - if homestay.user.received_feedbacks.present?
-      p.rating.text-center
-        == rating_stars_awesome homestay.average_rating
-  .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
-    - if homestay.user.profile_photo?
-      = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
-    - elsif homestay.user.uid.present?
-      = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
-    - elsif homestay.photos?
-      = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png
-    - elsif homestay.pictures.any?
-      = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle'
-    - else
-      = image_tag 'default_profile_photo.jpg', class: 'img-circle', style: 'width: 100px;'
-    - if homestay.user.received_feedbacks.present?
-      p.rating.text-center
-        == rating_stars_awesome homestay.average_rating
-  .media-body.info
-    h2.first_name #{ homestay.user.first_name }
-    h3.title #{ truncate(homestay.title, length: 50, separator: ' ') }
-    p.cost-per-night
-      ' #{homestay.address_suburb},
-      strong
-        = number_to_currency(homestay.cost_per_night)
-    p.excerpt.hidden-xs = truncate(homestay.description, length: 200)
+a href=homestay_path(homestay)
+  .media data-listing=homestay.id
+    .media-left.media-middle.image.hidden-xs
+      - if homestay.photos?
+        = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill
+      - elsif homestay.pictures.any?
+        = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title
+      - else
+        = image_tag 'default_profile_photo.png', style: 'width: 150px;'
+      - if homestay.user.received_feedbacks.present?
+        p.rating.text-center
+          == rating_stars_awesome homestay.average_rating
+    .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
+      - if homestay.user.profile_photo?
+        = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
+      - elsif homestay.user.uid.present?
+        = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
+      - elsif homestay.photos?
+        = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png
+      - elsif homestay.pictures.any?
+        = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle'
+      - else
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle', style: 'width: 100px;'
+      - if homestay.user.received_feedbacks.present?
+        p.rating.text-center
+          == rating_stars_awesome homestay.average_rating
+    .media-body.info
+      h2.first_name #{ homestay.user.first_name }
+      h3.title #{ truncate(homestay.title, length: 50, separator: ' ') }
+      p.cost-per-night
+        ' #{homestay.address_suburb},
+        strong
+          = number_to_currency(homestay.cost_per_night)
+      p.excerpt.hidden-xs = truncate(homestay.description, length: 200)
