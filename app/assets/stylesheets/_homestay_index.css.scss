@@ -66,11 +66,11 @@
           background: $orange;
           color: $grey-lighter;
           padding: 2px 5px;
+          @media (max-width: $screen-xs-max) {
+            float: right;
+          }
         }
 
-        @media (max-width: $screen-xs-max) {
-          text-align: right;
-        }
       }
     }
 
