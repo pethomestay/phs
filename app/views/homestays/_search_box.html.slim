@@ -33,6 +33,9 @@
     / # = f.label 'Grooming, walking, training, feeding' do |controls|
     / #   = controls.check_box :is_services, 'Show additional pet services listings'
 
+.toggler.hidden-sm.hidden-md.hidden-lg.text-center
+  i.fa.fa-caret-down.fa-2x
+
 coffee:
   $ ->
     $check_in  = $('#search_check_in_date')
