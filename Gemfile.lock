@@ -229,6 +229,7 @@ GEM
     net-ssh (2.9.1)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    netrc (0.8.0)
     newrelic_rpm (3.5.8.72)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
@@ -314,8 +315,9 @@ GEM
     redcarpet (3.0.0)
     ref (1.0.2)
     request_store (1.1.0)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-activemodel-mocks (1.0.1)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
@@ -459,7 +461,7 @@ DEPENDENCIES
   rails_12factor
   raygun4ruby
   redcarpet
-  rest-client (= 1.6.7)
+  rest-client
   rspec-activemodel-mocks
   rspec-rails (~> 3.0.0)
   sass-rails
