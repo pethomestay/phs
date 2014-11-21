@@ -24,7 +24,7 @@ h1 Editing Homestay
   /    input#user_homestay_address_2 name='homestay[address_2]' value=(f.object.address_2.present? ? f.object.address_2 : current_user.address_2)
   = f.input :address_suburb, label: 'Suburb', value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb)
   = f.input :address_city, label: 'City', value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city)
-  = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
+  / = f.input :address_country, label: 'Country', priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)]
   .grouped-checkboxes
     = label_tag "Professional?", nil, class: 'for-group'
     = f.input :is_professional, as: :boolean, inline_label: 'I am a registered business', label: false
