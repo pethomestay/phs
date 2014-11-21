@@ -23,7 +23,11 @@ class Admin::HomestaysController < Admin::AdminController
     @homestay = Homestay.find_by_slug!(params[:homestay_id])
     if @homestay.locked
       #need to send out message to user to let them know it's approved!
+      #### DELETE THIS ONCE YOU START USING INTERCOM
       HomestayApprovedJob.new.async.perform(@homestay)
+      Intercom::Event.create(:event_name => "homestay-approved", :email => @homestay.user.email, :created_at => Time.now.to_i, :metadata => {:approved_by => current_user.name})
+    else
+      Intercom::Event.create(:event_name => "homestay-locked", :email => @homestay.user.email, :created_at => Time.now.to_i, :metadata => {:locked_by => current_user.name})
     end
     @homestay.locked = !@homestay.locked #toggle locked state
     @homestay.active = !@homestay.locked #active is going to be the reverse of locked ie locked true then active false

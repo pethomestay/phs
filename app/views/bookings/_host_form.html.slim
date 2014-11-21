@@ -100,106 +100,117 @@
         td Total Host Payout
         td
           strong = number_to_currency(@booking.host_payout)
-  .col-xs-10.col-xs-offset-1
-    - unless @booking.owner_accepted
-      .btn.btn-secondary.btn-block#modify-price-button Click Here to Offer a Custom Rate
-    br
-  - unless @booking.owner_accepted
-    .col-xs-11.col-sm-10.col-sm-offset-1.modify-pricing
-      h3.text-center Custom Quote
-      table.table
-        tr#proposed-per-night
-          td
-            em Proposed Daily Rate
-          td
-            input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}" value=@booking.cost_per_night
-        tr id="proposed-total-price"
-          td
-            em Proposed Total Rate
-          td
-            input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}" value=@booking.subtotal
-        tr
-          td
-            em
-              span.hidden-xs PetHomeStay
-              |  Service Charge
-            br
-            | (15% of total stay)
-          td#phs-charge = number_to_currency(@booking.phs_service_charge)
-        tr
-          td $10 million host Public Liability and Pet Liability Insurance
-          td= number_to_currency(@booking.public_liability_insurance)
-        tr
-          td
-            em Total Host Payout
-          td
-            strong#host-payout = number_to_currency(@booking.host_payout)
+  .col-xs-11.col-sm-10.col-sm-offset-1.modify-pricing
+    h3.text-center Custom Quote
+    table.table
+      tr#proposed-per-night
+        td
+          em Proposed Daily Rate
+        td
+          input.form-control#per-night type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.cost_per_night)}" value=@booking.cost_per_night
+      tr id="proposed-total-price"
+        td
+          em Proposed Total Rate
+        td
+          input.form-control#total-stay type="number" step="any" min=0 placeholder="#{number_to_currency(@booking.subtotal)}" value=@booking.subtotal
+      tr
+        td
+          em
+            span.hidden-xs PetHomeStay
+            |  Service Charge
+          br
+          | (15% of total stay)
+        td#phs-charge = number_to_currency(@booking.phs_service_charge)
+      tr
+        td $10 million host Public Liability and Pet Liability Insurance
+        td= number_to_currency(@booking.public_liability_insurance)
+      tr
+        td
+          em Total Host Payout
+        td
+          strong#host-payout = number_to_currency(@booking.host_payout)
 .row
-= simple_form_for @booking, wrapper: :bootstrap3 do |f|
-  = f.input :cost_per_night, as: :hidden
-  - if @booking.owner_accepted
-    .col-xs-11.col-sm-10.col-sm-offset-1
-      = f.input :host_accepted, required: true, as: :radio_buttons, label: 'Do you accept the booking?'
-    .col-xs-11.col-sm-10.col-sm-offset-1
-      = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
+  .col-xs-11.col-sm-9.col-sm-offset-1
+    h3.text-center Your Actions
+    p.text-center Reply to this Guest and Accept, Customise or Decline this Booking
+.row
+  .col-xs-11.col-sm-9.col-sm-offset-1
+    = simple_form_for @booking, wrapper: :bootstrap3 do |f|
+      = f.input :cost_per_night, as: :hidden, :value => number_to_currency(@booking.cost_per_night)
+      = f.input :message, input_html: {rows: 2}, placeholder: "Please leave a message"
+      .row
+        .col-xs-12
+          = f.submit 'Accept Booking', class: 'btn btn-primary btn-lg btn-block submit-button'
       br
-    .row
-      = f.submit 'Submit', class: 'btn btn-primary btn-lg btn-block'
-    br
-  - else
-    = f.input :message, input_html: {rows: 5}, placeholder: "Add a message to send to #{@booking.booker.first_name}"
-    br
-    = f.submit 'Accept Booking', class: 'btn btn-primary btn-lg btn-block'
-    br
-    - if @booking.owner_accepted
-      p.small Accepting this request will confirm the booking.
-    - else
-      p.small
-        ' If you offer a Custom Rate, and #{@booking.booker.first_name} accepts,
-        strong both parties are locked into the Booking.
-      p.small
-        ' Only offer Custom Rates that you are happy to commit to as they cannot
-        | be changed once accepted by #{@booking.booker.first_name}!
-    br
-    br
-    javascript:
-      $(document).ready(function(){
-        $(".modify-pricing").hide();
-        $("#modify-price-button").on("click", function() {
-          $('.booking-details-container').hide();
-          $(".modify-pricing").show();
-          // $(".current-total-price").text("Current Total Price");
-          // $(".current-daily-price").text("Current Daily Price");
-          $('#total-stay').focus()
-          $(this).hide();
-        });
-        $("#per-night").bind("change keyup input", function(){
-          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
-          var per_night = parseFloat($(this).val()).toFixed(2);
-          var total = (per_night * number_of_nights).toFixed(2);
-          var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
-          $("#total-stay").val(total);
-          $("#host-payout").text("$" + payout);
-          $("#phs-charge").text("$" + fee);
-        });
-        $("#total-stay").bind("keyup", function(){
-          var number_of_nights = parseFloat("#{@booking.number_of_nights}");
-          var total = parseFloat($(this).val()).toFixed(2);
-          var per_night = (total/number_of_nights).toFixed(2);
-          var fee = (total * 0.15).toFixed(2);
-          var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
-          $("#per-night").val(per_night);
-          $("#host-payout").text("$" + payout);
-          $("#phs-charge").text("$" + fee);
-        });
-        $('form').on("submit", function(){
-          if (parseFloat($("#per-night").val()) >= 0) {
-            var proposed_per_night_price = parseFloat($("#per-night").val()).toFixed(2);
-            $("#booking_cost_per_night").val(proposed_per_night_price);
-          } else {
-            alert("Sorry, please enter a different price");
-            return false;
-          }
-        });
+      .row.booking-details-container
+        .col-xs-12
+          p.text-center= "- OR -"
+        .col-xs-12
+          .btn.btn-secondary.btn-block.btn-lg#modify-price-button Offer a Custom Rate
+      br
+      br
+      br
+      br
+      .row
+        .col-xs-12
+          - if @booking.owner_accepted
+            p.small.text-center Accepting this request will confirm the booking.
+          - else
+            p.small.text-center
+              ' If you offer a Custom Rate, and #{@booking.booker.first_name} accepts,
+              strong both parties are locked into the Booking.
+            p.small.text-center
+              ' Only offer Custom Rates that you are happy to commit to as they cannot
+              | be changed once accepted by #{@booking.booker.first_name}!
+      .row
+        .col-xs-12
+          = f.submit 'Decline Booking', class: 'btn btn-warning btn-xs btn-block'
+      br
+  javascript:
+    $(document).ready(function(){
+      $(".modify-pricing").hide();
+      $("#modify-price-button").on("click", function() {
+        $('.booking-details-container').hide();
+        $(".modify-pricing").show();
+        $('#total-stay').focus();
+        $('.submit-button').val("Submit");
+        $(this).hide();
+        $('#per-night').val("");
       });
+      $("#per-night").bind("change keyup input", function(){
+        var number_of_nights = parseFloat("#{@booking.number_of_nights}");
+        var per_night = parseFloat($(this).val()).toFixed(2);
+        var total = (per_night * number_of_nights).toFixed(2);
+        var fee = (total * 0.15).toFixed(2);
+        var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
+        $("#total-stay").val(total);
+        $("#host-payout").text("$" + payout);
+        $("#phs-charge").text("$" + fee);
+      });
+      $("#total-stay").bind("keyup", function(){
+        var number_of_nights = parseFloat("#{@booking.number_of_nights}");
+        var total = parseFloat($(this).val()).toFixed(2);
+        var per_night = (total/number_of_nights).toFixed(2);
+        var fee = (total * 0.15).toFixed(2);
+        var payout = (total - (total * 0.15) - parseFloat("#{Booking::PER_NIGHT_LIABILITY_INSURANCE_COST}") * number_of_nights).toFixed(2);
+        $("#per-night").val(per_night);
+        $("#host-payout").text("$" + payout);
+        $("#phs-charge").text("$" + fee);
+      });
+      $('form').on("submit", function(){
+        if (parseFloat($("#per-night").val()) >= 10) {
+          var proposed_per_night_price = parseFloat($("#per-night").val()).toFixed(2);
+          $("#booking_cost_per_night").val(proposed_per_night_price);
+        } else {
+          alert("Sorry, minimum is $10 / night");
+          return false;
+        }
+        if ("#{Rails.env == 'production'}" == "true") {
+          var event_type = (parseFloat("#{@booking.cost_per_night}") === proposed_per_night_price) ? "host-standard" : "host-custom"
+          Intercom('trackEvent', event_type, {
+            check_in_date: "#{@booking.check_in_date.to_time.to_i}",
+            price: proposed_per_night_price
+          });
+        }
+      });
+    });

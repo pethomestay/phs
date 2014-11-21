@@ -262,8 +262,9 @@ class BookingsController < ApplicationController
 
   def host_paid
     @booking = Booking.find(params[:id])
-    @booking.host_was_paid
-    @booking.save!
+    # @booking.host_was_paid
+    # @booking.save!
+    @booking.update_column(:state, "host_paid")
     render nothing: true
   end
 
