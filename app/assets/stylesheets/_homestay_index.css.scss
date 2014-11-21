@@ -47,6 +47,12 @@
         font-size: 15px;
         margin-top: 2px;
       }
+
+      .cost-per-night strong {
+        background: $orange;
+        color: $grey-lighter;
+        padding: 2px 5px;
+      }
     }
 
     @media (max-width: $screen-xs-max) {
