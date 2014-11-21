@@ -46,6 +46,7 @@
     }
 
     .media-body {
+      width: 100%;
       padding-left: 5px;
 
       .first_name {
@@ -60,10 +61,16 @@
         margin-top: 2px;
       }
 
-      .cost-per-night strong {
-        background: $orange;
-        color: $grey-lighter;
-        padding: 2px 5px;
+      .cost-per-night {
+        strong {
+          background: $orange;
+          color: $grey-lighter;
+          padding: 2px 5px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+          text-align: right;
+        }
       }
     }
 
