@@ -26,7 +26,6 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'alphabetical_paginate'
 gem 'bootstrap-sass'
-gem 'font-awesome-sass', '~> 4.2.0'
 gem 'owlcarousel-rails' # For carousel on Homestay listing page
 gem 'simple_form'
 gem 'awesome_nested_fields'
