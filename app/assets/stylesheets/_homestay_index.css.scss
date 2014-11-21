@@ -91,6 +91,21 @@
       }
     }
   }
+
+  ul.pagination {
+    li {
+      display: none;
+
+      &.prev,
+      &.next {
+        display: inline;
+
+        &.disabled {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: $screen-sm-min) {
