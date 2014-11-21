@@ -112,6 +112,8 @@
   }
 
   ul.pagination {
+    width: 100%;
+
     li {
       display: none;
 
@@ -122,6 +124,10 @@
         &.disabled {
           display: none;
         }
+      }
+
+      &.next {
+        float: right;
       }
     }
   }
