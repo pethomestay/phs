@@ -1,15 +1,12 @@
 .container-fluid.homestay-index
   = render 'search_box'
   .row.below-search-box
-    .col-sm-8.results
-      - if @homestays.any?
-        ul.media-list
-          - @homestays.each do |homestay|
-            = render 'result_row', homestay: homestay
-        = will_paginate @homestays, renderer: BootstrapPagination::Rails
-      - else
-        = render 'no_results'
     - if @homestays.any?
+      .col-sm-8.results
+          ul.media-list
+            - @homestays.each do |homestay|
+              = render 'result_row', homestay: homestay
+          = will_paginate @homestays, renderer: BootstrapPagination::Rails
       .col-sm-4.sidebar-search
         - if @search.latitude.present? && @search.longitude.present?
           .search-map-container
@@ -37,3 +34,6 @@
                       $mapWrapper.removeClass 'fixed'
                     $mapWrapper.addClass 'fixed-bottom'
                     $mapWrapper.css 'top', top
+    - else
+      .col-sm-8.col-sm-offset-2
+        = render 'no_results'
