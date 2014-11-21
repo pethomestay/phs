@@ -1,5 +1,5 @@
-a href=homestay_path(homestay)
-  .media data-listing=homestay.id
+.media data-listing=homestay.id
+  a href=homestay_path(homestay)
     .media-left.media-middle.image.hidden-xs
       - if homestay.photos?
         = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill
@@ -10,6 +10,8 @@ a href=homestay_path(homestay)
       - if homestay.user.received_feedbacks.present?
         p.rating.text-center
           == rating_stars_awesome homestay.average_rating
+      - else
+        p
     .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
       - if homestay.user.profile_photo?
         = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
@@ -24,6 +26,8 @@ a href=homestay_path(homestay)
       - if homestay.user.received_feedbacks.present?
         p.rating.text-center
           == rating_stars_awesome homestay.average_rating
+      - else
+        p
     .media-body.info
       h2.first_name #{ homestay.user.first_name }
       h3.title #{ truncate(homestay.title, length: 50, separator: ' ') }
