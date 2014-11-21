@@ -51,6 +51,7 @@
 
     @media (max-width: $screen-xs-max) {
       .media:nth-child(even) {
+        padding-top: 15px;
         padding-left: 10px;
         padding-right: 10px;
         margin-left:  -10px;
