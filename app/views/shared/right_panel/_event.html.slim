@@ -19,9 +19,9 @@
   - if awaits_feedback # A booking that awaits feedback
     - if event.check_out_date < Date.today
       a.btn.btn-primary.pull-right.leave-feedback href=new_enquiry_feedbacks_path(event.enquiry)
-        | Leave
+        | LEAVE
         br
-        | feedback
+        | FEEDBACK
     - else
       a.btn.btn-default.pull-right.disabled style='pointer-events: auto;' data-toggle='popover' data-trigger='hover click' data-placement='top' data-content="You'll be able to leave a feedback once the Stay finishes."
         | LEAVE
@@ -29,5 +29,5 @@
         | FEEDBACK
   - elsif guest_view && ['Enquiry', "Pending action - #{event.booker.first_name}"].include?(event.get_status)
       a.btn.btn-primary.pull-right.leave-feedback href=edit_booking_path(event)
-        | Book
+        | BOOK
   .hr
