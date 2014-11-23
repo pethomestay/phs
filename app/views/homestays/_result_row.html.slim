@@ -6,7 +6,7 @@
       - elsif homestay.pictures.any?
         = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title
       - else
-        = image_tag 'default_profile_photo.png', style: 'width: 150px;'
+        = image_tag 'default_profile_photo.jpg', style: 'width: 150px;'
       - if homestay.user.received_feedbacks.present?
         p.rating.text-center
           == rating_stars_awesome homestay.average_rating
