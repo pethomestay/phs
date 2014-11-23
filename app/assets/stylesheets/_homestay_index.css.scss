@@ -120,6 +120,7 @@
       &.prev,
       &.next {
         display: inline;
+        text-transform: uppercase;
 
         &.disabled {
           display: none;
