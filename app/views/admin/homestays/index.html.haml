@@ -7,6 +7,8 @@
   %thead
     %tr
       %th Title
+      %th Host
+      %th Mobile
       %th Suburb
       %th Created
       %th Active?
@@ -16,6 +18,13 @@
     - @homestays.each do |homestay|
       %tr
         %td= link_to homestay.title, admin_homestay_path(homestay)
+        - if homestay.user.present?
+          %td
+            = link_to homestay.user.name, admin_user_path(homestay.user)
+          %td= homestay.user.mobile_number
+        - else
+          %td N/A
+          %td N/A
         %td= homestay.address_suburb
         %td= homestay.created_at.to_formatted_s(:year_month_day)
         %td{:id => "is_active_" + homestay.id.to_s}
