@@ -10,7 +10,7 @@
             .form-group
               %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
                 %i.fa.fa-facebook.fa-fw.fa-lg
-                Log In with Facebook
+                LOG IN WITH FACEBOOK
             %h6.hr
               %span or
             .form-group
@@ -23,7 +23,7 @@
                 %span.input-group-addon
                   %i.fa.fa-lock.fa-fw
                 = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
-            = submit_tag 'Log In', class: 'btn btn-primary form-control submit'
+            = submit_tag 'LOG IN', class: 'btn btn-primary form-control submit'
             %label.checkbox-inline
               = check_box_tag 'user[remember_me]', 1, true
               Remember Me
