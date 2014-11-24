@@ -11,6 +11,6 @@ feature 'User signs up', focus: true do
       fill_in 'user[password]', with: 'sd2864925'
     end
 
-    expect { click_button 'Sign Up' }.to change { ActionMailer::Base.deliveries.count }.by 1
+    expect { click_button 'SIGN UP' }.to change { ActionMailer::Base.deliveries.count }.by 1
   end
 end
