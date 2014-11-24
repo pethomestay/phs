@@ -17,8 +17,4 @@ class Contact
   def persisted?
     false
   end
-
-  def send_email
-    ContactMailer.new_customer_contact(self).deliver
-  end
 end
