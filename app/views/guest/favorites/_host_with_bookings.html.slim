@@ -14,7 +14,7 @@
         span #{host.try(:homestay).try(:address_suburb)}, #{host.try(:homestay).try(:address_city)} #{host.try(:homestay).try(:address_postcode)}
     .right
       - if host.homestay.present?
-        = link_to 'Make Enquiry', homestay_path(host.homestay, anchor: 'enquiry'), class: 'btn btn-primary', style: 'margin-bottom: 5px;'
+        = link_to 'MAKE ENQUIRY', homestay_path(host.homestay, anchor: 'enquiry'), class: 'btn btn-primary', style: 'margin-bottom: 5px;'
       br
       br
       span

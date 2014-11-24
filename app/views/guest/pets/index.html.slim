@@ -10,7 +10,7 @@
             td #{pet.name}
             td = link_to 'Edit', edit_guest_pet_path(pet)
             td = link_to 'Remove', guest_pet_path(pet), method: 'DELETE', confirm: "Do you really want to remove #{pet.name}? This CANNOT be undone."
-      = link_to 'Add New Pet', new_guest_pet_path, class: 'btn btn-secondary pull-right'
+      = link_to 'ADD NEW PET', new_guest_pet_path, class: 'btn btn-secondary pull-right'
     - else
       p
         ' You currently have no pet on your account. Would you like to
