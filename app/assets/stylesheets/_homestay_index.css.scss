@@ -1,0 +1,156 @@
+.homestay-index {
+  .search-box {
+    margin: 0 -15px;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    #search_check_in_date,
+    #search_check_out_date {
+      background-color: #fff;
+      cursor: pointer;
+    }
+    .search.btn {
+      margin-bottom: 15px;
+
+      @media (max-width: $screen-xs-max) {
+        width: 100%;
+      }
+    }
+    .sort-order {
+      span.sort-by {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .toggler {
+    display: none;
+    background: $grey;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .results {
+    padding: 10px 10px 0 10px;
+
+    a {
+      color: $black;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    p.rating {
+      color: $blue-light;
+    }
+
+    .media-body {
+      width: 100%;
+      padding-left: 5px;
+
+      .first_name {
+        padding-top: 5px;
+        margin-top: 0;
+        margin: 0;
+      }
+
+      .title {
+        color: $grey-dark;
+        font-size: 15px;
+        margin-top: 2px;
+      }
+
+      .cost-per-night {
+        strong {
+          background: $orange;
+          color: $grey-lighter;
+          padding: 2px 5px;
+          @media (max-width: $screen-xs-max) {
+            float: right;
+          }
+        }
+
+      }
+    }
+
+    @media (max-width: $screen-xs-max) {
+      .media:nth-child(even) {
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left:  -10px;
+        margin-right: -10px;
+        background-color: $grey-light;
+      }
+
+      .media-left {
+        display: table-cell;
+      }
+    }
+  }
+  .sidebar-search {
+    padding: 0;
+    .search-map-wrapper {
+      width: 100%;
+      height: 100vh;
+      #search-map {
+        height: 100%;
+        min-height: 300px;
+      }
+      &.fixed {
+        position: fixed;
+        top: 0;
+      }
+      &.fixed-bottom {
+        position: absolute;
+      }
+      &.on-mobile {
+        max-height: 500px;
+      }
+    }
+  }
+
+  ul.pagination {
+    width: 100%;
+
+    li {
+      display: none;
+
+      &.prev,
+      &.next {
+        display: inline;
+        text-transform: uppercase;
+
+        &.disabled {
+          display: none;
+        }
+      }
+
+      &.next {
+        float: right;
+      }
+    }
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  #new_search {
+    .form-group {
+      margin-bottom: 15px;
+      input {
+        &#search_location {
+          width: 300px;
+        }
+        &#search_check_in_date,
+        &#search_check_out_date {
+          width: 200px;
+          margin-left: 20px;
+        }
+      }
+    }
+    .search.btn {
+      margin-left: 20px;
+    }
+  }
+}

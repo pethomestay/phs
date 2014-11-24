@@ -11,7 +11,7 @@
         = message.user.present? ? message.user.name : 'N/A'
     .reply.pull-right
       i.fa.fa-reply
-      span  Reply
+      span  REPLY
   .body
     pre
       = message.message_text
@@ -23,37 +23,37 @@
         - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && (conversation.try(:booking).try(:enquiry).try(:owner_accepted) || conversation.booking.payment.present?) && conversation.booking.check_in_date < Date.today # Guest view - leave feedback button
            a.btn.btn-primary href=new_enquiry_feedbacks_path(conversation.enquiry)
             '
-            | Leave Feedback
+            | LEAVE FEEDBACK
             br
-            | for completed stays
+            | FOR COMPLETED STAYS
         - elsif conversation.try(:booking) && conversation.booking.owner_accepted != true # Guest view - book homestay button if they haven't already booked
           a.btn.btn-primary href=edit_booking_path(conversation.booking)
             i.fa.fa-check.fa-fw
             '
-            | Book This Homestay
+            | BOOK THIS HOMESTAY
         - elsif conversation.booking.nil? # Legacy booking for guest
           - booking_params = conversation.enquiry.blank? ? { homestay_id: conversation.booking.homestay.id } : { enquiry_id: conversation.enquiry_id }
           a.btn.btn-primary href=new_booking_path(booking_params)
             i.fa.fa-check.fa-fw
             '
-            | Book This Homestay
+            | BOOK THIS HOMESTAY
       - else
         - if conversation.booking.present?
           - if conversation.booking.owner_accepted && conversation.booking.host_accepted.nil? # Host view - Confirm/Reject button
             a.btn.btn-primary href=host_confirm_booking_path(conversation.booking)
               '
-              | Confirm or Reject
+              | CONFIRM OR REJECT
           - elsif conversation.booking && !conversation.booking.owner_accepted && conversation.booking.check_in_date >= Date.today # Host can customise request
             a.btn.btn-primary href=edit_booking_path(conversation.booking)
               i.fa.fa-pencil-square-o
               '
-              | Review Booking
+              | REVIEW BOOKING
           - elsif conversation.booking.host_accepted && conversation.booking.payment.present?
             a.btn.btn-primary href=booking_host_receipt_path(conversation.booking)
-              | View Booking
+              | VIEW BOOKING
 - if top
   .new-msg-form-container
     form
       .form-group
         textarea.form-control rows='4' placeholder='Type in message here and click Send'
-      button type='submit' class='btn btn-primary' Send
+      button type='submit' class='btn btn-primary' SEND

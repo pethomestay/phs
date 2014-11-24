@@ -4,9 +4,9 @@
       h3 Account Details
     .top-buttons
       - if current_user.uid.nil?
-        = link_to "Link account with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn btn-facebook-sign-up'
+        = link_to 'LINK ACCOUNT WITH FACEBOOK', user_omniauth_authorize_path(:facebook), class: 'btn btn-facebook-sign-up'
       - else
-        = link_to "Unlink account from Facebook", unlink_path(@user), method: :post, class: 'btn btn-facebook-sign-up'
+        = link_to 'UNLINK ACCOUNT FROM FACEBOOK', unlink_path(@user), method: :post, class: 'btn btn-facebook-sign-up'
         p
           br
           | Note: Please set a password before unlinking your account.
@@ -31,7 +31,7 @@
         .well.current-password
           = f.input :current_password, label: 'We need your current password to confirm your changes'
       .form-actions
-        = f.submit 'Update account', class: 'btn btn-primary'
+        = f.submit 'UPDATE ACCOUNT', class: 'btn btn-primary'
 
 
 coffee:

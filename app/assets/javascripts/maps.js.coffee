@@ -3,13 +3,13 @@ window.initMap = (lat, lng, opts = {}) ->
   window.map = new GMaps(opts)
 
 markerImage = ->
-  new google.maps.MarkerImage '/assets/image.png',
+  new google.maps.MarkerImage 'http://res.cloudinary.com/hxnfgf9c2/image/upload/v1414374978/map_marker.png',
     new google.maps.Size(32,49),
     new google.maps.Point(0,0),
     new google.maps.Point(16,49)
 
 markerShadow = ->
-  new google.maps.MarkerImage '/assets/shadow.png',
+  new google.maps.MarkerImage 'http://res.cloudinary.com/hxnfgf9c2/image/upload/v1415156969/shadow.png',
     new google.maps.Size(60,49),
     new google.maps.Point(0,0),
     new google.maps.Point(16,49)

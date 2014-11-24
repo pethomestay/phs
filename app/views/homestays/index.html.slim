@@ -1,0 +1,50 @@
+.container-fluid.homestay-index
+  = render 'search_box'
+  .row.below-search-box
+    - if @homestays.any?
+      .col-sm-8.results
+          ul.media-list
+            - @homestays.each do |homestay|
+              = render 'result_row', homestay: homestay
+          = will_paginate @homestays, renderer: BootstrapPagination::Rails
+      .col-sm-4.sidebar-search
+        - if @search.latitude.present? && @search.longitude.present?
+          .search-map-container
+            .search-map-wrapper
+              #search-map class=( @homestays.any? ? '' : 'short' )
+          coffee:
+            $ ->
+              $mapWrapper = $('.search-map-wrapper')
+              $mapContainer = $('.search-map-container')
+              if $('#xs-indicator').is ':visible'
+                $mapWrapper.addClass 'on-mobile'
+              else
+                $(window).on 'scroll', (evt) ->
+                  if $(window).scrollTop() < $mapContainer.offset().top
+                    $mapWrapper.removeClass 'fixed'
+                    $mapWrapper.removeClass 'fixed-bottom'
+                    $mapWrapper.css 'top', 0
+                  else if ( $(window).scrollTop() + $(window).height() ) < $('section.footer').offset().top
+                    $mapWrapper.addClass 'fixed'
+                    $mapWrapper.removeClass 'fixed-bottom'
+                    $mapWrapper.css 'top', 0
+                  else
+                    if $mapWrapper.hasClass 'fixed'
+                      top = $('.row.below-search-box').height() - $mapWrapper.height()
+                      $mapWrapper.removeClass 'fixed'
+                    $mapWrapper.addClass 'fixed-bottom'
+                    $mapWrapper.css 'top', top
+    - else
+      .col-sm-8.col-sm-offset-2
+        = render 'no_results'
+
+coffee:
+  $ ->
+    return if $('#xs-indicator').is ':hidden'
+    $search_box = $('.search-box')
+    $toggler = $('.toggler')
+    $search_box.delay(1000).slideUp ->
+      $toggler.show()
+    $toggler.on 'click', ->
+      $toggler.hide()
+      $search_box.slideDown()

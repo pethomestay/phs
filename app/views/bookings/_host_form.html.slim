@@ -205,5 +205,12 @@
           alert("Sorry, minimum is $10 / night");
           return false;
         }
+        if ("#{Rails.env == 'production'}" == "true") {
+          var event_type = (parseFloat("#{@booking.cost_per_night}") === proposed_per_night_price) ? "host-standard" : "host-custom"
+          Intercom('trackEvent', event_type, {
+            check_in_date: "#{@booking.check_in_date.to_time.to_i}",
+            price: proposed_per_night_price
+          });
+        }
       });
     });

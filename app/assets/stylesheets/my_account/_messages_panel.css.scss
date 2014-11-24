@@ -148,6 +148,11 @@
             background-color: $blue-light;
           }
         }
+
+        &.prev,
+        &.next {
+          text-transform: uppercase;
+        }
       }
     }
   }

@@ -1,7 +1,4 @@
-- content_for :head_stylesheet do
-  = stylesheet_link_tag '_bootstrap-datepicker'
 - content_for :head_javascript do
-  = javascript_include_tag 'bootstrap-datepicker-core'
   = javascript_include_tag 'datepicker'
 - if @check_for_coupon
   = render partial: 'home/coupon'
