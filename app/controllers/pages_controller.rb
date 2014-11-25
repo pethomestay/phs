@@ -22,9 +22,6 @@ class PagesController < ApplicationController
   def the_team
   end
 
-  def house_rules
-  end
-
   def investors
     render layout: 'new_application'
   end
