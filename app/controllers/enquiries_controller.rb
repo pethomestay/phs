@@ -22,7 +22,10 @@ class EnquiriesController < ApplicationController
     else
       flash[:error] = @enquiry.errors.full_messages.first
     end
-    redirect_to @enquiry.homestay
+    redirect_to controller: 'homestays',
+                action: 'show',
+                id: @enquiry.homestay.slug,
+                anchor: 'request-modal'
   end
 
   def show

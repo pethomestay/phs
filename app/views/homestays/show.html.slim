@@ -161,6 +161,9 @@
           h4.modal-title.request-label Request a meeting
         = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
           .modal-body
+            - flash.each do |type, message|
+              .alert class="alert-#{ new_flash_class_for(type) }" role='alert'
+                = message
             input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
             = f.input_field :duration_id, as: :hidden, value: 1
             .row
@@ -192,6 +195,9 @@
 
 coffee:
   $ ->
+    # Fire modal if #request-modal is in URL
+    if window.location.hash == '#request-modal'
+      $('#request-modal').modal('show')
     # Carousel
     $('#hero').owlCarousel
       navigation: true
