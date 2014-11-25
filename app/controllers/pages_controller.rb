@@ -25,9 +25,6 @@ class PagesController < ApplicationController
   def house_rules
   end
 
-  def post_to_securepay
-  end
-
   def investors
     render layout: 'new_application'
   end
