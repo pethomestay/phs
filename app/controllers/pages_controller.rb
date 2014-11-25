@@ -32,6 +32,7 @@ class PagesController < ApplicationController
   end
 
   def jobs
+    render layout: 'new_application'
   end
 
   def partners
