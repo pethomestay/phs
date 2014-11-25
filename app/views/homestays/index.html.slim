@@ -14,6 +14,7 @@
               #search-map class=( @homestays.any? ? '' : 'short' )
           coffee:
             $ ->
+              return if $('.results').height() < $('.sidebar-search').height()
               $mapWrapper = $('.search-map-wrapper')
               $mapContainer = $('.search-map-container')
               if $('#xs-indicator').is ':visible'
