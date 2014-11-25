@@ -23,6 +23,7 @@ class Enquiry < ActiveRecord::Base
   validates_presence_of :check_in_date, :check_out_date
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
+  validate :guest_must_have_a_mobile_number
 
   after_create :create_mailbox
   after_create :send_new_enquiry_notifications
@@ -100,6 +101,12 @@ class Enquiry < ActiveRecord::Base
   #end
 
   private
+  def guest_must_have_a_mobile_number
+    unless self.user.mobile_number.present?
+      errors[:base] << 'A mobile number is needed so the Host can contact you!'
+    end
+  end
+
   def send_new_enquiry_notifications
     ProviderMailer.enquiry(self).deliver
   end

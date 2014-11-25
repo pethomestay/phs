@@ -1,9 +1,3 @@
-- content_for :head_stylesheet do
-  = stylesheet_link_tag '_bootstrap-datepicker'
-- content_for :head_javascript do
-  = javascript_include_tag 'bootstrap-datepicker-core'
-
-
 .container-fluid.homestay-show
   .row.first
     #hero.owl-carousel.owl-theme
@@ -167,6 +161,9 @@
           h4.modal-title.request-label Request a meeting
         = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
           .modal-body
+            - flash.each do |type, message|
+              .alert class="alert-#{ new_flash_class_for(type) }" role='alert'
+                = message
             input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
             = f.input_field :duration_id, as: :hidden, value: 1
             .row
@@ -184,14 +181,26 @@
             .row
               .col-xs-12
                 = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-                = f.check_box :reuse_message, options = { checked: false }
-                span  Reuse this message next time I contact a host
+                .form-group
+                  .input-group.input-group-lg
+                    span.input-group-addon style='background: #fff;'
+                      i.fa.fa-mobile.fa-fw.fa-lg
+                    input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
+                  p.help-block.text-center
+                    small
+                      | A mobile number is needed so the Host can get in touch!
+                      br
+                      | We don't share or use this for any other purpose :)
+                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
           .modal-footer
             button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
             = f.submit 'SUBMIT', class: 'btn btn-primary'
 
 coffee:
   $ ->
+    # Fire modal if #request-modal is in URL
+    if window.location.hash == '#request-modal'
+      $('#request-modal').modal('show')
     # Carousel
     $('#hero').owlCarousel
       navigation: true
