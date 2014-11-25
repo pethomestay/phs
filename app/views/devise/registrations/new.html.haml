@@ -41,12 +41,14 @@
               = f.hidden_field :accept_house_rules, value: 1
             .form-group
               = f.hidden_field :accept_terms, value: 1
-            %p.help-block
-              By clicking the button below, you agree to our
-              = link_to 'house rules', house_rules_path, target: '_blank'
-              and
-              = link_to 'terms and conditions', terms_and_conditions_path, target: '_blank'
+            %br
             = f.submit 'SIGN UP', class: 'btn btn-primary form-control submit'
+            %p.help-block.text-center
+              %small
+                By clicking the button below, you agree to our
+                = link_to 'house rules', house_rules_path, target: '_blank'
+                and
+                = link_to 'terms and conditions', terms_and_conditions_path, target: '_blank'
     .why-sign-up.hidden-xs
       %h2
         Why you'll
