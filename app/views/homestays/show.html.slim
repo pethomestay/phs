@@ -187,8 +187,7 @@
                       span.input-group-addon style='background: #fff;'
                         i.fa.fa-mobile.fa-fw.fa-lg
                       input.form-control type='tel' name='mobile_number' placeholder='Mobile Number'
-                = f.check_box :reuse_message, options = { checked: false }
-                span  Reuse this message next time I contact a host
+                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
           .modal-footer
             button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
             = f.submit 'SUBMIT', class: 'btn btn-primary'
