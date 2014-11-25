@@ -14,6 +14,9 @@ class EnquiriesController < ApplicationController
       end
     end
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
+    if params[:mobile_number]
+      current_user.update_attribute(:mobile_number, params[:mobile_number])
+    end
     if @enquiry.valid?
       flash[:alert] = 'Your enquiry has been sent to the Host, and there is a record in your My Account Inbox. Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using PetHomeStay!'
     else
