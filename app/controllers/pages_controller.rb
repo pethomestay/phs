@@ -29,6 +29,7 @@ class PagesController < ApplicationController
   end
 
   def investors
+    render layout: 'new_application'
   end
 
   def jobs
