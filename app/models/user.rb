@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   has_attachment :profile_photo, accept: [:jpg, :png, :bmp, :gif]
 
   validates_presence_of :first_name, :last_name, :email
-  validates :mobile_number, presence: true, if: 'provider.nil?'
+  # validates :mobile_number, presence: true, if: 'provider.nil?'
   phony_normalize :mobile_number, :default_country_code => 'AU'
   # validates_plausible_phone :mobile_number
 
