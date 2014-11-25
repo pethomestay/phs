@@ -183,8 +183,8 @@
                 = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
                 - if current_user.mobile_number.blank?
                   .form-group
-                    .input-group
-                      span.input-group-addon
+                    .input-group.input-group-lg
+                      span.input-group-addon style='background: #fff;'
                         i.fa.fa-mobile.fa-fw.fa-lg
                       input.form-control type='tel' name='mobile_number' placeholder='Mobile Number'
                 = f.check_box :reuse_message, options = { checked: false }
