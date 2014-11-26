@@ -33,7 +33,7 @@ $ ->
         $date = $(e.target).parent()
       else if e.target.tagName == 'TD'
         $date = $(e.target)
-      return if $date.hasClass('ignored') or $date.hasClass('booked') or $date.hasClass('today')
+      return if $date.hasClass('ignored') or $date.hasClass('today')
       if $date.hasClass 'unavailable'
         @trigger 'uiDestroyUnavailableDate',
           date: $date.data('date')
