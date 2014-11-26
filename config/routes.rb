@@ -6,6 +6,7 @@ PetHomestay::Application.routes.draw do
   get '/users/sign_up', to: redirect("/sign-up")
 
   devise_scope :user do
+    get '/sign-out', to: "devise/sessions#destroy"
     get    "sign-in",  to: "devise/sessions#new",         as: :new_user_session
     post   "sign-in",  to: "devise/sessions#create",      as: :user_session
     delete "sign-out", to: "devise/sessions#destroy",     as: :destroy_user_session
@@ -108,6 +109,7 @@ PetHomestay::Application.routes.draw do
     post '/conversation/mark_read', to: 'messages#mark_read'
     get '/favorites', to: 'favorites#index'
     resources :pets, except: [:show]
+    resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'guest#index'
   end
   devise_scope :user do

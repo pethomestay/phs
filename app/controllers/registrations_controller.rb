@@ -40,6 +40,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
+    cookies[:check_for_coupon] = true
     if params[:redirect_path].present?
       params[:redirect_path]
     else
