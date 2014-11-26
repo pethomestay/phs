@@ -6,6 +6,7 @@ PetHomestay::Application.routes.draw do
   get '/users/sign_up', to: redirect("/sign-up")
 
   devise_scope :user do
+    get '/sign-out', to: "devise/sessions#destroy"
     get    "sign-in",  to: "devise/sessions#new",         as: :new_user_session
     post   "sign-in",  to: "devise/sessions#create",      as: :user_session
     delete "sign-out", to: "devise/sessions#destroy",     as: :destroy_user_session
