@@ -1,6 +1,19 @@
 PetHomestay::Application.routes.draw do
 
-  devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }, :skip => [:sessions, :registrations] 
+
+  get '/users/sign_in', to: redirect("/sign-in")
+  get '/users/sign_up', to: redirect("/sign-up")
+
+  devise_scope :user do
+    get '/sign-out', to: "devise/sessions#destroy"
+    get    "sign-in",  to: "devise/sessions#new",         as: :new_user_session
+    post   "sign-in",  to: "devise/sessions#create",      as: :user_session
+    delete "sign-out", to: "devise/sessions#destroy",     as: :destroy_user_session
+ 
+    get    "sign-up",  to: "devise/registrations#new",    as: :new_user_registration
+    post   "sign-up",  to: "devise/registrations#create", as: :user_registration
+  end
 
   resources :users do
     collection do
@@ -96,6 +109,7 @@ PetHomestay::Application.routes.draw do
     post '/conversation/mark_read', to: 'messages#mark_read'
     get '/favorites', to: 'favorites#index'
     resources :pets, except: [:show]
+    resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'guest#index'
   end
   devise_scope :user do

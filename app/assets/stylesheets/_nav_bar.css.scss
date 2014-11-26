@@ -43,6 +43,10 @@
     }
 }
 @media (max-width: 350px) {
+    .nav-custom .buttons {
+        margin-left: 0;
+        margin-right: 1px;
+    }
     #my {
         display: none;
     }

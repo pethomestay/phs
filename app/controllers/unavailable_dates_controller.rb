@@ -22,12 +22,21 @@ class UnavailableDatesController < ApplicationController
   end
 
   def destroy
-    if current_user.admin && params[user_id].present?
-      unavailable_date = User.find(params[:user_id]).unavailable_dates.find(params[:id])
+    # For unavailable made by bookings
+    if params[:unavailable_date].present?
+      unavailable_date = current_user.unavailable_dates.find_by_date(params[:unavailable_date][:date])
+      if unavailable_date.nil?
+        current_user.unavailable_dates.create(:date => params[:unavailable_date][:date])
+        skip_destroy = true
+      end
     else
-      unavailable_date = current_user.unavailable_dates.find(params[:id])
+      if current_user.admin && params[user_id].present?
+        unavailable_date = User.find(params[:user_id]).unavailable_dates.find(params[:id])
+      else
+        unavailable_date = current_user.unavailable_dates.find(params[:id])
+      end
     end
-    unavailable_date.destroy
+    unavailable_date.destroy unless skip_destroy
     render json: { message: t("unavailable_date.successfully_destroyed") }, status: 200
   end
 

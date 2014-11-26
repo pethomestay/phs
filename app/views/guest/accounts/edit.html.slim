@@ -1,0 +1,8 @@
+= render layout: 'layouts/user' do
+  .page-header
+    h3 Payout Details
+  p PetHomeStay will use these details to transfer any credits earned through Coupon code redemptions
+  = simple_form_for [:guest, @account], url: guest_account_path, wrapper: :bootstrap3 do |f|
+    = render 'fields', f: f
+    .form-actions
+      = f.submit 'SAVE', class: 'btn btn-primary'
