@@ -94,11 +94,7 @@ PetHomestay::Application.routes.draw do
     end
   end
 
-  resources :unavailable_dates, :only => [:create, :destroy] do
-    collection do
-      delete :destroy_unavailable_booking_date
-    end
-  end
+  resources :unavailable_dates, :only => [:create, :destroy]
 
   resources :accounts do
     collection do
