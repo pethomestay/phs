@@ -28,6 +28,12 @@ javascript:
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 #fb-root
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
 
 .container-fluid.homestay-show
   .row.first
@@ -72,7 +78,9 @@ javascript:
       - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
       - twitter_url += '&via=PetHomeStay'
       - twitter_url += '&hashtags=freecuddles'
-      a.twitter-share-btn target='_blank' href=twitter_url Tweet
+      button.btn.twitter-share-btn data-href=twitter_url
+        i.fa.fa-twitter.fa-fw
+        |  TWEET
       span.section-title.summary Summary
       .row.summary
         .col-xs-7.col-sm-5.entry
