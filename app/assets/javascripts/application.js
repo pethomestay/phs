@@ -47,4 +47,3 @@
 //= require jquery.tablesorter
 //= require jquery.validate.min
 //= require xdate
-//= require jquery.cookie

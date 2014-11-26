@@ -34,4 +34,3 @@
 //= require_directory ./components_data
 //= require_directory ./components_ui
 //= require bootstrap-datepicker-core
-//= require jquery.cookie
