@@ -93,11 +93,15 @@
         }
       }
     }
+
+    .fb-share-btn {
+      width: 100px;
+      margin-top: 20px;
+      padding: 5px 10px;
+    }
+
     .summary {
       line-height: 1.5;
-      &.section-title {
-        padding-top: 15px;
-      }
       .entry span {
         font-weight: 500;
       }

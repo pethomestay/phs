@@ -1,3 +1,29 @@
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : gon.fb_app_id,
+      xfbml      : false,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn').on('click', function() {
+      FB.ui(
+      {
+        method: 'share',
+        href: document.URL
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
+
 .container-fluid.homestay-show
   .row.first
     #hero.owl-carousel.owl-theme
@@ -34,6 +60,9 @@
               = render 'stars', rating: @homestay.average_rating
               span.count
                 |  (#{@reviews.count})
+      button.btn.btn-facebook-sign-up.fb-share-btn
+        i.fa.fa-facebook.fa-fw
+        |  SHARE
       span.section-title.summary Summary
       .row.summary
         .col-xs-7.col-sm-5.entry

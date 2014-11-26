@@ -52,6 +52,7 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
+    gon.push fb_app_id: ENV['APP_ID']
     render layout: 'new_application'
   end
 
