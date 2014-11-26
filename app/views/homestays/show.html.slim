@@ -68,6 +68,11 @@ javascript:
       button.btn.btn-facebook-sign-up.fb-share-btn
         i.fa.fa-facebook.fa-fw
         |  SHARE
+      - twitter_url  = 'https://twitter.com/share'
+      - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+      - twitter_url += '&via=PetHomeStay'
+      - twitter_url += '&hashtags=freecuddles'
+      a.twitter-share-btn target='_blank' href=twitter_url Tweet
       span.section-title.summary Summary
       .row.summary
         .col-xs-7.col-sm-5.entry
