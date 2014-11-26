@@ -11,22 +11,30 @@ p Why not become the first Host in your area, or sign up to be told when there i
   p.muted Click the button below and we'll keep you informed.
   form.form-inline.notify action='http://pethomestay.createsend.com/t/j/s/hrtrp/' method='post'
     input#fieldName name='cm-name' type='hidden' value=current_user.name
-    input#fieldEmail name='cm-hrtrp-hrtrp' type='hidden' required=true value=current_user.email
+    input#fieldEmail name='cm-hrtrp-hrtrp' type='hidden' value=current_user.email
     input#fieldjifyh name='cm-f-jifyh' type='hidden' value=@search.location
-    input.btn.btn-primary type='submit' value='Notify Me'
+    input.btn.btn-primary type='submit' value='NOTIFY ME'
 - else
   h4 = "Could you be one of the first PetHomeStays for #{@search.location}?"
   p Be the first to look after some awesome and adorable pets in your neighbourhood. You can earn extra money doing what you love, or  build goodwill with other pet owners for when you need your pet looked after.
-  = link_to 'Join now!', new_user_registration_path, class: 'btn btn-primary'
+  = link_to 'JOIN NOW', new_user_registration_path, class: 'btn btn-primary'
   hr
   h4 Want to sign up to be notified of new PetHomeStays?
   p.muted Fill in your name and email below and we'll keep you informed of any new sitters.
   form.form-inline.notify action='http://pethomestay.createsend.com/t/j/s/hrtrp/' method='post'
-    label for='fieldName' Name
-    input#fieldName.span2 name='cm-name', type='text'
-    label for='fieldEmail' Email
-    input#fieldEmail.span2 name='cm-hrtrp-hrtrp' type='email' required=true
-    input#fieldjifyh name='cm-f-jifyh', type='hidden' value=@search.location
-    input.btn.btn-primary type='submit' value='Notify Me'
+    .form-group
+      .input-group
+        label.sr-only for='fieldName' Name
+        .input-group-addon
+          i.fa.fa-user
+        input.form-control#fieldName name='cm-name' type='text' placeholder='Name'
+    .form-group
+      .input-group
+        label.sr-only for='fieldEmail' Email
+        .input-group-addon
+          i.fa.fa-envelope
+        input.form-control#fieldEmail name='cm-hrtrp-hrtrp' type='email' required=true placeholder='Email'
+    input#fieldjifyh name='cm-f-jifyh' type='hidden' value=@search.location
+    input.btn.btn-primary type='submit' value='NOTIFY ME'
 br
 br
