@@ -108,6 +108,7 @@ PetHomestay::Application.routes.draw do
     post '/conversation/mark_read', to: 'messages#mark_read'
     get '/favorites', to: 'favorites#index'
     resources :pets, except: [:show]
+    resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'guest#index'
   end
   devise_scope :user do
