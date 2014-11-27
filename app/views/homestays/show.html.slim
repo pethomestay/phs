@@ -266,17 +266,29 @@ coffee:
     if window.location.hash == '#request-modal'
       $('#request-modal').modal('show')
     # Carousel
-    $('#hero').owlCarousel
-      navigation: true
-      navigationText: [
-        "<i class='fa fa-chevron-left'></i>",
-        "<i class='fa fa-chevron-right'></i>"
-      ]
-      autoHeight : true
-      stopOnHover: true
-      slideSpeed : 300
-      paginationSpeed : 400
-      singleItem: true
+    if $('#xs-indicator').is ':visible'
+      $('#hero').owlCarousel
+        navigation: true
+        navigationText: [
+          "<i class='fa fa-chevron-left'></i>",
+          "<i class='fa fa-chevron-right'></i>"
+        ]
+        autoHeight : true
+        stopOnHover: true
+        slideSpeed : 300
+        paginationSpeed : 400
+        singleItem: true
+    else
+      $('#hero').owlCarousel
+        navigation: true
+        navigationText: [
+          "<i class='fa fa-chevron-left'></i>",
+          "<i class='fa fa-chevron-right'></i>"
+        ]
+        autoPlay: true
+        pagination: false
+        singleItem: true
+      $('.owl-controls').css 'margin-top', 0
 
     # Map
     $map = $('#map')

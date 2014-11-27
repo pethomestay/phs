@@ -138,6 +138,11 @@
         a { color: $blue-light; }
       }
     }
+
+    @media (max-width: $screen-xs-max) {
+      padding-left: 6.5%;
+      padding-right: 6.5%;
+    }
   }
   .map-container {
     padding: 0;
