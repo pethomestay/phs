@@ -108,6 +108,10 @@
       padding: 5px 10px;
       color: $grey-lighter;
       background: #55acee;
+
+      @media (max-width: 350px) {
+        float: right;
+      }
     }
 
     .summary {
