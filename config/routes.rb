@@ -11,8 +11,8 @@ PetHomestay::Application.routes.draw do
     post   "sign-in",  to: "devise/sessions#create",      as: :user_session
     delete "sign-out", to: "devise/sessions#destroy",     as: :destroy_user_session
  
-    get    "sign-up",  to: "devise/registrations#new",    as: :new_user_registration
-    post   "sign-up",  to: "devise/registrations#create", as: :user_registration
+    get    "sign-up",  to: "registrations#new",    as: :new_user_registration
+    post   "sign-up",  to: "registrations#create", as: :user_registration
   end
 
   resources :users do

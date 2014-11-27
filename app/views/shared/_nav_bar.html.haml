@@ -5,6 +5,12 @@
         .navbar-header.pull-right
             - if user_signed_in?
                 - if current_user.admin?
+                    - if session[:check_for_coupon] && current_user.try(:used_coupon).nil?
+                        = render partial: 'home/coupon'
+                        :javascript
+                            $(document).ready(function(){
+                                $('#coupon-modal').modal('show');
+                            });
                     = link_to 'ADMIN CONSOLE', admin_dashboard_path, class: 'buttons btn navbar-btn hidden-xs'
                 %a.buttons.btn.navbar-btn#find-a-host{ href: root_path } FIND A HOST
                 = link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn'
