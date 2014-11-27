@@ -93,11 +93,29 @@
         }
       }
     }
+
+    .fb-share-btn {
+      width: 100px;
+      margin-top: 20px;
+      padding: 5px 10px;
+    }
+
+    .twitter-share-btn {
+      width: 100px;
+      height: 40px;
+      margin-top: 20px;
+      margin-left: 20px;
+      padding: 5px 10px;
+      color: $grey-lighter;
+      background: #55acee;
+
+      @media (max-width: 350px) {
+        float: right;
+      }
+    }
+
     .summary {
       line-height: 1.5;
-      &.section-title {
-        padding-top: 15px;
-      }
       .entry span {
         font-weight: 500;
       }
@@ -110,9 +128,11 @@
     }
     .inquire {
       display: block;
+      height: 40px;
+      padding-top: 9px;
       max-width: 500px;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      margin-top: 15px;
+      margin-bottom: 10px;
       &.sign-in {
         margin-top: -10px;
         a { color: $blue-light; }
