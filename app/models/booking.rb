@@ -100,7 +100,8 @@ class Booking < ActiveRecord::Base
       self.cancel_date = Date.today
       self.save
     else
-      Raygun.track_exception(custom_data: {time: Time.now, booking: self.id, reason: "Refund failed"})
+      raise
+      Raygun.track_exception(Exception.new("Refund failed, booking_id:#{self.id}"))
     end
     if guest_cancel
       GuestCancelledBookingHostJob.new.async.perform(self.id) #Let the host know booking has been cancelled
