@@ -45,17 +45,11 @@
     width: 155px;
 }
 #search-btn {
-    color: #FFFFFF;
-    background-color: #ec5c3b;
     width: 7em;
     height: 46px;
     border-radius: 4px;
 }
-#search-btn:focus,
-#search-btn:hover {
-    background-color: #ec5c3b;
-    color: #FFFFFF;
-}
+
 // Highlights
 .highlights {
     margin-top: 7em;

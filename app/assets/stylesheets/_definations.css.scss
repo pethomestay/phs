@@ -29,6 +29,7 @@ $sub-nav-height: 86px;
     color:  $grey-lighter;
     border: none;
     padding: 7px 12px; // Overwrites 6px 12px
+    &:focus,
     &:hover {
       background-color: $orange-light;
       color: $grey-lighter;
