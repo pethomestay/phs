@@ -7,12 +7,12 @@
         .panel-body
           = form_tag session_path(resource_name), method: 'post' do
             = hidden_field_tag :redirect_path, params[:redirect_path]
-            .form-group
-              %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
-                %i.fa.fa-facebook.fa-fw.fa-lg
-                LOG IN WITH FACEBOOK
-            %h6.hr
-              %span or
+            / .form-group
+            /   %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
+            /     %i.fa.fa-facebook.fa-fw.fa-lg
+            /     LOG IN WITH FACEBOOK
+            / %h6.hr
+            /   %span or
             .form-group
               .input-group
                 %span.input-group-addon
