@@ -63,6 +63,10 @@ ul.nav.nav-pills.nav-stacked
       a href=(current_user.pets.any? ? guest_pets_path : new_guest_pet_path)
         i.fa.fa-paw.fa-lg.fa-fw
         | PET PROFILES
+    li class=('active' if params[:controller] == 'guest/accounts')
+      a href=(current_user.account.blank? ? new_guest_account_path : guest_account_path)
+        i.fa.fa-dollar.fa-lg.fa-fw
+        | BALANCE
     li
       a href='http://support.pethomestay.com' target='_blank'
         i.fa.fa-question-circle.fa-lg.fa-fw

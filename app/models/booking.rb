@@ -367,9 +367,21 @@ class Booking < ActiveRecord::Base
   # Sends email to host saying that payment made, they just need to accept
   def trigger_host_accept
     ProviderMailer.owner_confirmed(self).deliver
+    self.block_out_dates
     # self.host_accepts_booking
     # self.host_accepted = true
     # self.save!
+  end
+
+  def block_out_dates
+    return unless self.check_out_date && self.check_in_date
+    return unless self.check_out_date > self.check_in_date
+    user = self.bookee
+    start = self.check_in_date
+    (start..check_out_date).each do |booking_date|
+      next if booking_date == check_out_date
+      user.unavailable_dates.create(:date => booking_date)
+    end
   end
 
   def phs_service_charge

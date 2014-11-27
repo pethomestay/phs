@@ -48,15 +48,23 @@ class User < ActiveRecord::Base
   scope :last_five, order('created_at DESC').limit(5)
 
   # Creates the coupon code that users can share with others: First three letters of last name + first two letters of first name +
-  def generate_referral_code(force = false)
+  # custom_discount = nil, custom_credit = nil
+  def generate_referral_code(force = false, args = {})
     return if !force && self.coupon_code.present?
-    suggested_code = self.last_name.gsub(/[^a-z]/i, '').slice(0..2) + self.first_name.gsub(/[^a-z]/i, '').slice(0)
-    suggested_code+= "X"*(4 - suggested_code.length) if suggested_code.length != 4
-    non_unique = User.where("coupon_code like ?", suggested_code + "%").count
-    unique_num = non_unique > 0 ? non_unique.to_s : ""
-    final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
+    if args[:custom_code]
+      final_code = args[:custom_code].upcase
+    else
+      suggested_code = self.last_name.gsub(/[^a-z]/i, '').slice(0..2) + self.first_name.gsub(/[^a-z]/i, '').slice(0)
+      suggested_code+= "X"*(4 - suggested_code.length) if suggested_code.length != 4
+      non_unique = Coupon.where("code like ?", suggested_code + "%").count
+      unique_num = non_unique > 0 ? non_unique.to_s : ""
+      final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
+    end
+    discount_amount = args[:custom_discount] || Coupon::DEFAULT_DISCOUNT_AMOUNT
+    referrer_amount = args[:custom_credit] || Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT
     self.skip_reconfirmation! # Do this to eliminate duplicate confirmation emails caused by next line
-    self.update_attribute(:coupon_code, final_code.upcase)
+    # self.update_attribute(:coupon_code, final_code.upcase)
+    self.referred_coupons.new(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
   end
 
   def name
@@ -102,7 +110,7 @@ class User < ActiveRecord::Base
   def validate_code?(code)
     code.upcase!
     return false if self.used_coupon.present?
-    referrer = User.find_by_coupon_code(code)
+    referrer = Coupon.find_by_code(code).referrer
     return false if referrer.nil?
     Coupon.create(:code => code, :referrer_id => referrer.id, :used_by_id => self.id, :discount_amount => Coupon::DEFAULT_DISCOUNT_AMOUNT, :credit_referrer_amount => Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT)
     return true
