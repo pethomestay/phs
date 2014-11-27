@@ -5,7 +5,7 @@
   - if @homestay.photos?
     - img_url = cloudinary_url @homestay.photos.first.public_id
   - elsif @homestay.pictures.any?
-    - img_url = cloudinary_url @homestay.pictures.first.file.url
+    - img_url = @homestay.pictures.first.file.remote_url
   - elsif @homestay.user.profile_photo?
     - img_url = cloudinary_url @homestay.user.profile_photo.public_id
   - elsif @homestay.user.uid.present?
