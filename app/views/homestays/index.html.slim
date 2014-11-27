@@ -1,12 +1,12 @@
 .container-fluid.homestay-index
-  = render 'search_box'
   .row.below-search-box
     - if @homestays.any?
       .col-sm-8.results
-          ul.media-list
-            - @homestays.each do |homestay|
-              = render 'result_row', homestay: homestay
-          = will_paginate @homestays, renderer: BootstrapPagination::Rails
+        = render 'search_box'
+        ul.media-list
+          - @homestays.each do |homestay|
+            = render 'result_row', homestay: homestay
+        = will_paginate @homestays, renderer: BootstrapPagination::Rails
       .col-sm-4.sidebar-search
         - if @search.latitude.present? && @search.longitude.present?
           .search-map-container

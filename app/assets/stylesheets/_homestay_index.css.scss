@@ -1,24 +1,59 @@
+$secondary-text-color: #50a19e;
+$search-field-height: 40px;
+
 .homestay-index {
   .search-box {
     margin: 0 -15px;
+    background: $blue-light;
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+
+    @media (min-width: $screen-sm-min) {
+      padding-top: 50px;
+      padding-left: 40px;
+      padding-bottom: 30px;
+    }
+
+    .search_location_container {
+      @media (min-width: $screen-sm-min) {
+        width: 200px;
+      }
+
+      #search_location {
+        height: $search-field-height;
+      }
+    }
+
+    .search_check_in_date_container,
+    .search_check_out_date_container {
+      @media (min-width: $screen-sm-min) {
+        width: 135px;
+      }
+    }
     #search_check_in_date,
     #search_check_out_date {
+      margin-left: 2px;
+      height: $search-field-height;
       background-color: #fff;
       cursor: pointer;
     }
     .search.btn {
-      margin-bottom: 15px;
+      width: 105px;
+      height: $search-field-height;
+      margin-left: 2px;
 
       @media (max-width: $screen-xs-max) {
         width: 100%;
       }
     }
     .sort-order {
+      margin-top: 20px;
+      color: $grey-lighter;
+
       span.sort-by {
         margin-right: 15px;
+        color: $secondary-text-color;
       }
     }
   }
@@ -31,7 +66,7 @@
   }
 
   .results {
-    padding: 10px 10px 0 10px;
+    padding: 0 10px 0 10px;
 
     a {
       color: $black;
@@ -130,27 +165,6 @@
       &.next {
         float: right;
       }
-    }
-  }
-}
-
-@media (min-width: $screen-sm-min) {
-  #new_search {
-    .form-group {
-      margin-bottom: 15px;
-      input {
-        &#search_location {
-          width: 300px;
-        }
-        &#search_check_in_date,
-        &#search_check_out_date {
-          width: 200px;
-          margin-left: 20px;
-        }
-      }
-    }
-    .search.btn {
-      margin-left: 20px;
     }
   }
 }
