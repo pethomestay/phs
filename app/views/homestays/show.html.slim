@@ -1,3 +1,57 @@
+- content_for :meta_tags do
+  meta property='og:title' content=@homestay.title
+  meta property='og:site_name' content='PetHomeStay'
+  meta property='og:url' content=request.original_url
+  meta property='og:description' content="Find a great pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+  meta name='twitter:card' content='summary'
+  meta name='twitter:site' content='@PetHomeStay'
+  meta name='twitter:title' content=@homestay.title
+  meta name='twitter:description' content=truncate(@homestay.description, length: 200)
+  meta name='twitter:url' content=request.original_url
+  - if @homestay.photos?
+    - img_url = cloudinary_url @homestay.photos.first.public_id
+  - elsif @homestay.pictures.any?
+    - img_url = @homestay.pictures.first.file.remote_url
+  - elsif @homestay.user.profile_photo?
+    - img_url = cloudinary_url @homestay.user.profile_photo.public_id
+  - elsif @homestay.user.uid.present?
+    - img_url = cloudinary_url @homestay.user.uid
+  - if img_url.present?
+    meta property='og:image' content=img_url
+    meta name='twitter:image' content=img_url
+
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : gon.fb_app_id,
+      xfbml      : false,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn').on('click', function() {
+      FB.ui(
+      {
+        method: 'share',
+        href: document.URL
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+
 .container-fluid.homestay-show
   .row.first
     #hero.owl-carousel.owl-theme
@@ -34,6 +88,16 @@
               = render 'stars', rating: @homestay.average_rating
               span.count
                 |  (#{@reviews.count})
+      button.btn.btn-facebook-sign-up.fb-share-btn
+        i.fa.fa-facebook.fa-fw
+        |  SHARE
+      - twitter_url  = 'https://twitter.com/share'
+      - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+      - twitter_url += '&via=PetHomeStay'
+      - twitter_url += '&hashtags=freecuddles'
+      button.btn.twitter-share-btn data-href=twitter_url
+        i.fa.fa-twitter.fa-fw
+        |  TWEET
       span.section-title.summary Summary
       .row.summary
         .col-xs-7.col-sm-5.entry
