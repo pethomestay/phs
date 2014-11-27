@@ -2,6 +2,16 @@
   meta property='og:title' content=@homestay.title
   meta property='og:site_name' content='PetHomeStay'
   meta property='og:description' content="Find a great pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+  - if @homestay.photos?
+    - img_url = cloudinary_url @homestay.photos.first.public_id
+  - elsif @homestay.pictures.any?
+    - img_url = cloudinary_url @homestay.pictures.first.file.url
+  - elsif @homestay.user.profile_photo?
+    - img_url = cloudinary_url @homestay.user.profile_photo.public_id
+  - elsif @homestay.user.uid.present?
+    - img_url = cloudinary_url @homestay.user.uid
+  - if img_url.present?
+    meta property='og:image' content=img_url
 
 javascript:
   window.fbAsyncInit = function() {
