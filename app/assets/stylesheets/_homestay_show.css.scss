@@ -138,9 +138,16 @@
         a { color: $blue-light; }
       }
     }
+
+    @media (max-width: $screen-xs-max) {
+      padding-left: 6.5%;
+      padding-right: 6.5%;
+    }
   }
   .map-container {
     padding: 0;
+    margin-left: -15px;
+    margin-right: -15px;
     #map {
       display: block;
       width: 100%;
@@ -193,6 +200,8 @@
     }
   }
   .calendar-container {
+    margin-left: -15px;
+    margin-right: -15px;
     .calendar {
       td {
         cursor: auto;
