@@ -87,7 +87,7 @@ PetHomestay::Application.configure do
   config.action_mailer.asset_host = "http://#{ENV['HOST']}"
 
   # Protect staging app from public
-  # config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Staging") do |u, p|
-  #   [u, p] == [ENV['MY_STAGING_USERNAME'], ENV['MY_STAGING_PASSWORD']]
-  # end
+  config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Staging") do |u, p|
+    [u, p] == [ENV['MY_STAGING_USERNAME'], ENV['MY_STAGING_PASSWORD']]
+  end
 end
