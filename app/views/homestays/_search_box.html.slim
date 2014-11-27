@@ -3,18 +3,18 @@
     .form-group
       .input-group.input-group-flat-left.search_location_container
         span.input-group-addon
-          i.fa.fa-map-marker
+          i.fa.fa-map-marker.fa-lg
         = f.input_field :location, placeholder: 'Postcode or City'
     .form-group.search_check_in_date
       .input-group.input-group-flat-right.search_check_in_date_container
         = f.input_field :check_in_date, placeholder: 'Drop Off', readonly: true, value: check_in_date
         span.input-group-addon
-          i.fa.fa-calendar
+          i.fa.fa-calendar.fa-lg
     .form-group.search_check_out_date
       .input-group.input-group-flat-right.search_check_out_date_container
         = f.input_field :check_out_date, placeholder: 'Pick Up', readonly: true, value: check_out_date
         span.input-group-addon
-          i.fa.fa-calendar
+          i.fa.fa-calendar.fa-lg
     = f.button :submit, 'SEARCH', class: 'btn btn-primary search'
     .sort-order
       span.sort-by Sort by
