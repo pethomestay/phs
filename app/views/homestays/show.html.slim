@@ -3,6 +3,11 @@
   meta property='og:site_name' content='PetHomeStay'
   meta property='og:url' content=request.original_url
   meta property='og:description' content="Find a great pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+  meta name='twitter:card' content='summary'
+  meta name='twitter:site' content='@PetHomeStay'
+  meta name='twitter:title' content=@homestay.title
+  meta name='twitter:description' content=truncate(@homestay.description, length: 200)
+  meta name='twitter:url' content=request.original_url
   - if @homestay.photos?
     - img_url = cloudinary_url @homestay.photos.first.public_id
   - elsif @homestay.pictures.any?
@@ -13,6 +18,7 @@
     - img_url = cloudinary_url @homestay.user.uid
   - if img_url.present?
     meta property='og:image' content=img_url
+    meta name='twitter:image' content=img_url
 
 javascript:
   window.fbAsyncInit = function() {
