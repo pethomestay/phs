@@ -110,18 +110,21 @@ $search-field-height: 40px;
       }
     }
 
-    @media (max-width: $screen-xs-max) {
-      .media:nth-child(even) {
+    .media {
+      margin: 25px 15px;
+      background: $grey-light;
+      @media (max-width: $screen-xs-max) {
         padding-top: 15px;
         padding-left: 10px;
         padding-right: 10px;
-        margin-left:  -10px;
-        margin-right: -10px;
-        background-color: $grey-light;
-      }
+        margin:  0 -10px;
+        &:nth-child(even) {
+          background-color: transparent;
+        }
 
-      .media-left {
-        display: table-cell;
+        .media-left {
+          display: table-cell;
+        }
       }
     }
   }
