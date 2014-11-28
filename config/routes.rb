@@ -1,10 +1,6 @@
 PetHomestay::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
-  # For SEO
-  get '/signin' => 'sessions#new', :as => :signin
-  get '/signup' => 'identities#new', :as => :signup
-  get '/signout' => 'sessions#destroy', :as => :signout
 
   resources :users do
     collection do
