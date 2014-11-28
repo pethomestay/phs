@@ -1,4 +1,6 @@
 class Enquiry < ActiveRecord::Base
+  include ShortMessagesHelper
+
   belongs_to :user
   belongs_to :homestay
   has_many :feedbacks
@@ -112,7 +114,8 @@ class Enquiry < ActiveRecord::Base
   end
 
   def send_new_enquiry_notification_SMS
-    ProviderMailer.new_enquiry_SMS(self).deliver
+    send_sms to: self.homestay.user.mobile_number,
+      text: "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
   end
 
   # See the comment at top
