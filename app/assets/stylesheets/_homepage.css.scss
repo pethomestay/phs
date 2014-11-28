@@ -40,47 +40,16 @@
     padding: 13px;
 }
 // Input field
-.left-merged .input-group-addon {
-    border-right: 0;
-    background-color: #FFFFFF;
-    border-radius: 0;
-}
-#postcode input {
-    border-left: 0;
-    background-color: #FFFFFF;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
-}
-.left-merged .input-group-addon {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-.right-merged .input-group-addon {
-    border-left: 0;
-    background-color: #FFFFFF;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
 #drop-off input,
 #pick-up input {
-    border-right: 0;
-    background-color: #FFFFFF;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
     width: 155px;
 }
 #search-btn {
-    color: #FFFFFF;
-    background-color: #ec5c3b;
     width: 7em;
     height: 46px;
     border-radius: 4px;
 }
-#search-btn:focus,
-#search-btn:hover {
-    background-color: #ec5c3b;
-    color: #FFFFFF;
-}
+
 // Highlights
 .highlights {
     margin-top: 7em;
@@ -150,13 +119,6 @@
 // Three features
 #why-phs {
     background-color: rgb(247, 247, 247);
-}
-#why-phs img {
-    width: 280px;
-    // center graphics
-    display: block;
-    margin-left:  auto;
-    margin-right: auto;
 }
 #why-phs h3 {
     margin-top: 55px;
