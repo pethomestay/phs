@@ -1,6 +1,6 @@
 require 'rest_client'
 
-module SMSHelper
+module ShortMessagesHelper
   SMSBROADCAST_URL = 'https://api.smsbroadcast.com.au/api-adv.php'
 
   def send_sms(opts)

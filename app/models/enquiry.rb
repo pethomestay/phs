@@ -1,5 +1,5 @@
 class Enquiry < ActiveRecord::Base
-  include SMSHelper
+  include ShortMessagesHelper
 
   belongs_to :user
   belongs_to :homestay
