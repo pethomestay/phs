@@ -1,17 +1,16 @@
 require 'rest_client'
 
 module SMS
-  SMSGLOBAL_URL = 'http://www.smsglobal.com/http-api.php'
+  SMSBROADCAST_URL = 'https://api.smsbroadcast.com.au/api-adv.php'
 
   def send_sms(opts)
     params = {
-      action: 'sendsms',
-      user: ENV['SMSGLOBAL_USERNAME'],
-      password: ENV['SMSGLOBAL_PASSWORD'],
+      username: ENV['SMSBROADCAST_USERNAME'],
+      password: ENV['SMSBROADCAST_PASSWORD'],
       from: 'PetHomeStay',
       to: opts[:to],
-      text: opts[:text]
+      message: opts[:text]
     }
-    RestClient.get SMSGLOBAL_URL, params: params
+    RestClient.get SMSBROADCAST_URL, params: params
   end
 end
