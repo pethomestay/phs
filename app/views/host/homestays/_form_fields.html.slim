@@ -29,6 +29,17 @@ css:
     li Do you provide bedding, toys, treats?
     li Do you provide a pick up or drop off?
     li Are you specific about certain times?
+  .form-group
+    label
+      | * Mobile number
+    .input-group
+      span.input-group-addon
+        i.fa.fa-mobile
+      input.form-control type='tel' name='mobile_number' value=current_user.mobile_number
+    p.help-block
+      small
+        | A mobile number is compulsory so the Guest can get in touch! We don't
+        |  share or use this for any other purpose :)
   = f.input :cost_per_night do
     .input-group
       .input-group-addon $

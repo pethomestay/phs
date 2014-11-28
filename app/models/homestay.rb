@@ -25,6 +25,7 @@ class Homestay < ActiveRecord::Base
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
+  validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
@@ -174,6 +175,12 @@ class Homestay < ActiveRecord::Base
   end
 
   private
+  def host_must_have_a_mobile_number
+    unless self.user.mobile_number.present?
+      errors[:base] << 'A mobile number is needed so the Guest can contact you!'
+    end
+  end
+
   def copy_slug_errors_to_title
     errors.add(:title, errors.get(:slug)[0]) if errors.get(:slug)
   end

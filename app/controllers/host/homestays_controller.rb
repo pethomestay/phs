@@ -1,5 +1,6 @@
 class Host::HomestaysController < Host::HostController
   before_filter :authenticate_user!, only: [:new, :create]
+  before_filter :update_user_mobile_number, only: [:create, :update]
   skip_before_filter :host_filters,  only: [:new, :create]
 
   # GET /host/homestay/new
@@ -21,6 +22,7 @@ class Host::HomestaysController < Host::HostController
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
+      flash[:error] = @homestay.errors[:base][0] if @homestay.errors[:base].present?
       render :new
     end
   end
@@ -43,6 +45,13 @@ class Host::HomestaysController < Host::HostController
       redirect_to @homestay, alert: 'Your listing has been updated.'
     else
       render :edit
+    end
+  end
+
+  private
+  def update_user_mobile_number
+    if params[:mobile_number].present?
+      current_user.update_attribute(:mobile_number, params[:mobile_number])
     end
   end
 end
