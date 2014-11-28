@@ -170,7 +170,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def favourite?(current_user)
-	  !Favourite.where(user_id: current_user, homestay_id: self).blank?
+    !Favourite.where(user_id: current_user, homestay_id: self).blank?
   end
 
   private
