@@ -13,15 +13,6 @@ class ProviderMailer < ActionMailer::Base
     # email.mailgun_operations = {tag: "enquiry", "tracking-opens"=>"yes", "tracking-clicks"=>"yes"}
   end
 
-  def new_enquiry_SMS(enquiry)
-    host   = enquiry.homestay.user
-    host_mobile = trim(host.mobile_number)
-    return unless host_mobile # abort if mobile number is illegal
-    @sender = enquiry.user
-    address = "#{host_mobile}@email.smsglobal.com"
-    mail(to: address, subject: "New Enquiry Notification")
-  end
-
   def owner_confirmed(booking)
     @booking = booking
     @enquiry = @booking.enquiry
