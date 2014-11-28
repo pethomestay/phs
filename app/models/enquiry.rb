@@ -1,7 +1,5 @@
-require 'rest_client'
-
 class Enquiry < ActiveRecord::Base
-  include SMS
+  include SMSHelper
 
   belongs_to :user
   belongs_to :homestay
