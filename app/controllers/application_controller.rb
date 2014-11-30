@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :expire_hsts # TEMPORARY - DESTROY THIS CODE ONCE SSL RECONFIGURED
 
   def admin_login_required
     authenticate_user!
@@ -33,5 +34,10 @@ class ApplicationController < ActionController::Base
     else
       guest_path # Default page after log in
     end
+  end
+
+  private
+  def expire_hsts
+    response.headers["Strict-Transport-Security"] = 'max-age=0'
   end
 end
