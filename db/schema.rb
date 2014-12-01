@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141112024405) do
+ActiveRecord::Schema.define(:version => 20141201064611) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -344,6 +344,7 @@ ActiveRecord::Schema.define(:version => 20141112024405) do
     t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
     t.string   "coupon_code"
+    t.boolean  "opt_out_sms",            :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
