@@ -34,4 +34,5 @@ class ApplicationController < ActionController::Base
       guest_path # Default page after log in
     end
   end
+
 end

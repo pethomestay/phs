@@ -84,8 +84,8 @@ PetHomestay::Application.configure do
   }
 
   # Add default mailer URL
-  config.action_mailer.default_url_options = { :host => 'www.pethomestay.com' }
-  config.action_mailer.asset_host = "http://www.pethomestay.com"
+  config.action_mailer.default_url_options = { :host => 'www.pethomestay.com.au' }
+  config.action_mailer.asset_host = "https://www.pethomestay.com.au"
 
   # Use SSL
   # config.force_ssl = true
