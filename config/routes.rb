@@ -151,7 +151,7 @@ PetHomestay::Application.routes.draw do
   get '/terms-and-conditions' => redirect('http://support.pethomestay.com/hc/en-us/articles/201214939-Terms-Conditions'), as: 'terms_and_conditions'
   get '/house-rules'          => redirect('http://support.pethomestay.com/hc/en-us/sections/200341999-House-Rules'), as: 'house_rules'
   get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
-  get '/cancellation-policy'  => 'pages#cancellation_policy', as: 'cancellation_policy'
+  get '/cancellation-policy'  => redirect('http://support.pethomestay.com/hc/en-us/articles/202709609-Cancellation-Policy'), as: 'cancellation_policy'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
   get '/investors'            => 'pages#investors', as: 'investors'
   get '/jobs'                 => 'pages#jobs', as: 'jobs'
