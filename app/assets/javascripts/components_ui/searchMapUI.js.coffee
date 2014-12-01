@@ -19,7 +19,7 @@ $ ->
           homestayID: homestay.id
           lat: homestay.latitude
           lng: homestay.longitude
-          icon: 'http://res.cloudinary.com/hxnfgf9c2/image/upload/v1414374978/map_marker.png'
+          icon: 'https://res.cloudinary.com/hxnfgf9c2/image/upload/v1414374978/map_marker.png'
           click: (e) ->
             $homestay = $("[data-listing=#{e.homestayID}]")
             $('html, body').animate
