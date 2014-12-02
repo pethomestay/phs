@@ -352,7 +352,6 @@ GEM
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
-    smsglobal (0.1.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -464,7 +463,6 @@ DEPENDENCIES
   simple_form
   simplecov
   slim
-  smsglobal
   state_machine
   strong_parameters
   sucker_punch
