@@ -114,5 +114,5 @@ IntercomRails.config do |config|
   # config.inbox.style = :custom
 end
 
-Intercom.app_id = "ack5yd0y"
+Intercom.app_id = ENV["INTERCOM_APP_ID"] || "ack5yd0y"
 Intercom.app_api_key = "b3235938ff543ad1e6c07aa1bbb5cc868680d3cf"
