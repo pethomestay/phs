@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
   validates_acceptance_of :accept_terms, on: :create
   validates_uniqueness_of :coupon_code, :allow_blank => true, :allow_nil => true
 
-  after_save :release_jobs
   after_create :generate_referral_code
 
   scope :active, where(active: true)
@@ -460,9 +459,5 @@ class User < ActiveRecord::Base
     else
       false
     end
-  end
-
-  def release_jobs
-    CMNewSubscriberJob.new.async.perform(self)
   end
 end
