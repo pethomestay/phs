@@ -119,6 +119,11 @@ class Enquiry < ActiveRecord::Base
                                  DateTime.now.beginning_of_day)
     if (all_enquiries_today.count + 1) > MAX_ENQUIRIES_PER_DAY
       errors[:base] << "You've reached the limit of enquiries today. Please try again tomorrow."
+      Intercom::Event.create(
+        event_name: 'enquiry-limit-reached',
+        created_at: Time.now.to_i,
+        email: self.user.email,
+      )
     end
   end
 
