@@ -65,6 +65,15 @@ class User < ActiveRecord::Base
     return true
   end
 
+  # Returns the dollar amount of money earned from owned coupons
+  def coupon_credits_earned
+    total = 0
+    self.owned_coupons.each do |coupon|
+      total += coupon.credit_referrer_amount.to_f * coupon.bookings.count
+    end
+    total
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

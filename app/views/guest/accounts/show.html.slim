@@ -3,10 +3,10 @@
     h3 Payout Summary
   p
     |Your referral code: 
-    b= current_user.coupon_code.try(:upcase)
+    b= current_user.owned_coupons.collect(&:code).join(", ")
   p
     |Referral credit earned: 
-    b= number_to_currency(current_user.referred_coupons.select(&:used?).sum(&:credit_referrer_amount))
+    b= number_to_currency(current_user.coupon_credits_earned)
 
   .page-header
     h3 Payout Details
