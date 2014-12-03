@@ -1,4 +1,32 @@
-%h1 Admin generated Coupons
+%h1.text-center Admin Coupon Generator
+= simple_form_for @coupon, url: create_coupon_admin_coupons_path, wrapper: :bootstrap3, :html => {:class => 'inline-form'}, :method => 'post' do |f|
+  .row-fluid
+    .span6
+      = f.association :owner, prompt: "Choose a User (can type name in)", :required => true
+    .span6
+      = f.input :code, :input_html => {:maxlength => 6}, :required => true
+  .row-fluid
+    .span6
+      = f.input :discount_amount, :required => true, input_html: { min: '0', step: 'any' }
+      = f.hint 'Dollar amount'
+    .span6
+      = f.input :credit_referrer_amount, :required => true, input_html: { min: '0', step: 'any' }
+      = f.hint 'Dollar amount'
+  = f.input :valid_from, :required => true, start_year: Date.today.year,  order: [:day, :month, :year]
+  = f.input :valid_to, :required => true, start_year: Date.today.year + 1,  order: [:day, :month, :year]
+
+
+  = f.submit "Create", class: 'btn btn-primary'
+
+%hr/
+
+%h1.text-center Force expire
+= form_tag(expire_coupon_admin_coupons_path, method: 'post', remote: true, :id => "expire_coupon_form") do
+  /= collection_select :, :coupon_id, Coupon.all, :id, :code
+  = select "expiring_coupon", "id", Coupon.valid.collect {|cc| [cc.code, cc.id]}, {include_blank: true}
+  = submit_tag "Expire", class: 'btn btn-primary', confirm: "Are you sure you want to expire this coupon, all unpaid bookings with this coupon will be affected"
+
+%h1.text-center Used Coupons
 %table.table.tablesorter
   %thead
     %tr
@@ -6,29 +34,39 @@
       %th Code
       %th Used by
       %th Applied by (booking_id)
-      %th Credit pending / Credits earned
   %tbody
-  
-%h1 Coupon Usage
+    - if @applied_coupons.any?
+      - @applied_coupons.each do |usage|
+        %tr
+          %td= usage.coupon.owner.name
+          %td= usage.coupon.code
+          %td= usage.user.name
+          %td= usage.booking.present? ? usage.booking.id : "N/A"
+
+%h1.text-center Expired Coupons
 %table.table.tablesorter
   %thead
     %tr
-      %th Referrer Name
+      %th Referrer
       %th Code
-      %th Used by
-      %th Applied by (booking_id)
-      %th Credit pending / Credits earned
+      %th Expired on
+      %th Users affected
   %tbody
-  - @coupons.each do |coupon|
-    %tr
-      %td
-        = User.find(coupon[0]).name
-      %td= coupon[1].collect(&:code).uniq.join(", ")
-      %td= "Used by: #{coupon[1].collect {|u| u.used_by.name if u.booking.nil? }.compact.count} people<br>#{coupon[1].collect {|u| u.used_by.name if u.booking.nil? }.compact.join("<br>")}".html_safe
-      %td= "Applied by: #{coupon[1].collect {|u| u.used_by.name if u.booking.present? }.compact.count} people<br>#{coupon[1].collect {|u| "#{u.used_by.name} (#{link_to u.booking.id, admin_view_booking_url(u.booking)})" if u.booking.present? }.compact.join("<br>")}".html_safe
-      %td= "#{number_to_currency(coupon[1].select(&:unused?).sum(&:credit_referrer_amount))} / #{number_to_currency(coupon[1].select(&:used?).sum(&:credit_referrer_amount))}"
+    - if @expired_coupons.any?
+      - @expired_coupons.each do |coupon|
+        %tr
+          %td= coupon.owner.name
+          %td= coupon.code
+          %td= coupon.valid_to
+          %td= CouponUsage.where("coupon_id = ? and booking_id IS NULL", coupon.id).collect(&:user).collect(&:name).join("<br>").html_safe
 
 :javascript
   $(document).ready(function(){
     $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+    $('#expire_coupon_form').bind("ajax:success", function(){
+      location.reload();
+    });
+    $('#expire_coupon_form').bind("ajax:failure", function(){
+      location.reload();
+    });
   });

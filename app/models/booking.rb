@@ -5,7 +5,8 @@ class Booking < ActiveRecord::Base
   belongs_to :bookee, class_name: 'User', foreign_key: :bookee_id
   belongs_to :homestay
   belongs_to :enquiry
-  has_one    :coupon
+  has_one    :coupon_usage
+  has_one    :coupon, :through => :coupon_usage
 
   MINIMUM_DAILY_PRICE = 10.0
   CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.0 # 2.5% = 0.025

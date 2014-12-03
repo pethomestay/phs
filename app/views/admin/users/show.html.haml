@@ -38,7 +38,9 @@
       - next if unavailable.date < Date.today
       %dd
         = unavailable.date.to_date.strftime("%A, %d/%m/%Y")
-
+  %dt Coupons
+  - if @user.owned_coupons.any?
+    %dd= @user.owned_coupons.collect(&:code).join("<br>").html_safe
 .control-group
   %label Unavailable Dates
   .controls

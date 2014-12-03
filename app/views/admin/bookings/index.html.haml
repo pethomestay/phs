@@ -45,7 +45,7 @@
           %td= number_to_currency(booking.payment.amount)
 
           %td= number_to_currency(discount)
-          %td= booking.try(:coupon).try(:referred_by).try(:name)
+          %td= booking.try(:coupon).try(:owner).try(:name)
 
           %td= number_to_currency(booking.public_liability_insurance)
           %td= number_to_currency(booking.phs_service_charge)

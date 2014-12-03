@@ -1,11 +1,5 @@
 - content_for :head_javascript do
   = javascript_include_tag 'datepicker'
-- if @check_for_coupon
-  = render partial: 'home/coupon'
-  javascript:
-    $(document).ready(
-      $('#coupon-modal').modal('show')
-    )
 = render partial: 'home/jumbotron'
 = render partial: 'home/three_steps'
 = render 'home/press_coverage'

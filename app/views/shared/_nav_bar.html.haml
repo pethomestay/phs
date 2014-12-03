@@ -4,8 +4,8 @@
             %a.navbar-brand#brand{href: "#{root_path}"} pet<span style="color: #ea7a28;">home</span>stay
         .navbar-header.pull-right
             - if user_signed_in?
-                - if current_user.admin?
-                    - if session[:check_for_coupon] && current_user.try(:used_coupon).nil?
+                - if current_user.admin?|| true
+                    - if session[:check_for_coupon] && current_user.try(:used_coupons).try(:empty?)
                         = render partial: 'home/coupon'
                         :javascript
                             $(document).ready(function(){
@@ -29,3 +29,7 @@
                 %a.buttons.btn.navbar-btn#become-a-host{ href: why_join_path } BECOME A HOST
                 %a.buttons.btn.navbar-btn{href: new_user_session_path } SIGN IN
                 %a.buttons.btn.navbar-btn.primary{href: new_user_registration_path } SIGN UP
+:css
+    h4.modal-title.request-label {
+        color: black;
+    }

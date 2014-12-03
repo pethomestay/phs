@@ -20,8 +20,9 @@ class User < ActiveRecord::Base
   has_many :homestays, through: :favourites, dependent: :destroy
   has_one  :account
   has_many :payments
-  has_one  :used_coupon, class_name: "Coupon", foreign_key: :used_by_id
-  has_many :referred_coupons, class_name: "Coupon", foreign_key: :referrer_id
+  has_many :coupon_usages
+  has_many :used_coupons, through: :coupon_usages, source: :coupon
+  has_many :owned_coupons, class_name: "Coupon", foreign_key: :user_id
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -39,7 +40,6 @@ class User < ActiveRecord::Base
   validates :accept_terms, :acceptance => true
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
-  validates_uniqueness_of :coupon_code, :allow_blank => true, :allow_nil => true
 
   after_create :generate_referral_code
 
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   # Creates the coupon code that users can share with others: First three letters of last name + first two letters of first name +
   # custom_discount = nil, custom_credit = nil
   def generate_referral_code(force = false, args = {})
-    return if !force && self.coupon_code.present?
+    return if !force && self.owned_coupons.present?
     if args[:custom_code]
       final_code = args[:custom_code].upcase
     else
@@ -61,9 +61,8 @@ class User < ActiveRecord::Base
     end
     discount_amount = args[:custom_discount] || Coupon::DEFAULT_DISCOUNT_AMOUNT
     referrer_amount = args[:custom_credit] || Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT
-    self.skip_reconfirmation! # Do this to eliminate duplicate confirmation emails caused by next line
-    # self.update_attribute(:coupon_code, final_code.upcase)
-    self.referred_coupons.new(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
+    self.owned_coupons.create(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
+    return true
   end
 
   def name
@@ -108,10 +107,10 @@ class User < ActiveRecord::Base
 
   def validate_code?(code)
     code.upcase!
-    return false if self.used_coupon.present?
-    referrer = Coupon.find_by_code(code).referrer
-    return false if referrer.nil?
-    Coupon.create(:code => code, :referrer_id => referrer.id, :used_by_id => self.id, :discount_amount => Coupon::DEFAULT_DISCOUNT_AMOUNT, :credit_referrer_amount => Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT)
+    return false if self.used_coupons.any?
+    coupon = Coupon.valid.find_by_code(code)
+    return false if coupon.nil?
+    CouponUsage.create(:user_id => self.id, :coupon_id => coupon.id)
     return true
   end
 
