@@ -35,3 +35,15 @@ coverage/
 .vagrant/
 
 *.dump
+
+*.crt
+
+*.cer
+
+*.pem
+
+*.csr
+
+*.key
+
+*.ca-bundle

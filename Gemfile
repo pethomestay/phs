@@ -53,8 +53,6 @@ gem 'braintree'
 gem 'intercom-rails' # Intercom.io integration
 gem 'intercom' # Intercom.io library for events
 gem 'jwt' # For Zendesk Single Sign-on
-gem 'createsend' # Campaign Monitor API Wrapper
-gem 'smsglobal' # API support for smsglobal.com
 gem 'phony_rails' # validate and normalize phone number
 group :test, :development do
   gem 'capistrano'

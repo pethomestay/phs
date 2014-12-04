@@ -1,6 +1,8 @@
 class Enquiry < ActiveRecord::Base
   include ShortMessagesHelper
 
+  MAX_ENQUIRIES_PER_DAY = 5
+
   belongs_to :user
   belongs_to :homestay
   has_many :feedbacks
@@ -26,6 +28,7 @@ class Enquiry < ActiveRecord::Base
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
   validate :guest_must_have_a_mobile_number
+  validate :day_limit
 
   after_create :create_mailbox
   after_create :send_new_enquiry_notifications
@@ -106,6 +109,23 @@ class Enquiry < ActiveRecord::Base
   def guest_must_have_a_mobile_number
     unless self.user.mobile_number.present?
       errors[:base] << 'A mobile number is needed so the Host can contact you!'
+    end
+  end
+
+  def day_limit
+    today_count = self.user.enquiries.select(:created_at)
+                  .where('created_at > ?',
+                         Time.now.in_time_zone('Melbourne').beginning_of_day)
+                  .count
+    if today_count > MAX_ENQUIRIES_PER_DAY
+      errors[:base] << "Sorry! We only allow #{MAX_ENQUIRIES_PER_DAY} enquiries per day to minimise the risk of spam."
+      if Rails.env.production?
+        Intercom::Event.create(
+          event_name: 'enquiry-limit-reached',
+          created_at: Time.now.to_i,
+          email: self.user.email,
+        )
+      end
     end
   end
 

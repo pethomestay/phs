@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141112024405) do
+ActiveRecord::Schema.define(:version => 20141203214306) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -76,17 +76,30 @@ ActiveRecord::Schema.define(:version => 20141112024405) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "coupon_usages", :force => true do |t|
+    t.boolean  "coupon_status"
+    t.integer  "user_id"
+    t.integer  "coupon_id"
+    t.integer  "booking_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "coupon_usages", ["booking_id"], :name => "index_coupon_usages_on_booking_id"
+  add_index "coupon_usages", ["coupon_id"], :name => "index_coupon_usages_on_coupon_id"
+  add_index "coupon_usages", ["user_id"], :name => "index_coupon_usages_on_user_id"
+
   create_table "coupons", :force => true do |t|
     t.string   "code"
-    t.integer  "booking_id"
-    t.integer  "referrer_id"
-    t.integer  "used_by_id"
+    t.integer  "user_id"
     t.decimal  "discount_amount"
     t.decimal  "credit_referrer_amount"
     t.date     "valid_from"
     t.date     "valid_to"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "coupon_limit"
+    t.integer  "users_count",            :default => 0
   end
 
   create_table "enquiries", :force => true do |t|
@@ -343,7 +356,6 @@ ActiveRecord::Schema.define(:version => 20141112024405) do
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
-    t.string   "coupon_code"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

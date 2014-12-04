@@ -37,7 +37,7 @@ class Homestay < ActiveRecord::Base
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
-  after_create :notify_intercom
+  after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
   def notify_intercom
