@@ -22,7 +22,6 @@
 
 %h1.text-center Force expire
 = form_tag(expire_coupon_admin_coupons_path, method: 'post', remote: true, :id => "expire_coupon_form") do
-  /= collection_select :, :coupon_id, Coupon.all, :id, :code
   = select "expiring_coupon", "id", Coupon.valid.collect {|cc| [cc.code, cc.id]}, {include_blank: true}
   = submit_tag "Expire", class: 'btn btn-primary', confirm: "Are you sure you want to expire this coupon, all unpaid bookings with this coupon will be affected"
 

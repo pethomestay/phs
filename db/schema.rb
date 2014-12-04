@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141127034403) do
+ActiveRecord::Schema.define(:version => 20141203214306) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -96,8 +96,10 @@ ActiveRecord::Schema.define(:version => 20141127034403) do
     t.decimal  "credit_referrer_amount"
     t.date     "valid_from"
     t.date     "valid_to"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "coupon_limit"
+    t.integer  "users_count",            :default => 0
   end
 
   create_table "enquiries", :force => true do |t|
