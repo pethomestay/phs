@@ -5,7 +5,8 @@ class Booking < ActiveRecord::Base
   belongs_to :bookee, class_name: 'User', foreign_key: :bookee_id
   belongs_to :homestay
   belongs_to :enquiry
-  has_one    :coupon
+  has_one    :coupon_usage
+  has_one    :coupon, :through => :coupon_usage
 
   MINIMUM_DAILY_PRICE = 10.0
   CREDIT_CARD_SURCHARGE_IN_DECIMAL = 0.0 # 2.5% = 0.025
@@ -54,7 +55,7 @@ class Booking < ActiveRecord::Base
   before_save  :update_state
 
   def is_above_minimum_daily_rate
-    errors.add(:subtotal, "Must be at least $10/night") if self.cost_per_night < (self.subtotal / self.number_of_nights)
+    errors.add(:subtotal, 'must be at least $10/night') if self.cost_per_night < MINIMUM_DAILY_PRICE
   end
 
   def create_mailbox
@@ -261,8 +262,7 @@ class Booking < ActiveRecord::Base
   def confirmed_by_host(current_user)
     if self.payment.present?
        result = Braintree::Transaction.submit_for_settlement(self.payment.braintree_transaction_id)
-       # This causes an error "undefined method `message' for #<Hash:0x00000007f51f70>"
-       # Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
+       raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
     end
     message = nil
     if [6, 7].include?(self.response_id)

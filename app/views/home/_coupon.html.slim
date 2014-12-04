@@ -5,17 +5,17 @@
           button type='button' class='close' data-dismiss='modal'
             span aria-hidden='true' &times;
             span.sr-only Close
-          h4.modal-title.request-label Do you have a referral code?
+          h4.modal-title.request-label Referral code
         = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3 do |f|
           .modal-body
             .row
-              .col-sm-6
-                p Do you have a referral code?
+              .col-sm-12
+                p If you have a referral code, put it in here? If not, click here to get one now.
                 .input-group.input-group-lg.left-merged.enquiry_check_in_date
                     span.input-group-addon.custom
                       i.fa.fa-share-alt
                     = f.input_field :coupon_code, value: "", placeholder: "ABC123", as: :string, :label => "Coupon code"
           .modal-footer
-            button type='button' class='btn btn-default' data-dismiss='modal' Cancel
+            button type='button' class='btn btn-default cancel-coupon' data-dismiss='modal' Cancel
             = f.submit 'Submit', class: 'btn btn-primary'
 - session[:check_for_coupon] = nil

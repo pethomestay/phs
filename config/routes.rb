@@ -131,7 +131,10 @@ PetHomestay::Application.routes.draw do
     resources :analytics
     resources :users
     resources :accounts
-    resources :coupons
+    resources :coupons, only: [:index] do
+      post :create_coupon, :on => :collection
+      post :expire_coupon, :on => :collection
+    end
   end
 
   # Zendesk Single Sign-on

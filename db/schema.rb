@@ -76,11 +76,22 @@ ActiveRecord::Schema.define(:version => 20141201064611) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "coupon_usages", :force => true do |t|
+    t.boolean  "coupon_status"
+    t.integer  "user_id"
+    t.integer  "coupon_id"
+    t.integer  "booking_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "coupon_usages", ["booking_id"], :name => "index_coupon_usages_on_booking_id"
+  add_index "coupon_usages", ["coupon_id"], :name => "index_coupon_usages_on_coupon_id"
+  add_index "coupon_usages", ["user_id"], :name => "index_coupon_usages_on_user_id"
+
   create_table "coupons", :force => true do |t|
     t.string   "code"
-    t.integer  "booking_id"
-    t.integer  "referrer_id"
-    t.integer  "used_by_id"
+    t.integer  "user_id"
     t.decimal  "discount_amount"
     t.decimal  "credit_referrer_amount"
     t.date     "valid_from"
@@ -343,7 +354,6 @@ ActiveRecord::Schema.define(:version => 20141201064611) do
     t.string   "facebook_location"
     t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
-    t.string   "coupon_code"
     t.boolean  "opt_out_sms",            :default => false
   end
 

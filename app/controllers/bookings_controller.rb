@@ -24,8 +24,8 @@ class BookingsController < ApplicationController
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
     if !@host_view
-      if current_user.used_coupon.present? && current_user.used_coupon.booking.nil? && current_user.admin
-        @coupon = current_user.used_coupon
+      if current_user.used_coupons.any? && current_user.admin?
+        @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
       end
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
@@ -57,7 +57,7 @@ class BookingsController < ApplicationController
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
-          # Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
+          raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
           AdminMailer.host_rejected_paid_booking(@booking).deliver
           # @booking.mailbox.messages.create! user_id: @booking.booker_id,
           # message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately #{current_user.name} has declined the booking. You can try other Hosts in your area.\n\n#{params[:booking][:message]}"
@@ -85,8 +85,8 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
-      if current_user.used_coupon.present? && current_user.used_coupon.booking.nil? && current_user.admin
-        @coupon = current_user.used_coupon
+      if current_user.used_coupons.merge(CouponUsage.unused).any? && current_user.admin?
+        @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
         payment_amount = (@booking.amount - @coupon.discount_amount).to_s
       else
         payment_amount = @booking.amount.to_s
@@ -129,7 +129,7 @@ class BookingsController < ApplicationController
                 :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
             )
-            Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
+            raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
           end
         else
           result = Braintree::Transaction.sale(
@@ -149,7 +149,7 @@ class BookingsController < ApplicationController
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
-          @coupon.update_attribute(:booking_id, @booking.id) if @coupon.present?
+          current_user.coupon_usages.unused.find_by_coupon_id(@coupon.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           # @booking.mailbox.messages.create! user_id: @booking.booker_id,
           # message_text: "[This is an auto-generated message for the Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happens within a few days.\nThanks for using PetHomestay!"
@@ -158,7 +158,7 @@ class BookingsController < ApplicationController
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           render :owner_receipt, :layout => 'new_application' and return
         else
-          Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
+          raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
           AdminMailer.braintree_payment_failure_admin(@booking, result).deliver
           flash[:error] = result.message
           redirect_to action: :edit and return
