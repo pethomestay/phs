@@ -2,13 +2,13 @@
   .page-header
     h3 Payout Summary
   p
-    | Amount earned:
+    ' Amount earned:
     b= number_to_currency(current_user.bookees.finished_and_host_accepted.inject(0) {|sum, b| sum += b.host_payout.to_f})
   p
-    | Your referral code:
+    ' Your referral code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
   p
-    | Referral credit earned:
+    ' Referral credit earned:
     b= number_to_currency(current_user.coupon_credits_earned)
 
   .page-header
