@@ -7,6 +7,7 @@ class Host::AccountsController < Host::HostController
 
   def create
     @account = Account.new(params[:account])
+    @account.user = current_user
     if @account.save
       redirect_to host_account_path
     else
