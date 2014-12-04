@@ -119,6 +119,7 @@ class User < ActiveRecord::Base
     return false if self.used_coupons.any?
     coupon = Coupon.valid.find_by_code(code)
     return false if coupon.nil?
+    return false if coupon.coupon_limit.present? && coupon.users_count >= coupon.coupon_limit
     CouponUsage.create(:user_id => self.id, :coupon_id => coupon.id)
     return true
   end
