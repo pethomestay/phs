@@ -32,6 +32,8 @@
           br
     .media-body.info
       h2.first_name #{ homestay.user.first_name }
+      - if homestay.for_charity
+        = image_tag 'homestay/petrescue.png', class: 'for_charity'
       h3.title #{ truncate(homestay.title, length: 50, separator: ' ') }
       p.cost-per-night
         ' #{homestay.address_suburb}
