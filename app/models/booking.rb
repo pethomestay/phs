@@ -262,8 +262,7 @@ class Booking < ActiveRecord::Base
   def confirmed_by_host(current_user)
     if self.payment.present?
        result = Braintree::Transaction.submit_for_settlement(self.payment.braintree_transaction_id)
-       # This causes an error "undefined method `message' for #<Hash:0x00000007f51f70>"
-       # Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
+       raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
     end
     message = nil
     if [6, 7].include?(self.response_id)
