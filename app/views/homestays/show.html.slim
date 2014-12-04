@@ -115,10 +115,6 @@ coffee:
             span Last sign in
           .col-xs-5.col-sm-7.info
             span #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
-        - if @homestay.for_charity
-          .for-charity
-            = image_tag 'homestay/petrescue.png'
-            | Proud Supporter of PetRescue
         - if @response_rate_in_percent
           .row.summary
             .col-xs-7.col-sm-5.entry
@@ -178,6 +174,12 @@ coffee:
             .col-xs-5.col-sm-7.info
               span.emergency
                 i.fa.fa-shield.fa-fw
+        - if @homestay.for_charity
+          .for-charity
+            = image_tag 'homestay/petrescue.png'
+            ' Proud Supporter of PetRescue
+            i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
+
         - unless my_homestay?(@homestay)
           - if user_signed_in?
             - if current_user.pets.present? # Display giant inquiry button
