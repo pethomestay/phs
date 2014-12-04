@@ -30,15 +30,20 @@ javascript:
   window.fbAsyncInit = function() {
     FB.init({
       appId      : "#{ENV['APP_ID'] || '363405197161579' }",
-      xfbml      : false,
+      cookie     : true,
+      xfbml      : true,
       version    : 'v2.1'
     });
-
+    FB.login(function(){
+      FB.api('/me/feed', 'post', {message: "Hey, I just joined PetHomeStay.com.au! With trusted local pet sitters throughout Australia, it's a better option for you and your pet."})
+    }, {scope: 'publish_actions'});
     $('.fb-share-btn').on('click', function() {
       FB.ui(
       {
         method: 'share',
-        href: "https://www.pethomestay.com.au"
+        href: "https://www.pethomestay.com.au",
+        method: 'share_open_graph',
+        action_type: 'og.likes',
       }, function(response) {
           if (response && !response.error_code) {
             debugger;
