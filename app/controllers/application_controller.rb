@@ -22,12 +22,8 @@ class ApplicationController < ActionController::Base
       params[:redirect_path]
     elsif request.env['omniauth.origin']
       request.env['omniauth.origin']
-    elsif resource.homestay.blank? && resource.pets.blank?
-      if params[:signup_path].present?
-        welcome_path(signup_path: params[:signup_path])
-      else
-        welcome_path
-      end
+    elsif resource.homestay.blank? && resource.pets.blank? # Newly signed up
+      welcome_path
     elsif resource.homestay.present?
       host_path # Defaults to host page if homestay is present
     else
