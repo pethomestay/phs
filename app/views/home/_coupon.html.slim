@@ -35,9 +35,6 @@ javascript:
       xfbml      : true,
       version    : 'v2.1'
     });
-    FB.login(function(){
-      FB.api('/me/feed', 'post', {message: "Hey, I just joined PetHomeStay.com.au! With trusted local pet sitters throughout Australia, it's a better option for you and your pet."})
-    }, {scope: 'publish_actions'});
     $('.fb-share-btn').on('click', function() {
       FB.ui(
       {

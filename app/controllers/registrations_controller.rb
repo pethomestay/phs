@@ -42,9 +42,9 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     session[:check_for_coupon] = true
     if params[:redirect_path].present?
-      params[:redirect_path]
+      "#{params[:redirect_path]}?sign_up=true"
     else
-      root_path
+      root_path(sign_up: true)
     end
   end
 end
