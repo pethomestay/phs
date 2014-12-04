@@ -2,7 +2,7 @@
 = simple_form_for @coupon, url: create_coupon_admin_coupons_path, wrapper: :bootstrap3, :html => {:class => 'inline-form'}, :method => 'post' do |f|
   .row-fluid
     .span6
-      = f.association :owner, prompt: "Choose a User (can type name in)", :required => true
+      = f.association :owner, collection: User.all.sort_by(&:name), prompt: "Choose a User (can type name in)", :required => true
     .span6
       = f.input :code, :input_html => {:maxlength => 6}, :required => true
   .row-fluid
@@ -14,7 +14,7 @@
       = f.hint 'Dollar amount'
   = f.input :valid_from, :required => true, start_year: Date.today.year,  order: [:day, :month, :year]
   = f.input :valid_to, :required => true, start_year: Date.today.year + 1,  order: [:day, :month, :year]
-
+  = f.input :coupon_limit
 
   = f.submit "Create", class: 'btn btn-primary'
 

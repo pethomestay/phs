@@ -44,18 +44,12 @@ javascript:
         method: 'feed',
         link: "https://www.pethomestay.com.au",
         picture: "https://d1nq2ztuzp3vk0.cloudfront.net/assets/home/three_features/feature_two-9d2ae9f999068089b39bc5bf09d22f72.png",
-        name: "Hey, I just joined PetHomeStay.com.au!"
+        name: "Hey, I just joined PetHomeStay.com.au!",
         caption: "Australia's no. 1 pet sitting community",
         description: "With trusted local pet sitters throughout Australia, it's a better option for you and your pet."
       }, function(response) {
-          if (response && !response.error_code) {
-            debugger;
-            $('#user_coupon_code').val('SHARE5');
-            $('#user_coupon_code').attr('disabled, disable');
-            $('form').submit();
-          } else {
-            debugger;
-          }
+          $('#user_coupon_code').val('SHARE5');
+          $('form').submit();
         }
       );
       return false;
@@ -70,4 +64,4 @@ javascript:
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 #fb-root
-- session[:check_for_coupon] = true
+- session[:check_for_coupon] = nil
