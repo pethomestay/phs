@@ -54,7 +54,7 @@ class Booking < ActiveRecord::Base
   before_save  :update_state
 
   def is_above_minimum_daily_rate
-    errors.add(:subtotal, "Must be at least $10/night") if self.cost_per_night < (self.subtotal / self.number_of_nights)
+    errors.add(:subtotal, 'must be at least $10/night') if self.cost_per_night < MINIMUM_DAILY_PRICE
   end
 
   def create_mailbox
