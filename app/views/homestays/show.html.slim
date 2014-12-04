@@ -177,7 +177,8 @@ coffee:
         - if @homestay.for_charity
           .for-charity
             = image_tag 'homestay/petrescue.png'
-            | Proud Supporter of PetRescue
+            ' Proud Supporter of PetRescue
+            i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
 
         - unless my_homestay?(@homestay)
           - if user_signed_in?
