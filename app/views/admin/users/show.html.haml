@@ -26,12 +26,6 @@
   %dd= @user.phone_number.present? ? @user.phone_number : '-'
   %dt Mobile
   %dd= @user.mobile_number.present? ? @user.mobile_number : '-'
-  %dt Address
-  %dd
-    = @user.address_1
-    = @user.address_2
-    %br
-    = "#{@user.address_suburb}, #{@user.address_postcode}"
   - if @user.unavailable_dates.any?
     %dt Unavailable dates
     - @user.unavailable_dates.sort_by!(&:date).each_with_index do |unavailable, index|
