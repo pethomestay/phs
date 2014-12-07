@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
     if args[:custom_code]
       final_code = args[:custom_code].upcase
     else
-      suggested_code = self.last_name.gsub(/[^a-z]/i, '').slice(0..2) + self.first_name.gsub(/[^a-z]/i, '').slice(0)
+      suggested_code = self.first_name.gsub(/[^a-z]/i, '').slice(0..3) + self.last_name.gsub(/[^a-z]/i, '').slice(0)
       suggested_code+= "X"*(4 - suggested_code.length) if suggested_code.length != 4
       non_unique = Coupon.where("code like ?", suggested_code + "%").count
       unique_num = non_unique > 0 ? non_unique.to_s : ""
