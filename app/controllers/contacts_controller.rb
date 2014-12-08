@@ -33,4 +33,18 @@ class ContactsController < ApplicationController
       render :new, layout: 'new_application'
     end
   end
+
+  def add_note
+    @contact = Contact.new(params[:contact])
+    if @contact.valid?
+      # Create user in case user does not exist in intercom
+      Intercom::User.create email: @contact.email, name: @contact.name
+      Intercom::Note.create email: @contact.email,
+                            body: "Need Homestay in #{params[:location]}"
+      flash[:success] = 'Success! We will keep you informed!'
+    else
+      flash[:error] = 'There is an error in your input. Please double check and try again.'
+    end
+    redirect_to :back
+  end
 end

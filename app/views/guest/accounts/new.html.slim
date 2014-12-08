@@ -2,11 +2,12 @@
   .page-header
     h3 Payout Summary
   p
-    |Your referral code: 
-    b= current_user.owned_coupons.collect(&:name).join(", ")
+    ' Your referral code:
+    b= current_user.owned_coupons.collect(&:code).join(", ")
   p
-    |Referral credit earned: 
+    ' Referral credit earned:
     b= number_to_currency(current_user.coupon_credits_earned)
+
   .page-header
     h3 Payout Details
   p PetHomeStay will use these details to transfer any Host Payouts to your account

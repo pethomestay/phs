@@ -87,6 +87,7 @@ class Booking < ActiveRecord::Base
 
   def refund_payment(guest_cancel = false)
     return if self.payment.nil?
+    return if self.check_out_date < Date.today
     if self.payment.status == "authorized"
       result = Braintree::Transaction.void(self.payment.braintree_transaction_id)
     end
@@ -96,7 +97,7 @@ class Booking < ActiveRecord::Base
       result = Braintree::Transaction.void(self.payment.braintree_transaction_id) unless result.success?
     end
     if result.success?
-      self.refund        = self.payment.amount
+      self.refund        = amount || self.payment.amount
       self.cancel_reason = self.cancel_reason || "Admin cancelled"
       self.cancel_date = Date.today
       self.save
@@ -108,7 +109,7 @@ class Booking < ActiveRecord::Base
       GuestCancelledBookingHostJob.new.async.perform(self.id) #Let the host know booking has been cancelled
       GuestCancelledBookingGuestJob.new.async.perform(self.id) #Confirm for the guest that their booking has been cancelled
     end
-    return result.success?
+    return result
   end
 
   def calculate_payment_refund
@@ -262,7 +263,8 @@ class Booking < ActiveRecord::Base
   def confirmed_by_host(current_user)
     if self.payment.present?
        result = Braintree::Transaction.submit_for_settlement(self.payment.braintree_transaction_id)
-       raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
+       # The follow line still causes error in production
+       # raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree transaction settlement failed", result: result, payment_id: self.payment.id})
     end
     message = nil
     if [6, 7].include?(self.response_id)

@@ -70,6 +70,12 @@
     padding-top: 10px;
     padding-left: 10%;
     padding-right: 10%;
+
+    @media (max-width: $screen-xs-max) {
+      padding-left: 5.5%;
+      padding-right: 5.5%;
+    }
+
     .basic-info .info {
       .title,
       .suburb,
@@ -126,6 +132,14 @@
         }
       }
     }
+    .for-charity {
+      padding-top: 20px;
+      img {
+        width: 40px;
+        margin-right: 7px;
+      }
+    }
+
     .inquire {
       display: block;
       height: 40px;
@@ -137,11 +151,6 @@
         margin-top: -10px;
         a { color: $blue-light; }
       }
-    }
-
-    @media (max-width: $screen-xs-max) {
-      padding-left: 6.5%;
-      padding-right: 6.5%;
     }
   }
   .map-container {
@@ -157,6 +166,12 @@
   .hs-lower-section {
     padding-left: 10%;
     padding-right: 10%;
+
+    @media (max-width: $screen-xs-max) {
+      padding-left: 5.5%;
+      padding-right: 5.5%;
+    }
+
     pre {
       background: none;
       border: none;

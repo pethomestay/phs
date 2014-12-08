@@ -113,17 +113,19 @@ class Enquiry < ActiveRecord::Base
   end
 
   def day_limit
-    all_enquiries_today = Enquiry.select(:created_at)   # All enquiries
-                          .where(user_id: self.user.id) # created by this user
-                          .where('created_at > ?',      # today
-                                 DateTime.now.beginning_of_day)
-    if all_enquiries_today.count > MAX_ENQUIRIES_PER_DAY
+    today_count = self.user.enquiries.select(:created_at)
+                  .where('created_at > ?',
+                         Time.now.in_time_zone('Melbourne').beginning_of_day)
+                  .count
+    if today_count > MAX_ENQUIRIES_PER_DAY
       errors[:base] << "Sorry! We only allow #{MAX_ENQUIRIES_PER_DAY} enquiries per day to minimise the risk of spam."
-      Intercom::Event.create(
-        event_name: 'enquiry-limit-reached',
-        created_at: Time.now.to_i,
-        email: self.user.email,
-      )
+      if Rails.env.production?
+        Intercom::Event.create(
+          event_name: 'enquiry-limit-reached',
+          created_at: Time.now.to_i,
+          email: self.user.email,
+        )
+      end
     end
   end
 

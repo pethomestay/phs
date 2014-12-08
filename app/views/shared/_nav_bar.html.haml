@@ -4,7 +4,7 @@
             %a.navbar-brand#brand{href: "#{root_path}"} pet<span style="color: #ea7a28;">home</span>stay
         .navbar-header.pull-right
             - if user_signed_in?
-                - if current_user.admin?|| true
+                - if current_user.admin?
                     - if session[:check_for_coupon] && current_user.try(:used_coupons).try(:empty?)
                         = render partial: 'home/coupon'
                         :javascript

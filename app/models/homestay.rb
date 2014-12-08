@@ -2,6 +2,8 @@ class Homestay < ActiveRecord::Base
   include ActionView::Helpers
   include HomestaysHelper
 
+  MINIMUM_HOMESTAY_PRICE = 10
+
   belongs_to :user
   has_many :enquiries
   has_many :bookings
@@ -12,10 +14,18 @@ class Homestay < ActiveRecord::Base
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
-  attr_accessible :title, :description, :cost_per_night, :property_type_id, :outdoor_area_id, :is_professional, :insurance, :first_aid, :professional_qualification, :constant_supervision, :supervision_outside_work_hours, :emergency_transport, :fenced, :children_present, :police_check, :website, :address_1, :address_suburb, :address_city, :address_country, :address_postcode, :pet_feeding, :pet_grooming, :pet_training, :pet_walking, :accept_liability, :parental_consent, :accept_liability, :active
+  attr_accessible :title, :description, :cost_per_night, :property_type_id,
+                  :outdoor_area_id, :is_professional, :insurance, :first_aid,
+                  :professional_qualification, :constant_supervision,
+                  :supervision_outside_work_hours, :emergency_transport,
+                  :fenced, :children_present, :police_check, :website,
+                  :address_1, :address_suburb, :address_city, :address_country,
+                  :address_postcode, :pet_feeding, :pet_grooming, :pet_training,
+                  :pet_walking, :accept_liability, :parental_consent,
+                  :accept_liability, :active, :for_charity
 
 
-  validates_presence_of :cost_per_night, :address_1, :address_suburb, :address_city, :address_country, :title, :description
+  validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
@@ -25,6 +35,7 @@ class Homestay < ActiveRecord::Base
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
+  validates :cost_per_night, presence: true, numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
@@ -37,7 +48,7 @@ class Homestay < ActiveRecord::Base
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
-  after_create :notify_intercom
+  after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
   def notify_intercom

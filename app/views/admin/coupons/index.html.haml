@@ -2,7 +2,7 @@
 = simple_form_for @coupon, url: create_coupon_admin_coupons_path, wrapper: :bootstrap3, :html => {:class => 'inline-form'}, :method => 'post' do |f|
   .row-fluid
     .span6
-      = f.association :owner, prompt: "Choose a User (can type name in)", :required => true
+      = f.association :owner, collection: User.all.sort_by(&:name), prompt: "Choose a User (can type name in)", :required => true
     .span6
       = f.input :code, :input_html => {:maxlength => 6}, :required => true
   .row-fluid
@@ -14,7 +14,7 @@
       = f.hint 'Dollar amount'
   = f.input :valid_from, :required => true, start_year: Date.today.year,  order: [:day, :month, :year]
   = f.input :valid_to, :required => true, start_year: Date.today.year + 1,  order: [:day, :month, :year]
-
+  = f.input :coupon_limit
 
   = f.submit "Create", class: 'btn btn-primary'
 
@@ -22,7 +22,6 @@
 
 %h1.text-center Force expire
 = form_tag(expire_coupon_admin_coupons_path, method: 'post', remote: true, :id => "expire_coupon_form") do
-  /= collection_select :, :coupon_id, Coupon.all, :id, :code
   = select "expiring_coupon", "id", Coupon.valid.collect {|cc| [cc.code, cc.id]}, {include_blank: true}
   = submit_tag "Expire", class: 'btn btn-primary', confirm: "Are you sure you want to expire this coupon, all unpaid bookings with this coupon will be affected"
 

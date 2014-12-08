@@ -26,12 +26,6 @@
   %dd= @user.phone_number.present? ? @user.phone_number : '-'
   %dt Mobile
   %dd= @user.mobile_number.present? ? @user.mobile_number : '-'
-  %dt Address
-  %dd
-    = @user.address_1
-    = @user.address_2
-    %br
-    = "#{@user.address_suburb}, #{@user.address_postcode}"
   - if @user.unavailable_dates.any?
     %dt Unavailable dates
     - @user.unavailable_dates.sort_by!(&:date).each_with_index do |unavailable, index|
@@ -41,6 +35,8 @@
   %dt Coupons
   - if @user.owned_coupons.any?
     %dd= @user.owned_coupons.collect(&:code).join("<br>").html_safe
+  - else
+    %dd None
 .control-group
   %label Unavailable Dates
   .controls

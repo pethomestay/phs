@@ -6,10 +6,7 @@
       h2 I want to find pet care
       p To start finding great, local and trustworthy pet sitters: the first step is to enter some basic details about your pet!
       .form-actions
-        - if params[:signup_path]
-          = link_to 'ADD YOUR PET\'S DETAILS NOW', new_guest_pet_path(redirect_path: params[:signup_path]), class: 'btn btn-lg btn-primary'
-        - else
-          = link_to 'ADD YOUR PET\'S DETAILS NOW', new_guest_pet_path, class: 'btn btn-lg btn-primary'
+        = link_to 'FIND A HOMESTAY NOW', root_path, class: 'btn btn-lg btn-primary'
     .col-sm-6.right
       h2 I want to look after pets
       p It couldn't be easier to be put in touch with pet owners. Just give us some basic details and we'll create an awesome listings page.

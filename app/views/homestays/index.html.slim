@@ -36,6 +36,8 @@
                     $mapWrapper.addClass 'fixed-bottom'
                     $mapWrapper.css 'top', top
     - else
+      .col-sm-12.results
+        = render 'search_box'
       .col-sm-8.col-sm-offset-2
         = render 'no_results'
 
