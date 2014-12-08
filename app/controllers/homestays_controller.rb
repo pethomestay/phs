@@ -21,16 +21,6 @@ class HomestaysController < ApplicationController
     respond_with @homestays, layout: 'new_application'
   end
 
-  def rotate_image
-      @image = UserPicture.find_by_id(params[:id])
-      @image.file = @image.file.process(:rotate, 90)
-      @image.save
-      @new_url = @image.file.thumb('200x200').url
-      respond_to do | format|
-        format.js
-      end
-  end
-
   def show
     @homestay = Homestay.find_by_slug(params[:id])
     raise ActiveRecord::RecordNotFound unless @homestay
@@ -44,7 +34,7 @@ class HomestaysController < ApplicationController
     @reviews = @homestay.user.received_feedbacks.reviewed
     @response_rate_in_percent = @homestay.user.response_rate_in_percent
     if current_user
-	    @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
+      @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
       @enquiry = Enquiry.new({
         user: current_user,
         pets: current_user.pets,
@@ -70,19 +60,19 @@ class HomestaysController < ApplicationController
   end
 
   def favourite
-	  @homestay = Homestay.find params[:id]
-		Favourite.create! homestay_id: @homestay.id, user_id: current_user.id
-		render nothing: true
+    @homestay = Homestay.find params[:id]
+    Favourite.create! homestay_id: @homestay.id, user_id: current_user.id
+    render nothing: true
   end
 
   def non_favourite
-	  @homestay = Homestay.find params[:id]
-	  @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
+    @homestay = Homestay.find params[:id]
+    @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
     if @fav
-		  @fav.destroy
-		  render nothing: true
-	  else
-			render nothing: true, status: 302
+      @fav.destroy
+      render nothing: true
+    else
+      render nothing: true, status: 302
     end
   end
 
