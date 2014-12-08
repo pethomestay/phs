@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
 
-  # Creates the coupon code that users can share with others: First three letters of last name + first two letters of first name +
+  # Creates the coupon code that users can share with others: First four letters of first name + first letter of last name +
   # custom_discount = nil, custom_credit = nil
   def generate_referral_code(force = false, args = {})
     return if !force && self.owned_coupons.present?
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
       final_code = args[:custom_code].upcase
     else
       suggested_code = self.first_name.gsub(/[^a-z]/i, '').slice(0..3) + self.last_name.gsub(/[^a-z]/i, '').slice(0)
-      suggested_code+= "X"*(4 - suggested_code.length) if suggested_code.length != 4
+      suggested_code+= "X"*(5 - suggested_code.length) if suggested_code.length < 5
       non_unique = Coupon.where("code like ?", suggested_code + "%").count
       unique_num = non_unique > 0 ? non_unique.to_s : ""
       final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
