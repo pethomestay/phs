@@ -1,0 +1,49 @@
+:css
+  #infoa {
+    margin-top: -5px;
+  }
+
+
+%h1{ style: 'display: inline-block;' } Listing Homestays
+= link_to 'FILTER BY HOST LAST NAME', admin_homestays_path(letter: 'A'), class: 'btn pull-right', style: 'margin-top: 10px;'
+= will_paginate @homestays, renderer: BootstrapLinkRenderer
+%table.table.tablesorter
+  %thead
+    %tr
+      %th Title
+      %th Host
+      %th Mobile
+      %th Suburb
+      %th Created
+      %th Active?
+      %th Approved?
+      %th Actions
+  %tbody
+    - @homestays.each do |homestay|
+      %tr
+        %td= link_to homestay.title, admin_homestay_path(homestay)
+        - if homestay.user.present?
+          %td
+            = link_to homestay.user.name, admin_user_path(homestay.user)
+          %td= homestay.user.mobile_number
+        - else
+          %td N/A
+          %td N/A
+        %td= homestay.address_suburb
+        %td= homestay.created_at.to_formatted_s(:year_month_day)
+        %td{:id => "is_active_" + homestay.id.to_s}
+          =homestay.active ? "Active" : "Inactive"
+        %td{:id => "is_locked_" + homestay.id.to_s}
+          =homestay.locked ? "Approval Pending" : "Approved"
+        %td
+          =link_to 'Edit', edit_admin_homestay_path(homestay)
+          =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
+          =link_to homestay.active? ? 'Deactivate' : 'Activate', homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+
+          =link_to homestay.locked? ? 'Approve' : 'Unapprove', admin_homestay_locking_path(homestay), id: 'locked_toggle_' + homestay.id.to_s, remote: true, :method=>:post
+
+
+:javascript
+  $(document).ready(function(){
+    $('table.tablesorter').tablesorter({headers:{3:{sorter:false}}});
+  });

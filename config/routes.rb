@@ -126,7 +126,11 @@ PetHomestay::Application.routes.draw do
     end
     resources :transactions
     resources :feedbacks
-    resources :homestays, except:[:new, :create]
+    resources :homestays, except:[:new, :create] do
+      collection do
+        get :by_date_created
+      end
+    end
     resources :pets
     resources :analytics
     resources :users
