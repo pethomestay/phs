@@ -2,6 +2,8 @@ class Homestay < ActiveRecord::Base
   include ActionView::Helpers
   include HomestaysHelper
 
+  MINIMUM_HOMESTAY_PRICE = 10
+
   belongs_to :user
   has_many :enquiries
   has_many :bookings
@@ -23,7 +25,7 @@ class Homestay < ActiveRecord::Base
                   :accept_liability, :active, :for_charity
 
 
-  validates_presence_of :cost_per_night, :address_1, :address_suburb, :address_city, :address_country, :title, :description
+  validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
@@ -33,6 +35,7 @@ class Homestay < ActiveRecord::Base
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
+  validates :cost_per_night, presence: true, numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
