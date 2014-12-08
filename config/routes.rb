@@ -9,7 +9,11 @@ PetHomestay::Application.routes.draw do
     end
   end
 
-  resources :contacts, only: [:new, :create]
+  resources :contacts, only: [:new, :create] do
+    collection do
+      post :add_note
+    end
+  end
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedbacks, only: [:new, :create]
