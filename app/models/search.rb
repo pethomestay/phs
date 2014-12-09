@@ -5,6 +5,7 @@ class Search
   include ActiveModel::Conversion
 
   DEFAULT_RADIUS = 20
+  NUMBER_OF_RESULTS = 30
 
   attr_accessor :provider_types, :within, :sort_by, :country
   attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date
@@ -45,6 +46,25 @@ class Search
 
   def within
     @within ||= DEFAULT_RADIUS
+  end
+
+  def populate_list
+    perform_geocode unless @latitude.present? && @longitude.present?
+    start_time = Time.now
+    puts "#{start_time}"
+    results_list = []
+    search_radius = 5
+    while results_list.count < NUMBER_OF_RESULTS do
+      results_list += Homestay.active.near([@latitude, @longitude], search_radius)
+      search_radius += 5
+    end
+    search_time = Time.now
+    puts "Time taken for search= #{(search_time - start_time).seconds}"
+    # return results_list
+    results_list.sort_by! {|h| h.user.average_rating.present? ? h.user.average_rating : 0}.reverse!
+    sort_time = Time.now
+    puts "Time taken for sort= #{(sort_time - search_time).seconds}"
+    return results_list
   end
 
   def perform
