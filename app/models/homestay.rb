@@ -11,6 +11,7 @@ class Homestay < ActiveRecord::Base
   has_attachments :photos, maximum: 10
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
+  has_many :unavailable_dates, through: :user
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
@@ -39,6 +40,7 @@ class Homestay < ActiveRecord::Base
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
+  scope :available_for_enquiry, ->(start_date, end_date) {Homestay.active.joins(:unavailable_dates).where("unavailable_dates.date NOT BETWEEN ? and ?", start_date, end_date)}
   scope :last_five, order('created_at DESC').limit(5)
 
   geocoded_by :geocoding_address
