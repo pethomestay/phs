@@ -2,11 +2,16 @@
   .page-header
     h3 Payout Summary
   p
-    ' Your referral code:
+    ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
   p
-    ' Referral credit earned:
+    ' Credit earned:
     b= number_to_currency(current_user.coupon_credits_earned)
+  p Credits will be paid upon accumulation of $25 worth of credits
+  .page-header
+    h3 Promo Code Applied
+  - current_user.used_coupons.each do |coupon|
+    p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
 
   .page-header
     h3 Payout Details
