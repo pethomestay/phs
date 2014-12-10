@@ -4,7 +4,7 @@
     .span6
       = f.association :owner, collection: User.all.sort_by(&:name), prompt: "Choose a User (can type name in)", :required => true
     .span6
-      = f.input :code, :input_html => {:maxlength => 6}, :required => true
+      = f.input :code, :input_html => {:maxlength => 7}, :required => true
   .row-fluid
     .span6
       = f.input :discount_amount, :required => true, input_html: { min: '0', step: 'any' }
