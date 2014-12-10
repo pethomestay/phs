@@ -4,8 +4,9 @@ class Search
   include ActiveModel::Serialization
   include ActiveModel::Conversion
 
-  DEFAULT_RADIUS = 20
+  DEFAULT_RADIUS    = 20
   NUMBER_OF_RESULTS = 30
+  MAXIMUM_RADIUS    = 50
 
   attr_accessor :provider_types, :within, :sort_by, :country
   attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date
@@ -50,18 +51,21 @@ class Search
 
   def populate_list
     perform_geocode unless @latitude.present? && @longitude.present?
+    start_date = @check_in_date
+    end_date   = @check_out_date
     start_time = Time.now
     puts "#{start_time}"
     results_list = []
     search_radius = 5
-    while results_list.count < NUMBER_OF_RESULTS do
-      results_list += Homestay.active.near([@latitude, @longitude], search_radius)
+    while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
+      # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
+      results_list += Homestay.reject_unavailable_homestays(start_date, end_date).near([@latitude, @longitude], search_radius)
       search_radius += 5
     end
     search_time = Time.now
     puts "Time taken for search= #{(search_time - start_time).seconds}"
     # return results_list
-    results_list.sort_by! {|h| h.user.average_rating.present? ? h.user.average_rating : 0}.reverse!
+    results_list.uniq!.sort_by! {|h| h.user.average_rating.present? ? h.user.average_rating : 0}.reverse! if results_list.any?
     sort_time = Time.now
     puts "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list
