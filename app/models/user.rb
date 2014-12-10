@@ -436,7 +436,16 @@ class User < ActiveRecord::Base
     self.update_attribute(:calendar_updated_at, Date.today)
   end
 
+  def new_response_rate_in_percent
+
+  end
+
   def response_rate_in_percent
+    if self.admin?
+      self.new_response_rate_in_percent
+    else
+
+    end
     # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
     # Write down total count of fetched host mailboxes.
     # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
