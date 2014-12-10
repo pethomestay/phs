@@ -15,11 +15,12 @@
               = guest.name
               br
               - pet = guest.pet
-              strong
-                ' Pet:
-              | #{pet.name}
-              = pet.breed.present? ? ", a #{pet.breed}" : ''
-              | , #{truncate([pet.age].to_sentence, length: 15)}
+              - if pet.present?
+                strong
+                  ' Pet:
+                | #{pet.name}
+                = pet.breed.present? ? ", a #{pet.breed}" : ''
+                | , #{truncate([pet.age].to_sentence, length: 15)}
               br
               ' From
               strong
