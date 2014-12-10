@@ -18,14 +18,4 @@
 %p.article-content
   %strong= "Transaction Details"
 %p.article-content
-  Date and Time: #{date_day_month_year_format(@transaction.updated_at)} #{hour_minute_format(@transaction.updated_at)}
-%p.article-content
-  Transaction Id: #{@transaction.id.to_s}
-%p.article-content
-  Transaction Securepay reference: "#{@transaction.reference.to_s}"
-
-
-
-
-
-
+  #{@transaction}
