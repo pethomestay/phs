@@ -24,7 +24,7 @@ class BookingsController < ApplicationController
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
     if !@host_view
-      if current_user.used_coupons.any? && current_user.admin?
+      if current_user.used_coupons.any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
       end
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
@@ -85,7 +85,7 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
-      if current_user.used_coupons.merge(CouponUsage.unused).any? && current_user.admin?
+      if current_user.used_coupons.merge(CouponUsage.unused).any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
         payment_amount = (@booking.amount - @coupon.discount_amount).to_s
       else
