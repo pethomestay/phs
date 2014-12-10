@@ -149,7 +149,7 @@ class BookingsController < ApplicationController
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
-          current_user.coupon_usages.unused.find_by_coupon_id(@coupon.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
+          CouponUsage.find_by_coupon_id_and_user_id(@coupon.id, current_user.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           # @booking.mailbox.messages.create! user_id: @booking.booker_id,
           # message_text: "[This is an auto-generated message for the Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happens within a few days.\nThanks for using PetHomestay!"
