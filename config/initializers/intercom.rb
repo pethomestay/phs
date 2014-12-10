@@ -64,7 +64,8 @@ IntercomRails.config do |config|
     :amount_earned_from_homestay_hostings    => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.host_payout.to_f}.round(2)},
     :amount_earned_from_coupons              => Proc.new { |user| user.coupon_credits_earned},
     :average_feedback_as_host                => Proc.new { |user| user.average_rating},
-    :has_bank_account                        => Proc.new { |user| user.account.present?}
+    :has_bank_account                        => Proc.new { |user| user.account.present?},
+    :email_verified                          => :confirmed?
   }
 
   # == User -> Company association
