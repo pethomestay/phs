@@ -255,7 +255,11 @@ class BookingsController < ApplicationController
       end
       @booking.destroy
       flash[:notice] = 'Your incomplete booking was cancelled.'
-      redirect_to guest_messages_path and return
+      if current_user.homestay.present?
+        redirect_to host_bookings_path and return
+      else
+        redirect_to guest_messages_path and return
+      end
     end
   end
 
