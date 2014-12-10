@@ -95,7 +95,7 @@ class BookingsController < ApplicationController
       if params[:payment_method_nonce].present? # Payment was made
         final_amount = @booking.coupon.present? ? @booking.amount - @booking.coupon.discount_amount : @booking.amount
         # Create a customer in BrainTree if the user has never paid via BrainTree before
-        if current_user.braintree_customer_id.nil?
+        if current_user.braintree_customer_id.nil? && Rails.env == "production"
           customer_create_result = Braintree::Customer.create(
               :first_name => current_user.first_name,
               :last_name => current_user.last_name,
