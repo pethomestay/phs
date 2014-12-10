@@ -31,4 +31,6 @@ class PagesController < ApplicationController
 
   def in_the_press
   end
+
+  def charity_hosts; end
 end
