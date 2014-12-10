@@ -10,14 +10,6 @@ class AdminMailer < ActionMailer::Base
     mail(from: email_with_name, subject: "A Pet Homestay Host (#{@user.first_name} #{@user.last_name}) has created a new Homestay!")
   end
 
-  def payment_failure_admin(booking,transaction)
-    @booking = booking
-    @user = @booking.booker
-    @transaction = transaction
-    email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-    mail(from: email_with_name, subject: "A Pet Homestay Guest (#{@user.first_name} #{@user.last_name}) has an issue with a booking payment Transaction Id #{@transaction.id.to_s}")
-  end
-
   def host_rejected_paid_booking(booking)
     @booking = booking
     @user = @booking.bookee
@@ -28,7 +20,8 @@ class AdminMailer < ActionMailer::Base
   def braintree_payment_failure_admin(booking, result)
     @booking = booking
     @user = @booking.booker
+    @transaction = result
     email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-    mail(from: email_with_name, subject: "A Pet Homestay Guest (#{@user.first_name} #{@user.last_name}) has an issue with a BRAINTREE Payment: #{result}")
+    mail(from: email_with_name, subject: "A Guest (#{@user.first_name} #{@user.last_name}) has an issue with a BRAINTREE Payment: #{transaction}")
   end
 end
