@@ -52,7 +52,7 @@ IntercomRails.config do |config|
     :number_of_pending_bookings              => Proc.new { |user| (user.bookees.unfinished + user.bookers.unfinished).select {|b| b.check_in_date > Date.today}.count},
     :is_a_host                               => Proc.new { |user| user.homestay.present? },
     :number_of_pets                          => Proc.new { |user| user.pets.count },
-    :number_of_bookings_as_guest             => Proc.new { |user| user.bookers.count},
+    :number_of_bookings_as_guest             => Proc.new { |user| user.bookers.count },
     :accepted_booking_percentage_as_guest    => Proc.new { |user| user.bookers.any? ? (user.bookers.finished_or_host_accepted.count*100 / user.bookers.count.to_f).round(2).to_s + "%" : "0" },
     :number_of_feedback_given                => Proc.new { |user| user.given_feedbacks.count},
     :amount_spent                            => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + (b.transaction.present? ? b.transaction.amount : 0)} + user.payments.sum("amount")},
@@ -63,8 +63,9 @@ IntercomRails.config do |config|
     :number_of_feedback_received             => Proc.new { |user| user.received_feedbacks.count},
     :amount_earned_from_homestay_hostings    => Proc.new { |user| user.bookees.finished_or_host_accepted.inject(0) { |sum, b| sum + b.host_payout.to_f}.round(2)},
     :amount_earned_from_coupons              => Proc.new { |user| user.coupon_credits_earned},
-    :average_feedback_as_host                => Proc.new { |user| user.average_rating},
-    :has_bank_account                        => Proc.new { |user| user.account.present?}
+    :average_feedback_as_host                => :average_rating,
+    :has_bank_account                        => Proc.new { |user| user.account.present?},
+    :email_verified                          => :confirmed?
   }
 
   # == User -> Company association
