@@ -4,10 +4,14 @@
   p
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
+  p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
   p
     ' Credit earned:
     b= number_to_currency(current_user.coupon_credits_earned)
   p Credits will be paid upon accumulation of $25 worth of credits
+  - if current_user.coupon_credits_earned >= 25
+    button.btn.btn-primary
+      | Redeem
   .page-header
     h3 Promo Code Applied
   - current_user.used_coupons.each do |coupon|

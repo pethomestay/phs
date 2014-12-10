@@ -5,15 +5,17 @@
     ' Amount earned:
     b= number_to_currency(current_user.bookees.finished_and_host_accepted.inject(0) {|sum, b| sum += b.host_payout.to_f})
   p
-    ' Your referral code:
+    ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
   p
-    ' Referral credit earned:
+    ' Credit earned:
     b= number_to_currency(current_user.coupon_credits_earned)
-
+    - if current_user.coupon_credits_earned >= 25
+      button.btn.btn-primary
+        | Redeem
   .page-header
     h3 Payout Details
-  p PetHomeStay will use these details to transfer any Host Payouts to your account
+  p PetHomeStay will use these details to transfer any Credits or Payouts to your account
   table.table.table-striped
     tbody
       tr
