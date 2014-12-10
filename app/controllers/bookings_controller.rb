@@ -158,7 +158,6 @@ class BookingsController < ApplicationController
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           render :owner_receipt, :layout => 'new_application' and return
         else
-          raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree payment failed", result: result, booking_id: @booking.id})
           AdminMailer.braintree_payment_failure_admin(@booking, result).deliver
           flash[:error] = result.message
           redirect_to action: :edit and return
