@@ -46,7 +46,7 @@ gem 'rest-client'
 gem 'nokogiri', '1.6.2.1'
 gem 'sucker_punch'
 gem 'mailgun_rails'
-gem 'figaro', :github=> 'laserlemon/figaro'
+gem 'figaro'
 gem 'state_machine'
 gem 'braintree'
 
