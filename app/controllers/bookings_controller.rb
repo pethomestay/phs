@@ -24,7 +24,7 @@ class BookingsController < ApplicationController
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
     if !@host_view
-      if current_user.used_coupons.any? && current_user.admin?
+      if current_user.used_coupons.any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
       end
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
@@ -85,7 +85,7 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
-      if current_user.used_coupons.merge(CouponUsage.unused).any? && current_user.admin?
+      if current_user.used_coupons.merge(CouponUsage.unused).any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
         payment_amount = (@booking.amount - @coupon.discount_amount).to_s
       else
@@ -95,7 +95,7 @@ class BookingsController < ApplicationController
       if params[:payment_method_nonce].present? # Payment was made
         final_amount = @booking.coupon.present? ? @booking.amount - @booking.coupon.discount_amount : @booking.amount
         # Create a customer in BrainTree if the user has never paid via BrainTree before
-        if current_user.braintree_customer_id.nil?
+        if current_user.braintree_customer_id.nil? && Rails.env == "production"
           customer_create_result = Braintree::Customer.create(
               :first_name => current_user.first_name,
               :last_name => current_user.last_name,
@@ -149,7 +149,7 @@ class BookingsController < ApplicationController
         if result.success?
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
-          current_user.coupon_usages.unused.find_by_coupon_id(@coupon.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
+          CouponUsage.find_by_coupon_id_and_user_id(@coupon.id, current_user.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
           @booking.update_attribute(:owner_accepted, true)
           # @booking.mailbox.messages.create! user_id: @booking.booker_id,
           # message_text: "[This is an auto-generated message for the Guest]\n\nGreat! You have paid for the booking!\nAll that remains is for Host to confirm his/her availability. This usually happens within a few days.\nThanks for using PetHomestay!"
@@ -255,7 +255,11 @@ class BookingsController < ApplicationController
       end
       @booking.destroy
       flash[:notice] = 'Your incomplete booking was cancelled.'
-      redirect_to guest_messages_path and return
+      if current_user.homestay.present?
+        redirect_to host_bookings_path and return
+      else
+        redirect_to guest_messages_path and return
+      end
     end
   end
 
