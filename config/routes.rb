@@ -65,10 +65,6 @@ PetHomestay::Application.routes.draw do
     end
   end
 
-  resources :mailboxes, only: :index do
-    resources :messages, only: [:index, :create]
-  end
-
   resources :availability do
     collection do
       get :booking_info
@@ -169,6 +165,9 @@ PetHomestay::Application.routes.draw do
   get '/perth'      => redirect('/homestays/?search[location]=6000')
   get '/darwin'     => redirect('/homestays/?search[location]=0800')
   get '/newcastle'  => redirect('/homestays/?search[location]=2300')
+
+  # For legacy URLs
+  get '/mailboxes/(*something)', to: redirect('/guest')
 
   root to: 'pages#home'
 end
