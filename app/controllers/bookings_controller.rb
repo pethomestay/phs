@@ -335,7 +335,7 @@ class BookingsController < ApplicationController
   private
   def homestay_required
     if params[:enquiry_id].blank? && params[:homestay_id].blank?
-      return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
+      return redirect_to guest_path, alert: 'You are not authorised to make this request!'
     end
     @enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
     @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
