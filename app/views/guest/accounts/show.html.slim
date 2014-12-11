@@ -4,6 +4,18 @@
   p
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
+  - twitter_url  = 'https://twitter.com/share'
+  - twitter_url += "?text=Come join me on PetHomeStay.com.au"
+  - twitter_url += "&url=https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
+  - twitter_url += '&via=PetHomeStay'
+  - twitter_url += '&hashtags=freecuddles'
+  p
+    button.btn.fb-share-btn
+      i.fa.fa-facebook
+        |  SHARE
+    button.btn.twitter-share-btn data-href=twitter_url
+      i.fa.fa-twitter
+        |  TWEET
   p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
   - if current_user.coupon_credits_earned > 0
     p
@@ -37,3 +49,34 @@
         td Account Number
         td #{ @account.account_number }
   = link_to 'EDIT', edit_guest_account_path, class: 'btn btn-secondary '
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : "#{ENV['APP_ID'] || '363405197161579' }",
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn').on('click', function() {
+      FB.ui(
+      {
+        method: 'share',
+        href: "https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
