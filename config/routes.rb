@@ -30,6 +30,7 @@ PetHomestay::Application.routes.draw do
       get 'favourites'
     end
   end
+  resources :coupon_payouts, only: [:new, :update]
   resources :transactions
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'

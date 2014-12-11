@@ -43,10 +43,16 @@ javascript:
         picture: "https://d1nq2ztuzp3vk0.cloudfront.net/assets/home/three_features/feature_two-9d2ae9f999068089b39bc5bf09d22f72.png",
         name: "Hey, I just joined PetHomeStay.com.au!",
         caption: "Australia's no. 1 pet sitting community",
-        description: "With trusted local pet sitters throughout Australia, it's a better option for you and your pet."
+        description: "With trusted local pet sitters throughout Australia, it's a better option for you and your pet. Come join me today!"
       }, function(response) {
-          $('#user_coupon_code').val('SHARE5');
-          $('form').submit();
+          if (response && !response.error_code) {
+            $('#user_coupon_code').val('SHARE5');
+            $('.modal-title').text("Thanks for sharing");
+            $('form').hide();
+            $('form').submit();
+          } else {
+              alert('Failed to post...');
+          }
         }
       );
       return false;
