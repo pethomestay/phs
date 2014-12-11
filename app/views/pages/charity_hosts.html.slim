@@ -36,6 +36,17 @@
       p
         | We at PetHomeStay are incredibly passionate about this cause, so please
         |  consider becoming a PetHomeStay Charity Host!
+
+      p
+        = link_to 'Check out our FAQ for more details!',
+          'http://support.pethomestay.com/hc/en-us/articles/202808979-Charity-Hosts',
+          style: 'padding-bottom: 15px;'
+
+      - if user_signed_in? && current_user.homestay.blank?
+        = link_to 'BECOME A CHARITY HOST WITH PetHomeStay!',
+          new_host_homestay_path, class: 'btn btn-primary btn-block',
+          style: 'margin-bottom: 10px;'
+
     .hidden-xs.hidden-sm.col-md-5
       = image_tag 'charity-hosts/petrescue-cat.png',  class: 'img-responsive'
       = image_tag 'charity-hosts/petrescue-logo.png', class: 'img-responsive',
