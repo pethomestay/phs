@@ -2,7 +2,6 @@ describe Account, :type => :model do
 	it { is_expected.to belong_to :user }
 
 	it { is_expected.to validate_presence_of :account_number }
-	it { is_expected.to validate_presence_of :bank }
 	it { is_expected.to validate_presence_of :bsb }
 	it { is_expected.to validate_presence_of :name }
 
