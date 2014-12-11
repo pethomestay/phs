@@ -30,6 +30,7 @@ PetHomestay::Application.routes.draw do
       get 'favourites'
     end
   end
+  resources :coupon_payouts, only: [:new, :update]
   resources :transactions
   resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
@@ -163,7 +164,7 @@ PetHomestay::Application.routes.draw do
   get '/house-rules'          => redirect('http://support.pethomestay.com/hc/en-us/sections/200341999-House-Rules'), as: 'house_rules'
   get '/privacy-policy'       => redirect('http://support.pethomestay.com/hc/en-us/articles/201215089-Privacy-Policy'), as: 'privacy_policy'
   get '/cancellation-policy'  => redirect('http://support.pethomestay.com/hc/en-us/articles/202709609-Cancellation-Policy'), as: 'cancellation_policy'
-  get '/charity-hosts'        => redirect('http://support.pethomestay.com/hc/en-us/articles/202808979-Charity-Hosts'), as: 'charity_hosts'
+  get '/charity-hosts'        => 'pages#charity_hosts', as: 'charity_hosts'
   get '/insurance-policy'     => 'pages#insurance_policy', as: 'insurance_policy'
   get '/investors'            => 'pages#investors', as: 'investors'
   get '/jobs'                 => 'pages#jobs', as: 'jobs'

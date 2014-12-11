@@ -83,8 +83,23 @@
               %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
             - else
               = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
-
-
+%hr/
+- if @coupon_payout_requests.any?
+  %h1 Coupon Payout Requests
+  %table.table.table-bordered
+    %thead
+      %th.table-header-text Requestor
+      %th.table-header-text Amount requested
+      %th.table-header-text Requested on
+      %th.table-header-text Actions
+    %tbody
+      - @coupon_payout_requests.each do |coupon_payout|
+        %tr
+          %td= "#{coupon_payout.user.name} (#{coupon_payout.user.account.bsb} / #{coupon_payout.user.account.account_number})"
+          %td= number_to_currency(coupon_payout.payment_amount)
+          %td= coupon_payout.created_at.strftime("%l:%M %p, %d/%m/%y")
+          %td
+            = link_to "Pay", coupon_payout_path(coupon_payout), :method => 'put', class: 'btn'
 :javascript
   $(document).ready(function(){
     $.tablesorter.addParser({

@@ -5,17 +5,22 @@
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
   p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
-  p
-    ' Credit earned:
-    b= number_to_currency(current_user.coupon_credits_earned)
-  p Credits will be paid upon accumulation of $25 worth of credits
+  - if current_user.coupon_credits_earned > 0
+    p
+      ' Credit earned:
+      b= "#{number_to_currency(current_user.coupon_credits_earned)}"
+      - if current_user.coupon_payouts.paid.any?
+        b= " - #{number_to_currency(current_user.coupon_payouts.paid.sum(&:payment_amount))} paid"
+      - if current_user.coupon_payouts.unpaid.any?
+        b= " - #{number_to_currency(current_user.coupon_payouts.unpaid.sum(&:payment_amount))} pending payment"
+    p Credits will be paid upon accumulation of $25 worth of credits
   - if current_user.coupon_credits_earned >= 25
-    button.btn.btn-primary
-      | Redeem
-  .page-header
-    h3 Promo Code Applied
-  - current_user.used_coupons.each do |coupon|
-    p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
+    = link_to "Redeem", new_coupon_payout_path, class: 'btn btn-primary'
+  - if current_user.used_coupons.any?
+    .page-header
+      h3 Promo Code Applied
+      - current_user.used_coupons.each do |coupon|  
+        p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
 
   .page-header
     h3 Payout Details

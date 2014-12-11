@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :coupon_usages
   has_many :used_coupons, through: :coupon_usages, source: :coupon
   has_many :owned_coupons, class_name: "Coupon", foreign_key: :user_id
+  has_many :coupon_payouts, dependent: :destroy
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'

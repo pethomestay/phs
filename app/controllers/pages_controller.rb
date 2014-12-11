@@ -7,28 +7,23 @@ class PagesController < ApplicationController
     @homepage = true
   end
 
-  def welcome
-  end
-
-  def why_join_pethomestay
-  end
-
-  def our_company
-  end
-
-  def the_team
-  end
-
-  def investors
-  end
-
-  def jobs
-  end
-
   def partners
     @contact = Contact.new
   end
 
-  def in_the_press
-  end
+  def welcome; end
+
+  def why_join_pethomestay; end
+
+  def our_company; end
+
+  def the_team; end
+
+  def investors; end
+
+  def jobs; end
+
+  def in_the_press; end
+
+  def charity_hosts; end
 end
