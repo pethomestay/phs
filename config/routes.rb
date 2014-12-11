@@ -62,12 +62,6 @@ PetHomestay::Application.routes.draw do
     end
   end
 
-  resources :availability do
-    collection do
-      get :booking_info
-    end
-  end
-
   resources :unavailable_dates, :only => [:create, :destroy]
 
   resources :accounts do
@@ -161,8 +155,9 @@ PetHomestay::Application.routes.draw do
   get '/newcastle'  => redirect('/homestays/?search[location]=2300')
 
   # For legacy URLs
-  get '/my-account/(*something)', to: redirect('/guest')
-  get '/mailboxes/(*something)',  to: redirect('/guest')
+  get '/my-account/(*something)',   to: redirect('/guest')
+  get '/mailboxes/(*something)',    to: redirect('/guest')
+  get '/availability/(*something)', to: redirect('/host')
 
   root to: 'pages#home'
 end
