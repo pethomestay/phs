@@ -135,9 +135,6 @@ PetHomestay::Application.routes.draw do
 
   mount Attachinary::Engine => "/attachinary"
 
-  get '/my-account'     => 'users#show', as: :my_account
-  get '/my-account'     => 'users#show', as: :user_root
-
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
   get '/how-does-it-work'     => redirect('http://support.pethomestay.com/hc/en-us/articles/200678169-How-does-PetHomeStay-work-'), as: 'how_does_it_work'
@@ -167,7 +164,8 @@ PetHomestay::Application.routes.draw do
   get '/newcastle'  => redirect('/homestays/?search[location]=2300')
 
   # For legacy URLs
-  get '/mailboxes/(*something)', to: redirect('/guest')
+  get '/my-account/(*something)', to: redirect('/guest')
+  get '/mailboxes/(*something)',  to: redirect('/guest')
 
   root to: 'pages#home'
 end
