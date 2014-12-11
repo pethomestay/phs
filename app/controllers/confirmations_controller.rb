@@ -5,7 +5,7 @@ class ConfirmationsController < ApplicationController
     @enquiry = Enquiry.find(params[:enquiry_id])
     @homestay = @enquiry.homestay
     @provider = @homestay.user
-    redirect_to my_account_path if @enquiry.user != current_user
+    redirect_to guest_path if @enquiry.user != current_user
   end
 
   def update
@@ -15,13 +15,13 @@ class ConfirmationsController < ApplicationController
       if enquiry.owner_accepted
         ProviderMailer.owner_confirmed(enquiry).deliver
         PetOwnerMailer.enquiry_reciept(enquiry).deliver
-        redirect_to my_account_path, alert: "You've confirmed that #{enquiry.homestay.user.first_name} will handle your booking."
+        redirect_to guest_path, alert: "You've confirmed that #{enquiry.homestay.user.first_name} will handle your booking."
       else
         #ProviderMailer.owner_canceled(enquiry).deliver
-        redirect_to my_account_path, alert: "You've closed this enquiry"
+        redirect_to guest_path, alert: "You've closed this enquiry"
       end
     else
-      redirect_to my_account_path
+      redirect_to guest_path
     end
   end
 end

@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
 
-  def show
-    @user = current_user
-  end
-
   def set_coupon
     redirect_to root_path, :notice => "You have already applied a previous coupon" and return if current_user.used_coupons.any?
     if current_user.validate_code?(params[:user][:coupon_code])
