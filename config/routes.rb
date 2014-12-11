@@ -40,18 +40,6 @@ PetHomestay::Application.routes.draw do
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
   post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_host_cancel_booking'
   post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
-  # For SEO and Marketing
-  get '/melbourne'  => redirect('/homestays/?search[location]=3000')
-  get '/sydney'     => redirect('/homestays/?search[location]=2000')
-  get '/brisbane'   => redirect('/homestays/?search[location]=4000')
-  get '/adelaide'   => redirect('/homestays/?search[location]=5000')
-  get '/gold_coast' => redirect('/homestays/?search[location]=4217')
-  get '/perth'      => redirect('/homestays/?search[location]=6000')
-  get '/darwin'     => redirect('/homestays/?search[location]=0800')
-  get '/newcastle'  => redirect('/homestays/?search[location]=2300')
-
-
-
 
   resources :bookings do
     collection do
@@ -171,5 +159,16 @@ PetHomestay::Application.routes.draw do
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/our-company'          => 'pages#our_company', as: 'our_company'
+
+  # For SEO and Marketing
+  get '/melbourne'  => redirect('/homestays/?search[location]=3000')
+  get '/sydney'     => redirect('/homestays/?search[location]=2000')
+  get '/brisbane'   => redirect('/homestays/?search[location]=4000')
+  get '/adelaide'   => redirect('/homestays/?search[location]=5000')
+  get '/gold_coast' => redirect('/homestays/?search[location]=4217')
+  get '/perth'      => redirect('/homestays/?search[location]=6000')
+  get '/darwin'     => redirect('/homestays/?search[location]=0800')
+  get '/newcastle'  => redirect('/homestays/?search[location]=2300')
+
   root to: 'pages#home'
 end
