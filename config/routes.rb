@@ -32,7 +32,6 @@ PetHomestay::Application.routes.draw do
   end
   resources :coupon_payouts, only: [:new, :update]
   resources :transactions
-  resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
