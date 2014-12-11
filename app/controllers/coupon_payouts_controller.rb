@@ -5,7 +5,11 @@ class CouponPayoutsController < ApplicationController
   # Allows users to request coupon payouts
   def new
     current_user.coupon_payouts.create(:payment_amount => current_user.coupon_credits_earned)
-    redirect_to new_guest_account_path, alert: "Thanks, we will process the request shortly"
+    if current_user.homestay.present?
+      redirect_to new_host_account_path, alert: "Thanks, we will process the request shortly"
+    else 
+      redirect_to new_guest_account_path, alert: "Thanks, we will process the request shortly"
+    end
   end
 
   # Admin to mark a request as completed
