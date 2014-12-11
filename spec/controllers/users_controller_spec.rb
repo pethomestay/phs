@@ -19,23 +19,4 @@ describe UsersController, :type => :controller do
       expect(response).to render_template :show
     end
   end
-
-  describe "Post #update_calendar" do
-
-    subject{ post :update_calendar }
-
-    before do
-      allow(user).to receive(:update_calendar)
-    end
-
-    it "should pass update calendar message to user" do
-      expect(user).to receive(:update_calendar)
-      subject
-    end
-
-    it "should give 200 response code" do
-      expect(subject.code).to eq("200")
-    end
-
-  end
 end

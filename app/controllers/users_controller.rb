@@ -11,9 +11,4 @@ class UsersController < ApplicationController
     params[:user][:coupon_code] = nil
     redirect_to root_path, :notice => message and return
   end
-
-  def update_calendar
-    current_user.update_calendar
-    render json: { message: "Successfully Updated" }, status: 200
-  end
 end

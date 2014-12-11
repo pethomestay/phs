@@ -433,10 +433,6 @@ class User < ActiveRecord::Base
     unavailable_dates.uniq
   end
 
-  def update_calendar
-    self.update_attribute(:calendar_updated_at, Date.today)
-  end
-
   def response_rate_in_percent
     # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
     # Write down total count of fetched host mailboxes.
