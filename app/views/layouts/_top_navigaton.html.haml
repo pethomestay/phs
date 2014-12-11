@@ -1,6 +1,4 @@
 %ul.nav.nav-pills
-  %li.messages
-    = link_to 'Messages', mailboxes_path
   %li.favourites
     = link_to 'Favourites', favourites_homestays_path
   %li.bookings
@@ -10,5 +8,3 @@
   -if current_user.homestay.present? && current_user.homestay.persisted?
     %li.availability
       = link_to 'My Calendar', availability_path(current_user.homestay)
-  %li.account
-    = link_to 'My Account', my_account_path

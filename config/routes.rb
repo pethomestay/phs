@@ -4,7 +4,6 @@ PetHomestay::Application.routes.draw do
 
   resources :users do
     collection do
-      post :update_calendar
       post :set_coupon
     end
   end
@@ -32,26 +31,12 @@ PetHomestay::Application.routes.draw do
   end
   resources :coupon_payouts, only: [:new, :update]
   resources :transactions
-  resources :pets, except: [:show]
   get '/welcome' => 'pages#welcome'
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
-  post '/homestays/:slug/rotate_image/:id' => 'homestays#rotate_image', as: 'rotate_homestay_image'
   post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
   post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_host_cancel_booking'
   post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
-  # For SEO and Marketing
-  get '/melbourne'  => redirect('/homestays/?search[location]=3000')
-  get '/sydney'     => redirect('/homestays/?search[location]=2000')
-  get '/brisbane'   => redirect('/homestays/?search[location]=4000')
-  get '/adelaide'   => redirect('/homestays/?search[location]=5000')
-  get '/gold_coast' => redirect('/homestays/?search[location]=4217')
-  get '/perth'      => redirect('/homestays/?search[location]=6000')
-  get '/darwin'     => redirect('/homestays/?search[location]=0800')
-  get '/newcastle'  => redirect('/homestays/?search[location]=2300')
-
-
-
 
   resources :bookings do
     collection do
@@ -74,16 +59,6 @@ PetHomestay::Application.routes.draw do
       put 'guest_save_cancel_reason'
       get 'guest_cancelled'
       get 'admin_view'
-    end
-  end
-
-  resources :mailboxes, only: :index do
-    resources :messages, only: [:index, :create]
-  end
-
-  resources :availability do
-    collection do
-      get :booking_info
     end
   end
 
@@ -151,9 +126,6 @@ PetHomestay::Application.routes.draw do
 
   mount Attachinary::Engine => "/attachinary"
 
-  get '/my-account'     => 'users#show', as: :my_account
-  get '/my-account'     => 'users#show', as: :user_root
-
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
   get '/how-does-it-work'     => redirect('http://support.pethomestay.com/hc/en-us/articles/200678169-How-does-PetHomeStay-work-'), as: 'how_does_it_work'
@@ -171,5 +143,21 @@ PetHomestay::Application.routes.draw do
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/our-company'          => 'pages#our_company', as: 'our_company'
+
+  # For SEO and Marketing
+  get '/melbourne'  => redirect('/homestays/?search[location]=3000')
+  get '/sydney'     => redirect('/homestays/?search[location]=2000')
+  get '/brisbane'   => redirect('/homestays/?search[location]=4000')
+  get '/adelaide'   => redirect('/homestays/?search[location]=5000')
+  get '/gold_coast' => redirect('/homestays/?search[location]=4217')
+  get '/perth'      => redirect('/homestays/?search[location]=6000')
+  get '/darwin'     => redirect('/homestays/?search[location]=0800')
+  get '/newcastle'  => redirect('/homestays/?search[location]=2300')
+
+  # For legacy URLs
+  get '/my-account/(*something)',   to: redirect('/guest')
+  get '/mailboxes/(*something)',    to: redirect('/guest')
+  get '/availability/(*something)', to: redirect('/host')
+
   root to: 'pages#home'
 end

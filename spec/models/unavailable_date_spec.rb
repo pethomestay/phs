@@ -10,7 +10,7 @@ describe UnavailableDate, :type => :model do
   let(:unavailable_date){ FactoryGirl.create(:unavailable_date, user: user) }
 
   context "date validation" do
-    
+
     before do
       unavailable_date.date = Date.today - 1.day
     end
@@ -25,21 +25,4 @@ describe UnavailableDate, :type => :model do
     end
 
   end
-
-  describe ".after_save" do
-    it "should mark calendar as updated" do
-      unavailable_date.save
-      expect(unavailable_date.user.calendar_updated_at).to eq(Date.today)
-    end
-  end
-
-  describe ".after_destroy" do
-    it "should mark calendar as updated" do
-      unavailable_date.save
-      user.calendar_updated_at = Date.today - 1.day
-      unavailable_date.destroy
-      expect(unavailable_date.user.calendar_updated_at).to eq(Date.today)
-    end
-  end
-
 end
