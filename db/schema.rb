@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141210213142) do
+ActiveRecord::Schema.define(:version => 20141211041900) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -365,7 +365,6 @@ ActiveRecord::Schema.define(:version => 20141210213142) do
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
   end
 

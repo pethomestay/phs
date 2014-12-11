@@ -4,7 +4,6 @@ PetHomestay::Application.routes.draw do
 
   resources :users do
     collection do
-      post :update_calendar
       post :set_coupon
     end
   end
@@ -60,12 +59,6 @@ PetHomestay::Application.routes.draw do
       put 'guest_save_cancel_reason'
       get 'guest_cancelled'
       get 'admin_view'
-    end
-  end
-
-  resources :availability do
-    collection do
-      get :booking_info
     end
   end
 
@@ -162,8 +155,9 @@ PetHomestay::Application.routes.draw do
   get '/newcastle'  => redirect('/homestays/?search[location]=2300')
 
   # For legacy URLs
-  get '/my-account/(*something)', to: redirect('/guest')
-  get '/mailboxes/(*something)',  to: redirect('/guest')
+  get '/my-account/(*something)',   to: redirect('/guest')
+  get '/mailboxes/(*something)',    to: redirect('/guest')
+  get '/availability/(*something)', to: redirect('/host')
 
   root to: 'pages#home'
 end
