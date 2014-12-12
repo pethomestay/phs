@@ -5,6 +5,10 @@ class PagesController < ApplicationController
   def home
     @check_for_coupon = params[:check_for_coupon].present? && current_user.try(:admin)
     @homepage = true
+    if params[:code].present?
+      cookies[:code] = params[:code]
+      redirect_to root_path and return
+    end
   end
 
   def partners

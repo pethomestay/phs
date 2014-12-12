@@ -68,3 +68,7 @@ javascript:
    }(document, 'script', 'facebook-jssdk'));
 #fb-root
 - session[:check_for_coupon] = nil
+- if cookies[:code].present?
+  javascript:
+    $('#user_coupon_code').val("#{cookies[:code]}");
+    $('form').submit();

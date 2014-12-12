@@ -4,8 +4,7 @@
   p
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
-  p Share this code to your friends and community!
-  p Every person who joins will get $10 off their first booking and you will receive $5 credit when they book :)
+  = render 'social_sharing'
   - if current_user.coupon_credits_earned > 0
     p
       ' Credit earned:
@@ -24,3 +23,41 @@
     = render 'fields', f: f
     .form-actions
       = f.submit 'SAVE', class: 'btn btn-primary'
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : "#{ENV['APP_ID'] || '382802968555135' }",
+      cookie     : true,
+      status     : true,
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn').on('click', function() {
+      FB.ui(
+      {
+        method: 'feed',
+        link: "https://www.pethomestay.com.au",
+        picture: "https://d1nq2ztuzp3vk0.cloudfront.net/assets/home/three_features/feature_two-9d2ae9f999068089b39bc5bf09d22f72.png",
+        name: "Hey, I just joined PetHomeStay.com.au!",
+        caption: "Australia's no. 1 pet sitting community",
+        description: "With trusted local pet sitters throughout Australia, it's a better option for you and your pet. Come join me today!",
+        href: "https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
