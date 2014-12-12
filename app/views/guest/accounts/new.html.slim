@@ -4,20 +4,7 @@
   p
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
-  p Share this code to your friends and community!
-  p Every person who joins will get $10 off their first booking and you will receive $5 credit when they book :)
-  - twitter_url  = 'https://twitter.com/share'
-  - twitter_url += "?text=Come join me on PetHomeStay.com.au"
-  - twitter_url += "&url=https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
-  - twitter_url += '&via=PetHomeStay'
-  - twitter_url += '&hashtags=freecuddles'
-  p
-    button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
-      i.fa.fa-facebook
-        |  SHARE
-    button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
-      i.fa.fa-twitter
-        |  TWEET
+  = render 'social_sharing'
   - if current_user.coupon_credits_earned > 0
     p
       ' Credit earned:
