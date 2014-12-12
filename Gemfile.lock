@@ -44,6 +44,8 @@ GEM
     attachinary (1.3.0)
       cloudinary (~> 1.0.69)
       rails (>= 3.2)
+    attr_encrypted (1.3.3)
+      encryptor (>= 1.3.0)
     auto_strip_attributes (2.0.6)
       activerecord (>= 3.0)
     awesome_nested_fields (0.6.4)
@@ -113,6 +115,7 @@ GEM
     dragonfly-s3_data_store (1.0.4)
       dragonfly (~> 1.0)
       fog
+    encryptor (1.3.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.37.0)
@@ -398,6 +401,7 @@ DEPENDENCIES
   actionmailer_inline_css
   alphabetical_paginate
   attachinary
+  attr_encrypted
   auto_strip_attributes (~> 2.0)
   awesome_nested_fields
   bootstrap-sass
