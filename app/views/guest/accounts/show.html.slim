@@ -1,22 +1,10 @@
 = render layout: 'layouts/user' do
   .page-header
-    h3 Payout Summary
+    h3 Promo Code
   p
     ' Your Promo Code:
     b= current_user.owned_coupons.collect(&:code).join(", ")
-  - twitter_url  = 'https://twitter.com/share'
-  - twitter_url += "?text=Come join me on PetHomeStay.com.au"
-  - twitter_url += "&url=https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
-  - twitter_url += '&via=PetHomeStay'
-  - twitter_url += '&hashtags=freecuddles'
-  p
-    button.btn.fb-share-btn
-      i.fa.fa-facebook
-        |  SHARE
-    button.btn.twitter-share-btn data-href=twitter_url
-      i.fa.fa-twitter
-        |  TWEET
-  p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
+  = render 'social_sharing'
   - if current_user.coupon_credits_earned > 0
     p
       ' Credit earned:
@@ -31,7 +19,7 @@
   - if current_user.used_coupons.any?
     .page-header
       h3 Promo Code Applied
-      - current_user.used_coupons.each do |coupon|  
+      - current_user.used_coupons.each do |coupon|
         p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
 
   .page-header
