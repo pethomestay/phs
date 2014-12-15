@@ -24,6 +24,7 @@ class Homestay < ActiveRecord::Base
                   :pet_walking, :accept_liability, :parental_consent,
                   :accept_liability, :active, :for_charity
 
+  serialize :pet_sizes, Array
 
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
