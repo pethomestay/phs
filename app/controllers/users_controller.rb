@@ -12,4 +12,12 @@ class UsersController < ApplicationController
     params[:user][:coupon_code] = nil
     redirect_to root_path, :notice => message and return
   end
+
+  # Clears session variable
+  def decline_coupon
+    session[:check_for_coupon] = nil
+    respond_to do |format|
+      format.json { head :ok }
+    end
+  end
 end

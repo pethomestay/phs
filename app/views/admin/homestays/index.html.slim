@@ -37,9 +37,11 @@ table.table.tablesorter
           =homestay.locked ? "Approval Pending" : "Approved"
         td
           =link_to 'Edit', edit_admin_homestay_path(homestay)
+          br
           =link_to 'Destroy', admin_homestay_path(homestay), :method => :delete, :data => { :confirm => 'Are you sure?' }
+          br
           =link_to homestay.active? ? 'Deactivate' : 'Activate', homestay_activate_path(homestay), id: 'active_toggle_' + homestay.id.to_s, remote: true, :method=>:post
-
+          br
           =link_to homestay.locked? ? 'Approve' : 'Unapprove', admin_homestay_locking_path(homestay), id: 'locked_toggle_' + homestay.id.to_s, remote: true, :method=>:post
 
 
