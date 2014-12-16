@@ -18,6 +18,9 @@ dl.dl-horizontal
   - if @homestay.pet_sizes.present? && @homestay.pet_sizes != ['']
     dt Pet Sizes
     dd= @homestay.pet_sizes[0...-1].join(', ')
+  - if @homestay.favorite_breeds.present? && @homestay.favorite_breeds != ['', '', '']
+    dt Favourite Breeds
+    dd= @homestay.favorite_breeds.join(', ')
   dt Is Active?
   dd= @homestay.active
   dt For charity?

@@ -22,9 +22,11 @@ class Homestay < ActiveRecord::Base
                   :address_1, :address_suburb, :address_city, :address_country,
                   :address_postcode, :pet_feeding, :pet_grooming, :pet_training,
                   :pet_walking, :accept_liability, :parental_consent,
-                  :accept_liability, :active, :for_charity, :pet_sizes
+                  :accept_liability, :active, :for_charity, :pet_sizes,
+                  :favorite_breeds
 
   serialize :pet_sizes, Array
+  serialize :favorite_breeds, Array
 
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
