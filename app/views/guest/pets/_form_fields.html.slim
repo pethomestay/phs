@@ -1,13 +1,11 @@
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 
 
-<a class="pet_accordian" id="profile_a_accordian_one">
-span.pet_accordian_legend Step 1 - Essentials
-span.header-hint.pet_accordian_label.pet_label Please complete all fields
-<span class="pet_accordian_image">
-  <i class="fa fa-minus" id="profile_i_accordian_one"></i>
-</span>
-</a>
+a.pet_accordian#profile_a_accordian_one
+  span.pet_accordian_legend Step 1 - Essentials
+  span.header-hint.pet_accordian_label.pet_label Please complete all fields
+  span.pet_accordian_image
+    i.fa.fa-minus#profile_i_accordian_one
 hr.line_section
   section id="section-step-one" class="pet_section_scrollable"
     div.pet_options_section
@@ -25,13 +23,11 @@ hr.line_section
         br
         = f.input_field :personalities, collection: PERSONALITIES, as: :check_boxes
 
-<a class="pet_accordian" id="profile_a_accordian_two">
-span.pet_accordian_legend Step 2 - Emergency + Medical
-span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.
-<span class="pet_accordian_image">
-  <i class="fa fa-plus" id="profile_i_accordian_two"></i>
-</span>
-</a>
+a class="pet_accordian" id="profile_a_accordian_two"
+  span.pet_accordian_legend Step 2 - Emergency + Medical
+  span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.
+  span.pet_accordian_image
+    i.fa.fa-plus#profile_i_accordian_two
 hr.line_section
   section id="section-step-two"
     div.pet_options_section
