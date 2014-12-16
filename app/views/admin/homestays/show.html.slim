@@ -15,7 +15,7 @@ dl.dl-horizontal
   dd= @homestay.is_professional?
   dt Address
   dd= @homestay.address_1
-  - if @homestay.pet_sizes.present?
+  - if @homestay.pet_sizes != ['']
     dt Pet Sizes
     dd= @homestay.pet_sizes[0...-1].join(', ')
   dt Is Active?
