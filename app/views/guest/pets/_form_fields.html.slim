@@ -1,12 +1,11 @@
-- all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 
 
 <a class="pet_accordian" id="profile_a_accordian_one">
 span.pet_accordian_legend Step 1 - Essentials
-span.header-hint.pet_accordian_label.pet_label Please complete all fields        
+span.header-hint.pet_accordian_label.pet_label Please complete all fields
 <span class="pet_accordian_image">
-  <i class="fa fa-minus" id="profile_i_accordian_one"></i> 
+  <i class="fa fa-minus" id="profile_i_accordian_one"></i>
 </span>
 </a>
 hr.line_section
@@ -15,22 +14,22 @@ hr.line_section
       = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
       = f.input :name, label: 'Pet Name'
       = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
-      = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: 'Please specify pet type' 
+      = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: 'Please specify pet type'
       = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
-      = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false 
+      = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
     div.pet_options_section
-      = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }  
+      = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
       = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
       = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
       = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
         br
-        = f.input_field :personalities, collection: all_personalities, as: :check_boxes 
+        = f.input_field :personalities, collection: PERSONALITIES, as: :check_boxes
 
 <a class="pet_accordian" id="profile_a_accordian_two">
 span.pet_accordian_legend Step 2 - Emergency + Medical
-span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.        
+span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.
 <span class="pet_accordian_image">
-  <i class="fa fa-plus" id="profile_i_accordian_two"></i> 
+  <i class="fa fa-plus" id="profile_i_accordian_two"></i>
 </span>
 </a>
 hr.line_section
@@ -56,20 +55,20 @@ coffee:
 
   $("#profile_a_accordian_one").on 'click', ->
      if $("#profile_i_accordian_one").hasClass("fa-minus")
-      $('#section-step-one').slideUp(350) 
+      $('#section-step-one').slideUp(350)
       $("#profile_i_accordian_one").removeClass("fa-minus").addClass("fa-plus")
-     else 
+     else
       $('#section-step-one').slideDown(350)
       $("#profile_i_accordian_one").removeClass("fa-plus").addClass("fa-minus")
-      
+
   $("#profile_a_accordian_two").on 'click', ->
      if $("#profile_i_accordian_two").hasClass("fa-minus")
-      $('#section-step-two').slideUp(350) 
+      $('#section-step-two').slideUp(350)
       $("#profile_i_accordian_two").removeClass("fa-minus").addClass("fa-plus")
-     else 
+     else
       $('#section-step-two').slideDown(350)
-      $("#profile_i_accordian_two").removeClass("fa-plus").addClass("fa-minus")  
-    
+      $("#profile_i_accordian_two").removeClass("fa-plus").addClass("fa-minus")
+
   $('.pet_size_id .slider').slider
     formatter: (size_id) ->
       switch size_id
