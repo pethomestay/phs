@@ -22,7 +22,7 @@ class Homestay < ActiveRecord::Base
                   :address_1, :address_suburb, :address_city, :address_country,
                   :address_postcode, :pet_feeding, :pet_grooming, :pet_training,
                   :pet_walking, :accept_liability, :parental_consent,
-                  :accept_liability, :active, :for_charity
+                  :accept_liability, :active, :for_charity, :pet_sizes
 
   serialize :pet_sizes, Array
 
