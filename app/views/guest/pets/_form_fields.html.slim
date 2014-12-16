@@ -1,4 +1,3 @@
-- all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 = field_set_tag 'Step 1 - Essentials'
   p.header-hint.help-block Please complete all fields
@@ -23,7 +22,7 @@
     span.max high
   = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
     br
-    = f.input_field :personalities, collection: all_personalities, as: :check_boxes
+    = f.input_field :personalities, collection: PERSONALITIES, as: :check_boxes
 
 = field_set_tag 'Step 2 - Emergency + Medical'
   p.header-hint.help-block You can fill this in now, or come back later before a booking starts.
