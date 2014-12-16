@@ -9,17 +9,7 @@ h1 Editing Homestay
   /= f.association :user, collection: User.active.all(order: 'last_name'), prompt: "Choose an Homestay host"
 
   = f.input :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes
-  .control-group
-    label Favorite breeds
-    .controls
-      - if f.object.favorite_breeds.present?
-        - f.object.favorite_breeds.each do |breed|
-          = text_field_tag 'homestay[favorite_breeds][]', breed
-          br
-      - else
-        = text_field_tag 'homestay[favorite_breeds][]', breed
-        br
-      = link_to 'Add a Breed', '#', class: 'add-a-breed-link'
+  = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Chooes one or more breeds' } }
 
   = f.input :for_charity
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
@@ -100,5 +90,5 @@ coffee:
         </table class="table">
       """
 
-    $('.add-a-breed-link').on 'click', ->
-      $('.add-a-breed-link').before('<input name="homestay[favorite_breeds][]" type="text"><br>')
+    $('.chosen-select').chosen
+      max_selected_options: 5
