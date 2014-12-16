@@ -75,14 +75,28 @@
     margin-left: 20px;
   }
   .pet_accordian {
-    display: inline-block;
-    cursor: pointer;
-    font-size: 16pt;
-    float: right;
+    width: 100%;
+    padding: 0;
+    display:block;
+    min-height:30px;
+    cursor:pointer;
   }
-  .pet_profile_legend {
+  .pet_accordian_legend {
      font-size: 16pt;
-     display: inline-block; 
+     display: inline-block;
+     float: left;
+  }
+  .pet_accordian_label {
+    padding-left: 15px;
+    float: left;
+    padding-top: 6px;;
+  }
+  .pet_accordian_image {
+    float: right;
+    font-size: 16pt;
+  }
+  .pet_section_scrollable {
+    overflow-y:auto;
   }
   .slider.slider-horizontal{
     width:100% !important;
@@ -91,9 +105,18 @@
   .chzn-container.chzn-container-single {
     width:100% !important;
   }
-  .pet_pslider_section{
-     margin-top: 25px;
+  .pet_options_section {
+    padding:15px;
   }
+  .pet_options_section:hover {
+     background-color: #f5f5f5 
+  }
+  @media screen and (max-width:500px) {
+     .pet_label { display:none }
+  }
+  @media screen and (max-width:1600px) {
+     .pet_label_2 { display:none }
+  }  
   .line_section {
     margin: 10px 0 10px 0
   }
