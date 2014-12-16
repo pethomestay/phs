@@ -5,6 +5,7 @@ PetHomestay::Application.routes.draw do
   resources :users do
     collection do
       post :set_coupon
+      post :decline_coupon
     end
   end
 
