@@ -22,8 +22,11 @@ class Homestay < ActiveRecord::Base
                   :address_1, :address_suburb, :address_city, :address_country,
                   :address_postcode, :pet_feeding, :pet_grooming, :pet_training,
                   :pet_walking, :accept_liability, :parental_consent,
-                  :accept_liability, :active, :for_charity
+                  :accept_liability, :active, :for_charity, :pet_sizes,
+                  :favorite_breeds
 
+  serialize :pet_sizes, Array
+  serialize :favorite_breeds, Array
 
   validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
 
@@ -48,6 +51,8 @@ class Homestay < ActiveRecord::Base
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
+  before_save :strip_pet_sizes
+  before_save :strip_favorite_breeds
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
@@ -68,13 +73,6 @@ class Homestay < ActiveRecord::Base
 
   def create_slug
     self.slug = title.parameterize if title
-  end
-
-  def sanitize_description
-    if self.description.present?
-      self.description = strip_tags(self.description)
-      self.description = strip_nbsp(self.description)
-    end
   end
 
   def geocoding_address
@@ -186,6 +184,7 @@ class Homestay < ActiveRecord::Base
   end
 
   private
+
   def host_must_have_a_mobile_number
     unless self.user.mobile_number.present?
       errors[:base] << 'A mobile number is needed so the Guest can contact you!'
@@ -194,6 +193,21 @@ class Homestay < ActiveRecord::Base
 
   def copy_slug_errors_to_title
     errors.add(:title, errors.get(:slug)[0]) if errors.get(:slug)
+  end
+
+  def sanitize_description
+    if self.description.present?
+      self.description = strip_tags(self.description)
+      self.description = strip_nbsp(self.description)
+    end
+  end
+
+  def strip_pet_sizes
+    self.pet_sizes.delete('') if self.pet_sizes.present?
+  end
+
+  def strip_favorite_breeds
+    self.favorite_breeds.delete('') if self.favorite_breeds.present?
   end
 
   def set_country_Australia
