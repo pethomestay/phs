@@ -73,13 +73,6 @@ class Homestay < ActiveRecord::Base
     self.slug = title.parameterize if title
   end
 
-  def sanitize_description
-    if self.description.present?
-      self.description = strip_tags(self.description)
-      self.description = strip_nbsp(self.description)
-    end
-  end
-
   def geocoding_address
     if address_suburb.present?
       "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
@@ -189,6 +182,7 @@ class Homestay < ActiveRecord::Base
   end
 
   private
+
   def host_must_have_a_mobile_number
     unless self.user.mobile_number.present?
       errors[:base] << 'A mobile number is needed so the Guest can contact you!'
@@ -197,6 +191,13 @@ class Homestay < ActiveRecord::Base
 
   def copy_slug_errors_to_title
     errors.add(:title, errors.get(:slug)[0]) if errors.get(:slug)
+  end
+
+  def sanitize_description
+    if self.description.present?
+      self.description = strip_tags(self.description)
+      self.description = strip_nbsp(self.description)
+    end
   end
 
   def set_country_Australia
