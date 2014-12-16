@@ -15,12 +15,18 @@ dl.dl-horizontal
   dd= @homestay.is_professional?
   dt Address
   dd= @homestay.address_1
-  - if @homestay.pet_sizes.present? && @homestay.pet_sizes != ['']
-    dt Pet Sizes
-    dd= @homestay.pet_sizes[0...-1].join(', ')
-  - if @homestay.favorite_breeds.present? && @homestay.favorite_breeds != ['', '', '']
-    dt Favourite Breeds
-    dd= @homestay.favorite_breeds.join(', ')
+  dt Pet Sizes
+  dd
+    - if @homestay.pet_sizes.present?
+      = @homestay.pet_sizes.join(', ')
+    - else
+      | N/A
+  dt Favourite Breeds
+  dd
+    - if @homestay.favorite_breeds.present?
+      = @homestay.favorite_breeds.join(', ')
+    - else
+      | N/A
   dt Is Active?
   dd= @homestay.active
   dt For charity?

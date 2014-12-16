@@ -51,6 +51,8 @@ class Homestay < ActiveRecord::Base
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
+  before_save :strip_pet_sizes
+  before_save :strip_favorite_breeds
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
@@ -198,6 +200,14 @@ class Homestay < ActiveRecord::Base
       self.description = strip_tags(self.description)
       self.description = strip_nbsp(self.description)
     end
+  end
+
+  def strip_pet_sizes
+    self.pet_sizes.delete('') if self.pet_sizes.present?
+  end
+
+  def strip_favorite_breeds
+    self.favorite_breeds.delete('') if self.favorite_breeds.present?
   end
 
   def set_country_Australia
