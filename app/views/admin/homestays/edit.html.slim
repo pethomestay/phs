@@ -14,11 +14,12 @@ h1 Editing Homestay
     .controls
       - if f.object.favorite_breeds.present?
         - f.object.favorite_breeds.each do |breed|
-          input name='homestay[favorite_breeds][]' type='text' value=breed
+          = text_field_tag 'homestay[favorite_breeds][]', breed
           br
       - else
-        input name='homestay[favorite_breeds][]' type='text'
+        = text_field_tag 'homestay[favorite_breeds][]', breed
         br
+      = link_to 'Add a Breed', '#', class: 'add-a-breed-link'
 
   = f.input :for_charity
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
@@ -97,3 +98,6 @@ coffee:
         <% } %>
       </table class="table">
     """
+
+  $('.add-a-breed-link').on 'click', ->
+    $('.add-a-breed-link').before('<input name="homestay[favorite_breeds][]" type="text"><br>')
