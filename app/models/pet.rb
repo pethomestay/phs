@@ -91,10 +91,6 @@ class Pet < ActiveRecord::Base
     size.title if size_id
   end
 
-	def any_dislikes?
-		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
-	end
-
   private
 
   def strip_personalities
