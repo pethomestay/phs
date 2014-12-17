@@ -52,8 +52,11 @@
    text-align: center;   
 }
 .pet-trash {
-  color:#ec5c3b; 
+  color:#c4c4c4; 
   font-size:21pt;  
+}
+.pet-trash:hover {
+  color:#ec5c3b; 
 }
 .pet-panel {
   // index
