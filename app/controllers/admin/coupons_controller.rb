@@ -23,7 +23,7 @@ class Admin::CouponsController < Admin::AdminController
     @expiring_coupon = Coupon.find(params[:expiring_coupon][:id])
     if @expiring_coupon.nil?
       render :json => { :success => false, :error => "No coupon found"}
-    elsif @expiring_coupon.update_attribute(:valid_to, Time.now)
+    elsif @expiring_coupon.update_attribute(:coupon_limit, @expiring_coupon.users.count)
       render :json => { :success => true, :message => "Coupon successfully expired"}
     else
       render :json => { :success => false, :error => "Miscellaneous error"}

@@ -11,16 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141204035226) do
+ActiveRecord::Schema.define(:version => 20141216235017) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name"
-    t.string   "bank"
-    t.string   "bsb"
-    t.string   "account_number"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.string   "encrypted_name"
+    t.string   "encrypted_bsb"
+    t.string   "encrypted_account_number"
   end
 
   create_table "attachinary_files", :force => true do |t|
@@ -43,8 +42,6 @@ ActiveRecord::Schema.define(:version => 20141204035226) do
     t.integer  "booker_id"
     t.integer  "bookee_id"
     t.text     "message"
-    t.string   "pet_name"
-    t.string   "guest_name"
     t.integer  "enquiry_id"
     t.integer  "homestay_id"
     t.date     "check_in_date"
@@ -75,6 +72,16 @@ ActiveRecord::Schema.define(:version => 20141204035226) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "coupon_payouts", :force => true do |t|
+    t.integer  "user_id"
+    t.decimal  "payment_amount"
+    t.boolean  "paid"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "coupon_payouts", ["user_id"], :name => "index_coupon_payouts_on_user_id"
 
   create_table "coupon_usages", :force => true do |t|
     t.boolean  "coupon_status"
@@ -194,6 +201,8 @@ ActiveRecord::Schema.define(:version => 20141204035226) do
     t.integer  "outdoor_area_id"
     t.boolean  "locked",                            :default => true
     t.boolean  "for_charity",                       :default => false
+    t.text     "pet_sizes"
+    t.text     "favorite_breeds"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
@@ -355,7 +364,6 @@ ActiveRecord::Schema.define(:version => 20141204035226) do
     t.integer  "age_range_min"
     t.integer  "age_range_max"
     t.string   "facebook_location"
-    t.date     "calendar_updated_at"
     t.integer  "braintree_customer_id"
     t.boolean  "opt_out_sms",            :default => false
   end

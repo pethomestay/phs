@@ -1,4 +1,4 @@
-if Rails.env == "development"
+if Rails.env.development?
   Braintree::Configuration.environment = :sandbox
   Braintree::Configuration.merchant_id = "nfss7wx3fk4dzkrg"
   Braintree::Configuration.public_key = "9mbnqmrx5js2dvm7"

@@ -4,7 +4,6 @@
     %tr
       %th Username
       %th Account Name
-      %th Bank
       %th BSB
       %th Account Number
       %th
@@ -13,7 +12,6 @@
       %tr
         %td= account.user.name
         %td= account.name
-        %td= account.bank
         %td= account.bsb
         %td= account.account_number
         %td= link_to 'show', admin_account_path(account)

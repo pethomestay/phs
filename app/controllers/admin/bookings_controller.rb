@@ -3,7 +3,9 @@ class Admin::BookingsController < Admin::AdminController
 	respond_to :html
 
 	def index
-		respond_with(:admin, @bookings = Booking.all.select {|b| b.transaction.present? || b.payment.present? }.select {|b| b.state == "finished_host_accepted"}.sort_by(&:created_at).reverse)
+    @coupon_payout_requests = CouponPayout.unpaid
+    @bookings = Booking.all.select {|b| b.transaction.present? || b.payment.present? }.select {|b| b.state == "finished_host_accepted"}.sort_by(&:created_at).reverse
+		respond_with(:admin, @coupon_payout_requests, @bookings)
 	end
 
   def host_cancel

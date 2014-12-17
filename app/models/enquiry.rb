@@ -29,6 +29,7 @@ class Enquiry < ActiveRecord::Base
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
   validate :guest_must_have_a_mobile_number
   validate :day_limit
+  validate :host_is_available
 
   after_create :create_mailbox
   after_create :send_new_enquiry_notifications
@@ -126,6 +127,13 @@ class Enquiry < ActiveRecord::Base
           email: self.user.email,
         )
       end
+    end
+  end
+
+  def host_is_available
+    host = self.homestay.user
+    unless host.is_available? from: self.check_in_date, to: self.check_out_date
+      errors[:base] << "#{host.first_name} is not available during this period. Please refer to the calendar for availability info."
     end
   end
 

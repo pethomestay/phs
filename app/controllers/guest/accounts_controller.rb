@@ -20,10 +20,12 @@ class Guest::AccountsController < Guest::GuestController
   end
 
   def edit
+    redirect_to new_guest_account_path and return if current_user.account.nil?
     @account = current_user.account
   end
 
   def update
+    redirect_to new_guest_account_path and return if current_user.account.nil?
     @account = current_user.account
     if @account.update_attributes(params[:account])
       flash[:notice] = 'Your account details have been saved'
@@ -37,6 +39,7 @@ class Guest::AccountsController < Guest::GuestController
   end
 
   def show
+    redirect_to new_guest_account_path and return if current_user.account.nil?
     @account = current_user.account
   end
 end

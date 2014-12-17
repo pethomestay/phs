@@ -88,7 +88,7 @@
         h3.text-center= "Payment successfully made on #{@booking.payment.created_at.in_time_zone('Melbourne').strftime("%A, %d/%m/%Y at %l:%M %p %Z")}"
       - else
         p.help-block.text-center You are only charged when the Host confirms this booking.
-        p.help-block.text-center We accept Paypal or any credit card.
+        p.help-block.text-center We accept Paypal, Visa and MasterCard.
         form#checkout url=booking_path(@booking) method="put"
           #dropin
           - if @coupon

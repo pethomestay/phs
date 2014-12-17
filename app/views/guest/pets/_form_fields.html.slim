@@ -1,46 +1,70 @@
-- all_personalities = ['Barker', 'Digger', 'Chewer', 'Playful', 'Energetic', 'Mellow', 'Smart', 'Obedient', 'Mischievous', 'Loud', 'Quiet', 'Protective', 'Affectionate', 'Crazy', 'Independent', 'Rowdy', 'Calm', 'Athletic', 'Lively', 'Happy', 'Gentle']
 = hidden_field_tag 'redirect_path', params[:redirect_path]
-= field_set_tag 'Step 1 - Essentials'
-  p.header-hint.help-block Please complete all fields
-  = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
-  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
-  = f.input :name, label: 'Pet Name'
-  = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
-  = f.input :other_pet_type, label: 'Please specify pet type'
-  = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
-  = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-  .slider-labels.size
-    span.min <15kg
-    span.max 46kg+
-  = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-  .slider-labels.pet-age
-    span.min <18 months
-    span.max 15+ years
-  = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
-  = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
-  .slider-labels.energy-level
-    span.min low
-    span.max high
-  = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
-    br
-    = f.input_field :personalities, collection: all_personalities, as: :check_boxes
 
-= field_set_tag 'Step 2 - Emergency + Medical'
-  p.header-hint.help-block You can fill this in now, or come back later before a booking starts.
-  = f.input :emergency_contact_name, label: 'Emergency Contact'
-  = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
-  = f.input :vet_name,  label: 'Vet Surgery'
-  = f.input :vet_phone, label: 'Vet Phone'
-  = f.input :council_number, label: 'Council Pet Tag'
-  = f.input :microchip_number, label: 'Microchip #'
-  = f.input :medication, input_html: { rows: 2 }
-  label My pet is:
-  = f.input :house_trained, label: 'toilet trained'
-  = f.input :flea_treated, label: 'flea treated'
-  = f.input :vaccinated, label: 'vaccinated'
+
+a.pet_accordian#profile_a_accordian_one
+  span.pet_accordian_legend Step 1 - Essentials
+  span.header-hint.pet_accordian_label.pet_label Please complete all fields
+  span.pet_accordian_image
+    i.fa.fa-minus#profile_i_accordian_one
+hr.line_section
+  section id="section-step-one" class="pet_section_scrollable"
+    div.pet_options_section
+      = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+      = f.input :name, label: 'Pet Name'
+      = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
+      = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: 'Please specify pet type'
+      = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
+      = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
+    div.pet_options_section
+      = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+      = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+      = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
+      = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
+        br
+        = f.input_field :personalities, collection: PERSONALITIES, as: :check_boxes
+
+a class="pet_accordian" id="profile_a_accordian_two"
+  span.pet_accordian_legend Step 2 - Emergency + Medical
+  span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.
+  span.pet_accordian_image
+    i.fa.fa-plus#profile_i_accordian_two
+hr.line_section
+  section id="section-step-two"
+    div.pet_options_section
+      = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
+      = f.input :emergency_contact_name, label: 'Emergency Contact'
+      = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+      = f.input :vet_name,  label: 'Vet Surgery'
+      = f.input :vet_phone, label: 'Vet Phone'
+      = f.input :council_number, label: 'Council Pet Tag'
+      = f.input :microchip_number, label: 'Microchip #'
+      = f.input :medication, input_html: { rows: 2 }
+    div.pet_options_section
+      label My pet is:
+      = f.input :house_trained, label: 'toilet trained'
+      = f.input :flea_treated, label: 'flea treated'
+      = f.input :vaccinated, label: 'vaccinated'
 
 
 coffee:
+  $("#section-step-two").slideUp(50)
+
+  $("#profile_a_accordian_one").on 'click', ->
+     if $("#profile_i_accordian_one").hasClass("fa-minus")
+      $('#section-step-one').slideUp(350)
+      $("#profile_i_accordian_one").removeClass("fa-minus").addClass("fa-plus")
+     else
+      $('#section-step-one').slideDown(350)
+      $("#profile_i_accordian_one").removeClass("fa-plus").addClass("fa-minus")
+
+  $("#profile_a_accordian_two").on 'click', ->
+     if $("#profile_i_accordian_two").hasClass("fa-minus")
+      $('#section-step-two').slideUp(350)
+      $("#profile_i_accordian_two").removeClass("fa-minus").addClass("fa-plus")
+     else
+      $('#section-step-two').slideDown(350)
+      $("#profile_i_accordian_two").removeClass("fa-plus").addClass("fa-minus")
+
   $('.pet_size_id .slider').slider
     formatter: (size_id) ->
       switch size_id
@@ -90,7 +114,7 @@ coffee:
                 alt="" width="50" height="50" />
             </td>
             <td>
-              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+              <a href="#" data-remove="<%= files[i].public_id %>"><i class="fa fa-trash-o pet-trash"></i></a>
             </td>
           <% } %>
             </td>
@@ -118,7 +142,7 @@ coffee:
                 alt=""/>
             </td>
             <td>
-              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
+              <a href="#" data-remove="<%= files[i].public_id %>"><i class="fa fa-trash-o pet-trash"></i></a>
             </td>
           <% } %>
             </td>

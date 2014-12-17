@@ -1,7 +1,0 @@
-- unless message.message_text.blank?
-  .well
-    %p
-      %span.pull-right= "#{time_ago_in_words message.created_at} ago"
-      %span
-        %strong= (current_user == message.user) ? 'Me' : message.user.first_name.capitalize
-        %p= message.message_text

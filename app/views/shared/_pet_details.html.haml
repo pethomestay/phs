@@ -22,7 +22,7 @@
   %strong= ": #{@guest.pet.dislike_animals? ? 'Yes' : 'No'}, "
   %i Dislike People
   %strong= ": #{@guest.pet.dislike_people? ? 'Yes' : 'No'}."
-- if @guest.pet.any_dislikes?
+- if @guest.pet.explain_dislikes.present?
   %p.article-content
     %i Dislike explanation
     = ": #{@guest.pet.explain_dislikes}."

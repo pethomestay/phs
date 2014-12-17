@@ -380,11 +380,4 @@ describe User, :type => :model do
     end
 
   end
-
-  describe "#update_calendar" do
-    it "should mark calendar as updated" do
-      confirmed_user.update_calendar
-      expect(confirmed_user.calendar_updated_at).to eq(Date.today)
-    end
-  end
 end
