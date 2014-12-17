@@ -32,6 +32,10 @@ dl.dl-horizontal
   dt For charity?
   dd= @homestay.for_charity
 
+- if @homestay.emergency_sits?
+  p
+    strong Available for emergency sits
+
 table.pictures
   caption Pictures
   - if @homestay.photos?

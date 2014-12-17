@@ -12,6 +12,7 @@ h1 Editing Homestay
   = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Chooes one or more breeds' } }
 
   = f.input :for_charity
+  = f.input :emergency_sits
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
     .add-on $
     = f.input_field :cost_per_night, class: 'span1'
