@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141216020710) do
+ActiveRecord::Schema.define(:version => 20141216235017) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(:version => 20141216020710) do
     t.integer  "booker_id"
     t.integer  "bookee_id"
     t.text     "message"
-    t.string   "pet_name"
-    t.string   "guest_name"
     t.integer  "enquiry_id"
     t.integer  "homestay_id"
     t.date     "check_in_date"

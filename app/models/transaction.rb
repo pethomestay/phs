@@ -1,6 +1,6 @@
 require 'digest/sha1'
 require 'rest_client'
-require 'nokogiri'
+# require 'nokogiri'
 
 class Transaction < ActiveRecord::Base
 
@@ -96,7 +96,7 @@ class Transaction < ActiveRecord::Base
             content_type: 'text/xml'
         )
 
-        doc = Nokogiri::XML(response)
+        # doc = Nokogiri::XML(response)
         if %w(00 08).include?(doc.xpath('//responseCode').text)
           self.transaction_id = doc.xpath('//txnID').text
           self.reference = doc.xpath('//ponum').text
@@ -132,7 +132,7 @@ class Transaction < ActiveRecord::Base
             content_type: 'text/xml'
         )
 
-        doc = Nokogiri::XML(response)
+        # doc = Nokogiri::XML(response)
         if %w(00 08).include?(doc.xpath('//responseCode').text)
           self.transaction_id = doc.xpath('//txnID').text
           self.response_text = doc.xpath('//responseText').text
