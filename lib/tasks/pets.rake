@@ -2,9 +2,9 @@ namespace :pets do
   namespace :personalities do
     desc 'Strip the empty element in personalities'
     task :strip => :environment do
-      Pet.all.each do |pet|
-        pet.personalities.delete('') if pet.personalities.present?
-        pet.save
+      Pet.where('personalities IS NOT NULL').each do |pet|
+          pet.personalities.delete('')
+          pet.save
       end
 
       puts 'Finished!'
