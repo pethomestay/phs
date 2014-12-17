@@ -36,9 +36,6 @@ class Enquiry < ActiveRecord::Base
   after_create :send_new_enquiry_notification_SMS
 
   before_save :set_response, on: :create
-  # The following line leads to some Guests receiving empty email notification
-  # Thus it has been disabled until further investigation
-  #after_update :send_enquiry_update_notifications
   after_save :create_or_modify_booking
 
   scope :last_five, order('created_at DESC').limit(5)
@@ -97,16 +94,8 @@ class Enquiry < ActiveRecord::Base
       .limit(1)[0] # First host response in this enquiry
   end
 
-  # No longer needed
-  #def period
-  #  if self.check_in_date === self.check_out_date
-  #    self.check_in_date.strftime('%b %e')
-  #  else
-  #    "#{self.check_in_date.strftime('%b %e')} - #{self.check_out_date.strftime('%b %e')}"
-  #  end
-  #end
-
   private
+
   def guest_must_have_a_mobile_number
     unless self.user.mobile_number.present?
       errors[:base] << 'A mobile number is needed so the Host can contact you!'
@@ -146,18 +135,8 @@ class Enquiry < ActiveRecord::Base
       text: "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
   end
 
-  # See the comment at top
-  #def send_enquiry_update_notifications
-  #  return if confirmed?
-  #  PetOwnerMailer.host_enquiry_response(self).deliver
-  #end
-
   def require_respsonse_message
     response_id == ReferenceData::Response::UNDECIDED.id
-  end
-
-  def strip_phone_numbers(string)
-    string.gsub /\d+[\s|\d]+/, ''
   end
 
   def set_response
