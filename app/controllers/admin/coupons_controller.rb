@@ -1,12 +1,12 @@
 class Admin::CouponsController < Admin::AdminController
-	respond_to :html
+  respond_to :html
 
-	def index
+  def index
     @coupon = Coupon.new
     # @coupons = Coupon.all.group_by(&:user_id)
     @applied_coupons = CouponUsage.all
     @expired_coupons = Coupon.invalid
-	end
+  end
 
   def create_coupon
     params[:coupon][:code].upcase!
