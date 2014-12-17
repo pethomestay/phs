@@ -1,9 +1,12 @@
 class Message < ActiveRecord::Base
+  include ShortMessagesHelper
+
   belongs_to :mailbox
   belongs_to :user
 
   # after_create :enquiry_response_message
   after_create :mark_mailbox_unread
+  after_create :sms_guest_of_host_response, if: :first_host_response?
 
   # def enquiry_response_message
   #   if mailbox.booking.blank? && (mailbox.messages.size <= 2) && (user == mailbox.host_mailbox) && (mailbox.messages.first.user == mailbox.guest_mailbox)
@@ -16,6 +19,15 @@ class Message < ActiveRecord::Base
   end
 
   private
+
+  def first_host_response?
+    mailbox.messages.where(user_id: mailbox.host_mailbox_id).count == 1
+  end
+
+  def sms_guest_of_host_response
+    send_sms to: mailbox.guest_mailbox,
+      text: 'A Host has responded to your PetHomeStay Enquiry! Log in via mobile to view it in your Inbox!'
+  end
 
   def mark_mailbox_unread
     mailbox = self.mailbox
