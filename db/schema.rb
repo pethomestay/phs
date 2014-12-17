@@ -365,6 +365,7 @@ ActiveRecord::Schema.define(:version => 20141216235017) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.integer  "braintree_customer_id"
+    t.boolean  "opt_out_sms",            :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

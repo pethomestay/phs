@@ -76,13 +76,4 @@ class Mailbox < ActiveRecord::Base
     end
     self.save!
   end
-
-  def read_for(current_user)
-    if current_user == guest_mailbox
-      self.host_read = false
-    elsif current_user == host_mailbox
-      self.guest_read = false
-    end
-    self.save!
-  end
 end
