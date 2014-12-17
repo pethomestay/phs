@@ -115,7 +115,6 @@ PetHomestay::Application.routes.draw do
     resources :pets
     resources :analytics
     resources :users
-    resources :accounts
     resources :coupons, only: [:index] do
       post :create_coupon, :on => :collection
       post :expire_coupon, :on => :collection
