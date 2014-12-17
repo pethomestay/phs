@@ -24,6 +24,8 @@ class Pet < ActiveRecord::Base
     :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
+  before_validation :strip_personalities
+
   def pet_age
     if self.date_of_birth.present?
       diff = Date.today.year - self.date_of_birth.year
@@ -89,12 +91,13 @@ class Pet < ActiveRecord::Base
     size.title if size_id
   end
 
-	def any_dislikes?
-		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
-	end
-
   private
+
+  def strip_personalities
+    self.personalities.delete('') if self.personalities.present?
+  end
+
   def at_least_three_personalities
-    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? and personalities.reject(&:empty?).count < 3
+    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? && personalities.count < 3
   end
 end
