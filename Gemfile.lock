@@ -438,7 +438,6 @@ DEPENDENCIES
   nested_form
   net-scp (= 1.2.1)
   newrelic_rpm
-  nokogiri (= 1.6.2.1)
   oauth2
   omniauth-facebook
   owlcarousel-rails
