@@ -41,12 +41,10 @@ dl.dl-horizontal
       | N/A
   dt Is Active?
   dd= @homestay.active
+  dt Emergency sits
+  dd= @homestay.emergency_sits?
   dt For charity?
   dd= @homestay.for_charity
-
-- if @homestay.emergency_sits?
-  p
-    strong Available for emergency sits
 
 table.pictures
   caption Pictures
