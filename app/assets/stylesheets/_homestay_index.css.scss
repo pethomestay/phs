@@ -5,10 +5,12 @@ $search-field-height: 40px;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   background-color: #5cc1c0;
-  color: black;
-  border-radius:0;
-  margin-right: 15px; 
-  width: 125px;
+  height: 80px;
+  border-radius: 75px;
+  padding: 29px 22px 0 22px;
+  color: #434343;
+  margin-right: 15px;
+  text-align: center;
 }
 
 .pagination > li:last-child > a:hover, .pagination > li:last-child > span:hover {
@@ -19,10 +21,12 @@ $search-field-height: 40px;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   background-color: #5cc1c0;
-  color: black; 
-  border-radius:0;
-  margin-left:15px;
-  width: 125px; 
+  height: 80px;
+  border-radius: 75px;
+  padding: 29px 22px 0 22px;
+  color: #434343;
+  margin-left: 15px;
+  text-align: center;
 }
 
 .pagination > li:first-child > a:hover, .pagination > li:first-child > span:hover {
