@@ -4,10 +4,14 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :set_instance_vars, only: [:edit]
 
   def update
-    @user = User.find(current_user.id)
+    @user = current_user
 
-    successfully_updated = if @user.needs_password?
-                             @user.update_with_password(params[:user])
+    successfully_updated = if @user.needs_password? && @user.valid_password?(params[:user][:current_password])
+                           # Hack for update_attributes.
+                           params[:user].delete("current_password")
+                           params[:user].delete(:password) if params[:user][:password].empty?
+                           params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].empty?
+                           @user.update_attributes(params[:user])
                            else
                              # remove the virtual current_password attribute update_without_password
                              # doesn't know how to ignore it
