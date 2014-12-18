@@ -1,3 +1,63 @@
+/* dark color overrides */
+ 
+.chzn-container .chzn-results li {
+  color: #000;   
+}
+.chzn-container .chzn-drop, .chzn-container-single .chzn-single {
+  background-color: #fff;
+  color: #000;
+}
+/* Some IE 7-9 fun with this next one - filter likes to override background */
+.chzn-container-single .chzn-single {
+  background-color: #fff;
+  background-image: none;
+  background: #fff none top left no-repeat;
+  filter: none;
+  border: 1px solid #ccc;
+  display: block;
+  height: 30px;
+}
+.chzn-container .chzn-drop {
+  border: 1px solid #ccc;    
+}
+.chzn-container-single .chzn-single div {
+  background-image: -webkit-gradient(linear, left bottom, left top, 
+    color-stop(0, #fff), color-stop(0.6, #fff));
+  background-image: -webkit-linear-gradient(center bottom, #fff 0%, #fff 60%);
+  background-image: -moz-linear-gradient(center bottom, #fff 0%, #fff 60%);
+  background-image: -o-linear-gradient(bottom, #fff 0%, #fff 60%);
+  background-image: -ms-linear-gradient(top, #fff 0%,#fff 60%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', 
+    endColorstr='#fff',GradientType=0 );
+  background-image: linear-gradient(top, #fff 0%,#fff 60%);
+  border-left: 1px solid #ccc;
+}
+.chzn-container-active .chzn-single-with-drop {
+  box-shadow: none; 
+}
+.chzn-container .chzn-results .highlighted {
+  background: #149bdf;
+  color: #fff;
+}
+.chzn-container .chzn-results .no-results {
+  background: #fff;
+}
+.chzn-container .chzn-results li em {
+  background: none;
+}
+.table th {
+   text-align: center;   
+}
+.table td {
+   text-align: center;   
+}
+.pet-trash {
+  color:#c4c4c4; 
+  font-size:21pt;  
+}
+.pet-trash:hover {
+  color:#ec5c3b; 
+}
 .pet-panel {
   // index
   table tbody tr td {
@@ -17,11 +77,54 @@
     cursor: pointer;
     margin-left: 20px;
   }
+  .pet_accordian {
+    width: 100%;
+    padding: 0;
+    display:block;
+    min-height:30px;
+    cursor:pointer;
+  }
+  .pet_accordian_legend {
+     font-size: 16pt;
+     display: inline-block;
+     float: left;
+  }
+  .pet_accordian_label {
+    padding-left: 15px;
+    float: left;
+    padding-top: 6px;;
+  }
+  .pet_accordian_image {
+    float: right;
+    font-size: 16pt;
+  }
+  .pet_section_scrollable {
+    overflow-y:auto;
+  }
+  .slider.slider-horizontal{
+    width:100% !important;
+    height:30px !important;
+  }
+  .chzn-container.chzn-container-single {
+    width:100% !important;
+  }
+  .pet_options_section {
+    padding:15px;
+  }
+  .pet_options_section:hover {
+     background-color: #f5f5f5 
+  }
+  @media screen and (max-width:500px) {
+     .pet_label { display:none }
+  }
+  @media screen and (max-width:1600px) {
+     .pet_label_2 { display:none }
+  }  
+  .line_section {
+    margin: 10px 0 10px 0
+  }
   .pet_personalities label.checkbox {
     padding-bottom: 10px;
-  }
-  .slider {
-    margin-left: 30px;
   }
   .slider-labels {
     margin-top: -20px;

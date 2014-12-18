@@ -10,6 +10,10 @@ class ReferenceData::Size
     [SMALL, MEDIUM, LARGE, GIANT]
   end
 
+  def self.all_titles
+    [SMALL.title, MEDIUM.title, LARGE.title, GIANT.title]
+  end
+
   def self.find(id)
     raise ActiveRecord::RecordNotFound.new unless id <=  all.length
     all[id - 1]

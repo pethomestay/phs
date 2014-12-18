@@ -15,10 +15,26 @@ dl.dl-horizontal
   dd= @homestay.is_professional?
   dt Address
   dd= @homestay.address_1
+  dt Pet Sizes
+  dd
+    - if @homestay.pet_sizes.present?
+      = @homestay.pet_sizes.join(', ')
+    - else
+      | N/A
+  dt Favourite Breeds
+  dd
+    - if @homestay.favorite_breeds.present?
+      = @homestay.favorite_breeds.join(', ')
+    - else
+      | N/A
   dt Is Active?
   dd= @homestay.active
   dt For charity?
   dd= @homestay.for_charity
+
+- if @homestay.emergency_sits?
+  p
+    strong Available for emergency sits
 
 table.pictures
   caption Pictures

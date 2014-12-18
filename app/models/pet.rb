@@ -18,10 +18,13 @@ class Pet < ActiveRecord::Base
 
   serialize :personalities, Array
 
-  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id, :pet_age, :sex_id, :energy_level,
-    :personalities, :emergency_contact_name, :emergency_contact_phone, :vet_name, :vet_phone,
-    :council_number, :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
+  attr_accessible :name, :pet_type_id, :other_pet_type, :breed, :size_id,
+    :pet_age, :sex_id, :energy_level, :personalities, :emergency_contact_name,
+    :emergency_contact_phone, :vet_name, :vet_phone, :council_number,
+    :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
+
+  before_validation :strip_personalities
 
   def pet_age
     if self.date_of_birth.present?
@@ -88,12 +91,13 @@ class Pet < ActiveRecord::Base
     size.title if size_id
   end
 
-	def any_dislikes?
-		self.dislike_loneliness? || self.dislike_children? || self.dislike_animals? || self.dislike_people?
-	end
-
   private
+
+  def strip_personalities
+    self.personalities.delete('') if self.personalities.present?
+  end
+
   def at_least_three_personalities
-    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? and personalities.reject(&:empty?).count < 3
+    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? && personalities.count < 3
   end
 end

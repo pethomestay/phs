@@ -1,12 +1,12 @@
 class Admin::BookingsController < Admin::AdminController
   include BookingsHelper
-	respond_to :html
+  respond_to :html
 
-	def index
+  def index
     @coupon_payout_requests = CouponPayout.unpaid
     @bookings = Booking.all.select {|b| b.transaction.present? || b.payment.present? }.select {|b| b.state == "finished_host_accepted"}.sort_by(&:created_at).reverse
-		respond_with(:admin, @coupon_payout_requests, @bookings)
-	end
+    respond_with(:admin, @coupon_payout_requests, @bookings)
+  end
 
   def host_cancel
     @booking = Booking.find(params[:booking_id])
@@ -31,11 +31,11 @@ class Admin::BookingsController < Admin::AdminController
     return redirect_to admin_transactions_path
   end
 
-	def reconciliations_file
-		@bookings = Booking.finished_and_host_accepted_or_host_paid
-		respond_to do |format|
-			format.csv { send_data @bookings.to_csv }
-		end
+  def reconciliations_file
+    @bookings = Booking.finished_and_host_accepted_or_host_paid
+    respond_to do |format|
+      format.csv { send_data @bookings.to_csv }
+    end
   end
 
   def reset_booking_state

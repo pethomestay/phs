@@ -50,8 +50,7 @@ class Guest::PetsController < Guest::GuestController
   # DELETE
   def destroy
     @pet = current_user.pets.find(params[:id])
-    pet_name = @pet.name
     @pet.destroy
-    redirect_to guest_pets_path, alert: "#{pet_name} has been removed from your list of pets."
+    redirect_to guest_pets_path, alert: "#{ @pet.name } has been removed from your list of pets."
   end
 end
