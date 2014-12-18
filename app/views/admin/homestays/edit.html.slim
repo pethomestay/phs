@@ -1,7 +1,6 @@
 h1 Editing Homestay
 
 = simple_form_for([:admin, @homestay], html: {class: 'form-horizontal', multipart: true}) do |f|
-  = f.error_notification
 
   = f.input :title
   / These fields are commented out because we may not want admin to change these

@@ -46,6 +46,27 @@ class Homestay < ActiveRecord::Base
   validates_length_of :title, maximum: 50
   validates :cost_per_night, presence: true,
     numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
+  validates :remote_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'remote_price.present?'
+  validates :pet_walking_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'pet_walking_price.present?'
+  validates :pet_grooming_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'pet_grooming_price.present?'
+  validates :visits_price, presence: true, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'visits_radius.present?'
+  validates :visits_radius, presence: true, numericality: {
+    greater_than_or_equal_to: 0, only_integer: true
+  }, if: 'visits_price.present?'
+  validates :delivery_price, presence: true, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'delivery_radius.present?'
+  validates :delivery_radius, presence: true, numericality: {
+    greater_than_or_equal_to: 0, only_integer: true
+  }, if: 'delivery_price.present?'
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
