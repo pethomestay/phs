@@ -2,7 +2,6 @@ class BookingsController < ApplicationController
   include BookingsHelper
   before_filter :authenticate_user!
   before_filter :homestay_required, only: [:index, :new]
-  before_filter :secure_pay_response, only: :result
 
   def index
     @bookings = current_user.bookees.valid_host_view_booking_states
@@ -24,7 +23,7 @@ class BookingsController < ApplicationController
     return redirect_to root_path, :alert => "Sorry no booking found" if @booking.nil?
     @host_view = @booking.bookee == current_user
     if !@host_view
-      if current_user.used_coupons.any? && current_user.admin?
+      if current_user.used_coupons.any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
       end
       @booking.update_attribute(:amount, @booking.calculate_amount) # Re-do calculations for all future transactions because remove CC surcharge
@@ -85,7 +84,7 @@ class BookingsController < ApplicationController
         end
       end
     else # Guest booking modifications (or payment)
-      if current_user.used_coupons.merge(CouponUsage.unused).any? && current_user.admin?
+      if current_user.used_coupons.merge(CouponUsage.unused).any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
         payment_amount = (@booking.amount - @coupon.discount_amount).to_s
       else
@@ -333,38 +332,12 @@ class BookingsController < ApplicationController
     end
   end
 
-
-
   private
-
   def homestay_required
     if params[:enquiry_id].blank? && params[:homestay_id].blank?
-      return redirect_to my_account_path, alert: 'You are not authorised to make this request!'
+      return redirect_to guest_path, alert: 'You are not authorised to make this request!'
     end
     @enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
     @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
-  end
-
-  def secure_pay_response
-    invalid_response = %w(timestamp summarycode refid fingerprint restext rescode txnid preauthid)
-      .inject(false) { |boolean, key| boolean || params[key].blank? }
-    return redirect_to my_account_path, alert: 'This transaction is not authorized' if invalid_response
-    response = {
-      time_stamp: params['timestamp'],
-      summary_code: params['summarycode'],
-      reference_id: params['refid'],
-      fingerprint: params['fingerprint'],
-
-      card_storage_response_code: params['strescode'],
-      card_number: params['pan'],
-      token: params['token'],
-      card_storage_response_text: params['strestext'],
-
-      response_text: invalid_response ? 'Something has went wrong, please contact support' : params['restext'],
-      response_code: invalid_response ? 'invalid' : params['rescode'],
-      transaction_id: params['txnid'],
-      pre_authorization_id: params['preauthid']
-    }
-    @transaction = Transaction.find(response[:reference_id].split('=')[1]).update_by_response(response)
   end
 end

@@ -32,7 +32,7 @@
       %th Referrer
       %th Code
       %th Used by
-      %th Applied by (booking_id)
+      %th Applied by (braintree_id)
   %tbody
     - if @applied_coupons.any?
       - @applied_coupons.each do |usage|
@@ -40,7 +40,7 @@
           %td= usage.coupon.owner.name
           %td= usage.coupon.code
           %td= usage.user.name
-          %td= usage.booking.present? ? usage.booking.id : "N/A"
+          %td= usage.booking.present? ? usage.booking.payment.braintree_transaction_id : "N/A"
 
 %h1.text-center Expired Coupons
 %table.table.tablesorter

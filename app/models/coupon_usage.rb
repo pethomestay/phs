@@ -9,6 +9,6 @@ class CouponUsage < ActiveRecord::Base
   private
 
   def increment_counter
-    self.coupon.increment(:users_count)
+    self.coupon.increment!(:users_count)
   end
 end

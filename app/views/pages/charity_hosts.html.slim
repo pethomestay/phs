@@ -1,0 +1,53 @@
+.container
+  .page-header
+    h1 Raise Money with PetHomeStay and Help Animals in Need!
+
+  .row
+    .col-xs-12.visible-xs-block.visible-sm-block
+      = image_tag 'charity-hosts/petrescue-cat.png',  class: 'img-responsive',
+        style: 'margin-bottom: 10px;'
+    .col-md-7
+      p
+        strong
+          | Many people feel incredibly passionate about pets and community - so
+          |  PetHomeStay allows them raise money for charity by letting them do what
+          |  they love!
+
+      p
+        | PetHomeStay is proud to support PetRescue, Australia’s leading animal
+        |  adoption platform, by allowing people to nominate themselves as a Charity
+        |  Host.
+
+      p
+        | Charity Hosts will get a special PetRescue logo on their listing to show
+        |  that they are a fund raiser - they also get far more enquiries from
+        |  potential Guests who want to support them!
+
+      p
+        | HomeStays start from just $10, and 100% of fees from their HomeStays go
+        |  straight to charity - so just by looking after their next door
+        |  neighbour’s pet, Hosts can earn money to help those animals in need.
+
+      p
+        | Every Host chooses when and how often they want to pet sit, so it is a
+        |  great way to do something good thats fits in with any pet lovers
+        |  lifestyle.
+
+      p
+        | We at PetHomeStay are incredibly passionate about this cause, so please
+        |  consider becoming a PetHomeStay Charity Host!
+
+      p
+        = link_to 'Check out our FAQ for more details!',
+          'http://support.pethomestay.com/hc/en-us/articles/202808979-Charity-Hosts',
+          style: 'padding-bottom: 15px;'
+
+      - if user_signed_in? && current_user.homestay.blank?
+        = link_to 'BECOME A CHARITY HOST WITH PetHomeStay!',
+          new_host_homestay_path, class: 'btn btn-primary btn-block',
+          style: 'margin-bottom: 10px;'
+
+    .hidden-xs.hidden-sm.col-md-5
+      = image_tag 'charity-hosts/petrescue-cat.png',  class: 'img-responsive'
+      = image_tag 'charity-hosts/petrescue-logo.png', class: 'img-responsive',
+        style: 'margin-top: 10px;'

@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :coupon_usages
   has_many :used_coupons, through: :coupon_usages, source: :coupon
   has_many :owned_coupons, class_name: "Coupon", foreign_key: :user_id
+  has_many :coupon_payouts, dependent: :destroy
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -49,19 +50,19 @@ class User < ActiveRecord::Base
   # Creates the coupon code that users can share with others: First four letters of first name + first letter of last name +
   # custom_discount = nil, custom_credit = nil
   def generate_referral_code(force = false, args = {})
-    return if !force && self.owned_coupons.present?
+    return if !force && self.owned_coupons.any?
     if args[:custom_code]
       final_code = args[:custom_code].upcase
     else
       suggested_code = self.first_name.gsub(/[^a-z]/i, '').slice(0..3).to_s + self.last_name.gsub(/[^a-z]/i, '').slice(0).to_s
       suggested_code += "X"*(5 - suggested_code.length) if suggested_code.length < 5
-      non_unique = Coupon.where("code like ?", suggested_code + "%").count
+      non_unique = Coupon.where("code LIKE ?", "%#{suggested_code.upcase}%").count
       unique_num = non_unique > 0 ? non_unique.to_s : ""
       final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
     end
     discount_amount = args[:custom_discount] || Coupon::DEFAULT_DISCOUNT_AMOUNT
     referrer_amount = args[:custom_credit] || Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT
-    self.owned_coupons.create(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
+    self.owned_coupons.create!(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
     return true
   end
 
@@ -432,8 +433,14 @@ class User < ActiveRecord::Base
     unavailable_dates.uniq
   end
 
-  def update_calendar
-    self.update_attribute(:calendar_updated_at, Date.today)
+  # Expect two params, from & to, both of which are Date objects
+  def is_available?(opts)
+    if self.unavailable_dates.select(:date)
+       .where('date >= ? AND date <= ?', opts[:from], opts[:to]).any?
+      false # Unavailable
+    else
+      true  # Available
+    end
   end
 
   def new_response_rate_in_percent
