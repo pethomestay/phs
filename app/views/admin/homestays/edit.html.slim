@@ -55,12 +55,12 @@ h1 Editing Homestay
     h3 Extra services
     = f.input :pet_walking_price, wrapper_html: {class: 'input-append input-prepend'} do
       .add-on $
-      = f.input_field :pet_walking_price
+      = f.input_field :pet_walking_price, placeholder: 'per hour'
       .add-on .00
     br
     = f.input :pet_grooming_price, wrapper_html: {class: 'input-append input-prepend'} do
       .add-on $
-      = f.input_field :pet_grooming_price
+      = f.input_field :pet_grooming_price, placeholder: 'per hour'
       .add-on .00
   = f.input :active, as: :boolean
 
