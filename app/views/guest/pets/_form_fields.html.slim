@@ -13,7 +13,7 @@ hr.line_section
       = f.input :name, label: 'Pet Name'
       = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
       = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: 'Please specify pet type'
-      = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', data: { placeholder: 'Choose a breed' } }
+      = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Choose a breed' } }
       = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
     div.pet_options_section
       = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
@@ -48,6 +48,9 @@ hr.line_section
 
 coffee:
   $("#section-step-two").slideUp(50)
+
+  $(".chosen-select").chosen
+    max_selected_options: 1
 
   $("#profile_a_accordian_one").on 'click', ->
      if $("#profile_i_accordian_one").hasClass("fa-minus")
