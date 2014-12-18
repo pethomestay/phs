@@ -11,6 +11,7 @@ class Homestay < ActiveRecord::Base
   has_attachments :photos, maximum: 10
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
+  has_many :unavailable_dates, through: :user
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
@@ -43,6 +44,7 @@ class Homestay < ActiveRecord::Base
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
+  # scope :available_for_enquiry, ->(start_date, end_date) {Homestay.active.joins(:unavailable_dates).where("unavailable_dates.date NOT BETWEEN ? and ?", start_date.to_date, end_date.to_date)}
   scope :last_five, order('created_at DESC').limit(5)
 
   geocoded_by :geocoding_address
@@ -66,6 +68,14 @@ class Homestay < ActiveRecord::Base
       :price_per_night => self.cost_per_night,
       :title_is_unique => Homestay.where(:title => self.title).count == 1
       })
+  end
+
+  def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
+    if start_date && end_date
+      Homestay.active.reject {|h| ((start_date.to_date..end_date.to_date).to_a - h.unavailable_dates.collect(&:date)).any? }
+    else
+      Homestay.active
+    end
   end
 
   def to_param

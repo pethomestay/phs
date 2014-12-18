@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     if current_user.validate_code?(params[:user][:coupon_code])
       message = "Thanks, the coupon has been accepted, it will be applied the first time you make a booking"
       cookies[:code] = nil
+      session[:check_for_coupon] = nil
     else
       message = "Sorry, the coupon is not valid"
     end
