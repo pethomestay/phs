@@ -5,7 +5,7 @@ class Search
   include ActiveModel::Conversion
 
   DEFAULT_RADIUS    = 20
-  NUMBER_OF_RESULTS = 10
+  NUMBER_OF_RESULTS = 30
   MAXIMUM_RADIUS    = 50
 
   attr_accessor :provider_types, :within, :sort_by, :country
@@ -59,13 +59,13 @@ class Search
     puts "#{start_time}"
 
     results_list = []
-    search_radius = 2
-    
+    search_radius = 5
+
     # This searches for Homestays, expanding the radius of search by 5km until it reaches 30 results
     while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
       # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
       results_list += Homestay.reject_unavailable_homestays(start_date, end_date).near([@latitude, @longitude], search_radius)
-      search_radius += 2
+      search_radius += 5
     end
 
     search_time = Time.now
@@ -76,7 +76,7 @@ class Search
     results_list = Search.algorithm(results_list)
     sort_time = Time.now
     puts "Time taken for sort= #{(sort_time - search_time).seconds}"
-    return results_list
+    return results_list.uniq
   end
 
   def perform
