@@ -39,6 +39,10 @@
             br
             - if booking.payment.present? || booking.transaction.present?
               = link_to 'VIEW RECEIPT', booking_host_receipt_path(booking), class: 'btn btn-primary right-panel-btn'
+              br
+              - if booking.check_in_date.present? && booking.check_in_date <= Date.today
+                br
+                = link_to 'CANCEL', booking_host_cancellation_path(booking), class: 'btn btn-primary right-panel-btn'
             - else
               = link_to "CUSTOM QUOTE", edit_booking_path(booking), class: 'btn btn-primary right-panel-btn'
             br
@@ -50,5 +54,5 @@
               = link_to 'CANCEL', guest_cancelled_booking_path(booking), class: cancel_classes, id: 'cancel-booking_' + booking.id.to_s
 
 
-      - if !@trips and can_host_request_cancel_any_bookings?
-        = link_to 'Need to cancel a booking?', host_cancellation_bookings_path
+      / - if !@trips and can_host_request_cancel_any_bookings?
+      /  = link_to 'Need to cancel a booking?', host_cancellation_bookings_path

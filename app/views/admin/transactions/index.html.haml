@@ -18,6 +18,7 @@
     %tr
       %td{:colspan => "12", :style => "font-weight:bold;text-align:center;"} BRAINTREE TRANSACTIONS
     - @payments.each do |payment|
+      - next if payment.booking.nil?
       - booking = payment.booking
       - guest = booking.booker
       - host  = booking.bookee

@@ -1,6 +1,24 @@
 $secondary-text-color: #50a19e;
 $search-field-height: 40px;
 
+.search-alert {
+  margin: 0 -15px 0 -15px;
+  border-radius: 0px;
+}
+
+.search_item_container {
+  border: 1px solid #ccc;
+  padding: 15px 15px 0 15px;
+  background: #f9f9f9 !important;
+  box-shadow: 0 12px 12px transparent,0 13px 12px transparent,0 6px 5px #ccc,0 10px 6px transparent,0 25px 10px transparent;
+  opacity: .75;
+} 
+
+.search_item_container:hover {
+  border: 1px solid #5cc1c0;
+  opacity: 1;
+} 
+
 .homestay-index {
   .search-box {
     margin: 0 -15px;
@@ -122,15 +140,12 @@ $search-field-height: 40px;
 
       }
     }
-
     .media {
       margin: 25px 15px;
       background: $grey-light;
       @media (max-width: $screen-xs-max) {
-        padding-top: 15px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin:  0 -10px;
+        padding: 15px 15px 0 15px;
+        margin:  15px -10px;
         &:nth-child(even) {
           background-color: transparent;
         }

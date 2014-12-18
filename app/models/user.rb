@@ -238,6 +238,7 @@ class User < ActiveRecord::Base
     booking.amount = booking.calculate_amount
     booking.host_accepted = nil
     booking.owner_accepted = nil
+    booking.for_charity = homestay.for_charity
     booking.save!
     booking.mailbox.update_attribute(:booking_id, booking.id)
     booking

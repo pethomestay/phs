@@ -9,6 +9,18 @@ dl.dl-horizontal
   dd= @homestay.user.name
   dt Cost per night
   dd= @homestay.cost_per_night
+  dt Pet Walking
+  dd
+    - if @homestay.pet_walking_price.present?
+      = @homestay.pet_walking_price
+    - else
+      | N/A
+  dt Pet Grooming
+  dd
+    - if @homestay.pet_grooming_price.present?
+      = @homestay.pet_grooming_price
+    - else
+      | N/A
   dt Description
   dd= @homestay.description
   dt Is professional

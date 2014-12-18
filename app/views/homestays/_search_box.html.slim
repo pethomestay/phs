@@ -33,12 +33,17 @@
     / # = f.label 'Grooming, walking, training, feeding' do |controls|
     / #   = controls.check_box :is_services, 'Show additional pet services listings'
 
+div.alert.alert-warning.alert-dismissible.fade.in.search-alert role="alert"
+  button.close data-dismiss="alert"
+    span aria-hidden="true" x
+    span.sr-only "Close" 
+  span.strong Please add dates to filter by Christmas and Holiday Availability
 .toggler.hidden-sm.hidden-md.hidden-lg.text-center
   i.fa.fa-caret-down.fa-2x
 
 coffee:
   $ ->
-    $check_in  = $('#search_check_in_date')
+    $check_in  = $('#search_check_in_date')            
     check_in_picker = $check_in.datepicker(
       format: 'dd/mm/yyyy'
       startDate: '0d'
@@ -53,7 +58,7 @@ coffee:
       check_out_picker.update()
       $check_out.focus()
     ).data('datepicker')
-    $check_out = $('#search_check_out_date')
+    $check_out = $('#search_check_out_date') 
     check_out_picker = $check_out.datepicker(
       format: 'dd/mm/yyyy'
       startDate: '0d'
@@ -64,7 +69,9 @@ coffee:
       evt.preventDefault()
       check_out_picker.hide()
       check_in_picker.show()
+      show_notification()
     $('.search_check_out_date .input-group-addon'). on 'click', (evt) ->
       evt.preventDefault()
       check_in_picker.hide()
       check_out_picker.show()
+      show_notification()
