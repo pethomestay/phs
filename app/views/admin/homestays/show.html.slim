@@ -8,8 +8,8 @@ dl.dl-horizontal
   dt Provider
   dd= @homestay.user.name
   dt Cost per night
-  dd= @homestay.cost_per_night
-  dt Pet sitting in Guest's home
+  dd= number_to_currency(@homestay.cost_per_night)
+  dt Guest home sitting
   dd= @homestay.remote_price.present?\
       ? number_to_currency(@homestay.remote_price) : 'N/A'
   dt Pet Walking
