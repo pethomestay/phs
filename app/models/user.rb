@@ -443,36 +443,40 @@ class User < ActiveRecord::Base
     end
   end
 
+  # New response_rate
+  # True or False if Message in Mailbox is responded within 24 hrs
+  # Ideally each mailbox has a score, then aggregate mailbox scores into User
+  # For the time being, use existing response_rate_in_percent
   def new_response_rate_in_percent
 
   end
 
-  def response_rate_in_percent
-    if self.admin?
+  # Original response_rate
+  def response_rate_in_percent(new_version = false)
+    if self.admin? && new_version 
       self.new_response_rate_in_percent
     else
-
-    end
-    # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
-    # Write down total count of fetched host mailboxes.
-    # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
-    # mailbox if none found.
-    # Check if response time is less than 24 hours. Count if it is.
-    mailboxes = self.host_mailboxes.where(created_at: 30.days.ago..24.hours.ago)
-    return nil if mailboxes.blank? # Current user (as a Host) has not received any message
-    total = mailboxes.count
-    count = 0
-    mailboxes.each do |mailbox|
-      host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
-      if host_response.present? # If there exists a response from current user (as a Host)
-        time_diff = host_response.created_at - mailbox.created_at
-        count += 1 if time_diff <= 24.hours
+      # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
+      # Write down total count of fetched host mailboxes.
+      # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
+      # mailbox if none found.
+      # Check if response time is less than 24 hours. Count if it is.
+      mailboxes = self.host_mailboxes.where(created_at: 10000.days.ago..24.hours.ago)
+      return nil if mailboxes.blank? # Current user (as a Host) has not received any message
+      total = mailboxes.count
+      count = 0
+      mailboxes.each do |mailbox|
+        host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
+        if host_response.present? # If there exists a response from current user (as a Host)
+          time_diff = host_response.created_at - mailbox.created_at
+          count += 1 if time_diff <= 24.hours
+        end
       end
+      # calculate response rate in PERCENTAGE
+      score = (count * 100.0 / total).round 0
+      return nil if score == 0 # Hide host responsiveness if the score is 0
+      score
     end
-    # calculate response rate in PERCENTAGE
-    score = (count * 100.0 / total).round 0
-    return nil if score == 0 # Hide host responsiveness if the score is 0
-    score
   end
 
   def mobile_num_legal?
