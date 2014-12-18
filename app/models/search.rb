@@ -59,7 +59,7 @@ class Search
     puts "#{start_time}"
 
     results_list = []
-    search_radius = 5
+    search_radius = 2
 
     # Testing search sort
     if true
@@ -69,7 +69,7 @@ class Search
       while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
         # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
         results_list += Homestay.reject_unavailable_homestays(start_date, end_date).near([@latitude, @longitude], search_radius)
-        search_radius += 5
+        search_radius += 2
       end
     end
 
