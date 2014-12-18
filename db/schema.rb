@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(:version => 20141218025501) do
     t.integer  "booker_id"
     t.integer  "bookee_id"
     t.text     "message"
-    t.string   "pet_name"
-    t.string   "guest_name"
     t.integer  "enquiry_id"
     t.integer  "homestay_id"
     t.date     "check_in_date"
@@ -203,6 +201,9 @@ ActiveRecord::Schema.define(:version => 20141218025501) do
     t.integer  "outdoor_area_id"
     t.boolean  "locked",                            :default => true
     t.boolean  "for_charity",                       :default => false
+    t.text     "pet_sizes"
+    t.text     "favorite_breeds"
+    t.boolean  "emergency_sits"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
@@ -282,24 +283,6 @@ ActiveRecord::Schema.define(:version => 20141218025501) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       :limit => 128
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
-  end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
-
   create_table "transactions", :force => true do |t|
     t.integer  "booking_id"
     t.string   "transaction_id"
@@ -366,6 +349,7 @@ ActiveRecord::Schema.define(:version => 20141218025501) do
     t.string   "facebook_location"
     t.integer  "braintree_customer_id"
     t.decimal  "responsiveness_score"
+    t.boolean  "opt_out_sms",            :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

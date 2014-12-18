@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :accept_house_rules, :accept_terms
 
-  attr_accessible :first_name, :last_name, :email, :mobile_number, :password, :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2, :address_suburb, :address_city, :address_postcode, :address_country, :password_confirmation, :braintree_customer_id, :coupon_code
+  attr_accessible :first_name, :last_name, :email, :mobile_number, :password,
+    :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2,
+    :address_suburb, :address_city, :address_postcode, :address_country,
+    :password_confirmation, :braintree_customer_id, :coupon_code, :opt_out_sms
 
   has_one :homestay
   has_many :pets
