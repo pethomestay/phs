@@ -53,10 +53,6 @@
           %td
             %input.booking_paid_confirm{ type: 'button', value: 'YES' }
             - account = booking.bookee.account
-            - if account.blank?
-              %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
-            - else
-              = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
       - else 
         %tr{ "data-id" => booking.id }
           %td= booking.booker.name.capitalize
@@ -79,10 +75,6 @@
           %td
             %input.booking_paid_confirm{ type: 'button', value: 'YES' }
             - account = booking.bookee.account
-            - if account.blank?
-              %i.icon-exclamation-sign{ hint: 'Payout info has not been entered' }
-            - else
-              = link_to '<i class="icon-eye-open"></i>'.html_safe, admin_account_path(account)
 %hr/
 - if @coupon_payout_requests.any?
   %h1 Coupon Payout Requests
