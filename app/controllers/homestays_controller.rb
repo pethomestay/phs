@@ -1,5 +1,4 @@
 class HomestaysController < ApplicationController
-  require 'will_paginate/array'
   respond_to :html
   before_filter :authenticate_user!, except: [:show, :index, :availability]
 
@@ -13,12 +12,7 @@ class HomestaysController < ApplicationController
     @search = Search.new(params[:search])
     #We are only doing australia, not sure why we are doing the country detect
     @search.country =  'Australia' #request.location.country_code if request.location
-    if current_user.present? && current_user.admin?
-      @homestays = @search.populate_list
-      @homestays = @homestays.paginate(page: params[:page], per_page: 10)
-    else
-      @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
-    end
+    @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
     @title = "Pet care for #{@search.location}"
     gon.push({
       search: @search,
@@ -48,7 +42,7 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
-    gon.push fb_app_id: ( ENV['APP_ID'] || '382802968555135' )
+    gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render layout: 'new_application'
   end
 
