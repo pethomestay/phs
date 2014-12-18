@@ -5,7 +5,7 @@ class Search
   include ActiveModel::Conversion
 
   DEFAULT_RADIUS    = 20
-  NUMBER_OF_RESULTS = 30
+  NUMBER_OF_RESULTS = 10
   MAXIMUM_RADIUS    = 50
 
   attr_accessor :provider_types, :within, :sort_by, :country
