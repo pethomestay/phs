@@ -18,6 +18,16 @@ dl.dl-horizontal
   dt Pet Grooming
   dd= @homestay.pet_grooming_price.present?\
       ? number_to_currency(@homestay.pet_grooming_price): 'N/A'
+  - if @homestay.visits_price.present?
+    dt Visits
+    dd
+      | #{ number_to_currency @homestay.visits_price } up to
+      |  #{ number_to_human(@homestay.visits_radius, units: { unit: 'km' }) }
+  - if @homestay.delivery_price.present?
+    dt Pick Up / Drop Off
+    dd
+      | #{ number_to_currency @homestay.delivery_price } up to
+      |  #{ number_to_human(@homestay.delivery_radius, units: { unit: 'km' }) }
   dt Description
   dd= @homestay.description
   dt Is professional
