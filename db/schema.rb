@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141218013709) do
+ActiveRecord::Schema.define(:version => 20141218045105) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20141218013709) do
     t.decimal  "refund"
     t.boolean  "refunded",         :default => false
     t.date     "cancel_date"
+    t.boolean  "for_charity"
   end
 
   create_table "cards", :force => true do |t|
@@ -350,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20141218013709) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.integer  "braintree_customer_id"
+    t.decimal  "responsiveness_score"
     t.boolean  "opt_out_sms",            :default => false
   end
 
