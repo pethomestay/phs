@@ -207,6 +207,11 @@ ActiveRecord::Schema.define(:version => 20141218045105) do
     t.boolean  "emergency_sits"
     t.decimal  "pet_walking_price"
     t.decimal  "pet_grooming_price"
+    t.decimal  "remote_price"
+    t.decimal  "visits_price"
+    t.decimal  "delivery_price"
+    t.integer  "visits_radius"
+    t.integer  "delivery_radius"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
@@ -351,7 +356,6 @@ ActiveRecord::Schema.define(:version => 20141218045105) do
     t.integer  "age_range_max"
     t.string   "facebook_location"
     t.integer  "braintree_customer_id"
-    t.decimal  "responsiveness_score"
     t.boolean  "opt_out_sms",            :default => false
   end
 

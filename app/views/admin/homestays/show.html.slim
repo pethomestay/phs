@@ -8,45 +8,44 @@ dl.dl-horizontal
   dt Provider
   dd= @homestay.user.name
   dt Cost per night
-  dd= @homestay.cost_per_night
+  dd= number_to_currency(@homestay.cost_per_night)
+  dt Guest home sitting
+  dd= @homestay.remote_price.present?\
+      ? number_to_currency(@homestay.remote_price) : 'N/A'
   dt Pet Walking
-  dd
-    - if @homestay.pet_walking_price.present?
-      = @homestay.pet_walking_price
-    - else
-      | N/A
+  dd= @homestay.pet_walking_price.present?\
+      ? number_to_currency(@homestay.pet_walking_price) : 'N/A'
   dt Pet Grooming
-  dd
-    - if @homestay.pet_grooming_price.present?
-      = @homestay.pet_grooming_price
-    - else
-      | N/A
+  dd= @homestay.pet_grooming_price.present?\
+      ? number_to_currency(@homestay.pet_grooming_price): 'N/A'
+  - if @homestay.visits_price.present?
+    dt Visits
+    dd
+      | #{ number_to_currency @homestay.visits_price } up to
+      |  #{ number_to_human(@homestay.visits_radius, units: { unit: 'km' }) }
+  - if @homestay.delivery_price.present?
+    dt Pick Up / Drop Off
+    dd
+      | #{ number_to_currency @homestay.delivery_price } up to
+      |  #{ number_to_human(@homestay.delivery_radius, units: { unit: 'km' }) }
   dt Description
   dd= @homestay.description
-  dt Is professional
+  dt Is professional?
   dd= @homestay.is_professional?
   dt Address
   dd= @homestay.address_1
   dt Pet Sizes
-  dd
-    - if @homestay.pet_sizes.present?
-      = @homestay.pet_sizes.join(', ')
-    - else
-      | N/A
+  dd= @homestay.pet_sizes.present?\
+      ? @homestay.pet_sizes.join(', ') : 'N/A'
   dt Favourite Breeds
-  dd
-    - if @homestay.favorite_breeds.present?
-      = @homestay.favorite_breeds.join(', ')
-    - else
-      | N/A
+  dd= @homestay.favorite_breeds.present?\
+      ? @homestay.favorite_breeds.join(', ') : 'N/A'
   dt Is Active?
   dd= @homestay.active
+  dt Emergency sits?
+  dd= @homestay.emergency_sits?
   dt For charity?
   dd= @homestay.for_charity
-
-- if @homestay.emergency_sits?
-  p
-    strong Available for emergency sits
 
 table.pictures
   caption Pictures
