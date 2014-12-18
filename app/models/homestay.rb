@@ -11,7 +11,8 @@ class Homestay < ActiveRecord::Base
   has_attachments :photos, maximum: 10
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
-  accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :pictures, reject_if: :all_blank,
+    allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
   attr_accessible :title, :description, :cost_per_night, :property_type_id,
@@ -30,17 +31,21 @@ class Homestay < ActiveRecord::Base
   serialize :pet_sizes, Array
   serialize :favorite_breeds, Array
 
-  validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
+  validates_presence_of :address_1, :address_suburb, :address_city,
+    :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
-  validates_inclusion_of :property_type_id, :in => ReferenceData::PropertyType.all.map(&:id)
-  validates_inclusion_of :outdoor_area_id, :in => ReferenceData::OutdoorArea.all.map(&:id)
+  validates_inclusion_of :property_type_id,
+    in: ReferenceData::PropertyType.all.map(&:id)
+  validates_inclusion_of :outdoor_area_id,
+    in: ReferenceData::OutdoorArea.all.map(&:id)
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
-  validates :cost_per_night, presence: true, numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
+  validates :cost_per_night, presence: true,
+    numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
@@ -86,7 +91,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def need_parental_consent?
-    user && user.date_of_birth.present? and user.date_of_birth > 18.years.ago.to_date
+    user && user.date_of_birth.present? && user.date_of_birth > 18.years.ago.to_date
   end
 
   def emergency_preparedness?
