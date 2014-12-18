@@ -15,8 +15,10 @@ class UsersController < ApplicationController
   end
 
   # Clears session variable
-  def decline_coupon_page
-
-
+  def decline_coupon
+    session[:check_for_coupon] = nil
+    respond_to do |format|
+      format.json { head :ok }
+    end
   end
 end

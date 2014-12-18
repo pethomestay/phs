@@ -433,6 +433,16 @@ class User < ActiveRecord::Base
     unavailable_dates.uniq
   end
 
+  # Expect two params, from & to, both of which are Date objects
+  def is_available?(opts)
+    if self.unavailable_dates.select(:date)
+       .where('date >= ? AND date <= ?', opts[:from], opts[:to]).any?
+      false # Unavailable
+    else
+      true  # Available
+    end
+  end
+
   def response_rate_in_percent
     # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
     # Write down total count of fetched host mailboxes.
