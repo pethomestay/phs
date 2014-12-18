@@ -10,7 +10,8 @@ $search-field-height: 40px;
   border: 1px solid #ccc;
   padding: 15px 15px 0 15px;
   background: #f9f9f9 !important;
-  box-shadow: 0 12px 12px transparent,0 13px 12px transparent,0 6px 5px #ccc,0 10px 6px transparent,0 25px 10px transparent;
+  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,.35);
+  box-shadow: 0 1px 6px rgba(0,0,0,.35);
   opacity: .75;
 } 
 
