@@ -24,7 +24,8 @@ class Homestay < ActiveRecord::Base
                   :pet_walking, :accept_liability, :parental_consent,
                   :accept_liability, :active, :for_charity, :pet_sizes,
                   :favorite_breeds, :emergency_sits, :pet_walking_price,
-                  :pet_grooming_price
+                  :pet_grooming_price, :remote_price, :visits_price,
+                  :delivery_price, :visits_radius, :delivery_radius
 
   serialize :pet_sizes, Array
   serialize :favorite_breeds, Array
