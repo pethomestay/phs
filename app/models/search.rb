@@ -42,7 +42,7 @@ class Search
   end
 
   def sort_by
-    @sort_by ||= 'distance'
+    @sort_by ||= 'recommended'
   end
 
   def within
@@ -74,7 +74,7 @@ class Search
     
     # Sorting by average rating
     # results_list.uniq!.sort_by! {|h| h.user.average_rating.present? ? h.user.average_rating : 0}.reverse! if results_list.any?
-    results_list = Search.algorithm(results_list)
+    results_list = Search.algorithm(results_list) if @sort_by == "recommended"
     sort_time = Time.now
     puts "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list.uniq
