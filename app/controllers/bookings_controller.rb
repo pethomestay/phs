@@ -302,9 +302,9 @@ class BookingsController < ApplicationController
       render 'host_cancel'
     else
       # ensure that we can search for this status when showing the admin notifications
-      @booking.update_column(:state, 'host_requested_cancellation')
       @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
+      @booking.update_column(:state, 'host_requested_cancellation')
       flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
       return redirect_to host_messages_path
     end
