@@ -185,6 +185,14 @@ class Homestay < ActiveRecord::Base
     outdoor_area.title if outdoor_area_id
   end
 
+  def energy_levels
+    levels = []
+    energy_level_ids.each do |id|
+      levels << ReferenceData::EnergyLevel.find(id)
+    end
+    levels
+  end
+
   def location
     if self.address_suburb != self.address_city # Avoid "Melbourne, Melbourne"
       "#{address_suburb}, #{address_city}"

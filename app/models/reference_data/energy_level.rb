@@ -1,23 +1,28 @@
 class ReferenceData::EnergyLevel
-  attr_accessor :id, :title
+  attr_reader :id, :title
 
-  def initialize(id, title)
-    @id    = id
-    @title = title
+  @@all = []
+
+  def initialize(opts={})
+    @id    = opts[:id]
+    @title = opts[:title]
+    @@all << self
   end
 
   def self.all
-    [LOW, LOW_MEDIUM, MEDIUM, HIGH_MEDIUM, HIGH]
+    @@all
   end
 
   def self.find(id)
-    raise ActiveRecord::RecordNotFound.new unless id <=  all.length
-    all[id - 1]
+    @@all.each do |energy_level|
+      return energy_level.title if energy_level.id == id
+    end
+    raise ActiveRecord::RecordNotFound.new
   end
-
-  LOW         = ReferenceData::EnergyLevel.new(1, 'Low')
-  LOW_MEDIUM  = ReferenceData::EnergyLevel.new(2, 'Low Medium')
-  MEDIUM      = ReferenceData::EnergyLevel.new(3, 'Medium')
-  HIGH_MEDIUM = ReferenceData::EnergyLevel.new(4, 'High Medium')
-  HIGH        = ReferenceData::EnergyLevel.new(5, 'High')
 end
+
+LOW         = ReferenceData::EnergyLevel.new id: '1', title: 'Low'
+LOW_MEDIUM  = ReferenceData::EnergyLevel.new id: '2', title: 'Low Medium'
+MEDIUM      = ReferenceData::EnergyLevel.new id: '3', title: 'Medium'
+HIGH_MEDIUM = ReferenceData::EnergyLevel.new id: '4', title: 'High Medium'
+HIGH        = ReferenceData::EnergyLevel.new id: '5', title: 'High'
