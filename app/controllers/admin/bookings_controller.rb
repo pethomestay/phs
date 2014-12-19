@@ -29,6 +29,7 @@ class Admin::BookingsController < Admin::AdminController
     else
       canceled(params[:booking_id], false)
     end
+    @booking.update_column(:state, "guest_cancelled")
     return redirect_to admin_transactions_path
   end
 

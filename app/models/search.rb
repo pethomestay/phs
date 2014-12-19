@@ -64,7 +64,7 @@ class Search
     while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
       # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
       results_list += Homestay.active.near([@latitude, @longitude], search_radius)
-      results_list.reject {|h| ((start_date..end_date).to_a - h.unavailable_dates.collect(&:date)).any?} if start_date && end_date
+      results_list.reject! {|h| ((start_date..end_date).to_a - h.unavailable_dates.collect(&:date)).any?} if start_date && end_date
       search_radius += 2
     end
 
