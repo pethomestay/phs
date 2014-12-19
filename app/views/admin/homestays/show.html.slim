@@ -34,12 +34,12 @@ dl.dl-horizontal
   dd= @homestay.is_professional?
   dt Address
   dd= @homestay.address_1
-  dt Pet Sizes
-  dd= @homestay.pet_sizes.present?\
-      ? @homestay.pet_sizes.join(', ') : 'N/A'
-  dt Favourite Breeds
-  dd= @homestay.favorite_breeds.present?\
-      ? @homestay.favorite_breeds.join(', ') : 'N/A'
+  - if @homestay.pet_sizes.any?
+    dt Pet Sizes
+    dd= @homestay.pet_sizes.join(', ')
+  - if @homestay.favorite_breeds.any?
+    dt Favourite Breeds
+    dd= @homestay.favorite_breeds.join(', ')
   - @homestay.energy_levels.any?
     dt Energy Levels
     dd= @homestay.energy_levels.join(', ')
