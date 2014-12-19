@@ -18,7 +18,6 @@
     = f.button :submit, 'SEARCH', class: 'btn btn-primary search'
     .sort-order
       span.sort-by Sort by
-      - binding.pry
       label.radio-inline
         = radio_button :search, :sort_by, 'recommended'
         | Recommended
