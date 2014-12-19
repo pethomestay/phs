@@ -26,10 +26,12 @@ class Homestay < ActiveRecord::Base
                   :accept_liability, :active, :for_charity, :pet_sizes,
                   :favorite_breeds, :emergency_sits, :pet_walking_price,
                   :pet_grooming_price, :remote_price, :visits_price,
-                  :delivery_price, :visits_radius, :delivery_radius
+                  :delivery_price, :visits_radius, :delivery_radius,
+                  :energy_level_ids
 
-  serialize :pet_sizes, Array
-  serialize :favorite_breeds, Array
+  serialize :pet_sizes,        Array
+  serialize :favorite_breeds,  Array
+  serialize :energy_level_ids, Array
 
   validates_presence_of :address_1, :address_suburb, :address_city,
     :address_country, :title, :description
@@ -81,6 +83,7 @@ class Homestay < ActiveRecord::Base
   before_save :sanitize_description
   before_save :strip_pet_sizes
   before_save :strip_favorite_breeds
+  before_save :strip_energy_level_ids
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
@@ -236,6 +239,10 @@ class Homestay < ActiveRecord::Base
 
   def strip_favorite_breeds
     self.favorite_breeds.delete('') if self.favorite_breeds.present?
+  end
+
+  def strip_energy_level_ids
+    self.energy_level_ids.delete('') if self.energy_level_ids.present?
   end
 
   def set_country_Australia
