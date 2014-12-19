@@ -10,6 +10,9 @@ h1 Editing Homestay
   = f.input :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes
   = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Chooes one or more breeds' } }
 
+  = f.input :energy_level_ids, collection: ReferenceData::EnergyLevel.all,
+    label: 'Energy of pets Host is willing to look after', as: :check_boxes,
+    checked: f.object.energy_level_ids
   = f.input :for_charity
   = f.input :emergency_sits
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
