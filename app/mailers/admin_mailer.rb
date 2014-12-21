@@ -22,6 +22,6 @@ class AdminMailer < ActionMailer::Base
     @user = @booking.booker
     @transaction = result
     email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
-    mail(from: email_with_name, subject: "A Guest (#{@user.first_name} #{@user.last_name}) has an issue with a BRAINTREE Payment: #{transaction}")
+    mail(from: email_with_name, subject: "A Guest (#{@user.first_name} #{@user.last_name}) has an issue with a BRAINTREE Payment: #{@transaction}")
   end
 end

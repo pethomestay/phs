@@ -17,10 +17,15 @@
           i.fa.fa-calendar.fa-lg
     = f.button :submit, 'SEARCH', class: 'btn btn-primary search'
     .sort-order
-      span.sort-by Sort by
+      - if current_user.present? && current_user.admin?
+        span.sort-by Sort by
+        label.radio-inline
+          = radio_button :search, :sort_by, 'recommended'
+        | Recommended
       label.radio-inline
         = radio_button :search, :sort_by, 'distance'
         | Distance
+      / Remove this when you are ready to turn search live for all users
       label.radio-inline
         = radio_button :search, :sort_by, 'cost_per_night'
         | Cost

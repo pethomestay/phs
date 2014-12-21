@@ -40,11 +40,43 @@ class Search
   end
 
   def sort_by
+    # @sort_by ||= 'recommended'
     @sort_by ||= 'distance'
   end
 
   def within
     @within ||= DEFAULT_RADIUS
+  end
+
+  def populate_list
+    perform_geocode unless @latitude.present? && @longitude.present?
+    start_date = @check_in_date
+    end_date   = @check_out_date
+    search_dates = start_date && end_date ? (start_date..end_date).to_a : []
+
+    # Logging code to check how long a query takes
+    start_time = Time.now
+    puts "#{start_time}"
+
+    results_list = []
+    search_radius = 2
+    # This searches for Homestays, expanding the radius of search by 5km until it reaches 30 results
+    while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
+      # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
+      results_list += Homestay.active.near([@latitude, @longitude], search_radius)
+      results_list.reject! { |h| (h.unavailable_dates.collect(&:date) & (search_dates)).any? } if search_dates.any?
+      search_radius += 2
+    end
+
+    search_time = Time.now
+    puts "Time taken for search= #{(search_time - start_time).seconds}"
+
+    # Sorting by average rating
+    # results_list.uniq!.sort_by! {|h| h.user.average_rating.present? ? h.user.average_rating : 0}.reverse! if results_list.any?
+    results_list = Search.algorithm(results_list) if @sort_by == "recommended"
+    sort_time = Time.now
+    puts "Time taken for sort= #{(sort_time - search_time).seconds}"
+    return results_list.uniq
   end
 
   def perform

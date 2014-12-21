@@ -18,6 +18,7 @@ class Admin::BookingsController < Admin::AdminController
     #we want to sent to the guest to let them know their booking is canceled
     flash[:notice] = "Booking with id: #{@booking.id}, has been cancelled by host"
     AdminCancelledBookingJob.new.async.perform(params[:booking_id])
+    @booking.update_column(:state, "host_cancelled")
     return redirect_to admin_transactions_path
   end
 
@@ -28,6 +29,7 @@ class Admin::BookingsController < Admin::AdminController
     else
       canceled(params[:booking_id], false)
     end
+    @booking.update_column(:state, "guest_cancelled")
     return redirect_to admin_transactions_path
   end
 
