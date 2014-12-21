@@ -41,16 +41,27 @@ $search-field-height: 40px;
 .search_item_container {
   border: 1px solid #ccc;
   padding: 15px;
-  background: #f9f9f9 !important;
+  background: #fff !important;
   -webkit-box-shadow: 0 1px 6px rgba(0,0,0,.35);
   box-shadow: 0 1px 6px rgba(0,0,0,.35);
-  opacity: .75;
 } 
 
 .search_item_container:hover {
+  background: #f4f4f4 !important;
   border: 1px solid #5cc1c0;
-  opacity: 1;
 } 
+
+.search_item_profile_picture {
+  border: 1px solid #eee;
+  padding: 0 !important;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+.search_item_media_body {
+  padding-left: 15px !important;
+  width: 100%;
+}
 
 .homestay-index {
   .search-box {
@@ -144,15 +155,7 @@ $search-field-height: 40px;
       }
 
       .for_charity {
-        float: right;
         width: 50px;
-
-        @media (min-width: $screen-sm-min) {
-          width: 80px;
-          position: relative;
-          right: 10px;
-          top: 10px;
-        }
       }
 
       .title {
@@ -165,7 +168,8 @@ $search-field-height: 40px;
         strong {
           background: $orange;
           color: $grey-lighter;
-          padding: 2px 5px;
+          padding: 7px;
+          font-size:16px;
           @media (max-width: $screen-xs-max) {
             float: right;
           }
