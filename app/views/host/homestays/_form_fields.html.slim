@@ -115,6 +115,46 @@ css:
     = f.input :accept_liability, as: :hidden, input_html: { value: 1 }
     small.help-block I understand that by creating this listing, depending my home state or council laws, I may be liable for any damages or 3rd party events which may happen while I am in control of other's pets. I accept these risks or have suitable insurance to cover these events.
 
+  / New Fields
+  = f.input :pet_sizes, collection: ReferenceData::Size.all_titles,
+    label: 'Size Pets You Accept', as: :check_boxes
+  = f.input :energy_level_ids, collection: ReferenceData::EnergyLevel.all,
+    label: 'Energy of pets you are willing to look after', as: :check_boxes,
+    checked: f.object.energy_level_ids
+  = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Chooes one or more breeds' } }
+  = f.input :supervision_id, collection: ReferenceData::Supervision.all,
+    as: :radio_buttons
+  = f.input :remote_price, label: 'Pet sitting in other peoples home' do
+    .input-group
+      .input-group-addon $
+      = f.input_field :remote_price, placeholder: 'per 24 hours'
+  = f.input :pet_walking_price do
+    .input-group
+      .input-group-addon $
+      = f.input_field :pet_walking_price, placeholder: 'per hour'
+  = f.input :pet_grooming_price do
+    .input-group
+      .input-group-addon $
+      = f.input_field :pet_grooming_price, placeholder: 'per hour'
+  = label_tag 'Visits'
+  .form-group
+    .input-group
+      .input-group-addon $
+      = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
+    .input-group
+      .input-group-addon up to
+      = f.input_field :visits_radius, class: 'span1'
+      .input-group-addon km
+  br
+  = label_tag 'Pick Up / Drop Offs'
+  .form-group
+    .input-group
+      .input-group-addon $
+      = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2'
+    .input-group
+      .input-group-addon up to
+      = f.input_field :delivery_radius, class: 'span1'
+      .input-group-addon km
 
 coffee:
   $ ->
@@ -146,3 +186,6 @@ coffee:
           <% } %>
         </table class="table">
       """
+
+  $('.chosen-select').chosen
+    max_selected_options: 3
