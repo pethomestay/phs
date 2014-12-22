@@ -1,7 +1,6 @@
 h1 Editing Homestay
 
 = simple_form_for([:admin, @homestay], html: {class: 'form-horizontal', multipart: true}) do |f|
-  = f.error_notification
 
   = f.input :title
   / These fields are commented out because we may not want admin to change these
@@ -11,6 +10,9 @@ h1 Editing Homestay
   = f.input :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes
   = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Chooes one or more breeds' } }
 
+  = f.input :energy_level_ids, collection: ReferenceData::EnergyLevel.all,
+    label: 'Energy of pets Host is willing to look after', as: :check_boxes,
+    checked: f.object.energy_level_ids
   = f.input :for_charity
   = f.input :emergency_sits
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
@@ -42,6 +44,8 @@ h1 Editing Homestay
     = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
     = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
     = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+  = f.input :supervision_id, collection: ReferenceData::Supervision.all,
+    as: :radio_buttons
 
   .grouped-checkboxes
     = label_tag "I have", nil, class: 'for-group'
@@ -51,6 +55,39 @@ h1 Editing Homestay
     = f.input :website, label: 'Facebook page or website about your service', input_html: {class: 'span4'}
 
 
+  .extra-services
+    h3 Extra services
+    = f.input :remote_price, label: 'Pet sitting in Guest\'s home', wrapper_html: {class: 'input-prepend'} do
+      .add-on $
+      = f.input_field :remote_price, placeholder: 'per 24 hours'
+    br
+    = f.input :pet_walking_price, wrapper_html: {class: 'input-prepend'} do
+      .add-on $
+      = f.input_field :pet_walking_price, placeholder: 'per hour'
+    br
+    = f.input :pet_grooming_price, wrapper_html: {class: 'input-prepend'} do
+      .add-on $
+      = f.input_field :pet_grooming_price, placeholder: 'per hour'
+    br
+    = label_tag 'Visits'
+    .controls
+      .input-prepend
+        .add-on $
+        = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
+      span style='padding: 0 10px;' up to
+      = f.input_field :visits_radius, class: 'span1'
+      span style='padding: 0 10px;' km
+    br
+    = label_tag 'Pick Up / Drop Offs'
+    .controls
+      .input-prepend
+        .add-on $
+        = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2'
+      span style='padding: 0 10px;' up to
+      = f.input_field :delivery_radius, class: 'span1'
+      span style='padding: 0 10px;' km
+    br
+    br
   = f.input :active, as: :boolean
 
   = f.input :photos, as: :attachinary
@@ -92,4 +129,4 @@ coffee:
       """
 
     $('.chosen-select').chosen
-      max_selected_options: 5
+      max_selected_options: 3

@@ -20,6 +20,7 @@ class Admin::HomestaysController < Admin::AdminController
   def update
     @homestay = Homestay.find_by_slug!(params[:id])
     @homestay.update_attributes(params[:homestay])
+    flash[:errors] = @homestay.errors.full_messages if @homestay.errors.any?
     respond_with(:admin, @homestay)
   end
 

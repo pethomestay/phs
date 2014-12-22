@@ -11,7 +11,8 @@ class Homestay < ActiveRecord::Base
   has_attachments :photos, maximum: 10
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
-  accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :pictures, reject_if: :all_blank,
+    allow_destroy: true
 
   attr_accessor :parental_consent, :accept_liability
   attr_accessible :title, :description, :cost_per_night, :property_type_id,
@@ -23,22 +24,54 @@ class Homestay < ActiveRecord::Base
                   :address_postcode, :pet_feeding, :pet_grooming, :pet_training,
                   :pet_walking, :accept_liability, :parental_consent,
                   :accept_liability, :active, :for_charity, :pet_sizes,
-                  :favorite_breeds, :emergency_sits
+                  :favorite_breeds, :emergency_sits, :pet_walking_price,
+                  :pet_grooming_price, :remote_price, :visits_price,
+                  :delivery_price, :visits_radius, :delivery_radius,
+                  :energy_level_ids, :supervision_id
 
-  serialize :pet_sizes, Array
-  serialize :favorite_breeds, Array
+  serialize :pet_sizes,        Array
+  serialize :favorite_breeds,  Array
+  serialize :energy_level_ids, Array
 
-  validates_presence_of :address_1, :address_suburb, :address_city, :address_country, :title, :description
+  validates_presence_of :address_1, :address_suburb, :address_city,
+    :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
-  validates_inclusion_of :property_type_id, :in => ReferenceData::PropertyType.all.map(&:id)
-  validates_inclusion_of :outdoor_area_id, :in => ReferenceData::OutdoorArea.all.map(&:id)
+  validates_inclusion_of :property_type_id,
+    in: ReferenceData::PropertyType.all.map(&:id)
+  validates_inclusion_of :outdoor_area_id,
+    in: ReferenceData::OutdoorArea.all.map(&:id)
+  validates :supervision_id, numericality: {
+    in: ReferenceData::Supervision.all.map(&:id)
+    }, if: 'supervision_id.present?'
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
-  validates :cost_per_night, presence: true, numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
+  validates :cost_per_night, presence: true,
+    numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
+  validates :remote_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'remote_price.present?'
+  validates :pet_walking_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'pet_walking_price.present?'
+  validates :pet_grooming_price, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'pet_grooming_price.present?'
+  validates :visits_price, presence: true, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'visits_radius.present?'
+  validates :visits_radius, presence: true, numericality: {
+    greater_than_or_equal_to: 0, only_integer: true
+  }, if: 'visits_price.present?'
+  validates :delivery_price, presence: true, numericality: {
+    greater_than_or_equal_to: 0
+  }, if: 'delivery_radius.present?'
+  validates :delivery_radius, presence: true, numericality: {
+    greater_than_or_equal_to: 0, only_integer: true
+  }, if: 'delivery_price.present?'
   validate :host_must_have_a_mobile_number
 
   scope :active, where(active: true)
@@ -53,6 +86,7 @@ class Homestay < ActiveRecord::Base
   before_save :sanitize_description
   before_save :strip_pet_sizes
   before_save :strip_favorite_breeds
+  before_save :strip_energy_level_ids
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
@@ -84,17 +118,23 @@ class Homestay < ActiveRecord::Base
   end
 
   def need_parental_consent?
-    user && user.date_of_birth.present? and user.date_of_birth > 18.years.ago.to_date
+    user && user.date_of_birth.present? && user.date_of_birth > 18.years.ago.to_date
   end
 
   def emergency_preparedness?
     first_aid || emergency_transport
   end
 
+  def supervision
+    ReferenceData::Supervision.find(supervision_id) if supervision_id.present?
+  end
+
+  # Depreciated
   def supervision?
     supervision_outside_work_hours || constant_supervision
   end
 
+  # Depreciated but may be used in other parts of the program, especially emails
   def pretty_supervision
     if constant_supervision
       'I can provide 24/7 supervision for your pets'
@@ -154,6 +194,14 @@ class Homestay < ActiveRecord::Base
     outdoor_area.title if outdoor_area_id
   end
 
+  def energy_levels
+    levels = []
+    energy_level_ids.each do |id|
+      levels << ReferenceData::EnergyLevel.find(id)
+    end
+    levels
+  end
+
   def location
     if self.address_suburb != self.address_city # Avoid "Melbourne, Melbourne"
       "#{address_suburb}, #{address_city}"
@@ -208,6 +256,10 @@ class Homestay < ActiveRecord::Base
 
   def strip_favorite_breeds
     self.favorite_breeds.delete('') if self.favorite_breeds.present?
+  end
+
+  def strip_energy_level_ids
+    self.energy_level_ids.delete('') if self.energy_level_ids.present?
   end
 
   def set_country_Australia

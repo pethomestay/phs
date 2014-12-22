@@ -85,31 +85,28 @@ class Booking < ActiveRecord::Base
    not [:unfinished, :payment_authorisation_pending].include?(self.state.to_sym)
   end
 
+  # If guest cancel, trigger BrainTree refund stuff
+  # If host cancel, notify admin, update status but do not inform guest (PHS admin will do that)
   def refund_payment(guest_cancel = false)
     return if self.payment.nil?
     return if self.check_out_date < Date.today
-    if self.payment.status == "authorized"
-      result = Braintree::Transaction.void(self.payment.braintree_transaction_id)
-    end
-    if self.payment.status == "submitted_for_settlement"
+    if guest_cancel
       amount = self.calculate_payment_refund
       result = Braintree::Transaction.refund(self.payment.braintree_transaction_id, amount)
       result = Braintree::Transaction.void(self.payment.braintree_transaction_id) unless result.success?
-    end
-    if result.success?
-      self.refund        = amount || self.payment.amount
-      self.cancel_reason = self.cancel_reason || "Admin cancelled"
-      self.cancel_date = Date.today
-      self.save
-    else
-      # raise
-      # Raygun.track_exception(Exception.new("Refund failed, booking_id:#{self.id}"))
-    end
-    if guest_cancel
+      if result.success?
+        self.refund        = amount || self.payment.amount
+        self.cancel_reason = self.cancel_reason || "Admin cancelled"
+        self.cancel_date = Date.today
+        self.save
+        self.update_column(:state, 'guest_cancelled')
+      end
       GuestCancelledBookingHostJob.new.async.perform(self.id) #Let the host know booking has been cancelled
       GuestCancelledBookingGuestJob.new.async.perform(self.id) #Confirm for the guest that their booking has been cancelled
+    else # host cancel
+      self.update_column(:state, 'host_requested_cancellation')
+
     end
-    return result
   end
 
   def calculate_payment_refund

@@ -1,4 +1,4 @@
-.media data-listing=homestay.id
+.media.search_item_container data-listing=homestay.id
   a href=homestay_path(homestay)
     .media-left.media-middle.image.hidden-xs
       - if homestay.photos?
@@ -6,12 +6,12 @@
       - elsif homestay.pictures.any?
         = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title
       - else
-        = image_tag 'default_profile_photo.jpg', style: 'width: 150px;'
+        = image_tag 'default_profile_photo.jpg', style: 'width: 150px; height:150px;'
       - if homestay.user.received_feedbacks.present?
+        
         p.rating.text-center
           == rating_stars_awesome homestay.average_rating
       - else
-        p
           br
     .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
       - if homestay.user.profile_photo?

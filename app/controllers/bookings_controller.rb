@@ -283,13 +283,9 @@ class BookingsController < ApplicationController
   end
 
   def host_cancellation
-    #list of bookings that the host can request to cancel
-    @bookings = Booking.where("bookee_id = ? AND state = ? AND check_in_date >= ?", current_user.id, :finished_host_accepted, Date.today)
-    if @bookings.length == 1
-      @one_booking = true
-      @booking = @bookings.first
-      render 'host_cancel'
-    end
+    @booking = current_user.bookees.find_by_id(params[:booking_id])
+    redirect_to host_path, notice: "Sorry, something went wrong" and return if @booking.nil?
+    render 'host_cancel'
   end
 
   def host_cancel
@@ -299,15 +295,16 @@ class BookingsController < ApplicationController
   end
 
   def host_confirm_cancellation
-    @booking = Booking.find(params[:id])
+    @booking = current_user.bookees.find_by_id(params[:id])
+    redirect_to host_path, notice: "Sorry, something went wrong" and return if @booking.nil?
     if params[:booking][:cancel_reason].blank?
       @booking_errors = "Cancel reason cannot be blank!"
       render 'host_cancel'
     else
       # ensure that we can search for this status when showing the admin notifications
-      @booking.host_requested_cancellation
       @booking.cancel_reason = params[:booking][:cancel_reason]
       @booking.save
+      @booking.update_column(:state, 'host_requested_cancellation')
       flash[:notice] = "Your request to cancel this booking has been forwarded to the admin for approval."
       return redirect_to host_messages_path
     end

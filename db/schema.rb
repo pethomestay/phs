@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141217225120) do
+ActiveRecord::Schema.define(:version => 20141222002901) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20141217225120) do
     t.decimal  "refund"
     t.boolean  "refunded",         :default => false
     t.date     "cancel_date"
+    t.boolean  "for_charity"
   end
 
   create_table "cards", :force => true do |t|
@@ -204,6 +205,15 @@ ActiveRecord::Schema.define(:version => 20141217225120) do
     t.text     "pet_sizes"
     t.text     "favorite_breeds"
     t.boolean  "emergency_sits"
+    t.decimal  "pet_walking_price"
+    t.decimal  "pet_grooming_price"
+    t.decimal  "remote_price"
+    t.decimal  "visits_price"
+    t.decimal  "delivery_price"
+    t.integer  "visits_radius"
+    t.integer  "delivery_radius"
+    t.text     "energy_level_ids"
+    t.integer  "supervision_id"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"

@@ -40,11 +40,11 @@ PetHomestay::Application.routes.draw do
   post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
 
   resources :bookings do
+    get 'host_cancellation'
     collection do
       post 'result'
       get 'result'
       get 'update_transaction'
-      get 'host_cancellation'
       post 'host_cancel'
       get 'update_message'
     end
