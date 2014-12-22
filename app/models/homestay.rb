@@ -27,7 +27,7 @@ class Homestay < ActiveRecord::Base
                   :favorite_breeds, :emergency_sits, :pet_walking_price,
                   :pet_grooming_price, :remote_price, :visits_price,
                   :delivery_price, :visits_radius, :delivery_radius,
-                  :energy_level_ids
+                  :energy_level_ids, :supervision_id
 
   serialize :pet_sizes,        Array
   serialize :favorite_breeds,  Array
@@ -43,6 +43,9 @@ class Homestay < ActiveRecord::Base
     in: ReferenceData::PropertyType.all.map(&:id)
   validates_inclusion_of :outdoor_area_id,
     in: ReferenceData::OutdoorArea.all.map(&:id)
+  validates :supervision_id, numericality: {
+    in: ReferenceData::Supervision.all.map(&:id)
+    }, if: 'supervision_id.present?'
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
@@ -122,10 +125,16 @@ class Homestay < ActiveRecord::Base
     first_aid || emergency_transport
   end
 
+  def supervision
+    ReferenceData::Supervision.find(supervision_id) if supervision_id.present?
+  end
+
+  # Depreciated
   def supervision?
     supervision_outside_work_hours || constant_supervision
   end
 
+  # Depreciated but may be used in other parts of the program, especially emails
   def pretty_supervision
     if constant_supervision
       'I can provide 24/7 supervision for your pets'

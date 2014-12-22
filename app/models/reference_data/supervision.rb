@@ -21,6 +21,6 @@ class ReferenceData::Supervision
   end
 end
 
-ANYTIME       = ReferenceData::Supervision.new id: '1', title: '24x7 Care'
-EVENINGS      = ReferenceData::Supervision.new id: '2', title: 'Evenings'
-WEEKENDS_ONLY = ReferenceData::Supervision.new id: '3', title: 'Weekends Only'
+ANYTIME       = ReferenceData::Supervision.new id: 1, title: '24x7 Care'
+EVENINGS      = ReferenceData::Supervision.new id: 2, title: 'Evenings'
+WEEKENDS_ONLY = ReferenceData::Supervision.new id: 3, title: 'Weekends Only'

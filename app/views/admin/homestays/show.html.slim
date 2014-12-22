@@ -43,6 +43,9 @@ dl.dl-horizontal
   - @homestay.energy_levels.any?
     dt Energy Levels
     dd= @homestay.energy_levels.join(', ')
+  - if @homestay.supervision.present?
+    dt Supervision
+    dd= @homestay.supervision
   dt Is Active?
   dd= @homestay.active
   dt Emergency sits?
