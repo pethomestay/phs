@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(:version => 20141222002901) do
     t.string   "facebook_location"
     t.integer  "braintree_customer_id"
     t.boolean  "opt_out_sms",            :default => false
+    t.decimal  "responsiveness_score"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
