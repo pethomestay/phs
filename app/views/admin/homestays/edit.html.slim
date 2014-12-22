@@ -57,37 +57,32 @@ h1 Editing Homestay
 
   .extra-services
     h3 Extra services
-    = f.input :remote_price, label: 'Pet sitting in Guest\'s home', wrapper_html: {class: 'input-append input-prepend'} do
+    = f.input :remote_price, label: 'Pet sitting in Guest\'s home', wrapper_html: {class: 'input-prepend'} do
       .add-on $
       = f.input_field :remote_price, placeholder: 'per 24 hours'
-      .add-on .00
     br
-    = f.input :pet_walking_price, wrapper_html: {class: 'input-append input-prepend'} do
+    = f.input :pet_walking_price, wrapper_html: {class: 'input-prepend'} do
       .add-on $
       = f.input_field :pet_walking_price, placeholder: 'per hour'
-      .add-on .00
     br
-    = f.input :pet_grooming_price, wrapper_html: {class: 'input-append input-prepend'} do
+    = f.input :pet_grooming_price, wrapper_html: {class: 'input-prepend'} do
       .add-on $
       = f.input_field :pet_grooming_price, placeholder: 'per hour'
-      .add-on .00
     br
     = label_tag 'Visits'
     .controls
-      .input-append.input-prepend
+      .input-prepend
         .add-on $
         = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
-        .add-on .00
       span style='padding: 0 10px;' up to
       = f.input_field :visits_radius, class: 'span1'
       span style='padding: 0 10px;' km
     br
     = label_tag 'Pick Up / Drop Offs'
     .controls
-      .input-append.input-prepend
+      .input-prepend
         .add-on $
         = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2'
-        .add-on .00
       span style='padding: 0 10px;' up to
       = f.input_field :delivery_radius, class: 'span1'
       span style='padding: 0 10px;' km
