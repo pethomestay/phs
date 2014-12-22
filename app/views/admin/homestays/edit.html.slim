@@ -44,6 +44,8 @@ h1 Editing Homestay
     = f.input :constant_supervision, as: :boolean, inline_label: '24/7 supervision', label: false
     = f.input :supervision_outside_work_hours, as: :boolean, inline_label: 'Supervision outside of work hours (6pm - 8am)', label: false
     = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
+  = f.input :supervision_id, collection: ReferenceData::Supervision.all,
+    as: :radio_buttons
 
   .grouped-checkboxes
     = label_tag "I have", nil, class: 'for-group'
