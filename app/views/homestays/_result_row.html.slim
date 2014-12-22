@@ -1,6 +1,6 @@
 .media.search_item_container data-listing=homestay.id
   a href=homestay_path(homestay)
-    .media-left.media-middle.image.hidden-xs
+    .media-left.image.hidden-xs
       - if homestay.photos?
         = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill, class: 'search_item_profile_picture'
       - elsif homestay.pictures.any?
@@ -9,32 +9,59 @@
         = image_tag 'default_profile_photo.jpg', style: 'width: 150px; height:150px;' , class: 'search_item_profile_picture'
     .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
       - if homestay.user.profile_photo?
-        = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
+        = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
       - elsif homestay.user.uid.present?
-        = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png
+        = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
       - elsif homestay.photos?
-        = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png
+        = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
       - elsif homestay.pictures.any?
-        = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle'
+        = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
       - else
-        = image_tag 'default_profile_photo.jpg', class: 'img-circle', style: 'width: 100px;'
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
     .media-body.search_item_media_body.info
-      h2.first_name #{ homestay.title } 
-      p.first_name.cost-per-night.pull-right
-        strong
-          = number_to_currency(homestay.cost_per_night)    
-      h3.title Posted by #{ homestay.user.first_name }
+      .media-left.display_inline.media-middle.hidden-xs.hidden-sm
+        - if homestay.user.profile_photo?
+          = cl_image_tag homestay.user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.user.uid.present?
+          = facebook_profile_image_tag homestay.user.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.photos?
+          = cl_image_tag homestay.photos.first.public_id, width: 60, height: 60, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.pictures.any?
+          = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
+        - else
+          = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
+      h2.first_name #{ (homestay.user.first_name).titleize }
       - if homestay.user.received_feedbacks.present? 
-        span.rating.text-center
+        p.display_inline.rating.text-center
           == rating_stars_awesome homestay.average_rating
+        p.display_inline.count.hidden-xs.hidden-sm
+          | ( #{ homestay.user.received_feedbacks.reviewed.count }  )
       - else
-        span
-      p Lives in #{(homestay.address_suburb).upcase}
-      - if homestay.for_charity
-        = image_tag 'homestay/petrescue.png', class: 'for_charity'
-      - else
-        p
-          br        
+        p.display_inline 
+      p.display_inline.cost-per-night-2x.pull-right.hidden-xs.hidden-sm
+        strong
+          = number_to_currency(homestay.cost_per_night)
+      p.display_inline.cost-per-night.pull-right.hidden-md.hidden-lg
+        strong
+          = number_to_currency(homestay.cost_per_night)         
+      p #{ homestay.title } 
+      h3.title #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
+      p
+        - if homestay.for_charity
+          = image_tag 'homestay/petrescue.png', class: 'for_charity'
+        - else
+          p
+            br        
     hr
-    .info
-      p.excerpt.hidden-xs = truncate(homestay.description, length: 400)  
+    .hidden-xs.hidden-sm 
+        - if homestay.user.received_feedbacks.reviewed.any? 
+          p.rating-sm
+            = render 'search_review_row', review: homestay.user.received_feedbacks.reviewed.shift
+        - else
+          p.rating-sm
+            .review.search_item_review_container
+              .media-left.media-middle
+                span
+                  first_name-sa Summary
+                  p Posted on #{homestay.created_at.strftime('%F')}
+                  p = truncate(homestay.description, length: 200)   

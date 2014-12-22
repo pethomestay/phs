@@ -15,6 +15,9 @@ $search-field-height: 40px;
 
 .pagination > li:last-child > a:hover, .pagination > li:last-child > span:hover {
   background-color: #4DB6AC;
+  transition: all .4s ease-in-out;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 
 .pagination > li:first-child > a, .pagination > li:first-child > span {
@@ -31,6 +34,9 @@ $search-field-height: 40px;
 
 .pagination > li:first-child > a:hover, .pagination > li:first-child > span:hover {
   background-color: #4DB6AC;
+  transition: all .5s ease-in-out;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 
 .search-alert {
@@ -40,15 +46,30 @@ $search-field-height: 40px;
 
 .search_item_container {
   border: 1px solid #ccc;
+  padding-bottom: 5px;
   padding: 15px;
   background: #fff !important;
   -webkit-box-shadow: 0 1px 6px rgba(0,0,0,.35);
   box-shadow: 0 1px 6px rgba(0,0,0,.35);
 } 
 
+.first_name-sa {
+  display: inline-block;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 0;
+  margin: 0;
+}
+
+.stars-sa {
+  color: #5cc1c0;
+}
+
 .search_item_container:hover {
-  background: #f4f4f4 !important;
   border: 1px solid #5cc1c0;
+  transition: all .5s ease-in-out;
+  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,.85);
+  box-shadow: 0 1px 6px rgba(0,0,0,.85);
 } 
 
 .search_item_profile_picture {
@@ -58,10 +79,30 @@ $search-field-height: 40px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
 }
 
+.search_item_profile_picture:hover {
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  transition: all .5s ease-in-out;
+}
+
 .search_item_media_body {
   padding-left: 15px !important;
   width: 100%;
 }
+
+.search_item_media_desc {
+  background-color:white;
+  padding: 15px;
+  margin: -15px -15px -25px -15px;
+  border-top: 1px solid #ccc;
+}
+
+.search_item_review_container {
+      background-color: #f2f2f2;
+      padding: 15px;
+      margin: -15px -15px -25px -15px;
+      border-top: 1px solid #ccc;
+    }
 
 .homestay-index {
   .search-box {
@@ -141,6 +182,17 @@ $search-field-height: 40px;
 
     p.rating {
       color: $blue-light;
+      font-size: 25px;
+      @media (max-width: $screen-xs-max) {
+            padding-left: 0;
+      }      
+    }
+
+    p.rating-sm {
+      color: $blue-light;
+      @media (max-width: $screen-xs-max) {
+            padding-left: 0;
+      }      
     }
 
     .media-body {
@@ -148,6 +200,14 @@ $search-field-height: 40px;
       padding-left: 5px;
 
       .first_name {
+        display: inline-block;
+        padding-right:10px;
+        padding-top: 5px;
+        margin-top: 0;
+        margin: 0;
+      }
+
+      .display_inline {
         display: inline-block;
         padding-top: 5px;
         margin-top: 0;
@@ -162,6 +222,19 @@ $search-field-height: 40px;
         color: $grey-dark;
         font-size: 15px;
         margin-top: 2px;
+      }
+
+    .cost-per-night-2x {
+        strong {
+          background: $orange;
+          color: $grey-lighter;
+          padding: 7px;
+          font-size:21px;
+          @media (max-width: $screen-sm-max) {
+            float: right;
+          }
+        }
+
       }
 
       .cost-per-night {
