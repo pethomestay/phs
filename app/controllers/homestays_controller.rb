@@ -1,4 +1,5 @@
 class HomestaysController < ApplicationController
+  require 'will_paginate/array'
   respond_to :html
   before_filter :authenticate_user!, except: [:show, :index, :availability]
 
