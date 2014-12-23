@@ -27,9 +27,9 @@
         - elsif homestay.photos?
           = cl_image_tag homestay.photos.first.public_id, width: 60, height: 60, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
         - elsif homestay.pictures.any?
-          = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
+          = image_tag homestay.pictures.first.file.thumb('60x60#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
         - else
-          = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
+          = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 60px;'
       h2.first_name #{ (homestay.user.first_name).titleize }
       - if homestay.user.received_feedbacks.present? 
         p.display_inline.rating.text-center
