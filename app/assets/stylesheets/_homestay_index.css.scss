@@ -124,17 +124,26 @@ p.ta {
   margin: 0;
 }
 
-span.ta.readmore-js-section.readmore-js-toggle {
+.homestay_icon_wrapper{ 
+  cursor:pointer;
+}
+
+.truncated_text  {
   background: none;
   border: none;
   padding: 0;
   margin-bottom: 5px;
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.45;
-  color: #333;
+  color: #434343;
   word-wrap: break-word;
-  text-align: left;
+  text-align: left !important;
+}
+
+.text_right {
+  float: right;
+  text-align: right;
 }
 
 .homestay-index {

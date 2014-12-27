@@ -16,6 +16,15 @@
               = render 'stars', rating: review.rating
       span.reviewer
         p Reviewed #{review.created_at.strftime('%F')}
-      span
-        p #{review.review.truncate(200)}
+        span.description.readmore-2.truncated_text #{review.review}
         .hr
+
+coffee:
+  $ ->
+
+    # Readmore toggle
+    $('.readmore-2').readmore
+      moreLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-plus"></i> Read more</a>'
+      lessLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-minus"></i> Collapse</a>'
+      sectionCSS: 'display: block; width: 100%; margin-bottom: 0px;'
+      maxHeight: 45
