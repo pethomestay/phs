@@ -15,7 +15,7 @@
       span.stars-sa
               = render 'stars', rating: review.rating
       span.reviewer
-        p Posted on #{review.created_at.strftime('%F')}
+        p Reviewed #{review.created_at.strftime('%F')}
       span
         p #{review.review.truncate(200)}
         .hr

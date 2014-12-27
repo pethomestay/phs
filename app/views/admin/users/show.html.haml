@@ -11,8 +11,9 @@
   %dd= @user.homestay.present? ? @user.homestay.title : 'no homestay'
   %dt Pets
   %dd= @user.pets.count
-  %dt Date of birth
-  %dd= @user.date_of_birth
+  - if @user.date_of_birth
+    %dt Date of birth
+    %dd= @user.date_of_birth
   - if not @user.provider.nil?
     - if not @user.facebook_location.nil?
       %dt Facebook Location

@@ -1,67 +1,127 @@
 .media.search_item_container data-listing=homestay.id
-  a href=homestay_path(homestay)
     .media-left.image.hidden-xs
-      - if homestay.photos?
-        = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill, class: 'search_item_profile_picture'
-      - elsif homestay.pictures.any?
-        = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title, class: 'search_item_profile_picture'
-      - else
-        = image_tag 'default_profile_photo.jpg', style: 'width: 150px; height:150px;' , class: 'search_item_profile_picture'
-    .media-left.media-middle.hidden-sm.hidden-md.hidden-lg
-      - if homestay.user.profile_photo?
-        = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-      - elsif homestay.user.uid.present?
-        = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-      - elsif homestay.photos?
-        = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-      - elsif homestay.pictures.any?
-        = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
-      - else
-        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
-    .media-body.search_item_media_body.info
-      .media-left.display_inline.media-middle.hidden-xs.hidden-sm
-        - if homestay.user.profile_photo?
-          = cl_image_tag homestay.user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-        - elsif homestay.user.uid.present?
-          = facebook_profile_image_tag homestay.user.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-        - elsif homestay.photos?
-          = cl_image_tag homestay.photos.first.public_id, width: 60, height: 60, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+      a href=homestay_path(homestay) 
+        - if homestay.photos?
+          = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill, class: 'search_item_profile_picture'
         - elsif homestay.pictures.any?
-          = image_tag homestay.pictures.first.file.thumb('60x60#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
+          = image_tag homestay.pictures.first.file.thumb('150x150#').url, alt: homestay.title, class: 'search_item_profile_picture'
         - else
-          = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 60px;'
-      h2.first_name #{ (homestay.user.first_name).titleize }
-      - if homestay.user.received_feedbacks.present? 
-        p.display_inline.rating.text-center
-          == rating_stars_awesome homestay.average_rating
-        p.display_inline.count.hidden-xs.hidden-sm
-          | ( #{ homestay.user.received_feedbacks.reviewed.count }  )
-      - else
-        p.display_inline 
+          = image_tag 'default_profile_photo.jpg', style: 'width: 150px; height:150px;' , class: 'search_item_profile_picture'
+    .media-left.hidden-sm.hidden-md.hidden-lg
+      a href=homestay_path(homestay)   
+        - if homestay.user.profile_photo?
+          = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.user.uid.present?
+          = facebook_profile_image_tag homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.photos?
+          = cl_image_tag homestay.photos.first.public_id, width: 100, height: 100, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif homestay.pictures.any?
+          = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
+        - else
+          = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
+    .media-body.search_item_media_body.info
+      a href=homestay_path(homestay) 
+        .media-left.display_inline.media-middle.hidden-xs.hidden-sm
+          - if homestay.user.profile_photo?
+            = cl_image_tag homestay.user.profile_photo.public_id, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+          - elsif homestay.user.uid.present?
+            = facebook_profile_image_tag homestay.user.uid, width: 60, height: 60, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+          - elsif homestay.photos?
+            = cl_image_tag homestay.photos.first.public_id, width: 60, height: 60, crop: :thumb, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+          - elsif homestay.pictures.any?
+            = image_tag homestay.pictures.first.file.thumb('60x60#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
+          - else
+            = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 60px;'
+        a href=homestay_path(homestay) 
+          h2.first_name #{ (homestay.user.first_name).titleize }
+        - if homestay.user.received_feedbacks.present? 
+          p.display_inline.rating.text-center
+            == rating_stars_awesome homestay.average_rating
+          p.display_inline.count.hidden-xs.hidden-sm
+            | ( #{ homestay.user.received_feedbacks.reviewed.count }  )
+        - else
+          p.display_inline 
       p.display_inline.cost-per-night-2x.pull-right.hidden-xs.hidden-sm
         strong
           = number_to_currency(homestay.cost_per_night)
       p.display_inline.cost-per-night.pull-right.hidden-md.hidden-lg
         strong
           = number_to_currency(homestay.cost_per_night)         
-      p #{ homestay.title } 
-      h3.title #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
-      p
-        - if homestay.for_charity
-          = image_tag 'homestay/petrescue.png', class: 'for_charity'
-        - else
-          p
-            br        
-    hr
+      p.ta #{ homestay.title }
+      .hidden-md.hidden-lg
+        h3.title #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
+      .row.badges_row
+        .col-md-9.col-lg-9.hidden-xs.hidden-sm
+          span.description.readmore.ta.readmore-js-section.readmore-js-toggle #{ homestay.description } 
+        .col-md-3.col-lg-3.hidden-xs.hidden-sm
+          p.ta.pull-right   #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
+      .row.badges_row
+        .col-md-9.col-lg-9.hidden-xs.hidden-sm
+            - if homestay.constant_supervision
+              div.display_inline.section_group data-toggle="tooltip" title="24/7 supervision"
+                  i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left  
+            - if homestay.supervision_outside_work_hours
+              div.display_inline.section_group data-toggle="tooltip" title="After hour supervision"
+                  i.fa.fa-suitcase.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.first_aid
+              div.display_inline.section_group data-toggle="tooltip" title="First-aid Training" 
+                  i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.police_check
+              div.display_inline.section_group data-toggle="tooltip" title="Police Check" 
+                  i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.fenced
+              div.display_inline.section_group data-toggle="tooltip" title="Fenced Back Yard" 
+                  i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.professional_qualification
+              div.display_inline.section_group data-toggle="tooltip" title="Professional Qualification"  
+                  i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.emergency_transport
+              div.display_inline.section_group data-toggle="tooltip" title="Emergency Transport"             
+                  i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left 
+            - if homestay.for_charity
+              div.display_inline.section_group
+                = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
+            - else
+                br
+        .col-md-3.col-lg-3.hidden-xs.hidden-sm
+            span.pull-right #{homestay.created_at.strftime('%F')}                    
+
+        .row.badges_row
+        .col-xs-12.col-sm-12.hidden-md.hidden-lg
+            - if homestay.constant_supervision
+                i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="24/7 supervision" 
+            - if homestay.supervision_outside_work_hours
+                i.fa.fa-suitcase.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="After hour supervision" 
+            - if homestay.first_aid
+                i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="First-aid Training" 
+            - if homestay.police_check
+                i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="Police Check" 
+            - if homestay.fenced
+                i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="Fenced Back Yard" 
+            - if homestay.professional_qualification
+                i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="Professional Qualification" 
+            - if homestay.emergency_transport
+                i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" data-placement="left" title="Emergency Transport"               
+            - if homestay.for_charity
+              = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
+            - else
+                br
+
     .hidden-xs.hidden-sm 
         - if homestay.user.received_feedbacks.reviewed.any? 
-          p.rating-sm
             = render 'search_review_row', review: homestay.user.received_feedbacks.reviewed.shift
-        - else
-          p.rating-sm
-            .review.search_item_review_container
-              .media-left.media-middle
-                span
-                  first_name-sa Summary
-                  p Posted on #{homestay.created_at.strftime('%F')}
-                  p = truncate(homestay.description, length: 200)   
+
+coffee:
+  $ ->
+
+    # Readmore toggle
+    $('.readmore').readmore
+      moreLink: '<a href="#" class="homestay_expand_desc_option pull-right"><i class="fa fa-plus"></i> Read more</a>'
+      lessLink: '<a href="#" class="homestay_expand_desc_option pull-right"><i class="fa fa-minus"></i> Collapse</a>'
+      sectionCSS: 'display: block; width: 100%; margin-bottom: 0px; text-align:right;'
+      maxHeight: 50
+    $('.review .readmore').readmore
+      moreLink: '<a href="#"><i class="fa fa-plus"></i> Read more</a>'
+      lessLink: '<a href="#"><i class="fa fa-minus"></i> Collapse</a>'
+      sectionCSS: 'display: block; width: 100%; margin-bottom: 0px;'
+      maxHeight: 50

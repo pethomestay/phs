@@ -1,7 +1,7 @@
 $secondary-text-color: #50a19e;
 $search-field-height: 40px;
 
-.pagination > li:last-child > a, .pagination > li:last-child > span {
+.custom_page.pagination > li:last-child > a, .custom_page.pagination > li:last-child > span {
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   background-color: #5cc1c0;
@@ -13,14 +13,14 @@ $search-field-height: 40px;
   text-align: center;
 }
 
-.pagination > li:last-child > a:hover, .pagination > li:last-child > span:hover {
+.custom_page.pagination > li:last-child > a:hover, .custom_page.pagination > li:last-child > span:hover {
   background-color: #4DB6AC;
   transition: all .4s ease-in-out;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 
-.pagination > li:first-child > a, .pagination > li:first-child > span {
+.custom_page.pagination > li:first-child > a, .custom_page.pagination > li:first-child > span {
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   background-color: #5cc1c0;
@@ -32,7 +32,7 @@ $search-field-height: 40px;
   text-align: center;
 }
 
-.pagination > li:first-child > a:hover, .pagination > li:first-child > span:hover {
+.custom_page.pagination > li:first-child > a:hover, .custom_page.pagination > li:first-child > span:hover {
   background-color: #4DB6AC;
   transition: all .5s ease-in-out;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
@@ -63,6 +63,22 @@ $search-field-height: 40px;
 
 .stars-sa {
   color: #5cc1c0;
+}
+
+.homestay_highlights {
+  font-size: 15.6px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #777;
+}
+
+.homestay_icons {
+  color: #ec5c3b;
+}
+
+.homestay_expand_desc_option:hover {
+  color: #5cc1c0 !important;
+  transition: all .5s ease-in-out !important;
 }
 
 .search_item_container:hover {
@@ -100,9 +116,26 @@ $search-field-height: 40px;
 .search_item_review_container {
       background-color: #f2f2f2;
       padding: 15px;
-      margin: -15px -15px -25px -15px;
+      margin: 15px -15px -15px -15px;
       border-top: 1px solid #ccc;
-    }
+}
+
+p.ta {
+  margin: 0;
+}
+
+span.ta.readmore-js-section.readmore-js-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 5px;
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #333;
+  word-wrap: break-word;
+  text-align: left;
+}
 
 .homestay-index {
   .search-box {
@@ -188,11 +221,13 @@ $search-field-height: 40px;
       }      
     }
 
-    p.rating-sm {
-      color: $blue-light;
+    .badges_row {
+      color: #ababab;
+      font-size: 15px;
+      margin-top: 2px;
       @media (max-width: $screen-xs-max) {
-            padding-left: 0;
-      }      
+            padding-bottom: 15px
+      } 
     }
 
     .media-body {
@@ -214,10 +249,20 @@ $search-field-height: 40px;
         margin: 0;
       }
 
+      .display_inline.section_group {
+        padding: 0 10px 0 0;
+        vertical-align: middle;  
+        min-width: 52px;
+      }
+
       .for_charity {
         width: 50px;
       }
 
+      .for_charity_sm {
+        width: 26px;
+      }
+        
       .title {
         color: $grey-dark;
         font-size: 15px;

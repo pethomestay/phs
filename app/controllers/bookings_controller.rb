@@ -53,6 +53,12 @@ class BookingsController < ApplicationController
   def update
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     if @booking.bookee == current_user # Host booking modifications
+      if params[:commit] == "Decline Booking" # Host has rejected the booking
+        message_content = params[:booking][:message] || "Sorry, the host has declined the booking"
+        @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => message_content)
+        @booking.update_column(:state, "rejected")
+        return redirect_to host_messages_path, :alert => "Declined booking"
+      end
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
