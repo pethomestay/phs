@@ -22,6 +22,8 @@
 //= require bootstrap-growl.min
 //= require bootstrap-slider
 //= require bootbox.min
+//= require plugins
+//= require wizard_setup
 //= require owl.carousel
 //= require popover
 //= require moment

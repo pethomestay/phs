@@ -3,6 +3,7 @@
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import "bootstrap-datepicker";
 @import "bootstrap-slider";
+@import "nifty";
 @import "owl.carousel";
 @import "owl.theme";
 @import "animate";
@@ -30,6 +31,9 @@
 // Font
 body {
     font-family: 'Ubuntu', sans-serif;
+    color: #404040;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
 
     p {
         font-size: 15.6px;
@@ -165,3 +169,8 @@ a.profile {
     padding-right: 10px;
   }
 }
+
+.searchbox > .input-group input:focus {
+  border-color: #458fd2;
+}
+
