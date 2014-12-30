@@ -1,5 +1,13 @@
 /* dark color overrides */
  
+.chzn-container {
+  width: 100% !important;
+}
+
+.chzn-drop {
+  width: 100% !important;
+}
+
 .chzn-container .chzn-results li {
   color: #000;   
 }
@@ -95,6 +103,17 @@
     cursor: pointer;
     margin-left: 20px;
   }
+
+  label.checkbox-two
+  label.radio-two {
+    display: inline-block;
+    padding-left: 40px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
   .pet_accordian {
     width: 100%;
     padding: 0;
@@ -166,3 +185,5 @@
     }
   }
 }
+
+

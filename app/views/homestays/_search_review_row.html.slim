@@ -4,20 +4,23 @@
 
 - unless review.review.empty?
   .review.search_item_review_container
-      span.pull-left.media-left.media-middle
-        - if review.user.profile_photo?
-          = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-        - elsif review.user.uid.present?
-          = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
-        - else
-          = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
-      span.reviewer.first_name-sa #{review.user.first_name}
-      span.stars-sa
-              = render 'stars', rating: review.rating
-      span.reviewer
-        p Reviewed #{review.created_at.strftime('%F')}
-        span.description.readmore-2.truncated_text #{review.review}
-        .hr
+    .row.badges_row
+        .col-md-3.col-lg-3
+          span.pull-left.media-left.media-middle
+            - if review.user.profile_photo?
+              = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - elsif review.user.uid.present?
+              = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - else
+              = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
+          span.reviewer.first_name-sa #{review.user.first_name}
+          span.stars-sa
+                  = render 'stars', rating: review.rating
+          span.reviewer
+            p Reviewed #{review.created_at.strftime('%F')}
+        .col-md-8.col-lg-8
+          span.description.readmore-2.truncated_text #{review.review}
+          .hr
 
 coffee:
   $ ->

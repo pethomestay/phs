@@ -1,44 +1,6 @@
 $secondary-text-color: #50a19e;
 $search-field-height: 40px;
 
-.custom_page.pagination > li:last-child > a, .custom_page.pagination > li:last-child > span {
-  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
-  background-color: #5cc1c0;
-  height: 80px;
-  border-radius: 75px;
-  padding: 29px 22px 0 22px;
-  color: #434343;
-  margin-right: 15px;
-  text-align: center;
-}
-
-.custom_page.pagination > li:last-child > a:hover, .custom_page.pagination > li:last-child > span:hover {
-  background-color: #4DB6AC;
-  transition: all .4s ease-in-out;
-  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-}
-
-.custom_page.pagination > li:first-child > a, .custom_page.pagination > li:first-child > span {
-  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
-  background-color: #5cc1c0;
-  height: 80px;
-  border-radius: 75px;
-  padding: 29px 22px 0 22px;
-  color: #434343;
-  margin-left: 15px;
-  text-align: center;
-}
-
-.custom_page.pagination > li:first-child > a:hover, .custom_page.pagination > li:first-child > span:hover {
-  background-color: #4DB6AC;
-  transition: all .5s ease-in-out;
-  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-}
-
 .search-alert {
   margin: 0 -15px 0 -15px;
   border-radius: 0px;
@@ -74,6 +36,13 @@ $search-field-height: 40px;
 
 .homestay_icons {
   color: #ec5c3b;
+}
+
+.homestay_expand_desc_option {
+  text-align: right;
+  margin-top: -24px;
+  margin-right: -65px;
+  float:right;
 }
 
 .homestay_expand_desc_option:hover {
@@ -118,6 +87,40 @@ $search-field-height: 40px;
       padding: 15px;
       margin: 15px -15px -15px -15px;
       border-top: 1px solid #ccc;
+}
+
+.stay-costs {
+    background: $orange;
+    color: white;
+    padding: 7px;
+    font-size:1.8em;
+  @media (max-width: $screen-sm-max) {
+      float: right;
+    }
+}
+
+.stay-costs-2x {
+    background: $orange;
+    color: white;
+    padding: 7px;
+    font-size:2em;
+  @media (max-width: $screen-sm-max) {
+      float: right;
+    }
+}    
+
+.stay-costs {
+  .lower {
+    color: #c04d33;;
+    font-size:12px;
+  }
+}
+
+.stay-costs-2x {
+  .lower {
+    color: #c04d33;;
+    font-size:16px;
+  }
 }
 
 p.ta {
@@ -194,11 +197,12 @@ p.ta {
     }
     .sort-order {
       margin-top: 20px;
-      color: $grey-lighter;
+      color: white;
 
       span.sort-by {
         margin-right: 15px;
-        color: $secondary-text-color;
+        font-size: 15px;
+        color: white;
       }
     }
   }
