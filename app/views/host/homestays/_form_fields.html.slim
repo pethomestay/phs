@@ -102,40 +102,40 @@ css:
         
             .tab-pane.fade id="demo-main-tab2"
 
-              = f.input :cost_per_night  do
+              = f.input :cost_per_night, label: 'Pet Homestay Rate'  do
                 .input-group
                   .input-group-addon $
-                  = f.input_field :cost_per_night, placeholder: '.00', name:'cost_per_night_field'
+                  = f.input_field :cost_per_night, placeholder: '.00'
               
-              = f.input :remote_price, label: 'Pet sitting in other peoples home' do
+              = f.input :remote_price, label: 'Pet Sitting Rate' do
                 .input-group
                   .input-group-addon $
-                  = f.input_field :remote_price, placeholder: 'per 24 hours', name:'remote_price_field'
-              = f.input :pet_walking_price do
+                  = f.input_field :remote_price, placeholder: 'per 24 hours'
+              = f.input :pet_walking_price, label: 'Pet Walking Rate'do
                 .input-group
                   .input-group-addon $
-                  = f.input_field :pet_walking_price, placeholder: 'per hour', name:'pet_walking_field'
-              = f.input :pet_grooming_price do
+                  = f.input_field :pet_walking_price, placeholder: 'per hour'
+              = f.input :pet_grooming_price, label: 'Pet Grooming Rate' do
                 .input-group
                   .input-group-addon $
-                  = f.input_field :pet_grooming_price, placeholder: 'per hour', name:'pet_grooming_field'
+                  = f.input_field :pet_grooming_price, placeholder: 'per hour'
               .row
                 = label_tag 'Visits'
               .form-group
                 .input-group
                   .input-group-addon $
-                  = f.input_field :visits_price, placeholder: 'per hour', class: 'span2', name: 'visits_price_field'
+                  = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
                   .input-group-addon up to
-                  = f.input_field :visits_radius, class: 'span1', name: 'visits_radius_field', placeholder: 'km'
+                  = f.input_field :visits_radius, class: 'span1', placeholder: 'km'
               br
               .row
                 = label_tag 'Pick Up / Drop Offs'
               .form-group
                 .input-group
                   .input-group-addon $
-                  = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2', name: 'delivery_price_field'
+                  = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2'
                   .input-group-addon up to
-                  = f.input_field :delivery_radius, class: 'span1', name: 'delivery_radius_field', placeholder: 'km'
+                  = f.input_field :delivery_radius, class: 'span1', placeholder: 'km'
 
             .tab-pane.fade id="demo-main-tab3"          
 
@@ -146,7 +146,7 @@ css:
 
               = f.input :description, label: 'Main Profile Detail - This is displayed as a description of your homestay', placeholder: 'As much detail as possible' , input_html: { rows: 5 }
 
-              = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Choose upto 3 favorite breeds' } }
+              = f.input :favorite_breeds, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
 
               = f.input :pet_sizes, collection: ReferenceData::Size.all_titles, label: 'Acceptable Pet Size:', as: :check_boxes,:item_wrapper_class =>'hs_mhs_s_cb', :input_html => { :checked => true }
               = f.input :energy_level_ids, collection: ReferenceData::EnergyLevel.all, label: 'Acceptable Pet Energy Level:', as: :check_boxes, :item_wrapper_class => 'hs_mhs_s_cb', :input_html => { :checked => true } 
