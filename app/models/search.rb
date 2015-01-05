@@ -42,8 +42,8 @@ class Search
   end
 
   def sort_by
-    @sort_by ||= 'recommended'
-    # @sort_by ||= 'distance'
+    # @sort_by ||= 'recommended'
+    @sort_by ||= 'distance'
   end
 
   def within
