@@ -14,11 +14,12 @@
             - else
               = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
           span.reviewer.first_name-sa #{review.user.first_name}
+          br
           span.stars-sa
                   = render 'stars', rating: review.rating
           span.reviewer
-            p Reviewed #{review.created_at.strftime('%F')}
-        .col-md-8.col-lg-8
+            p #{review.created_at.strftime('%F')}
+        .col-md-9.col-lg-9 style="margin-top:15px;"
           span.description.readmore-2.truncated_text #{review.review}
           .hr
 
@@ -27,7 +28,7 @@ coffee:
 
     # Readmore toggle
     $('.readmore-2').readmore
-      moreLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-plus"></i> Expand</a>'
-      lessLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-minus"></i> Collapse</a>'
+      moreLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-plus-square"></i> Expand</a>'
+      lessLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-minus-square"></i> Collapse</a>'
       sectionCSS: 'display: block; width: 100%; margin-bottom: 0px;'
       maxHeight: 45

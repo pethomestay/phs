@@ -14,7 +14,7 @@
 .chzn-container .chzn-drop, .chzn-container-single .chzn-single {
   background-color: #fff;
   color: #000;
-  border-radius:4px;
+  border-radius:2px;
 }
 /* Some IE 7-9 fun with this next one - filter likes to override background */
 .chzn-container-single .chzn-single {
@@ -22,15 +22,15 @@
   background-image: none;
   background: #fff none top left no-repeat;
   filter: none;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   display: block;
   height: 30px;
 }
 .chzn-choices {
-  border-radius:4px !important;
+  border-radius:2px !important;
 }
 .chzn-container .chzn-drop {
-  border: 1px solid #ccc;     
+  border: 1px solid #ddd;     
 }
 .chzn-container-single .chzn-single div {
   background-image: -webkit-gradient(linear, left bottom, left top, 
@@ -42,7 +42,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', 
     endColorstr='#fff',GradientType=0 );
   background-image: linear-gradient(top, #fff 0%,#fff 60%);
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #ddd;
 }
 .chzn-container-multi .chzn-choices .search-field input {
   color: #666666;

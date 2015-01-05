@@ -48,11 +48,9 @@
           |/24hr
       p.ta #{ homestay.title }
       h3.title #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
-      .row.badges_row
-        .col-md-11.col-lg-11.hidden-xs.hidden-sm
+      .badges_row
+        .hidden-xs.hidden-sm
           span.description.readmore.truncated_text #{ homestay.description } 
-      .row.badges_row
-        .col-md-12.col-lg-12.hidden-xs.hidden-sm
           - if homestay.constant_supervision
               i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="24/7 supervision" 
           - if homestay.supervision_outside_work_hours
@@ -110,12 +108,7 @@ coffee:
 
     # Readmore toggle
     $('.readmore').readmore
-      moreLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-plus"></i> Expand</a>'
-      lessLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-minus"></i> Collapse</a>'
-      sectionCSS: 'display: block; width: 100%; margin-bottom: 5px; text-align:right;'
-      maxHeight: 45
-    $('.review .readmore').readmore
-      moreLink: '<a href="#"><i class="fa fa-plus"></i> Expand</a>'
-      lessLink: '<a href="#"><i class="fa fa-minus"></i> Collapse</a>'
-      sectionCSS: 'display: block; width: 100%; margin-bottom: 5px;'
+      moreLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-plus-square"></i> Expand</a>'
+      lessLink: '<a href="#" class="homestay_expand_desc_option"><i class="fa fa-minus-square"></i> Collapse</a>'
+      sectionCSS: 'display: inline-block; width: 100%; margin-bottom: 0px; text-align:right;'
       maxHeight: 45
