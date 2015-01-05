@@ -4,5 +4,5 @@
       h3 Create Your PetHomeStay Listing
     = simple_form_for [:host, @homestay], url: host_homestay_path, wrapper: :bootstrap3 do |f|
       = render 'form_fields', f: f
-      .form-actions
-        = f.submit 'CREATE MY LISTING', class: 'btn btn-primary'
+      .form-actions id="demo-submit-wz"
+        = f.submit 'CREATE MY LISTING', class: 'createMyListing btn btn-primary'

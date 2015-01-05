@@ -7,6 +7,7 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
+    = render partial: 'shared/analytics_segment_io'
     = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '359693007532798' #this Facebook app id is for production
     = render partial: 'shared/tracking/crazy_egg' if ENV['APP_ID'] == '359693007532798' #this Facebook app id is for production
     = yield :open_graph_tags
