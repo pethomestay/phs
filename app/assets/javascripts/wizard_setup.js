@@ -43,14 +43,15 @@ $(document).ready(function() {
          return false;
       },
       onInit : function(){
-         $('#demo-bv-wz').find('.finish').hide().prop('disabled', true);
+         $('#demo-bv-wz').find('.createMyListing').hide().prop('disabled', true);
       },
       onTabShow: function(tab, navigation, index) {
          var $total = navigation.find('li').length;
          var $current = index+1;
          var $percent = (index/$total) * 100;
-         var margin = (100/$total)/2;
-         $('#demo-bv-wz').find('.progress-bar').css({width:$percent+'%', 'margin': 0 + 'px ' + margin + '%'});
+         var wdt = 100/$total;
+         var lft = wdt*index;
+         $('#demo-submit-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
          
          navigation.find('li:eq('+index+') a').trigger('focus');
 
@@ -58,15 +59,14 @@ $(document).ready(function() {
          // If it's the last tab then hide the last button and show the finish instead
          if($current >= $total) {
              $('#demo-bv-wz').find('.next').hide();
-             $('#demo-bv-wz').find('.finish').show();
-             $('#demo-bv-wz').find('.finish').prop('disabled', false);
+             $('#demo-submit-wz').find('.createMyListing').show().prop('disabled', false);
          } else {
              $('#demo-bv-wz').find('.next').show();
-             $('#demo-bv-wz').find('.finish').hide().prop('disabled', true);
+             $('#demo-submit-wz').find('.createMyListing').hide().prop('disabled', true);
          }    
       },
       onNext: function(){
-         isValid = null;
+        isValid = null;
          $('#demo-bv-wz-form').bootstrapValidator('validate');
       
      
@@ -86,63 +86,123 @@ $(document).ready(function() {
          validating: 'fa fa-refresh'
       },
       fields: {
-         homestay_address: {
-            message: 'The username is not valid',
-            validators: {
-               notEmpty: {
-                  message: 'The username is required.'
-               }
-            }
-         },
-         email: {
-            validators: {
-               notEmpty: {
-                  message: 'The email address is required and can\'t be empty'
-               },
-               emailAddress: {
-                  message: 'The input is not a valid email address'
-               }
-            }
-         },
-         firstName: {
+         mobile_number: {
            validators: {
                notEmpty: {
-                  message: 'The first name is required and cannot be empty'
+                  message: 'Please enter a mobile number to allow guests to contact you'
                },
-               regexp: {
-                  regexp: /^[A-Z\s]+$/i,
-                  message: 'The first name can only consist of alphabetical characters and spaces'
-               }
-            }
-         },
-         lastName: {
-            validators: {
-               notEmpty: {
-                  message: 'The last name is required and cannot be empty'
-               },
-               regexp: {
-                  regexp: /^[A-Z\s]+$/i,
-                  message: 'The last name can only consist of alphabetical characters and spaces'
-               }
-            }
-         },
-         phoneNumber: {
-            validators: {
-               notEmpty: {
-                  message: 'The phone number is required and cannot be empty'
-               },        
                digits: {
-                  message: 'The value can contain only digits'
+                  message: 'This field can contain only digits'
                }
             }
          },
-         address: {
+         cost_per_night_field: {
             validators: {
                notEmpty: {
-                  message: 'The address is required'
+                  message: 'Please enter a HomeStay price - must 10 dollars of greater'
+               },
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 10,
+                   message: 'Please enter a value greater than $10'
                }
             }
-         }
+         },
+         remote_price_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than $0'
+               }
+            }
+         },
+         pet_walking_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than $0'
+               }
+            }
+         },
+         pet_grooming_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than $0'
+               }
+            }
+         },
+         visits_price_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than $0'
+               }
+            }
+         },
+         visits_radius_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than 0'
+               }
+            }
+         },
+         delivery_price_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than $0'
+               }
+            }
+         },
+         delivery_radius_field: {
+            validators: {
+               digits: {
+                  message: 'This field can contain only digits'
+               },
+               greaterThan: {
+                   value: 0,
+                   message: 'Please enter a value greater than 0'
+               }
+            }
+         }, 
+         pet_homestay_title: {
+            validators: {
+               stringLength: {
+                   min: 1,
+                   max: 50,
+                   message: 'Please enter a title of upto 50 characters long'
+               }
+            }
+         },
+         pet_homestay_desc: {
+            validators: {
+               notEmpty: {
+                  message: 'Please enter a HomeStay Description for your listing'
+               }
+            }
+         },
       }
    }).on('success.field.bv', function(e, data) {       
       // $(e.target)  --> The field element
