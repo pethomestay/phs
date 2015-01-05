@@ -30,7 +30,7 @@
           = image_tag homestay.pictures.first.file.thumb('60x60#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
         - else
           = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 60px;'
-      h2.first_name #{ (homestay.user.first_name).titleize }
+        h2.first_name #{ (homestay.user.first_name).titleize }
       - if homestay.user.received_feedbacks.present? 
           p.display_inline.rating.text-center
             == rating_stars_awesome homestay.average_rating

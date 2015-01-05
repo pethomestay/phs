@@ -40,18 +40,17 @@ $(document).ready(function() {
       nextSelector   : '.next',
       previousSelector  : '.previous',
       onTabClick: function(tab, navigation, index) {  
-         return false;
+         return true;
       },
       onInit : function(){
-         $('#demo-bv-wz').find('.createMyListing').hide().prop('disabled', true);
+         $('#demo-bv-wz').find('.finish').hide().prop('disabled', true);
       },
       onTabShow: function(tab, navigation, index) {
          var $total = navigation.find('li').length;
          var $current = index+1;
          var $percent = (index/$total) * 100;
-         var wdt = 100/$total;
-         var lft = wdt*index;
-         $('#demo-submit-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
+         var margin = (100/$total)/2;
+         $('#demo-bv-wz').find('.progress-bar').css({width:$percent+'%', 'margin': 0 + 'px ' + margin + '%'});
          
          navigation.find('li:eq('+index+') a').trigger('focus');
 
@@ -59,14 +58,15 @@ $(document).ready(function() {
          // If it's the last tab then hide the last button and show the finish instead
          if($current >= $total) {
              $('#demo-bv-wz').find('.next').hide();
-             $('#demo-submit-wz').find('.createMyListing').show().prop('disabled', false);
+             $('#demo-bv-wz').find('.finish').show();
+             $('#demo-bv-wz').find('.finish').prop('disabled', false);
          } else {
              $('#demo-bv-wz').find('.next').show();
-             $('#demo-submit-wz').find('.createMyListing').hide().prop('disabled', true);
+             $('#demo-bv-wz').find('.finish').hide().prop('disabled', true);
          }    
       },
       onNext: function(){
-        isValid = null;
+         isValid = null;
          $('#demo-bv-wz-form').bootstrapValidator('validate');
       
      
@@ -86,13 +86,60 @@ $(document).ready(function() {
          validating: 'fa fa-refresh'
       },
       fields: {
-         mobile_number: {
+         homestay_address: {
+            message: 'The username is not valid',
+            validators: {
+               notEmpty: {
+                  message: 'The username is required.'
+               }
+            }
+         },
+         email: {
+            validators: {
+               notEmpty: {
+                  message: 'The email address is required and can\'t be empty'
+               },
+               emailAddress: {
+                  message: 'The input is not a valid email address'
+               }
+            }
+         },
+         firstName: {
            validators: {
                notEmpty: {
-                  message: 'Please enter a mobile number to allow guests to contact you'
+                  message: 'The first name is required and cannot be empty'
                },
+               regexp: {
+                  regexp: /^[A-Z\s]+$/i,
+                  message: 'The first name can only consist of alphabetical characters and spaces'
+               }
+            }
+         },
+         lastName: {
+            validators: {
+               notEmpty: {
+                  message: 'The last name is required and cannot be empty'
+               },
+               regexp: {
+                  regexp: /^[A-Z\s]+$/i,
+                  message: 'The last name can only consist of alphabetical characters and spaces'
+               }
+            }
+         },
+         phoneNumber: {
+            validators: {
+               notEmpty: {
+                  message: 'The phone number is required and cannot be empty'
+               },        
                digits: {
-                  message: 'This field can contain only digits'
+                  message: 'The value can contain only digits'
+               }
+            }
+         },
+         address: {
+            validators: {
+               notEmpty: {
+                  message: 'The address is required'
                }
             }
          }

@@ -24,8 +24,8 @@ class ReferenceData::Size
     all[id - 1]
   end
 
-  SMALL = ReferenceData::Size.new(1, 'Small')
-  MEDIUM = ReferenceData::Size.new(2, 'Medium')
-  LARGE = ReferenceData::Size.new(3, 'Large')
-  GIANT = ReferenceData::Size.new(4, 'Giant')
+  SMALL = ReferenceData::Size.new(1, 'Small (0-15kg)')
+  MEDIUM = ReferenceData::Size.new(2, 'Medium (16-30kg)')
+  LARGE = ReferenceData::Size.new(3, 'Large (31-45kg)')
+  GIANT = ReferenceData::Size.new(4, 'Giant (46kg+)')
 end
