@@ -40,7 +40,7 @@ $(document).ready(function() {
       nextSelector   : '.next',
       previousSelector  : '.previous',
       onTabClick: function(tab, navigation, index) {  
-         return false;
+         return true;
       },
       onInit : function(){
          $('#demo-bv-wz').find('.createMyListing').hide().prop('disabled', true);
