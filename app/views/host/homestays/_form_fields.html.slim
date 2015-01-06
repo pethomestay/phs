@@ -163,41 +163,11 @@ css:
                 = f.input :professional_qualification, as: :boolean, inline_label: 'A professional pet qualification', label: false
                 = f.input :emergency_transport, as: :boolean, inline_label: 'Emergency transport', label: false
                 = f.input :police_check, as: :boolean, inline_label: 'A current police check certificate', label: false
-              .hs_mhs_s_hide
-                = f.input :is_professional, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :fenced, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :pet_feeding, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :pet_grooming, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :pet_training, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :pet_walking, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :constant_supervision, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :supervision_outside_work_hours, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
-                = f.input :children_present, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'} 
-                = f.input :website, input_html: {class: 'span4 hs_mhs_s_hide'}
              
     .pull-right.pad-all style="margin-top:-15px; margin-right:-15px;"
       button.previous.btn.btn-primary type="button" Previous
       button.next.btn.btn-primary style="margin-left:5px;" type="button" Next
-
-
-      
-
-   
-
-    
-
-    
-
-    /h3
-    /  | Do you own pets?
-    /  br
-    /  small If you do, please complete a pet profile after creating your listing
-    /.checkbox
-    /  = f.input :pets_present, as: :boolean, label: 'My pets will be present at this address during PetHomeStay bookings', checked_value: 1, unchecked_value: 2
-
-    
-
-    
+      = f.submit 'CREATE MY LISTING', class: 'createMyListing btn btn-primary', id: "demo-submit", style: "margin-left:5px;"
 
   
   / New Fields

@@ -59,10 +59,10 @@ $(document).ready(function() {
          // If it's the last tab then hide the last button and show the finish instead
          if($current >= $total) {
              $('#demo-bv-wz').find('.next').hide();
-             $('#demo-submit-wz').find('.createMyListing').show().prop('disabled', false);
+             $('.createMyListing').show().prop('disabled', false);
          } else {
              $('#demo-bv-wz').find('.next').show();
-             $('#demo-submit-wz').find('.createMyListing').hide().prop('disabled', true);
+             $('.createMyListing').hide().prop('disabled', true);
          }    
       },
       onNext: function(){
