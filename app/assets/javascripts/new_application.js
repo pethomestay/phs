@@ -23,6 +23,7 @@
 //= require bootstrap-slider
 //= require bootbox.min
 //= require plugins
+//= require input_check_radio
 //= require wizard_setup
 //= require owl.carousel
 //= require popover

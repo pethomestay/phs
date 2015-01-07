@@ -40,7 +40,7 @@ $(document).ready(function() {
       nextSelector   : '.next',
       previousSelector  : '.previous',
       onTabClick: function(tab, navigation, index) {  
-         return false;
+         return true;
       },
       onInit : function(){
          $('#demo-bv-wz').find('.createMyListing').hide().prop('disabled', true);
@@ -57,6 +57,11 @@ $(document).ready(function() {
 
          
          // If it's the last tab then hide the last button and show the finish instead
+         if($current == 1) {
+            $('#demo-bv-wz').find('.previous').hide();
+         } else {
+            $('#demo-bv-wz').find('.previous').show();
+         }   
          if($current >= $total) {
              $('#demo-bv-wz').find('.next').hide();
              $('#demo-submit-wz').find('.createMyListing').show().prop('disabled', false);
