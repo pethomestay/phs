@@ -44,10 +44,12 @@ css:
             
             .tab-pane id="demo-main-tab1"  
               .row
-                span.help-block style="display:inline-block;" Add as many photos as you can of your PetHomeStay.
+                label.hs_mhs_title      
+                  | Photos
                 button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="Upload LANDSCAPE photos (turn your phone sideways!) for the best results. Make sure you include a photo of you with some pets, where you will take them for walks, and where the pet will spend its time in your backyard. Tip - to get awesome photos use Instagram or a similar app!"
-                  i.fa.fa-question-circle
-              = f.input :photos, as: :attachinary
+                    i.fa.fa-question-circle   
+                .help-block Add as many photos as you can of your PetHomeStay.     
+              = f.input :photos, as: :attachinary, label: false
               .row
                 .hidden-md.hidden-sm.hidden-xs
                   .panel._item_base
@@ -59,7 +61,7 @@ css:
                         .hs_mhs_50 Tip - to get awesome photos use Instagram or a similar app!            
                 .col-lg-6
                   .form-group
-                    label
+                    label.hs_mhs_title
                       | Mobile number
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A mobile number is compulsory so we can alert you via text when you have a new Enquiry and the Guest can get in touch. We do not use this for marketing or any external purpose."  
                       i.fa.fa-question-circle
@@ -76,7 +78,7 @@ css:
                           .hs_mhs_50 A mobile number is compulsory so we can alert you via text when you have a new Enquiry and the Guest can get in touch. We do not use this for marketing or any external purpose.
                 .col-lg-6
                   .form-group      
-                    label
+                    label.hs_mhs_title
                       | PetHomeStay Service Address
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="Your exact address is not shown and is restricted to the general suburb level. If you want to offer services outside your home such as walking or pet sitting, your address provides the catchment area for these types of services."  
                       i.fa.fa-question-circle  
@@ -104,12 +106,12 @@ css:
             .tab-pane.fade id="demo-main-tab2"
               .row
                 .col-lg-6
-                  label style="margin-left:-15px;"
-                  | PetHomeStay Supports
+                  label.hs_mhs_title  style="margin-left:-15px;"
+                    | Charity Hosts
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - Click on the question icon"
                     i.fa.fa-question-circle
                   .checkbox 
-                    = f.input :for_charity, as: :boolean, inline_label: 'Host Charity', label: false, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+                    = f.input :for_charity, as: :boolean, inline_label: 'Please donate my payments to PetRescue', label: false, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -120,7 +122,7 @@ css:
                         a style="color: #5cc1c0; margin-left: 50px;" href="/charity-hosts" Click here  
 
               .row
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :cost_per_night, label: 'PetHomeStay Rate per 24h'  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="A PetHomeStay is looking after pets in YOUR OWN home. The average Pet Boarding Rate is $30 but you can come back anytime and set it to whatever you want "
                       i.fa.fa-question-circle
@@ -137,7 +139,7 @@ css:
                         .hs_mhs_50 Hosts do not provide food as standard!
                         .hs_mhs_50 The average Pet Boarding Rate is $30 but you can come back anytime and set it to whatever you want   
               .row  
-                .col-lg-6       
+                .col-lg-6.hs_mhs_title        
                   = f.input :remote_price, label: 'Pet Sitting Rate per 24h' do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)."
                       i.fa.fa-question-circle
@@ -152,7 +154,7 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 Looking after pets in SOMEONE ELSES home (like house sitting). 
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :pet_walking_price, label: 'Pet Walking Rate'do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!."
                       i.fa.fa-question-circle
@@ -167,7 +169,7 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :pet_grooming_price, label: 'Pet Grooming Rate' do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Grooming - Includes clipping, baths and washes!"
                       i.fa.fa-question-circle
@@ -182,7 +184,7 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 Includes clipping, baths and washes!
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   .row
                     label Check up Visit
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Visits - Check the house, feed outside animals, collect mail or feed fish."
@@ -201,7 +203,7 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 Check the house, feed outside animals, collect mail or feed fish   
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   .row
                     label Pick Up / Drop Offs
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pick-Ups & Drop-Offs - As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!"
@@ -222,7 +224,7 @@ css:
             
             .tab-pane.fade id="demo-main-tab3"          
               .row
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :title, label: 'Service Title'  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
                       i.fa.fa-question-circle   
@@ -235,7 +237,7 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50  50 character limit         
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :description, label: 'Service Detail'  , input_html: { rows: 4}  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
                       i.fa.fa-question-circle 
@@ -250,7 +252,7 @@ css:
                         br  
                         .hs_mhs_50  Make sure you add as much detail as possible!       
               .row  
-                .col-lg-6
+                .col-lg-6.hs_mhs_title 
                   = f.input :favorite_breeds, collection: DOG_BREEDS, label: 'Favourite Dog Breeds', input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
@@ -260,10 +262,12 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 Tell us your 3 favourite dog breeds - we can match you with Guests who are particularly looking for Hosts with experience in specific breeds of pet.
               .row
-                .col-lg-6        
-                  = f.input :pet_sizes, label: 'Pet Sizes'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
-                      i.fa.fa-question-circle
+                .col-lg-6
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    |Pet Sizes
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
+                      i.fa.fa-question-circle          
+                  = f.input :pet_sizes, label: false  do
                     = f.input_field :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes,:item_wrapper_class =>'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
@@ -274,9 +278,11 @@ css:
                         .hs_mhs_50 If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!        
               .row  
                 .col-lg-6
-                  = f.input :energy_level_ids, label: 'Energy Levels'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
-                      i.fa.fa-question-circle 
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    | Energy Levels
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
+                      i.fa.fa-question-circle   
+                  = f.input :energy_level_ids, label: false  do
                     = f.input_field :energy_level_ids, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => false }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
@@ -287,9 +293,11 @@ css:
                         .hs_mhs_50 A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes.       
               .row
                 .col-lg-6
-                  = f.input :supervision_id, label: 'Supervision'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
-                      i.fa.fa-question-circle            
+                  label.hs_mhs_title style="margin-left:-15px;"
+                    | Supervision
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
+                      i.fa.fa-question-circle   
+                  = f.input :supervision_id, label: false  do           
                     = f.input_field :supervision_id, collection: ReferenceData::Supervision.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }, label: false  
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
@@ -302,8 +310,8 @@ css:
                         .hs_mhs_50 Weekends - You will be at home the weekends (Friday night - Sunday night).
               .row
                 .col-lg-6
-                  label style="margin-left:-15px;"
-                  | Other Benefits
+                  label.hs_mhs_title style="margin-left:-15px;"
+                    | Other Benefits
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you are able to provide these additional benefits for your Guests, please indicate these here!"
                     i.fa.fa-question-circle
                   .checkbox        
@@ -336,7 +344,7 @@ css:
 
     .pull-right.pad-all style="margin-top:-15px; margin-right:-15px;"
       a.previous.hs_mhs_link type="button" Previous
-      button.next.btn.btn-primary style="margin-left:5px;" type="button" Next
+      button.next.btn.btn-primary style="margin-left:5px; min-width:200px; font-weight:bold; font-size:18px;" type="button" NEXT
 
   
   / New Fields
