@@ -40,10 +40,6 @@ class Homestay < ActiveRecord::Base
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
-  validates_inclusion_of :property_type_id,
-    in: ReferenceData::PropertyType.all.map(&:id)
-  validates_inclusion_of :outdoor_area_id,
-    in: ReferenceData::OutdoorArea.all.map(&:id)
   validates :supervision_id, numericality: {
     in: ReferenceData::Supervision.all.map(&:id)
     }, if: 'supervision_id.present?'

@@ -374,3 +374,117 @@ p.ta {
     }
   }
 }
+
+
+// Homestay Form
+
+._item_base {
+  padding: 5px;
+  background: #fff !important;
+  background-color: #f2f2f2 !important;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+._item_con {
+  padding: 5px;
+  background: #fff !important;
+  background-color: #f2f2f2 !important;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  box-shadow: none;
+  margin-right: -15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+._inline_icons_left {
+  float: left;
+  margin-right: 15px;
+}
+
+._form_con_lg {
+  padding: 25px;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.form_con_add_lg {
+  font-size: 25px;
+}
+
+
+.collection_cb {
+    display: block !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.boolean_cb {
+    display: block !important;
+    margin-left:-30px !important;
+    cursor: pointer;
+  }
+.form-group.boolean {
+  margin-bottom:0px;
+  margin-left:-5px;
+}    
+.hs_mhs_s_tabc {
+  padding:10px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-radius-bottom-left: 4px;
+  border-radius-bottom-right: 4px;
+}
+.hs_mhs_s_tabicons {
+  color: #ec5c3b;
+  margin-left: 10px;
+}
+.hs_mhs_s_hide {
+  display: none;
+}
+.hs_mhs_s_bg-info {
+  background-color: #5cc1c0;
+  color: white;
+}
+.hs_mhs_s_btn-info {
+  border: none;
+  display: inline-block;
+}
+.hs_mhs_s_btn-info:hover{
+  background-color: white;
+}
+.phs_help_section {
+  width: 100%;
+  padding-top: 5px;
+  font-size: 13px;
+  font-weight: 300;
+}
+.hs_mhs_50 {
+  margin-left: 50px;
+  font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #404040;
+}
+
+.hs_mhs_50_20 {
+  margin-left: 50px;
+  margin-top: -20px;
+  font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #404040;
+}
+
+.hs_mhs_title {
+  font-weight:bold;
+  font-size: 15px;
+}
+.hs_mhs_link:hover {
+  color: #5cc1c0;
+}
