@@ -277,8 +277,7 @@ css:
                     | Pet Sizes
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
                       i.fa.fa-question-circle          
-                  = f.input :pet_sizes, label: false  do
-                    = f.input_field :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes,:item_wrapper_class =>'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }
+                  = f.input :pet_sizes, label: false, collection: ReferenceData::Size.all_titles, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -292,8 +291,7 @@ css:
                     | Energy Levels
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
                       i.fa.fa-question-circle   
-                  = f.input :energy_level_ids, label: false  do
-                    = f.input_field :energy_level_ids, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => false }
+                  = f.input :energy_level_ids, label: false, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -306,9 +304,8 @@ css:
                   label.hs_mhs_title style="margin-left:-15px;"
                     | Supervision
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
-                      i.fa.fa-question-circle   
-                  = f.input :supervision_id, label: false  do           
-                    = f.input_field :supervision_id, collection: ReferenceData::Supervision.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }, label: false  
+                      i.fa.fa-question-circle            
+                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
