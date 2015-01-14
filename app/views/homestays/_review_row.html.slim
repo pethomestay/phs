@@ -1,18 +1,20 @@
-/ Params
-/   review: a Feedback object
-/   top: whether this is the review at top
-
 - unless review.review.empty?
-  .review
-    .row
-      .col-xs-3.left
-        - if review.user.profile_photo?
-          = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'center-block'
-        - elsif review.user.uid.present?
-          = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'center-block'
-        - else
-          = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle', class: 'center-block'
-        span.reviewer #{review.user.first_name}
-      .col-xs-9.right
-        p.readmore #{review.review}
-        .hr
+  .review.item_review_container
+    .row.badges_row
+        .col-lg-2 style="min-width:190px"
+          span.pull-left.media-left.media-middle
+            - if review.user.profile_photo?
+              = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - elsif review.user.uid.present?
+              = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - else
+              = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
+          span.reviewer.first_name-sa #{review.user.first_name}
+          br
+          span.stars-sa
+                  = render 'stars', rating: review.rating
+          span.reviewer
+            p #{review.created_at.strftime('%F')}
+        .col-lg-10 style="margin-top:-5px;"
+          pre.tx_sp.truncated_text #{review.review}
+          .hr
