@@ -21,14 +21,17 @@
     meta name='twitter:image' content=img_url
 css:
   .title_p_t {
-    margin-top:15px;
+    margin-top:10px;
   }
   .tooltip_p_t {
-    margin-top:10px
+    margin-top:5px
   }
   .title_blk {
     display:block;
-  }  
+  } 
+  .price_size {
+    font-size: 1.1em;
+  } 
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
@@ -115,16 +118,21 @@ coffee:
               - else # ask user to sign up or sign in
                 = link_to 'BOOK THIS HOST', new_user_session_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire'
               / TODO: use a modal to prompt user to sign in so redirect_path can be set
-          .col-lg-2.col-md-2.col-sm-2.col-xs-6.text-lg-right.text-md-right
-            .stay-costs
+          .hidden-xs.hidden-sm.col-lg-2.col-md-2.text-lg-right.text-md-right
+            .stay-costs style="max-width:125px;float:right;"
               span.after-work $#{@homestay.cost_per_night.to_i}
               span.lower 
                 |/24h
+          .hidden-lg.hidden-md.col-sm-2.col-xs-6.text-xs-right.text-sm-right
+            .stay-costs style="max-width:125px;float:left;"
+              span.after-work $#{@homestay.cost_per_night.to_i}
+              span.lower 
+                |/24h      
     .col-lg-8
       .tab-base
         ul.nav.nav-tabs
           li.active
-            a data-toggle="tab" href="#demo-stk-lft-tab-1" Profile
+            a data-toggle="tab" href="#demo-stk-lft-tab-1" Summary
           li
             a data-toggle="tab" href="#demo-stk-lft-tab-2" Description  
           li
@@ -134,21 +142,21 @@ coffee:
         .tab-content
           .tab-pane.fade.active.in  id="demo-stk-lft-tab-1"
             .row style="margin: 0"
-              - if @homestay.favorite_breeds
+              - if @homestay.favorite_breeds.any?
                 .col-lg-6 style="margin-bottom: 15px;"
                   label.hs_mhs_title.title_blk  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
                   - for breed in @homestay.favorite_breeds
                     span.after-work.pull-left #{ breed }
                     i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
                     br 
-              - if @homestay.pet_sizes
+              - if @homestay.pet_sizes.any?
                 .col-lg-6 style="margin-bottom: 15px;"
                   label.hs_mhs_title.title_blk  Pet Sizes Accepted
                   - for size in @homestay.pet_sizes
                     span.after-work.pull-left #{ size }
                     i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
                     br
-              - if @homestay.energy_level_ids
+              - if @homestay.energy_level_ids.any?
                 .col-lg-6 style="margin-bottom: 15px;"
                   label.hs_mhs_title.title_blk  Pet Energy Levels Accepted
                   - for energy in @homestay.energy_level_ids
@@ -207,52 +215,6 @@ coffee:
             - else
               span No reviews for this user at the moment
     .col-lg-4
-      - if @homestay.remote_price
-        .row.stat.attr
-          label.hs_mhs_title.title_p_t.pull-left Pet Sitting Rate
-          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)." 
-            i.fa.fa-question-circle
-          .stay-costs.pull-right  
-            span.after-work $#{ (@homestay.remote_price).to_i }
-            span.lower 
-              |/24hr            
-      - if @homestay.pet_walking_price
-        .row.stat.attr
-            label.hs_mhs_title.title_p_t.pull-left Pet Walking Rate
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!" 
-              i.fa.fa-question-circle
-            .stay-costs.pull-right
-              span.after-work $#{ (@homestay.pet_walking_price).to_i }
-              span.lower 
-                |/hour    
-      - if @homestay.pet_grooming_price
-        .row.stat.attr
-            label.hs_mhs_title.title_p_t.pull-left Pet Grooming Rate
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Grooming - Includes clipping, baths and washes!" 
-              i.fa.fa-question-circle
-            .stay-costs.pull-right
-              span.after-work $#{ (@homestay.pet_grooming_price).to_i }
-              span.lower 
-                |/hour 
-      - if @homestay.visits_price
-        .row.stat.attr
-            label.hs_mhs_title.title_p_t.pull-left Check up Visit Rate
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Visits - Check the house, feed outside animals, collect mail or feed fish." 
-              i.fa.fa-question-circle
-            .stay-costs.pull-right
-              span.after-work $#{ (@homestay.visits_price).to_i }
-              span.lower 
-                |/hour 
-      - if @homestay.delivery_price
-        .row.stat.attr
-            label.hs_mhs_title.title_p_t.pull-left Pick Up / Drop Offs Rate
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pick-Ups & Drop-Offs - As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!" 
-              i.fa.fa-question-circle
-            .stay-costs.pull-right
-              span.after-work $#{ (@homestay.delivery_price).to_i }
-              span.lower 
-                |/trip
-                                                     
       .row.stat.attr
         .col-xs-7.col-sm-5.entry
           span style="margin-left: -15px;" Last sign in
@@ -265,6 +227,51 @@ coffee:
             i.fa.fa-question-circle data-toggle='popover' data-content='% of messages responded to within 24 hours' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
           .col-xs-5.col-sm-7.info
             span.pull-right style="margin-right:-15px"  #{ @response_rate_in_percent }%
+      - if @homestay.remote_price
+        .row.stat.attr
+          label.hs_mhs_title.title_p_t.pull-left Pet Sitting Rate
+          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)." 
+            i.fa.fa-question-circle
+          .stay-costs.price_size.pull-right.  
+            span.after-work $#{ (@homestay.remote_price).to_i }
+            span.lower 
+              |/24hr            
+      - if @homestay.pet_walking_price
+        .row.stat.attr
+            label.hs_mhs_title.title_p_t.pull-left Pet Walking Rate
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!" 
+              i.fa.fa-question-circle
+            .stay-costs.price_size.pull-right
+              span.after-work $#{ (@homestay.pet_walking_price).to_i }
+              span.lower 
+                |/hour    
+      - if @homestay.pet_grooming_price
+        .row.stat.attr
+            label.hs_mhs_title.title_p_t.pull-left Pet Grooming Rate
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Grooming - Includes clipping, baths and washes!" 
+              i.fa.fa-question-circle
+            .stay-costs.price_size.pull-right
+              span.after-work $#{ (@homestay.pet_grooming_price).to_i }
+              span.lower 
+                |/hour 
+      - if @homestay.visits_price
+        .row.stat.attr
+            label.hs_mhs_title.title_p_t.pull-left Check up Visit Rate
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Visits - Check the house, feed outside animals, collect mail or feed fish." 
+              i.fa.fa-question-circle
+            .stay-costs.price_size.pull-right
+              span.after-work $#{ (@homestay.visits_price).to_i }
+              span.lower 
+                |/hour 
+      - if @homestay.delivery_price
+        .row.stat.attr
+            label.hs_mhs_title.title_p_t.pull-left Pick Up / Drop Offs Rate
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pick-Ups & Drop-Offs - As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!" 
+              i.fa.fa-question-circle
+            .stay-costs.price_size.pull-right
+              span.after-work $#{ (@homestay.delivery_price).to_i }
+              span.lower 
+                |/trip                                                     
       .row.stat.attr style="text-align:center"
         .btn-group
           a.btn.btn-icon.btn-hover-primary.fa.fa-facebook.icon-lg.fb-share-btn style="border:1px solid #ddd"
