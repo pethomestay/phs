@@ -7,11 +7,16 @@
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = render partial: 'shared/analytics_segment_io'
     = render partial: 'shared/tracking/google_analytics' if ENV['APP_ID'] == '359693007532798' #this Facebook app id is for production
     = render partial: 'shared/tracking/crazy_egg' if ENV['APP_ID'] == '359693007532798' #this Facebook app id is for production
     = yield :open_graph_tags
     = yield :head
+    :javascript
+      :plain
+        analytics.identity ("#{current_user.id}", {
+          name: "#{current_user.name}",
+          email: "#{current_user.email}"
+        } )
   %body
     - if Rails.env.production?
       = render 'shared/tag_manager'
@@ -26,3 +31,5 @@
         = render partial: 'layouts/nav_layouts', :locals => {:flash => flash, :current_user_present => current_user_present}
     .clearer{style: "clear: left;"}
     = render partial: 'shared/footer_compatible'
+      .pre hakaw
+      = render partial: 'shared/analytics_segment_io'
