@@ -17,6 +17,8 @@
       - if current_user.coupon_payouts.unpaid.any?
         b= " - #{number_to_currency(current_user.coupon_payouts.unpaid.sum(&:payment_amount))} pending payment"
     p Credits will be paid upon accumulation of $25 worth of credits
+  - if current_user.coupon_credits_earned >= 25
+    = link_to "Redeem", new_coupon_payout_path, class: 'btn btn-primary'
   - if current_user.used_coupons.any?
     .page-header
       h3 Promo Code Applied
