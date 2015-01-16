@@ -2,6 +2,7 @@ class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
   before_filter :set_enquiry
+  skip_before_filter :track_session_variables, only: [:create]
 
   def create
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))

@@ -2,6 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   include GuestHelper
   before_filter :authenticate_user!
   before_filter :set_instance_vars, only: [:edit]
+  skip_before_filter :track_session_variables, only: [:update, :create]
 
   def update
     @user = current_user

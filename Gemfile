@@ -52,6 +52,7 @@ gem 'braintree'
 
 gem 'intercom-rails' # Intercom.io integration
 gem 'intercom' # Intercom.io library for events
+gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics' # Segment.io
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'phony_rails' # validate and normalize phone number
 group :test, :development do

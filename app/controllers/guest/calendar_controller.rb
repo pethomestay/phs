@@ -1,4 +1,5 @@
 class Guest::CalendarController < Guest::GuestController
+  skip_before_filter :track_session_variables
   # GET /guest/calendar/availability
   # Params
   #   start: start date in the format of YYYY-MM-DD
