@@ -1,9 +1,9 @@
 @import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import "bootstrap_3_3_0.min";
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+@import "nifty";
 @import "bootstrap-datepicker";
 @import "bootstrap-slider";
-@import "nifty";
 @import "owl.carousel";
 @import "owl.theme";
 @import "animate";
@@ -27,6 +27,7 @@
 // Guest View
 @import "my_account/guest/pet_panel";
 @import "my_account/guest/favorites_panel";
+
 
 // Font
 body {
@@ -174,3 +175,116 @@ a.profile {
   border-color: #458fd2;
 }
 
+.chzn-container {
+  width: 100% !important;
+}
+
+.chzn-drop {
+  width: 100% !important;
+}
+
+.chzn-container .chzn-results li {
+  color: #000;   
+}
+.chzn-container .chzn-drop, .chzn-container-single .chzn-single {
+  background-color: #fff;
+  color: #000;
+  border-radius:2px;
+}
+/* Some IE 7-9 fun with this next one - filter likes to override background */
+.chzn-container-single .chzn-single {
+  background-color: #fff;
+  background-image: none;
+  background: #fff none top left no-repeat;
+  filter: none;
+  border: 1px solid #ddd;
+  display: block;
+  height: 30px;
+}
+.chzn-choices {
+  border-radius:2px !important;
+}
+.chzn-container .chzn-drop {
+  border: 1px solid #ddd;     
+}
+.chzn-container-single .chzn-single div {
+  background-image: -webkit-gradient(linear, left bottom, left top, 
+    color-stop(0, #fff), color-stop(0.6, #fff));
+  background-image: -webkit-linear-gradient(center bottom, #fff 0%, #fff 60%);
+  background-image: -moz-linear-gradient(center bottom, #fff 0%, #fff 60%);
+  background-image: -o-linear-gradient(bottom, #fff 0%, #fff 60%);
+  background-image: -ms-linear-gradient(top, #fff 0%,#fff 60%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', 
+    endColorstr='#fff',GradientType=0 );
+  background-image: linear-gradient(top, #fff 0%,#fff 60%);
+  border-left: 1px solid #ddd;
+}
+.chzn-container-multi .chzn-choices .search-field input {
+  color: #666666;
+  background: transparent !important;
+  border: 0 !important;
+  font-family: sans-serif;
+  font-size: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  margin: 1px 0;
+  outline: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.chzn-container-multi .chzn-choices {
+  background-color: white;
+  background-image: none;
+  background-image: none;
+  background-image: none;
+  background-image: none;
+  background-image: none;
+  border: 1px solid #aaaaaa;
+  margin: 0;
+  padding: 0;
+  cursor: text;
+  overflow: hidden;
+  height: auto !important;
+  height: 1%;
+  position: relative;
+}
+
+.chzn-container-multi .chzn-choices .search-choice {
+  background-color: #3bb5e8;
+  color: white;
+  font-weight: bold;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 0px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#eeeeee', GradientType=0 );
+  background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  -webkit-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  color: #333333;
+  border: 1px solid #ddd;
+  line-height: 22px;
+  padding: 3px 20px 3px 5px;
+  margin: 3px 0 3px 5px;
+  position: relative;
+  cursor: default;
+}
+.chzn-container-active .chzn-single-with-drop {
+  box-shadow: none; 
+}
+.chzn-container .chzn-results .highlighted {
+  background: #149bdf;
+  color: #fff;
+}
+.chzn-container .chzn-results .no-results {
+  background: #fff;
+}
+.chzn-container .chzn-results li em {
+  background: none;
+}

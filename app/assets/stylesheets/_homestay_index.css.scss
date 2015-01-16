@@ -433,7 +433,7 @@ p.ta {
     display: block !important;
     margin-left:-30px !important;
     cursor: pointer;
- }
+ } 
 // this is for collection checkboxes 
 .phs_cb_cont {
   padding-left: 30px;
@@ -443,6 +443,29 @@ p.ta {
   margin-left: -30px !important;
 }
 
+// this is for custom radio buttons
+.collection_rb {
+    display: block !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.boolean_rb {
+    display: block !important;
+    margin-left:-30px !important;
+    cursor: pointer;
+ }
+
+// this is for collection checkboxes 
+.phs_rb_cont {
+  padding-left: 30px;
+}
+
+.phs_rb_sp {
+  margin-left: -30px !important;
+}
 .form-group.boolean {
   margin-bottom:0px;
   margin-left:-5px;
