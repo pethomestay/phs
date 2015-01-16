@@ -36,6 +36,10 @@ css:
     width: 100%;
     text-align: center;
     border-top: 1px solid #ddd;
+  }
+  .phs_icon_wrap {
+    border: 1px solid #ddd;
+    border-radius:4px;
   } 
 javascript:
   window.fbAsyncInit = function() {
@@ -98,18 +102,18 @@ coffee:
         / TODO: use a modal to prompt user to sign in so redirect_path can be set   
   .row style="background-color:#e8ebf0"
     .panel
-      .panel-bg-cover style="max-height:404px;"
+      .panel-bg-cover style="max-height:400px;"
         .container-fluid.homestay-show
           .row.first
             #hero.owl-carousel.owl-theme
               - if @homestay.photos?
                 - for photo in @homestay.photos
                   .item.img-responsive
-                    = cl_image_tag photo.public_id, height: 700, crop: :fill, gravity: :face
+                    = cl_image_tag photo.public_id, height: 400
               - elsif @homestay.pictures.present?
                 - for picture in @homestay.pictures
                   .item.img-responsive
-                    = image_tag picture.file.thumb('x704').url, gravity: :face
+                    = image_tag picture.file.thumb('x400').url
               - else
                 .item.img-responsive
                   = image_tag 'placeholder.png'                       
@@ -122,7 +126,7 @@ coffee:
           = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'panel-media-img img-circle img-border-light'    
         .row
           .col-lg-5.col-md-5
-            h3.panel-media-heading #{ (@homestay.user.first_name).titleize }
+            h3.panel-media-heading style="font-size:30px; font-weight:bold;" #{ (@homestay.user.first_name).titleize }
             p.ta #{@homestay.title}
             p.text-muted style="margin-bottom:-5px;" #{@homestay.location}
             p.hs_rating
@@ -146,7 +150,7 @@ coffee:
           li
             a data-toggle="tab" href="#demo-stk-lft-tab-2" Profile  
           li
-            a data-toggle="tab" href="#demo-stk-lft-tab-3" Availablilty
+            a data-toggle="tab" href="#demo-stk-lft-tab-3" Calendar
           li
             a data-toggle="tab" href="#demo-stk-lft-tab-4" Reviews
         .tab-content
@@ -158,23 +162,31 @@ coffee:
                   ' Proud Supporter of PetRescue
                   i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'    
               div style="margin: 0 15px 15px 15px"
-                label.hs_mhs_title.title_blk  Other Services  
-                - if @homestay.professional_qualification
-                  span Professional Qualification
-                  i.fa.fa-graduation-cap.fa-fw.fa-lg.homestay_icons.pull-right
-                  br 
-                - if @homestay.emergency_transport
-                  span Emergency transport
-                  i.fa.fa-ambulance.fa-fw.fa-lg.homestay_icons.pull-right
-                  br 
-                - if @homestay.first_aid
-                  span First-aid Training
-                  i.fa.fa-medkit.fa-fw.fa-lg.homestay_icons.pull-right
-                  br 
-                - if @homestay.police_check
-                  span Police Check
-                  i.fa.fa-shield.fa-fw.fa-lg.homestay_icons.pull-right
-                  br
+                ul.row.wz-step.wz-icon-bw.wz-nav-off.mar-top.wz-steps
+                  - if @homestay.professional_qualification
+                    li.col-xs-3 
+                      a
+                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap 
+                          i.fa.fa-graduation-cap.fa-lg.homestay_icons
+                        p.text-thin Professional Qualification
+                  - if @homestay.emergency_transport
+                    li.col-xs-3 
+                      a
+                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
+                          i.fa.fa-ambulance.fa-lg.homestay_icons
+                        p.text-thin Emergency transport
+                  - if @homestay.first_aid
+                    li.col-xs-3 
+                      a
+                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
+                          i.fa.fa-medkit.fa-lg.homestay_icons
+                        p.text-thin First-aid Training  
+                  - if @homestay.police_check
+                    li.col-xs-3 
+                      a
+                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
+                          i.fa.fa-shield.fa-lg.homestay_icons
+                        p.text-thin Police Check 
             .row style="margin: 0"     
               pre.tx_sp.truncated_text #{@homestay.description}
           .tab-pane.fade id="demo-stk-lft-tab-2"
@@ -228,7 +240,7 @@ coffee:
     .col-lg-4
       .row.stat.attr.hidden-sm.hidden-xs
         label.hs_mhs_title.title_p_t.pull-left PetHomeStay 
-        button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="A PetHomeStay is looking after pets in YOUR OWN home." 
+        button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="A PetHomeStay is looking after pets in the Host's own home." 
           i.fa.fa-question-circle
         .stay-costs.price_size.pull-right  
           span.after-work $#{@homestay.cost_per_night.to_i}
@@ -238,7 +250,7 @@ coffee:
       - if @homestay.remote_price
         .row.stat.attr
           label.hs_mhs_title.title_p_t.pull-left Pet Sitting 
-          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)." 
+          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Sitting - Looking after pets in your home (like house sitting)." 
             i.fa.fa-question-circle
           .stay-costs.price_size.pull-right  
             span.after-work $#{ (@homestay.remote_price).to_i }
@@ -247,7 +259,7 @@ coffee:
       - if @homestay.pet_walking_price
         .row.stat.attr
             label.hs_mhs_title.title_p_t.pull-left Pet Walking 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!" 
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Walking - Including Pickup & Drop off of the pet from your home. Our insurance covers animals in transit!" 
               i.fa.fa-question-circle
             .stay-costs.price_size.pull-right
               span.after-work $#{ (@homestay.pet_walking_price).to_i }
@@ -265,7 +277,7 @@ coffee:
       - if @homestay.visits_price
         .row.stat.attr
             label.hs_mhs_title.title_p_t.pull-left Check up Visit 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Visits - Check the house, feed outside animals, collect mail or feed fish." 
+            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Visits - Check up on your home, feed pets or fish, collect mail." 
               i.fa.fa-question-circle
             .stay-costs.price_size.pull-right
               span.after-work $#{ (@homestay.visits_price).to_i }
@@ -281,17 +293,14 @@ coffee:
               span.lower 
                 |/trip                                                     
       .row.stat.attr
-        .col-xs-7.col-sm-5.entry
-          span style="margin-left: -15px;" Last sign in
-        .col-xs-5.col-sm-7.info
-          span.pull-right style="margin-right:-15px" #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
+        label.hs_mhs_title.title_p_t.pull-left Last sign in
+        span.pull-right style="margin-top:10px" #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
       - if @response_rate_in_percent
         .row.stat.attr
-          .col-xs-7.col-sm-5.entry
-            span style="margin-left: -15px;" Host Responsiveness
-            i.fa.fa-question-circle data-toggle='popover' data-content='% of messages responded to within 24 hours' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
-          .col-xs-5.col-sm-7.info
-            span.pull-right style="margin-right:-15px"  #{ @response_rate_in_percent }%    
+          label.hs_mhs_title.title_p_t.pull-left Host Responsiveness
+          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" data-container='body' data-trigger='hover click' title="% of messages responded within 24 hours"
+            i.fa.fa-question-circle
+          span.pull-right style="margin-top:10px;" #{ @response_rate_in_percent }%    
       .row.stat.attr.map-container
         #map data-lat=@homestay.latitude data-lng=@homestay.longitude
       .row.stat.attr style="text-align:center"

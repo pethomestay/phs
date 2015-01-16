@@ -1,7 +1,7 @@
 - unless review.review.empty?
   .review.item_review_container
     .row.badges_row
-        .col-lg-2 style="min-width:190px"
+        .col-md-2.col-lg-2.hidden-sm.hidden-xs
           span.pull-left.media-left.media-middle
             - if review.user.profile_photo?
               = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
@@ -15,6 +15,23 @@
                   = render 'stars', rating: review.rating
           span.reviewer
             p #{review.created_at.strftime('%F')}
-        .col-lg-10 style="margin-top:-5px;"
+        .col-md-10.col-lg-10.hidden-sm.hidden-xs style="margin-top:-5px;"
           pre.tx_sp.truncated_text #{review.review}
           .hr
+        .col-xs-offset-5.col-sm-offset-5.col-xs-3.col-sm-3.hidden-md.hidden-lg
+          span.pull-left.media-left.media-middle
+            - if review.user.profile_photo?
+              = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - elsif review.user.uid.present?
+              = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+            - else
+              = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
+          span.reviewer.first_name-sa #{review.user.first_name}
+          br
+          span.stars-sa
+                  = render 'stars', rating: review.rating
+          span.reviewer
+            p #{review.created_at.strftime('%F')}
+        .col-xs-12.col-sm-12.hidden-md.hidden-lg style="margin-top:-5px;"
+          pre.tx_sp.truncated_text #{review.review}
+          .hr  

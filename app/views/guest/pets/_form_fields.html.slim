@@ -1,27 +1,39 @@
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 
-
 a.pet_accordian#profile_a_accordian_one
   span.pet_accordian_legend Step 1 - Essentials
   span.header-hint.pet_accordian_label.pet_label Please complete all fields
   span.pet_accordian_image
     i.fa.fa-minus#profile_i_accordian_one
 hr.line_section
-  section id="section-step-one" class="pet_section_scrollable"
-    div.pet_options_section
-      = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
-      = f.input :name, label: 'Pet Name'
-      = f.input :pet_type_id, label: 'Pet Type', collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
-      = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: 'Please specify pet type'
-      = f.input :breed, collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Choose a breed' } }
-      = f.input :sex_id, collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
-    div.pet_options_section
-      = f.input :size_id, label: 'Pet Size', input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-      = f.input :pet_age, label: 'Pet Age', input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-      = f.input :energy_level, label: 'Energy Level', input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
-      = f.input :personalities, hint: 'This will help the Host take better care of him/her. Please check at least three relevant personalities' do
-        br
-        = f.input_field :personalities, collection: PERSONALITIES, as: :check_boxes
+  section id="section-step-one"
+    = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+    label.hs_mhs_title
+    | Pet Name
+    = f.input :name, label: false
+    label.hs_mhs_title
+    | Please Type
+    = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+    label.hs_mhs_title
+    | Please specify pet type
+    = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
+    = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Choose a breed' } } 
+    = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+  .slider_con
+    label.hs_mhs_title style="margin-left:-15px"
+      | Pet Size  
+    = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+    label.hs_mhs_title style="margin-left:-15px"
+      | Pet Age
+    = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+    label.hs_mhs_title style="margin-left:-15px"
+      | Energy Level
+    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+  label.hs_mhs_title
+    | Personalities
+  .phs_help_section 
+    span This will help the Host take better care of him/her. Please check at least three relevant personalities
+  = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont'
 
 a.pet_accordian id="profile_a_accordian_two"
   span.pet_accordian_legend Step 2 - Emergency + Medical
@@ -30,20 +42,19 @@ a.pet_accordian id="profile_a_accordian_two"
     i.fa.fa-plus#profile_i_accordian_two
 hr.line_section
   section id="section-step-two"
-    div.pet_options_section
-      = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
-      = f.input :emergency_contact_name, label: 'Emergency Contact'
-      = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
-      = f.input :vet_name,  label: 'Vet Surgery'
-      = f.input :vet_phone, label: 'Vet Phone'
-      = f.input :council_number, label: 'Council Pet Tag'
-      = f.input :microchip_number, label: 'Microchip #'
-      = f.input :medication, input_html: { rows: 2 }
-    div.pet_options_section
-      label My pet is:
-      = f.input :house_trained, label: 'toilet trained'
-      = f.input :flea_treated, label: 'flea treated'
-      = f.input :vaccinated, label: 'vaccinated'
+    = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
+    = f.input :emergency_contact_name, label: 'Emergency Contact'
+    = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+    = f.input :vet_name,  label: 'Vet Surgery'
+    = f.input :vet_phone, label: 'Vet Phone'
+    = f.input :council_number, label: 'Council Pet Tag'
+    = f.input :microchip_number, label: 'Microchip #'
+    = f.input :medication, input_html: { rows: 2 }
+    label My pet is:
+    .checkbox style="margin-left:15px;" 
+      = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+      = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+      = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
 
 
 coffee:
