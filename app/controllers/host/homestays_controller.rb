@@ -6,7 +6,7 @@ class Host::HomestaysController < Host::HostController
   # GET /host/homestay/new
   def new
     redirect_to edit_host_homestay_path and return if current_user.homestay.present?
-    Intercom::Event.create(:event_name => "viewed My Homestay box", :email => current_user.email, :created_at => Time.now.to_i)
+    Intercom::Event.create(:event_name => "viewed My Homestay box", :email => current_user.email, :created_at => Time.now.to_i) if Rails.env == "production"
     @homestay = current_user.build_homestay
   end
 
@@ -20,7 +20,7 @@ class Host::HomestaysController < Host::HostController
       HomestayCreatedJob.new.async.perform(@homestay)
       #Send email to admin to let them know currently not needed but can be activated later
       #AdminMailer.delay.homestay_created_admin(@homestay.id)
-      Intercom::Event.create(:event_name => "Created a Homestay", :email => current_user.email, :created_at => Time.now.to_i)
+      Intercom::Event.create(:event_name => "Created a Homestay", :email => current_user.email, :created_at => Time.now.to_i) if Rails.env == "production"
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?
