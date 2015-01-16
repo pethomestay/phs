@@ -158,7 +158,7 @@ css:
               .row  
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" Pet Walking Rate
-                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!."
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!"
                       i.fa.fa-question-circle
                   = f.input :pet_walking_price, label: false do
                     .input-group
@@ -305,7 +305,7 @@ css:
                     | Supervision
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
                       i.fa.fa-question-circle            
-                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
+                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :radio_buttons, input_html: { class: 'form-normal form-info'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          

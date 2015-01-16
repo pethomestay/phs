@@ -89,10 +89,16 @@ $search-field-height: 40px;
 }
 
 .search_item_review_container {
-      background-color: #f2f2f2;
-      padding: 15px;
-      margin: 15px -15px -15px -15px;
-      border-top: 1px solid #ccc;
+  background-color: #f2f2f2;
+  padding: 15px;
+  margin: 15px -15px -15px -15px;
+  border-top: 1px solid #ccc;
+}
+
+.item_review_container {
+  padding: 15px;
+  margin: -15px -15px -15px -15px;
+  border-bottom: 1px solid #ccc;
 }
 
 .stay-costs {
@@ -490,4 +496,44 @@ p.ta {
 .hs_mhs_link:hover {
   color: #5cc1c0;
   cursor: pointer;
+}
+
+p.hs_rating {
+  color: $blue-light;
+  font-size: 20px;
+  @media (max-width: $screen-sm-max) {
+        padding-left: 0;
+        font-size: 15px;
+  }      
+}
+
+.bar_top {
+  background-color: #fff; 
+  z-index:10;
+  top: 54px;
+  border: 0;
+  opacity: 1;
+  width:100%;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+
+}
+
+.bar_top_sticky {
+  position: fixed;
+  top:0;
+  background-color: #fff; 
+  z-index:10;
+  border: 0;
+  opacity: 1;
+  width:100%;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.btn-book {
+  height: 54px !important;
+  padding-top: 15px !important;
 }
