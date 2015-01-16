@@ -89,10 +89,16 @@ $search-field-height: 40px;
 }
 
 .search_item_review_container {
-      background-color: #f2f2f2;
-      padding: 15px;
-      margin: 15px -15px -15px -15px;
-      border-top: 1px solid #ccc;
+  background-color: #f2f2f2;
+  padding: 15px;
+  margin: 15px -15px -15px -15px;
+  border-top: 1px solid #ccc;
+}
+
+.item_review_container {
+  padding: 15px;
+  margin: -15px -15px -15px -15px;
+  border-bottom: 1px solid #ccc;
 }
 
 .stay-costs {
@@ -414,7 +420,7 @@ p.ta {
   font-size: 25px;
 }
 
-
+// this is for custom checkboxes
 .collection_cb {
     display: block !important;
     margin-top: 10px;
@@ -427,11 +433,21 @@ p.ta {
     display: block !important;
     margin-left:-30px !important;
     cursor: pointer;
-  }
+ }
+// this is for collection checkboxes 
+.phs_cb_cont {
+  padding-left: 30px;
+}
+
+.phs_cb_sp {
+  margin-left: -30px !important;
+}
+
 .form-group.boolean {
   margin-bottom:0px;
   margin-left:-5px;
-}    
+}   
+
 .hs_mhs_s_tabc {
   padding:10px;
   border-left: 1px solid #ddd;
@@ -472,19 +488,52 @@ p.ta {
   color: #404040;
 }
 
-.hs_mhs_50_20 {
-  margin-left: 50px;
-  margin-top: -20px;
-  font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  color: #404040;
-}
-
 .hs_mhs_title {
-  font-weight:bold;
-  font-size: 15px;
+  font-weight: bold;
+  color: #404040;
+  font-size: 16px;
 }
 .hs_mhs_link:hover {
   color: #5cc1c0;
+  cursor: pointer;
+}
+
+p.hs_rating {
+  color: $blue-light;
+  font-size: 20px;
+  @media (max-width: $screen-sm-max) {
+        padding-left: 0;
+        font-size: 15px;
+  }      
+}
+
+.bar_top {
+  background-color: #fff; 
+  z-index:10;
+  top: 54px;
+  border: 0;
+  opacity: 1;
+  width:100%;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+
+}
+
+.bar_top_sticky {
+  position: fixed;
+  top:0;
+  background-color: #fff; 
+  z-index:10;
+  border: 0;
+  opacity: 1;
+  width:100%;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.btn-book {
+  height: 54px !important;
+  padding-top: 15px !important;
 }

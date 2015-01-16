@@ -1,27 +1,42 @@
 $(document).ready(function() {
 
+  checkCheckBoxValues();
 
-  var num_times_marked = 0;
+  function checkCheckBoxValues() {
+    $('.collection_cb').each(function(){
+      if( $(this).prop( "checked" ) == true ){
+           $(this).addClass( "active" );
+      } else {
+         $(this).removeClass( "active" );
+      }
+    });
+
+    $('.boolean_cb').each(function(){
+      if($(this).prop( "checked" ) == true){
+           $(this).addClass( "active" );
+      } else {
+         $(this).removeClass( "active" );
+      }
+    });
+
+  }
     $( ".collection_cb" ).click(function() { 
-      if( $(this).hasClass("active") && num_times_marked == 0) {
+      if( $(this).hasClass("active") ) {
           $(this).removeClass( "active" );
-          $(this).attr('checked', false); 
-        } else if( !$(this).hasClass("active") && num_times_marked == 0) {
+          $(this).attr("checked", false); 
+        } else if( !$(this).hasClass("active") ){
           $(this).addClass( "active" );
-          $(this).attr('checked', true); 
-        } 
-      num_times_marked++;
-      if(num_times_marked == 2)
-          num_times_marked = 0;   
+          $(this).prop("checked", true); 
+        }  
     });
 
     $( ".boolean_cb" ).click(function() { 
       if( $(this).hasClass("active")) {
           $(this).removeClass( "active" );
-          $(this).attr('checked', false);  
+          $(this).prop('checked', false);  
         } else if( !$(this).hasClass("active")) {
           $(this).addClass( "active" )
-          $(this).attr('checked', true); 
+          $(this).prop("checked"); 
         } 
      
     });  

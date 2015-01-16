@@ -38,7 +38,7 @@
             | ( #{ homestay.user.received_feedbacks.reviewed.count }  )
       - else
           p.display_inline 
-      .stay-costs-2x.display_inline.cost-per-night-2x.pull-right.hidden-xs.hidden-sm
+      .stay-costs-2x.display_inline.pull-right.hidden-xs.hidden-sm
         span $#{(homestay.cost_per_night).to_i}
         span.lower 
           |/24hr

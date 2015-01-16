@@ -51,7 +51,7 @@ $(document).ready(function() {
          var $percent = (index/$total) * 100;
          var wdt = 100/$total;
          var lft = wdt*index;
-         $('#demo-submit-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
+         $('#demo-bv-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
          
          navigation.find('li:eq('+index+') a').trigger('focus');
 
@@ -68,7 +68,7 @@ $(document).ready(function() {
          } else {
              $('#demo-bv-wz').find('.next').show();
              $('#demo-submit-wz').find('.createMyListing').hide().prop('disabled', true);
-         }    
+         }
       },
       onNext: function(){
         isValid = null;

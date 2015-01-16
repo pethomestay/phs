@@ -9,13 +9,15 @@ css:
 
 .homestay-form
   - if f.object.persisted?
-    h3 Listing is Active?
-    .checkbox
-      - if f.object.locked?
-        = f.input :active, as: :boolean, disabled: true, hint: 'This listing is currently waiting for admin approval.', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'} 
-      - else
-        = f.input :active, as: :boolean, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-
+    h3 Make your Listing Public 
+    .alert.alert-info.fade.in style="background-color:#5cc1c0;"
+      button.close data-dismiss="alert"
+        span ×
+      .checkbox style="margin-left:10px;"
+        - if f.object.locked?
+          = f.input :active, as: :boolean, disabled: true, hint: 'This listing is currently waiting for admin approval.', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'} 
+        - else
+          = f.input :active, as: :boolean, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
   div id="demo-bv-wz"  
     ul.row.wz-step.wz-icon-bw.wz-nav-off.mar-top.wz-steps
       li.col-xs-4
@@ -42,11 +44,12 @@ css:
             
             .tab-pane id="demo-main-tab1"  
               .row
-                span.help-block More information lets owners know exactly what kind of help you can provide. Be honest, and ensure you set expectations correctly.
-                span.help-block style="display:inline-block;" Add as many photos as you can of your PetHomeStay.
+                label.hs_mhs_title      
+                  | Photos
                 button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="Upload LANDSCAPE photos (turn your phone sideways!) for the best results. Make sure you include a photo of you with some pets, where you will take them for walks, and where the pet will spend its time in your backyard. Tip - to get awesome photos use Instagram or a similar app!"
-                  i.fa.fa-question-circle
-              = f.input :photos, as: :attachinary  
+                    i.fa.fa-question-circle   
+                .help-block Add as many photos as you can of your PetHomeStay.     
+              = f.input :photos, as: :attachinary, label: false
               .row
                 .hidden-md.hidden-sm.hidden-xs
                   .panel._item_base
@@ -54,12 +57,11 @@ css:
                       .phs_help_section
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Photos
                         .hs_mhs_50 Upload LANDSCAPE photos (turn your phone sideways!) for the best results. Make sure you include a photo of you with some pets, where you will take them for walks, and where the pet will spend its time in your backyard.
                         .hs_mhs_50 Tip - to get awesome photos use Instagram or a similar app!            
                 .col-lg-6
                   .form-group
-                    label
+                    label.hs_mhs_title
                       | Mobile number
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A mobile number is compulsory so we can alert you via text when you have a new Enquiry and the Guest can get in touch. We do not use this for marketing or any external purpose."  
                       i.fa.fa-question-circle
@@ -73,11 +75,10 @@ css:
                         .phs_help_section 
                           span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                             i.fa.fa-paw
-                          .hs_mhs_title Mobile number
                           .hs_mhs_50 A mobile number is compulsory so we can alert you via text when you have a new Enquiry and the Guest can get in touch. We do not use this for marketing or any external purpose.
                 .col-lg-6
                   .form-group      
-                    label
+                    label.hs_mhs_title
                       | PetHomeStay Service Address
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="Your exact address is not shown and is restricted to the general suburb level. If you want to offer services outside your home such as walking or pet sitting, your address provides the catchment area for these types of services."  
                       i.fa.fa-question-circle  
@@ -91,7 +92,6 @@ css:
                         .phs_help_section 
                           span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                             i.fa.fa-paw
-                          .hs_mhs_title PetHomeStay Service Address
                           .hs_mhs_50 Your exact address is not shown and is restricted to the general suburb level. 
                           .hs_mhs_50 If you want to offer services outside your home such as walking or pet sitting, your address provides the catchment area for these types of services.    
               .address-preview.hidden-sm.hidden-xs
@@ -106,26 +106,45 @@ css:
             .tab-pane.fade id="demo-main-tab2"
               .row
                 .col-lg-6
-                  = f.input :cost_per_night, label: 'PetHomeStay Rate per 24h'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="A PetHomeStay is looking after pets in YOUR OWN home."
+                  label.hs_mhs_title  style="margin-left:-15px;"
+                    | Charity Hosts
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - Click on the question icon"
+                    i.fa.fa-question-circle
+                  .checkbox 
+                    = f.input :for_charity, as: :boolean, inline_label: 'Please donate my payments to PetRescue', label: false, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+                .col-lg-6.hidden-md.hidden-sm.hidden-xs          
+                  .panel._item_con
+                    .panel-body style="padding: 10px;"          
+                      .phs_help_section 
+                        span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
+                          i.fa.fa-paw
+                        .hs_mhs_50 PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - 
+                        a style="color: #5cc1c0; margin-left: 50px;" href="/charity-hosts" Click here  
+
+              .row
+                .col-lg-6.hs_mhs_title
+                  label.hs_mhs_title style="margin-left:-15px;" PetHomeStay Rate per 24h  
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="A PetHomeStay is looking after pets in YOUR OWN home. The average Pet Boarding Rate is $30 but you can come back anytime and set it to whatever you want "
                       i.fa.fa-question-circle
+                  = f.input :cost_per_night, label: false  do
                     .input-group
                       .input-group-addon.form_con_add_lg $
-                      = f.input_field :cost_per_night, placeholder: '.00', class: '_form_con_lg'  
+                      = f.input_field :cost_per_night, placeholder: '$10 minimum', class: '_form_con_lg'  
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs
                   .panel._item_con
                     .panel-body style="padding: 10px;"
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title PetHomeStay
                         .hs_mhs_50 Looking after pets in YOUR OWN home.
-                        .hs_mhs_50 Hosts do not provide food as standard!  
+                        .hs_mhs_50 Hosts do not provide food as standard!
+                        .hs_mhs_50 The average Pet Boarding Rate is $30 but you can come back anytime and set it to whatever you want   
               .row  
-                .col-lg-6       
-                  = f.input :remote_price, label: 'Pet Sitting Rate' do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)."
+                .col-lg-6
+                  label.hs_mhs_title style="margin-left:-15px;" Pet Sitting Rate per 24h       
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Sitting - Looking after pets in SOMEONE ELSE'S home (like house sitting)."
                       i.fa.fa-question-circle
+                  = f.input :remote_price, label: false do
                     .input-group
                       .input-group-addon.form_con_add_lg $
                       = f.input_field :remote_price, placeholder: 'per 24 hours',  class: '_form_con_lg'
@@ -135,13 +154,13 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Pet Sitting
                         .hs_mhs_50 Looking after pets in SOMEONE ELSES home (like house sitting). 
               .row  
                 .col-lg-6
-                  = f.input :pet_walking_price, label: 'Pet Walking Rate'do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!."
+                  label.hs_mhs_title style="margin-left:-15px;" Pet Walking Rate
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Walking - Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!"
                       i.fa.fa-question-circle
+                  = f.input :pet_walking_price, label: false do
                     .input-group
                       .input-group-addon $
                       = f.input_field :pet_walking_price, placeholder: 'per hour'
@@ -151,13 +170,13 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Pet Walking
                         .hs_mhs_50 Including Pickup & Drop off of the pet from the Guest House. Our insurance covers animals in transit!
               .row  
-                .col-lg-6
-                  = f.input :pet_grooming_price, label: 'Pet Grooming Rate' do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Grooming - Includes clipping, baths and washes!"
+                .col-lg-6.hs_mhs_title
+                  label.hs_mhs_title style="margin-left:-15px;" Pet Grooming Rate 
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pet Grooming - Includes clipping, baths and washes!"
                       i.fa.fa-question-circle
+                  = f.input :pet_grooming_price, label: false do
                     .input-group
                       .input-group-addon $
                       = f.input_field :pet_grooming_price, placeholder: 'per hour'
@@ -167,13 +186,11 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Pet Grooming
-                        br  
-                        .hs_mhs_50_20 Includes clipping, baths and washes!
+                        .hs_mhs_50 Includes clipping, baths and washes!
               .row  
-                .col-lg-6
+                .col-lg-6 
                   .row
-                    label Check up Visit
+                    label.hs_mhs_title  Check up Visit
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Visits - Check the house, feed outside animals, collect mail or feed fish."
                       i.fa.fa-question-circle
                   .form-group
@@ -181,42 +198,40 @@ css:
                       .input-group-addon $
                       = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
                       .input-group-addon up to
-                      = f.input_field :visits_radius, class: 'span1', placeholder: 'km  -  distance from your house'
+                      = f.input_field :visits_radius, class: 'span1', placeholder: 'km away'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"    
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Visits 
-                        br
-                        .hs_mhs_50_20 Check the house, feed outside animals, collect mail or feed fish   
+                        .hs_mhs_50 Check the house, feed outside animals, collect mail or feed fish   
               .row  
                 .col-lg-6
                   .row
-                    label Pick Up / Drop Offs
+                    label.hs_mhs_title  Pick Up / Drop Offs
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="Pick-Ups & Drop-Offs - As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!"
                       i.fa.fa-question-circle 
                   .form-group
                     .input-group
                       .input-group-addon $
-                      = f.input_field :delivery_price, placeholder: 'per journey', class: 'span2'
+                      = f.input_field :delivery_price, placeholder: 'per trip', class: 'span2'
                       .input-group-addon up to
-                      = f.input_field :delivery_radius, class: 'span1', placeholder: 'km  -  distance from your house'
+                      = f.input_field :delivery_radius, class: 'span1', placeholder: 'km away'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Pick-Ups & Drop-Offs
-                        br  
-                        .hs_mhs_50_20 As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!    
+                        .hs_mhs_50 As a Host you may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!    
             
             .tab-pane.fade id="demo-main-tab3"          
               .row
                 .col-lg-6
-                  = f.input :title, label: 'Service Title'  do
+                  label.hs_mhs_title style="margin-left:-15px;"
+                    | Service Title  
+                  = f.input :title, label: false  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
                       i.fa.fa-question-circle   
                     = f.input_field :title, placeholder: 'Service Title', maxlength: 50
@@ -226,100 +241,84 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Service Title  
                         .hs_mhs_50  50 character limit         
               .row  
                 .col-lg-6
-                  = f.input :description, label: 'Service Detail'  , input_html: { rows: 4}  do
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    | Service Detail 
+                  = f.input :description, label: false , input_html: { rows: 4}  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
                       i.fa.fa-question-circle 
-                    = f.input_field :description, placeholder: 'As much detail as possible', style:'height: 153px;'
+                    = f.input_field :description, style:'height: 253px;'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Service Detail
                         .hs_mhs_50  The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host!
                         br  
                         .hs_mhs_50  Make sure you add as much detail as possible!       
               .row  
                 .col-lg-6
-                  = f.input :favorite_breeds, collection: DOG_BREEDS, label: 'Favourite Breeds', input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    | Favourite Dog Breeds 
+                  = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Favourite Breeds 
-                        .hs_mhs_50 Tell us your 3 favourite breeds - we can match you with Guests who are particularly looking for Hosts with experience in specific breeds of pet.
+                        .hs_mhs_50 Tell us your 3 favourite dog breeds - we can match you with Guests who are particularly looking for Hosts with experience in specific breeds of pet.
               .row
-                .col-lg-6        
-                  = f.input :pet_sizes, label: 'Pet Sizes'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
-                      i.fa.fa-question-circle
-                    = f.input_field :pet_sizes, collection: ReferenceData::Size.all_titles, as: :check_boxes,:item_wrapper_class =>'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }
+                .col-lg-6
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    | Pet Sizes
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
+                      i.fa.fa-question-circle          
+                  = f.input :pet_sizes, label: false, collection: ReferenceData::Size.all_titles, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Pet Sizes  
                         .hs_mhs_50 If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!        
               .row  
                 .col-lg-6
-                  = f.input :energy_level_ids, label: 'Energy Levels'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
-                      i.fa.fa-question-circle 
-                    = f.input_field :energy_level_ids, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => false }
+                  label.hs_mhs_title style="margin-left:-15px;" 
+                    | Energy Levels
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
+                      i.fa.fa-question-circle   
+                  = f.input :energy_level_ids, label: false, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Energy Levels
                         .hs_mhs_50 A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes.       
-              .row 
+              .row
                 .col-lg-6
-                  = f.input :supervision_id, label: 'Supervision'  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
+                  label.hs_mhs_title style="margin-left:-15px;"
+                    | Supervision
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
                       i.fa.fa-question-circle            
-                    = f.input_field :supervision_id, collection: ReferenceData::Supervision.all, as: :check_boxes, :item_wrapper_class => 'form-checkbox form-normal form-info active collection_cb', :input_html => { :checked => true }, label: false  
+                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :radio_buttons, input_html: { class: 'form-normal form-info'}, :item_wrapper_class =>'phs_cb_cont' 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Supervision   
                         .hs_mhs_50 24x7 - You will be at home the majority of the time.
                         .hs_mhs_50 Evenings - You will be at home in the Evenings only.          
                         .hs_mhs_50 Weekends - You will be at home the weekends (Friday night - Sunday night).
               .row
                 .col-lg-6
-                  label style="margin-left:-15px;"
-                  | PetHomeStay Supports
-                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - Click on the question icon"
-                    i.fa.fa-question-circle
-                  .checkbox 
-                    = f.input :for_charity, as: :boolean, inline_label: 'Host Charity', label: false, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-                .col-lg-6.hidden-md.hidden-sm.hidden-xs          
-                  .panel._item_con
-                    .panel-body style="padding: 10px;"          
-                      .phs_help_section 
-                        span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
-                          i.fa.fa-paw
-                        .hs_mhs_title PetHomeStay Supports   
-                        .hs_mhs_50 PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - 
-                        a style="color: #5cc1c0; margin-left: 50px;" href="/charity-hosts" Click here  
-              .row
-                .col-lg-6
-                  label style="margin-left:-15px;"
-                  | Other Benefits
+                  label.hs_mhs_title style="margin-left:-15px;"
+                    | Other Benefits
                   button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you are able to provide these additional benefits for your Guests, please indicate these here!"
                     i.fa.fa-question-circle
                   .checkbox        
@@ -333,8 +332,7 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_title Other Benefits   
-                        .hs_mhs_50 If you are able to provide these additional benefits for your Guests, please indicate these here!   
+                        .hs_mhs_50 If you are able to provide these additional benefits for your Guests, please indicate these here!
 
               .hs_mhs_s_hide
                 = f.input :property_type_id, collection: ReferenceData::PropertyType.all, include_blank: false
@@ -349,18 +347,25 @@ css:
                 = f.input :constant_supervision, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
                 = f.input :supervision_outside_work_hours, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'}
                 = f.input :children_present, as: :boolean, label: false, input_html: { class: 'hs_mhs_s_hide'} 
-                = f.input :website, input_html: {class: 'span4 hs_mhs_s_hide'}
-             
-    .pull-right.pad-all style="margin-top:-15px; margin-right:-15px;"
-      a.previous.hs_mhs_link type="button" Previous
-      button.next.btn.btn-primary style="margin-left:5px;" type="button" Next
+                = f.input :website, input_html: {class: 'span4 hs_mhs_s_hide'}               
 
+    .pull-right.pad-all style="margin-top:-15px; margin-right:-15px;"
+      a.previous.hs_mhs_link type="button" 
+        i.fa.fa-arrow-circle-o-left style="padding-right:5px"
+        span Previous
+      button.next.btn.btn-primary style="margin-left:5px; min-width:200px; font-weight:bold; font-size:18px;" type="button"
+        span NEXT
+        i.fa.fa-arrow-circle-o-right style="padding-left:5px; font-size:20px"
+  
+  / New Fields
+  / Make it only visible to admins at the moment
     /h3
     /  | Do you own pets?
     /  br
     /  small If you do, please complete a pet profile after creating your listing
     /.checkbox
     /  = f.input :pets_present, as: :boolean, label: 'My pets will be present at this address during PetHomeStay bookings', checked_value: 1, unchecked_value: 2
+
 coffee:
   $ ->
     $('.homestay_photos .attachinary-input').attachinary
