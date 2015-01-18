@@ -43,15 +43,14 @@ $(document).ready(function() {
   }
     
     $( ".collection_rb" ).click(function() { 
-
-      if( !$(this).hasClass("active") ) {
-          $( this ).parent().parent().children().children().removeClass( "active" );
-          $( this ).parent().parent().children().children().attr( "checked", false );
-          console.log($(this).parent().parent());
+      if( $(this).hasClass("active") ) {
+          
+        } else if( !$(this).hasClass("active") ){
+          $( this ).parent().parent().children().children().removeClass( "active" );    
           $(this).addClass( "active" );
-          $(this).attr("checked", true);
+          $(this).prop("checked", true); 
         }  
-
+      
     }); 
 
 

@@ -73,6 +73,7 @@ module PetHomestay
     # Configure layout for devise pages
     config.to_prepare do
         Devise::SessionsController.layout 'new_application'
+        Devise::SessionsController.skip_before_filter :track_session_variables
         Devise::RegistrationsController.layout 'new_application'
         Devise::PasswordsController.layout 'new_application'
     end

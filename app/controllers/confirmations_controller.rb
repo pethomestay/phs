@@ -1,5 +1,6 @@
 class ConfirmationsController < ApplicationController
   before_filter :authenticate_user!
+  skip_before_filter :track_session_variables, only: [:update]
 
   def show
     @enquiry = Enquiry.find(params[:enquiry_id])

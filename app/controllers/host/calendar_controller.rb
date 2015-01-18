@@ -1,5 +1,6 @@
 class Host::CalendarController < Host::HostController
   skip_before_filter :host_filters
+  skip_before_filter :track_session_variables
 
   # GET /host/calendar/availability
   # Params

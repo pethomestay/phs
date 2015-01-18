@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   include BookingsHelper
   before_filter :authenticate_user!
   before_filter :homestay_required, only: [:index, :new]
+  skip_before_filter :track_session_variables, only: [:update]
 
   def index
     @bookings = current_user.bookees.valid_host_view_booking_states
@@ -57,33 +58,75 @@ class BookingsController < ApplicationController
         message_content = params[:booking][:message] || "Sorry, the host has declined the booking"
         @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => message_content)
         @booking.update_column(:state, "rejected")
+        Analytics.track(
+          user_id:          current_user.id,
+          event:            "Host declined a booking",
+          properties:       {
+            booking: @booking.to_json,
+            reason:  params[:booking][:message] || "No reason given",
+          },
+          timestamp:        Time.now,
+          context:       {
+            'Google Analytics' => {
+              clientId: google_analytics_client_id
+              },
+            'UserAgent' => request.user_agent,
+            'ip' => request.ip,
+          },
+          integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+        )
         return redirect_to host_messages_path, :alert => "Declined booking"
       end
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
-          # raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "Host rejected a paid booking #{@booking.id}"})
           AdminMailer.host_rejected_paid_booking(@booking).deliver
-          # @booking.mailbox.messages.create! user_id: @booking.booker_id,
-          # message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately #{current_user.name} has declined the booking. You can try other Hosts in your area.\n\n#{params[:booking][:message]}"
-          # @booking.mailbox.messages.create! user_id: @booking.bookee_id,
-          # message_text: "[This is an auto-generated message for the Host]\n\nYou have declined the booking.\n\n#{params[:booking][:message]}"
           @booking.mailbox.update_attributes host_read: false, guest_read: false
+          Analytics.track(
+            user_id:          current_user.id,
+            event:            "Host declined a paid booking",
+            properties:       {
+              booking: @booking.to_json
+            },
+            timestamp:        Time.now,
+            context:          segment_io_context,
+            integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+          )
           return redirect_to host_messages_path, :alert => "Informed #{@booking.booker.name} of rejected booking"
         else
           message = @booking.confirmed_by_host(current_user)
+          Analytics.track(
+            user_id:          current_user.id,
+            event:            "Host accepted a booking",
+            properties:       {
+              booking: @booking.to_json
+            },
+            timestamp:        Time.now,
+            context:          segment_io_context,
+            integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+          )
           return redirect_to host_messages_path, alert: message
         end
       else
         if @booking.update_attributes!(params[:booking])
           @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
-          # @booking.mailbox.messages.create user_id: @booking.bookee_id,
-          # message_text: "[This is an auto-generated message for the Host]\n\nCustom Rate proposed to #{@booking.booker.first_name} for #{view_context.number_to_currency(@booking.amount)} for #{@booking.number_of_nights} days."
-          # @booking.mailbox.messages.create user_id: @booking.booker_id,
-          # message_text: "[This is an auto-generated message for the Guest]\n\n#{current_user.first_name} has proposed a custom rate at #{view_context.number_to_currency(@booking.amount)} in total. Go ahead and book this Homestay if you're happy with it.\n\n#{params[:booking][:message]}"
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
+          Analytics.track(
+            user_id:          current_user.id,
+            event:            "Host sent a custom rate",
+            properties:       {
+              id:        @booking.homestay.id,
+              name:      @booking.homestay.title,
+              price:     @booking.homestay.cost_per_night,
+              quantity: (@booking.check_out_date - @booking.check_in_date).to_i,
+              category:  @booking.homestay.address_city
+            },
+            timestamp:        Time.now,
+            context:          segment_io_context,
+            integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+          )
           return redirect_to host_messages_path, alert: "Custom rate has been sent to #{@booking.booker.first_name}"
         else
           return redirect_to host_messages_path, error: 'Sorry, your custom rate did not go through for some reason. Please try again or contact us at 1300 660 945.'
@@ -152,6 +195,29 @@ class BookingsController < ApplicationController
         end
 
         if result.success?
+          # Send Segment.io
+          Analytics.track(
+            user_id:          current_user.id,
+            event:            "Completed Order",
+            properties:       {
+              orderId:     @booking.id,
+              total:       @booking.amount,
+              revenue:     @booking.phs_service_charge,
+              host_payout: @booking.host_payout,
+              discount:    @booking.coupon.try(:discount_amount),
+              coupon:      @booking.coupon.try(:code),
+              product:     [{
+                id:          @booking.homestay.id,
+                name:        @booking.homestay.title,
+                price:       @booking.homestay.cost_per_night,
+                quantity:   (@booking.check_out_date - @booking.check_in_date).to_i,
+                category:    @booking.homestay.address_city
+              }]
+            },
+            timestamp:        Time.now,
+            context:          segment_io_context,
+            integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+          )
           # Create Payment record
           current_user.payments.create(:booking_id => @booking.id, :user_id => current_user.id, :amount => result.transaction.amount, :braintree_token => params[:payment_method_nonce], :status => result.transaction.status, :braintree_transaction_id => result.transaction.id)
           CouponUsage.find_by_coupon_id_and_user_id(@coupon.id, current_user.id).update_attribute(:booking_id, @booking.id) if @coupon.present?
