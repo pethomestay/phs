@@ -69,49 +69,49 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  # private
-  # # Gets 
-  # def track_session_variables
-  #   if current_user.present?
-  #     Analytics.track(
-  #       user_id:       current_user.id,
-  #       event:         get_useable_name_of_action(params),
-  #       properties:    params.except(:action, :controller),
-  #       timestamp:     Time.now,
-  #       context:       {
-  #         'Google Analytics' => {
-  #           clientId: google_analytics_client_id
-  #           },
-  #         'UserAgent' => request.user_agent,
-  #         'ip' => request.ip,
-  #       },
-  #       integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
-  #     )
+  private
+  # Gets 
+  def track_session_variables
+    if current_user.present?
+      Analytics.track(
+        user_id:       current_user.id,
+        event:         get_useable_name_of_action(params),
+        properties:    params.except(:action, :controller),
+        timestamp:     Time.now,
+        context:       {
+          'Google Analytics' => {
+            clientId: google_analytics_client_id
+            },
+          'UserAgent' => request.user_agent,
+          'ip' => request.ip,
+        },
+        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
+      )
 
-  #   else
-  #     # Sets cookie if not yet set, otherwise, gets the cookie
-  #     if cookies[:segment_anonymous_id].present?
-  #       anonymous_id = cookies[:segment_anonymous_id]
-  #     else
-  #       cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
-  #       anonymous_id = cookies[:segment_anonymous_id]
-  #     end
-  #     Analytics.track(
-  #       user_id:          anonymous_id,
-  #       event:            get_useable_name_of_action(params),
-  #       properties:       params.except(:action, :controller),
-  #       timestamp:        Time.now,
-  #       context:       {
-  #         'Google Analytics' => {
-  #           clientId: google_analytics_client_id
-  #           },
-  #         'UserAgent' => request.user_agent,
-  #         'ip' => request.ip,
-  #       },
-  #       integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
-  #     )
-  #   end
-  # end
+    else
+      # Sets cookie if not yet set, otherwise, gets the cookie
+      if cookies[:segment_anonymous_id].present?
+        anonymous_id = cookies[:segment_anonymous_id]
+      else
+        cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
+        anonymous_id = cookies[:segment_anonymous_id]
+      end
+      Analytics.track(
+        user_id:          anonymous_id,
+        event:            get_useable_name_of_action(params),
+        properties:       params.except(:action, :controller),
+        timestamp:        Time.now,
+        context:       {
+          'Google Analytics' => {
+            clientId: google_analytics_client_id
+            },
+          'UserAgent' => request.user_agent,
+          'ip' => request.ip,
+        },
+        integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
+      )
+    end
+  end
 
   def get_useable_name_of_action(action)
     case params[:controller]
