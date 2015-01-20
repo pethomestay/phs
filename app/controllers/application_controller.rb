@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # before_filter :track_session_variables
+  before_filter :track_session_variables
   protect_from_forgery
 
   def admin_login_required
@@ -120,6 +120,8 @@ class ApplicationController < ActionController::Base
       case params[:action]
       when "home"
         return "Went to homepage"
+      else
+        return "Untracked behaviour in pages"
       end
 
     when "homestays"
@@ -137,7 +139,7 @@ class ApplicationController < ActionController::Base
       when "activate"
         return "Toggle activated for homestay id: #{params[:id]}"
       else
-        "Uknown action within homestays controller"
+        "Untracked behaviour in homestays"
       end
 
     when "registrations"
@@ -151,7 +153,7 @@ class ApplicationController < ActionController::Base
       when "destroy"
         return "User deleting their account"
       else
-        "Unknown action within registrations"
+        "Untracked behaviour in registrations"
       end
 
     when "users/omniauith_callbacks"
@@ -174,7 +176,7 @@ class ApplicationController < ActionController::Base
       when "destroy"
         return "User deleting their account"
       else
-        "Unknown action within users"
+        "Untracked behaviour in users"
       end
 
     when "enquiries"
@@ -220,7 +222,7 @@ class ApplicationController < ActionController::Base
       when "index"
         return "Host dashboard screen"
       else
-        "Untracked event"
+        "Untracked behaviour in host/host"
       end
 
     when "host/homestays"
@@ -233,6 +235,8 @@ class ApplicationController < ActionController::Base
         return "Editing a homestay"
       when "update"
         return "Edited a homestay"
+      else
+        return "Untracked behaviour in host/homestays"
       end
 
     when "host/bookings"
@@ -246,6 +250,8 @@ class ApplicationController < ActionController::Base
         return "Account details screen"
       when "create", "update"
         return "Changed bank account details"
+      else
+        return "Untracked behaviour in host/accounts"
       end
 
     when "guest/guest"
