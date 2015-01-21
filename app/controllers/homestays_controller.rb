@@ -45,6 +45,9 @@ class HomestaysController < ApplicationController
         check_in_date: Date.today,
         check_out_date: Date.today
       })
+    elsif cookies[:segment_anonymous_id].nil?
+      cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
+      anonymous_id = cookies[:segment_anonymous_id]
     end
     Analytics.track(
       user_id:          current_user.try(:id) || cookies[:segment_anonymous_id],
