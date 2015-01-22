@@ -6,3 +6,11 @@
       = render 'form_fields', f: f
       .form-actions
         = f.button :submit, class: 'btn btn-primary text-uppercase'
+  javascript:
+    $('form').on('submit', function(e){
+      if ($('#homestay_title').val() === "" || $('#homestay_description').val() == "" ) {
+        $("html, body").animate({ scrollTop: 0 }, 500);
+        return false;
+        e.preventDefault;
+      }
+    });
