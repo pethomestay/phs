@@ -32,11 +32,11 @@
     tbody
       tr
         td Account Name
-        td #{ @account.name }
+        td #{ @account.try(:name) }
       tr
         td BSB
-        td #{ @account.bsb }
+        td #{ @account.try(:bsb) }
       tr
         td Account Number
-        td #{ @account.account_number }
+        td #{ @account.try(:account_number) }
   = link_to 'EDIT', edit_host_account_path, class: 'btn btn-secondary '
