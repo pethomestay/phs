@@ -2,21 +2,21 @@
 
 %dl.dl-horizontal
   %dt Name
-  %dd= @pet.name
+  %dd= @pet.try(:name)
   %dt Owner Name
-  %dd= @pet.user.name
+  %dd= @pet.user.try(:name)
   %dt Created
   %dd= @pet.created_at
   %dt Type
-  %dd= @pet.pet_type_name
+  %dd= @pet.try(:pet_type_name)
   %dt Breed
-  %dd= @pet.breed
+  %dd= @pet.try(:breed)
   %dt Date of birth
-  %dd= @pet.date_of_birth
+  %dd= @pet.try(:date_of_birth)
   %dt Sex
-  %dd= @pet.sex_name
+  %dd= @pet.try(:sex_name)
   %dt Size
-  %dd= @pet.size_name
+  %dd= @pet.try(:size_name)
 
 %table.pictures
   %caption Pictures
