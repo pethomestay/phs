@@ -120,6 +120,6 @@ class Search
     puts "removed no_reviews #{Time.now - start_time}"
     results_list                    = results_list.sort_by {|h| h.user.average_rating}.reverse!
     puts "sort_by_rating #{Time.now - start_time}"
-    return results_list + recently_signed_up + not_responsive + no_reviews + no_photos
+    return results_list + no_reviews + recently_signed_up + not_responsive + no_photos
   end
 end
