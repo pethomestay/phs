@@ -68,7 +68,6 @@ class Search
       results_list.reject! { |h| (h.unavailable_dates.collect(&:date) & (search_dates)).any? } if search_dates.any?
       search_radius += 2
     end
-
     search_time = Time.now
     puts "Time taken for search= #{(search_time - start_time).seconds}"
 
@@ -111,15 +110,13 @@ class Search
     start_time = Time.now
     puts "#{start_time}"
     no_photos, results_list         = results_list.partition {|h| h.photos.empty? && h.pictures.empty? }
-    puts "removed no_photos #{Time.now - start_time}"
-    not_responsive, results_list    = results_list.partition {|h| h.user.responsiveness_score.nil? || h.user.responsiveness_score < 20 }
-    puts "removed not_responsive #{Time.now - start_time}"
-    recently_signed_up,results_list = results_list.partition {|h| h.user.created_at > Date.today - 30.days}
-    puts "removed old_sign_up #{Time.now - start_time}"
-    no_reviews, results_list        = results_list.partition {|h| h.user.average_rating.nil? }
-    puts "removed no_reviews #{Time.now - start_time}"
-    results_list                    = results_list.sort_by {|h| h.user.average_rating}.reverse!
-    puts "sort_by_rating #{Time.now - start_time}"
-    return results_list + no_reviews + recently_signed_up + not_responsive + no_photos
+    puts "removed no_photos #{Time.now - start_time} (#{no_photos.count}/#{results_list.count} profiles)"
+    # not_responsive, results_list_2    = results_list.partition {|h| h.user.responsiveness_score.nil? || h.user.responsiveness_score < 20 }
+    # puts "removed not_responsive #{Time.now - start_time}"
+    has_reviews, results_list        = results_list.partition {|h| h.user.average_rating.present? && h.user.average_rating > 0 }
+    puts "selected for reviews #{Time.now - start_time} (#{has_reviews.count}/#{results_list.count} profiles)"
+    recently_signed_up, results_list = results_list.partition {|h| h.user.created_at > Date.today - 30.days}
+    puts "removed old_sign_up #{Time.now - start_time} (#{recently_signed_up.count}/#{results_list.count} profiles)"
+    return has_reviews.sort_by {|h| h.user.average_rating}.reverse! + recently_signed_up.sort_by! {|h| h.user.last_sign_in_at}.reverse! + results_list.sort_by! {|h| h.user.last_sign_in_at}.reverse! + no_photos
   end
 end
