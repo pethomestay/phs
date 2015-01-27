@@ -69,26 +69,30 @@ javascript:
                     = " #{feedback.enquiry.homestay.user.name}" 
                   div
                     = " #{feedback.enquiry.homestay.title}" 
-            .panel-body.feedback-body
-              .row
-                .col-sm-12.pull-right
-                  a href=edit_enquiry_feedbacks_path(feedback)
-                    i.fa.fa-pencil-square-o.fa-lg.fa-fw
-                    | edit
+            .panel-body.feedback-body    
               .row 
-                .col-sm-9
-                  blockquote
+                .col-sm-7
+                  p Public Review
+                  blockquote style="padding: 0 20px"
                     = "#{feedback.review}"
                   
                 .col-sm-3
+                  p.text-center Rating
                   - if feedback.enquiry.homestay.user.received_feedbacks.present? 
                     p.display_inline.rating.text-center
                       == rating_stars_awesome feedback.enquiry.homestay.average_rating
+                .col-sm-2
+                  p Action
+                  a href=edit_enquiry_feedbacks_path(feedback)
+                    i.fa.fa-pencil-square-o.fa-lg.fa-fw
+                    span.hidden-sm.hidden-xs Edit
               hr
               .row 
                 .col-sm-12
-                  blockquote
-                    = "#{feedback.private_review}"   
+                 - if feedback.private_review? 
+                    p Private Review
+                    blockquote  style="padding: 0 20px"
+                      = "#{feedback.private_review}"   
               .row
                 .col-sm-12
                   .text-center

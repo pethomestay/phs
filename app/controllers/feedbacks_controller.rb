@@ -2,8 +2,11 @@ class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
   before_filter :set_enquiry, except: [:index, :edit]
-  skip_before_filter :track_session_variables, only: [:create, :index]
+  # skip_before_filter :track_session_variables, only: [:create, :index]
 
+
+  # Need to figure out how to let a host leave feedback. 
+  # Need to figure out where to split the host and guest feedbacks.
   def index
     @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
     @user = current_user 
@@ -29,13 +32,10 @@ class FeedbacksController < ApplicationController
     end
   end
 
+  # At the moment of pushing this - the edit action is not working properly. 
   def edit
-    @user = current_user
-    if involved_party(@enquiry)
-      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
-    else
-      render file: "#{Rails.root}/public/404", format: :html, status: 404
-    end
+      @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
+      render  :layout => "new_application"
   end
 
   private
