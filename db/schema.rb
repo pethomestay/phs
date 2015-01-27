@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141222002901) do
+ActiveRecord::Schema.define(:version => 20150126235954) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -155,8 +155,9 @@ ActiveRecord::Schema.define(:version => 20141222002901) do
     t.integer  "enquiry_id"
     t.integer  "rating"
     t.text     "review"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.text     "private_review"
   end
 
   add_index "feedbacks", ["enquiry_id"], :name => "index_feedbacks_on_enquiry_id"

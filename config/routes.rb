@@ -14,11 +14,13 @@ PetHomestay::Application.routes.draw do
       post :add_note
     end
   end
+
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
-    resource :feedbacks, only: [:new, :create]
+    resource :feedbacks, only: [:new, :edit, :create] 
     get "show_for_guest"
   end
+    
   resources :homestays do
     member do
       get 'favourite'
@@ -73,9 +75,10 @@ PetHomestay::Application.routes.draw do
 
   namespace :guest do
     resources :messages, only: [:index, :create]
+    resources :feedbacks, only: [:index]
     get '/calendar/availability', to: 'calendar#availability'
     post '/conversation/mark_read', to: 'messages#mark_read'
-    get '/favorites', to: 'favorites#index'
+    resources :favorites, only: [:index]
     resources :pets, except: [:show]
     resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'guest#index'
@@ -89,6 +92,7 @@ PetHomestay::Application.routes.draw do
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
+     resources :feedbacks, only: [:index]
     resource :homestay, only: [:new, :create, :edit, :update]
     resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'

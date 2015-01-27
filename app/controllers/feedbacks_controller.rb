@@ -1,7 +1,15 @@
 class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
-  before_filter :set_enquiry
+  before_filter :set_enquiry, except: [:index, :edit]
+  skip_before_filter :track_session_variables, only: [:create, :index]
+
+  def index
+    @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
+    @user = current_user 
+    gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
+    render :layout => "new_application"
+  end
 
   def create
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
@@ -13,6 +21,16 @@ class FeedbacksController < ApplicationController
   end
 
   def new
+    @user = current_user
+    if involved_party(@enquiry)
+      respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
+    else
+      render file: "#{Rails.root}/public/404", format: :html, status: 404
+    end
+  end
+
+  def edit
+    @user = current_user
     if involved_party(@enquiry)
       respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
     else
