@@ -1,15 +1,13 @@
-class FeedbacksController < ApplicationController
+class Host::FeedbacksController < Host::HostController
   respond_to :html
-  before_filter :authenticate_user!
   before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
-
   def index
-    @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
+    @feedbacks = current_user.given_feedbacks # feedbacks given as a host
     @user = current_user 
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
-    render :layout => "new_application"
+    render "feedbacks/index", :layout => "new_application"
   end
 
   def create
