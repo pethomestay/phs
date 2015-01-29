@@ -4,6 +4,7 @@ class Account < ActiveRecord::Base
   belongs_to :user
 
   auto_strip_attributes :account_number, :bsb, delete_whitespaces: true
+  attr_accessible :user_id, :bsb, :name, :account_number
 
   validates_presence_of :account_number, :bsb, :name
   validates_size_of :account_number, minimum: 6, maximum: 20

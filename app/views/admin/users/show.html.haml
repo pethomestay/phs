@@ -41,22 +41,35 @@
 
 / Bank account info
 - if @user.account.present?
-  - a = @user.account
-  %table.table.table-hover
-    %thead
-      %tr
-        %th Payout Account
-    %tbody
-      %tr
-        %td Account Name
-        %td= a.name
-      %tr
-        %td BSB
-        %td= a.bsb
-      %tr
-        %td Account Number
-        %td= a.account_number
-  %br
+  - @account = @user.account
+  / %table.table.table-hover
+  /   %thead
+  /     %tr
+  /       %th Payout Account
+  /   %tbody
+  /     %tr
+  /       %td Account Name
+  /       %td= a.name
+  /     %tr
+  /       %td BSB
+  /       %td= a.bsb
+  /     %tr
+  /       %td Account Number
+  /       %td= a.account_number
+  / %br
+- else
+  - @account = Account.new(:user_id => @user.id)
+.control-group
+  %label Account
+  = simple_form_for([:admin, @account]) do |f|
+    = f.input :user_id, :as => :hidden, :input_html => {:value => @user.id}
+    = f.input :bsb
+    = f.input :account_number
+    = f.input :name
+    = f.submit
+  - if @account.persisted?
+    = link_to "Delete", admin_account_path(@account), :method => :delete
+
 
 .control-group
   %label Unavailable Dates
