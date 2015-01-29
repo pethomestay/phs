@@ -25,7 +25,7 @@
             '
             | LEAVE FEEDBACK
             br
-            | FOR COMPLETED STAYS
+            | FOR COMPLETED STAY
         - elsif conversation.try(:booking) && conversation.booking.owner_accepted != true # Guest view - book homestay button if they haven't already booked
           a.btn.btn-primary href=edit_booking_path(conversation.booking)
             i.fa.fa-check.fa-fw
@@ -38,7 +38,13 @@
             '
             | BOOK THIS HOMESTAY
       - else
-        - if conversation.booking.present? && conversation.booking.state != "rejected"
+        - if conversation.booking.present? && conversation.booking.payment.present? && conversation.booking.check_out_date <= Date.today
+          a.btn.btn-primary href=new_host_feedback_path(conversation.enquiry)
+            '
+            | LEAVE FEEDBACK
+            br
+            | FOR GUEST
+        - elsif conversation.booking.present? && conversation.booking.state != "rejected"
           - if conversation.booking.owner_accepted && conversation.booking.host_accepted.nil? # Host view - Confirm/Reject button
             a.btn.btn-primary href=host_confirm_booking_path(conversation.booking)
               '

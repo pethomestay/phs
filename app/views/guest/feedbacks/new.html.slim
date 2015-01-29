@@ -1,0 +1,46 @@
+css:
+  .feedback-head {
+    cursor : pointer;
+  }
+  .feedback-body {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-top: none;
+  }
+= render layout: 'layouts/user_root' do
+  .favorites-panel
+    .messages-panel
+      .panel-header
+        h4 = "Leave feedback for #{@feedback.subject.first_name}"
+    = simple_form_for([@enquiry, @feedback]) do |f|
+      .panel.panel-default style="margin-top:20px"
+        .panel-heading.panel-colorful.panel-info.feedback-head
+          .media style="padding: 0 5px 5px 5px;"
+            span.pull-left
+              - if @user.profile_photo?
+                = cl_image_tag @user.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+              - elsif @user.uid.present?
+                = facebook_profile_image_tag @user.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+              - else
+                = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
+            .media-body
+              div style="font-size: 20px; margin-top:15px;" 
+                = " #{@feedback.subject.name}"  
+        .panel-body.feedback-body
+          .row
+            .col-sm-12
+              = f.hidden_field :rating, value: f.object.rating || 0
+              - if f.object.errors.present?
+                p.tc.red.text-center= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+              - else
+                p.tc.text-center= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+              .rater.text-center style="font-size:30px"
+                == rating_stars_awesome 0
+          .row 
+            .col-sm-12
+              =f.input :review, placeholder: "Please leave your review here.", label: 'Public Review',input_html: {rows: 4, class: 'review-text span6'}
+          .row style="margin-top:20px"
+            .col-sm-12
+              =f.input :private_review, placeholder: "Please leave your private feedback here (optional)", label: 'Private Review', input_html: {rows: 4, class: 'review-text span6'} 
+      .form-actions style="margin-top:20px;"
+        = f.submit 'SUBMIT FEEDBACK', class: 'btn btn-primary', style: 'margin-bottom: 30px;'
