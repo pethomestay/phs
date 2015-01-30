@@ -54,6 +54,23 @@ class Booking < ActiveRecord::Base
   after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
   before_save  :update_state
 
+
+  # ----- Functionality: AUTO DECLINE BOOKING AFTER 24 HOURS ---------------
+
+  def self.auto_decline
+    unfinished_bookings = Booking.unfinished.select {|b| b.mailbox.inactive_host_replies_mailbox}.each {|b| b.trigger_host_no_activity_reject(true)}
+  end
+
+  # Pass in argument true if want no messages to go out. Typically when this method is used for the first time
+  def trigger_host_no_activity_reject(inform = false)
+    if inform
+      self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "The host has not replied within 24 hours so the enquiry has been closed.")
+      UserMailer.automatically_declined(self).deliver
+    end
+    self.update_column(:state, "rejected")
+  end
+
+
   def is_above_minimum_daily_rate
     errors.add(:subtotal, 'must be at least $10/night') if self.cost_per_night < MINIMUM_DAILY_PRICE
   end

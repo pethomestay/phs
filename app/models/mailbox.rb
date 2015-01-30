@@ -14,6 +14,18 @@ class Mailbox < ActiveRecord::Base
   scope :as_guest, ->(user) { where("guest_mailbox_id = ?", user.id).order('guest_read ASC, created_at DESC') } # Retrieve all conversations relevant in Guest view
   scope :as_host,  ->(user) { where("host_mailbox_id = ?", user.id).order('host_read ASC, created_at DESC') } # Retrieve all conversations relevant in Host view
 
+
+  # Returns true if the mailbox has had no changes by the host in 24 hours
+  def inactive_host_replies_mailbox
+    return false if self.booking.nil? || self.booking.state != "unfinished"
+    last_host_activity = self.messages.where(:user_id => self.host_mailbox_id).last.try(:created_at)  ||
+                         self.messages.where(:user_id => self.guest_mailbox_id).last.try(:created_at) || 
+                         self.booking.updated_at
+    puts last_host_activity
+    return (last_host_activity + 24.hours) < Time.now
+  end
+
+
   def enquiry_or_booking_presence
     if enquiry_id.blank? && booking_id.blank?
       self.errors.add(:enquiry_id, "can't be blank")

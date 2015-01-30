@@ -50,6 +50,13 @@ class UserMailer < ActionMailer::Base
     mail(to: email_with_name, subject: "Your booking has been cancelled by the host")
   end
 
+  def automatically_declined(booking)
+    @booking = booking
+    @user = @booking.bookee
+    @guest = @booking.booker
+    mail(to: "albert@pethomestay.com", subject: "Booking automatically declined")
+  end
+
 
   def guest_cancelled_booking_to_host(booking)
     @booking = booking
