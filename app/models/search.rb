@@ -71,7 +71,7 @@ class Search
     search_time = Time.now
     puts "Time taken for search= #{(search_time - start_time).seconds}"
 
-    results_list = Search.algorithm(results_list) unless @sort_by == "distance"
+    results_list = Search.algorithm(results_list.uniq) unless @sort_by == "distance"
     sort_time = Time.now
     puts "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list.uniq
@@ -117,6 +117,15 @@ class Search
     puts "selected for reviews #{Time.now - start_time} (#{has_reviews.count}/#{results_list.count} profiles)"
     recently_signed_up, results_list = results_list.partition {|h| h.user.created_at > Date.today - 30.days}
     puts "removed old_sign_up #{Time.now - start_time} (#{recently_signed_up.count}/#{results_list.count} profiles)"
-    return has_reviews.sort_by {|h| h.user.average_rating}.reverse! + recently_signed_up.sort_by! {|h| h.user.last_sign_in_at}.reverse! + results_list.sort_by! {|h| h.user.last_sign_in_at}.reverse! + no_photos
+    return Search.sort_reviewed(has_reviews) + recently_signed_up.sort_by! {|h| h.user.last_sign_in_at}.reverse! + results_list.sort_by! {|h| h.user.last_sign_in_at}.reverse! + no_photos
+  end
+
+  # Sorting results with reviews first by same value, then by number of reviews
+
+  def self.sort_reviewed(results_list)
+    final_list = []
+    results_list = results_list.group_by {|h| h.user.average_rating}
+    results_list.each {|k,v| final_list += results_list[k].sort_by {|h| h.user.received_feedbacks.count}.reverse!}
+    return final_list
   end
 end
