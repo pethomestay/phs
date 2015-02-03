@@ -1,17 +1,14 @@
-class FeedbacksController < ApplicationController
+class Host::FeedbacksController < Host::HostController
   respond_to :html
-  before_filter :authenticate_user!
   before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
-
   def index
-    @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
+    @feedbacks = current_user.given_feedbacks 
     @user = current_user 
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
-    render :layout => "new_application"
+    render "feedbacks/index", :layout => "new_application"
   end
->>>>>>> Feedback-module
 
   def create
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
@@ -31,10 +28,10 @@ class FeedbacksController < ApplicationController
     end
   end
 
-  # At the moment of pushing this - the edit action is not working properly. 
   def edit
-      @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
-      render  :layout => "new_application"
+    @feedback = current_user.given_feedbacks.find(params[:id])
+    redirect_to host_path, :alert => "No feedback found" and return unless @feedback
+    render  :layout => "new_application"
   end
 
   private
