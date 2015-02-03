@@ -38,13 +38,7 @@
             '
             | BOOK THIS HOMESTAY
       - else
-        - if conversation.booking.present? && conversation.booking.payment.present? && conversation.booking.check_out_date <= Date.today
-          a.btn.btn-primary href=new_host_feedback_path(conversation.enquiry)
-            '
-            | LEAVE FEEDBACK
-            br
-            | FOR GUEST
-        - elsif conversation.booking.present? && conversation.booking.state != "rejected"
+        - if conversation.booking.present? && conversation.booking.state != "rejected"
           - if conversation.booking.owner_accepted && conversation.booking.host_accepted.nil? # Host view - Confirm/Reject button
             a.btn.btn-primary href=host_confirm_booking_path(conversation.booking)
               '
@@ -54,6 +48,12 @@
               i.fa.fa-pencil-square-o
               '
               | REVIEW BOOKING
+          - elsif conversation.booking.payment.present? && conversation.booking.check_out_date < Date.today
+            a.btn.btn-primary href= new_enquiry_feedbacks_path(conversation.enquiry)
+              '
+              | LEAVE FEEDBACK
+              br
+              | FOR GUEST    
           - elsif conversation.booking.host_accepted && conversation.booking.payment.present?
             a.btn.btn-primary href=booking_host_receipt_path(conversation.booking)
               | VIEW BOOKING

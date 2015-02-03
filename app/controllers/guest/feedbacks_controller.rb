@@ -3,11 +3,8 @@ class Guest::FeedbacksController < Guest::GuestController
   before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
-
-  # Need to figure out how to let a host leave feedback. 
-  # Need to figure out where to split the host and guest feedbacks.
   def index
-    @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
+    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all # feedbacks given as a guest
     @user = current_user 
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "feedbacks/index", :layout => "new_application"
@@ -31,7 +28,6 @@ class Guest::FeedbacksController < Guest::GuestController
     end
   end
 
-  # At the moment of pushing this - the edit action is not working properly. 
   def edit
     @feedback = current_user.given_feedbacks.find(params[:id])
     redirect_to guest_path, :alert => "No feedback found" and return unless @feedback

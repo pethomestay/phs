@@ -71,7 +71,7 @@ javascript:
                     = " #{feedback.enquiry.homestay.title}" 
             .panel-body.feedback-body    
               .row 
-                .col-sm-7
+                .col-sm-9
                   p Public Review
                   blockquote style="padding: 0 20px"
                     = "#{feedback.review}"
@@ -81,11 +81,11 @@ javascript:
                   - if feedback.enquiry.homestay.user.received_feedbacks.present? 
                     p.display_inline.rating.text-center
                       == rating_stars_awesome feedback.enquiry.homestay.average_rating
-                .col-sm-2
-                  p Action
-                  =link_to edit_guest_feedback_path(feedback)
-                    i.fa.fa-pencil-square-o.fa-lg.fa-fw
-                    span.hidden-sm.hidden-xs Edit
+                / .col-sm-2
+                /   p Action
+                /   =link_to edit_enquiry_feedbacks(feedback)
+                /     i.fa.fa-pencil-square-o.fa-lg.fa-fw
+                /     span.hidden-sm.hidden-xs Edit
               hr
               .row 
                 .col-sm-12
@@ -96,10 +96,8 @@ javascript:
               .row
                 .col-sm-12
                   .text-center
-                    a.btn.btn-default.btn-icon.btn-hover-primary.fb-share-btn.btn-fb.add-tooltip href="fb-root" title="" data-original-title="Facebook" style="width:70px;margin-right:5px;"
-                      i.fa.fa-facebook.icon-lg  
-                    a.btn.btn-default.btn-icon.btn-hover-info.btn-tw.add-tooltip href="#" title="" data-original-title="Twitter" style="width:70px;"
-                      i.fa.fa-twitter.icon-lg
+                    = render 'social_sharing'
+  
 javascript:
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function() { 
