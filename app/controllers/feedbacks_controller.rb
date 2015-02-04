@@ -11,7 +11,6 @@ class FeedbacksController < ApplicationController
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render :layout => "new_application"
   end
->>>>>>> Feedback-module
 
   def create
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
