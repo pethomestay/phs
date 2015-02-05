@@ -11,10 +11,13 @@ class Host::FeedbacksController < Host::HostController
   end
 
   def create
+    binding.pry
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
-      redirect_to guest_path, alert: 'Thanks for your feedback!'
+      binding.pry
+      redirect_to host_path, alert: 'Thanks for your feedback!'
     else
+      binding.pry
       render :new
     end
   end
@@ -36,10 +39,13 @@ class Host::FeedbacksController < Host::HostController
 
   private
   def set_enquiry
-    @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.feedbacks.any?
-      redirect_to guest_path,
-        alert: "Thanks, you have already left feedback" and return
+    @enquiry = current_user.homestay.enquiries.find_by_id(params[:enquiry_id])
+    # binding.pry
+    if @enquiry.feedbacks.find_by_user_id(current_user.id).nil?
+      return true
+      # binding.pry
+      # redirect_to guest_path,
+      #   alert: "Thanks, you have already left feedback" and return
     elsif @enquiry.booking.host_accepted == false && @enquiry.booking.owner_accepted == false
       redirect_to guest_path,
         alert: 'The Homestay booking has not been completed yet.' and return
