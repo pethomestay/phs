@@ -1,15 +1,20 @@
 .bg
+  <video class="hidden-sm hidden-xs" style="width:100%" autoplay loop>
+    <source src="videos/doglow.mp4"/>
+  </video>
+  .bg-back.hidden-md.hidden-lg  
 .jumbotron
   .container
     h1 Find Trusted, Local<br id="line-breaker"> Pet Sitters
     = render 'home/host_search_bar', autofocus: true
-    .highlights.hidden-xs
+    h3 The Best Carers - Insured, Interviewed, & Vetted by Us
+    .highlights.hidden-xs style="margin-top: 1em;"
       .highlight
         = image_tag 'home/highlights/kangaroo.png'
         span
-          | Made with love
+          | Australian Owned,
           br
-          | in Australia
+          | Australian Operated
       .highlight.hidden-sm
         span.peace.icon
           strong $10m
@@ -36,6 +41,7 @@
           | 100% Satisfaction
           br
           | Money Back Guarantee
+
     / .highlights.visible-xs-block
     /   .highlight
     /     = image_tag 'home/highlights/peace.png', style: 'height: 50px;'
