@@ -29,6 +29,7 @@ css:
         .panel-body.feedback-body
           .row
             .col-sm-12
+              = f.hidden_field :enquiry_id, value: @enquiry.id
               = f.hidden_field :rating, value: f.object.rating || 0
               - if f.object.errors.present?
                 p.tc.red.text-center= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
