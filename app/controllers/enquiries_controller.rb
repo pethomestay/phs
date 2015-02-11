@@ -16,6 +16,9 @@ class EnquiriesController < ApplicationController
         old_reused_enquiry.save
       end
     end
+    if current_user.pets.empty?
+      @pet = current_user.pets.build(params[:pet])
+    end  
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
       flash[:alert] = 'Your enquiry has been sent to the Host, and there is a record in your My Account Inbox. Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using PetHomeStay!'
@@ -31,6 +34,7 @@ class EnquiriesController < ApplicationController
 
   def show
     @user = @enquiry.user
+    @pet = @user.pet
     @enquiry.proposed_per_day_price = @enquiry.homestay.cost_per_night
     respond_with @enquiry
   end
@@ -57,8 +61,8 @@ class EnquiriesController < ApplicationController
   private
   def find_enquiry
     @enquiry = Enquiry.find_by_homestay_id_and_id!(current_user.homestay.id, params[:id])
-  end
-
+  end 
+    
   def verify_guest
     @enquiry = current_user.enquiries.find(params[:enquiry_id])
     redirect_to guest_path, notice: "No access" and return unless @enquiry
