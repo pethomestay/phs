@@ -125,7 +125,7 @@ class Search
   def self.sort_reviewed(results_list)
     final_list = []
     results_list = results_list.group_by {|h| h.user.average_rating}
-    results_list.each {|k,v| final_list += results_list[k].sort_by {|h| h.user.received_feedbacks.count}.reverse!}
+    results_list.keys.sort.reverse.each {|k| final_list += results_list[k].sort_by {|h| h.user.received_feedbacks.count}.reverse!}
     return final_list
   end
 end
