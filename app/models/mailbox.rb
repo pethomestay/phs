@@ -18,10 +18,10 @@ class Mailbox < ActiveRecord::Base
   # Returns true if the mailbox has had no changes by the host in 24 hours
   def inactive_host_replies_mailbox
     return false if self.booking.nil? || self.booking.state != "unfinished"
-    last_host_activity = self.messages.where(:user_id => self.host_mailbox_id).last.try(:created_at)  ||
-                         self.messages.where(:user_id => self.guest_mailbox_id).last.try(:created_at) || 
-                         self.booking.updated_at
-    puts last_host_activity
+    last_host_activity = self.host_mailbox.current_sign_in_at
+                         # self.messages.where(:user_id => self.host_mailbox_id).last.try(:created_at)  ||
+                         # self.messages.where(:user_id => self.guest_mailbox_id).last.try(:created_at) ||
+                         # self.booking.updated_at
     return (last_host_activity + 24.hours) < Time.now
   end
 
