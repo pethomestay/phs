@@ -393,6 +393,20 @@ coffee:
                   span.input-group-addon
                     i.fa.fa-calendar
                   = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
+              
+              .col-xs-12
+                = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
+                .form-group
+                  .input-group.input-group-lg
+                    span.input-group-addon style='background: #fff;'
+                      i.fa.fa-mobile.fa-fw.fa-lg
+                    input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
+                  p.help-block.text-center
+                    small
+                      | A mobile number is needed so the Host can get in touch!
+                      br
+                      | We don't share or use this for any other purpose :)
+                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
               .col-sm-12
                 h4 Add Your Pet Details
                 = simple_form_for [:guest, current_user.pets.build], wrapper: :bootstrap3 do |f|
@@ -406,7 +420,7 @@ coffee:
                   label.hs_mhs_title
                   | Please specify pet type
                   = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
-                  = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Select 1' } } 
+                  = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', id: 'breed_select_id', multiple:true, data: { placeholder: 'Select 1' } } 
                   = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
                   .slider_con
                     label.hs_mhs_title style="margin-left:-15px"
@@ -423,40 +437,27 @@ coffee:
                   .phs_help_section 
                     span This will help the Host take better care of him/her. Please check at least three relevant personalities
                   = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_width '
-                  = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
-                  = f.input :emergency_contact_name, label: 'Emergency Contact'
-                  = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
-                  = f.input :vet_name,  label: 'Vet Surgery'
-                  = f.input :vet_phone, label: 'Vet Phone'
-                  = f.input :council_number, label: 'Council Pet Tag'
-                  = f.input :microchip_number, label: 'Microchip #'
-                  = f.input :medication, input_html: { rows: 2 }
-                  label My pet is:
-                  .checkbox style="margin-left:15px;" 
-                    = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-                    = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-                    = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-
-                  = f.submit 'ADD PET', class: 'btn btn-primary'
-            br
+                  label.hs_mhs_title.extra_header  style="display:block;cursor:pointer;"
+                    | Extra Details
+                  .extra_section
+                    = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
+                    = f.input :emergency_contact_name, label: 'Emergency Contact'
+                    = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
+                    = f.input :vet_name,  label: 'Vet Surgery'
+                    = f.input :vet_phone, label: 'Vet Phone'
+                    = f.input :council_number, label: 'Council Pet Tag'
+                    = f.input :microchip_number, label: 'Microchip #'
+                    = f.input :medication, input_html: { rows: 2 }
+                    label My pet is:
+                    .checkbox style="margin-left:15px;" 
+                      = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+                      = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+                      = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
             .row
-              .col-xs-12
-                = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-                .form-group
-                  .input-group.input-group-lg
-                    span.input-group-addon style='background: #fff;'
-                      i.fa.fa-mobile.fa-fw.fa-lg
-                    input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
-                  p.help-block.text-center
-                    small
-                      | A mobile number is needed so the Host can get in touch!
-                      br
-                      | We don't share or use this for any other purpose :)
-                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
-          .modal-footer
+              hr    
             button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
-            = f.submit 'SUBMIT', class: 'btn btn-primary'            
-
+            = f.submit 'SUBMIT', class: 'btn btn-primary pull-right'
+            
 coffee:
   $ ->
     # Fire modal if #request-modal is in URL
@@ -559,22 +560,6 @@ coffee:
     $(".chosen-select").chosen
       max_selected_options: 1
 
-    $("#profile_a_accordian_one").on 'click', ->
-       if $("#profile_i_accordian_one").hasClass("fa-minus")
-        $('#section-step-one').slideUp(350)
-        $("#profile_i_accordian_one").removeClass("fa-minus").addClass("fa-plus")
-       else
-        $('#section-step-one').slideDown(350)
-        $("#profile_i_accordian_one").removeClass("fa-plus").addClass("fa-minus")
-
-    $("#profile_a_accordian_two").on 'click', ->
-       if $("#profile_i_accordian_two").hasClass("fa-minus")
-        $('#section-step-two').slideUp(350)
-        $("#profile_i_accordian_two").removeClass("fa-minus").addClass("fa-plus")
-       else
-        $('#section-step-two').slideDown(350)
-        $("#profile_i_accordian_two").removeClass("fa-plus").addClass("fa-minus")
-
     $('.pet_size_id .slider').slider
       formatter: (size_id) ->
         switch size_id
@@ -665,7 +650,7 @@ coffee:
       no_results_text: 'No results matched'
       width: '200px'
 javascript:
-
+  
   $(document).scroll(function () {
     //stick nav to top of page
     var y = $(this).scrollTop();
@@ -680,3 +665,30 @@ javascript:
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
+  $('#pet_pet_type_id_1').prop("checked");
+  $('chosen-select').show();
+  $('#other_pet_type_text_id').hide();
+  
+  $('#pet_pet_type_id_1').click(function() {
+    $('.pet_breed').show();
+    $('#other_pet_type_text_id').hide();
+  });
+  $('#pet_pet_type_id_2').click(function() {
+    $('.pet_breed').hide();
+    $('#other_pet_type_text_id').hide();
+  });
+  $('#pet_pet_type_id_5').click(function() {
+    $('.pet_breed').hide();
+    $('#other_pet_type_text_id').show();
+  });
+
+  $('.extra_section').hide();
+  
+  $('.extra_header').click(function() {
+    if( $('.extra_section').css('display') == 'none') {
+      $('.extra_section').slideDown(350);
+    } else {
+      $('.extra_section').slideUp(350);
+    }
+  });
