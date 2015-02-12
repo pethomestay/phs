@@ -40,6 +40,11 @@ css:
   .phs_icon_wrap {
     border: 1px solid #ddd;
     border-radius:4px;
+  }
+  .phs_badge_wrap {
+    margin: 0 15px 15px 15px;
+    width: 250px;
+    display: inline-block;
   } 
 javascript:
   window.fbAsyncInit = function() {
@@ -155,12 +160,7 @@ coffee:
             a data-toggle="tab" href="#demo-stk-lft-tab-4" Reviews
         .tab-content
           .tab-pane.fade.active.in  id="demo-stk-lft-tab-1"
-            .row style="margin: 0"
-              - if @homestay.for_charity
-                .for-charity style="margin: 0 15px 15px 15px"
-                  = image_tag 'homestay/petrescue.png', style:"width:50px;"
-                  ' Proud Supporter of PetRescue
-                  i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'    
+            .row
               div style="margin: 0 15px 15px 15px"
                 ul.row.wz-step.wz-icon-bw.wz-nav-off.mar-top.wz-steps
                   - if @homestay.professional_qualification
@@ -187,6 +187,18 @@ coffee:
                         span.icon-wrap.icon-wrap-xs.phs_icon_wrap
                           i.fa.fa-shield.fa-lg.homestay_icons
                         p.text-thin Police Check 
+              .container style="text-align: center; margin-top: 15px;"
+                  - if @homestay.for_charity
+                    .for-charity.phs_badge_wrap
+                      = image_tag 'homestay/petrescue.png', style:"width:50px; margin-right:10px"
+                      ' PetRescue Supporter
+                      i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'    
+                  - if @homestay.wildfire_badge
+                    .for-charity.phs_badge_wrap
+                      = image_tag 'homestay/wildfire_badge.png', style:"width:50px; margin-right:10px"
+                      ' Emergency Host
+                      i.fa.fa-question-circle data-toggle='popover' data-content='This host provides much needed care to bushfire effected pets. All earnings are donated to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
+            hr
             .row style="margin: 0"     
               pre.tx_sp.truncated_text #{@homestay.description}
           .tab-pane.fade id="demo-stk-lft-tab-2"

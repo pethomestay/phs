@@ -66,10 +66,13 @@
           - if homestay.emergency_transport
               i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Emergency Transport"       
           - if homestay.for_charity
-            .display_inline.section_group
+            .homestay_icon_wrapper.display_inline.section_group
               = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
+          - if homestay.wildfire_badge
+            .homestay_icon_wrapper.display_inline.section_group
+              = image_tag 'homestay/wildfire_badge.png', class: 'for_charity_sm'
           - else
-              br                   
+              br                        
 
       .row.badges_row
         .col-xs-12.col-sm-12.hidden-md.hidden-lg
@@ -95,10 +98,13 @@
             .homestay_icon_wrapper.display_inline.section_group              
                 i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Emergency Transport"        
           - if homestay.for_charity
+            .homestay_icon_wrapper.display_inline.section_group
               = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
+          - if homestay.wildfire_badge
+            .homestay_icon_wrapper.display_inline.section_group
+              = image_tag 'homestay/wildfire_badge.png', class: 'for_charity_sm'
           - else
-              br
-
+              br    
     .hidden-xs.hidden-sm 
         - if homestay.user.received_feedbacks.reviewed.any?
           = render 'search_review_row', review: homestay.user.received_feedbacks.reviewed.shift ,top: true

@@ -120,7 +120,21 @@ css:
                           i.fa.fa-paw
                         .hs_mhs_50 PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - 
                         a style="color: #5cc1c0; margin-left: 50px;" href="/charity-hosts" Click here  
-
+              .row
+                .col-lg-6
+                  label.hs_mhs_title  style="margin-left:-15px;"
+                    | Emergency Hosts for Fire
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports Hosts that provide Bushfire Emergency pet care. Any money earned, we will donate 100% of it to charity."
+                    i.fa.fa-question-circle
+                  .checkbox 
+                    = f.input :wildfire_badge, as: :boolean, inline_label: 'I provide Emergency Petcare as a Host', label: false, input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
+                .col-lg-6.hidden-md.hidden-sm.hidden-xs          
+                  .panel._item_con
+                    .panel-body style="padding: 10px;"          
+                      .phs_help_section 
+                        span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
+                          i.fa.fa-paw
+                        .hs_mhs_50 PetHomeStay Supports Hosts that provide Bushfire Emergency pet care. Any money earned, we will donate 100% of it to charity.  
               .row
                 .col-lg-6.hs_mhs_title
                   label.hs_mhs_title style="margin-left:-15px;" PetHomeStay Rate per 24h  

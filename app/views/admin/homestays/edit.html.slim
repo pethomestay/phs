@@ -14,6 +14,7 @@ h1 Editing Homestay
     label: 'Energy of pets Host is willing to look after', as: :check_boxes,
     checked: f.object.energy_level_ids
   = f.input :for_charity
+  = f.input :wildfire_badge
   = f.input :emergency_sits
   = f.input :cost_per_night, wrapper_html: {class: 'input-append input-prepend'} do
     .add-on $
