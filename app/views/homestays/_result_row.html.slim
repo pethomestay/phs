@@ -1,5 +1,5 @@
 .media.search_item_container data-listing=homestay.id
-  a href=homestay_path(homestay)     
+  a href=homestay_path(homestay)
     .media-left.image.hidden-xs
       - if homestay.photos?
         = cl_image_tag homestay.photos.first.path, width: 150, height: 150, crop: :fill, class: 'search_item_profile_picture'
@@ -17,7 +17,7 @@
       - elsif homestay.pictures.any?
         = image_tag homestay.pictures.first.file.thumb('100x100#').url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
       - else
-        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'  
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
     .media-body.search_item_media_body.info
       .media-left.display_inline.media-middle.hidden-xs.hidden-sm
         - if homestay.user.profile_photo?
@@ -31,75 +31,75 @@
         - else
           = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 60px;'
       h2.first_name #{ (homestay.user.first_name).titleize }
-      - if homestay.user.received_feedbacks.present? 
+      - if homestay.user.received_feedbacks.present?
           p.display_inline.rating.text-center
             == rating_stars_awesome homestay.average_rating
           p.display_inline.count.hidden-xs.hidden-sm
-            | ( #{ homestay.user.received_feedbacks.reviewed.count }  )
+            | ( #{ homestay.user.received_feedbacks.count }  )
       - else
-          p.display_inline 
+          p.display_inline
       .stay-costs-2x.display_inline.pull-right.hidden-xs.hidden-sm
         span $#{(homestay.cost_per_night).to_i}
-        span.lower 
+        span.lower
           |/24hr
       .stay-costs.display_inline.cost-per-night.pull-right.hidden-md.hidden-lg
         span $#{(homestay.cost_per_night).to_i}
-        span.lower 
+        span.lower
           |/24hr
       p.ta #{ homestay.title }
       h3.title #{ (homestay.address_suburb).upcase } #{ homestay.address_postcode }
       .badges_row
         .hidden-xs.hidden-sm
-          span.description.readmore.truncated_text #{ homestay.description } 
+          span.description.readmore.truncated_text #{ homestay.description }
           - if homestay.constant_supervision
-              i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="24/7 supervision" 
+              i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="24/7 supervision"
           - if homestay.supervision_outside_work_hours
-              i.fa.fa-suitcase.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="After hour supervision" 
+              i.fa.fa-suitcase.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="After hour supervision"
           - if homestay.first_aid
-              i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="First-aid Training" 
+              i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="First-aid Training"
           - if homestay.police_check
-              i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Police Check" 
+              i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Police Check"
           - if homestay.fenced
-              i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Fenced Back Yard" 
+              i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Fenced Back Yard"
           - if homestay.professional_qualification
-              i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Professional Qualification" 
+              i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Professional Qualification"
           - if homestay.emergency_transport
-              i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Emergency Transport"       
+              i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="tooltip" title="Emergency Transport"
           - if homestay.for_charity
             .display_inline.section_group
               = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
           - else
-              br                   
+              br
 
       .row.badges_row
         .col-xs-12.col-sm-12.hidden-md.hidden-lg
           - if homestay.constant_supervision
-            .homestay_icon_wrapper.display_inline.section_group 
+            .homestay_icon_wrapper.display_inline.section_group
                 i.fa.fa-clock-o.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="24/7 supervision"
           - if homestay.supervision_outside_work_hours
-            .homestay_icon_wrapper.display_inline.section_group 
+            .homestay_icon_wrapper.display_inline.section_group
                 i.fa.fa-suitcase.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="After hour supervision"
           - if homestay.first_aid
-            .homestay_icon_wrapper.display_inline.section_group 
-                i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="First-aid Training" 
+            .homestay_icon_wrapper.display_inline.section_group
+                i.fa.fa-medkit.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="First-aid Training"
           - if homestay.police_check
-            .homestay_icon_wrapper.display_inline.section_group 
-                i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Police Check" 
+            .homestay_icon_wrapper.display_inline.section_group
+                i.fa.fa-shield.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Police Check"
           - if homestay.fenced
-            .homestay_icon_wrapper.display_inline.section_group 
-                i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Fenced Back Yard" 
+            .homestay_icon_wrapper.display_inline.section_group
+                i.fa.fa-paw.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Fenced Back Yard"
           - if homestay.professional_qualification
-            .homestay_icon_wrapper.display_inline.section_group 
-                i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Professional Qualification"   
+            .homestay_icon_wrapper.display_inline.section_group
+                i.fa.fa-graduation-cap.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Professional Qualification"
           - if homestay.emergency_transport
-            .homestay_icon_wrapper.display_inline.section_group              
-                i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Emergency Transport"        
+            .homestay_icon_wrapper.display_inline.section_group
+                i.fa.fa-ambulance.fa-fw.fa-2x.homestay_icons.pull-left data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Emergency Transport"
           - if homestay.for_charity
               = image_tag 'homestay/petrescue.png', class: 'for_charity_sm'
           - else
               br
 
-    .hidden-xs.hidden-sm 
+    .hidden-xs.hidden-sm
         - if homestay.user.received_feedbacks.reviewed.any?
           = render 'search_review_row', review: homestay.user.received_feedbacks.reviewed.shift ,top: true
 
