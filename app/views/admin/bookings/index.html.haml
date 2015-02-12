@@ -31,7 +31,8 @@
     - @bookings.sort_by(&:check_out_date).each do |booking|
       - if booking.payment.present?
         - discount = booking.coupon.present? ? booking.coupon.discount_amount : 0
-        %tr{ "data-id" => booking.id }
+        - style = booking.for_charity ? "background: #c9cefe;" : ""
+        %tr{ "data-id" => booking.id, :style => style }
           %td= booking.bookee.name.capitalize
           %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
           %td= booking.check_out_date.strftime('%d %b %y')
@@ -53,7 +54,7 @@
           %td
             %input.booking_paid_confirm{ type: 'button', value: 'YES' }
             - account = booking.bookee.account
-      - else 
+      - else
         %tr{ "data-id" => booking.id }
           %td= booking.booker.name.capitalize
           %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
