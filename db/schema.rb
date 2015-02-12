@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150126235954) do
+ActiveRecord::Schema.define(:version => 20150212003326) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20150126235954) do
     t.integer  "delivery_radius"
     t.text     "energy_level_ids"
     t.integer  "supervision_id"
+    t.boolean  "wildfire_badge"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
