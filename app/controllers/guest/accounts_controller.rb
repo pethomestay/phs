@@ -2,7 +2,12 @@ class Guest::AccountsController < Guest::GuestController
   include BookingsHelper
 
   def new
-    @account = Account.new
+    if current_user.account
+      @account = current_user.account
+      redirect_to edit_guest_account_path
+    else
+      @account = Account.new
+    end
   end
 
   def create
