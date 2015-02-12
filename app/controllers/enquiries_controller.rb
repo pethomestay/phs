@@ -18,6 +18,7 @@ class EnquiriesController < ApplicationController
     end
     if current_user.pets.empty?
       @pet = current_user.pets.build(params[:pet])
+      @pet.save
     end  
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
@@ -34,7 +35,6 @@ class EnquiriesController < ApplicationController
 
   def show
     @user = @enquiry.user
-    @pet = @user.pet
     @enquiry.proposed_per_day_price = @enquiry.homestay.cost_per_night
     respond_with @enquiry
   end
