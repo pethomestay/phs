@@ -54,7 +54,7 @@ class UserMailer < ActionMailer::Base
     @booking = booking
     @user = @booking.bookee
     @guest = @booking.booker
-    mail(to: "albert@pethomestay.com", subject: "Booking automatically declined")
+    mail(to: @user.email, subject: "Booking automatically declined")
   end
 
 

@@ -63,9 +63,8 @@ class Booking < ActiveRecord::Base
 
   # Pass in argument true if want no messages to go out. Typically when this method is used for the first time
   def trigger_host_no_activity_reject(inform = false)
-    return unless self.homestay.id == 325 # This is Tom's demo listing, remove this line to activate this feature
     if inform
-      self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "The host has not replied within 24 hours so the enquiry has been closed.")
+      self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "This Host has not replied within 24 hours so your enquiry to them has been closed.\nIf you have had no responses within 24 hours, please send more Enquiries to Hosts or ring us on 1300 660 945.")
       UserMailer.automatically_declined(self).deliver
     end
     self.update_column(:state, "rejected")
