@@ -1,16 +1,15 @@
 class Host::FeedbacksController < Host::HostController
   respond_to :html
-  before_filter :set_enquiry, except: [:index, :edit, :create]
+  before_filter :set_enquiry, except: [:index, :edit, :create, :update]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
-    @feedbacks = current_user.given_feedbacks 
+    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all 
     @user = current_user 
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
-    render "feedbacks/index", :layout => "new_application"
+    render "host/feedbacks/index", :layout => "new_application"
   end
 
-  # HASH: See comments below regarding what you need to do
   def create
     @enquiry = current_user.homestay.enquiries.find_by_id(params[:feedback][:enquiry_id])
     # redirect_to ? unless @enquiry <== Decide where you want to send the user if for some reason, the enquiry is nil
@@ -27,10 +26,10 @@ class Host::FeedbacksController < Host::HostController
 
   def new
     @user = current_user
-    if involved_party(@enquiry)
+    if involved_party(@enquiry) && @enquiry.feedbacks.find_by_user_id(current_user.id).nil?
       respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
     else
-      render file: "#{Rails.root}/public/404", format: :html, status: 404
+      redirect_to host_path, alert: 'Sorry! You have already left feedback'
     end
   end
 
@@ -38,6 +37,14 @@ class Host::FeedbacksController < Host::HostController
     @feedback = current_user.given_feedbacks.find(params[:id])
     redirect_to host_path, :alert => "No feedback found" and return unless @feedback
     render  :layout => "new_application"
+  end
+
+  def update
+    @feedback = current_user.given_feedbacks.find(params[:id])
+    redirect_to host_path, :alert => "No feedback found" and return unless @feedback
+    @feedback.update_attributes(params[:feedback])
+    @feedback.save
+    redirect_to host_path, alert: 'Feedback Updated!'
   end
 
   private

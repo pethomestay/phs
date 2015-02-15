@@ -75,7 +75,7 @@ PetHomestay::Application.routes.draw do
 
   namespace :guest do
     resources :messages, only: [:index, :create]
-    resources :feedbacks, except: [:destroy, :update]
+    resources :feedbacks, except: [:destroy]
     get '/calendar/availability', to: 'calendar#availability'
     post '/conversation/mark_read', to: 'messages#mark_read'
     resources :favorites, only: [:index]
@@ -92,7 +92,7 @@ PetHomestay::Application.routes.draw do
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
-     resources :feedbacks, except: [:destroy, :update]
+    resources :feedbacks, except: [:destroy]
     resource :homestay, only: [:new, :create, :edit, :update]
     resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'

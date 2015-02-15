@@ -12,15 +12,15 @@ css:
     .messages-panel
       .panel-header
         h4 = "Leave feedback for #{@feedback.subject.first_name}"
-    = simple_form_for([@enquiry, @feedback]) do |f|
+    = simple_form_for([:host, @feedback]) do |f|
       .panel.panel-default style="margin-top:20px"
         .panel-heading.panel-colorful.panel-info.feedback-head
           .media style="padding: 0 5px 5px 5px;"
             span.pull-left
-              - if @user.profile_photo?
-                = cl_image_tag @user.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
-              - elsif @user.uid.present?
-                = facebook_profile_image_tag @user.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+              - if @feedback.subject.profile_photo?
+                = cl_image_tag @feedback.subject.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+              - elsif @feedback.subject.uid.present?
+                = facebook_profile_image_tag @feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
               - else
                 = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
             .media-body
