@@ -100,8 +100,8 @@ $(document).ready(function() {
       },
       onInit : function(){
          $('#enquiry-modal-wizard').find('.submitEnquiry').hide().prop('disabled', true);
-         $("#enquiry-info-tab").hide();
-         $("#pet-info-tab").show();
+         $("#enq_fields").show();
+         $("#pet-info-tab").hide();
       },
       onTabShow: function(tab, navigation, index) {
          var $total = navigation.find('li').length;
@@ -117,12 +117,12 @@ $(document).ready(function() {
          // If it's the last tab then hide the last button and show the finish instead
          if($current == 1) {
             $('#enquiry-modal-wizard').find('.previous').hide();
-            $("#enquiry-info-tab").hide();
-            $("#pet-info-tab").fadeIn(400);
+            $("#enq_fields").fadeIn(400);
+            $("#pet-info-tab").hide();
          } else {
             $('#enquiry-modal-wizard').find('.previous').show();
-            $("#enquiry-info-tab").fadeIn(400);
-            $("#pet-info-tab").hide();
+            $("#enq_fields").hide();
+            $("#pet-info-tab").fadeIn(400);
          }   
          if($current >= $total) {
              $('#enquiry-modal-wizard').find('.next').hide();
@@ -134,20 +134,11 @@ $(document).ready(function() {
       },
       onNext: function(e){
          if ($("#enquiry-info-tab").hasClass('active')) {
-            $("#enquiry-info-tab").fadeIn(400);
+            $("#enq_fields").fadeIn(400);
             $("#pet-info-tab").hide();
-            if ($('#mobile_number_field').val() === "" || $('#addressField').val() === "" || $('#addressField').val === null)   {
-               $("html, body").animate({ scrollTop: 0 }, 500);
-               return false;
-            }
          } else if ($("#pet-info-tab").hasClass('active')) {
-            $("#enquiry-info-tab").hide();
+            $("#enq_fields").hide();
             $("#pet-info-tab").fadeIn(400);
-            if ($('#homestay_cost_per_night').val() === "" || $('#homestay_cost_per_night').val() === null) {
-               $("html, body").animate({ scrollTop: 0 }, 500);
-               e.preventDefault;
-               return false;
-            }
          }
 
         isValid = null;
@@ -171,18 +162,12 @@ $(document).ready(function() {
          mobile_number: {
            validators: {
                notEmpty: {
-                  message: 'Please enter a mobile number to allow guests to contact you'
+                  message: 'Please enter a mobile number to allow guests to contact you.'
                },
                digits: {
                   message: 'This field can contain only digits'
                }
             }
-         },
-         pet_name: {
-            validators: {
-               notEmpty: {
-                  message: 'Please enter the name of your pet.'
-               },
          }
       }
    }).on('success.field.bv', function(e, data) {       
