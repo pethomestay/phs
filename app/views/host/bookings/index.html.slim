@@ -1,3 +1,10 @@
+css:
+  .btn-l {
+    margin-top:-30px;
+  }
+  .btn-r {
+    margin-top:10px
+  }
 = render layout: 'layouts/user' do
   .bookings-panel
     .page-header
@@ -6,10 +13,11 @@
       p You have no past bookings as a host
     - else
       - @bookings.each do |booking|
-        div.well.show-booking-history
+        .well.show-booking-history
+          h4 = booking_status_for_listing(booking)
           - guest = booking.booker
-          .booking-info  style='display: inline-block;'
-            p style='max-width: 350px;'
+          .booking-info 
+            p
               strong
                 ' Guest:
               = guest.name
@@ -33,22 +41,18 @@
                 ' Payout:
               | $#{booking.host_payout}
 
-          .booking-right-panel.pull-right style='min-width:190px;'
-            span.confirmed-block
-              = booking_status_for_listing(booking)
-            br
+          .booking-info
             - if booking.payment.present? || booking.transaction.present?
-              = link_to 'VIEW RECEIPT', booking_host_receipt_path(booking), class: 'btn btn-primary right-panel-btn'
-              br
+              = link_to 'VIEW RECEIPT', booking_host_receipt_path(booking), class: 'btn btn-primary right-panel-btn pull-right btn-r'
               - if booking.check_in_date.present? && booking.check_in_date >= Date.today
                 br
-                = link_to 'CANCEL', booking_host_cancellation_path(booking), class: 'btn btn-primary right-panel-btn'
+                = link_to 'CANCEL', booking_host_cancellation_path(booking), class: 'btn btn-primary right-panel-btn pull-left btn-l'
             - else
-              = link_to "CUSTOM QUOTE", edit_booking_path(booking), class: 'btn btn-primary right-panel-btn'
+              = link_to "CUSTOM QUOTE", edit_booking_path(booking), class: 'btn btn-primary right-panel-btn pull-right btn-r'
             br
             - if ((not is_canceled_booking?(booking) and booking.owner_view?(current_user) and booking.get_days_left >= 0) or (!booking.is_host_view_valid?)) #don't allow a booking to be canceled if it's an old one and paid for
               br
-              - cancel_classes = 'btn btn-primary right-panel-btn'
+              - cancel_classes = 'btn btn-primary right-panel-btn pull-left btn-l'
               - if !booking.is_host_view_valid?
                 - cancel_classes += ' confirm-cancel'
               = link_to 'CANCEL', guest_cancelled_booking_path(booking), class: cancel_classes, id: 'cancel-booking_' + booking.id.to_s
