@@ -4,14 +4,37 @@
 
   .row
     .col-xs-12.visible-xs-block.visible-sm-block
-      = image_tag 'charity-hosts/petrescue-cat.png',  class: 'img-responsive',
-        style: 'margin-bottom: 10px;'
+      = image_tag 'charity-hosts/hut_dog.png',  class: 'img-responsive',style: 'margin-bottom: 10px;width:100%'
     .col-md-7
+      h4 Bushfire Hosts 
+     
+      p 
+        | PetHomeStay feels strongly about helping pets in need.
+        | Our founder Bronwyn is from Western Australia and we felt that bushfire 
+        | affected pets and owners could use the PetHomeStay platform for good. 
+        | Please note that Pet Accident & Emergency Insurance is not applicable on Bushfire Emergency stays.
+
       p
-        strong
-          | Many people feel incredibly passionate about pets and community - so
-          |  PetHomeStay allows them raise money for charity by letting them do what
-          |  they love!
+        | Bushfire Hosts get a special bushfire logo on their listing to show
+        |  that they work for a cause.   
+
+      - if user_signed_in? && current_user.homestay.blank?
+        = link_to 'BECOME A BUSHFIRE HOST WITH PetHomeStay!',
+          new_host_homestay_path, class: 'btn btn-primary btn-block'
+
+      hr    
+    .hidden-xs.hidden-sm.col-md-5
+       = image_tag 'charity-hosts/hut_dog.png',  class: 'img-responsive'
+    .col-xs-12.visible-xs-block.visible-sm-block
+        = image_tag 'charity-hosts/petrescue-cat.png',  class: 'img-responsive',
+        style: 'margin-bottom: 10px; wudth:100%'
+    .col-md-7      
+      h4 Charity Hosts
+
+      p
+        | Many people feel incredibly passionate about pets and community - so
+        |  PetHomeStay allows them raise money for charity by letting them do what
+        |  they love!
 
       p
         | PetHomeStay is proud to support PetRescue, Australia’s leading animal

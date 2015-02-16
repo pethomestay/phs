@@ -11,14 +11,4 @@
                 %input.form-control{autofocus: true, type: "text", name: "search[location]", placeholder: "City or Postcode", 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'manual', 'data-container' => 'body', 'data-content' => 'Please tell us where to search :)'}
             - else
                 %input.form-control{type: "text", name: "search[location]", placeholder: "City or Postcode", 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'manual', 'data-container' => 'body', 'data-content' => 'Please tell us where to search :)'}
-    .form-group#drop-off
-        .input-group.input-group-lg.input-group-flat-right
-            %input.form-control{type: "text", name: "search[check_in_date]", placeholder: "Drop Off", readonly: "", style: "cursor: pointer;"}
-            %span.input-group-addon
-                %i.fa.fa-calendar.fa-lg
-    .form-group#pick-up
-        .input-group.input-group-lg.input-group-flat-right
-            %input.form-control{type: "text", name: "search[check_out_date]", placeholder: "Pick Up", readonly: "", style: "cursor: pointer;"}
-            %span.input-group-addon
-                %i.fa.fa-calendar.fa-lg
     %button#search-btn.btn.btn-lg.btn-primary{type: "submit"} SEARCH

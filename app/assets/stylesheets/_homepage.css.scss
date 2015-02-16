@@ -2,11 +2,11 @@
 
 // Jumbotron
 .bg {
-    background: image-url("home/jumbotron_bg.png") no-repeat center center;
+    background: image-url("home/stillshot.png") no-repeat center center;
     background-size: cover;
     position: absolute;
     width: 100%;
-    height: 550px; // Must be the height of jumbotron plus the height of nav bar
+    height:550px;
     top: 0;
     left: 0;
     z-index: -1;
@@ -15,19 +15,15 @@
         background-position: 0% 30%;
     }
 }
-.bg-back {
-    background: image-url("home/stillshot-home.jpg") no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    width: 100%;
-    height: 550px; // Must be the height of jumbotron plus the height of nav bar
-    top: 0;
-    left: 0;
-    z-index: -1;
 
-    @media (min-width: $screen-md-min) {
-        background-position: 0% 30%;
-    }
+#big-video-wrap {
+    overflow:hidden;
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    z-index:-1;
 }
 .jumbotron {
     margin-bottom: 0;

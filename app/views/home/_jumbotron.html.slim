@@ -1,8 +1,17 @@
-.bg
-  <video class="hidden-sm hidden-xs" style="width:100%" autoplay loop>
-    <source src="videos/doglow.mp4"/>
-  </video>
-  .bg-back.hidden-md.hidden-lg  
+.alert.alert-mint.alert-dismissible.fade.in style="background-color:#ec5c3b; margin-bottom:0" role="alert"
+  button.close data-dismiss="alert"
+    span aria-hidden="true" x
+    span.sr-only "Close" 
+  .container.hidden-sm.hidden-xs
+    = image_tag 'homestay/wildfire_badge.png', style: 'width:40px; padding-right:10px'
+    span.strong EMERGENCY BUSHFIRE HOSTS - To help Bushfire affected Pets, apply to become a Charity Host 
+    a style="color: #5cc1c0;" href="/charity-hosts" click here 
+    span.strong for more information
+  .container.hidden-md.hidden-lg
+    = image_tag 'homestay/wildfire_badge.png', style: 'width:40px; padding-right:10px'
+    span.strong EMERGENCY BUSHFIRE HOSTS - 
+    a style="color: #5cc1c0;" href="/charity-hosts" Click here 
+    span.strong
 .jumbotron
   .container
     h1 Find Trusted, Local<br id="line-breaker"> Pet Sitters
@@ -49,3 +58,10 @@
     /       | PetHomeStay
     /       br
     /       | Guarantee
+
+
+javascript:
+  var BV = new $.BigVideo({useFlashForFirefox:false});
+  BV.init();
+  BV.show('videos/doglow.mp4', {ambient:true, doLoop:true, altSource:'videos/doglow.mp4'});
+    
