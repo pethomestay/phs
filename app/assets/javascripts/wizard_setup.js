@@ -1,40 +1,5 @@
 $(document).ready(function() {
 
-
-// $('#demo-main-wz').bootstrapWizard({
-//       tabClass    : 'wz-steps',
-//       nextSelector  : '.next',
-//       previousSelector  : '.previous',
-//       onTabClick: function(tab, navigation, index) {  
-//          return false;
-//       },
-//       onInit : function(){
-//          $('#demo-main-wz').find('.finish').hide().prop('disabled', true);
-//       },
-//       onTabShow: function(tab, navigation, index) {
-//          var $total = navigation.find('li').length;
-//          var $current = index+1;
-//          var $percent = ($current/$total) * 100;
-//          var wdt = 100/$total;
-//          var lft = wdt*index;
-         
-//          $('#demo-main-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
-         
-         
-//          // If it's the last tab then hide the last button and show the finish instead
-//          if($current >= $total) {
-//             $('#demo-main-wz').find('.next').hide();
-//             $('#demo-main-wz').find('.finish').show();
-//             $('#demo-main-wz').find('.finish').prop('disabled', false);
-//          } else {
-//             $('#demo-main-wz').find('.next').show();
-//             $('#demo-main-wz').find('.finish').hide().prop('disabled', true);
-//          }    
-//       }
-//   });
-
-   // With Bootstrap Validator
-   // =================================================================
    $('#demo-bv-wz').bootstrapWizard({
       tabClass    : 'wz-steps',
       nextSelector   : '.next',
@@ -113,6 +78,111 @@ $(document).ready(function() {
                   message: 'This field can contain only digits'
                }
             }
+         }
+      }
+   }).on('success.field.bv', function(e, data) {          
+      var $parent = data.element.parents('.form-group');
+      
+      $parent.removeClass('has-success');
+      
+   }).on('error.form.bv', function(e) {
+      isValid = false;
+   });
+
+
+   // Enquiry modal  
+   $('#enquiry-modal-wizard').bootstrapWizard({
+      tabClass    : 'wz-steps',
+      nextSelector   : '.next',
+      previousSelector  : '.previous',
+      onTabClick: function(tab, navigation, index) {  
+         return true;
+      },
+      onInit : function(){
+         $('#enquiry-modal-wizard').find('.submitEnquiry').hide().prop('disabled', true);
+         $("#enquiry-info-tab").hide();
+         $("#pet-info-tab").show();
+      },
+      onTabShow: function(tab, navigation, index) {
+         var $total = navigation.find('li').length;
+         var $current = index+1;
+         var $percent = (index/$total) * 100;
+         var wdt = 100/$total;
+         var lft = wdt*index;
+         $('#enquiry-modal-wizard').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
+         
+         navigation.find('li:eq('+index+') a').trigger('focus');
+
+         
+         // If it's the last tab then hide the last button and show the finish instead
+         if($current == 1) {
+            $('#enquiry-modal-wizard').find('.previous').hide();
+            $("#enquiry-info-tab").hide();
+            $("#pet-info-tab").fadeIn(400);
+         } else {
+            $('#enquiry-modal-wizard').find('.previous').show();
+            $("#enquiry-info-tab").fadeIn(400);
+            $("#pet-info-tab").hide();
+         }   
+         if($current >= $total) {
+             $('#enquiry-modal-wizard').find('.next').hide();
+             $('#enquiry-modal-wz').find('.submitEnquiry').show().prop('disabled', false);
+         } else {
+             $('#enquiry-modal-wizard').find('.next').show();
+             $('#enquiry-modal-wz').find('.submitEnquiry').hide().prop('disabled', true);
+         }
+      },
+      onNext: function(e){
+         if ($("#enquiry-info-tab").hasClass('active')) {
+            $("#enquiry-info-tab").fadeIn(400);
+            $("#pet-info-tab").hide();
+            if ($('#mobile_number_field').val() === "" || $('#addressField').val() === "" || $('#addressField').val === null)   {
+               $("html, body").animate({ scrollTop: 0 }, 500);
+               return false;
+            }
+         } else if ($("#pet-info-tab").hasClass('active')) {
+            $("#enquiry-info-tab").hide();
+            $("#pet-info-tab").fadeIn(400);
+            if ($('#homestay_cost_per_night').val() === "" || $('#homestay_cost_per_night').val() === null) {
+               $("html, body").animate({ scrollTop: 0 }, 500);
+               e.preventDefault;
+               return false;
+            }
+         }
+
+        isValid = null;
+         $('#enquiry-modal-wizard-form').bootstrapValidator('validate');
+         if(isValid === false)return false;
+      }
+   });
+
+   
+   
+   
+   var isValid;
+   $('#enquiry-modal-wizard-form').bootstrapValidator({   
+      message: 'This value is not valid',
+      feedbackIcons: {
+         valid: 'fa fa-check-circle fa-lg text-success',
+         invalid: 'fa fa-times-circle fa-lg',
+         validating: 'fa fa-refresh'
+      },
+      fields: {
+         mobile_number: {
+           validators: {
+               notEmpty: {
+                  message: 'Please enter a mobile number to allow guests to contact you'
+               },
+               digits: {
+                  message: 'This field can contain only digits'
+               }
+            }
+         },
+         pet_name: {
+            validators: {
+               notEmpty: {
+                  message: 'Please enter the name of your pet.'
+               },
          }
       }
    }).on('success.field.bv', function(e, data) {       

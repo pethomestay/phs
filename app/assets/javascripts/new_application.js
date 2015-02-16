@@ -28,6 +28,7 @@
 //= require owl.carousel
 //= require popover
 //= require moment
+//= require jquery.slimscroll.min
 //= require jquery_nested_form
 //= require chosen-jquery
 //= require gmaps
