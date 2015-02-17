@@ -19,7 +19,7 @@
         |  that they work for a cause.   
 
       - if user_signed_in? && current_user.homestay.blank?
-        = link_to 'BECOME A BUSHFIRE HOST WITH PetHomeStay!',
+        = link_to 'BECOME A BUSHFIRE HOST',
           new_host_homestay_path, class: 'btn btn-primary btn-block'
 
       hr    
@@ -67,7 +67,7 @@
           style: 'padding-bottom: 15px;'
 
       - if user_signed_in? && current_user.homestay.blank?
-        = link_to 'BECOME A CHARITY HOST WITH PetHomeStay!',
+        = link_to 'BECOME A CHARITY HOST',
           new_host_homestay_path, class: 'btn btn-primary btn-block',
           style: 'margin-bottom: 10px;'
 
