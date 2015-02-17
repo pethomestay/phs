@@ -30,6 +30,8 @@
 //= require moment
 //= require video
 //= require bigvideo
+//= require bootstrap-modal
+//= require bootstrap-modalmanager
 //= require jquery_nested_form
 //= require chosen-jquery
 //= require gmaps

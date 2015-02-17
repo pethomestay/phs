@@ -1,31 +1,35 @@
-.modal.fade#coupon-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close type='button' data-dismiss='modal'
-            span aria-hidden='true' &times;
-            span.sr-only Close
-          h4.modal-title.request-label Promo Code
-        = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3 do |f|
-          .modal-body
-            .row
-              .col-sm-12
-                p If you have a Promo Code, enter it here
-                .input-group.input-group-lg.left-merged.enquiry_check_in_date
-                    span.input-group-addon.custom
-                      i.fa.fa-share-alt
-                    = f.input_field :coupon_code, value: "", placeholder: "ABC123", as: :string, :label => "Coupon code"
-                p.text-center
-                  | -- or --
-                p
-                  button.btn.btn-facebook-sign-up.fb-share-btn
-                    i.fa.fa-facebook.fa-fw
-                    |  Get $5 off your first booking by sharing us on FaceBook
-
-          .modal-footer
-            button.btn.btn-default.cancel-coupon#cancel-code-prompt type='button' data-dismiss='modal'
-              | I don't want to use a code
-            = f.submit 'Submit', class: 'btn btn-primary'
+.modal.fade#coupon-modal tabindex='-1'
+  .modal-header
+    button.close type='button' data-dismiss='modal'
+      span aria-hidden='true' &times;
+      span.sr-only Close
+    h4.modal-title.request-label Promo Code
+  = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3 do |f|
+    .modal-body
+      .row
+        .col-sm-12
+          p If you have a Promo Code, enter it here
+          .input-group.input-group-lg.left-merged.enquiry_check_in_date
+              span.input-group-addon.custom
+                i.fa.fa-share-alt
+              = f.input_field :coupon_code, value: "", placeholder: "ABC123", as: :string, :label => "Coupon code"
+          p.text-center
+            | -- or --
+          p
+            button.btn.btn-facebook-sign-up.fb-share-btn.hidden-xs
+              i.fa.fa-facebook.fa-fw
+              span
+                |  Get $5 off your first booking by sharing us on FaceBook
+          p
+            button.btn.btn-facebook-sign-up.fb-share-btn.hidden-sm.hidden-md.hidden-lg
+              i.fa.fa-facebook.fa-fw
+              span
+                |  Get $5 off by sharing
+        
+    .modal-footer
+      button.btn.btn-default.cancel-coupon#cancel-code-prompt type='button' data-dismiss='modal'
+        | I don't want to use a code
+      = f.submit 'Submit', class: 'btn btn-primary'
 javascript:
   $('#cancel-code-prompt').on('click', function(){
     $.ajax({
@@ -77,3 +81,5 @@ javascript:
   javascript:
     $('#user_coupon_code').val("#{cookies[:code]}");
     $('form').submit();
+
+    
