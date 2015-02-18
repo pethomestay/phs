@@ -100,29 +100,34 @@ $(document).ready(function() {
       },
       onInit : function(){
          $('#enquiry-modal-wizard').find('.submitEnquiry').hide().prop('disabled', true);
-         $("#enq_fields").show();
-         $("#pet-info-tab").hide();
+         $("#enq_fields").hide();
+         $("#pet-info-tab").show();
       },
       onTabShow: function(tab, navigation, index) {
          var $total = navigation.find('li').length;
          var $current = index+1;
          var $percent = (index/$total) * 100;
-         var wdt = 100/$total;
-         var lft = wdt*index;
-         $('#enquiry-modal-wizard').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
+         var margin = (100/$total)/2;
+         $('#enquiry-modal-wizard').find('.progress-bar').css({width:$percent+'%', 'margin': 0 + 'px ' + margin + '%'});
          
          navigation.find('li:eq('+index+') a').trigger('focus');
 
-         
          // If it's the last tab then hide the last button and show the finish instead
          if($current == 1) {
             $('#enquiry-modal-wizard').find('.previous').hide();
-            $("#enq_fields").fadeIn(400);
+            $("#pet-info-tab").fadeIn(400);
+            $("#enq_fields").hide();
+            $("#submit-info-tab").hide();
+         } else if($current == 2) {
+            $('#enquiry-modal-wizard').find('.previous').show();
             $("#pet-info-tab").hide();
+            $("#enq_fields").fadeIn(400);
+            $("#submit-info-tab").hide();
          } else {
             $('#enquiry-modal-wizard').find('.previous').show();
+            $("#pet-info-tab").hide();
             $("#enq_fields").hide();
-            $("#pet-info-tab").fadeIn(400);
+            $("#submit-info-tab").fadeIn(400);
          }   
          if($current >= $total) {
              $('#enquiry-modal-wizard').find('.next').hide();
@@ -133,13 +138,7 @@ $(document).ready(function() {
          }
       },
       onNext: function(e){
-         if ($("#enquiry-info-tab").hasClass('active')) {
-            $("#enq_fields").fadeIn(400);
-            $("#pet-info-tab").hide();
-         } else if ($("#pet-info-tab").hasClass('active')) {
-            $("#enq_fields").hide();
-            $("#pet-info-tab").fadeIn(400);
-         }
+         
 
         isValid = null;
          $('#enquiry-modal-wizard-form').bootstrapValidator('validate');

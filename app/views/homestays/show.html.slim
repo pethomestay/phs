@@ -54,6 +54,7 @@ css:
     font-weight:bold; 
     font-size:18px;
   }
+
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
@@ -379,29 +380,37 @@ coffee:
   / Request a meeting modal
   .modal.fade#request-modal-add-pet tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
     .modal-dialog.rocket
-      .modal-content
+      .modal-content id="enquiry-modal-wizard"  
         .modal-header
           button type='button' class='close' data-dismiss='modal'
             span aria-hidden='true' &times;
             span.sr-only Close
-          h4.modal-title.request-label Request a meetings
+          h4.modal-title.request-label Request a Meeting
         
-        .modal-body id="enquiry-modal-wizard"  
-          ul.row.wz-step.wz-icon-bw.wz-nav-off.mar-top.wz-steps
-            li.col-xs-6
-              a data-toggle="tab" href="#enquiry-info-tab" aria-expanded="true"
-                span.icon-wrap.icon-wrap-xs.hs_mhs_s_bg-info  
-                  i.fa.fa-user
-                p.text-thin Enquiry Info  
-            li.col-xs-6
-              a data-toggle="tab" href="#pet-info-tab"
-                span.icon-wrap.icon-wrap-xs.hs_mhs_s_bg-info  
-                  i.fa.fa-usd
-                p.text-thin Pet Info
-          
-          .progress.progress-xs
-            div.progress-bar.progress-bar-primary    
-          
+        .modal-body 
+          .wz-heading
+            
+            .progress.progress-sm.progress-light-base
+              .progress-bar.progress-bar-primary    
+           
+            ul.row.wz-icon-bw.wz-nav-off 
+              li.col-xs-4
+                a data-toggle="tab" href="#pet-info-tab" aria-expanded="true"
+                  span.icon-wrap.icon-wrap-sm.icon-circle.bg-mint
+                    i.wz-icon.fa.fa-paw.fa-2x
+                    i.wz-icon-done.fa.fa-check.fa-2x
+              li.col-xs-4
+                a data-toggle="tab" href="#enquiry-info-tab"
+                  span.icon-wrap.icon-wrap-sm.icon-circle.bg-mint
+                    i.wz-icon.fa.fa-user.fa-2x
+                    i.wz-icon-done.fa.fa-check.fa-2x
+              li.col-xs-4
+                a data-toggle="tab" href="#submit-info-tab" aria-expanded="true"
+                  span.icon-wrap.icon-wrap-sm.icon-circle.bg-mint
+                    i.wz-icon.fa.fa-paper-plane.fa-2x
+                    i.wz-icon-done.fa.fa-check.fa-2x             
+
+
           = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
             .tab-pane id="enquiry-info-tab"   
               - flash.each do |type, message|
@@ -436,33 +445,31 @@ coffee:
                     = f.input :reuse_message, as: :hidden, input_html: { value: 1 }    
                 .tab-pane id="pet-info-tab" 
                   = simple_form_for [:guest, current_user.pets.build], wrapper: :bootstrap3 do |f|
-                    #pet-items-wz  
-                      = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
-                      label.hs_mhs_title
-                      | Pet Name
-                      = f.input :name, label: false
-                      label.hs_mhs_title
-                      | Please Type
-                      = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+                    .modal-body#pet-items-wz  
+                      .hidden
+                        = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
                       .row style="margin-bottom: 10px;"
-                        .col-sm-4
+                        .col-xs-4
                           .item.phs_pet_icon_wrap#pet_1_demo
-                            = image_tag 'homestay/dog56.png', style: 'max-width: 95px; cursor:pointer;'
+                            = image_tag 'homestay/dog56.png', style: 'max-width: 45px; cursor:pointer;'
                           .item.phs_pet_icon_wrap
                             i.fa.fa-check-circle.fa-2x#pet_icon_demo_1  
-                        .col-sm-4
+                        .col-xs-4
                           .item.phs_pet_icon_wrap#pet_2_demo
-                            = image_tag 'homestay/cat19.png', style: 'max-width: 95px; cursor:pointer;'
+                            = image_tag 'homestay/cat19.png', style: 'max-width: 45px; cursor:pointer;'
                           .item.phs_pet_icon_wrap
                             i.fa.fa-check-circle.fa-2x#pet_icon_demo_2
-                        .col-sm-4
+                        .col-xs-4
                           .item.phs_pet_icon_wrap#pet_3_demo
-                            = image_tag 'homestay/mouse33.png', style: 'max-width: 95px; cursor:pointer;'          
+                            = image_tag 'homestay/mouse33.png', style: 'max-width: 45px; cursor:pointer;'          
                           .item.phs_pet_icon_wrap
                             i.fa.fa-check-circle.fa-2x#pet_icon_demo_3    
                       label.hs_mhs_title
+                      | Pet Name
+                      = f.input :name, label: false, input_html: {name: 'pet_name'}
+                      label.hs_mhs_title
                       | Please specify pet type
-                      = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
+                      = f.input :other_pet_type, input_html: {id: 'other_pet_type_text_id' }, label: false 
                       = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Select 1' } } 
                       = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
                       .slider_con
@@ -472,17 +479,56 @@ coffee:
                         label.hs_mhs_title style="margin-left:-15px"
                           | Pet Age
                         = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-                        label.hs_mhs_title style="margin-left:-15px"
-                          | Energy Level
-                        = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+                        = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+                      = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+                      
                       label.hs_mhs_title
                         | Personalities
                       .phs_help_section 
                         span This will help the Host take better care of him/her. Please check at least three relevant personalities
                       = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_width '
                   
-                  = f.submit 'ADD PET', class: 'btn btn-primary'
-                  button type='button' class='btn btn-default' data-dismiss='modal' CANCEL          
+                  = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-primary'
+                  
+                
+
+                .tab-pane id="submit-info-tab" 
+                  .modal-body
+                    h3 
+                      | We have notified this Host and they
+                      | have 24 hours to get back to you.
+
+                    p
+                      | Go to My Account Page to see all responses
+                      | from Hosts.
+
+                    p
+                      | Simply click 'Book this Homestay' when you are
+                      | ready to confirm and pay.
+                    .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"  
+                      p
+                        | Confirm and Pay via PetHomeStay for pet insurance, 
+                        | 24x7 Support and feedback
+                    
+                    = link_to 'Message Another Host', guest_path, class: 'btn btn-primary btn-block'  
+                    
+                    p.text-center
+                      | or
+
+                    = link_to 'Go to My Account', guest_path, class: 'btn btn-primary btn-block'
+    
+                        
+
+
+
+        .modal-footer id="enquiry-modal-wz"
+          button type='button' class='btn btn-default pull-left' data-dismiss='modal' CANCEL
+          button.next.btn.btn-primary.pull-right.phs_actionBtn
+            span NEXT
+            i.fa.fa-arrow-circle-o-right style="padding-left:5px; font-size:20px"
+          a.previous.hs_mhs_link.pull-right style="padding-top:10px"
+            i.fa.fa-arrow-circle-o-left style="padding-right:5px"
+            span Previous            
 / - if user_signed_in? and current_user.pets.empty?
 /   / Request a meeting modal
 /   .modal.fade#request-modal-add-pet tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
