@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150126235954) do
+ActiveRecord::Schema.define(:version => 20150219005915) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -104,10 +104,11 @@ ActiveRecord::Schema.define(:version => 20150126235954) do
     t.decimal  "credit_referrer_amount"
     t.date     "valid_from"
     t.date     "valid_to"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "coupon_limit"
     t.integer  "users_count",            :default => 0
+    t.boolean  "is_expired",             :default => false
   end
 
   create_table "enquiries", :force => true do |t|
@@ -215,6 +216,8 @@ ActiveRecord::Schema.define(:version => 20150126235954) do
     t.integer  "delivery_radius"
     t.text     "energy_level_ids"
     t.integer  "supervision_id"
+    t.text     "auto_interest_sms"
+    t.text     "auto_decline_sms"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
@@ -294,6 +297,22 @@ ActiveRecord::Schema.define(:version => 20150126235954) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "recommendations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.text     "review"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "shorteners", :force => true do |t|
+    t.string   "code"
+    t.integer  "hit_count"
+    t.string   "end_point"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "transactions", :force => true do |t|
     t.integer  "booking_id"
     t.string   "transaction_id"
@@ -361,6 +380,7 @@ ActiveRecord::Schema.define(:version => 20150126235954) do
     t.integer  "braintree_customer_id"
     t.boolean  "opt_out_sms",            :default => false
     t.decimal  "responsiveness_score"
+    t.string   "hex"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
