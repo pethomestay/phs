@@ -39,9 +39,11 @@ class PagesController < ApplicationController
     return unless @host && @host.admin? # Remove @host.admin? to enable for all users
     @guest = @enquiry.booking.booker
     if (params[:message] =~ /^yes/i).present? # Sends interested SMS content to guest
-      message = @host.homestay.auto_interest_sms || @host.homestay.default_auto_interest_sms
+      message = "#{@host.first_name}(#{@host.homestay.address_postcode}): "
+      message += @host.homestay.auto_interest_sms || @host.homestay.default_auto_interest_sms
       send_sms(to: @guest, text: message, ref: @enquiry.id)
     elsif (params[:message] =~ /^no/i).present? # Sends declined SMS content to guest
+      # Reject the booking
       message = @host.homestay.auto_decline_sms || @host.homestay.default_auto_decline_sms
       send_sms(to: @guest, text: message, ref: @enquiry.id)
     else
