@@ -14,7 +14,6 @@ class Pet < ActiveRecord::Base
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
   validates :pet_age, inclusion: { in: 1..15 }
-  validate :at_least_three_personalities
 
   serialize :personalities, Array
 

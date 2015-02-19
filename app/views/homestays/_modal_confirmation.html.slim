@@ -1,0 +1,30 @@
+.modal-header
+  button type='button' class='close' data-dismiss='modal'
+    span aria-hidden='true' &times;
+    span.sr-only Close
+  h4.modal-title.request-label Meeting Request Sent
+
+.modal-body
+  h3 
+    | We have notified this Host and they
+    | have 24 hours to get back to you.
+
+  p
+    | Go to My Account Page to see all responses
+    | from Hosts.
+
+  p
+    | Simply click 'Book this Homestay' when you are
+    | ready to confirm and pay.
+  .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"  
+    p
+      | Confirm and Pay via PetHomeStay for pet insurance, 
+      
+      | 24x7 Support and feedback
+  
+  = link_to 'Message Another Host', root_path, class: 'btn btn-primary btn-block'  
+  
+  p.text-center
+    | or
+
+  = link_to 'Go to My Account', guest_path, class: 'btn btn-primary btn-block'

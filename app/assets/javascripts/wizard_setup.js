@@ -1,40 +1,5 @@
 $(document).ready(function() {
 
-
-// $('#demo-main-wz').bootstrapWizard({
-//       tabClass    : 'wz-steps',
-//       nextSelector  : '.next',
-//       previousSelector  : '.previous',
-//       onTabClick: function(tab, navigation, index) {  
-//          return false;
-//       },
-//       onInit : function(){
-//          $('#demo-main-wz').find('.finish').hide().prop('disabled', true);
-//       },
-//       onTabShow: function(tab, navigation, index) {
-//          var $total = navigation.find('li').length;
-//          var $current = index+1;
-//          var $percent = ($current/$total) * 100;
-//          var wdt = 100/$total;
-//          var lft = wdt*index;
-         
-//          $('#demo-main-wz').find('.progress-bar').css({width:wdt+'%',left:lft+"%", 'position':'relative', 'transition':'all .5s'});
-         
-         
-//          // If it's the last tab then hide the last button and show the finish instead
-//          if($current >= $total) {
-//             $('#demo-main-wz').find('.next').hide();
-//             $('#demo-main-wz').find('.finish').show();
-//             $('#demo-main-wz').find('.finish').prop('disabled', false);
-//          } else {
-//             $('#demo-main-wz').find('.next').show();
-//             $('#demo-main-wz').find('.finish').hide().prop('disabled', true);
-//          }    
-//       }
-//   });
-
-   // With Bootstrap Validator
-   // =================================================================
    $('#demo-bv-wz').bootstrapWizard({
       tabClass    : 'wz-steps',
       nextSelector   : '.next',
@@ -115,22 +80,63 @@ $(document).ready(function() {
             }
          }
       }
-   }).on('success.field.bv', function(e, data) {       
-      // $(e.target)  --> The field element
-      // data.bv      --> The BootstrapValidator instance
-      // data.field   --> The field name
-      // data.element --> The field element
-      
+   }).on('success.field.bv', function(e, data) {          
       var $parent = data.element.parents('.form-group');
       
-      // Remove the has-success class
       $parent.removeClass('has-success');
       
-      
-      // Hide the success icon
-      //$parent.find('.form-control-feedback[data-bv-icon-for="' + data.field + '"]').hide();
    }).on('error.form.bv', function(e) {
       isValid = false;
+   });
+
+
+   // Enquiry modal  
+   $('#enquiry-modal-wizard').bootstrapWizard({
+      tabClass    : 'wz-steps',
+      nextSelector   : '.next',
+      previousSelector  : '.previous',
+      onTabClick: function(tab, navigation, index) {  
+         return false;
+      },
+      onInit : function(){
+         $("#enq_fields").hide();
+         $("#pet-items-wz").show();
+      },
+      onTabShow: function(tab, navigation, index) {
+         var $total = navigation.find('li').length;
+         var $current = index+1;
+         var $percent = (index/$total) * 100;
+         var margin = (100/$total)/2;
+         $('#enquiry-modal-wizard').find('.progress-bar').css({width:$percent+'%', 'margin': 0 + 'px ' + margin + '%'});
+         
+         navigation.find('li:eq('+index+') a').trigger('focus');
+
+         // If it's the last tab then hide the last button and show the finish instead
+         if($current == 1) {
+            $('#enquiry-modal-wizard').find('.submitEnquiry').hide();
+            $('#enquiry-modal-wizard').find('.next').show();
+            $('#enquiry-modal-wizard').find('.previous').hide();
+            $("#pet-info-tab").show();
+            $("#pet-items-wz").fadeIn(400);
+            $("#enq_fields").hide();
+            $("#submit-info-tab").hide();
+         } else if($current == 2) {
+            $('#enquiry-modal-wizard').find('.next').hide(); // hide the last button
+            $('#enquiry-modal-wizard').find('.previous').show(); // show the previous button
+            $("#pet-items-wz").hide(); // hide pet-info fields
+            $("#pet-info-tab").show();
+            $("#enq_fields").fadeIn(400); // show enquiry fields
+            $('#enquiry-modal-wizard').find('.submitEnquiry').show();
+            $("#submit-info-tab").hide();
+         }  
+      },
+      onNext: function(e){
+        // if($('#pet_sex_id_1').prop("checked") != true )
+         
+        isValid = null;
+         $('#enquiry-modal-wizard-form').bootstrapValidator('validate');
+         if(isValid === false)return false;
+      }
    });
 
 

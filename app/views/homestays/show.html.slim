@@ -50,6 +50,16 @@ css:
     width: 180px;
     display: inline-block;
   }
+  .phs_pet_icon_wrap {
+    text-align:center;
+  }
+  .phs_actionBtn {
+    margin-left:5px; 
+    min-width:200px; 
+    font-weight:bold; 
+    font-size:18px;
+  }
+
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
@@ -146,7 +156,7 @@ coffee:
             - unless my_homestay?(@homestay)
               - if user_signed_in?
                 - if current_user.pets.present? # Display giant inquiry button
-                  button.btn.btn-primary.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%" REQUEST A MEETINGs 
+                  button.btn.btn-primary.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%" REQUEST A MEETING
                 - else # Ask current user to add a pet first
                   button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK HOST
                   / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
@@ -330,6 +340,11 @@ coffee:
           - twitter_url += '&hashtags=freecuddles'  
           a.btn.btn-icon.btn-hover-info.fa.fa-twitter.icon-lg.twitter-share-btn style="border:1px solid #ddd" data-href=twitter_url 
 
+- if user_signed_in? and current_user.pets.present?
+  .modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+    .modal-dialog
+      .modal-content id="enquiry-modal-confirmation"      
+        = render 'modal_confirmation' ,top: true
 
 - if user_signed_in? and current_user.pets.present?
   / Request a meeting modal
@@ -377,104 +392,25 @@ coffee:
           .modal-footer
             button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
             = f.submit 'SUBMIT', class: 'btn btn-primary'
+
 - if user_signed_in? and current_user.pets.empty?
   / Request a meeting modal
   .modal.fade#request-modal-add-pet tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
-    .modal-dialog.rocket
-      .modal-content
-        .modal-header
-          button type='button' class='close' data-dismiss='modal'
-            span aria-hidden='true' &times;
-            span.sr-only Close
-          h4.modal-title.request-label Request a meetings
-        = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
-          .modal-body
-            - flash.each do |type, message|
-              .alert class="alert-#{ new_flash_class_for(type) }" role='alert'
-                = message
-            input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
-            = f.input_field :duration_id, as: :hidden, value: 1
-            .row
-              .col-sm-6
-                .input-group.input-group-lg.left-merged.enquiry_check_in_date
-                  span.input-group-addon
-                    i.fa.fa-calendar
-                  = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
-              .col-sm-6
-                .input-group.input-group-lg.left-merged.enquiry_check_out_date
-                  span.input-group-addon
-                    i.fa.fa-calendar
-                  = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
-              
-              .col-xs-12
-                = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-                .form-group
-                  .input-group.input-group-lg
-                    span.input-group-addon style='background: #fff;'
-                      i.fa.fa-mobile.fa-fw.fa-lg
-                    input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
-                  p.help-block.text-center
-                    small
-                      | A mobile number is needed so the Host can get in touch!
-                      br
-                      | We don't share or use this for any other purpose :)
-                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
-              .col-sm-12
-                h4 Add Your Pet Details
-                = simple_form_for [:guest, current_user.pets.build], wrapper: :bootstrap3 do |f|
-                  = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
-                  label.hs_mhs_title
-                  | Pet Name
-                  = f.input :name, label: false
-                  label.hs_mhs_title
-                  | Please Type
-                  = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
-                  label.hs_mhs_title
-                  | Please specify pet type
-                  = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
-                  = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', id: 'breed_select_id', multiple:true, data: { placeholder: 'Select 1' } } 
-                  = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
-                  .slider_con
-                    label.hs_mhs_title style="margin-left:-15px"
-                      | Pet Size  
-                    = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-                    label.hs_mhs_title style="margin-left:-15px"
-                      | Pet Age
-                    = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-                    label.hs_mhs_title style="margin-left:-15px"
-                      | Energy Level
-                    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
-                  label.hs_mhs_title
-                    | Personalities
-                  .phs_help_section 
-                    span This will help the Host take better care of him/her. Please check at least three relevant personalities
-                  = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_width '
-                  label.hs_mhs_title.extra_header  style="display:block;cursor:pointer;"
-                    | Extra Details
-                  .extra_section
-                    = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
-                    = f.input :emergency_contact_name, label: 'Emergency Contact'
-                    = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
-                    = f.input :vet_name,  label: 'Vet Surgery'
-                    = f.input :vet_phone, label: 'Vet Phone'
-                    = f.input :council_number, label: 'Council Pet Tag'
-                    = f.input :microchip_number, label: 'Microchip #'
-                    = f.input :medication, input_html: { rows: 2 }
-                    label My pet is:
-                    .checkbox style="margin-left:15px;" 
-                      = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-                      = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-                      = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-            .row
-              hr    
-            button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
-            = f.submit 'SUBMIT', class: 'btn btn-primary pull-right'
-            
+    .modal-dialog
+      .modal-content id="enquiry-modal-wizard"  
+        = render 'modal_add_pet', enquiry: @enquiry ,top: true
+
+
+               
+                       
 coffee:
   $ ->
     # Fire modal if #request-modal is in URL
     if window.location.hash == '#request-modal'
       $('#request-modal').modal('show')
+    # Fire modal if #confirm-modal is in URL
+    if window.location.hash == '#confirm-modal'
+      $('#confirm-modal').modal('show')  
     # Carousel
     if $('#xs-indicator').is ':visible'
       $('#hero').owlCarousel
@@ -629,34 +565,6 @@ coffee:
           <% } %>
         </table class="table">
       """
-    $('.pet_extra_photos .attachinary-input').attachinary
-      template: """
-        <table class="table table-hover">
-          <tr>
-            <th>Thumbnail</th>
-            <th>Action</th>
-          </tr>
-          <% for(var i = 0; i < files.length; i++){ %>
-            <tr>
-            <% if(files[i].resource_type == "raw") { %>
-              <td colspan="3">
-                <div class="raw-file"></div>
-              </td>
-            <% } else { %>
-              <td>
-                <img
-                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fit', "width": 75}) %>"
-                  alt=""/>
-              </td>
-              <td>
-                <a href="#"><i class="fa fa-trash-o pet-trash" data-remove="<%= files[i].public_id %>"></i></a>
-              </td>
-            <% } %>
-              </td>
-            </tr>
-          <% } %>
-        </table class="table">
-      """
     $('.chosen-select').chosen
       allow_single_deselect: true
       no_results_text: 'No results matched'
@@ -678,29 +586,4 @@ javascript:
     $('[data-toggle="tooltip"]').tooltip()
   })
 
-  $('#pet_pet_type_id_1').prop("checked");
-  $('chosen-select').show();
-  $('#other_pet_type_text_id').hide();
   
-  $('#pet_pet_type_id_1').click(function() {
-    $('.pet_breed').show();
-    $('#other_pet_type_text_id').hide();
-  });
-  $('#pet_pet_type_id_2').click(function() {
-    $('.pet_breed').hide();
-    $('#other_pet_type_text_id').hide();
-  });
-  $('#pet_pet_type_id_5').click(function() {
-    $('.pet_breed').hide();
-    $('#other_pet_type_text_id').show();
-  });
-
-  $('.extra_section').hide();
-  
-  $('.extra_header').click(function() {
-    if( $('.extra_section').css('display') == 'none') {
-      $('.extra_section').slideDown(350);
-    } else {
-      $('.extra_section').slideUp(350);
-    }
-  });
