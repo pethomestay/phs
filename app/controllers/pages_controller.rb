@@ -42,10 +42,10 @@ class PagesController < ApplicationController
       message = "PHS HOST RESPONSE from #{@host.first_name}, #{@host.homestay.address_postcode}: "
       message += @host.homestay.auto_interest_sms || @host.homestay.default_auto_interest_sms
       send_sms(to: @guest, text: message, ref: @enquiry.id)
+      @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => message)
     elsif (params[:message] =~ /^no/i).present? # Sends declined SMS content to guest
       # Reject the booking
-      message = @host.homestay.auto_decline_sms || @host.homestay.default_auto_decline_sms
-      send_sms(to: @guest, text: message, ref: @enquiry.id)
+      @enquiry.booking.update_column(:state, "rejected")
     else
       @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => params[:message])
     end
