@@ -8,16 +8,17 @@ class RegistrationsController < Devise::RegistrationsController
     @user = current_user
 
     successfully_updated = if @user.needs_password? && @user.valid_password?(params[:user][:current_password])
-                           # Hack for update_attributes.
-                           params[:user].delete("current_password")
-                           params[:user].delete(:password) if params[:user][:password].empty?
-                           params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].empty?
-                           @user.update_attributes(params[:user])
+                             # Hack for update_attributes.
+                             params[:user].delete("current_password")
+                             params[:user].delete(:password) if params[:user][:password].empty?
+                             params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].empty?
+                             @user.update_attributes(params[:user])
                            else
                              # remove the virtual current_password attribute update_without_password
                              # doesn't know how to ignore it
                              params[:user].delete(:current_password)
                              @user.update_without_password(params[:user])
+                             @user.homestay.update_attributes(params[:homestay])
                            end
 
     if successfully_updated

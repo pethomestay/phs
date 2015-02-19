@@ -28,7 +28,7 @@ class Homestay < ActiveRecord::Base
                   :favorite_breeds, :emergency_sits, :pet_walking_price,
                   :pet_grooming_price, :remote_price, :visits_price,
                   :delivery_price, :visits_radius, :delivery_radius,
-                  :energy_level_ids, :supervision_id
+                  :energy_level_ids, :supervision_id, :auto_decline_sms, :auto_interest_sms
 
   serialize :pet_sizes,        Array
   serialize :favorite_breeds,  Array
