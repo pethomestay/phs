@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  include ShortMessagesHelper
   layout 'new_application'
   before_filter :authenticate_user!, only: [:welcome]
 
@@ -30,4 +31,22 @@ class PagesController < ApplicationController
   def in_the_press; end
 
   def charity_hosts; end
+
+  # Receives the reply SMS from Hosts via SMSBroadcast
+  def receive_sms
+    @enquiry = Enquiry.find(params[:ref].to_i)
+    @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:from].split(//).last(5).join
+    return unless @host && @host.admin? # Remove @host.admin? to enable for all users
+    @guest = @enquiry.booking.booker
+    if (params[:message] =~ /^yes/i).present? # Sends interested SMS content to guest
+      message = @host.homestay.auto_interest_sms || @host.homestay.default_auto_interest_sms
+      send_sms(to: @guest, text: message, ref: @enquiry.id)
+    elsif (params[:message] =~ /^no/i).present? # Sends declined SMS content to guest
+      message = @host.homestay.auto_decline_sms || @host.homestay.default_auto_decline_sms
+      send_sms(to: @guest, text: message, ref: @enquiry.id)
+    else
+      @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => params[:message])
+    end
+    render nothing: true
+  end
 end

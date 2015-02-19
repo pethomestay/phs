@@ -132,7 +132,8 @@ class Enquiry < ActiveRecord::Base
 
   def send_new_enquiry_notification_SMS
     send_sms to: self.homestay.user,
-      text: "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
+      text: "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!",
+      ref: self.id
   end
 
   def require_respsonse_message
