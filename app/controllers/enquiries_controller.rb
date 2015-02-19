@@ -27,7 +27,7 @@ class EnquiriesController < ApplicationController
       redirect_to controller: 'homestays',
                   action: 'show',
                   id: @enquiry.homestay,
-                  anchor: 'request-modal'
+                  anchor: 'confirm-modal'
     else
       flash[:error] = @enquiry.errors.full_messages.first
       redirect_to controller: 'homestays',
