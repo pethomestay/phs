@@ -9,7 +9,7 @@ module ShortMessagesHelper
       params = {
         username: ENV['SMSBROADCAST_USERNAME'],
         password: ENV['SMSBROADCAST_PASSWORD'],
-        from: 'PetHomeStay',
+        from: '0481070660',
         to: user.mobile_number,
         message: opts[:text],
         ref: opts[:ref]
