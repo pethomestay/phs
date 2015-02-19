@@ -11,7 +11,8 @@ module ShortMessagesHelper
         password: ENV['SMSBROADCAST_PASSWORD'],
         from: 'PetHomeStay',
         to: user.mobile_number,
-        message: opts[:text]
+        message: opts[:text],
+        ref: opts[:ref]
       }
       RestClient.get SMSBROADCAST_URL, params: params
     end

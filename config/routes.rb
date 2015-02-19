@@ -17,10 +17,10 @@ PetHomestay::Application.routes.draw do
 
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
-    resource :feedbacks, only: [:new, :edit, :create] 
+    resource :feedbacks, only: [:new, :edit, :create]
     get "show_for_guest"
   end
-    
+
   resources :homestays do
     member do
       get 'favourite'
@@ -164,5 +164,7 @@ PetHomestay::Application.routes.draw do
   get '/mailboxes/(*something)',    to: redirect('/guest')
   get '/availability/(*something)', to: redirect('/host')
 
+  # For SMSBroadcast inbound SMS requests
+  get '/sms_receiver', :controller => :pages, :action => :receive_sms
   root to: 'pages#home'
 end
