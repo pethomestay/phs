@@ -18,12 +18,16 @@ class EnquiriesController < ApplicationController
     end
     if current_user.pets.empty?
       @pet = current_user.pets.build(params[:pet])
+      @pet.name = params[:pet][:name]
       @pet.save
     end  
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
       flash[:alert] = 'Your enquiry has been sent to the Host, and there is a record in your My Account Inbox. Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using PetHomeStay!'
-      redirect_to @enquiry.homestay
+      redirect_to controller: 'homestays',
+                  action: 'show',
+                  id: @enquiry.homestay,
+                  anchor: 'request-modal'
     else
       flash[:error] = @enquiry.errors.full_messages.first
       redirect_to controller: 'homestays',

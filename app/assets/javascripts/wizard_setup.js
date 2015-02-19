@@ -96,12 +96,11 @@ $(document).ready(function() {
       nextSelector   : '.next',
       previousSelector  : '.previous',
       onTabClick: function(tab, navigation, index) {  
-         return true;
+         return false;
       },
       onInit : function(){
-         $('#enquiry-modal-wizard').find('.submitEnquiry').hide().prop('disabled', true);
          $("#enq_fields").hide();
-         $("#pet-info-tab").show();
+         $("#pet-items-wz").show();
       },
       onTabShow: function(tab, navigation, index) {
          var $total = navigation.find('li').length;
@@ -114,77 +113,30 @@ $(document).ready(function() {
 
          // If it's the last tab then hide the last button and show the finish instead
          if($current == 1) {
+            $('#enquiry-modal-wizard').find('.submitEnquiry').hide();
+            $('#enquiry-modal-wizard').find('.next').show();
             $('#enquiry-modal-wizard').find('.previous').hide();
-            $("#pet-info-tab").fadeIn(400);
+            $("#pet-info-tab").show();
+            $("#pet-items-wz").fadeIn(400);
             $("#enq_fields").hide();
             $("#submit-info-tab").hide();
          } else if($current == 2) {
-            $('#enquiry-modal-wizard').find('.previous').show();
-            $("#pet-info-tab").hide();
-            $("#enq_fields").fadeIn(400);
+            $('#enquiry-modal-wizard').find('.next').hide(); // hide the last button
+            $('#enquiry-modal-wizard').find('.previous').show(); // show the previous button
+            $("#pet-items-wz").hide(); // hide pet-info fields
+            $("#pet-info-tab").show();
+            $("#enq_fields").fadeIn(400); // show enquiry fields
+            $('#enquiry-modal-wizard').find('.submitEnquiry').show();
             $("#submit-info-tab").hide();
-         } else {
-            $('#enquiry-modal-wizard').find('.previous').show();
-            $("#pet-info-tab").hide();
-            $("#enq_fields").hide();
-            $("#submit-info-tab").fadeIn(400);
-         }   
-         if($current >= $total) {
-             $('#enquiry-modal-wizard').find('.next').hide();
-             $('#enquiry-modal-wz').find('.submitEnquiry').show().prop('disabled', false);
-         } else {
-             $('#enquiry-modal-wizard').find('.next').show();
-             $('#enquiry-modal-wz').find('.submitEnquiry').hide().prop('disabled', true);
-         }
+         }  
       },
       onNext: function(e){
+        // if($('#pet_sex_id_1').prop("checked") != true )
          
-
         isValid = null;
          $('#enquiry-modal-wizard-form').bootstrapValidator('validate');
          if(isValid === false)return false;
       }
-   });
-
-   
-   
-   
-   var isValid;
-   $('#enquiry-modal-wizard-form').bootstrapValidator({   
-      message: 'This value is not valid',
-      feedbackIcons: {
-         valid: 'fa fa-check-circle fa-lg text-success',
-         invalid: 'fa fa-times-circle fa-lg',
-         validating: 'fa fa-refresh'
-      },
-      fields: {
-         mobile_number: {
-           validators: {
-               notEmpty: {
-                  message: 'Please enter a mobile number to allow guests to contact you.'
-               },
-               digits: {
-                  message: 'This field can contain only digits'
-               }
-            }
-         }
-      }
-   }).on('success.field.bv', function(e, data) {       
-      // $(e.target)  --> The field element
-      // data.bv      --> The BootstrapValidator instance
-      // data.field   --> The field name
-      // data.element --> The field element
-      
-      var $parent = data.element.parents('.form-group');
-      
-      // Remove the has-success class
-      $parent.removeClass('has-success');
-      
-      
-      // Hide the success icon
-      //$parent.find('.form-control-feedback[data-bv-icon-for="' + data.field + '"]').hide();
-   }).on('error.form.bv', function(e) {
-      isValid = false;
    });
 
 
