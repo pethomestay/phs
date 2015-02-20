@@ -75,12 +75,13 @@
         - if @coupon
           tr
             td Discount (code: #{@coupon.code})
-            td= "- #{number_to_currency(@coupon.discount_amount)}"
+            - coupon_actual_discount = @coupon.discount_is_percentage ? @booking.amount * (@coupon.discount_amount/100) : @coupon.discount_amount
+            td= "- #{number_to_currency(coupon_actual_discount)}"
           tr
             td
               ' Final Total
               i.fa.fa-question-circle data-toggle='popover' data-trigger='hover click' data-placement='top' data-content='Host fees are per 24 hours NOT per night. Please ensure you allow for this when booking in drop off and pick up times.'
-            td= number_to_currency(@booking.amount - @coupon.discount_amount)
+            td= number_to_currency(@booking.amount - coupon_actual_discount)
     hr
   .row
     .col-sm-10.col-sm-offset-1
@@ -92,7 +93,7 @@
         form#checkout url=booking_path(@booking) method="put"
           #dropin
           - if @coupon
-            input type="submit" value=("Pay #{number_to_currency(@booking.amount - @coupon.discount_amount)}") class='btn btn-primary btn-lg btn-block payment-button'
+            input type="submit" value=("Pay #{number_to_currency(@booking.amount - coupon_actual_discount)}") class='btn btn-primary btn-lg btn-block payment-button'
           - else
             input type="submit" value=("Pay #{number_to_currency(@booking.amount)}") class='btn btn-primary btn-lg btn-block payment-button'
         script type="text/javascript" src="https://js.braintreegateway.com/v2/braintree.js"

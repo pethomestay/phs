@@ -12,9 +12,9 @@
     p Credits will be paid upon accumulation of $25 worth of credits after you have added your payout details
   - if current_user.used_coupons.any?
     .page-header
-      h3 Sign Up Promo Code Applied
+      h3 Promo Code Applied
     - current_user.used_coupons.each do |coupon|
-      p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
+      p= "#{coupon.code} - #{coupon.discount_is_percentage ? "#{coupon.discount_amount.round}%" : number_to_currency(coupon.discount_amount)} off your next booking"
 
   .page-header
     h3 Payout Details
