@@ -25,9 +25,4 @@ class Coupon < ActiveRecord::Base
     end
   end
 
-  # Run once => will populate the database with referral codes and create the generic SHARE5 coupon for signup without coupons
-  def self.set_up_coupons
-    User.all.each {|u| u.generate_referral_code}
-    User.find_by_email('tom@pethomestay.com').owned_coupons.create(:code => 'SHARE5', :discount_amount => 5, :credit_referrer_amount => 0, :valid_from => Date.today) if Coupon.find_by_code('SHARE5').nil?
-  end
 end
