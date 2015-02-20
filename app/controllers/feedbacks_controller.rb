@@ -1,7 +1,7 @@
 class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
-  before_filter :set_enquiry, except: [:index, :edit]
+  # before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
 
@@ -13,6 +13,7 @@ class FeedbacksController < ApplicationController
   end
 
   def create
+    binding.pry
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
       redirect_to guest_path, alert: 'Thanks for your feedback!'
@@ -22,6 +23,7 @@ class FeedbacksController < ApplicationController
   end
 
   def new
+    binding.pry
     @user = current_user
     if involved_party(@enquiry)
       respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'
@@ -32,16 +34,17 @@ class FeedbacksController < ApplicationController
 
   # At the moment of pushing this - the edit action is not working properly. 
   def edit
-      @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
-      render  :layout => "new_application"
+    @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
+    render  :layout => "new_application"
   end
 
   private
   def set_enquiry
-    @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.feedbacks.any?
-      redirect_to guest_path,
-        alert: "Thanks, you have already left feedback" and return
+    @enquiry = current_user.homestay.enquiries.find_by_id(params[:enquiry_id])
+    if @enquiry.feedbacks.find_by_user_id(current_user.id).nil?
+      return true
+      # redirect_to guest_path,
+      #   alert: "Thanks, you have already left feedback" and return
     elsif @enquiry.booking.host_accepted == false && @enquiry.booking.owner_accepted == false
       redirect_to guest_path,
         alert: 'The Homestay booking has not been completed yet.' and return

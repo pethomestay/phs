@@ -1,3 +1,24 @@
+- content_for :meta_tags do
+  meta property='og:title' content=@PHS.enquiry.homestay.title
+  meta property='og:site_name' content='PetHomeStay'
+  meta property='og:url' content=request.original_url
+  meta property='og:description' content="I just had a great experience with #{@PHS.enquiry.homestay.title}. The Homestay was great and my pet loved it. I recommend #{@PHS.subject.title} as a great PetHomeStay experience"
+  meta name='twitter:card' content='summary'
+  meta name='twitter:site' content='@PetHomeStay'
+  meta name='twitter:title' content=@PHS.enquiry.homestay.title
+  meta name='twitter:description' content=truncate(@PHS.enquiry.homestay.description, length: 200)
+  meta name='twitter:url' content=request.original_url
+  - if @PHS.enquiry.homestay.photos?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.photos.first.public_id
+  - elsif @PHS.enquiry.homestay.pictures.any?
+    - img_url = @PHS.enquiry.homestay.pictures.first.file.remote_url
+  - elsif @PHS.enquiry.homestay.user.profile_photo?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.user.profile_photo.public_id
+  - elsif @PHS.enquiry.homestay.user.uid.present?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.user.uid
+  - if img_url.present?
+    meta property='og:image' content=img_url
+    meta name='twitter:image' content=img_url
 css:
   .feedback-head {
     cursor : pointer;
@@ -29,7 +50,6 @@ javascript:
       {
         method: 'share',
         href: document.URL
-        caption: "#{}"
       }, function(response){});
     });
   };
@@ -58,43 +78,43 @@ javascript:
             .panel-heading.panel-colorful.panel-info.feedback-head
               .media style="padding: 0 5px 5px 5px;"
                 span.pull-left
-                  - if @user.profile_photo?
-                    = cl_image_tag @user.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
-                  - elsif @user.uid.present?
-                    = facebook_profile_image_tag @user.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+                  - if feedback.subject.profile_photo?
+                    = cl_image_tag feedback.subject.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+                  - elsif feedback.subject.uid.present?
+                    = facebook_profile_image_tag feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
                   - else
                     = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
                 .media-body
                   div style="font-size: 20px; margin-top:5px;" 
-                    = " #{feedback.enquiry.homestay.user.name}" 
+                    = " #{feedback.subject.name}" 
                   div
                     = " #{feedback.enquiry.homestay.title}" 
             .panel-body.feedback-body    
               .row 
-                .col-sm-7
+                .col-xs-8
                   p Public Review
                   blockquote style="padding: 0 20px"
                     = "#{feedback.review}"
                   
-                .col-sm-3
+                .col-xs-2
                   p.text-center Rating
                   - if feedback.enquiry.homestay.user.received_feedbacks.present? 
                     p.display_inline.rating.text-center
                       == rating_stars_awesome feedback.enquiry.homestay.average_rating
-                .col-sm-2
+                .col-xs-2 style="text-align: center;"
                   p Action
-                  =link_to edit_enquiry_feedbacks(feedback)
+                  =link_to edit_guest_feedback_path(feedback)
                     i.fa.fa-pencil-square-o.fa-lg.fa-fw
                     span.hidden-sm.hidden-xs Edit
               hr
               .row 
-                .col-sm-12
+                .col-xs-12
                  - if feedback.private_review? 
                     p Private Review
                     blockquote  style="padding: 0 20px"
                       = "#{feedback.private_review}"   
               .row
-                .col-sm-12
+                .col-xs-12
                   .text-center
                     a.btn.btn-default.btn-icon.btn-hover-primary.fb-share-btn.btn-fb.add-tooltip href="fb-root" title="" data-original-title="Facebook" style="width:70px;margin-right:5px;"
                       i.fa.fa-facebook.icon-lg  
