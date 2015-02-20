@@ -7,14 +7,15 @@
       = f.input :code, :input_html => {:maxlength => 7}, :required => true
   .row-fluid
     .span6
-      = f.input :discount_amount, :required => true, input_html: { min: '0', step: 'any' }
-      = f.hint 'Dollar amount'
+      = f.input :discount_amount, :label => "Discount", :required => true, input_html: { min: '0', step: 'any' }
+      = f.hint 'Dollar or Percent amount'
     .span6
       = f.input :credit_referrer_amount, :required => true, input_html: { min: '0', step: 'any' }
       = f.hint 'Dollar amount'
   = f.input :valid_from, :required => true, start_year: Date.today.year,  order: [:day, :month, :year]
   = f.input :valid_to, :required => true, start_year: Date.today.year + 1,  order: [:day, :month, :year]
   = f.input :coupon_limit
+  = f.input :discount_is_percentage, :label => "Percentage Discount", :as => :boolean
 
   = f.submit "Create", class: 'btn btn-primary'
 

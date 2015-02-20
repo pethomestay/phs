@@ -135,13 +135,12 @@ class BookingsController < ApplicationController
     else # Guest booking modifications (or payment)
       if current_user.used_coupons.merge(CouponUsage.unused).any?
         @coupon = current_user.used_coupons.merge(CouponUsage.unused).last
-        payment_amount = (@booking.amount - @coupon.discount_amount).to_s
+        payment_amount = (@coupon.discount_is_percentage ? @booking.amount * ( 1 - (@coupon.discount_amount / 100)) : (@booking.amount - @coupon.discount_amount)).to_s
       else
         payment_amount = @booking.amount.to_s
       end
       submit_payment = @booking.host_accepted == true ? true : false
       if params[:payment_method_nonce].present? # Payment was made
-        final_amount = @booking.coupon.present? ? @booking.amount - @booking.coupon.discount_amount : @booking.amount
         # Create a customer in BrainTree if the user has never paid via BrainTree before
         if current_user.braintree_customer_id.nil? && Rails.env == "production"
           customer_create_result = Braintree::Customer.create(
