@@ -4,18 +4,17 @@ class Guest::FeedbacksController < Guest::GuestController
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
-    @PHS = current_user.given_feedbacks.last # feedbacks given as a guest
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').all # feedbacks given as a guest
-    @user = current_user 
+    @user = current_user
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "guest/feedbacks/index", :layout => "new_application"
   end
 
   def create
-    # The line below is causing an issue. 
+    # The line below is causing an issue.
     @feedback = Feedback.new(params[:feedback], :subject_id => @enquiry.booking.bookee.id, :user_id => current_user.id)
     @feedback.subject_id = @enquiry.booking.bookee.id
-    @feedback.user_id = current_user.id    
+    @feedback.user_id = current_user.id
     if @feedback.save!
       redirect_to guest_path, alert: 'Thanks for your feedback!'
     else
@@ -48,7 +47,7 @@ class Guest::FeedbacksController < Guest::GuestController
 
   private
   def set_enquiry
-    @enquiry = current_user.enquiries.find_by_id(params[:enquiry_id] || params[:feedback][:enquiry_id])  
+    @enquiry = current_user.enquiries.find_by_id(params[:enquiry_id] || params[:feedback][:enquiry_id])
     if @enquiry.feedbacks.find_by_user_id(current_user.id).nil?
       return true
       # redirect_to guest_path,
