@@ -12,7 +12,7 @@ css:
     .messages-panel
       .panel-header
         h4 = "Leave feedback for #{@feedback.subject.first_name}"
-    = simple_form_for([:guest, @feedback])) do |f|
+    = simple_form_for([:guest, @feedback]) do |f|
       .panel.panel-default style="margin-top:20px"
         .panel-heading.panel-colorful.panel-info.feedback-head
           .media style="padding: 0 5px 5px 5px;"
@@ -29,6 +29,7 @@ css:
         .panel-body.feedback-body
           .row
             .col-sm-12
+              = f.hidden_field :enquiry_id, value: @enquiry.id
               = f.hidden_field :rating, value: f.object.rating || 0
               - if f.object.errors.present?
                 p.tc.red.text-center= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"

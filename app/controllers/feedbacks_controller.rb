@@ -1,7 +1,7 @@
 class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
-  before_filter :set_enquiry, except: [:index, :edit]
+  # before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
 
@@ -13,6 +13,7 @@ class FeedbacksController < ApplicationController
   end
 
   def create
+    binding.pry
     @feedback = @enquiry.feedbacks.create({user: current_user, subject: subject(@enquiry)}.merge(params[:feedback]))
     if @feedback.valid?
       redirect_to guest_path, alert: 'Thanks for your feedback!'
@@ -22,6 +23,7 @@ class FeedbacksController < ApplicationController
   end
 
   def new
+    binding.pry
     @user = current_user
     if involved_party(@enquiry)
       respond_with @feedback = @enquiry.feedbacks.build(user: current_user, subject: subject(@enquiry)), layout: 'new_application'

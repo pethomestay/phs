@@ -1,3 +1,24 @@
+- content_for :meta_tags do
+  meta property='og:title' content=@PHS.enquiry.homestay.title
+  meta property='og:site_name' content='PetHomeStay'
+  meta property='og:url' content=request.original_url
+  meta property='og:description' content="I just had a great experience with #{@PHS.enquiry.homestay.title}. The Homestay was great and my pet loved it. I recommend #{@PHS.subject.title} as a great PetHomeStay experience"
+  meta name='twitter:card' content='summary'
+  meta name='twitter:site' content='@PetHomeStay'
+  meta name='twitter:title' content=@PHS.enquiry.homestay.title
+  meta name='twitter:description' content=truncate(@PHS.enquiry.homestay.description, length: 200)
+  meta name='twitter:url' content=request.original_url
+  - if @PHS.enquiry.homestay.photos?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.photos.first.public_id
+  - elsif @PHS.enquiry.homestay.pictures.any?
+    - img_url = @PHS.enquiry.homestay.pictures.first.file.remote_url
+  - elsif @PHS.enquiry.homestay.user.profile_photo?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.user.profile_photo.public_id
+  - elsif @PHS.enquiry.homestay.user.uid.present?
+    - img_url = cloudinary_url @PHS.enquiry.homestay.user.uid
+  - if img_url.present?
+    meta property='og:image' content=img_url
+    meta name='twitter:image' content=img_url
 css:
   .feedback-head {
     cursor : pointer;
@@ -29,7 +50,6 @@ javascript:
       {
         method: 'share',
         href: document.URL
-        caption: "#{}"
       }, function(response){});
     });
   };
@@ -58,10 +78,10 @@ javascript:
             .panel-heading.panel-colorful.panel-info.feedback-head
               .media style="padding: 0 5px 5px 5px;"
                 span.pull-left
-                  - if @feedback.subject.profile_photo?
-                    = cl_image_tag @feedback.subject.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
-                  - elsif @feedback.subject.uid.present?
-                    = facebook_profile_image_tag @feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+                  - if feedback.subject.profile_photo?
+                    = cl_image_tag feedback.subject.profile_photo.public_id, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+                  - elsif feedback.subject.uid.present?
+                    = facebook_profile_image_tag feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
                   - else
                     = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
                 .media-body

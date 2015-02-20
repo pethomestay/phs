@@ -16,32 +16,6 @@ css:
     background: #55acee; 
     color: #f7f7f7;
   }
-javascript:
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : gon.fb_app_id,
-      xfbml      : false,
-      version    : 'v2.1'
-    });
-
-    $('.fb-share-btn').on('click', function() {
-      FB.ui(
-      {
-        method: 'share',
-        href: document.URL
-        caption: "#{}"
-      }, function(response){});
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-#fb-root
 = render layout: 'layouts/user_root' do
   .messages-panel
     .panel-header
@@ -91,20 +65,3 @@ javascript:
                     p Private Review
                     blockquote  style="padding: 0 20px"
                       = "#{feedback.private_review}"   
-              .row
-                .col-xs-12
-                  .text-center
-                    = render 'social_sharing'
-  
-javascript:
-  $( ".feedback-body" ).hide();
-  $( ".feedback-head" ).click(function() { 
-    var body = $(this).parent().find(".feedback-body"); 
-    if( body.is(":hidden") ) {
-       body.slideDown();
-    } else {
-       body.slideUp();  
-    }      
-  }); 
-  
-  
