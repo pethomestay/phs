@@ -76,6 +76,7 @@ javascript:
           ' Reviews and Recommendations that you have made will appear here.
       - else
         - @feedbacks.each do |feedback|
+          - next unless feedback
           .panel.panel-default
             .panel-heading.panel-colorful.panel-info.feedback-head
               .media style="padding: 0 5px 5px 5px;"
