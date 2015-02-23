@@ -1,24 +1,26 @@
-- content_for :meta_tags do
-  meta property='og:title' content=@PHS.enquiry.homestay.title
-  meta property='og:site_name' content='PetHomeStay'
-  meta property='og:url' content=request.original_url
-  meta property='og:description' content="I just had a great experience with this homestay."
-  meta name='twitter:card' content='summary'
-  meta name='twitter:site' content='@PetHomeStay'
-  meta name='twitter:title' content=@PHS.enquiry.homestay.title
-  meta name='twitter:description' content=truncate(@PHS.enquiry.homestay.description, length: 200)
-  meta name='twitter:url' content=request.original_url
-  - if @PHS.enquiry.homestay.photos?
-    - img_url = cloudinary_url @PHS.enquiry.homestay.photos.first.public_id
-  - elsif @PHS.enquiry.homestay.pictures.any?
-    - img_url = @PHS.enquiry.homestay.pictures.first.file.remote_url
-  - elsif @PHS.enquiry.homestay.user.profile_photo?
-    - img_url = cloudinary_url @PHS.enquiry.homestay.user.profile_photo.public_id
-  - elsif @PHS.enquiry.homestay.user.uid.present?
-    - img_url = cloudinary_url @PHS.enquiry.homestay.user.uid
-  - if img_url.present?
-    meta property='og:image' content=img_url
-    meta name='twitter:image' content=img_url
+- phs = current_user.given_feedbacks.last
+- if phs
+  - content_for :meta_tags do
+    meta property='og:title' content=phs.enquiry.homestay.title
+    meta property='og:site_name' content='PetHomeStay'
+    meta property='og:url' content=request.original_url
+    meta property='og:description' content="I just had a great experience with this homestay."
+    meta name='twitter:card' content='summary'
+    meta name='twitter:site' content='@PetHomeStay'
+    meta name='twitter:title' content=phs.enquiry.homestay.title
+    meta name='twitter:description' content=truncate(phs.enquiry.homestay.description, length: 200)
+    meta name='twitter:url' content=request.original_url
+    - if phs.enquiry.homestay.photos?
+      - img_url = cloudinary_url phs.enquiry.homestay.photos.first.public_id
+    - elsif phs.enquiry.homestay.pictures.any?
+      - img_url = phs.enquiry.homestay.pictures.first.file.remote_url
+    - elsif phs.enquiry.homestay.user.profile_photo?
+      - img_url = cloudinary_url phs.enquiry.homestay.user.profile_photo.public_id
+    - elsif phs.enquiry.homestay.user.uid.present?
+      - img_url = cloudinary_url phs.enquiry.homestay.user.uid
+    - if img_url.present?
+      meta property='og:image' content=img_url
+      meta name='twitter:image' content=img_url
 css:
   .feedback-head {
     cursor : pointer;
@@ -30,11 +32,11 @@ css:
   }
   .btn-fb {
     margin-right:5px;
-    background: #3B5998; 
+    background: #3B5998;
     color: #f7f7f7;
   }
   .btn-tw {
-    background: #55acee; 
+    background: #55acee;
     color: #f7f7f7;
   }
 javascript:
@@ -68,12 +70,13 @@ javascript:
       h4 = "Feedback"
     .panel-content style="margin-top:20px"
       p If you love your hosts, share your reviews with your friends and family. Spreading the word helps build up a close knit community based on trust, plus it really helps out your hosts.
-      br 
+      br
       - if @feedbacks.blank?
         p
           ' Reviews and Recommendations that you have made will appear here.
       - else
         - @feedbacks.each do |feedback|
+          - next unless feedback
           .panel.panel-default
             .panel-heading.panel-colorful.panel-info.feedback-head
               .media style="padding: 0 5px 5px 5px;"
@@ -83,22 +86,22 @@ javascript:
                   - elsif feedback.subject.uid.present?
                     = facebook_profile_image_tag feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
                   - else
-                    = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
+                    = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'
                 .media-body
-                  div style="font-size: 20px; margin-top:5px;" 
-                    = " #{feedback.subject.name}" 
+                  div style="font-size: 20px; margin-top:5px;"
+                    = " #{feedback.subject.name}"
                   div
-                    = " Leaving feedback " 
-            .panel-body.feedback-body    
-              .row 
+                    = " Leaving feedback "
+            .panel-body.feedback-body
+              .row
                 .col-xs-8
                   p Public Review
                   blockquote style="padding: 0 20px"
                     = "#{feedback.review}"
-                  
+
                 .col-xs-2
                   p.text-center Rating
-                  - if feedback.enquiry.homestay.user.received_feedbacks.present? 
+                  - if feedback.enquiry.homestay.user.received_feedbacks.present?
                     p.display_inline.rating.text-center
                       == rating_stars_awesome feedback.enquiry.homestay.average_rating
                 .col-xs-2 style="text-align: center;"
@@ -107,28 +110,27 @@ javascript:
                     i.fa.fa-pencil-square-o.fa-lg.fa-fw
                     span.hidden-sm.hidden-xs Edit
               hr
-              .row 
+              .row
                 .col-xs-12
-                 - if feedback.private_review? 
+                 - if feedback.private_review?
                     p Private Review
                     blockquote  style="padding: 0 20px"
-                      = "#{feedback.private_review}"   
+                      = "#{feedback.private_review}"
               .row
                 .col-xs-12
                   .text-center
                     a.btn.btn-default.btn-icon.btn-hover-primary.fb-share-btn.btn-fb.add-tooltip href="fb-root" title="" data-original-title="Facebook" style="width:70px;margin-right:5px;"
-                      i.fa.fa-facebook.icon-lg  
+                      i.fa.fa-facebook.icon-lg
                     a.btn.btn-default.btn-icon.btn-hover-info.btn-tw.add-tooltip href="#" title="" data-original-title="Twitter" style="width:70px;"
                       i.fa.fa-twitter.icon-lg
 javascript:
   $( ".feedback-body" ).hide();
-  $( ".feedback-head" ).click(function() { 
-    var body = $(this).parent().find(".feedback-body"); 
+  $( ".feedback-head" ).click(function() {
+    var body = $(this).parent().find(".feedback-body");
     if( body.is(":hidden") ) {
        body.slideDown();
     } else {
-       body.slideUp();  
-    }      
-  }); 
-  
-  
+       body.slideUp();
+    }
+  });
+
