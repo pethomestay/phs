@@ -18,7 +18,6 @@ class EnquiriesController < ApplicationController
     end
     if current_user.pets.empty?
       @pet = current_user.pets.build(params[:pet])
-      @pet.name = params[:pet][:name]
       @pet.save
     end  
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
