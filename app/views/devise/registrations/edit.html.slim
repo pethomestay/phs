@@ -24,17 +24,20 @@
         br/
         - decline_text = current_user.homestay.auto_decline_sms || "Sorry - I can't help this time, but please ask again in the future!"
         - accept_text  = current_user.homestay.auto_interest_sms || "Hi, I would love to help look after your pet. Let's arrange a time to meet. My contact is #{current_user.mobile_number.present? ? current_user.mobile_number : current_user.email}"
-        textarea# name="homestay[auto_decline_sms]" cols="30" rows="3"
+        textarea.form-control# name="homestay[auto_decline_sms]" cols="30" rows="3"
           = decline_text
         br/
         label for="homestay[auto_interest_sms]" Auto Interest SMS
         br/
-        textarea# name="homestay[auto_interest_sms]" cols="30" rows="3"
+        textarea.form-control# name="homestay[auto_interest_sms]" cols="30" rows="3"
           = accept_text
       - if current_user.homestay.blank?
         = f.input :opt_out_sms, label: 'Opt out SMS', hint: 'Check to stop receiving SMS notifications', label_html: { style: 'position: relative; left: 20px; top: 10px;' }
-      = f.input :first_name
-      = f.input :last_name
+      .row style="margin-top:1em;"
+        .col-xs-6
+          = f.input :first_name
+        .col-xs-6
+          = f.input :last_name
       = f.input :password, hint: "leave blank if you don't want to change it"
       = f.input :password_confirmation, hint: 'Confirm your password'
       - if current_user.needs_password?
