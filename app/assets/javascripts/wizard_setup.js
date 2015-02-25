@@ -132,11 +132,96 @@ $(document).ready(function() {
       },
       onNext: function(e){
         // if($('#pet_sex_id_1').prop("checked") != true )
-         
-        isValid = null;
-         $('#enquiry-modal-wizard-form').bootstrapValidator('validate');
-         if(isValid === false)return false;
+        
+        // isValid = null;
+        //  $('#pet-info-tab').bootstrapValidator('validate');
+        //  if(isValid === false)return false;
       }
+   });
+
+
+    var isValid;
+   $('#pet-info-tab').bootstrapValidator({   
+      message: 'This value is not valid',
+      feedbackIcons: {
+         valid: 'fa fa-check-circle fa-lg text-success',
+         invalid: 'fa fa-times-circle fa-lg',
+         validating: 'fa fa-refresh'
+      },
+      fields: {
+         eq_pet_name: {
+           validators: {
+               notEmpty: {
+                  message: 'Please enter a valid pet name'
+               },
+            }
+         },
+         eq_pet_sex: {
+           validators: {
+               notEmpty: {
+                  message: 'A gender type is required - select one.'
+               },
+            }
+         }
+
+      }
+   }).on('success.field.bv', function(e, data) {          
+      var $parent = data.element.parents('.form-group');
+      
+      $parent.removeClass('has-success');
+      
+   }).on('error.form.bv', function(e) {
+      isValid = false;
+   });
+
+   $('#enquiry-info-tab').bootstrapValidator({   
+      message: 'This value is not valid',
+      feedbackIcons: {
+         valid: 'fa fa-check-circle fa-lg text-success',
+         invalid: 'fa fa-times-circle fa-lg',
+         validating: 'fa fa-refresh'
+      },
+      fields: {
+         eq_check_in_date: {
+           validators: {
+               notEmpty: {
+                  message: 'Check in Date cannot be empty'
+               }
+            }
+         },
+         eq_check_out_date: {
+           validators: {
+               notEmpty: {
+                  message: 'Check out Date cannot be empty'
+               }
+            }
+         },
+         eq_message: {
+           validators: {
+               notEmpty: {
+                  message: 'You must submit a message to the host'
+               }
+            }
+         },
+         eq_mobile: {
+           validators: {
+               notEmpty: {
+                  message: 'Please enter a mobile number to allow guests to contact you'
+               },
+               digits: {
+                  message: 'This field can contain only digits'
+               }
+            }
+         }
+
+      }
+   }).on('success.field.bv', function(e, data) {          
+      var $parent = data.element.parents('.form-group');
+      
+      $parent.removeClass('has-success');
+      
+   }).on('error.form.bv', function(e) {
+      isValid = false;
    });
 
 

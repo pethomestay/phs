@@ -36,25 +36,20 @@
             .input-group.input-group-lg.left-merged.enquiry_check_in_date
               span.input-group-addon
                 i.fa.fa-calendar
-              = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
+              = f.input_field :check_in_date, as: :string, readonly: true, input_html: { name: 'eq_check_in_date'} , placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
           .col-sm-6
             .input-group.input-group-lg.left-merged.enquiry_check_out_date
               span.input-group-addon
                 i.fa.fa-calendar
-              = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
+              = f.input_field :check_out_date, as: :string, readonly: true, input_html: { name: 'eq_check_out_date'} , placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
           .col-xs-12 style="margin-top:20px;"
             = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
             .form-group
               .input-group.input-group-lg
                 span.input-group-addon style='background: #fff;'
                   i.fa.fa-mobile.fa-fw.fa-lg
-                input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
-              p.help-block.text-center
-                small
-                  | A mobile number is needed so the Host can get in touch!
-                  br
-                  | We don't share or use this for any other purpose :)
-            = f.input :reuse_message, as: :hidden, input_html: { value: 1 }    
+                input.form-control type='tel' name='eq_mobile' placeholder='Mobile Number' value=current_user.mobile_number
+            = f.input :reuse_message, as: :hidden, input_html: { value: 1, name: 'eq_message' }    
         .tab-pane id="pet-info-tab" 
           = simple_form_for [:guest, current_user.pets.build], wrapper: :bootstrap3 do |f|
             .modal-body#pet-items-wz  
@@ -79,13 +74,13 @@
               
               label.hs_mhs_title
               | Pet Name
-              = f.input :name, label: false
+              = f.input :name, label: false, input_html: { name: 'eq_pet_name'}
               
               label.hs_mhs_title
               | Please specify pet type
               = f.input :other_pet_type, input_html: {id: 'other_pet_type_text_id' }, label: false 
               = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Select 1' } } 
-              = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+              = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp', name: 'eq_pet_sex'}, :item_wrapper_class =>'phs_rb_cont'
               .slider_con
                 label.hs_mhs_title style="margin-left:-15px"
                   | Pet Size  
@@ -98,12 +93,6 @@
                 = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
               = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
               
-              label.hs_mhs_title
-                | Personalities
-              .phs_help_section 
-                span This will help the Host take better care of him/her. Please select personalities that best describe your pet.
-              = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_width '
-
           = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-primary btn-block submitEnquiry'
 
 .modal-footer id="enquiry-modal-wz"
