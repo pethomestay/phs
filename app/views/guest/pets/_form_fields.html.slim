@@ -18,7 +18,7 @@ hr.line_section
     | Please specify pet type
     = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
     = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Choose a breed' } } 
-    = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+    = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, :item_wrapper_class =>'phs_rb_cont'
   .slider_con
     label.hs_mhs_title style="margin-left:-15px"
       | Pet Size  

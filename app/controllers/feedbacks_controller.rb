@@ -1,7 +1,7 @@
 class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
-  before_filter :set_enquiry, except: [:index, :edit]
+  # before_filter :set_enquiry, except: [:index, :edit]
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
 
@@ -30,18 +30,16 @@ class FeedbacksController < ApplicationController
     end
   end
 
-  # At the moment of pushing this - the edit action is not working properly. 
   def edit
-      @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
-      render  :layout => "new_application"
+    @feedback = @enquiry.feedback.find_by_id(params[:feedback_id])
+    render  :layout => "new_application"
   end
 
   private
   def set_enquiry
-    @enquiry = Enquiry.find_by_id!(params[:enquiry_id])
-    if @enquiry.feedbacks.any?
-      redirect_to guest_path,
-        alert: "Thanks, you have already left feedback" and return
+    @enquiry = current_user.homestay.enquiries.find_by_id(params[:enquiry_id])
+    if @enquiry.feedbacks.find_by_user_id(current_user.id).nil?
+      return true
     elsif @enquiry.booking.host_accepted == false && @enquiry.booking.owner_accepted == false
       redirect_to guest_path,
         alert: 'The Homestay booking has not been completed yet.' and return

@@ -1,7 +1,7 @@
 = render layout: 'layouts/user' do
   .pet-panel
-    .page-header
-      h3 Add Your Pet in 2 Easy Steps
+    .panel-header style="margin-bottom:1em"
+      h4 Add Your Pet in 2 Easy Steps
     = simple_form_for [:guest, @pet], wrapper: :bootstrap3 do |f|
       = hidden_field_tag :redirect_path, params[:redirect_path]
       = render 'guest/pets/form_fields', f: f

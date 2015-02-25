@@ -1,42 +1,43 @@
 = render layout: 'layouts/user' do
-  .page-header
-    h3 Payout Summary
-  p
-    ' Amount earned:
-    b= number_to_currency(current_user.bookees.finished_and_host_accepted.inject(0) {|sum, b| sum += b.host_payout.to_f})
-  p
-    ' Your Promo Code:
-    b= current_user.owned_coupons.collect(&:code).join(", ")
-  p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
-  - if current_user.coupon_credits_earned > 0
+  .messages-panel
+    .panel-header style="margin-bottom:1em"
+      h4 Payout Summary
     p
-      ' Credit earned:
-      b= "#{number_to_currency(current_user.coupon_credits_earned)}"
-      - if current_user.coupon_payouts.paid.any?
-        b= " - #{number_to_currency(current_user.coupon_payouts.paid.sum(&:payment_amount))} paid"
-      - if current_user.coupon_payouts.unpaid.any?
-        b= " - #{number_to_currency(current_user.coupon_payouts.unpaid.sum(&:payment_amount))} pending payment"
-    p Credits will be paid upon accumulation of $25 worth of credits
-  - if current_user.coupon_credits_earned >= 25
-    = link_to "Redeem", new_coupon_payout_path, class: 'btn btn-primary'
-  - if current_user.used_coupons.any?
-    .page-header
-      h3 Promo Code Applied
-      - current_user.used_coupons.each do |coupon|  
-        p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
+      ' Amount earned:
+      b= number_to_currency(current_user.bookees.finished_and_host_accepted.inject(0) {|sum, b| sum += b.host_payout.to_f})
+    p
+      ' Your Promo Code:
+      b= current_user.owned_coupons.collect(&:code).join(", ")
+    p Share this code to your friends and community! Every person who joins will get $10 off their first booking and you will receive $5 credit :)
+    - if current_user.coupon_credits_earned > 0
+      p
+        ' Credit earned:
+        b= "#{number_to_currency(current_user.coupon_credits_earned)}"
+        - if current_user.coupon_payouts.paid.any?
+          b= " - #{number_to_currency(current_user.coupon_payouts.paid.sum(&:payment_amount))} paid"
+        - if current_user.coupon_payouts.unpaid.any?
+          b= " - #{number_to_currency(current_user.coupon_payouts.unpaid.sum(&:payment_amount))} pending payment"
+      p Credits will be paid upon accumulation of $25 worth of credits
+    - if current_user.coupon_credits_earned >= 25
+      = link_to "Redeem", new_coupon_payout_path, class: 'btn btn-primary'
+    - if current_user.used_coupons.any?
+      .page-header
+        h3 Promo Code Applied
+        - current_user.used_coupons.each do |coupon|  
+          p= "#{coupon.code} - #{number_to_currency(coupon.discount_amount)} off your first booking"
 
-  .page-header
-    h3 Payout Details
-  p PetHomeStay will use these details to transfer any Credits or Payouts to your account
-  table.table.table-striped
-    tbody
-      tr
-        td Account Name
-        td #{ @account.try(:name) }
-      tr
-        td BSB
-        td #{ @account.try(:bsb) }
-      tr
-        td Account Number
-        td #{ @account.try(:account_number) }
-  = link_to 'EDIT', edit_host_account_path, class: 'btn btn-secondary '
+    .page-header
+      h3 Payout Details
+    p PetHomeStay will use these details to transfer any Credits or Payouts to your account
+    table.table.table-striped
+      tbody
+        tr
+          td Account Name
+          td #{ @account.try(:name) }
+        tr
+          td BSB
+          td #{ @account.try(:bsb) }
+        tr
+          td Account Number
+          td #{ @account.try(:account_number) }
+    = link_to 'EDIT', edit_host_account_path, class: 'btn btn-secondary '

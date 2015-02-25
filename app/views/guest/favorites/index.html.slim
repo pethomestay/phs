@@ -1,10 +1,10 @@
 = render layout: 'layouts/user' do
-  .favorites-panel
-    .page-header
-      h3 Favourite Hosts
+  .messages-panel
+    .panel-header
+      h4  Favourite Hosts
     .panel-content
       - if @favorites.blank?
-        p
+        p.text-center.pad-all
           ' Hosts you have Favourited will appear here. Why not
           = link_to 'find a trusted host in your area', root_path
           | ?

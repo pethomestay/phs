@@ -1,7 +1,7 @@
 = render layout: 'layouts/user' do
-  .homestay-panel
-    .page-header
-      h3 Update Your PetHomeStay Listing
+  .messages-panel
+    .panel-header style="margin-bottom:1em"
+      h4 Update Your PetHomeStay Listing
     = simple_form_for [:host, @homestay], url: host_homestay_path, wrapper: :bootstrap3 do |f|
       = render 'form_fields', f: f
       .form-actions
