@@ -7,7 +7,7 @@ class Pet < ActiveRecord::Base
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
-  validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id, :energy_level, :personalities
+  validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id, :energy_level
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5} # when pet type is 'other'
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
   validates :energy_level, inclusion: { in: 1..5 } # Low, low medium, medium, high medium, and high
@@ -96,7 +96,4 @@ class Pet < ActiveRecord::Base
     self.personalities.delete('') if self.personalities.present?
   end
 
-  def at_least_three_personalities
-    errors.add(:personalities, 'Please check at least three personalities') if personalities.present? && personalities.count < 3
-  end
 end
