@@ -1,7 +1,7 @@
 = render layout: 'layouts/user' do
-  .bookings-panel
-    .page-header
-      h3 Bookings
+  .messages-panel
+    .panel-header style="margin-bottom:1em"
+      h4 Bookings
     - if @bookings.blank?
       p You have no past bookings as a host
     - else

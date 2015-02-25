@@ -1,8 +1,8 @@
 = render layout: 'layouts/user' do
-  .account-panel
-    .page-header
-      h3 Account Details
-    .top-buttons
+  .messages-panel
+    .panel-header
+      h4 Account Details
+    .top-buttons style="margin-top:1em"
       - if current_user.uid.nil?
         = link_to 'LINK ACCOUNT WITH FACEBOOK', user_omniauth_authorize_path(:facebook), class: 'btn btn-facebook-sign-up'
       - else

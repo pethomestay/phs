@@ -12,6 +12,13 @@
   color:#ec5c3b; 
 }
 .pet-panel {
+  .panel-header {
+    margin: 0 -20px;
+    padding-top: 20px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    background-color: $grey;
+  }
   // index
   table tbody tr td {
     vertical-align: middle;
