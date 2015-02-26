@@ -1,3 +1,9 @@
+css:
+  .phs_select {
+    min-width: 142px;
+    display: inline-block;
+    text-align: center;
+  }
 .modal-header
   button type='button' class='close' data-dismiss='modal'
     span aria-hidden='true' &times;
@@ -49,6 +55,11 @@
                 span.input-group-addon style='background: #fff;'
                   i.fa.fa-mobile.fa-fw.fa-lg
                 input.form-control type='tel' placeholder='Mobile Number' value=current_user.mobile_number
+              p.help-block.text-center
+                small
+                  | A mobile number is needed so the Host can get in touch!
+                  br
+                  | We don't share or use this for any other purpose.  
             = f.input :reuse_message, as: :hidden   
         .tab-pane id="pet-info-tab" 
           = simple_form_for [:guest, current_user.pets.build], wrapper: :bootstrap3 do |f|
@@ -60,18 +71,20 @@
                   .item.phs_pet_icon_wrap#pet_1_demo
                     = image_tag 'homestay/dog56.png', style: 'max-width: 45px; cursor:pointer;'
                   .item.phs_pet_icon_wrap
-                    i.fa.fa-check-circle.fa-2x#pet_icon_demo_1  
+                    h4.text-center Dog  
                 .col-xs-4
                   .item.phs_pet_icon_wrap#pet_2_demo
                     = image_tag 'homestay/cat19.png', style: 'max-width: 45px; cursor:pointer;'
                   .item.phs_pet_icon_wrap
-                    i.fa.fa-check-circle.fa-2x#pet_icon_demo_2
+                    h4.text-center Cat
                 .col-xs-4
                   .item.phs_pet_icon_wrap#pet_3_demo
                     = image_tag 'homestay/mouse33.png', style: 'max-width: 45px; cursor:pointer;'          
                   .item.phs_pet_icon_wrap
-                    i.fa.fa-check-circle.fa-2x#pet_icon_demo_3    
+                    h4.text-center Other    
               
+              = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+
               label.hs_mhs_title
               | Pet Name
               = f.input :name, label: false, name: 'something'
@@ -79,8 +92,8 @@
               label.hs_mhs_title
               | Please specify pet type
               = f.input :other_pet_type, input_html: {id: 'other_pet_type_text_id' }, label: false 
-              = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Select 1' } } 
-              = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
+              = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
+              = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont phs_select'
               .slider_con
                 label.hs_mhs_title style="margin-left:-15px"
                   | Pet Size  
@@ -91,7 +104,6 @@
                 label.hs_mhs_title style="margin-left:-15px"
                   | Pet Energy Level
                 = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
-              = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
               
           = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-primary btn-block submitEnquiry'
 
