@@ -1,5 +1,5 @@
 class Coupon < ActiveRecord::Base
-  attr_accessible :code, :credit_referrer_amount, :discount_amount, :user_id, :valid_from, :valid_to, :coupon_limit, :users_count, :discount_is_percentage
+  attr_accessible :code, :credit_referrer_amount, :discount_amount, :user_id, :valid_from, :valid_to, :coupon_limit, :users_count, :discount_is_percentage, :admin_mass_code
   has_many :users, through: :coupon_usages, foreign_key: :user_id
   has_many :coupon_usages
   has_many :bookings, through: :coupon_usages, foreign_key: :booking_id

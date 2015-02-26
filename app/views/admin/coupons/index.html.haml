@@ -16,6 +16,7 @@
   = f.input :valid_to, :required => true, start_year: Date.today.year + 1,  order: [:day, :month, :year]
   = f.input :coupon_limit
   = f.input :discount_is_percentage, :label => "Percentage Discount", :as => :boolean
+  = f.input :admin_mass_code, :label => "Assignable only by admin", :as => :boolean
 
   = f.submit "Create", class: 'btn btn-primary'
 
