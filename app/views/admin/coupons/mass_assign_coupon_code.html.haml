@@ -1,0 +1,7 @@
+%h1.text-center Admin Coupon Applier
+= form_tag do_mass_assign_coupon_code_admin_coupons_path, :method => :post do
+  = label_tag :emails, "Emails, separated by ','"
+  = text_area_tag :email, "Please put a list of the emails in separated by commas e.g. albert@pethomestay.com, tom@pethomestay.com", :size => "40x9"
+  = label_tag :coupon_code, "Coupon Code"
+  = text_field_tag :coupon_code
+  = submit_tag("Go")

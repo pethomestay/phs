@@ -21,6 +21,9 @@
 
 %hr/
 
+%h1.text-center
+  = link_to "Mass Assign", mass_assign_coupon_code_admin_coupons_path
+
 %h1.text-center Force expire
 = form_tag(expire_coupon_admin_coupons_path, method: 'post', remote: true, :id => "expire_coupon_form") do
   = select "expiring_coupon", "id", Coupon.valid.collect {|cc| [cc.code, cc.id]}, {include_blank: true}

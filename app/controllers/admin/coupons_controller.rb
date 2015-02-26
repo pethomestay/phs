@@ -30,4 +30,22 @@ class Admin::CouponsController < Admin::AdminController
     end
   end
 
+  def mass_assign_coupon_code
+
+
+  end
+
+  def do_mass_assign_coupon_code
+    @coupon = Coupon.find_by_code(params[:coupon_code])
+    render :mass_assign_coupon_code, flash[:error] => "Coupon Code not recognised" and return unless @coupon
+    emails = params[:email].split(",")
+    target_users = []
+    emails.each do |email|
+      temp_user = User.find_by_email(email.strip)
+      target_users << temp_user unless temp_user.used_coupons.find_by_code(@coupon.code)
+    end
+    target_users.compact.uniq.each {|u| u.used_coupons << @coupon}
+    redirect_to admin_coupons_path, :notice => "#{@coupon.code} applied to #{target_users.count} users (#{target_users.collect(&:email).join(", ")})"
+  end
+
 end
