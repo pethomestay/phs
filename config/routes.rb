@@ -123,6 +123,8 @@ PetHomestay::Application.routes.draw do
     resources :coupons, only: [:index] do
       post :create_coupon, :on => :collection
       post :expire_coupon, :on => :collection
+      get  :mass_assign_coupon_code, :on => :collection
+      post :do_mass_assign_coupon_code,  :on => :collection
     end
   end
 
