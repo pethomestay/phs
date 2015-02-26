@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
 
   # Created a unique hex which will be used for matching recommendations
   def generate_hex
+    return unless self.hex.nil?
     hex = SecureRandom.hex(10)
     self.hex = hex
     while !self.valid?
