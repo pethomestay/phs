@@ -1,6 +1,6 @@
 - twitter_url  = 'https://twitter.com/share'
 - twitter_url += "?text=Come join me on PetHomeStay.com.au"
-- twitter_url += "&url=https://www.pethomestay.com.au/?code=#{current_user.owned_coupons.first.code}"
+- twitter_url += "&url=https://www.pethomestay.com.au/?code=#{current_user.try(:owned_coupons).try(:first).try(:code)}"
 - twitter_url += '&via=PetHomeStay'
 - twitter_url += '&hashtags=freecuddles'
 p
