@@ -6,6 +6,7 @@ class Guest::FeedbacksController < Guest::GuestController
   def index
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').all # feedbacks given as a guest
     @user = current_user
+    @recommendations = current_user.recommendations
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "guest/feedbacks/index", :layout => "new_application"
   end

@@ -7,7 +7,7 @@ class FeedbacksController < ApplicationController
 
   def index
     @feedbacks = current_user.given_feedbacks # feedbacks given as a guest
-    @user = current_user 
+    @user = current_user
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render :layout => "new_application"
   end

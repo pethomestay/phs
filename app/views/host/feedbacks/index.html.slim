@@ -9,11 +9,11 @@ css:
   }
   .btn-fb {
     margin-right:5px;
-    background: #3B5998; 
+    background: #3B5998;
     color: #f7f7f7;
   }
   .btn-tw {
-    background: #55acee; 
+    background: #55acee;
     color: #f7f7f7;
   }
 = render layout: 'layouts/user' do
@@ -37,20 +37,20 @@ css:
                   - elsif feedback.subject.uid.present?
                     = facebook_profile_image_tag feedback.subject.uid, width: 45, height: 45, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
                   - else
-                    = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'  
+                    = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 45px; margin:5px;'
                 .media-body
-                  div style="font-size: 20px; margin-top:15px;" 
-                    = " #{feedback.subject.name}" 
-            .panel-body.feedback-body    
-              .row 
+                  div style="font-size: 20px; margin-top:15px;"
+                    = " #{feedback.subject.name}"
+            .panel-body.feedback-body
+              .row
                 .col-xs-8
                   p Public Review
                   blockquote style="padding: 0 20px"
                     = "#{feedback.review}"
-                  
+
                 .col-xs-2
                   p.text-center Rating
-                  - if feedback.enquiry.homestay.user.received_feedbacks.present? 
+                  - if feedback.enquiry.homestay.user.received_feedbacks.present?
                     p.display_inline.rating.text-center
                       == rating_stars_awesome feedback.rating
                 .col-xs-2 style="text-align: center;"
@@ -59,9 +59,21 @@ css:
                     i.fa.fa-pencil-square-o.fa-lg.fa-fw
                     span.hidden-sm.hidden-xs Edit
               hr
-              .row 
+              .row
                 .col-xs-12
-                 - if feedback.private_review? 
+                 - if feedback.private_review?
                     p Private Review
                     blockquote  style="padding: 0 20px"
-                      = "#{feedback.private_review}"   
+                      = "#{feedback.private_review}"
+    .panel-header
+      h4 = "Recommendations"
+    .panel-content style="margin-top:20px"
+      - if @recommendations.any?
+        - @recommendations.each do |recommendation|
+          .panel.panel-default
+            .panel-heading.panel-colorful.panel-info.feedback-head
+              .media style="padding: 0 5px 5px 5px;"
+                span.pull-left
+                .media-body
+                  div style="font-size: 20px; margin-top:15px;"
+                    = recommendation.review

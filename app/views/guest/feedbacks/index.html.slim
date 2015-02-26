@@ -123,6 +123,18 @@ javascript:
                       i.fa.fa-facebook.icon-lg
                     a.btn.btn-default.btn-icon.btn-hover-info.btn-tw.add-tooltip href="#" title="" data-original-title="Twitter" style="width:70px;"
                       i.fa.fa-twitter.icon-lg
+    .panel-header
+      h4 = "Recommendations"
+    .panel-content style="margin-top:20px"
+      - if @recommendations.any?
+        - @recommendations.each do |recommendation|
+          .panel.panel-default
+            .panel-heading.panel-colorful.panel-info.feedback-head
+              .media style="padding: 0 5px 5px 5px;"
+                span.pull-left
+                .media-body
+                  div style="font-size: 20px; margin-top:15px;"
+                    = recommendation.review
 javascript:
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function() {

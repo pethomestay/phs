@@ -4,8 +4,9 @@ class Host::FeedbacksController < Host::HostController
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
-    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all 
-    @user = current_user 
+    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all
+    @user = current_user
+    @recommendations = current_user.recommendations
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "host/feedbacks/index", :layout => "new_application"
   end
@@ -16,7 +17,7 @@ class Host::FeedbacksController < Host::HostController
     @feedback = Feedback.new(params[:feedback], :subject_id => @enquiry.booking.booker.id, :user_id => current_user.id)
     @feedback.subject_id = @enquiry.booking.booker.id
     @feedback.user_id = current_user.id
-    
+
     if @feedback.save!
       redirect_to host_path, alert: 'Thanks for your feedback!'
     else
