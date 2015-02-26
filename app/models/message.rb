@@ -27,7 +27,6 @@ class Message < ActiveRecord::Base
   end
 
   def sms_guest_of_host_response
-    return if mailbox.guest_mailbox.admin? # Don't send a response back if admin because of new SMS reply
     send_sms to: mailbox.guest_mailbox,
       text: 'A Host has responded to your PetHomeStay Enquiry! Log in via mobile to view it in your Inbox!'
   end
