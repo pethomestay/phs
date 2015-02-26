@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150219005915) do
+ActiveRecord::Schema.define(:version => 20150226005328) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20150219005915) do
     t.integer  "coupon_limit"
     t.integer  "users_count",            :default => 0
     t.boolean  "is_expired",             :default => false
+    t.boolean  "discount_is_percentage", :default => false
+    t.boolean  "admin_mass_code",        :default => false
   end
 
   create_table "enquiries", :force => true do |t|
@@ -216,9 +218,9 @@ ActiveRecord::Schema.define(:version => 20150219005915) do
     t.integer  "delivery_radius"
     t.text     "energy_level_ids"
     t.integer  "supervision_id"
-    t.boolean  "wildfire_badge"
     t.text     "auto_interest_sms"
     t.text     "auto_decline_sms"
+    t.boolean  "wildfire_badge"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"

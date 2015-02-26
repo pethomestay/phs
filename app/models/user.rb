@@ -126,6 +126,8 @@ class User < ActiveRecord::Base
     return false if coupon.nil?
     return false if coupon.owner == self
     return false if coupon.coupon_limit.present? && coupon.users_count >= coupon.coupon_limit
+    return false if coupon.valid_to.present? && Time.now > coupon.valid_to
+    return false if coupon.admin_mass_code
     CouponUsage.create(:user_id => self.id, :coupon_id => coupon.id)
     return true
   end
