@@ -21,7 +21,8 @@ class Message < ActiveRecord::Base
   private
 
   def first_host_response?
-    return false if self.message_text.include?(mailbox.host_mailbox.homestay.auto_interest_sms || mailbox.host_mailbox.homestay.default_auto_interest_sms )
+    return false if self.message_text.include?( mailbox.host_mailbox.homestay.auto_interest_sms_text )
+    return false if self.message_text.include?( mailbox.host_mailbox.homestay.auto_decline_sms_text )
     mailbox.messages.where(user_id: mailbox.host_mailbox_id).count == 1
   end
 
