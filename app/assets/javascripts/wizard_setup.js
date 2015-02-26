@@ -149,14 +149,14 @@ $(document).ready(function() {
          validating: 'fa fa-refresh'
       },
       fields: {
-         eq_pet_name: {
+         'pet[name]': {
            validators: {
                notEmpty: {
                   message: 'Please enter a valid pet name'
                },
             }
          },
-         eq_pet_sex: {
+         'pet[sex_id]': {
            validators: {
                notEmpty: {
                   message: 'A gender type is required - select one.'
@@ -182,34 +182,24 @@ $(document).ready(function() {
          validating: 'fa fa-refresh'
       },
       fields: {
-         eq_check_in_date: {
+         'enquiry[check_in_date]': {
            validators: {
                notEmpty: {
                   message: 'Check in Date cannot be empty'
                }
             }
          },
-         eq_check_out_date: {
+         'enquiry[check_out_date]': {
            validators: {
                notEmpty: {
                   message: 'Check out Date cannot be empty'
                }
             }
          },
-         eq_message: {
+         'enquiry[message]': {
            validators: {
                notEmpty: {
                   message: 'You must submit a message to the host'
-               }
-            }
-         },
-         eq_mobile: {
-           validators: {
-               notEmpty: {
-                  message: 'Please enter a mobile number to allow guests to contact you'
-               },
-               digits: {
-                  message: 'This field can contain only digits'
                }
             }
          }
