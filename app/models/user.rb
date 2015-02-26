@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2,
     :address_suburb, :address_city, :address_postcode, :address_country,
     :password_confirmation, :braintree_customer_id, :coupon_code, :opt_out_sms,
-    :responsiveness_score, :active
+    :responsiveness_score, :active, :hex
 
   has_one :homestay
   has_many :pets
@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :used_coupons, through: :coupon_usages, source: :coupon
   has_many :owned_coupons, class_name: "Coupon", foreign_key: :user_id
   has_many :coupon_payouts, dependent: :destroy
+  has_many :recommendations, dependent: :destroy
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -45,8 +46,10 @@ class User < ActiveRecord::Base
   validates :accept_terms, :acceptance => true
   validates_acceptance_of :accept_house_rules, on: :create
   validates_acceptance_of :accept_terms, on: :create
+  validates_uniqueness_of :hex, :allow_blank => true
 
   after_create :generate_referral_code
+  after_save   :generate_hex
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
@@ -68,6 +71,17 @@ class User < ActiveRecord::Base
     referrer_amount = args[:custom_credit] || Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT
     self.owned_coupons.create!(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
     return true
+  end
+
+  # Created a unique hex which will be used for matching recommendations
+  def generate_hex
+    hex = SecureRandom.hex(10)
+    self.hex = hex
+    while !self.valid?
+      hex = SecureRandom.hex(10)
+      self.hex = hex
+    end
+    self.update_column(:hex, hex)
   end
 
   # Returns the dollar amount of money earned from owned coupons

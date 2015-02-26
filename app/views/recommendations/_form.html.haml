@@ -1,0 +1,16 @@
+= simple_form_for(@recommendation) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id, :as => :hidden, :input_html => {:value => params[:hex]}
+    = f.input :review
+    = label_tag "Name"
+    = text_field_tag "name"
+    = f.input :email
+
+  .form-input
+    Yes, sign me up to PHS
+
+
+  .form-actions
+    = f.button :submit, "Leave review and Sign Up"

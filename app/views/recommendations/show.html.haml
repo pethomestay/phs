@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Subject:
+  = @recommendation.subject_id
+%p
+  %b User:
+  = @recommendation.user_id
+%p
+  %b Rating:
+  = @recommendation.rating
+%p
+  %b Review:
+  = @recommendation.review
+
+= link_to 'Edit', edit_recommendation_path(@recommendation)
+\|
+= link_to 'Back', recommendations_path
