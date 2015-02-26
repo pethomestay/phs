@@ -9,6 +9,8 @@ PetHomestay::Application.routes.draw do
     end
   end
 
+  resources :recommendations, except: [:show, :edit, :update]
+
   resources :contacts, only: [:new, :create] do
     collection do
       post :add_note
@@ -150,6 +152,7 @@ PetHomestay::Application.routes.draw do
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/our-company'          => 'pages#our_company', as: 'our_company'
+  get '/recommendations/:hex' => 'recommendations#new'
 
   # For SEO and Marketing
   get '/melbourne'  => redirect('/homestays/?search[location]=3000')

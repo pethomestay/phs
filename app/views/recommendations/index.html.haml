@@ -1,0 +1,19 @@
+%h1 Listing recommendations
+
+%table
+  %tr
+    %th Review
+    %th Date
+    %th
+    %th
+    %th
+
+  - @recommendations.each do |recommendation|
+    %tr
+      %td= recommendation.review
+      %td= recommendation.created_at.strftime("%l:%M %p, %e/%m/%y")
+      / %td# link_to 'Show', recommendation
+      / %td# link_to 'Edit', edit_recommendation_path(recommendation)
+      %td= link_to 'Destroy', recommendation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
