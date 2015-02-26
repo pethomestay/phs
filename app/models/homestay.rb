@@ -107,12 +107,12 @@ class Homestay < ActiveRecord::Base
     end
   end
 
-  def default_auto_interest_sms
-    return "Hi, I would love to help look after your pet. Let's arrange a time to meet. My contact is #{self.user.mobile_number.present? ? self.user.mobile_number : self.user.email}"
+  def auto_interest_sms_text
+    self.auto_interest_sms || "Hi, I would love to help look after your pet. Let's arrange a time to meet. My contact is #{self.user.mobile_number.present? ? self.user.mobile_number : self.user.email}"
   end
 
-  def default_auto_decline_sms
-    return "Sorry - I can't help this time, but please ask again in the future!"
+  def auto_decline_sms_text
+    self.auto_decline_sms || "Sorry - I can't help this time, but please ask again in the future!"
   end
 
   def to_param
