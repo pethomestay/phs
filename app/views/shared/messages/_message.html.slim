@@ -9,6 +9,8 @@
       ' From:
       span.sender
         = message.user.present? ? message.user.name : 'N/A'
+      span.h6
+        = " (#{time_ago_in_words(message.created_at)} ago)"
     .reply.pull-right
       i.fa.fa-reply
       span  REPLY
@@ -53,7 +55,7 @@
               '
               | LEAVE FEEDBACK
               br
-              | FOR GUEST    
+              | FOR GUEST
           - elsif conversation.booking.host_accepted && conversation.booking.payment.present?
             a.btn.btn-primary href=booking_host_receipt_path(conversation.booking)
               | VIEW BOOKING
