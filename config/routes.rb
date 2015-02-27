@@ -120,7 +120,9 @@ PetHomestay::Application.routes.draw do
     end
     resources :pets
     resources :analytics
-    resources :users
+    resources :users do
+      get :sign_in_as
+    end
     resources :accounts, only: [:new, :create, :edit, :update, :destroy]
     resources :coupons, only: [:index] do
       post :create_coupon, :on => :collection

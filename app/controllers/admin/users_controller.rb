@@ -35,4 +35,12 @@ class Admin::UsersController < Admin::AdminController
 
     respond_with(:admin, @user, location: admin_users_path(letter: 'Z'))
   end
+
+  def sign_in_as
+    new_user = User.find_by_id(params[:user_id])
+    if new_user
+      result = sign_in(:user, new_user)
+    end
+    redirect_to root_path, :notice => "Signed in as #{new_user.email}"
+  end
 end
