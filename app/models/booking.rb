@@ -154,7 +154,7 @@ class Booking < ActiveRecord::Base
           booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
           booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
           booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
-          host.name.capitalize, booking.homestay.nil? ? "" : booking.homestay.title, host.complete_address, booking.number_of_nights,
+          host.name.capitalize, booking.homestay.nil? ? "" : booking.homestay.title, host.homestay.try(:geocoding_address), booking.number_of_nights,
           booking_reference, booking_payment_amount, "$#{booking.public_liability_insurance}",
           "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
           (booking.state?(:host_paid)) ? 'Paid' : 'Not Paid'
