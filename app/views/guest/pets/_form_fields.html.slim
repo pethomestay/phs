@@ -16,22 +16,22 @@ hr.line_section
     = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
     label.hs_mhs_title
     | Please specify pet type
-    = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false 
-    = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'Choose a breed' } } 
+    = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false
+    = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:false, data: { placeholder: 'Choose a breed' } }
     = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, :item_wrapper_class =>'phs_rb_cont'
   .slider_con
     label.hs_mhs_title style="margin-left:-15px"
-      | Pet Size  
+      | Pet Size
     = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
     label.hs_mhs_title style="margin-left:-15px"
       | Pet Age
     = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
     label.hs_mhs_title style="margin-left:-15px"
       | Energy Level
-    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
   label.hs_mhs_title
     | Personalities
-  .phs_help_section 
+  .phs_help_section
     span This will help the Host take better care of him/her. Please check at least three relevant personalities
   = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont'
 
@@ -51,7 +51,7 @@ hr.line_section
     = f.input :microchip_number, label: 'Microchip #'
     = f.input :medication, input_html: { rows: 2 }
     label My pet is:
-    .checkbox style="margin-left:15px;" 
+    .checkbox style="margin-left:15px;"
       = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
       = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
       = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
