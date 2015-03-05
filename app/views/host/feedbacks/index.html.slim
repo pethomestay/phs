@@ -72,7 +72,7 @@ javascript:
               .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                 .pull-left style="font-size: 15px;"
                   | You Reviewed
-                  = " #{feedback.subject.homestay.title}'s homestay on #{feedback.updated_at.strftime("%d %b, %Y")}"
+                  = " #{feedback.subject.homestay.title}'s homestay updated (#{time_ago_in_words(feedback.updated_at)}) ago"
               .panel-body.feedback-body
                 .row
                   .col-md-2
@@ -124,7 +124,7 @@ javascript:
               .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                 .pull-left style="font-size: 15px;"
                   | Review left by
-                  = " #{rec_feedback.user.first_name} #{rec_feedback.user.last_name} on #{rec_feedback.updated_at.strftime("%d %b, %Y")}"
+                  = " #{rec_feedback.user.first_name} #{rec_feedback.user.last_name} updated (#{time_ago_in_words(rec_feedback.updated_at)}) ago"
               .panel-body.feedback-body
                 .row
                   .col-md-2
@@ -159,7 +159,7 @@ javascript:
                   .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                     .pull-left style="font-size: 15px;"
                       | Recommendation left by
-                      = " #{recommendation.email} on #{recommendation.updated_at.strftime("%d %b, %Y")}"
+                      = " #{recommendation.email} updated (#{time_ago_in_words(recommendation.updated_at)}) ago" 
                   .panel-body.feedback-body
                     .row
                       .col-md-12      
