@@ -32,7 +32,8 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def destroy
-    current_user.update_attributes({active: false, email: "#{current_user.email}.#{Time.now.to_i}.old"})
+    current_user.update_attribute(:active, false)
+    current_user.update_column(:email,"#{current_user.email}.#{Time.now.to_i}.old" )
     if current_user.homestay.present?
       current_user.homestay.update_attribute :active, false
     end
