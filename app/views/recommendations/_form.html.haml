@@ -1,16 +1,32 @@
 = simple_form_for(@recommendation) do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :user_id, :as => :hidden, :input_html => {:value => params[:hex]}
-    = f.input :review
-    = label_tag "Name"
-    = text_field_tag "name"
-    = f.input :email
-
-  .form-input
-    Yes, sign me up to PHS
-
-
-  .form-actions
-    = f.button :submit, "Leave review and Sign Up"
+  %section.sign-up
+    .container
+      .col-md-8.col-md-offset-2.col-sm-6
+        .panel.panel-info
+          .panel-heading
+            - if @user.profile_photo?
+              = cl_image_tag @user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+            - elsif @user.uid.present?
+              = facebook_profile_image_tag @user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture', style: '; margin:5px;'
+            - else
+              = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'margin:5px;'
+          .panel-body
+            .form-group
+              .row
+                .col-xs-12
+                  = f.input :user_id, :as => :hidden, :input_html => {:value => params[:hex]}
+                  = f.input :review, class: 'form-control', placeholder: 'Write your recommendation here'
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-user.fa-fw
+                = text_field_tag 'name', nil, class: 'form-control', placeholder: 'Name'
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope.fa-fw
+                = f.email_field :email, class: 'form-control', placeholder: 'Email'
+            .form-actions
+              = f.button :submit, "Leave review and Sign Up", class: 'btn btn-primary form-control submit'
