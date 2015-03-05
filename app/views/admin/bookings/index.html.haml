@@ -34,7 +34,7 @@
         - style = booking.for_charity ? "background: #c9cefe;" : ""
         %tr{ "data-id" => booking.id, :style => style }
           %td= booking.bookee.name.capitalize
-          %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
+          %td= booking.bookee.account.present? ? "#{booking.bookee.try(:account).try(:bsb)}<br>#{booking.bookee.try(:account).try(:account_number)}".html_safe : "NONE"
           %td= booking.check_out_date.strftime('%d %b %y')
           %td{ class: "stored-card-color" }
             = booking.payment.braintree_transaction_id
@@ -57,7 +57,7 @@
       - else
         %tr{ "data-id" => booking.id }
           %td= booking.booker.name.capitalize
-          %td= booking.bookee.account.present? ? "#{booking.bookee.account.bsb}<br>#{booking.bookee.account.account_number}".html_safe : "NONE"
+          %td= booking.bookee.account.present? ? "#{booking.bookee.try(:account).try(:bsb)}<br>#{booking.bookee.try(:account).try(:account_number)}".html_safe : "NONE"
           %td= booking.check_out_date.strftime('%d %b %y')
           - reference = booking.transaction.reference
           %td{ class: "#{reference.include?('transaction_id') ? 'credit-card-color' : 'stored-card-color'}" }
@@ -88,7 +88,7 @@
     %tbody
       - @coupon_payout_requests.each do |coupon_payout|
         %tr
-          %td= "#{coupon_payout.user.name} (#{coupon_payout.user.account.bsb} / #{coupon_payout.user.account.account_number})"
+          %td= "#{coupon_payout.user.name} (#{coupon_payout.user.try(:account).try(:bsb)} / #{coupon_payout.user.try(:account).try(:account_number)})"
           %td= number_to_currency(coupon_payout.payment_amount)
           %td= coupon_payout.created_at.strftime("%l:%M %p, %d/%m/%y")
           %td
