@@ -45,7 +45,8 @@
           = f.input :current_password, label: 'We need your current password to confirm your changes'
       .form-actions
         = f.submit 'UPDATE ACCOUNT', class: 'btn btn-primary'
-
+    br/
+    p.small= link_to "Cancel account", users_path, method: :delete
 
 coffee:
   $('.user_profile_photo .attachinary-input').attachinary

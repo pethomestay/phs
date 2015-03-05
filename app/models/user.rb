@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2,
     :address_suburb, :address_city, :address_postcode, :address_country,
     :password_confirmation, :braintree_customer_id, :coupon_code, :opt_out_sms,
-    :responsiveness_score, :hex
+    :responsiveness_score, :hex, :active
 
   has_one :homestay
   has_many :pets

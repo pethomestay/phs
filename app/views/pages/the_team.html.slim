@@ -25,8 +25,14 @@
     |  unique needs of her giant puppy. To chat to Bronwyn, get in touch with
     |  her.
   p
-    | PetHomeStay currently uses a mix of in-house and external contractors for
-    |  technical development, marketing and operations.
+    - if current_user && (current_user.email.include?("@pethomestay.com") || current_user.last_name.include?("LeGrice"))
+      | PetHomeStay currently uses a mix of in-house and external contractors for
+      |  technical development, marketing and operations.
+    - else
+      | Technical development at PetHomeStay is managed by
+      = mail_to "albert@pethomestay.com", " Albert "
+      |  with front-end
+      |  styling and behaviour implemented by Hashim.
   p
     ' We are always on the lookout for passionate people who care about pets to join our team - If you love our concept and what we do, and would like to join the fastest growing peer to peer pet care company in Australia -
     = link_to 'check out our jobs board', jobs_path
