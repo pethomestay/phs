@@ -179,12 +179,17 @@ javascript:
         .tab-pane.fade.in id="recommendation-tab"
           - if @recommendations.any?
             - @recommendations.each do |recommendation|
-              .panel-heading.panel-colorful.panel-info.feedback-head
-                .media style="padding: 0 5px 5px 5px;"
-                  span.pull-left
-                  .media-body
-                    div style="font-size: 20px; margin-top:15px;"
+              .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+                .pull-left style="font-size: 15px;"
+                  | Recommendation left by
+                  = " #{recommendation.email} on #{recommendation.updated_at.strftime("%d %b, %Y")}"
+              .panel-body.feedback-body
+                .row
+                  .col-md-12      
+                    span "
+                    strong 
                       = recommendation.review
+                    span "  
           - if @recommendations.blank?
               p Recommendations that you have received will appear here.            
 javascript:

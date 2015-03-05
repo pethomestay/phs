@@ -5,8 +5,9 @@ class Host::FeedbacksController < Host::HostController
 
   def index
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
+    @rec_feedbacks = current_user.received_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     @user = current_user
-    @recommendations = current_user.recommendations
+    @recommendations = current_user.recommendations.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "host/feedbacks/index", :layout => "new_application"
   end
