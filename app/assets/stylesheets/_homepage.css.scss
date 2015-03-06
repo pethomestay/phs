@@ -13,6 +13,7 @@
 
     @media (min-width: $screen-md-min) {
         background-position: 0% 30%;
+        padding-top:100px;
     }
 }
 
@@ -25,6 +26,17 @@
     left:0;
     z-index:-1;
 }
+
+.splace {
+    
+    @media (max-width: $screen-sm-max) {
+      padding-top:75px;
+    }
+    @media (max-width: $screen-xs-max) {
+      padding-top:100px;
+    }
+}
+
 .jumbotron {
     margin-bottom: 0;
     height: 498px; // Must be the height of bg minus the height of nav bar
@@ -33,6 +45,7 @@
     color: #FFFFFF;
     text-shadow: black 0.03em 0.03em 0.03em;
     text-align: center;
+
 }
 // Greeting
 .jumbotron h1 {
