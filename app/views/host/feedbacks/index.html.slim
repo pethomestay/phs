@@ -21,6 +21,10 @@ css:
     margin-right: -20px;
     height: 75px;
   }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+  }
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
@@ -53,119 +57,140 @@ javascript:
         ul.nav.nav-tabs
           li.active
             a href="#reviews-given-tab" data-toggle="tab"
-              span Reviews Given 
+              span Given 
           li
             a href="#reviews-received-tab" data-toggle="tab"
-              span Reviews Received
+              span Received
           li
             a href="#recommendation-tab" data-toggle="tab"    
-              span Recommendations        
+              span Recommendations
+          li.active.hidden-md.hidden-lg
+            a href="#reviews-given-tab" data-toggle="tab"
+              i.fa.fa-share 
+          li.hidden-md.hidden-lg
+            a href="#reviews-received-tab" data-toggle="tab"
+              i.fa.fa-reply
+          li.hidden-md.hidden-lg
+            a href="#recommendation-tab" data-toggle="tab"    
+              i.fa.fa-heart            
     .panel-body
       .tab-content
         .tab-pane.fade.in.active id="reviews-given-tab"
-          - if @feedbacks.blank?
-            p
-              ' Reviews that you have made will appear here.
-          - else
-            - @feedbacks.each do |feedback|
-              - next unless feedback
-              .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
-                .pull-left style="font-size: 15px;"
-                  | You Reviewed
-                  = " #{feedback.subject.homestay.title}'s homestay updated (#{time_ago_in_words(feedback.updated_at)}) ago"
-              .panel-body.feedback-body
-                .row
-                  .col-md-2
-                    .text-center.pad-all
-                      - if feedback.subject.profile_photo?
-                        = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
-                      - elsif feedback.subject.uid.present?
-                        = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
-                      - else
-                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
-                  .col-md-8
-                    div style="margin: 20px 0 0 0;"
-                      = "#{feedback.review}"
-
-                  .col-md-2.text-center style="margin: 20px 0 0 0;"
-                    - if feedback.enquiry.homestay.user.received_feedbacks.present?
-                      p.display_inline.rating
-                        == rating_stars_awesome feedback.enquiry.homestay.average_rating
-                    br
-                      =link_to edit_host_feedback_path(feedback)
-                        i.fa.fa-pencil-square-o.fa-lg.fa-fw
-                        span.hidden-sm.hidden-md Edit
-                .row
-                  .col-md-12.text-center.pad-all
-                    p Why not share or tweet this Homestay's review to help out your host?
-                    button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
-                      i.fa.fa-facebook
-                        |  SHARE      
-                    button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
-                      i.fa.fa-twitter
-                        |  TWEET    
-                - if feedback.private_review?  
-                  hr
+          .phs-subtitle
+            ' Reviews that you have made being a host for your guests and their pets will appear here.
+          - @feedbacks.each do |feedback|
+            - next unless feedback
+            - if feedback.enquiry.booking.booker == feedback.subject 
+              .parent
+                .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+                  .panel-title.phs-title
+                    | You Reviewed
+                    = " #{feedback.subject.name}'s pet updated (#{time_ago_in_words(feedback.updated_at)}) ago"
+                .panel-body.feedback-body
                   .row
-                    .col-md-12
-                      span Your extra comments for 
-                      strong
-                        = " #{feedback.subject.name}:"
-                      .text-thin style="margin: 5px 0 15px 15px;"
-                        = "#{feedback.private_review}"
-      
+                    .col-md-2
+                      .text-center.pad-all
+                        - if feedback.subject.profile_photo?
+                          = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                        - elsif feedback.subject.uid.present?
+                          = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                        - else
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
+                    .col-md-8
+                      div style="margin: 20px 0 0 0;"
+                        = "#{feedback.review}"
+
+                    .col-md-2.text-center style="margin: 20px 0 0 0;"
+                      - if feedback.enquiry.homestay.user.received_feedbacks.present?
+                        p.display_inline.rating
+                          == rating_stars_awesome feedback.enquiry.homestay.average_rating
+                      br
+                        =link_to edit_host_feedback_path(feedback)
+                          i.fa.fa-pencil-square-o.fa-lg.fa-fw
+                          span.hidden-sm.hidden-md Edit
+                  .row
+                    .col-md-12.text-center.pad-all
+                      p Why not share or tweet this Homestay's review to help out your host?
+                      button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
+                        i.fa.fa-facebook
+                          |  SHARE      
+                      button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
+                        i.fa.fa-twitter
+                          |  TWEET    
+                  - if feedback.private_review?  
+                    hr
+                    .row
+                      .col-md-12
+                        span Your extra comments for 
+                        strong
+                          = " #{feedback.subject.name}:"
+                        .text-thin style="margin: 5px 0 15px 15px;"
+                          = "#{feedback.private_review}"
+        
         .tab-pane.fade.in id="reviews-received-tab"
-          - if @rec_feedbacks.blank?
-            p
-              ' Reviews that you have made will appear here.
-          - else
-            - @rec_feedbacks.each do |rec_feedback|
-              - next unless rec_feedback
-              .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
-                .pull-left style="font-size: 15px;"
-                  | Review left by
-                  = " #{rec_feedback.user.first_name} #{rec_feedback.user.last_name} updated (#{time_ago_in_words(rec_feedback.updated_at)}) ago"
-              .panel-body.feedback-body
-                .row
-                  .col-md-2
-                    .text-center.pad-all
-                      - if rec_feedback.subject.profile_photo?
-                        = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
-                      - elsif rec_feedback.subject.uid.present?
-                        = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
-                      - else
-                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
-                  .col-md-8
-                    div style="margin: 20px 0 0 0;"
-                      = "#{rec_feedback.review}"
-
-                  .col-md-2
-                    - if rec_feedback.enquiry.homestay.user.received_feedbacks.present?
-                      p.display_inline.rating.text-center style="margin: 20px 0 0 0;"
-                        == rating_stars_awesome rec_feedback.enquiry.homestay.average_rating
-                - if rec_feedback.private_review?
-                  hr
+          .phs-subtitle
+            ' Reviews that you have received being a host by your guests will appear here.
+          - @rec_feedbacks.each do |rec_feedback|
+            - next unless rec_feedback
+            - if rec_feedback.enquiry.booking.booker == rec_feedback.subject  
+              .parent
+                .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+                  .panel-title.phs-title
+                    | A Homestay review was left by
+                    = " #{rec_feedback.user.first_name} #{rec_feedback.user.last_name} updated (#{time_ago_in_words(rec_feedback.updated_at)}) ago"
+                .panel-body.feedback-body
                   .row
-                    .col-md-12                   
-                      span You received private feedback from  
-                      strong
-                        = " #{rec_feedback.user.first_name}:"
-                      .text-thin style="margin: 5px 0 15px 15px;"
-                        = "#{rec_feedback.private_review}"
+                    .col-md-2
+                      .text-center.pad-all
+                        - if rec_feedback.subject.profile_photo?
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                        - elsif rec_feedback.subject.uid.present?
+                          = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                        - else
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
+                    .col-md-8
+                      div style="margin: 20px 0 0 0;"
+                        = "#{rec_feedback.review}"
+
+                    .col-md-2
+                      - if rec_feedback.enquiry.homestay.user.received_feedbacks.present?
+                        p.display_inline.rating.text-center style="margin: 20px 0 0 0;"
+                          == rating_stars_awesome rec_feedback.enquiry.homestay.average_rating
+                  - if rec_feedback.private_review?
+                    hr
+                    .row
+                      .col-md-12                   
+                        span You received private feedback from  
+                        strong
+                          = " #{rec_feedback.user.first_name}:"
+                        .text-thin style="margin: 5px 0 15px 15px;"
+                          = "#{rec_feedback.private_review}"
 
         .tab-pane.fade.in id="recommendation-tab"
-              - if @recommendations.any?
-                - @recommendations.each do |recommendation|
-                  .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
-                    .pull-left style="font-size: 15px;"
-                      | Recommendation left by
-                      = " #{recommendation.email} updated (#{time_ago_in_words(recommendation.updated_at)}) ago" 
-                  .panel-body.feedback-body
-                    .row
-                      .col-md-12      
-                        span "
-                        strong 
-                          = recommendation.review
-                        span "  
-              - if @recommendations.blank?
-                  p Recommendations that you have received will appear here.  
+          .phs-subtitle
+            ' Support that you have received from friends and family will appear here.
+          - if @recommendations.any?
+            - @recommendations.each do |recommendation|
+              .parent
+                .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+                  .panel-title.phs-title
+                    | Recommendation left by
+                    = " #{recommendation.email} updated (#{time_ago_in_words(recommendation.updated_at)}) ago" 
+                .panel-body.feedback-body
+                  .row
+                    .col-md-12      
+                      span "
+                      strong 
+                        = recommendation.review
+                      span "  
+
+javascript:
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+       body.slideDown();
+    } else {
+       body.slideUp();
+    }
+  });
