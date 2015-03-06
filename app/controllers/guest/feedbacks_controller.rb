@@ -4,9 +4,9 @@ class Guest::FeedbacksController < Guest::GuestController
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
-    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all # feedbacks given as a guest
-    @user = current_user
-    @recommendations = current_user.recommendations
+    @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10) # feedbacks given as a guest
+    @rec_feedbacks = current_user.received_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
+    @recommendations = current_user.recommendations.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "guest/feedbacks/index", :layout => "new_application"
   end

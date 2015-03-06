@@ -22,7 +22,7 @@
       - guest_view = (current_user == conversation.guest_mailbox)
       - host_view = (current_user == conversation.host_mailbox)
       - if guest_view && conversation.try(:booking).try(:state) != "rejected"
-        - if conversation.try(:booking).try(:enquiry).try(:feedbacks).try(:empty?) && (conversation.try(:booking).try(:enquiry).try(:owner_accepted) || conversation.booking.payment.present?) && conversation.booking.check_in_date < Date.today && conversation.enquiry.feedbacks.find_by_user_id(current_user.id).nil? # Guest view - leave feedback button
+        - if (conversation.try(:booking).try(:enquiry).try(:owner_accepted) || conversation.booking.payment.present?) && conversation.booking.check_in_date < Date.today && conversation.enquiry.feedbacks.find_by_user_id(current_user.id).nil? # Guest view - leave feedback button
            a.btn.btn-primary href=new_guest_feedback_path(:enquiry_id=>conversation.enquiry)
             '
             | LEAVE FEEDBACK

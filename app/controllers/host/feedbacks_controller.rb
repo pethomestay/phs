@@ -4,7 +4,7 @@ class Host::FeedbacksController < Host::HostController
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
-    @feedbacks = current_user.given_feedbacks.order('created_at DESC').all
+    @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     @user = current_user
     @recommendations = current_user.recommendations
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
