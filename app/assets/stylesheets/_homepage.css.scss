@@ -29,6 +29,12 @@
 
 .splace {
     
+    @media (max-width: $screen-md-max) {
+      padding-top:175px;
+    }
+    @media (max-width: $screen-md-max) {
+      padding-top:135px;
+    }
     @media (max-width: $screen-sm-max) {
       padding-top:75px;
     }
