@@ -112,7 +112,7 @@ coffee:
                 span.lower 
                   |/24h  
         - else # ask user to sign up or sign in
-          = link_to 'BOOK THIS HOST', new_user_session_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-block btn-book inquire'
+          = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-block btn-book inquire'
           .hidden-lg.hidden-md
             .stay-costs.price_sticky
               span.after-work $#{@homestay.cost_per_night.to_i}
@@ -160,7 +160,7 @@ coffee:
                   button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK HOST
                   / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
               - else # ask user to sign up or sign in
-                = link_to 'BOOK THIS HOST', new_user_session_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
+                = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
               / TODO: use a modal to prompt user to sign in so redirect_path can be set    
     .col-lg-8
       .tab-base
