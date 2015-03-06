@@ -86,28 +86,28 @@ javascript:
    }(document, 'script', 'facebook-jssdk'));
 #fb-root
 = render layout: 'layouts/user' do
-  .panel.panel-default  
+  .panel.panel-default
     .panel-heading.phs-tab-header
       .panel-control
         ul.nav.nav-tabs
           li.active.hidden-sm.hidden-xs
             a href="#reviews-given-tab" data-toggle="tab"
-              span Reviews Given 
+              span Reviews Given
           li.hidden-sm.hidden-xs
             a href="#reviews-received-tab" data-toggle="tab"
               span Reviews Received
           li.hidden-sm.hidden-xs
-            a href="#recommendation-tab" data-toggle="tab"    
+            a href="#recommendation-tab" data-toggle="tab"
               span Recommendations
           li.active.hidden-md.hidden-lg
             a href="#reviews-given-tab" data-toggle="tab"
-              i.fa.fa-share 
+              i.fa.fa-share
           li.hidden-md.hidden-lg
             a href="#reviews-received-tab" data-toggle="tab"
               i.fa.fa-reply
           li.hidden-md.hidden-lg
-            a href="#recommendation-tab" data-toggle="tab"    
-              i.fa.fa-heart              
+            a href="#recommendation-tab" data-toggle="tab"
+              i.fa.fa-heart
     .panel-body.phs-panel-body
       .tab-content
         .tab-pane.fade.in.active id="reviews-given-tab"
@@ -115,7 +115,7 @@ javascript:
             ' Reviews that you have made as a guest for a host will appear here.
           - @feedbacks.each do |feedback|
             - next unless feedback
-            - if feedback.enquiry.booking.bookee == feedback.subject  
+            - if feedback.try(:enquiry).try(:booking).try(:bookee) == feedback.try(:subject)
               .parent
                 .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                   .panel-title.phs-title
@@ -148,15 +148,15 @@ javascript:
                       p Why not share or tweet this Homestay's review to help out your host?
                       button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
                         i.fa.fa-facebook
-                          |  SHARE      
+                          |  SHARE
                       button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
                         i.fa.fa-twitter
-                          |  TWEET    
-                  - if feedback.private_review?  
+                          |  TWEET
+                  - if feedback.private_review?
                     hr
                     .row
                       .col-md-12
-                        span Your extra comments for 
+                        span Your extra comments for
                         strong
                           = " #{feedback.subject.name}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
@@ -167,7 +167,7 @@ javascript:
             ' Reviews that you have received as a guest by a host will appear here.
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
-            - if rec_feedback.enquiry.booking.booker == rec_feedback.subject  
+            - if rec_feedback.enquiry.booking.booker == rec_feedback.subject
               .parent
                 .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                   .panel-title.phs-title
@@ -194,8 +194,8 @@ javascript:
                   - if rec_feedback.private_review?
                     hr
                     .row
-                      .col-md-12                   
-                        span You received private feedback from  
+                      .col-md-12
+                        span You received private feedback from
                         strong
                           = " #{rec_feedback.user.first_name}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
@@ -213,12 +213,12 @@ javascript:
                     = " #{recommendation.email} updated (#{time_ago_in_words(recommendation.updated_at)}) ago"
                 .panel-body.feedback-body
                   .row
-                    .col-md-12      
+                    .col-md-12
                       span "
-                      strong 
+                      strong
                         = recommendation.review
-                      span "  
-            
+                      span "
+
 javascript:
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function(event) {
