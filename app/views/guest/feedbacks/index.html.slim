@@ -1,26 +1,26 @@
-- phs = current_user.given_feedbacks.last
-- if phs
-  - content_for :meta_tags do
-    meta property='og:title' content=phs.enquiry.homestay.title
-    meta property='og:site_name' content='PetHomeStay'
-    meta property='og:url' content=request.original_url
-    meta property='og:description' content="I just had a great experience with this homestay."
-    meta name='twitter:card' content='summary'
-    meta name='twitter:site' content='@PetHomeStay'
-    meta name='twitter:title' content=phs.enquiry.homestay.title
-    meta name='twitter:description' content=truncate(phs.enquiry.homestay.description, length: 200)
-    meta name='twitter:url' content=request.original_url
-    - if phs.enquiry.homestay.photos?
-      - img_url = cloudinary_url phs.enquiry.homestay.photos.first.public_id
-    - elsif phs.enquiry.homestay.pictures.any?
-      - img_url = phs.enquiry.homestay.pictures.first.file.remote_url
-    - elsif phs.enquiry.homestay.user.profile_photo?
-      - img_url = cloudinary_url phs.enquiry.homestay.user.profile_photo.public_id
-    - elsif phs.enquiry.homestay.user.uid.present?
-      - img_url = cloudinary_url phs.enquiry.homestay.user.uid
-    - if img_url.present?
-      meta property='og:image' content=img_url
-      meta name='twitter:image' content=img_url
+/ - phs = current_user.given_feedbacks.last
+/ - if phs
+/   - content_for :meta_tags do
+/     meta property='og:title' content=phs.enquiry.homestay.title
+/     meta property='og:site_name' content='PetHomeStay'
+/     meta property='og:url' content=request.original_url
+/     meta property='og:description' content="I just had a great experience with this homestay."
+/     meta name='twitter:card' content='summary'
+/     meta name='twitter:site' content='@PetHomeStay'
+/     meta name='twitter:title' content=phs.enquiry.homestay.title
+/     meta name='twitter:description' content=truncate(phs.enquiry.homestay.description, length: 200)
+/     meta name='twitter:url' content=request.original_url
+/     - if phs.enquiry.homestay.photos?
+/       - img_url = cloudinary_url phs.enquiry.homestay.photos.first.public_id
+/     - elsif phs.enquiry.homestay.pictures.any?
+/       - img_url = phs.enquiry.homestay.pictures.first.file.remote_url
+/     - elsif phs.enquiry.homestay.user.profile_photo?
+/       - img_url = cloudinary_url phs.enquiry.homestay.user.profile_photo.public_id
+/     - elsif phs.enquiry.homestay.user.uid.present?
+/       - img_url = cloudinary_url phs.enquiry.homestay.user.uid
+/     - if img_url.present?
+/       meta property='og:image' content=img_url
+/       meta name='twitter:image' content=img_url
 css:
   .feedback-head {
     cursor : pointer;
@@ -189,6 +189,7 @@ javascript:
                         p.display_inline.rating
                           == rating_stars_awesome feedback.enquiry.homestay.average_rating
                   .row
+                    - binding.pry
                     .col-md-12.text-center.pad-all
                       p Had a great Homestay? Love your Host? Then why not spread the word on Facebook or Twitter? It helps out your Host a ton!
                       button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
@@ -197,6 +198,20 @@ javascript:
                       button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
                         i.fa.fa-twitter
                           |  TWEET
+                  = content_for (:head) do
+                    meta property='og:title'  content=feedback.enquiry.homestay.title  
+                    meta property='og:description' content="I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!"  
+                    meta property='og:site_name' content='PetHomeStay' 
+                    - if feedback.enquiry.homestay.photos?
+                      - img_url = cloudinary_url feedback.enquiry.homestay.photos.first.public_id
+                    - elsif feedback.enquiry.homestay.pictures.any?
+                      - img_url = feedback.enquiry.homestay.pictures.first.file.remote_url
+                    - elsif feedback.enquiry.homestay.user.profile_photo?
+                      - img_url = cloudinary_url feedback.enquiry.homestay.user.profile_photo.public_id
+                    - elsif feedback.enquiry.homestay.user.uid.present?
+                      - img_url = cloudinary_url feedback.enquiry.homestay.user.uid
+                    - if img_url.present?
+                      meta property="og:image"  content=img_url                
                   - if feedback.private_review?
                     hr
                     .row
