@@ -47,6 +47,28 @@ css:
   .phs-title {
     font-size: 15px;
     line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-tab-header-picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .phs-tab-header-picture2x {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
   }
   .phs-panel-body {
     margin-left: -20px;
@@ -59,6 +81,14 @@ css:
     margin: -10px 0 10px 0;
     padding: 5px;
     text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
   }
 javascript:
   window.fbAsyncInit = function() {
@@ -116,21 +146,40 @@ javascript:
           - @feedbacks.each do |feedback|
             - next unless feedback
             - if feedback.try(:enquiry).try(:booking).try(:bookee) == feedback.try(:subject)
-              .parent
-                .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+              .parent style="margin-bottom:50px;"
+                .panel-heading.feedback-head
                   .panel-title.phs-title
-                    | You Reviewed
-                    = " #{feedback.enquiry.booking.bookee.homestay.title}'s homestay updated (#{time_ago_in_words(feedback.updated_at)}) ago"
-                .panel-body.feedback-body
+                    .pull-left
+                      - if feedback.subject.profile_photo?
+                          = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - elsif feedback.subject.uid.present?
+                        = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - else
+                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                    .pull-left style="margin-top: 10px;"
+                      = "#{feedback.enquiry.booking.bookee.homestay.title}'s Homestay"
+                      br
+                      | Reviewed:
+                      = " (#{time_ago_in_words(feedback.created_at)}) ago"
+                    .pull-right.text-right
+                      | From: 
+                      = " #{feedback.enquiry.check_in_date}"
+                      br
+                      | To: 
+                      = " #{feedback.enquiry.check_out_date}"
+                      br
+                      .feedback-icon
+                        i.fa.fa-chevron-down
+                .panel-body.feedback-body style="margin-top: 20px;"
                   .row
                     .col-md-2
                       .text-center.pad-all
                         - if feedback.subject.profile_photo?
-                          = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                          = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - elsif feedback.subject.uid.present?
-                          = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                          = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
-                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
                       div style="margin: 20px 0 0 0;"
                         = feedback.review
@@ -139,13 +188,9 @@ javascript:
                       - if feedback.enquiry.homestay.user.received_feedbacks.present?
                         p.display_inline.rating
                           == rating_stars_awesome feedback.enquiry.homestay.average_rating
-                      br
-                        =link_to edit_guest_feedback_path(feedback)
-                          i.fa.fa-pencil-square-o.fa-lg.fa-fw
-                          span.hidden-sm.hidden-md Edit
                   .row
                     .col-md-12.text-center.pad-all
-                      p Why not share or tweet this Homestay's review to help out your host?
+                      p Had a great Homestay? Love your Host? Then why not spread the word on Facebook or Twitter? It helps out your Host a ton!
                       button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
                         i.fa.fa-facebook
                           |  SHARE
@@ -156,7 +201,7 @@ javascript:
                     hr
                     .row
                       .col-md-12
-                        span Your extra comments for
+                        span Your private comments for
                         strong
                           = " #{feedback.subject.name}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
@@ -168,21 +213,40 @@ javascript:
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
             - if rec_feedback.enquiry.booking.booker == rec_feedback.subject
-              .parent
-                .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
+              .parent style="margin-bottom:50px;"
+                .panel-heading.feedback-head
                   .panel-title.phs-title
-                    | Review left by
-                    = " #{rec_feedback.user.first_name} #{rec_feedback.user.last_name} updated (#{time_ago_in_words(rec_feedback.updated_at)}) ago"
-                .panel-body.feedback-body
+                    .pull-left
+                      - if rec_feedback.subject.profile_photo?
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - elsif rec_feedback.subject.uid.present?
+                        = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - else
+                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                    .pull-left style="margin-top: 10px;"
+                      = "#{rec_feedback.user.first_name} #{rec_feedback.user.last_name}"
+                      br
+                      | Reviewed:
+                      = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
+                    .pull-right.text-right
+                      | From: 
+                      = " #{rec_feedback.enquiry.check_in_date}"
+                      br
+                      | To: 
+                      = " #{rec_feedback.enquiry.check_out_date}"
+                      br  
+                      .feedback-icon
+                        i.fa.fa-chevron-down 
+                .panel-body.feedback-body style="margin-top: 20px;" 
                   .row
                     .col-md-2
                       .text-center.pad-all
                         - if rec_feedback.subject.profile_photo?
-                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - elsif rec_feedback.subject.uid.present?
-                          = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle'
+                          = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
-                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle'
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
                       div style="margin: 20px 0 0 0;"
                         = "#{rec_feedback.review}"
@@ -195,23 +259,38 @@ javascript:
                     hr
                     .row
                       .col-md-12
-                        span You received private feedback from
+                        span You received private comments from
                         strong
                           = " #{rec_feedback.user.first_name}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
                           = "#{rec_feedback.private_review}"
 
+
+
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
-            ' Support that you have received from friends and family will appear here.
+            ' Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
+            br
+            br
+            a href=""
+              = "www.pethomestay.com.au/recommendations/#{current_user.hex}"
+            br
+            br
+            '  to leave you more recommendations.
           - if @recommendations.any?
             - @recommendations.each do |recommendation|
-              .parent
+              .parent style="margin-bottom:50px;"
                 .panel-heading.panel-colorful.panel-info.feedback-head style="padding:20px"
                   .panel-title.phs-title
-                    | Recommendation left by
-                    = " #{recommendation.email} updated (#{time_ago_in_words(recommendation.updated_at)}) ago"
-                .panel-body.feedback-body
+                    .pull-left
+                      = "#{recommendation.email}"
+                      br
+                      | Reviewed:
+                      = " (#{time_ago_in_words(recommendation.created_at)}) ago"
+                    .pull-right
+                      .feedback-icon
+                        i.fa.fa-chevron-down  
+                .panel-body.feedback-body style="margin-top: 20px;"
                   .row
                     .col-md-12
                       span "
@@ -222,11 +301,21 @@ javascript:
 javascript:
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
     var body = $(this).parent().find(".feedback-body");
     if( body.is(":hidden") ) {
-       body.slideDown();
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
     } else {
-       body.slideUp();
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
     }
   });
 
