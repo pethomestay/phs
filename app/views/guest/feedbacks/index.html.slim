@@ -152,8 +152,6 @@ javascript:
                     .pull-left
                       - if feedback.subject.profile_photo?
                           = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                      - elsif feedback.subject.uid.present?
-                        = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
                     .pull-left style="margin-top: 10px;"
