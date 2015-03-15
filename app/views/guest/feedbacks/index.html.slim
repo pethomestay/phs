@@ -1,26 +1,3 @@
-/ - phs = current_user.given_feedbacks.last
-/ - if phs
-/   - content_for :meta_tags do
-/     meta property='og:title' content=phs.enquiry.homestay.title
-/     meta property='og:site_name' content='PetHomeStay'
-/     meta property='og:url' content=request.original_url
-/     meta property='og:description' content="I just had a great experience with this homestay."
-/     meta name='twitter:card' content='summary'
-/     meta name='twitter:site' content='@PetHomeStay'
-/     meta name='twitter:title' content=phs.enquiry.homestay.title
-/     meta name='twitter:description' content=truncate(phs.enquiry.homestay.description, length: 200)
-/     meta name='twitter:url' content=request.original_url
-/     - if phs.enquiry.homestay.photos?
-/       - img_url = cloudinary_url phs.enquiry.homestay.photos.first.public_id
-/     - elsif phs.enquiry.homestay.pictures.any?
-/       - img_url = phs.enquiry.homestay.pictures.first.file.remote_url
-/     - elsif phs.enquiry.homestay.user.profile_photo?
-/       - img_url = cloudinary_url phs.enquiry.homestay.user.profile_photo.public_id
-/     - elsif phs.enquiry.homestay.user.uid.present?
-/       - img_url = cloudinary_url phs.enquiry.homestay.user.uid
-/     - if img_url.present?
-/       meta property='og:image' content=img_url
-/       meta name='twitter:image' content=img_url
 css:
   .feedback-head {
     cursor : pointer;
@@ -128,7 +105,7 @@ javascript:
               span Reviews Received
           li.hidden-sm.hidden-xs
             a href="#recommendation-tab" data-toggle="tab"
-              span Recommendations
+              span Supporters
           li.active.hidden-md.hidden-lg
             a href="#reviews-given-tab" data-toggle="tab"
               i.fa.fa-share
@@ -142,7 +119,7 @@ javascript:
       .tab-content
         .tab-pane.fade.in.active id="reviews-given-tab"
           .phs-subtitle
-            ' Reviews that you have made as a guest for a host will appear here.
+            ' Reviews that you have given as a Guest for a host.
           - @feedbacks.each do |feedback|
             - next unless feedback
             - if feedback.try(:enquiry).try(:booking).try(:bookee) == feedback.try(:subject)
@@ -160,11 +137,14 @@ javascript:
                       | Reviewed:
                       = " (#{time_ago_in_words(feedback.created_at)}) ago"
                     .pull-right.text-right
-                      | From: 
-                      = " #{feedback.enquiry.check_in_date}"
+                      span.date
+                        small
+                          | From: 
+                        = " #{feedback.enquiry.check_in_date.strftime('%b %e')}"
                       br
-                      | To: 
-                      = " #{feedback.enquiry.check_out_date}"
+                        small
+                          | To: 
+                        = " #{feedback.enquiry.check_out_date.strftime('%b %e')}"
                       br
                       .feedback-icon
                         i.fa.fa-chevron-down
@@ -188,7 +168,7 @@ javascript:
                           == rating_stars_awesome feedback.enquiry.homestay.average_rating
                   .row
                     .col-md-12.text-center.pad-all
-                      p Had a great Homestay? Love your Host? Then why not spread the word on Facebook or Twitter? It helps out your Host a ton!
+                      p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
                       button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
                         i.fa.fa-facebook
                           |  SHARE
@@ -221,7 +201,7 @@ javascript:
 
         .tab-pane.fade.in id="reviews-received-tab"
           .phs-subtitle
-            ' Reviews that you have received as a guest by a host will appear here.
+            ' Reviews that you have received as a Guest by a Host.
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
             - if rec_feedback.enquiry.booking.booker == rec_feedback.subject
@@ -242,10 +222,10 @@ javascript:
                       = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
                     .pull-right.text-right
                       | From: 
-                      = " #{rec_feedback.enquiry.check_in_date}"
+                      = " #{rec_feedback.enquiry.check_in_date.strftime('%b %e')}"
                       br
                       | To: 
-                      = " #{rec_feedback.enquiry.check_out_date}"
+                      = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
                       br  
                       .feedback-icon
                         i.fa.fa-chevron-down 

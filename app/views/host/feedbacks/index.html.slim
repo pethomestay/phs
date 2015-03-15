@@ -99,13 +99,13 @@ javascript:
         ul.nav.nav-tabs
           li.active
             a href="#reviews-given-tab" data-toggle="tab"
-              span Given 
+              span Reviews Given 
           li
             a href="#reviews-received-tab" data-toggle="tab"
-              span Received
+              span Reviews Received
           li
             a href="#recommendation-tab" data-toggle="tab"    
-              span Recommendations
+              span Supporters
           li.active.hidden-md.hidden-lg
             a href="#reviews-given-tab" data-toggle="tab"
               i.fa.fa-share 
@@ -119,7 +119,7 @@ javascript:
       .tab-content
         .tab-pane.fade.in.active id="reviews-given-tab"
           .phs-subtitle
-            ' Reviews that you have made being a host for your guests and their pets will appear here.
+            ' Reviews that you have given as a Host for Guests.
           - @feedbacks.each do |feedback|
             - next unless feedback
             - if feedback.enquiry.booking.booker == feedback.subject 
@@ -139,11 +139,14 @@ javascript:
                       | Reviewed:
                       = " (#{time_ago_in_words(feedback.created_at)}) ago"
                     .pull-right.text-right
-                      | From: 
-                      = " #{feedback.enquiry.check_in_date}"
+                      span.date
+                        small
+                          | From: 
+                        = " #{feedback.enquiry.check_in_date.strftime('%b %e')}"
                       br
-                      | To: 
-                      = " #{feedback.enquiry.check_out_date}"
+                        small
+                          | To: 
+                        = " #{feedback.enquiry.check_out_date.strftime('%b %e')}"
                       br  
                       .feedback-icon
                         i.fa.fa-chevron-down  
@@ -177,7 +180,7 @@ javascript:
         
         .tab-pane.fade.in id="reviews-received-tab"
           .phs-subtitle
-            ' Reviews that you have received being a host by your guests will appear here.
+            ' Reviews that you have received as a Host by Guests.
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
             - if rec_feedback.enquiry.booking.booker == rec_feedback.subject  
@@ -197,11 +200,14 @@ javascript:
                       | Reviewed:
                       = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
                     .pull-right.text-right
-                      | From: 
-                      = " #{rec_feedback.enquiry.check_in_date}"
+                      span.date
+                        small
+                          | From: 
+                        = " #{rec_feedback.enquiry.check_in_date.strftime('%b %e')}"
                       br
-                      | To: 
-                      = " #{rec_feedback.enquiry.check_out_date}"
+                        small
+                          | To: 
+                        = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
                       br  
                       .feedback-icon
                         i.fa.fa-chevron-down  
@@ -249,7 +255,7 @@ javascript:
                 .panel-heading.feedback-head
                   .panel-title.phs-title
                     .pull-left
-                      = "#{rrecommendation.email}"
+                      = "#{recommendation.email}"
                       br
                       | Reviewed:
                       = " (#{time_ago_in_words(recommendation.created_at)}) ago"
