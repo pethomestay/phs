@@ -18,12 +18,12 @@
                 .col-xs-12
                   = f.input :user_id, :as => :hidden, :input_html => {:value => params[:hex]}
                   = f.input :review, label: false, class: 'form-control', placeholder: 'Write something awesome to show your support', input_html: { rows: 4 }
-            .form-group
-              %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
-                %i.fa.fa-facebook.fa-fw.fa-lg
-                SIGN UP WITH FACEBOOK
-            %h6.hr
-              %span or
+            -# .form-group
+            -#   %a.btn.btn-facebook-sign-up{href: user_omniauth_authorize_path(:facebook)}
+            -#     %i.fa.fa-facebook.fa-fw.fa-lg
+            -#     SIGN UP WITH FACEBOOK
+            -# %h6.hr
+            -#   %span or
             .form-group
               .input-group
                 %span.input-group-addon
@@ -38,7 +38,7 @@
               = f.button :submit, "Leave review and Sign Up", class: 'btn btn-primary form-control submit'
             %p.help-block.text-center
               %small
-                By clicking the button below, you agree to our
-                = link_to 'house rules', house_rules_path, target: '_blank'
-                and
-                = link_to 'terms and conditions', terms_and_conditions_path, target: '_blank'  
+                By leaving your support, you become a member of PetHomeStay &amp; agree to our
+                = link_to 'Terms and Conditions', terms_and_conditions_path, target: '_blank'  
+              %br
+              %small It's completely free, we never give out your information to any 3rd party &amp; you can leave at any time :)  
