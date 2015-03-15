@@ -154,7 +154,7 @@ PetHomestay::Application.routes.draw do
   get '/partners'             => 'pages#partners', as: 'partners'
   get '/in-the-press'         => 'pages#in_the_press', as: 'press'
   get '/our-company'          => 'pages#our_company', as: 'our_company'
-  get '/recommendations/:hex' => 'recommendations#new'
+  get '/support/:hex' => 'recommendations#new'
 
   # For SEO and Marketing
   get '/melbourne'  => redirect('/homestays/?search[location]=3000')
