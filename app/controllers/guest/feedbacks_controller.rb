@@ -4,6 +4,7 @@ class Guest::FeedbacksController < Guest::GuestController
   # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
+    binding.pry
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10) # feedbacks given as a guest
     @rec_feedbacks = current_user.received_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     @recommendations = current_user.recommendations.order('created_at DESC').paginate(page: params[:page], per_page: 10)
