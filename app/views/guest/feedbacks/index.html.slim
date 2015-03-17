@@ -145,7 +145,6 @@ javascript:
                         small
                           | To: 
                         = " #{feedback.enquiry.check_out_date.strftime('%b %e')}"
-                      br
                       .feedback-icon
                         i.fa.fa-chevron-down
                 .panel-body.feedback-body style="margin-top: 20px;"
@@ -154,8 +153,6 @@ javascript:
                       .text-center.pad-all
                         - if feedback.subject.profile_photo?
                           = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
-                        - elsif feedback.subject.uid.present?
-                          = facebook_profile_image_tag feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
                           = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
@@ -211,8 +208,6 @@ javascript:
                     .pull-left
                       - if rec_feedback.subject.profile_photo?
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                      - elsif rec_feedback.subject.uid.present?
-                        = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
                     .pull-left style="margin-top: 10px;"
@@ -226,7 +221,6 @@ javascript:
                       br
                       | To: 
                       = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
-                      br  
                       .feedback-icon
                         i.fa.fa-chevron-down 
                 .panel-body.feedback-body style="margin-top: 20px;" 
@@ -235,8 +229,6 @@ javascript:
                       .text-center.pad-all
                         - if rec_feedback.subject.profile_photo?
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
-                        - elsif rec_feedback.subject.uid.present?
-                          = facebook_profile_image_tag rec_feedback.subject.uid crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
                           = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
@@ -265,7 +257,7 @@ javascript:
             br
             br
             a href=""
-              = "www.pethomestay.com.au/recommendations/#{current_user.hex}"
+              = "www.pethomestay.com.au/support/#{current_user.hex}"
             br
             br
             '  to leave you more recommendations.

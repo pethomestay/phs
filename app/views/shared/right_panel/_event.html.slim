@@ -18,15 +18,15 @@
       span.name #{event.bookee.name}       
   - if guest_view && awaits_feedback
     - if event.check_out_date < Date.today
-      a.btn.btn-primary.pull-right.leave-feedback href=new_guest_feedback_path(event.enquiry)
+      a.btn.btn-primary.pull-right.leave-feedback href=new_guest_feedback_path(:enquiry_id=>event.enquiry)
         | LEAVE
         br
         | FEEDBACK
     - elsif event.check_out_date >= Date.today
       a.btn.btn-default.pull-right.disabled style='pointer-events: auto;' data-toggle='popover' data-trigger='hover click' data-placement='top' data-content="Leave feedback when the Stay is complete."
-        | LEAVE
+        | LEAVE FEEDBACK
         br
-        | FEEDBACK
+        | FOR COMPLETED STAY
   - elsif guest_view && ['Enquiry', "Pending action - #{event.booker.first_name}"].include?(event.get_status)
       a.btn.btn-primary.pull-right.leave-feedback href=edit_booking_path(event)
         | BOOK
