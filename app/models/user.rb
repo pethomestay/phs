@@ -226,7 +226,9 @@ class User < ActiveRecord::Base
   end
 
   def update_average_rating
-    rating = received_feedbacks.count == 0 ? 0 : (received_feedbacks.sum('rating') / received_feedbacks.count).ceil
+    rating = received_feedbacks.count == 0 ? 0 : (received_feedbacks.sum('rating') / received_feedbacks.count).to_f
+    rating.round
+    if rating
     update_attribute :average_rating, rating
   end
 
