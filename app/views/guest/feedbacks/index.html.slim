@@ -172,7 +172,7 @@ javascript:
                       button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
                         i.fa.fa-twitter
                           |  TWEET
-                  = content_for (:head) do
+                  - content_for :meta_tags do
                     meta property='og:title'  content=feedback.enquiry.homestay.title  
                     meta property='og:description' content="I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!"  
                     meta property='og:site_name' content='PetHomeStay' 
