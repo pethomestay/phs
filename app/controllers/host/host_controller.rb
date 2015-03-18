@@ -2,7 +2,6 @@ class Host::HostController < ApplicationController
   layout 'new_application'
 
   before_filter :host_filters
-  before_filter :set_host_instance_vars
   # GET /host
   def index
     @conversations = Mailbox.as_host(current_user).paginate(page: params[:page], per_page: 10)
