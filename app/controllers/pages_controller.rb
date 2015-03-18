@@ -37,7 +37,7 @@ class PagesController < ApplicationController
     @enquiry = Enquiry.find(params[:ref].to_i)
     render nothing: true and return unless @enquiry
     @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:from].split(//).last(5).join
-    render nothing: true and return unless @host && @host.admin? # Remove @host.admin? to enable for all users
+    render nothing: true and return unless @host #&& @host.admin? Remove @host.admin? to enable for all users
     @guest = @enquiry.booking.booker
 
     # Check that this is the first response from the host
