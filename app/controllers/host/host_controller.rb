@@ -10,7 +10,7 @@ class Host::HostController < ApplicationController
   end
 
   def set_host_instance_vars
-    @awaits_host_feedback = current_user.bookees.sort_by(&:check_in_date).select {|b| b.try(:enquiry).try(:feedbacks).try(:empty?)}
+    @awaits_host_feedback = current_user.bookees.sort_by(&:check_in_date).select {|b| b.try(:enquiry).try(:feedbacks).try(:empty?) && view_context.translate_state(b.state) == 'Booked' }
   end
 
   private
