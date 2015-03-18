@@ -2,11 +2,15 @@ class Host::HostController < ApplicationController
   layout 'new_application'
 
   before_filter :host_filters
-
+  before_filter :set_host_instance_vars
   # GET /host
   def index
     @conversations = Mailbox.as_host(current_user).paginate(page: params[:page], per_page: 10)
     render 'guest/guest/index'
+  end
+
+  def set_host_instance_vars
+    @awaits_host_feedback = current_user.bookees.sort_by(&:check_in_date).select {|b| b.try(:enquiry).try(:feedbacks).try(:empty?)}
   end
 
   private
