@@ -93,7 +93,7 @@ javascript:
    }(document, 'script', 'facebook-jssdk'));
 #fb-root  
 = render layout: 'layouts/user' do
-  .panel.panel-default  
+  .panel.panel-default style="box-shadow: none;" 
     .panel-heading.phs-tab-header
       .panel-control
         ul.nav.nav-tabs
@@ -123,8 +123,8 @@ javascript:
           - @feedbacks.each do |feedback|
             - next unless feedback
             - if feedback.enquiry.booking.booker == feedback.subject 
-              .parent style="margin-bottom:50px;"
-                .panel-heading.feedback-head
+              .parent style="border-bottom: 1px solid #ddd;"
+                .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
                       - if feedback.subject.profile_photo?
@@ -179,8 +179,8 @@ javascript:
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
             - if rec_feedback.enquiry.booking.booker == rec_feedback.subject  
-              .parent style="margin-bottom:50px;"
-                .panel-heading.feedback-head
+              .parent style="border-bottom: 1px solid #ddd;"
+                .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
                       - if rec_feedback.subject.profile_photo?
@@ -241,8 +241,8 @@ javascript:
             '  to leave you more recommendations.
           - if @recommendations.any?
             - @recommendations.each do |recommendation|
-              .parent style="margin-bottom:50px;"
-                .panel-heading.feedback-head
+              .parent style="border-bottom: 1px solid #ddd;"
+                .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
                       = "#{recommendation.email}"
