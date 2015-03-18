@@ -1,7 +1,8 @@
 = render layout: 'layouts/user' do
-  .pet-panel
-    .page-header
-      h3 Update Your Pet's Details
+  .messages-panel
+    .panel-header
+      h4 Update Your Pet's Details
     = simple_form_for [:guest, @pet], wrapper: :bootstrap3 do |f|
       = render 'guest/pets/form_fields', f: f
+      br
       = f.submit 'UPDATE', class: 'btn btn-primary'

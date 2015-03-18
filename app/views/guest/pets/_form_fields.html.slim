@@ -1,12 +1,70 @@
-= hidden_field_tag 'redirect_path', params[:redirect_path]
+css:
 
-a.pet_accordian#profile_a_accordian_one
-  span.pet_accordian_legend Step 1 - Essentials
-  span.header-hint.pet_accordian_label.pet_label Please complete all fields
-  span.pet_accordian_image
-    i.fa.fa-minus#profile_i_accordian_one
-hr.line_section
-  section id="section-step-one"
+  .feedback-head {
+    cursor : pointer;
+  }
+  .feedback-body {
+    border: 1px solid #ddd;
+    border-top: none;
+  } 
+  .phs-tab-header {
+    border-bottom: 1px #ddd solid;  
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-panel-body {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 0 0 0 !important;
+  }
+  .phs-subtitle {
+    background-color: #f2f2f2;
+    color: #ababab;
+    margin: -10px 0 10px 0;
+    padding: 5px;
+    text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
+  }  
+  .phs_cb_cont_addon {
+    min-width: 200px;
+    display: inline-block;
+  }
+= hidden_field_tag 'redirect_path', params[:redirect_path]
+.parent.phs-tab-header
+  .panel-heading.feedback-head
+    .panel-title.phs-title 
+      span.pull-left style="padding-right:10px"
+          i.fa.fa-paw 
+      span
+        ' Step 1 - Your Pet Profile
+      span.hidden-sm.hidden-xs style="padding-right:10px; font-size: 8pt"
+        'Please complete all fields    
+      span.feedback-icon.pull-right
+          i.fa.fa-chevron-down         
+  .panel-body.feedback-body 
     = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
     label.hs_mhs_title
     | Pet Name
@@ -17,31 +75,35 @@ hr.line_section
     label.hs_mhs_title
     | Please specify pet type
     = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false
-    = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:false, data: { placeholder: 'Choose a breed' } }
+    = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
     = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, :item_wrapper_class =>'phs_rb_cont'
-  .slider_con
-    label.hs_mhs_title style="margin-left:-15px"
-      | Pet Size
-    = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-    label.hs_mhs_title style="margin-left:-15px"
-      | Pet Age
-    = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-    label.hs_mhs_title style="margin-left:-15px"
-      | Energy Level
-    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
-  label.hs_mhs_title
-    | Personalities
-  .phs_help_section
-    span This will help the Host take better care of him/her. Please check at least three relevant personalities
-  = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont'
-
-a.pet_accordian id="profile_a_accordian_two"
-  span.pet_accordian_legend Step 2 - Emergency + Medical
-  span.header-hint.pet_accordian_label.pet_label_2 You can fill this in now, or come back later before a booking starts.
-  span.pet_accordian_image
-    i.fa.fa-plus#profile_i_accordian_two
-hr.line_section
-  section id="section-step-two"
+    .slider_con
+      label.hs_mhs_title style="margin-left:-15px"
+        | Pet Size
+      = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+      label.hs_mhs_title style="margin-left:-15px"
+        | Pet Age
+      = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+      label.hs_mhs_title style="margin-left:-15px"
+        | Energy Level
+      = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
+    label.hs_mhs_title
+      | Personalities
+    .phs_help_section
+      span This will help the Host take better care of him/her. Please check at least three relevant personalities
+    = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_cont_addon'
+.parent.phs-tab-header
+  .panel-heading.feedback-head
+    .panel-title.phs-title 
+      span.pull-left  style="padding-right:10px"
+          i.fa.fa-paw 
+      span
+        ' Step 2 - Emergency + Medical
+      span.hidden-sm.hidden-xs style="padding-right:10px; font-size: 8pt"
+        'Optional Information    
+      span.feedback-icon.pull-right
+          i.fa.fa-chevron-down         
+  .panel-body.feedback-body 
     = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
     = f.input :emergency_contact_name, label: 'Emergency Contact'
     = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
@@ -56,29 +118,48 @@ hr.line_section
       = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
       = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
 
+javascript:
+  $('#pet_pet_type_id_1').prop("checked");
+  $('#pet_icon_demo_1').css("color", "#ec5c3b");
+  $('chosen-select').show();
+  $('#other_pet_type_text_id').hide();
+  
+  $('#pet_pet_type_id_1').click(function() {
+    $('#pet_pet_type_id_1').prop("checked");   
+    $('.pet_breed').show();
+    $('#other_pet_type_text_id').hide();
+  });
+  $('#pet_pet_type_id_2').click(function() {
+    $('#pet_pet_type_id_2').prop("checked"); 
+    $('.pet_breed').hide();
+    $('#other_pet_type_text_id').hide();
+  });
+  $('#pet_pet_type_id_5').click(function() {
+    $('#pet_pet_type_id_5').prop("checked");
+    $('.pet_breed').hide();
+    $('#other_pet_type_text_id').show();
+  });
 
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
+    } else {
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
+    }
+  });
 coffee:
-  $("#section-step-two").slideUp(50)
-
-  $(".chosen-select").chosen
-    max_selected_options: 1
-
-  $("#profile_a_accordian_one").on 'click', ->
-     if $("#profile_i_accordian_one").hasClass("fa-minus")
-      $('#section-step-one').slideUp(350)
-      $("#profile_i_accordian_one").removeClass("fa-minus").addClass("fa-plus")
-     else
-      $('#section-step-one').slideDown(350)
-      $("#profile_i_accordian_one").removeClass("fa-plus").addClass("fa-minus")
-
-  $("#profile_a_accordian_two").on 'click', ->
-     if $("#profile_i_accordian_two").hasClass("fa-minus")
-      $('#section-step-two').slideUp(350)
-      $("#profile_i_accordian_two").removeClass("fa-minus").addClass("fa-plus")
-     else
-      $('#section-step-two').slideDown(350)
-      $("#profile_i_accordian_two").removeClass("fa-plus").addClass("fa-minus")
-
   $('.pet_size_id .slider').slider
     formatter: (size_id) ->
       switch size_id
