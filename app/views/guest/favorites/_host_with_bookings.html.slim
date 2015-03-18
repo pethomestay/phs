@@ -2,37 +2,127 @@
 /   host
 /   bookings: an array of bookings made between current user (as a Guest) and the host
 
+css:
+
+  .feedback-head {
+    cursor : pointer;
+    height: 90px;
+  }
+  .feedback-body {
+    border: 1px solid #ddd;
+    border-top: none;
+  } 
+  .phs-tab-header {
+    border-bottom: 1px #ddd solid;  
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-panel-body {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 0 0 0 !important;
+  }
+  .phs-subtitle {
+    background-color: #f2f2f2;
+    color: #ababab;
+    margin: -10px 0 10px 0;
+    padding: 5px;
+    text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
+  }  
+  .host-info {
+    margin-left: 80px;
+    margin-top: 10px;
+  }
 
 .host
   .header
     - if host.present? # TODO: add content to display when host is nil
-      = render 'shared/avatar_with_phone', user: host
-      .host-info
-        span.h5 = host.name
-        br
-        span.title = host.try(:homestay).try(:title)
-        span #{host.try(:homestay).try(:address_suburb)}, #{host.try(:homestay).try(:address_city)} #{host.try(:homestay).try(:address_postcode)}
-    .right
-      - if host.homestay.present?
-        = link_to 'MAKE ENQUIRY', homestay_path(host.homestay, anchor: 'enquiry'), class: 'btn btn-primary', style: 'margin-bottom: 5px;'
-      br
-      br
-      span
-        i.fa.fa-chevron-down.fa-lg.chevron
+      .parent.phs-tab-header  
+        .panel-heading.feedback-head
+          .panel-title.phs-title
+            .pull-left style="margin-top: -15px;"
+              = render 'shared/avatar_with_phone', user: host
+            .pull-left.host-info
+              span = host.name
+              br
+              span.title = host.try(:homestay).try(:title)
+              span #{host.try(:homestay).try(:address_suburb)}, #{host.try(:homestay).try(:address_city)} #{host.try(:homestay).try(:address_postcode)}
+            .pull-right.text-right
+              - if host.homestay.present?
+                = link_to 'MAKE ENQUIRY', homestay_path(host.homestay, anchor: 'enquiry'), class: 'btn btn-primary', style:"margin-bottom:5px;" 
+              br
+              .feedback-icon
+                i.fa.fa-chevron-down
+        .panel-body.feedback-body      
+          - for booking in bookings
+            - if booking.enquiry.try(:feedbacks).any?
+              p.hs_rating.text-center.text-2x == rating_stars_awesome booking.enquiry.feedbacks.first.rating  
+          h5 Your HomeStay history with this Host
+          table.table.table-bordered.table-hover
+            thead
+              tr
+                th
+                  | From Date
+                th
+                  | To Date
+                th
+                  | Amount Paid
+            - for booking in bookings
+              - if booking.enquiry.present?
+              tbody
+                tr
+                  td
+                    = " #{booking.check_in_date.strftime('%b %e')}"
+                  td
+                    = " #{booking.check_out_date.strftime('%b %e')}"
+                  td
+                    = " $#{booking.amount}"  
+          - for booking in bookings  
+            - if booking.enquiry.try(:feedbacks).any?
+              pre.tx_sp #{ booking.enquiry.try(:feedbacks).first.review }      
 
-  - for booking in bookings
-    - if booking.enquiry.present?
-      .booking
-        .left
-          span From: #{booking.check_in_date.strftime('%b %e')}
-          span To: #{booking.check_out_date.strftime('%b %e')}
-          span Amount: $#{booking.amount}
-          - if booking.enquiry.try(:feedbacks).any?
-            br
-            p #{ booking.enquiry.try(:feedbacks).first.review }
-        .right.pull-right
-          span
-            - if booking.try(:enquiry).try(:feedbacks).try(:any?)
-              span Feedback
-              / Note: we assume only Guest can leave a feedback
-              == rating_stars_awesome booking.enquiry.feedbacks.first.rating
+javascript:
+
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
+    } else {
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
+    }
+  });

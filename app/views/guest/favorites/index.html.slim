@@ -1,17 +1,12 @@
 = render layout: 'layouts/user' do
   .messages-panel
     .panel-header
-      h4  Favourite Hosts
+      h4 Your previous Bookings
     .panel-content
-      - if @favorites.blank?
-        p.text-center.pad-all
-          ' Hosts you have Favourited will appear here. Why not
-          = link_to 'find a trusted host in your area', root_path
-          | ?
-      - else
+      - if @favorites.any?
         - @favorites.each do |homestay|
           .well.well-lg.favorite-host data-homestay-id=homestay.id
-            .homestay-info style='display: inline-block;'
+            .homestay-info
               p
                 strong Listing Title
                 = ": #{homestay.title.capitalize}"
@@ -29,8 +24,6 @@
               br
               = link_to 'Remove', '#', class: 'remove-from-favourites'
     - if @hosts_with_bookings.any?
-      .page-header
-        h3 Confirmed Bookings
       .panel-content
         - for host_with_bookings in @hosts_with_bookings
           = render 'host_with_bookings', host: host_with_bookings[0], bookings: host_with_bookings[1]
