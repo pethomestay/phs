@@ -132,7 +132,7 @@ class Enquiry < ActiveRecord::Base
 
   def send_new_enquiry_notification_SMS
     if self.homestay.user.admin?
-      message_content = "New PHS Enquiry!\n#{self.check_in_date.strftime("%-d/%-m")} - #{self.check_out_date.strftime("%-d/%-m")}\nPet:#{self.user.pet.name[0..10]}, #{self.user.pet.try(:breed)[0..20]}, #{self.user.pet.age}\nReply YES to Express Interest or NO to Decline.\n <a> href="phs.host/account" phs.host/account</a>"
+      message_content = "New PHS Enquiry!\n#{self.check_in_date.strftime("%-d/%-m")} - #{self.check_out_date.strftime("%-d/%-m")}\nPet:#{self.user.pet.name[0..10]}, #{self.user.pet.try(:breed)[0..20]}, #{self.user.pet.age}\nReply YES to Express Interest or NO to Decline.\nwww.phs.host/account"
     else
       message_content = "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
     end
