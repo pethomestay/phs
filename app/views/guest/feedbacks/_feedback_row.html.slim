@@ -1,15 +1,15 @@
 - content_for :jega_tags do
-  meta property='og:title' content='#{feedback.enquiry.homestay.title}'  
-  meta property='og:site_name' content='PetHomeStay bull' 
+  meta property='og:title' content=@feedme.enquiry.homestay.title 
+  meta property='og:site_name' content='PetHomeStay' 
   meta property='og:description' content='I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!'
-  - if feedback.enquiry.homestay.photos?
-    - img_url = cloudinary_url feedback.enquiry.homestay.photos.first.public_id
-  - elsif feedback.enquiry.homestay.pictures.any?
-    - img_url = feedback.enquiry.homestay.pictures.first.file.remote_url
-  - elsif feedback.enquiry.homestay.user.profile_photo?
-    - img_url = cloudinary_url feedback.enquiry.homestay.user.profile_photo.public_id
-  - elsif feedback.enquiry.homestay.user.uid.present?
-    - img_url = cloudinary_url feedback.enquiry.homestay.user.uid
+  - if @feedme.enquiry.homestay.photos?
+    - img_url = cloudinary_url @feedme.enquiry.homestay.photos.first.public_id
+  - elsif @feedme.enquiry.homestay.pictures.any?
+    - img_url = @feedme.enquiry.homestay.pictures.first.file.remote_url
+  - elsif @feedme.enquiry.homestay.user.profile_photo?
+    - img_url = cloudinary_url @feedme.enquiry.homestay.user.profile_photo.public_id
+  - elsif @feedme.enquiry.homestay.user.uid.present?
+    - img_url = cloudinary_url @feedme.enquiry.homestay.user.uid
   - if img_url.present?
     meta property="og:image"  content='img_url'  
 css:

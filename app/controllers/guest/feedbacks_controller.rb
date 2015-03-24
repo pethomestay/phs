@@ -7,6 +7,9 @@ class Guest::FeedbacksController < Guest::GuestController
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10) # feedbacks given as a guest
     @rec_feedbacks = current_user.received_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)
     @recommendations = current_user.recommendations.order('created_at DESC').paginate(page: params[:page], per_page: 10)
+    if @feedbacks.last.try(:enquiry).try(:booking).try(:bookee) == @feedbacks.last.try(:subject)
+      @feedme = @feedbacks.last 
+    end   
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render "guest/feedbacks/index", :layout => "new_application"
   end
