@@ -140,14 +140,7 @@ javascript:
     .row
       .col-md-12.text-center.pad-all
         p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
-        button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
-          i.fa.fa-facebook
-            |  SHARE
-
-        
-        button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
-          i.fa.fa-twitter
-            |  TWEET              
+      = render 'social_sharing'            
     - if feedback.private_review?
       hr
       .row

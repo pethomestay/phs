@@ -123,7 +123,7 @@ javascript:
           - @feedbacks.each do |feedback|
             - next unless feedback
             - if feedback.try(:enquiry).try(:booking).try(:bookee) == feedback.try(:subject)
-              = render 'feedback_row', feedback: feedback ,top: true              
+              = render 'feedback_row', feedback: feedback              
 
         .tab-pane.fade.in id="reviews-received-tab"
           .phs-subtitle
@@ -131,7 +131,7 @@ javascript:
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
             - if rec_feedback.enquiry.booking.booker == rec_feedback.subject
-              = render 'rec_feedback_row', rec_feedback: rec_feedback ,top: true   
+              = render 'rec_feedback_row', rec_feedback: rec_feedback  
 
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
