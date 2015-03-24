@@ -1,7 +1,7 @@
 - content_for :jega_tags do
-  meta property='og:title' content=feedback.enquiry.homestay.title  
+  meta property='og:title' content='#{feedback.enquiry.homestay.title}'  
   meta property='og:site_name' content='PetHomeStay' 
-  meta property='og:description' content="I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!"
+  meta property='og:description' content='I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!'
   - if feedback.enquiry.homestay.photos?
     - img_url = cloudinary_url feedback.enquiry.homestay.photos.first.public_id
   - elsif feedback.enquiry.homestay.pictures.any?
@@ -11,7 +11,7 @@
   - elsif feedback.enquiry.homestay.user.uid.present?
     - img_url = cloudinary_url feedback.enquiry.homestay.user.uid
   - if img_url.present?
-    meta property="og:image"  content=img_url  
+    meta property="og:image"  content='img_url'  
 css:
   .feedback-head {
     cursor : pointer;
@@ -152,6 +152,8 @@ javascript:
         button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
           i.fa.fa-facebook
             |  SHARE
+
+        
         button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
           i.fa.fa-twitter
             |  TWEET              
@@ -164,23 +166,7 @@ javascript:
             = " #{feedback.subject.name}:"
           .text-thin style="margin: 5px 0 15px 15px;"
             = "#{feedback.private_review}"
+
+
 javascript:
-  $( ".feedback-body" ).hide();
-  $( ".feedback-head" ).click(function(event) {
-    var head = $(this).children();
-    var icon = $(this).find(".feedback-icon").children();
-    var body = $(this).parent().find(".feedback-body");
-    if( body.is(":hidden") ) {
-      icon.addClass("phs-rotate");
-      icon.removeClass("phs-reset");
-      head.removeClass("phs-title"); 
-      head.addClass("phs-title-active");
-      body.slideDown();
-    } else {
-      icon.removeClass("phs-rotate"); 
-      icon.addClass("phs-reset");
-      head.removeClass("phs-title-active"); 
-      head.addClass("phs-title");
-      body.slideUp();
-    }
-  });            
+  
