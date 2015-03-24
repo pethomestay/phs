@@ -1,0 +1,186 @@
+- content_for :meta_tags do
+  meta property='og:title' content=feedback.enquiry.homestay.title  
+  meta property='og:description' content="I just had a great experience with this homestay and I wholeheartedly want you to experience it for your pets too!"  
+  meta property='og:site_name' content='PetHomeStay' 
+  - if feedback.enquiry.homestay.photos?
+    - img_url = cloudinary_url feedback.enquiry.homestay.photos.first.public_id
+  - elsif feedback.enquiry.homestay.pictures.any?
+    - img_url = feedback.enquiry.homestay.pictures.first.file.remote_url
+  - elsif feedback.enquiry.homestay.user.profile_photo?
+    - img_url = cloudinary_url feedback.enquiry.homestay.user.profile_photo.public_id
+  - elsif feedback.enquiry.homestay.user.uid.present?
+    - img_url = cloudinary_url feedback.enquiry.homestay.user.uid
+  - if img_url.present?
+    meta property="og:image"  content=img_url  
+css:
+  .feedback-head {
+    cursor : pointer;
+  }
+  .feedback-body {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-top: none;
+  }
+  .btn-fb {
+    margin-right:5px;
+    background: #3B5998;
+    color: #f7f7f7;
+  }
+  .btn-tw {
+    background: #55acee;
+    color: #f7f7f7;
+  }
+  .phs-tab-header {
+    margin-left: -20px;
+    margin-right: -20px;
+    height: 75px;
+  }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-tab-header-picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .phs-tab-header-picture2x {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
+  .phs-panel-body {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 0 0 0 !important;
+  }
+  .phs-subtitle {
+    background-color: #f2f2f2;
+    color: #ababab;
+    margin: -10px 0 10px 0;
+    padding: 5px;
+    text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
+  }
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : gon.fb_app_id,
+      xfbml      : false,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn').on('click', function() {
+      FB.ui(
+      {
+        method: 'share',
+        href: document.URL
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root  
+.parent style="border-bottom: 1px solid #ddd;"
+  .panel-heading.feedback-head style="margin-bottom: 40px;"
+    .panel-title.phs-title
+      .pull-left
+        - if feedback.subject.profile_photo?
+            = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+        - else
+          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+      .pull-left style="margin-top: 10px;"
+        = "#{feedback.enquiry.booking.bookee.homestay.title}'s Homestay"
+        br
+        | Reviewed:
+        = " (#{time_ago_in_words(feedback.created_at)}) ago"
+      .pull-right.text-right
+        span.date
+          small
+            | From: 
+          = " #{feedback.enquiry.check_in_date.strftime('%b %e')}"
+        br
+          small
+            | To: 
+          = " #{feedback.enquiry.check_out_date.strftime('%b %e')}"
+        .feedback-icon
+          i.fa.fa-chevron-down
+  .panel-body.feedback-body style="margin-top: 20px;"
+    .row
+      .col-md-2
+        .text-center.pad-all
+          - if feedback.subject.profile_photo?
+            = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
+          - else
+            = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
+      .col-md-8
+        div style="margin: 20px 0 0 0;"
+          = feedback.review
+
+      .col-md-2.text-center style="margin: 20px 0 0 0;"
+        - if feedback.enquiry.homestay.user.received_feedbacks.present?
+          p.display_inline.rating
+            == rating_stars_awesome feedback.enquiry.homestay.average_rating
+    .row
+      .col-md-12.text-center.pad-all
+        p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
+        button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
+          i.fa.fa-facebook
+            |  SHARE
+        button.btn.twitter-share-btn style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
+          i.fa.fa-twitter
+            |  TWEET              
+    - if feedback.private_review?
+      hr
+      .row
+        .col-md-12
+          span Your private comments for
+          strong
+            = " #{feedback.subject.name}:"
+          .text-thin style="margin: 5px 0 15px 15px;"
+            = "#{feedback.private_review}"
+javascript:
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
+    } else {
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
+    }
+  });            
