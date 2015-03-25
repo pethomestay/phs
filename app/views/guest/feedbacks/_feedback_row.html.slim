@@ -140,7 +140,7 @@ javascript:
     .row
       .col-md-12.text-center.pad-all
         p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
-      = render 'social_sharing'            
+        = render 'social_sharing'            
     - if feedback.private_review?
       hr
       .row
@@ -153,4 +153,23 @@ javascript:
 
 
 javascript:
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
+    } else {
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
+    }
+  });
   

@@ -163,25 +163,3 @@ javascript:
                       strong
                         = recommendation.review
                       span "
-
-javascript:
-  $( ".feedback-body" ).hide();
-  $( ".feedback-head" ).click(function(event) {
-    var head = $(this).children();
-    var icon = $(this).find(".feedback-icon").children();
-    var body = $(this).parent().find(".feedback-body");
-    if( body.is(":hidden") ) {
-      icon.addClass("phs-rotate");
-      icon.removeClass("phs-reset");
-      head.removeClass("phs-title"); 
-      head.addClass("phs-title-active");
-      body.slideDown();
-    } else {
-      icon.removeClass("phs-rotate"); 
-      icon.addClass("phs-reset");
-      head.removeClass("phs-title-active"); 
-      head.addClass("phs-title");
-      body.slideUp();
-    }
-  });
-
