@@ -1,6 +1,54 @@
+- content_for :meta_tags do
+  meta property='og:title' content=feedback.enquiry.homestay.title
+  meta property='og:site_name' content='PetHomeStay'
+  meta property='og:description' content=feedback.review
+  meta name='twitter:card' content='summary'
+  meta name='twitter:site' content='@PetHomeStay'
+  meta name='twitter:title' content=feedback.enquiry.homestay.title
+  meta name='twitter:description' content=truncate(feedback.review, length: 200)
+  meta name='twitter:url' content=request.original_url
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '363405197161579',
+      status     : true, // check the login status upon init?
+      cookie     : true, // set sessions 
+      xfbml      : true, // parse XFBML tags on this page?
+      version    : 'v2.3'
+    });
+
+    $('.fb-share-btn.fb-guest-to-host-review').on('click', function() {
+      var data = $(this).data();
+      var fb_title = "Check out my review of " + data.title + "'s homestay!" 
+      FB.ui(
+      {
+        method: 'feed',
+        link: "https://www.pethomestay.com.au",
+        name: fb_title,
+        description: data.review
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+	 var js, fjs = d.getElementsByTagName(s)[0];
+	 if (d.getElementById(id)) {return;}
+	 js = d.createElement(s); js.id = id;
+	 js.src = "//connect.facebook.net/en_US/sdk.js";
+	 fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
 - twitter_url  = 'https://twitter.com/share'
+- twitter_url += "?text=Come join me on PetHomeStay.com.au"
 - twitter_url += '&via=PetHomeStay'
 - twitter_url += '&hashtags=freecuddles'
+
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
 p
   button.btn.fb-share-btn.fb-guest-to-host-review data-title=feedback.enquiry.homestay.title data-review=feedback.review style='background: #3B5998; color: #f7f7f7;'
     i.fa.fa-facebook 
