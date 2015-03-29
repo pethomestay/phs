@@ -214,9 +214,9 @@ $(document).ready(function() {
       isValid = false;
    });
 
-   $('.fb-share-btn.fb-test i').on('click', function() {
-      console.debug($(this).data());
-   });
+   // $('.fb-share-btn.fb-test i').on('click', function() {
+   //    console.debug($(this).data());
+   // });
 
    window.fbAsyncInit = function() {
     FB.init({
@@ -227,7 +227,7 @@ $(document).ready(function() {
       version    : 'v2.1'
     });
 
-    $('.fb-share-btn.fb-guest-to-host-review i').on('click', function() {
+    $('.fb-share-btn.fb-guest-to-host-review').on('click', function() {
       var data = $(this).data();
       console.debug(data);
       var fb_title = "Check out my review of " + data.title + "'s homestay!" 
