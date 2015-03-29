@@ -235,7 +235,6 @@ $(document).ready(function() {
       {
         method: 'feed',
         link: "https://www.pethomestay.com.au",
-        picture: data.picture,
         name: fb_title,
         description: data.review
       }, function(response){});

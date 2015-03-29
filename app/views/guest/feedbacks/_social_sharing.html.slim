@@ -1,12 +1,8 @@
-- if feedback.subject.profile_photo?
-	- img_url =  feedback.subject.profile_photo.public_id
-- else
-	- img_url =  'default_profile_photo.jpg'
 - twitter_url  = 'https://twitter.com/share'
 - twitter_url += '&via=PetHomeStay'
 - twitter_url += '&hashtags=freecuddles'
 p
-  button.btn.fb-share-btn.fb-guest-to-host-review data-title=feedback.enquiry.homestay.title data-review=feedback.review data-picture=img_url style='background: #3B5998; color: #f7f7f7;'
+  button.btn.fb-share-btn.fb-guest-to-host-review data-title=feedback.enquiry.homestay.title data-review=feedback.review style='background: #3B5998; color: #f7f7f7;'
     i.fa.fa-facebook 
       |  SHARE
   button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
