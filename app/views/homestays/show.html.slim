@@ -158,12 +158,12 @@ coffee:
             - unless my_homestay?(@homestay)
               - if user_signed_in?
                 - if current_user.pets.present? # Display giant inquiry button
-                  button.btn.btn-primary.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%" REQUEST A MEETING
+                  button.btn.btn-primary.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" REQUEST A MEETING
                 - else # Ask current user to add a pet first
-                  button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK HOST
+                  button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK HOST
                   / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
               - else # ask user to sign up or sign in
-                = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
+                = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%; padding: 12px 12px;'
               / TODO: use a modal to prompt user to sign in so redirect_path can be set    
     .col-lg-8
       .tab-base
