@@ -193,6 +193,12 @@ coffee:
                       - if feedback.enquiry.homestay.user.received_feedbacks.present?
                         p.display_inline.rating
                           == rating_stars_awesome feedback.enquiry.homestay.average_rating
+                  - if current_user.admin? 
+                    .row
+                      .col-md-12.text-center.pad-all
+                        =link_to edit_host_feedback_path(feedback)
+                          i.fa.fa-pencil-square-o.fa-lg.fa-fw
+                          | Edit Review
                   - if feedback.private_review?  
                     hr
                     .row

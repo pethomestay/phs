@@ -200,6 +200,12 @@ coffee:
                     .col-md-12.text-center.pad-all
                       p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
                       = render 'social_sharing', feedback: feedback            
+                  - if current_user.admin? 
+                    .row
+                      .col-md-12.text-center.pad-all
+                        =link_to edit_guest_feedback_path(feedback)
+                          i.fa.fa-pencil-square-o.fa-lg.fa-fw
+                          | Edit Review
                   - if feedback.private_review?
                     hr
                     .row
@@ -262,6 +268,7 @@ coffee:
                           = " #{rec_feedback.user.first_name}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
                           = "#{rec_feedback.private_review}"
+
 
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
