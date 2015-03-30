@@ -70,16 +70,35 @@ css:
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : gon.fb_app_id,
-      xfbml      : false,
+      appId      : "#{ENV['APP_ID'] || '382802968555135' }",
+      cookie     : true,
+      status     : true,
+      xfbml      : true,
       version    : 'v2.1'
     });
 
-    $('.fb-share-btn').on('click', function() {
+    $('.fb-share-btn.fb-host-to-guest-review').on('click', function() {
+      var data = $(this).data();
+      var fb_description = "Review: " + data.review
       FB.ui(
       {
-        method: 'share',
-        href: document.URL
+        method: 'feed',
+        link: "https://www.pethomestay.com.au",
+        name: data.title,
+        caption: "Australia's no. 1 pet sitting community",
+        description: fb_description
+      }, function(response){});
+    });
+
+    $('.fb-share-btn.fb-user-support').on('click', function() {
+      var data = $(this).data();
+      FB.ui(
+      {
+        method: 'feed',
+        link: data.url,
+        name: Please give me your support,
+        caption: "Australia's no. 1 pet sitting community",
+        description: "I could use a helping hand from friends. Please give me your support by going to the following link and telling the community that I love pets!"
       }, function(response){});
     });
   };
@@ -91,7 +110,18 @@ javascript:
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-#fb-root  
+#fb-root
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+    $('.twitter-support-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-support-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"  
+
 = render layout: 'layouts/user' do
   .panel.panel-default style="box-shadow: none;" 
     .panel-heading.phs-tab-header
@@ -219,6 +249,10 @@ javascript:
                       - if rec_feedback.enquiry.homestay.user.received_feedbacks.present?
                         p.display_inline.rating.text-center style="margin: 20px 0 0 0;"
                           == rating_stars_awesome rec_feedback.enquiry.homestay.average_rating
+                  .row
+                    .col-md-12.text-center.pad-all
+                      p style="font-weight: bold; font-size: 15pt;" The best way to say thank you is to SHARE your review to help your Host!
+                      = render 'social_sharing', rec_feedback: rec_feedback              
                   - if rec_feedback.private_review?
                     hr
                     .row
@@ -232,13 +266,12 @@ javascript:
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
             ' Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
+            p = "www.pethomestay.com.au/support/#{current_user.hex}"
+            ' Or use Social media 
             br
             br
-            a href=""
-              = "www.pethomestay.com.au/support/#{current_user.hex}"
-            br
-            br
-            '  to leave you more recommendations.
+            = render 'support_sharing' 
+            '  and get people you know to leave you support!
           - if @recommendations.any?
             - @recommendations.each do |recommendation|
               .parent style="border-bottom: 1px solid #ddd;"

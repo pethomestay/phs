@@ -92,6 +92,18 @@ javascript:
         description: fb_description
       }, function(response){});
     });
+
+    $('.fb-share-btn.fb-user-support').on('click', function() {
+      var data = $(this).data();
+      FB.ui(
+      {
+        method: 'feed',
+        link: data.url,
+        name: Please give me your support,
+        caption: "Australia's no. 1 pet sitting community",
+        description: "I could use a helping hand from friends. Please give me your support by going to the following link and telling the community that I love pets!"
+      }, function(response){});
+    });
   };
 
   (function(d, s, id){
@@ -108,6 +120,10 @@ coffee:
       width  = 600
       height = 350
       window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+    $('.twitter-support-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-support-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"  
 
 = render layout: 'layouts/user' do
   .panel.panel-default
@@ -250,13 +266,12 @@ coffee:
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
             ' Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
+            p = "www.pethomestay.com.au/support/#{current_user.hex}"
+            ' Or use Social media 
             br
             br
-            a href=""
-              = "www.pethomestay.com.au/support/#{current_user.hex}"
-            br
-            br
-            '  to leave you more recommendations.
+            = render 'support_sharing' 
+            '  and get people you know to leave you support!
           - if @recommendations.any?
             - @recommendations.each do |recommendation|
               .parent style="border-bottom: 1px solid #ddd;"

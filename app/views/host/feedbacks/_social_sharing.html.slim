@@ -1,0 +1,14 @@
+- title = rec_feedback.user.first_name + " " + rec_feedback.user.last_name + " left my homestay an awesome review!"
+- name = rec_feedback.user.first_name + " " + rec_feedback.user.last_name 
+- twitter_url  = 'https://twitter.com/share'
+- twitter_url += "?text= " + name +  " had an awesome experience with my HomeStay thanks to PetHomeStay"
+- twitter_url += "&url=https://www.pethomestay.com.au/"
+- twitter_url += '&hashtags=freecuddles'
+p
+  button.btn.fb-share-btn.fb-host-to-guest-review data-title=title data-review=rec_feedback.review style='background: #3B5998; color: #f7f7f7;'
+    i.fa.fa-facebook 
+      |  SHARE
+  button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
+    i.fa.fa-twitter
+      |  TWEET	
+
