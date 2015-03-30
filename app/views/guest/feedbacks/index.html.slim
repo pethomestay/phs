@@ -81,13 +81,15 @@ javascript:
 
     $('.fb-share-btn.fb-guest-to-host-review').on('click', function() {
       var data = $(this).data();
-      var fb_title = "Check out my review of " + data.title + "'s homestay!" 
+      var fb_title = "I had an awesome time at " + data.title + "'s homestay!" 
+      var fb_description = "Review: " + data.review
       FB.ui(
       {
         method: 'feed',
         link: "https://www.pethomestay.com.au",
         name: fb_title,
-        description: data.review
+        caption: "Australia's no. 1 pet sitting community",
+        description: fb_description
       }, function(response){});
     });
   };
