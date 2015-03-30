@@ -1,3 +1,4 @@
+
 css:
   .feedback-head {
     cursor : pointer;
@@ -67,6 +68,45 @@ css:
     transform: rotate(0deg);
     transition: .3s;
   }
+
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : "#{ENV['APP_ID'] || '382802968555135' }",
+      cookie     : true,
+      status     : true,
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn.fb-guest-to-host-review').on('click', function() {
+      var data = $(this).data();
+      var fb_title = "Check out my review of " + data.title + "'s homestay!" 
+      FB.ui(
+      {
+        method: 'feed',
+        link: "https://www.pethomestay.com.au",
+        name: fb_title,
+        description: data.review
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+
 = render layout: 'layouts/user' do
   .panel.panel-default
     .panel-heading.phs-tab-header
