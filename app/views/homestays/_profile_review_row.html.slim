@@ -1,0 +1,34 @@
+.review style=" padding: 15px;"
+  .row
+    .col-md-2.col-lg-2.hidden-sm.hidden-xs style="text-align:center"
+      .media-middle
+        - if review.user.profile_photo?
+          = cl_image_tag review.user.profile_photo.public_id, width: 90, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif review.user.uid.present?
+          = facebook_profile_image_tag review.user.uid, width: 90, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - else
+          = image_tag 'default_profile_photo.jpg', style: 'width: 90px;', class: 'img-circle search_item_profile_picture'
+      br
+      .reviewer #{review.user.first_name}
+      .stars-sa
+        = render 'stars', rating: review.rating
+      .reviewer  #{review.created_at.strftime('%F')}
+    .col-md-10.col-lg-10.hidden-sm.hidden-xs.well.well-sm
+      p #{review.review}
+      .hr
+    .col-xs-offset-5.col-sm-offset-5.col-xs-3.col-sm-3.hidden-md.hidden-lg style="text-align:center"
+      .media-middle
+        - if review.user.profile_photo?
+          = cl_image_tag review.user.profile_photo.public_id, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - elsif review.user.uid.present?
+          = facebook_profile_image_tag review.user.uid, width: 65, height: 65, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        - else
+          = image_tag 'default_profile_photo.jpg', style: 'width: 65px;', class: 'img-circle search_item_profile_picture'
+      .reviewer #{review.user.first_name}
+      .stars-sa
+              = render 'stars', rating: review.rating
+      .reviewer
+        p #{review.created_at.strftime('%F')}
+    .col-xs-12.col-sm-12.hidden-md.hidden-lg.well.well-sm
+      p #{review.review}
+      .hr  

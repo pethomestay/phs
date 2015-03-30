@@ -259,9 +259,8 @@ coffee:
         
           .tab-pane.fade id="demo-stk-lft-tab-4"
             - if @reviews.any?
-              = render 'review_row', review: @reviews.shift ,top: true
-              - for review in @reviews
-                = render 'review_row', review: review, top: false
+              - @reviews.each do |review|
+                = render 'profile_review_row', review: review, top: false
             - else
               span No reviews for this user at the moment
     .col-lg-4
@@ -332,13 +331,16 @@ coffee:
         #map data-lat=@homestay.latitude data-lng=@homestay.longitude
       .row.stat.attr style="text-align:center"
         .btn-group
-          a.btn.btn-icon.btn-hover-primary.fa.fa-facebook.icon-lg.fb-share-btn style="border:1px solid #ddd"
+          button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
+            i.fa.fa-facebook 
+              |  SHARE
           - twitter_url  = 'https://twitter.com/share'
           - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
           - twitter_url += '&via=PetHomeStay'
           - twitter_url += '&hashtags=freecuddles'  
-          a.btn.btn-icon.btn-hover-info.fa.fa-twitter.icon-lg.twitter-share-btn style="border:1px solid #ddd" data-href=twitter_url 
-
+          button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
+            i.fa.fa-twitter
+              |  TWEET  
 - if user_signed_in? and current_user.pets.present?
   .modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
     .modal-dialog
