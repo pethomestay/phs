@@ -27,6 +27,7 @@
 //= require wizard_setup
 //= require owl.carousel
 //= require popover
+//= require slick.min
 //= require moment
 //= require video
 //= require bigvideo

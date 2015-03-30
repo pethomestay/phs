@@ -20,6 +20,12 @@
     meta property='og:image' content=img_url
     meta name='twitter:image' content=img_url
 css:
+  .slick-prev {
+    display:none !important;
+  }
+  .slick-next {
+    display:none !important;
+  }
   .title_p_t {
     margin-top:10px;
   }
@@ -121,21 +127,18 @@ coffee:
         / TODO: use a modal to prompt user to sign in so redirect_path can be set   
   .row style="background-color:#e8ebf0"
     .panel
-      .panel-bg-cover style="max-height:400px;"
-        .container-fluid.homestay-show
-          .row.first
-            #hero.owl-carousel.owl-theme
-              - if @homestay.photos?
-                - for photo in @homestay.photos
-                  .item.img-responsive
-                    = cl_image_tag photo.public_id, height: 400
-              - elsif @homestay.pictures.present?
-                - for picture in @homestay.pictures
-                  .item.img-responsive
-                    = image_tag picture.file.thumb('x400').url
-              - else
-                .item.img-responsive
-                  = image_tag 'placeholder.png'                       
+      .row.first style="margin-bottom:0;"
+        - if @homestay.photos?
+          - for photo in @homestay.photos
+            .item.img-responsive
+              = cl_image_tag photo.public_id, height: 400
+        - elsif @homestay.pictures.present?
+          - for picture in @homestay.pictures
+            .item.img-responsive
+              = image_tag picture.file.thumb('x400').url
+        - else
+          .item.img-responsive
+            = image_tag 'placeholder.png'                       
       .panel-media
         - if @homestay.user.profile_photo?
           = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
@@ -412,38 +415,6 @@ coffee:
     # Fire modal if #confirm-modal is in URL
     if window.location.hash == '#confirm-modal'
       $('#confirm-modal').modal('show')  
-    # Carousel
-    if $('#xs-indicator').is ':visible'
-      $('#hero').owlCarousel
-        navigation: true
-        navigationText: [
-          "<i class='fa fa-chevron-circle-left fa-2x'></i>",
-          "<i class='fa fa-chevron-circle-right fa-2x'></i>"
-        ]
-        autoHeight : true
-        stopOnHover: true
-        slideSpeed : 300
-        paginationSpeed : 400
-        items : 3
-        itemsDesktop : [1199,2]
-        itemsDesktopSmall : [979,2]
-        itemsTablet : [768,1]
-        itemsMobile : [479,1] 
-    else
-      $('#hero').owlCarousel
-        navigation: true
-        navigationText: [
-          "<i class='fa fa-chevron-circle-left fa-2x'></i>",
-          "<i class='fa fa-chevron-circle-right fa-2x'></i>"
-        ]
-        autoPlay: true
-        pagination: false
-        items : 3
-        itemsDesktop : [1199,2]
-        itemsDesktopSmall : [979,2]
-        itemsTablet : [768,1]
-        itemsMobile : [479,1] 
-      $('.owl-controls').css 'margin-top', 0
 
     # Map
     $map = $('#map')
@@ -587,4 +558,31 @@ javascript:
     $('[data-toggle="tooltip"]').tooltip()
   })
 
+  $('.row.first').slick({
+      slidesToShow: 3,
+      accessibility: false,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      variableWidth: true,
+      adaptiveHeight: true,
+      responsive: [
+        {
+          breakpoint: 786,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
+  });
   
