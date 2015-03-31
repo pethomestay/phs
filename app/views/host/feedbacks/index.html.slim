@@ -152,7 +152,7 @@ coffee:
             ' Reviews that you have given as a Host for Guests.
           - @feedbacks.each do |feedback|
             - next unless feedback
-            - if feedback.enquiry.booking.booker == feedback.subject 
+            - if feedback.try(:enquiry).try(:booking).try(:booker) == feedback.try(:subject) 
               .parent style="border-bottom: 1px solid #ddd;"
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
@@ -214,7 +214,7 @@ coffee:
             ' Reviews that you have received as a Host by Guests.
           - @rec_feedbacks.each do |rec_feedback|
             - next unless rec_feedback
-            - if rec_feedback.enquiry.booking.booker == rec_feedback.subject  
+            - if rec_feedback.try(:enquiry).try(:booking).try(:booker) == rec_feedback.try(:subject)  
               .parent style="border-bottom: 1px solid #ddd;"
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
