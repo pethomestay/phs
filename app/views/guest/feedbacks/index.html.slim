@@ -160,10 +160,10 @@ coffee:
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
-                      / - if feedback.subject.profile_photo?
-                        / = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                      / - else
-                      = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - if feedback.subject.profile_photo?
+                        = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - else
+                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
                     .pull-left style="margin-top: 10px;"
                       = "#{feedback.enquiry.booking.bookee.homestay.title}'s Homestay"
                       br
@@ -184,10 +184,10 @@ coffee:
                   .row
                     .col-md-2
                       .text-center.pad-all
-                        / - if feedback.subject.profile_photo?
-                          / = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
-                        / - else
-                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
+                        - if feedback.subject.profile_photo?
+                          = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
+                        - else
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
                       div style="margin: 20px 0 0 0;"
                         = feedback.review
@@ -226,10 +226,10 @@ coffee:
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
-                      / - if rec_feedback.subject.profile_photo?
-                      /     = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                      / - else
-                      = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - if rec_feedback.subject.profile_photo?
+                        = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                      - else
+                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
                     .pull-left style="margin-top: 10px;"
                       = "#{rec_feedback.user.first_name} #{rec_feedback.user.last_name}"
                       br
@@ -247,10 +247,10 @@ coffee:
                   .row
                     .col-md-2
                       .text-center.pad-all
-                        / - if rec_feedback.subject.profile_photo?
-                          / = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
-                        / - else
-                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
+                        - if rec_feedback.subject.profile_photo?
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
+                        - else
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
                     .col-md-8
                       div style="margin: 20px 0 0 0;"
                         = "#{rec_feedback.review}"
