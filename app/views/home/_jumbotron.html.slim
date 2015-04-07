@@ -64,8 +64,11 @@
 javascript:
   var BV = new $.BigVideo({useFlashForFirefox:false});
   BV.init();
-  BV.show('videos/doglow.mp4', {ambient:true, doLoop:true, altSource:'videos/doglow.mp4'});
-  
+  if (Modernizr.touch) {
+    BV.show('doglow.png');
+  } else {
+    BV.show('videos/doglow.mp4', {ambient:true, doLoop:true, altSource:'videos/doglow.mp4'});
+  }
   var height = $(document).height();
   $( ".jumbotron" ).css( "height", height);
   

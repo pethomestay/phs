@@ -32,6 +32,7 @@ section.footer
           span.fa-stack.fa-lg
             i.fa.fa-circle.fa-stack-2x style="color: rgb(34, 96, 116)"
             i.fa.fa-envelope-o.fa-stack-1x
+       
     .col-sm-7.hidden-xs
       .col-sm-4
         h4 Learn More
@@ -40,6 +41,14 @@ section.footer
         = render 'shared/footer/list_item', text: 'Find a Sitter', url: root_path
         = render 'shared/footer/list_item', text: 'Charity Hosts', url: charity_hosts_path
         = render 'shared/footer/list_item', text: 'Contact Us', url: new_contact_path
+        / MixPanel Badge
+        br 
+        a href="https://mixpanel.com/f/partner"
+            img src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
+        br
+        br
+        .pull-left id="DigiCertClickID_zCiuq2TN" data-language="en_US"
+            a href="https://www.digicert.com/ssl-certificate.htm"
       .col-sm-4
         h4 About
         = render 'shared/footer/list_item', text: 'Our Company', url: our_company_path
@@ -61,3 +70,6 @@ section.footer
         = render 'shared/footer/list_item', text: 'Perth', url: perth_path
         = render 'shared/footer/list_item', text: 'Darwin', url: darwin_path
         = render 'shared/footer/list_item', text: 'Newcastle', url: newcastle_path
+
+javascript:
+    var __dcid = __dcid || [];__dcid.push(["DigiCertClickID_zCiuq2TN", "5", "s", "black", "zCiuq2TN"]);(function(){var cid=document.createElement("script");cid.async=true;cid.src="//seal.digicert.com/seals/cascade/seal.min.js";var s = document.getElementsByTagName("script");var ls = s[(s.length - 1)];ls.parentNode.insertBefore(cid, ls.nextSibling);}());

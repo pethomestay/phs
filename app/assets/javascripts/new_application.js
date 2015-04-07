@@ -29,6 +29,7 @@
 //= require popover
 //= require slick.min
 //= require moment
+//= require modernizr
 //= require video
 //= require bigvideo
 //= require jquery.slimscroll.min
