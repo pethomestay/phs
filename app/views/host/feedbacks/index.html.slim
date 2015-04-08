@@ -231,11 +231,11 @@ coffee:
                       span.date
                         small
                           | From: 
-                        = " #{rec_feedback.enquiry.check_in_date.strftime('%b %e')}"
+                        = " #{rec_feedback.enquiry.try(:check_in_date).strftime('%b %e')}"
                       br
                         small
                           | To: 
-                        = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
+                        = " #{rec_feedback.enquiry.try(:check_out_date).strftime('%b %e')}"
                       .feedback-icon
                         i.fa.fa-chevron-down  
                 .panel-body.feedback-body style="margin-top: 20px;"
