@@ -213,60 +213,61 @@ coffee:
           .phs-subtitle
             ' Reviews that you have received as a Host by Guests.
           - @rec_feedbacks.each do |rec_feedback|
-            .parent style="border-bottom: 1px solid #ddd;"
-              .panel-heading.feedback-head style="margin-bottom: 40px;"
-                .panel-title.phs-title
-                  .pull-left
-                    - if rec_feedback.subject.profile_photo?
-                        = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                    - else
-                      = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
-                  .pull-left style="margin-top: 10px;"
-                    = "#{rec_feedback.user.first_name} #{rec_feedback.user.last_name}"
-                    br
-                    | Reviewed:
-                    = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
-                  .pull-right.text-right
-                    span.date
-                      small
-                        | From: 
-                      = " #{rec_feedback.enquiry.check_in_date.strftime('%b %e')}"
-                    br
-                      small
-                        | To: 
-                      = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
-                    .feedback-icon
-                      i.fa.fa-chevron-down  
-              .panel-body.feedback-body style="margin-top: 20px;"
-                .row
-                  .col-md-2
-                    .text-center.pad-all
+            - unless rec_feedback.nil?
+              .parent style="border-bottom: 1px solid #ddd;"
+                .panel-heading.feedback-head style="margin-bottom: 40px;"
+                  .panel-title.phs-title
+                    .pull-left
                       - if rec_feedback.subject.profile_photo?
-                        = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
-                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
-                  .col-md-8
-                    div style="margin: 20px 0 0 0;"
-                      = "#{rec_feedback.review}"
-
-                  .col-md-2
-                    - if rec_feedback.enquiry.homestay.user.received_feedbacks.present?
-                      p.display_inline.rating.text-center style="margin: 20px 0 0 0;"
-                        == rating_stars_awesome rec_feedback.enquiry.homestay.average_rating
-                .row
-                  .col-md-12.text-center.pad-all
-                    p style="font-weight: bold; font-size: 15pt;" As a Host why not advertise your awesome reviews on social media?
-                    = render 'social_sharing', rec_feedback: rec_feedback              
-                - if rec_feedback.private_review?
-                  hr
+                        = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
+                    .pull-left style="margin-top: 10px;"
+                      = "#{rec_feedback.user.first_name} #{rec_feedback.user.last_name}"
+                      br
+                      | Reviewed:
+                      = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
+                    .pull-right.text-right
+                      span.date
+                        small
+                          | From: 
+                        = " #{rec_feedback.enquiry.check_in_date.strftime('%b %e')}"
+                      br
+                        small
+                          | To: 
+                        = " #{rec_feedback.enquiry.check_out_date.strftime('%b %e')}"
+                      .feedback-icon
+                        i.fa.fa-chevron-down  
+                .panel-body.feedback-body style="margin-top: 20px;"
                   .row
-                    .col-md-12                   
-                      span You received private comments from  
-                      strong
-                        = " #{rec_feedback.user.first_name}:"
-                      .text-thin style="margin: 5px 0 15px 15px;"
-                        = "#{rec_feedback.try(:private_review)}"
-                         
+                    .col-md-2
+                      .text-center.pad-all
+                        - if rec_feedback.subject.profile_photo?
+                          = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
+                        - else
+                          = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
+                    .col-md-8
+                      div style="margin: 20px 0 0 0;"
+                        = "#{rec_feedback.review}"
+
+                    .col-md-2
+                      - if rec_feedback.enquiry.homestay.user.received_feedbacks.present?
+                        p.display_inline.rating.text-center style="margin: 20px 0 0 0;"
+                          == rating_stars_awesome rec_feedback.enquiry.homestay.average_rating
+                  .row
+                    .col-md-12.text-center.pad-all
+                      p style="font-weight: bold; font-size: 15pt;" As a Host why not advertise your awesome reviews on social media?
+                      = render 'social_sharing', rec_feedback: rec_feedback              
+                  - if rec_feedback.private_review?
+                    hr
+                    .row
+                      .col-md-12                   
+                        span You received private comments from  
+                        strong
+                          = " #{rec_feedback.user.first_name}:"
+                        .text-thin style="margin: 5px 0 15px 15px;"
+                          = "#{rec_feedback.try(:private_review)}"
+                           
         .tab-pane.fade.in id="recommendation-tab"
           .phs-subtitle
             ' Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
