@@ -283,14 +283,16 @@ coffee:
                       | Reviewed:
                       = " (#{time_ago_in_words(rec_feedback.created_at)}) ago"
                     .pull-right.text-right
-                      span.date
-                        small
-                          | From: 
-                        = " #{rec_feedback.try(:enquiry).try(:check_in_date).strftime('%b %e')}"
+                      / span.date
+                      /   small
+                      /     | From: 
+                      /   = " #{rec_feedback.try(:enquiry).try(:check_in_date).strftime('%b %e')}"
+                      / br
+                      /   small
+                      /     | To: 
+                      /   = " #{rec_feedback.try(:enquiry).try(:check_out_date).strftime('%b %e')}"
                       br
-                        small
-                          | To: 
-                        = " #{rec_feedback.try(:enquiry).try(:check_out_date).strftime('%b %e')}"
+                      br
                       .feedback-icon
                         i.fa.fa-chevron-down  
                 .panel-body.feedback-body style="margin-top: 20px;"
