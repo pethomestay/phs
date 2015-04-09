@@ -26,6 +26,7 @@
 //= require bootstrap-popover
 //= require handlebars
 //= require handlebars.comparison
+//= require mix_panel
 //= require jquery.nested-fields
 //= require chosen-jquery
 //= require_tree ./gmaps4rails
