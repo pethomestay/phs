@@ -23,11 +23,11 @@
       - guest = booking.booker
       - host  = booking.bookee
       %tr
-        %td= link_to "#{guest.try(:name)} (#{guest.try(:mobile_number)})", admin_user_path(guest)
-        %td= link_to "#{host.try(:name)} (#{host.try(:mobile_number)})", admin_user_path(host)
-        %td= payment.try(:braintree_transaction_id)
+        %td= link_to "#{guest.try(:name)} (#{guest.mobile_number})", admin_user_path(guest)
+        %td= link_to "#{host.try(:name)} (#{host.mobile_number})", admin_user_path(host)
+        %td= payment.braintree_transaction_id
         %td= payment.created_at.in_time_zone("Melbourne").strftime("%l:%M %P, %d/%m/%y")
-        %td= number_to_currency(payment.try(:amount))
+        %td= number_to_currency(payment.amount)
         %td= booking.coupon.present? ? booking.coupon.code : ""
         %td
           %strong= booking.state
@@ -65,8 +65,8 @@
       %tr{ class: booking_state == 'host has been paid' ? 'completed' : '' }
         - guest = booking.booker
         - host = booking.bookee
-        %td= link_to (guest.try(:name) || 'n/a'), admin_user_path(guest)
-        %td= link_to (host.try(:name) || 'n/a'), admin_user_path(host)
+        %td= link_to (guest.name || 'n/a'), admin_user_path(guest)
+        %td= link_to (host.name || 'n/a'), admin_user_path(host)
         %td= link_to transaction.reference, admin_view_booking_url(booking)
         %td= transaction.updated_at.strftime('%d/%m/%Y')
         %td= transaction.pre_authorisation_id
