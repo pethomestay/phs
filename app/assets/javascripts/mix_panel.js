@@ -18,7 +18,7 @@ function source(){
     return 'Other';
   }
 }
-var hash = source():
+var hash = source();
 console.log(hash)
 
 // mixpanel.register_once({"Source": source()});
