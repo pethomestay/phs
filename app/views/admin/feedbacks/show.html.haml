@@ -2,16 +2,16 @@
 
 %dl.dl-horizontal
   %dt From
-  %dd= @feedback.user.name
+  %dd= @feedback.user.try(:name)
   %dt About
-  %dd= @feedback.subject.name
+  %dd= @feedback.subject.try(:name)
   %dt Homestay
-  %dd= @feedback.enquiry.homestay.title
+  %dd= @feedback.enquiry.homestay.try(:title)
   %dt Rating
   %dd
-    - rating_stars @feedback.rating
+    - rating_stars @feedback.try(:rating)
   %dt Review
-  %dd= @feedback.review
+  %dd= @feedback.try(:review)
 
 
 = link_to 'Edit', edit_admin_feedback_path(@feedback), class: 'btn btn-primary'

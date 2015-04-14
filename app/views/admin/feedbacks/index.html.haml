@@ -10,9 +10,9 @@
   %tbody
     - @feedbacks.each do |feedback|
       %tr
-        %td= link_to feedback.user.name, admin_feedback_path(feedback)
-        %td= link_to feedback.subject.name, admin_feedback_path(feedback)
-        %td= feedback.rating
+        %td= link_to feedback.user.try(:name), admin_feedback_path(feedback)
+        %td= link_to feedback.subject.try(:name), admin_feedback_path(feedback)
+        %td= feedback.try(:rating)
         %td= feedback.created_at.to_formatted_s(:year_month_day)
         %td
           =link_to 'Edit', edit_admin_feedback_path(feedback)

@@ -6,9 +6,9 @@
     .span6{style: 'padding-top:30px'}
       = f.hidden_field :rating, value: f.object.rating || 0
       - if f.object.errors.present?
-        %p.tc.red= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+        %p.tc.red= "How would you rate the way #{@feedback.subject.try(:first_name)} handled this booking?"
       - else
-        %p.tc= "How would you rate the way #{@feedback.subject.first_name} handled this booking?"
+        %p.tc= "How would you rate the way #{@feedback.subject.try(:first_name)} handled this booking?"
       .rater
         - rating_stars 0
     .span6
