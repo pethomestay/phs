@@ -19,7 +19,7 @@ function source(){
   }
 }
 var hash = source():
-console.log(hash);
+console.log(hash)
 
-mixpanel.register_once({"Source": source()});
-mixpanel.track("User: " source());
+// mixpanel.register_once({"Source": source()});
+// mixpanel.track("User: " source());
