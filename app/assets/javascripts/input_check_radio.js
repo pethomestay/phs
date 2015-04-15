@@ -5,8 +5,7 @@ $(document).ready(function() {
 
   var hash = source();
   console.log(hash);
-  mixpanel.track("This guy comes From: " + hash);
-
+  
 
 
   function source(){
