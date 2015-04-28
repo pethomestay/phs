@@ -32,7 +32,7 @@ $(document).ready(function() {
     event: 'User entered from',
     properties: {
     	referal: ref,
-    	Id: )
+    	Id: analytics.user().anonymousId()
     }
   });
 
