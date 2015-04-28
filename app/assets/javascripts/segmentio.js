@@ -5,7 +5,7 @@ $(document).ready(function() {
   }}();
 
   var ref = source();
-  var id_user = analytics.user().anonymousId();
+  console.log(ref);
 
   function source(){
     if (document.referrer.search('https?://(.*)google.([^/?]*)') === 0) {
@@ -22,18 +22,8 @@ $(document).ready(function() {
       return 'Other';
     }
   }
-
-
-  analytics.identify(analytics.user().anonymousId(), {
-  		// Do something
-  });
-
   analytics.track('Incoming Users', {
     event: 'User entered from',
-    properties: {
-    	referal: ref,
-    	Id: analytics.user().anonymousId()
-    }
+    properties: ref
   });
-
 });
