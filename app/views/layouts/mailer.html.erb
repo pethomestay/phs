@@ -147,7 +147,7 @@
                         <td style="padding: 0px 0px 0px 0px;" class="logo">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
-            						<td width="100" align="center">
+            						<td width="100" align="center" valign="middle">
 										<p style="font-size:25px;font-weight: bold;"><span style="color:white;">pet<span style="color: #ea8e28;">home</span>stay</span></p>
 									</td>
                                 </tr>
@@ -216,7 +216,9 @@
                                     <table  bgcolor="#f2f2f2" width="100%" border="0" cellspacing="0" cellpadding="0" style="border-radius:5px;">
 										
                                         <tr>
-                                            <td align="left" style=" padding:20px 10px 0 10px; font-size: 16px; line-height: 25px; color: #666666;" class="padding-copy"><%= yield %></td>
+                                            <td align="left" style=" padding:20px 10px 0 10px; font-size: 16px; line-height: 25px; color: #666666;" class="padding-copy">
+												<%= yield %>
+											</td>
                                         </tr>
                                         
 										
@@ -276,10 +278,10 @@
 						<p>©&nbsp;2015&nbsp;PetHomeStay</p>
 					</td>
 					<td align="center" valign="center" style="font-size: 14px; line-height: 18px;">
-                        <p><%= (link_to 'House Rules', house_rules_url,html_options = {"text-decoration: none"}) %></p>
+                        <p><%= (link_to 'House Rules', house_rules_url,html_options = {'text-decoration: none'}) %></p>
                     </td>
 					<td align="center" valign="center" style="font-size: 14px; line-height: 18px;">
-                        <p><%= link_to ('Terms & Conditions', terms_and_conditions_url,html_options = {"text-decoration: none"}) %></p>
+                        <p><%= link_to ('Terms & Conditions', terms_and_conditions_url,html_options = {'text-decoration: none'}) %></p>
                     </td> %></p>
                     </td>
                 </tr>
@@ -298,7 +300,7 @@
                         <table width="500" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">
                             <tr>
                                 <td align="center" valign="middle" style="font-size: 12px; line-height: 18px;  color:#666666;">
-									<span class="appleFooter" style="color:#000000;">62 King Street Melbourne VIC 3000 Australia | ABN XXXXXXX</span><br><unsubscribe>Unsubscribe</unsubscribe><span class="original-only" style="font-size: 12px; color: #444444;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><a style="color: #666666; text-decoration: none;">View this email in your browser</a>
+									<span class="appleFooter" style="color:#000000;">62 King Street Melbourne VIC 3000 Australia | ABN 80159944868</span><br><unsubscribe>Unsubscribe</unsubscribe><span class="original-only" style="font-size: 12px; color: #444444;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><a style="color: #666666; text-decoration: none;">View this email in your browser</a>
                                 </td>
                             </tr>
                         </table>
