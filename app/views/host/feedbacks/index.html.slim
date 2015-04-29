@@ -157,7 +157,7 @@ coffee:
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
-                      - if feedback.subject.try(:profile_photo?)
+                      - if feedback.try(:subject).try(:profile_photo)
                           = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
@@ -181,7 +181,7 @@ coffee:
                   .row
                     .col-md-2
                       .text-center.pad-all
-                        - if feedback.subject.try(:profile_photo?)
+                        - if feedback.try(:subject).try(:profile_photo?)
                           = cl_image_tag feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
                           = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
@@ -219,7 +219,7 @@ coffee:
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
-                      - if rec_feedback.subject.try(:profile_photo?)
+                      - if rec_feedback.try(:subject).try(:profile_photo?)
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
@@ -243,7 +243,7 @@ coffee:
                   .row
                     .col-md-2
                       .text-center.pad-all
-                        - if rec_feedback.subject.try(:profile_photo?)
+                        - if rec_feedback.try(:subject).try(:profile_photo?)
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
                           = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
@@ -273,7 +273,7 @@ coffee:
                 .panel-heading.feedback-head style="margin-bottom: 40px;"
                   .panel-title.phs-title
                     .pull-left
-                      - if rec_feedback.subject.try(:profile_photo?)
+                      - if rec_feedback.try(:subject).try(:profile_photo?)
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture2x'
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
@@ -297,7 +297,7 @@ coffee:
                   .row
                     .col-md-2
                       .text-center.pad-all
-                        - if rec_feedback.subject.try(:profile_photo?)
+                        - if rec_feedback.try(:subject).try(:profile_photo?)
                           = cl_image_tag rec_feedback.subject.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-md img-border img-circle phs-tab-header-picture'
                         - else
                           = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture'
