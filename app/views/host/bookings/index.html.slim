@@ -5,34 +5,34 @@
     - if @bookings.blank?
       p You have no past bookings as a host
     - else
-      - @bookings.each do |booking|
+      - @bookings.try(:each) do |booking|
         .well.show-booking-history
           h4 = booking_status_for_listing(booking)
-          - guest = booking.booker
+          - guest = booking.try(:booker)
           .booking-info 
             p
               strong
                 ' Guest:
-              = guest.name
+              = guest.try(:name)
               br
-              - pet = guest.pet
+              - pet = guest.try(:pet)
               - if pet.present?
                 strong
                   ' Pet:
-                | #{pet.name}
+                | #{pet.try(:name)}
                 = pet.breed.present? ? ", a #{pet.breed}" : ''
                 | , #{truncate([pet.age].to_sentence, length: 15)}
               br
               ' From
               strong
-                ' #{booking.check_in_date.strftime('%b %d')}
+                ' #{booking.check_in_date.try(:strftime('%b %d'))}
               ' to
               strong
-                | #{booking.check_out_date.strftime('%b %d')}
+                | #{booking.check_out_date.try(:strftime('%b %d'))}
               br
               strong
                 ' Payout:
-              | $#{booking.host_payout}
+              | $#{booking.try(:host_payout)}
 
           .btn-group style="width:100%"
             - if booking.payment.present? || booking.transaction.present?
