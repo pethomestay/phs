@@ -1,6 +1,46 @@
+css:
+  .square {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+    .today {
+        background: #ec5c3b;
+    }
+    .available {
+        background: #5cc1c0;
+    }
+    .unavailable {
+        background: #ababab;
+    }
+  }
+
+  .l_square {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+  }  
+  .l_today {
+      background: #ec5c3b;
+  }
+  .l_available {
+      background: #5cc1c0;
+  }
+  .l_unavailable {
+      background: #ababab;
+  }
+
 .calendar-container
   h4 Calendar
   = render 'pages/dashboard/calendar'
+  p.legends
+    span.l_square.l_today
+    '  Today
+    span.l_square.l_available
+    '  Available
+    span.l_square.l_unavailable
+    |  Unavailable 
   p.text-center
     - if params[:controller].include? 'host'
       | Click dates to toggle availability

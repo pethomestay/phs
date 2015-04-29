@@ -46,15 +46,15 @@
       }
       &.unavailable span {
         background-color: $grey-dark;
-        color: $grey-light;
+        color: #fff;
       }
       &.booked.unavailable span {
         background-color: $blue-light;
-        color: $grey-light;
+        color: #fff;
       }
       &.today span {
         background-color: $orange;
-        color: $grey-light;
+        color: #fff;
       }
       &.booked span{
         background-color: none;

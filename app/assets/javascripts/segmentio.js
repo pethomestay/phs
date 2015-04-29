@@ -5,7 +5,7 @@ $(document).ready(function() {
   }}();
 
   var ref = source();
-  console.log(ref);
+  // console.log(ref);
 
   function source(){
     if (document.referrer.search('https?://(.*)google.([^/?]*)') === 0) {
