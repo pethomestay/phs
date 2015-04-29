@@ -205,7 +205,7 @@ coffee:
                       .col-md-12
                         span Your private comments for 
                         strong
-                          = " #{feedback.subject.name}:"
+                          = " #{feedback.try(:subject).try(:name)}:"
                         .text-thin style="margin: 5px 0 15px 15px;"
                           = "#{feedback.private_review}"
         
