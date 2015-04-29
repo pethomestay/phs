@@ -23,14 +23,8 @@
       
       - if booking.try(:booker).try(:name).nil?
         - guest = booking.try(:booker)
-        - guest.name = 'Not Available'
-      - else 
-        - guest = booking.booker
-      
       - if booking.try(:bookee).try(:name).nil?
         - host = booking.try(:bookee)
-        - host.name = 'Not Available'
-      - else 
         - host  = booking.bookee
       %tr
         %td= link_to "#{guest.try(:name)} (#{guest.try(:mobile_number)})", admin_user_path(guest)
