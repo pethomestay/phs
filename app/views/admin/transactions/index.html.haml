@@ -23,13 +23,13 @@
       
       - if booking.try(:booker).try(:name).nil?
         - guest = booking.try(:booker)
-        - guest.try(:name) = 'Not Available'
+        - guest.name = 'Not Available'
       - else 
         - guest = booking.booker
       
       - if booking.try(:bookee).try(:name).nil?
-        - host = booking.bookee
-        - host.try(:name) = 'Not Available'
+        - host = booking.try(:bookee)
+        - host.name = 'Not Available'
       - else 
         - host  = booking.bookee
       %tr
