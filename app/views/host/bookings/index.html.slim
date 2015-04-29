@@ -25,10 +25,10 @@
               br
               ' From
               strong
-                ' #{booking.check_in_date.try(:strftime('%b %d'))}
+                ' #{booking.check_in_date.strftime('%b %d')}
               ' to
               strong
-                | #{booking.check_out_date.try(:strftime('%b %d'))}
+                | #{booking.check_out_date.strftime('%b %d')}
               br
               strong
                 ' Payout:
