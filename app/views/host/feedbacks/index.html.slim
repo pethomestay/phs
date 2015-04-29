@@ -162,7 +162,7 @@ coffee:
                       - else
                         = image_tag 'default_profile_photo.jpg', class: 'img-md img-border img-circle phs-tab-header-picture2x'
                     .pull-left style="margin-top: 10px;"
-                      = "#{feedback.subject.name} #{feedback.user.last_name}"
+                      = "#{feedback.try(:subject).try(:name)} #{feedback.user.last_name}"
                       br
                       | Reviewed:
                       = " (#{time_ago_in_words(feedback.created_at)}) ago"
