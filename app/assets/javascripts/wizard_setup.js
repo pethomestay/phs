@@ -41,13 +41,7 @@ $(document).ready(function() {
                $("html, body").animate({ scrollTop: 0 }, 500);
                return false;
             }
-         } else if ($("#demo-main-tab2").hasClass('active')) {
-            if ($('#homestay_cost_per_night').val() === "" || $('#homestay_cost_per_night').val() === null) {
-               $("html, body").animate({ scrollTop: 0 }, 500);
-               e.preventDefault;
-               return false;
-            }
-         }
+         } 
 
         isValid = null;
          $('#demo-bv-wz-form').bootstrapValidator('validate');

@@ -34,7 +34,7 @@ class Homestay < ActiveRecord::Base
   serialize :favorite_breeds,  Array
   serialize :energy_level_ids, Array
 
-  validates_presence_of :address_1, :address_suburb, :address_city,
+  validates_presence_of :address_city,
     :address_country, :title, :description
 
   validates_acceptance_of :accept_liability, on: :create
@@ -46,8 +46,9 @@ class Homestay < ActiveRecord::Base
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
-  validates :cost_per_night, presence: true,
-    numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE }
+  validates :cost_per_night,
+  numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE 
+  }, if: 'cost_per_night.present?' 
   validates :remote_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'remote_price.present?'
@@ -124,10 +125,14 @@ class Homestay < ActiveRecord::Base
   end
 
   def geocoding_address
-    if address_suburb.present?
-      "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
-    else
+    if address_suburb.nil?
       "#{address_1}, #{address_city}, #{address_country}"
+    elsif address_1.nil?
+      "#{address_suburb}, #{address_city}, #{address_country}"  
+    elsif address_suburb.present? && address_1.present? 
+      "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
+    elsif address_suburb.nil? && address_1.nil?
+      "#{address_city}, #{address_country}"
     end
   end
 

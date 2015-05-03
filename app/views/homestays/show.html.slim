@@ -130,8 +130,8 @@ coffee:
       .row.first style="margin-bottom:0;"
         - if @homestay.photos?
           - for photo in @homestay.photos
-            .item.img-responsive
-              = cl_image_tag photo.public_id, height: 400
+            .item.img-responsive style="max-height:400px; background-size:auto"
+              = cl_image_tag photo.public_id,'angle' => 'exif' 
         - elsif @homestay.pictures.present?
           - for picture in @homestay.pictures
             .item.img-responsive
@@ -166,106 +166,127 @@ coffee:
                 = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%; padding: 12px 12px;'
               / TODO: use a modal to prompt user to sign in so redirect_path can be set    
     .col-lg-8
-      .tab-base
-        ul.nav.nav-tabs
-          li.active
-            a data-toggle="tab" href="#demo-stk-lft-tab-1" Description
-          li
-            a data-toggle="tab" href="#demo-stk-lft-tab-2" Profile  
-          li
-            a data-toggle="tab" href="#demo-stk-lft-tab-3" Calendar
-          li
-            a data-toggle="tab" href="#demo-stk-lft-tab-4" Reviews
-        .tab-content
-          .tab-pane.fade.active.in  id="demo-stk-lft-tab-1"
-            .row
-              div style="margin: 0 15px 15px 15px"
-                ul.row.wz-step.wz-icon-bw.wz-nav-off.mar-top.wz-steps
-                  - if @homestay.professional_qualification
-                    li.col-md-3 
-                      a
-                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap 
-                          i.fa.fa-graduation-cap.fa-lg.homestay_icons
-                        p.text-thin Professional Qualification
-                  - if @homestay.emergency_transport
-                    li.col-md-3 
-                      a
-                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
-                          i.fa.fa-ambulance.fa-lg.homestay_icons
-                        p.text-thin Emergency transport
-                  - if @homestay.first_aid
-                    li.col-md-3 
-                      a
-                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
-                          i.fa.fa-medkit.fa-lg.homestay_icons
-                        p.text-thin First-aid Training  
-                  - if @homestay.police_check
-                    li.col-md-3 
-                      a
-                        span.icon-wrap.icon-wrap-xs.phs_icon_wrap
-                          i.fa.fa-shield.fa-lg.homestay_icons
-                        p.text-thin Police Check 
-              .container style="text-align: center; margin-top: 15px;"
-                  - if @homestay.for_charity
-                    .for-charity.phs_badge_wrap
-                      = image_tag 'homestay/petrescue.png', style:"width:50px; margin-right:10px"
-                      ' PetRescue Supporter
-                      i.fa.fa-question-circle data-toggle='popover' data-content='This Host donates their fee to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'    
-                  - if @homestay.wildfire_badge
-                    .for-charity.phs_badge_wrap
-                      = image_tag 'homestay/wildfire_badge.png', style:"width:50px; margin-right:10px"
-                      ' Emergency Host
-                      i.fa.fa-question-circle data-toggle='popover' data-content='This host provides much needed care to bushfire effected pets. All earnings are donated to PetRescue. By booking them, you are helping animals in need.' data-placement='auto' data-container='body' data-trigger='hover click' data-template='<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
-            hr
-            .row style="margin: 0"     
-              pre.tx_sp.truncated_text #{@homestay.description}
-          .tab-pane.fade id="demo-stk-lft-tab-2"
-            .row style="margin: 0"
-              - if @homestay.favorite_breeds.any?
-                .col-lg-6 style="margin-bottom: 15px;"
-                  label.hs_mhs_title.title_blk  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
-                  - for breed in @homestay.favorite_breeds
-                    span.after-work.pull-left #{ breed }
-                    i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                    br 
-              - if @homestay.pet_sizes.any?
-                .col-lg-6 style="margin-bottom: 15px;"
-                  label.hs_mhs_title.title_blk  Pet Sizes Accepted
-                  - for size in @homestay.pet_sizes
-                    span.after-work.pull-left #{ size }
-                    i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                    br
-              - if @homestay.energy_level_ids.any?
-                .col-lg-6 style="margin-bottom: 15px;"
-                  label.hs_mhs_title.title_blk  Pet Energy Levels Accepted
-                  - for energy in @homestay.energy_level_ids
-                    span.after-work.pull-left #{ ReferenceData::EnergyLevel.find(energy) } 
-                    i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                    br
-              - if @homestay.supervision_id
-                .col-lg-6 style="margin-bottom: 15px;"
-                  label.hs_mhs_title.title_blk  Supervision
-                  span.after-work.pull-left #{ ReferenceData::Supervision.find(@homestay.supervision_id) }
-                  i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                  br
+      .panel.panel-default
+        .panel-heading
+          .panel-control
+            ul.nav.nav-tabs.hidden-xs
+              li.active
+                a data-toggle="tab" href="#demo-stk-lft-tab-1"
+                  span style="padding-right:10px" Description
+                  i.fa.fa-keyboard-o.homestay_icons 
+
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-2"  
+                  span style="padding-right:10px" Profile
+                  i.fa.fa-user.homestay_icons
+                     
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-3"
+                  span style="padding-right:10px" Calendar
+                  i.fa.fa-calendar-o.homestay_icons
+                  
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-4"
+                  span style="padding-right:10px" Reviews
+                  i.fa.fa-bullhorn.homestay_icons
+                   
+            ul.nav.nav-tabs.hidden-sm.hidden-md.hidden-lg
+              li.active
+                a data-toggle="tab" href="#demo-stk-lft-tab-1"
+                  i.fa.fa-keyboard-o.fa-2x.homestay_icons
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-2"
+                  i.fa.fa-user.fa-2x.homestay_icons  
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-3"
+                  i.fa.fa-calendar-o.fa-2x.homestay_icons
+              li
+                a data-toggle="tab" href="#demo-stk-lft-tab-4"  
+                  i.fa.fa-bullhorn.fa-2x.homestay_icons    
+        .panel-body
+          .tab-content
+          
+            .tab-pane.fade.active.in  id="demo-stk-lft-tab-1"
+              .row style="margin: 0"     
+                pre.tx_sp.truncated_text style="padding:0px" #{@homestay.description}
             
-          .tab-pane.fade id="demo-stk-lft-tab-3"
-            .calendar-container style="margin:0px; background-color:#fff !important;"
-              = render 'pages/dashboard/calendar', host_id: @homestay.user.id
-              p.legends
-                span.square.today
-                '  Today
-                span.square.available
-                '  Available
-                span.square.unavailable
-                |  Unavailable  
-        
-          .tab-pane.fade id="demo-stk-lft-tab-4"
-            - if @reviews.any?
-              - @reviews.each do |review|
-                = render 'profile_review_row', review: review, top: false
-            - else
-              span No reviews for this user at the moment
+            .tab-pane.fade id="demo-stk-lft-tab-2"
+              .row style="margin: 0"
+                - if @homestay.for_charity
+                  .col-lg-6 style="margin-bottom: 25px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" PetRescue Supporter
+                    span.after-work.pull-right
+                      = image_tag 'homestay/petrescue.png', style:"width:40px; margin-right: -5px"   
+                - if @homestay.wildfire_badge
+                  .col-lg-6 style="margin-bottom: 25px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" Emergency Host
+                    span.after-work.pull-right
+                      = image_tag 'homestay/wildfire_badge.png', style:"width:40px; margin-right: -5px" 
+                - if @homestay.professional_qualification
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" Professional Qualification
+                    span.after-work.pull-right
+                      i.fa.fa-graduation-cap.fa-lg.homestay_icons
+                - if @homestay.emergency_transport
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" Emergency transport
+                    span.after-work.pull-right
+                      i.fa.fa-ambulance.fa-lg.homestay_icons
+                - if @homestay.first_aid
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" First-aid Training 
+                    span.after-work.pull-right
+                      i.fa.fa-medkit.fa-lg.homestay_icons
+                - if @homestay.police_check
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk style="display:inline-block" Police Check
+                    span.after-work.pull-right
+                      i.fa.fa-shield.fa-lg.homestay_icons 
+                - if @homestay.favorite_breeds.any?
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
+                    - for breed in @homestay.favorite_breeds
+                      span.after-work.pull-left #{ breed }
+                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                      br 
+                - if @homestay.pet_sizes.any?
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk  Pet Sizes Accepted
+                    - for size in @homestay.pet_sizes
+                      span.after-work.pull-left #{ size }
+                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                      br
+                - if @homestay.energy_level_ids.any?
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk  Pet Energy Levels Accepted
+                    - for energy in @homestay.energy_level_ids
+                      span.after-work.pull-left #{ ReferenceData::EnergyLevel.find(energy) } 
+                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                      br
+                - if @homestay.supervision_id
+                  .col-lg-6 style="margin-bottom: 15px;"
+                    label.hs_mhs_title.title_blk  Supervision
+                    span.after-work.pull-left #{ ReferenceData::Supervision.find(@homestay.supervision_id) }
+                    i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                    br
+              
+            .tab-pane.fade id="demo-stk-lft-tab-3"
+              .calendar-container style="margin:0px; background-color:#fff !important;"
+                = render 'pages/dashboard/calendar', host_id: @homestay.user.id
+                p.legends
+                  span.square.today
+                  '  Today
+                  span.square.available
+                  '  Available
+                  span.square.unavailable
+                  |  Unavailable  
+          
+            .tab-pane.fade id="demo-stk-lft-tab-4"
+              - if @reviews.any?
+                - @reviews.each do |review|
+                  = render 'profile_review_row', review: review, top: false
+              - else
+                span No reviews for this user at the moment
     .col-lg-4
       .row.stat.attr.hidden-sm.hidden-xs
         label.hs_mhs_title.title_p_t.pull-left PetHomeStay 
@@ -542,7 +563,7 @@ coffee:
       no_results_text: 'No results matched'
       width: '200px'
 javascript:
-
+  
   $(document).scroll(function () {
     //stick nav to top of page
     var y = $(this).scrollTop();
