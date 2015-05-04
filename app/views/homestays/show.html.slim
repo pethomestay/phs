@@ -131,8 +131,8 @@ coffee:
                     span.text-xs 
                       |/24h 
         - else # ask user to sign up or sign in
-          = link_to new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-block btn-book inquire'
-            | BOOK THIS HOST
+          = link_to new_user_registration_path(redirect_path: homestay_path(@homestay)),class: 'btn btn-lg btn-mint btn-block btn-book inquire'do
+            BOOK THIS HOST
             - if @homestay.cost_per_night.present?
               .hidden-lg.hidden-md
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
@@ -150,7 +150,7 @@ coffee:
       .slick_jag style="margin-bottom:0"
         - if @homestay.photos?
           - for photo in @homestay.photos
-            div style="max-height:400px; background-size:auto"
+            div style="background-size:auto"
               = cl_image_tag photo.public_id, height: 400
         - elsif @homestay.pictures.present?
           - for picture in @homestay.pictures
