@@ -229,6 +229,7 @@ p.ta {
 
   .results {
     padding: 0 10px 0 10px;
+    background-color: #e8ebf0;
 
     a {
       color: $black;
@@ -240,7 +241,6 @@ p.ta {
 
     p.rating {
       color: $blue-light;
-      font-size: 25px;
       @media (max-width: $screen-xs-max) {
             padding-left: 0;
       }      

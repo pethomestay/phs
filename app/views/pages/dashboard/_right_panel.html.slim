@@ -4,6 +4,7 @@ css:
     width: 10px;
     height: 10px;
     margin-left: 6px;
+    border-radius:20px;
     .today {
         background: #ec5c3b;
     }
@@ -20,6 +21,7 @@ css:
     width: 10px;
     height: 10px;
     margin-left: 6px;
+    border-radius:20px;
   }  
   .l_today {
       background: #ec5c3b;
@@ -34,11 +36,11 @@ css:
 .calendar-container
   h4 Calendar
   = render 'pages/dashboard/calendar'
-  p.legends
+  p.legends.text-center style="font-size: 12px;"
     span.l_square.l_today
     '  Today
     span.l_square.l_available
-    '  Available
+    '  Booking
     span.l_square.l_unavailable
     |  Unavailable 
   p.text-center
