@@ -21,11 +21,19 @@
       - next if payment.booking.nil?
       - booking = payment.booking
       
-      - if booking.try(:booker).try(:name).nil?
-        - guest = booking.try(:booker)
-      - if booking.try(:bookee).try(:name).nil?
-        - host = booking.try(:bookee)
-        - host  = booking.bookee
+      - if payment.booking.booker.name
+        - guest = payment.booking.booker
+      - else 
+        - payment.booking.booker.name = 'Not Available'
+        - guest = payment.booking.booker
+        
+      
+      - if booking.bookee.name
+        - host = booking.bookee
+      - else 
+        - host = booking.bookee
+        - host.name = 'Not Available'  
+
       %tr
         %td= link_to "#{guest.try(:name)} (#{guest.try(:mobile_number)})", admin_user_path(guest)
         %td= link_to "#{host.try(:name)} (#{host.try(:mobile_number)})", admin_user_path(host)

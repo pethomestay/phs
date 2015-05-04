@@ -102,70 +102,81 @@ coffee:
     nav.bar_top
       - unless my_homestay?(@homestay)
         - if user_signed_in?
-          - if current_user.pets.present? # Display giant inquiry button
-            button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" REQUEST A MEETING 
-            .hidden-lg.hidden-md
-              .stay-costs.price_sticky
-                span.after-work $#{@homestay.cost_per_night.to_i}
-                span.lower 
-                  |/24h  
+          - if current_user.pets.present? # Display giant enquiry button
+            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" BOOK THIS HOST 
+            - if @homestay.cost_per_night.present?
+              .hidden-lg.hidden-md
+                .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                  span.text-lg $#{@homestay.cost_per_night.to_i}
+                  span.text-xs 
+                    |/24h
+            - elsif @homestay.remote_price.present?     
+                .hidden-lg.hidden-md
+                  .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                    span.text-lg $#{@homestay.remote_price.to_i}
+                    span.text-xs 
+                      |/24h 
           - else # Ask current user to add a pet first 
-            button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK HOST
-            / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-block btn-book inquire'
-            .hidden-lg.hidden-md
-              .stay-costs.price_sticky
-                span.after-work $#{@homestay.cost_per_night.to_i}
-                span.lower 
-                  |/24h  
+            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK THIS HOST
+            - if @homestay.cost_per_night.present?
+              .hidden-lg.hidden-md
+                .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                  span.text-lg $#{@homestay.cost_per_night.to_i}
+                  span.text-xs 
+                    |/24h
+            - elsif @homestay.remote_price.present?     
+                .hidden-lg.hidden-md
+                  .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                    span.text-lg $#{@homestay.remote_price.to_i}
+                    span.text-xs 
+                      |/24h 
         - else # ask user to sign up or sign in
-          = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-block btn-book inquire'
-          .hidden-lg.hidden-md
-            .stay-costs.price_sticky
-              span.after-work $#{@homestay.cost_per_night.to_i}
-              span.lower 
-                |/24h  
-        / TODO: use a modal to prompt user to sign in so redirect_path can be set   
+          = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-block btn-book inquire'
+            - if @homestay.cost_per_night.present?
+              .hidden-lg.hidden-md
+                .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                  span.text-lg $#{@homestay.cost_per_night.to_i}
+                  span.text-xs 
+                    |/24h
+            - elsif @homestay.remote_price.present?     
+                .hidden-lg.hidden-md
+                  .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                    span.text-lg $#{@homestay.remote_price.to_i}
+                    span.text-xs 
+                      |/24h   
   .row style="background-color:#e8ebf0"
     .panel
-      .row.first style="margin-bottom:0;"
+      .slick_jag style="margin-bottom:0"
         - if @homestay.photos?
           - for photo in @homestay.photos
-            .item.img-responsive style="max-height:400px; background-size:auto"
-              = cl_image_tag photo.public_id,'angle' => 'exif' 
+            div style="max-height:400px; background-size:auto"
+              = cl_image_tag photo.public_id, height: 400
         - elsif @homestay.pictures.present?
           - for picture in @homestay.pictures
-            .item.img-responsive
+            div style="max-height:400px; background-size:auto"
               = image_tag picture.file.thumb('x400').url
         - else
-          .item.img-responsive
+          div style="max-height:400px; background-size:auto"
             = image_tag 'placeholder.png'                       
       .panel-media
         - if @homestay.user.profile_photo?
           = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
         - elsif @homestay.user.uid.present?
           = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
+        - elsif @homestay.photos.present?
+          - pict = @homestay.photos.first
+          = cl_image_tag pict.public_id, height: 400, class: 'panel-media-img img-circle img-border-light' 
         - else
           = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'panel-media-img img-circle img-border-light'    
         .row
           .col-lg-5.col-md-5
-            h3.panel-media-heading style="font-size:30px; font-weight:bold;" #{ (@homestay.user.first_name).titleize }
-            p.ta #{@homestay.title}
-            p.text-muted style="margin-bottom:-5px;" #{@homestay.location}
-            p.hs_rating
-              - if @reviews.any?
+            .panel-media-heading.text-bold.text-3x style="top: -1.7em;" #{ (@homestay.user.first_name).titleize }
+            span.text-lg #{ @homestay.title }  
+            - if @reviews.any?
+              span.display_inline.rating style="margin-bottom: 0; color: #5cc1c0"
                 = render 'stars', rating: @homestay.average_rating
-          .col-md-offset-3.col-lg-offset-3.col-lg-4.col-md-4.text-lg.hidden-sm.hidden-xs
-            - unless my_homestay?(@homestay)
-              - if user_signed_in?
-                - if current_user.pets.present? # Display giant inquiry button
-                  button.btn.btn-primary.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" REQUEST A MEETING
-                - else # Ask current user to add a pet first
-                  button.btn.btn-primary.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK HOST
-                  / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%'
-              - else # ask user to sign up or sign in
-                = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-primary btn-book inquire', style: 'width:100%; padding: 12px 12px;'
-              / TODO: use a modal to prompt user to sign in so redirect_path can be set    
-    .col-lg-8
+            p.text-sm #{@homestay.location}
+    .col-lg-8  
       .panel.panel-danger 
         .panel-heading style="background-color:#ec5c3b"
           .panel-control
@@ -290,6 +301,17 @@ coffee:
               - else
                 span No reviews for this user at the moment
     .col-lg-4
+      .panel.panel-body.text-lg.hidden-sm.hidden-xs
+        - unless my_homestay?(@homestay)
+          - if user_signed_in?
+            - if current_user.pets.present? # Display giant inquiry button
+              button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+            - else # Ask current user to add a pet first
+              button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+              / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
+          - else # ask user to sign up or sign in
+            = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%; padding: 12px 12px;'
+          / TODO: use a modal to prompt user to sign in so redirect_path can be set    
       .panel style="margin-bottom: 5px;"
         .panel-body style="padding:12px 13px"
           label.hs_mhs_title.title_p_t.pull-left PetHomeStay 
@@ -592,7 +614,7 @@ javascript:
     $('[data-toggle="tooltip"]').tooltip()
   })
 
-  $('.row.first').slick({
+  $('.slick_jag').slick({
       slidesToShow: 3,
       accessibility: false,
       autoplay: true,
