@@ -1,6 +1,7 @@
-%p.article-title Brilliant! #{@host.first_name.capitalize} has confirmed his service availability for you!
-%p.article-content= "Here is all of the contact details we have for #{@host.first_name.capitalize} so you have a record."
-%p.article-content The next step is simply for you to handover your pet to the provider at the agreed place and time.
+%p.article-title Booking Confirmation
+
+%p.article-content Your PetHomeStay Host has confirmed their Booking.
+%p.article-content= "The next step is simply for you to handover your pet to #{@host.first_name.capitalize} at the agreed place and time."
 %p.article-content
   Don’t forget to follow the
   = succeed '.' do
@@ -30,17 +31,12 @@
   %i Check Out Date
   = ": #{@booking.check_out_date.to_formatted_s(:day_and_month)}"
 %p.article-content
-  %i Number of stays (24 hour blocks)
+  %i Number of Stays (24 hour blocks)
   = ": #{@booking.number_of_nights}"
 %p.article-content
   %i Rate per night
   = ": $#{@booking.actual_value_figure(:cost_per_night)}"
-%p.article-content
-  %i Subtotal
-  = ": $#{@booking.actual_value_figure(:subtotal)}"
-%p.article-content
-  %i Credit Card Fee
-  = ": $#{@booking.actual_value_figure(:credit_card_fee)}"
+
 %p.article-content
   %strong
     %i Total Amount Paid
@@ -49,7 +45,7 @@
 
 = render 'shared/brief_pet_details'
 
-%p.article-title Provider details for your records
+%p.article-title Host Details
 %p.article-content
   %i Listing
   \:
@@ -57,18 +53,18 @@
   - if @homestay.pictures.present?
     %p.article-content= link_to image_tag(@homestay.pictures.first.file.thumb('190x150#').url), homestay_url(@homestay)
 %p.article-content
-  %i Provider's name
+  %i  Name
   = ": #{@host.name}"
 %p.article-content
-  %i Provider's email
+  %i Email
   = ": #{@host.email}"
 - if @host.phone_number.present?
   %p.article-content
-    %i Provider's phone
+    %i Phone
     = ": #{@host.phone_number}"
 - if @host.mobile_number.present?
   %p.article-content
-    %i Provider's mobile
+    %i Mobile
     = ": #{@host.mobile_number}"
 %p.article-content
   %i Address
@@ -79,34 +75,6 @@
   %p.article-content
     %i Address 2
     = ": #{@homestay.address_2}"
-%p.article-content
-  %i Professional?
-  - if @homestay.is_professional?
-    = ': Yes'
-  - else
-    = ': No'
-%p.article-content
-  %i Property type
-  = ": #{@homestay.property_type_name}"
-%p.article-content
-  %i Outdoor area
-  = ": #{@homestay.outdoor_area_name}"
-%p.article-content
-  %i Fenced?
-  - if @homestay.fenced
-    = ': Yes'
-  - else
-    = ': No'
-%p.article-content
-  - if @homestay.supervision?
-    %i Supervision?
-    \:
-    = @homestay.pretty_supervision
-%p.article-content
-  - if @homestay.emergency_preparedness?
-    %i Emergency preparedness?
-    = ": #{@homestay.pretty_emergency_preparedness}"
-%br
 
-%p.article-content Thanks and don’t forget to leave feedback via PetHomeStay on the provider!
-%p.article-content The PetHomeStay Team
+%p.article-content Thanks and don’t forget to leave feedback for the Host at the end of the Stay!
+
