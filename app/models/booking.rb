@@ -145,16 +145,13 @@ class Booking < ActiveRecord::Base
       ]
 
       all.each do |booking|
-        booker = booking.booker
-        pet = booker.pet
-        host = booking.bookee
         booking_reference = booking.transaction.present? ? booking.transaction.reference.to_s : booking.payment.braintree_transaction_id
         booking_payment_amount = booking.transaction.present? ? "$#{booking.transaction.amount}" : "$#{booking.payment.amount.to_s}"
         csv << [
-          booker.name.capitalize, booker.complete_address, pet.name, pet.breed, pet.age,
+          booking.try(:booker).try(:name), booking.booker.try(:complete_address), booking.booker.try(:pet).try(:name), booking.booker.try(:pet).try(:breed), booking.booker.try(:pet).try(:age),
           booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
           booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
-          host.name.capitalize, booking.homestay.nil? ? "" : booking.homestay.title, host.homestay.try(:geocoding_address), booking.number_of_nights,
+          booking.try(:bookee).try(:name), booking.homestay.nil? ? "" : booking.homestay.title, booking.bookee.homestay.try(:geocoding_address), booking.number_of_nights,
           booking_reference, booking_payment_amount, "$#{booking.public_liability_insurance}",
           "$#{booking.phs_service_charge}", "$#{booking.host_payout}",
           (booking.state?(:host_paid)) ? 'Paid' : 'Not Paid'
