@@ -1,11 +1,15 @@
-%p.article-content
-  %strong= "#{@host.first_name.capitalize} - You have a new PetHomeStay Message!"
+%p.article-title
+  %strong New PetHomeStay Booking
+
 %p.article-content
   %i From
   = ": #{@guest.first_name.capitalize}"
 %br
+%p.article-title Message
+%p.article-content
+  %i= @enquiry.message.blank? ? '-' : @enquiry.message
 
-%p.article-title Enquiry Details
+%p.article-title Booking Details
 %p.article-content
   %i Check In Date
   = ": #{date_day_monthname(@enquiry.check_in_date)}"
@@ -16,42 +20,10 @@
 
 = render 'shared/pet_details'
 
-%p.article-title Message
-%p.article-content
-  %i= @enquiry.message.blank? ? '-' : @enquiry.message
 %p.article-content.email-message-reply
-  %strong= link_to 'Reply to this message', host_messages_url, style: 'color:#444444;'
-  and answer any queries the guest may have.
+  %strong= link_to 'REPLY', host_messages_url, style: 'color:#444444;'
+%p.article-content.text-muted
+	Hosts should reply within 24 hours to maintain their Responsiveness Rating!
+	Please click the above link and NOT use your email client as it will not go to the Guest!
 %br
 
-%p.article-content
-  %strong Please encourage your Guest to ‘Book this HomeStay’ once they have all the information they need.
-%p.article-content
-  %strong A Guest clicking on ‘Book this HomeStay’ is the only way for a Host to be Insured, Reviewed and receive
-  Payment via PetHomeStay.
-%p.article-content
-  %strong 5 Key Reasons Why Hosts Should Encourage Bookings via PetHomeStay!
-
-%ul.phs-benefits-list
-  %li.article-content
-    %strong Trusted Community Service
-    \- PetHomeStay wants to make owning & looking after pets easier, more fun, and cheaper. It’s a new way to bring 
-    pet lovers together to provide a better community option - we can't help unhappy pets without Hosts booking via 
-    PetHomeStay :)
-  %li.article-content
-    %strong Charity
-    \- We donate 1% of all Host Fees to Charity - your fees go towards helping animals in need.
-  %li.article-content
-    %strong Insurance
-    \- PetHomeStay provides Public & Professional Liability insurance for all Hosts. It is illegal to look after 
-    someones pet for money without insurance!
-  %li.article-content
-    %strong Marketing & Support
-    \- PetHomeStay provides leads, marketing to drive traffic and maintains this website!
-  %li.article-content
-    %strong No Disputes
-    \- We hold the payment in escrow until the HomeStay is completed, and ensure that any cancellation fees are paid
-    as per policy.
-
-%p.article-content Thanks!
-%p.article-content The PetHomeStay Team

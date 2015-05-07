@@ -1,5 +1,5 @@
 %p.article-content
-  %strong= "#{@host.first_name.capitalize} - You have a PetHomeStay Booking!"
+  %strong New PetHomeStay Booking
 %p.article-content
   %i Guest Name
   = ": #{@guest.first_name.capitalize}"
@@ -27,8 +27,9 @@
   %i PetHomeStay Service Fee (15%)
   = ": $#{@booking.phs_service_charge}"
 %p.article-content
-  %i Insurance
-  = ": $#{@booking.public_liability_insurance}"
+  %i $10M PetHomeStay Host Insurance : INCLUDED
+  %i $2.5k Vet Emergency Cover : INCLUDED
+  %i 24x7 Emergency Helpline : INCLUDED
 %p.article-content
   %strong
     %i Total Payout
@@ -44,32 +45,5 @@
   %strong= link_to 'here', host_messages_url
 %br
 
-%p.article-content
-  %strong Please Click this 
-  = link_to 'Link', host_confirm_booking_url(@booking)
-  %strong to go to your PetHomeStay Account in order to:
-%p.article-content
-  %strong 1) Confirm this Booking
-%p.article-content
-  %strong 2) Decline this Booking
-%p.article-content
-  %strong 3) Request some more Information from the Guest
-%br
 
-%p.article-content
-  %strong Awesome Host Tips
-%p.article-content
-  %strong Respond Promptly
-  \- most people expect responses within 24 hours, and 48 hours at the at the latest. Remember that a Guest can cancel 
-  their booking at any time so to secure a HomeStay, respond as soon as possible.
-%p.article-content
-  %strong Be Polite
-  \- Even if you decline, it is good to give some sort of reason so Guests ask you next time. People do appreciate it 
-  and know for next time.
-%p.article-content
-  %strong Be Responsible
-  \- The Guest is trusting you with part of their family, so take pride in that and be the best Host you can be. It 
-  means a lot to people seeing their pet happy, and you will get repeat Guests for a long time to come!
 
-%p.article-content Thanks for helping out with PetHomeStay!
-%p.article-content The PetHomeStay Team

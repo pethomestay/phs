@@ -1,5 +1,5 @@
-%p.article-content
-  %strong= "#{@user.first_name.capitalize} - You have a new PetHomeStay Message!"
+%p.article-title
+  %strong= "New Message"
 
 %p.article-content
   %i From
@@ -23,5 +23,3 @@
 %p.article-content.email-message-reply
   %strong= link_to 'Reply to this message', new_user_session_url, style: 'color:#444444;'
 
-%p.article-content Many thanks!
-%p.article-content The PetHomeStay Team
