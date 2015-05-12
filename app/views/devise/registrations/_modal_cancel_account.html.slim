@@ -1,0 +1,12 @@
+.modal-body
+	
+	button data-dismiss="modal" class="close" type="button"
+		span aria-hidden="true" x
+	p.text-lg Delete Confirmation
+	
+	= image_tag 'about_us.jpg', class: 'img-responsive center-block thumbnail'
+	
+	p.text-thin.text.md Are you sure you want to delete your account? This process is irreversible.
+.modal-footer
+	.pull-right = link_to "Delete account", users_path, method: :delete
+	a.pull-left href="" data-dismiss="modal" Cancel
