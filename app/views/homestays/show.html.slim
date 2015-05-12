@@ -131,7 +131,7 @@ coffee:
                     span.text-xs 
                       |/24h 
         - else # ask user to sign up or sign in
-          = link_to new_user_registration_path(redirect_path: homestay_path(@homestay)),class: 'btn btn-lg btn-mint btn-block btn-book inquire'do
+          = link_to new_user_registration_path(redirect_path: homestay_path(@homestay)),class: 'btn btn-lg btn-mint btn-block btn-book inquire' do
             BOOK THIS HOST
             - if @homestay.cost_per_night.present?
               .hidden-lg.hidden-md
