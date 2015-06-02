@@ -9,7 +9,6 @@ respond_to :html
   def invite_emails
     if params[:invite]
       emails = params[:invite].split(",")
-      emails = emails.collect.each {|x| x if x.match(EMAIL_REGEX) }.compact.uniq
       unless emails.blank?
         emails.each do |email|
           UserMailer.invite_email(email, current_user).deliver
