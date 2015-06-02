@@ -54,3 +54,5 @@ PetHomestay::Application.configure do
   config.middleware.use('StubIp', '203.206.102.165')
 
 end
+
+EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

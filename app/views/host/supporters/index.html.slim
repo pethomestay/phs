@@ -1,0 +1,256 @@
+css:
+  .feedback-head {
+    cursor : pointer;
+  }
+  .feedback-body {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-top: none;
+  }
+  .btn-fb {
+    margin-right:5px;
+    background: #3B5998;
+    color: #f7f7f7;
+  }
+  .btn-tw {
+    background: #55acee;
+    color: #f7f7f7;
+  }
+  .phs-tab-header {
+    margin-left: -20px;
+    margin-right: -20px;
+    height: 75px;
+  }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-tab-header-picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .phs-tab-header-picture2x {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
+  .phs-panel-body {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 0 0 0 !important;
+  }
+  .phs-subtitle {
+    background-color: #f2f2f2;
+    color: #ababab;
+    margin: -10px 0 10px 0;
+    padding: 5px;
+    text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
+  }
+javascript:
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : "#{ENV['APP_ID'] || '382802968555135' }",
+      cookie     : true,
+      status     : true,
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+
+    $('.fb-share-btn.fb-host-to-guest-review').on('click', function() {
+      var data = $(this).data();
+      var fb_description = "Review: " + data.review
+      FB.ui(
+      {
+        method: 'feed',
+        link: "https://www.pethomestay.com.au",
+        name: data.title,
+        caption: "Australia's no. 1 pet sitting community",
+        description: fb_description
+      }, function(response){});
+    });
+
+    $('.fb-share-btn.fb-user-support').on('click', function() {
+      var data = $(this).data();
+      FB.ui(
+      {
+        method: 'feed',
+        link: data.url,
+        name: "Please give me your support",
+        caption: "Australia's no. 1 pet sitting community",
+        description: "I could use a helping hand from friends. Please give me your support by clicking on this post and telling the community that I love pets!"
+      }, function(response){});
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+#fb-root
+coffee:
+  $ ->
+    $('.twitter-share-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
+    $('.twitter-support-btn').on 'click', ->
+      width  = 600
+      height = 350
+      window.open $('.twitter-support-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"  
+
+= render layout: 'layouts/user' do
+  .panel.panel-default style="box-shadow: none;"          
+    .panel-body.phs-panel-body
+      = image_tag 'dogs-together.jpg', class: 'img-responsive center-block', style: 'margin-bottom: 5px; padding:15px;'
+
+      .col-md-12
+        .text-thin.text-center  Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
+        .text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
+        .text-thin.text-center Or send an invite to their emails
+      
+      .col-md-12.mar-top
+        .well.well-sm
+          input name="count" type="hidden" value="1" 
+          .input-appendable-wrapper
+            input#count type="hidden" value="1" 
+            #input-group-appendable1.input-group.input-group-appendable.mar-btm
+              input#field1.input.form-control autocomplete="off" name="field1" type="text" placeholder="Enter a valid email address" 
+              span.input-group-btn
+                button#btn1.btn.btn-primary.add-more style="padding:6px 12px" type="button"  +
+          .alert.alert-danger.media
+            i.fa.fa-ban style="padding-right: 10px; "
+            span Please enter a 
+            span.text-semibold strong valid email address.
+          
+          .text-thin.text-center Press + to add another email address
+    
+          = form_tag host_invite_emails_path, :html => { :method => "post" }
+          .hidden  
+            = text_field_tag :invite
+          .form-actions
+            = submit_tag 'Send Emails', class: 'btn btn-primary text-uppercase email-submit mar-top', style: 'width: 100%'  
+      
+      .text-thin.text-center Or use Social media and get people you know to leave you support!
+      
+      .text-center.mar-top
+        = render 'support_sharing' 
+        
+    .phs-panel-body                    
+      - if @recommendations.any?
+        - @recommendations.each do |recommendation|
+          - user = User.find(recommendation.user_id)
+          .parent style="border-bottom: 1px solid #ddd;"
+            .panel-heading.feedback-head style="margin-bottom: 20px;"
+              .panel-title.phs-title
+                .pull-left
+                  = "#{recommendation.email}"
+                  br
+                  | Reviewed:
+                  = "#{time_ago_in_words(recommendation.created_at)} ago"
+                .pull-right
+                  .feedback-icon
+                    i.fa.fa-chevron-down   
+            .panel-body.feedback-body style="margin-top: 20px;"
+              .row
+                .col-md-12      
+                  span "
+                  strong 
+                    = recommendation.review
+                  span "  
+
+javascript:
+  $( ".feedback-body" ).hide();
+  $( ".feedback-head" ).click(function(event) {
+    var head = $(this).children();
+    var icon = $(this).find(".feedback-icon").children();
+    var body = $(this).parent().find(".feedback-body");
+    if( body.is(":hidden") ) {
+      icon.addClass("phs-rotate");
+      icon.removeClass("phs-reset");
+      head.removeClass("phs-title"); 
+      head.addClass("phs-title-active");
+      body.slideDown();
+    } else {
+      icon.removeClass("phs-rotate"); 
+      icon.addClass("phs-reset");
+      head.removeClass("phs-title-active"); 
+      head.addClass("phs-title");
+      body.slideUp();
+    }
+  });
+  
+  $('.col-md-12').find('.alert').hide();  
+  $wrapper = $('.input-appendable-wrapper');
+  $count = $wrapper.find('#count').val();
+      
+
+  $('.input-group-appendable .add-more').click(function(){  
+    $lastItem = $wrapper.find('.input-group-appendable').last();
+    $lastField = $lastItem.find('.input')
+    // provided the last item is not empty
+    if ( isValidEmailAddress( $lastField.val().trim() )) {
+      $('.col-md-12').find('.alert').hide();
+      $newInput = $lastItem.clone(true);
+      // change attribute for new item
+      $count++;
+      // change text input and the button
+      $newInput.attr('id', 'input-group-appendable' + $count);
+      $newInput.find('input[type="text"]').attr({
+        id: "field" + $count,
+        name: "field" + $count
+      });
+
+      $newField = $newInput.find('.input');
+      $newField.val("");
+      $newInput.find('.btn').attr('id', 'btn' + $count);
+      $newInput.appendTo($wrapper);
+      //change the previous button to remove
+      $lastItem.find('.btn')
+      .removeClass('add-more')
+      .text('-')
+      .off()
+      .on('click', function(){
+        $(this).parents('.input-group-appendable').remove();
+      });
+
+      $wrapper.find('#count').val($count);
+    } else {
+        $('.col-md-12').find('.alert').show();
+    }
+    
+  });
+
+  $('.email-submit').click(function(){
+    for (i = 1; i <= $count; i++) { 
+       $('#invite').val($('#invite').val() + $( '#field' + i ).val() + ",");
+    }
+  });
+
+  function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+      return pattern.test(emailAddress);
+  };

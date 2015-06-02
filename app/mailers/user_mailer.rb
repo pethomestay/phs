@@ -2,6 +2,19 @@ class UserMailer < ActionMailer::Base
   layout 'mailer'
   default from: "PetHomeStay <no-reply@pethomestay.com>"
 
+  def invite_email(email, user)
+    @user = user
+    mail(:to => email, :subject => "Welcome to PetHomeStay")
+  end
+
+  def call_supporters(to, subject, message)
+    @email = to
+    @subject = subject
+    @message = message
+    email_with_name = "<#{@email}>"
+    mail(to: email_with_name, subject: "#{@subject.first_name} would love some feedback!")
+  end
+
   def leave_feedback(to, subject, enquiry)
     @user = to
     @subject = subject

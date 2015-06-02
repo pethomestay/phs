@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150226005328) do
+ActiveRecord::Schema.define(:version => 20150522050207) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(:version => 20150226005328) do
     t.datetime "updated_at",                                :null => false
     t.integer  "coupon_limit"
     t.integer  "users_count",            :default => 0
-    t.boolean  "is_expired",             :default => false
     t.boolean  "discount_is_percentage", :default => false
     t.boolean  "admin_mass_code",        :default => false
   end
@@ -218,14 +217,22 @@ ActiveRecord::Schema.define(:version => 20150226005328) do
     t.integer  "delivery_radius"
     t.text     "energy_level_ids"
     t.integer  "supervision_id"
+    t.boolean  "wildfire_badge"
     t.text     "auto_interest_sms"
     t.text     "auto_decline_sms"
-    t.boolean  "wildfire_badge"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"
   add_index "homestays", ["property_type_id"], :name => "index_homestays_on_property_type_id"
   add_index "homestays", ["user_id"], :name => "index_homestays_on_user_id"
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "sender_id"
+    t.text     "recipient_email"
+    t.datetime "sent_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "mailboxes", :force => true do |t|
     t.integer  "host_mailbox_id"
@@ -304,14 +311,6 @@ ActiveRecord::Schema.define(:version => 20150226005328) do
     t.integer  "user_id"
     t.string   "email"
     t.text     "review"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "shorteners", :force => true do |t|
-    t.string   "code"
-    t.integer  "hit_count"
-    t.string   "end_point"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

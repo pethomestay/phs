@@ -1,5 +1,8 @@
 PetHomestay::Application.routes.draw do
 
+  resources :invitations
+
+
   devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
   resources :users do
@@ -10,6 +13,8 @@ PetHomestay::Application.routes.draw do
   end
 
   resources :recommendations, except: [:show, :edit, :update]
+
+  resources :supporters, only: [:edit, :update]
 
   resources :contacts, only: [:new, :create] do
     collection do
@@ -91,6 +96,9 @@ PetHomestay::Application.routes.draw do
   end
 
   namespace :host do
+    get '/supporters', to: 'supporters#index'
+    post '/supporters/invite_emails', to: 'supporters#invite_emails', as: :invite_emails
+    
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
