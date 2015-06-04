@@ -3,7 +3,7 @@ PetHomestay::Application.routes.draw do
   resources :invitations
 
 
-  devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
   resources :users do
     collection do
@@ -97,7 +97,6 @@ PetHomestay::Application.routes.draw do
 
   namespace :host do
     get '/supporters', to: 'supporters#index'
-    post '/supporters/invite_emails', to: 'supporters#invite_emails', as: :invite_emails
     
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
@@ -107,6 +106,9 @@ PetHomestay::Application.routes.draw do
     resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'
   end
+  get '/invites/gmail/contact_callback', to: 'host/supporters#invite_emails', as: :host_invite_emails
+    
+  get '/contacts/failure', to: 'host/supporters#index'
 
   namespace :admin do
     match '/dashboard' => 'admin#dashboard', as: :dashboard
@@ -142,6 +144,7 @@ PetHomestay::Application.routes.draw do
 
   # Zendesk Single Sign-on
   get 'zendesk_session/:action', to: 'zendesk_session'
+
 
   mount Attachinary::Engine => "/attachinary"
 

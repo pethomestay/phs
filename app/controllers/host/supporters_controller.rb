@@ -7,17 +7,11 @@ respond_to :html
 
 
   def invite_emails
-    if params[:invite]
-      emails = params[:invite].split(",")
-      unless emails.blank?
-        emails.each do |email|
-          UserMailer.invite_email(email, current_user).deliver
-        end
-        redirect_to root_path, :notice => "Invitaion mail sent successfully"
-      else
-        redirect_to root_path, :notice => "Enter Valid Email address"
-      end
-    end  
+    @contacts = request.env['omnicontacts.contacts']
+    @contacts.each do |contact|
+      UserMailer.invite_email(contact[:email], current_user).deliver
+    end
+    redirect_to host_supporters_path, :notice => "Invitaion mail sent successfully"  
   end  
 end
 

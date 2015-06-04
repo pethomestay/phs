@@ -31,6 +31,7 @@ gem 'simple_form'
 gem 'awesome_nested_fields'
 gem 'nested_form' # To replace awesome_nested_fields in the future
 gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
+gem 'omnicontacts'
 
 gem 'cloudinary'
 gem 'attachinary'

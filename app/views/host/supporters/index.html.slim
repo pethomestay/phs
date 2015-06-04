@@ -131,6 +131,13 @@ coffee:
         .text-thin.text-center  Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
         .text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
         .text-thin.text-center Or send an invite to their emails
+      .col-md-12
+        a href="/contacts/gmail" Gmail
+        - if @contacts.try(:any?)
+          - @contacts.each do |c|
+            ul
+              li = c[:name]   
+              li = c[:email]
       
       .col-md-12.mar-top
         .well.well-sm
