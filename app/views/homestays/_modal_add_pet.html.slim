@@ -23,13 +23,17 @@
         = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
         
     = f.input :sex_id, label: 'Sex' , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
-    .slider_con
-      label.hs_mhs_title style="margin-left:-15px"
-        | Pet Age
-      = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-      label.hs_mhs_title style="margin-left:-15px"
-        | Pet Energy Level
-      = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+    .hidden
+        .slider_con
+          label.hs_mhs_title style="margin-left:-15px"
+            | Pet Size  
+          = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+          label.hs_mhs_title style="margin-left:-15px"
+            | Pet Age
+          = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+          label.hs_mhs_title style="margin-left:-15px"
+            | Pet Energy Level
+          = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
     = f.submit 'Add Your Pet', class: 'btn btn-primary btn-block submitEnquiry'
 
 javascript:

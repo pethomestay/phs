@@ -38,7 +38,7 @@ class Guest::PetsController < Guest::GuestController
           render :new
         end
         format.js do
-          @message = { :type => :error, :msg => @enquiry.errors.full_messages.first }
+          @message = { :type => :error, :msg => @pet.errors.full_messages.first }
           render :layout => false
         end
       end
