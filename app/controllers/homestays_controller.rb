@@ -49,6 +49,12 @@ class HomestaysController < ApplicationController
       cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
       anonymous_id = cookies[:segment_anonymous_id]
     end
+    unless current_user
+      @enquiry = Enquiry.new({
+        check_in_date: Date.today,
+        check_out_date: Date.today
+      })
+    end
     Analytics.track(
       user_id:          current_user.try(:id) || cookies[:segment_anonymous_id],
       event:            "Viewed Product",

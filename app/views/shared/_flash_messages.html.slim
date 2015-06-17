@@ -15,7 +15,7 @@
       }
     })
 
-- if defined? resource
+- if !resource.blank? and !resource.errors.blank?
   / Full_messages only have messages, no type
   - resource.errors.full_messages.each do |message|
     javascript:

@@ -18,7 +18,6 @@ Devise.setup do |config|
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
   config.omniauth :facebook, ENV['APP_ID'],ENV['APP_SECRET'], {:info_fields => 'age_range',:scope => 'user_location,email,offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}}
   #config.secret_key = ENV['DEVISE_SECRET']
-
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -59,7 +58,7 @@ Devise.setup do |config|
   # config.http_authenticatable = false
 
   # If http headers should be returned for AJAX requests. True by default.
-  # config.http_authenticatable_on_xhr = true
+  config.http_authenticatable_on_xhr = false
 
   # The realm used in Http Basic Authentication. "Application" by default.
   # config.http_authentication_realm = "Application"
@@ -199,7 +198,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ["*/*", :html]
+  config.navigational_formats = [:html, :json]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete

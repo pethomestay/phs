@@ -109,4 +109,17 @@ module ApplicationHelper
   def host_view
     params[:controller].include?('host') || ( params[:controller] == 'registrations' && request.url.include?('/host') )
   end
+
+  # Devise Ajax Changes
+  def resource_name
+    :user
+  end
+ 
+  def resource
+    @resource ||= User.new
+  end
+ 
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
 end

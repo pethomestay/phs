@@ -2,7 +2,7 @@ PetHomestay::Application.routes.draw do
 
   resources :invitations
 
-  devise_for :users, controllers: { registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
 
   resources :users do
     collection do

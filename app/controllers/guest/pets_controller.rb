@@ -1,5 +1,5 @@
 class Guest::PetsController < Guest::GuestController
-  respond_to :html
+  respond_to :html, :js
 
   # GET /guest/pets
   def index
@@ -17,16 +17,35 @@ class Guest::PetsController < Guest::GuestController
   def create
     @pet = current_user.pets.build(params[:pet])
     if @pet.save
-      flash[:alert] = "#{@pet.name} has been added to your list of pets."
-      if params[:redirect_path].present?
-        redirect_to params[:redirect_path]
-      else
-        redirect_to guest_pets_path
+      respond_to do |format|
+        format.html do
+          flash[:alert] = "#{@pet.name} has been added to your list of pets."
+          if params[:redirect_path].present?
+            redirect_to params[:redirect_path]
+          else
+            redirect_to guest_pets_path
+          end
+        end
+        format.js do
+          @message = { :type => :alert, :msg => "#{@pet.name} has been added to your list of pets." }
+          render :layout => false
+        end
       end
     else
-      flash[:error] = @pet.errors.full_messages.first
-      render :new
+      respond_to do |format|
+        format.html do
+          flash[:error] = @pet.errors.full_messages.first
+          render :new
+        end
+        format.js do
+          @message = { :type => :error, :msg => @enquiry.errors.full_messages.first }
+          render :layout => false
+        end
+      end
     end
+    
+    
+    
   end
 
   # GET

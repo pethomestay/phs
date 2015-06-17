@@ -1,0 +1,11 @@
+- if user_signed_in?
+  $('#sign-in-modal').modal('hide')
+  - if current_user.pets.present?
+    $('#request-modal').modal('show')
+    $( "#request-modal-add-pet" ).remove();
+  - else
+    $( "#request-modal" ).remove();
+    $('#request-modal-add-pet').modal('show')
+- else
+  $('#flash_error_sign_in').text('Invalid email or password. Please try again.')
+  $('#flash_error_sign_in').addClass('alert alert-#{ new_flash_class_for(:error) }')

@@ -4,6 +4,42 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :set_instance_vars, only: [:edit]
   skip_before_filter :track_session_variables, only: [:update, :create]
 
+  def create
+    build_resource
+
+    if resource.save
+      if resource.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_navigational_format?
+        sign_up(resource_name, resource)
+        respond_to do |format|
+          rpath = after_sign_in_path_for(resource)
+          format.html { redirect_to rpath }
+          format.js { render :action => :create, :layout => false }
+        end
+      else
+        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
+        expire_session_data_after_sign_in!
+        respond_to do |format|
+          rpath = after_sign_in_path_for(resource)
+          format.html { redirect_to rpath }
+          format.js { render :action => :create, :layout => false }
+        end
+      end
+    else
+      clean_up_passwords resource
+      respond_to do |format|
+        format.html { render :new }
+        format.js { render :action => :create, :layout => false }
+      end
+    end
+  end
+
+  # Signs in a user on sign up. You can overwrite this method in your own
+  # RegistrationsController.
+  def sign_up(resource_name, resource)
+    sign_in(resource_name, resource)
+  end
+
   def update
     @user = current_user
 

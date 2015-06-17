@@ -1,0 +1,13 @@
+- if @enquiry.valid?
+  $('#request-modal').modal('hide')
+  $('#confirm-modal').modal('show')
+- else
+  - if @pet_present
+    $('#request-modal').modal('show')
+    $('#flash_error_with_pet').text('#{ @message[:msg] }')
+    $('#flash_error_with_pet').addClass('alert alert-#{ new_flash_class_for(@message[:type]) }')
+  - else
+    $('#request-modal-add-pet').modal('show')
+    $('#flash_error').text('#{ @message[:msg] }')
+    $('#flash_error').addClass('alert alert-#{ new_flash_class_for(@message[:type]) }')
+

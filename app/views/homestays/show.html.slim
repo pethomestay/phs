@@ -20,6 +20,36 @@
     meta property='og:image' content=img_url
     meta name='twitter:image' content=img_url
 css:
+  
+  .link-options {
+    display:block;
+    visibility:hidden;
+    opacity:0;
+    transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+    width: 110px;
+    height: 110px;
+    text-align: center;
+    margin: 0 auto;
+    border: 4px solid #ddd;
+    border-radius: 50%;
+    z-index: 4;
+    margin-top: -105px;
+    color: #c4c4c4;  
+  }
+  .link-options:hover {
+    color: #ec5c3b;
+    border: 4px solid #ec5c3b;
+    opacity: 0.8; 
+  }
+  .pet-trash-css {
+    font-size: 40pt;
+    padding-top: 25px;
+  }
+  .show-options:hover .link-options {
+    visibility:visible;
+    opacity:1;
+    transition-delay:0s;
+  }
   .slick-prev {
     display:none !important;
   }
@@ -311,7 +341,7 @@ coffee:
               button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
               / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
           - else # ask user to sign up or sign in
-            = link_to 'BOOK THIS HOST', new_user_registration_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%; padding: 12px 12px;'
+            button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
           / TODO: use a modal to prompt user to sign in so redirect_path can be set    
       .panel style="margin-bottom: 5px;"
         .panel-body style="padding:12px 13px"
@@ -401,65 +431,34 @@ coffee:
             button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
               i.fa.fa-twitter
                 |  TWEET  
-- if user_signed_in? and current_user.pets.present?
-  .modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
-    .modal-dialog
-      .modal-content id="enquiry-modal-confirmation"      
-        = render 'modal_confirmation' ,top: true
 
-- if user_signed_in? and current_user.pets.present?
-  / Request a meeting modal
-  .modal.fade#request-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+.modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+  .modal-dialog
+    .modal-content id="enquiry-modal-confirmation"      
+      = render 'modal_confirmation', top: true
+
+- unless user_signed_in?
+  .modal.fade#sign-in-modal tabindex='-1' role='dialog'
     .modal-dialog
       .modal-content
-        .modal-header
-          button type='button' class='close' data-dismiss='modal'
-            span aria-hidden='true' &times;
-            span.sr-only Close
-          h4.modal-title.request-label Request a meeting
-        = simple_form_for @enquiry, wrapper: :bootstrap3 do |f|
-          .modal-body
-            - flash.each do |type, message|
-              .alert class="alert-#{ new_flash_class_for(type) }" role='alert'
-                = message
-            input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
-            = f.input_field :duration_id, as: :hidden, value: 1
-            .row
-              .col-sm-6
-                .input-group.input-group-lg.left-merged.enquiry_check_in_date
-                  span.input-group-addon
-                    i.fa.fa-calendar
-                  = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
-              .col-sm-6
-                .input-group.input-group-lg.left-merged.enquiry_check_out_date
-                  span.input-group-addon
-                    i.fa.fa-calendar
-                  = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)
-            br
-            .row
-              .col-xs-12
-                = f.input :message, placeholder: "Suggest where and when you'd like to meet this Host", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
-                .form-group
-                  .input-group.input-group-lg
-                    span.input-group-addon style='background: #fff;'
-                      i.fa.fa-mobile.fa-fw.fa-lg
-                    input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=current_user.mobile_number
-                  p.help-block.text-center
-                    small
-                      | A mobile number is needed so the Host can get in touch!
-                      br
-                      | We don't share or use this for any other purpose.
-                = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
-          .modal-footer
-            button type='button' class='btn btn-default' data-dismiss='modal' CANCEL
-            = f.submit 'SUBMIT', class: 'btn btn-primary'
+        = render 'modal_sign_in', top: true  
 
-- if user_signed_in? and current_user.pets.empty?
-  / Request a meeting modal
-  .modal.fade#request-modal-add-pet tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
+  .modal.fade#sign-up-modal tabindex='-1' role='dialog'
     .modal-dialog
-      .modal-content id="enquiry-modal-wizard"  
-        = render 'modal_add_pet', enquiry: @enquiry ,top: true
+      .modal-content
+        = render 'modal_sign_up', top: true
+
+/ Send an Enquiry modal
+.modal.fade#request-modal tabindex='-1' role='dialog'
+  .modal-dialog
+    .modal-content
+      = render 'modal_enquiry', top: true
+
+/ Pet Information Modal
+.modal.fade#request-modal-add-pet tabindex='-1' role='dialog'
+  .modal-dialog
+    .modal-content
+      = render 'modal_add_pet', top: true
 
 
                
@@ -562,44 +561,24 @@ coffee:
           else "#{age} years old"
     $('.pet_profile_photo .attachinary-input').attachinary
       template: """
-        <table class="table table-hover">
-          <tr>
-            <th>Thumbnail</th>
-            <th>Preview</th>
-            <th>Action</th>
-          </tr>
           <% for(var i = 0; i < files.length; i++){ %>
-            <tr>
             <% if(files[i].resource_type == "raw") { %>
-              <td colspan="3">
                 <div class="raw-file"></div>
-              </td>
             <% } else { %>
-              <td>
-                <img
-                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fill', "width": 50, "height": 50 }) %>"
-                  alt="" width="50" height="50" />
-              </td>
-              <td>
-                <img
-                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 50, "height": 50, "radius": "max" }) %>"
-                  alt="" width="50" height="50" />
-              </td>
-              <td>
-                <a href="#" ><i class="fa fa-trash-o pet-trash" data-remove="<%= files[i].public_id %>"></i></a>
-              </td>
-            <% } %>
-              </td>
-            </tr>
+                <div class="show-options" style="text-align: center; min-height: 120px;margin-bottom: -2.5em;">
+                  <img
+                    src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 100, "height": 100, "radius": "max" }) %>"
+                    alt="" width="100" height="100" />
+                  <a class="link-options" href="#" ><i class="fa fa-trash-o pet-trash-css" data-remove="<%= files[i].public_id %>"></i></a> 
+                </div>
+                <% } %>
           <% } %>
-        </table class="table">
       """
     $('.chosen-select').chosen
       allow_single_deselect: true
       no_results_text: 'No results matched'
       width: '200px'
 javascript:
-  
   $(document).scroll(function () {
     //stick nav to top of page
     var y = $(this).scrollTop();
@@ -637,9 +616,6 @@ javascript:
             slidesToScroll: 1
           }
         }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
       ]
   });
   

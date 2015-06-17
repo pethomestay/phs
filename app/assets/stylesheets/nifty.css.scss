@@ -3075,7 +3075,7 @@ fieldset[disabled] .form-radio,
   background-color: #ffffff;
   border: 1px solid #c1c1c1;
   border-radius: 2px;
-  left: 2px;
+  left: -4px;
   top: 50%;
   margin-top: -9px;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.16);
@@ -3173,7 +3173,6 @@ fieldset:not([disabled]) .form-radio.form-normal.active:after,
   height: 11px;
   background-color: #404040;
   border-radius: 50%;
-  left: 6px;
   top: 50%;
   margin-top: -5px;
 }
