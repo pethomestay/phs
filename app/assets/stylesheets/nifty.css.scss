@@ -4814,7 +4814,7 @@ button.close:active {
   color: #225b8f;
 }
 .bg-info {
-  background-color: #3bb5e8;
+  background-color: #5cc1c0;
 }
 .bg-info,
 .bg-info a {
@@ -4942,7 +4942,7 @@ a.text-primary:active {
 a.text-info:hover,
 a.text-info:focus,
 a.text-info:active {
-  color: #178ec0;
+  color: #5cc1c0;
 }
 .text-success,
 a.text-success:hover,
@@ -5889,3 +5889,22 @@ a.text-dark:active {
 .nano.has-scrollbar > .nano-content {
   overflow-y: scroll;
 }
+
+.text-divider {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  border-bottom: 1px solid #d6d6d6;
+  line-height: 0.1em;
+}
+.text-divider-section {
+  background-color: #fff;
+  color: #d6d6d6;
+  padding: 0 10px;
+}
+
+.text-box-centered {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
