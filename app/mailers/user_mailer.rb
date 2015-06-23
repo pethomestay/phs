@@ -2,8 +2,15 @@ class UserMailer < ActionMailer::Base
   layout 'mailer'
   default from: "PetHomeStay <no-reply@pethomestay.com>"
 
-  def invite_email(email, user)
+   def update_account(user)
     @user = user
+    @message = 'You recently updated your account password'
+    mail(to: @user.email, subject: 'Password updated')
+  end
+
+  def invite_email(email, user, message = nil)
+    @user = user
+    @message = message
     mail(:to => email, :subject => "Welcome to PetHomeStay")
   end
 

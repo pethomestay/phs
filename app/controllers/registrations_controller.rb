@@ -59,6 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     if successfully_updated
       set_flash_message :notice, :updated
+      UserMailer.update_account(current_user).deliver
       # Sign in the user bypassing validation in case his password changed
       sign_in @user, :bypass => true
       redirect_to after_update_path_for(@user)
