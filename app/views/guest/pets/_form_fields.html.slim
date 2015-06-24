@@ -52,6 +52,8 @@ css:
     min-width: 200px;
     display: inline-block;
   }
+= javascript_include_tag 'dropzone'
+= stylesheet_link_tag 'dropzone'
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 .parent.phs-tab-header
   .panel-heading.feedback-head
@@ -62,10 +64,16 @@ css:
         ' Step 1 - Your Pet Profile
       span.hidden-sm.hidden-xs style="padding-right:10px; font-size: 8pt"
         'Please complete all fields    
-      span.feedback-icon.pull-right
+      span.feedback-icon.pull-right 
           i.fa.fa-chevron-down         
   .panel-body.feedback-body 
-    = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+    = f.label :profile_photo
+    #guest_profile_photo_container
+      - if @pet.profile_photo?
+        = cl_image_tag @pet.profile_photo.public_id, height: 200, angle: :exif, crop: :fill   
+    .dropzone id="pet_profile_photo_dropzone"
+    - if @pet.new_record?
+      = hidden_field_tag "pet[profile_photo]"
     label.hs_mhs_title
     | Pet Name
     = f.input :name, label: false
@@ -104,7 +112,22 @@ css:
       span.feedback-icon.pull-right
           i.fa.fa-chevron-down         
   .panel-body.feedback-body 
-    = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
+    = f.label :extra_photos
+    #guest_extra_photos_container
+      - if @pet.extra_photos.any?
+        .row.mar-top 
+          - for photo in @pet.extra_photos
+            .col-md-3.col-xs-4.pad-ver.mar-btm id="pet_extra_photos_box_#{photo.id}"
+              .panel.widget
+                .widget-body.bg-primary.text-center
+                  = cl_image_tag photo.public_id, class: "widget-img  img-border-light"
+                  a href="#Pet-Profile-Photo" class="remove_pet_extra_photos" data-id="#{photo.id}" data-model-id="#{@pet.id}" data-model-type="Pet" data-scope="extra_photos"
+                    | X
+
+    .dropzone id="pet_extra_photos_dropzone"
+    - if @pet.new_record?
+      = hidden_field_tag "pet[extra_photos][]"
+    
     = f.input :emergency_contact_name, label: 'Emergency Contact'
     = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
     = f.input :vet_name,  label: 'Vet Surgery'
@@ -158,6 +181,138 @@ javascript:
       head.addClass("phs-title");
       body.slideUp();
     }
+  });
+
+  $("a.remove_pet_extra_photos").click(function(event) {
+    event.preventDefault();
+    if($(this).attr("data-id") != "" && $(this).attr("data-model-id") != "" && $(this).attr("data-model-type") != "" && confirm('Are you sure?')) {
+      photo_id = $(this).attr("data-id");
+      $.ajax({
+        url: '/remove_uploads',
+        type: 'DELETE',
+        data: "id=" + $(this).attr("data-id") +
+              "&model_type=" + $(this).attr("data-model-type") +
+              "&model_id=" + $(this).attr("data-model-id") +
+              "&scope=" + $(this).attr("data-scope"),
+        success: function(result) {
+          if(result.status == "success"){
+            $("div#pet_extra_photos_box_" + photo_id ).remove();
+          } else {
+            alert("Sorry Something went wrong!")
+          }
+        }
+      });
+    }
+  });
+
+  var profile_photo = [];
+  $(document).ready(function () {
+    $("#pet_profile_photo_dropzone").dropzone({
+      url: "/photo_uploads",
+      paramName: "photo",
+      previewsContainer: "#guest_profile_photo_container" ,
+      acceptedFiles: 'image/*',
+      maxFilesize: 2,
+      maxFiles: 1,
+      addRemoveLinks: true,
+      maxfilesexceeded: function () {
+        alert('Max File updloaded');
+      },
+      sending: function (file, xhr, formData) {
+        formData.append("authenticity_token", "#{form_authenticity_token}");
+        formData.append("attachinariable_type", "#{@pet.class.name}");
+        formData.append("attachinariable_id", "#{@pet.id}");
+        formData.append("attachinary_scope", "profile_photo");
+      },
+      success: function (file, response) {
+        profile_photo = [response]
+        #{{ "$('#pet_profile_photo').val(JSON.stringify(profile_photo));" if @pet.new_record? }}
+        file.previewElement.classList.add("dz-success");
+        file.previewElement.classList.add("public_id" + response.public_id);
+      },
+      removedfile: function(file) {
+        classes = file.previewElement.classList;
+        for(i = 0; i < classes.length; i++){
+          if( classes[i].match("public_id") == "public_id" ){
+            file_id = classes[i].replace("public_id", "");
+            for(j=0; j<profile_photo.length; j++){
+              if(file_id == profile_photo[j].public_id){
+                profile_photo.splice(j, 1);
+                #{{ "$('#pet_profile_photo').val(JSON.stringify(profile_photo));" if @pet.new_record? }}
+                break;
+              }
+            }
+            $.ajax({
+              url: '/remove_uploads_with_public_id',
+              type: 'DELETE',
+              data: "public_id=" + file_id,
+              success: function(result) {}
+            });
+            var _ref;
+            if ((_ref = file.previewElement) != null) {
+              _ref.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+            break;
+          }
+        }
+      }
+    });
+  });
+  
+  var extra_photos = [];
+  $(document).ready(function () {
+    $("#pet_extra_photos_dropzone").dropzone({
+      url: "/photo_uploads",
+      paramName: "photo",
+      //previewsContainer: "#guest_extra_photos_container",
+      acceptedFiles: 'image/*',
+      maxFilesize: 2,
+      maxFiles: 10,
+      addRemoveLinks: true,
+      maxfilesexceeded: function () {
+        alert('Max File updloaded');
+      },
+      sending: function (file, xhr, formData) {
+        formData.append("authenticity_token", "#{form_authenticity_token}");
+        formData.append("attachinariable_type", "#{@pet.class.name}");
+        formData.append("attachinariable_id", "#{@pet.id}");
+        formData.append("attachinary_scope", "extra_photos");
+      },
+      success: function (file, response) {
+        extra_photos.push(response)
+        #{{ "$('#pet_extra_photos_').val(JSON.stringify(extra_photos));" if @pet.new_record? }}
+        file.previewElement.classList.add("dz-success");
+        file.previewElement.classList.add("public_id" + response.public_id);
+      },
+      removedfile: function(file) {
+        classes = file.previewElement.classList;
+        for(i = 0; i < classes.length; i++){
+          if( classes[i].match("public_id") == "public_id" ){
+            file_id = classes[i].replace("public_id", "");
+            for(j=0; j<extra_photos.length; j++){
+              if(file_id == extra_photos[j].public_id){
+                extra_photos.splice(j, 1);
+                #{{ "$('#pet_extra_photos_').val(JSON.stringify(extra_photos));" if @pet.new_record? }}
+                break;
+              }
+            }
+            $.ajax({
+              url: '/remove_uploads_with_public_id',
+              type: 'DELETE',
+              data: "public_id=" + file_id,
+              success: function(result) {}
+            });
+            var _ref;
+            if ((_ref = file.previewElement) != null) {
+              _ref.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+            break;
+          }
+        }
+      }
+    });
   });
 coffee:
   $('.pet_size_id .slider').slider

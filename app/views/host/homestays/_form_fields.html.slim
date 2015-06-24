@@ -6,6 +6,8 @@ css:
     width: 100%;
   }
 = javascript_include_tag 'address_autocomplete'
+= javascript_include_tag 'dropzone'
+= stylesheet_link_tag 'dropzone'
 
 .homestay-form
   - if f.object.persisted?
@@ -49,7 +51,9 @@ css:
                 button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="Upload LANDSCAPE photos (turn your phone sideways!) for the best results. Make sure you include a photo of you with some pets, where you will take them for walks, and where the pet will spend its time in your backyard. Tip - to get awesome photos use Instagram or a similar app!"
                     i.fa.fa-question-circle   
                 .help-block Add as many photos as you can of your PetHomeStay.     
-              = f.input :photos, as: :attachinary, label: false
+              div.dropzone id="homestay_dropzone"
+              - if @homestay.new_record?
+                = hidden_field_tag "homestay[photos][]"
               .row
                 .hidden-md.hidden-sm.hidden-xs
                   .panel._item_base
@@ -419,3 +423,57 @@ javascript:
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
+  var photos = [];
+  $(document).ready(function () {
+    $("#homestay_dropzone").dropzone({
+      url: "/photo_uploads",
+      paramName: "photo",
+      acceptedFiles: 'image/*',
+      maxFilesize: 2,
+      maxFiles: 10,
+      addRemoveLinks: true,
+      maxfilesexceeded: function () {
+        alert('Max File updloaded');
+      },
+      sending: function (file, xhr, formData) {
+        formData.append("authenticity_token", "#{form_authenticity_token}");
+        formData.append("attachinariable_type", "#{@homestay.class.name}");
+        formData.append("attachinariable_id", "#{@homestay.id}");
+        formData.append("attachinary_scope", "photos");
+      },
+      success: function (file, response) {
+        photos.push(response)
+        #{{ "$('#homestay_photos_').val(JSON.stringify(photos));" if @homestay.new_record? }}
+        file.previewElement.classList.add("dz-success");
+        file.previewElement.classList.add("public_id" + response.public_id);
+      },
+      removedfile: function(file) {
+        classes = file.previewElement.classList;
+        for(i = 0; i < classes.length; i++){
+          if( classes[i].match("public_id") == "public_id" ){
+            file_id = classes[i].replace("public_id", "");
+            for(j=0; j<photos.length; j++){
+              if(file_id == photos[j].public_id){
+                photos.splice(j, 1);
+                #{{ "$('#homestay_photos_').val(JSON.stringify(photos));" if @pet.new_record? }}
+                break;
+              }
+            }
+            $.ajax({
+              url: '/remove_uploads_with_public_id',
+              type: 'DELETE',
+              data: "public_id=" + file_id,
+              success: function(result) {}
+            });
+            var _ref;
+            if ((_ref = file.previewElement) != null) {
+              _ref.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+            break;
+          }
+        }
+      }
+    });
+  });

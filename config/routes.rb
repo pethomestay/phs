@@ -148,6 +148,11 @@ PetHomestay::Application.routes.draw do
 
 
   mount Attachinary::Engine => "/attachinary"
+  post '/photo_uploads',    to: 'dropzone#photo_uploads'
+  delete '/remove_uploads', to: 'dropzone#remove_uploads'
+  delete '/remove_uploads_with_public_id', to:"dropzone#remove_uploads_with_public_id"
+
+
 
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
