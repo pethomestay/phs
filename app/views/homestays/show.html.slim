@@ -540,7 +540,6 @@ coffee:
       max_selected_options: 1
 
     $('.pet_size_id .slider').slider
-      orientation: 'vertical'
       formatter: (size_id) ->
         switch size_id
           when 1 then 'under 15kg'
@@ -549,7 +548,6 @@ coffee:
           when 4 then '46kg+'
           else 'invalid value'
     $('.pet_energy_level .slider').slider
-      orientation: 'vertical'
       formatter: (energy_id) ->
         switch energy_id
           when 1 then 'lazy'
@@ -559,7 +557,6 @@ coffee:
           when 5 then 'sugar rush'
           else 'invalid value'
     $('.pet_pet_age .slider').slider
-      orientation: 'vertical'
       formatter: (age) ->
         switch age
           when 1  then 'under 18 months'

@@ -18,7 +18,7 @@
               = f.input :pet_type_id, label: nil, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
             .col-xs-6
               .row
-                Button.btn.btn-mint.btn-block#modal_dog_btn style="height:75px" 
+                Button.btn.btn-primary.btn-block#modal_dog_btn style="height:75px" 
                   = image_tag 'homestay/dog56.png', height: 50, width:50, class: 'pull-left'
                   .pad-all Dog
             .col-xs-6  
@@ -35,10 +35,10 @@
             = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
         .row.text-box-centered
           .col-xs-12
-            .pad-ver
+            .mar-btm
               .btn-group.btn-group-justified
-                a.btn.btn-mint#modal_male_desex Male Desexed
-                a.btn.btn-mint#modal_female_desex Female Desexed
+                a.btn.btn-mint#modal_male_desex Male 
+                a.btn.btn-mint#modal_female_desex Female 
               label.form-checkbox.form-icon.form-text style="color:#3c3835"
                 input#modal_pet_normal_sex type="checkbox" checked="" Check if pet(s) not Desexed
                 .hidden
