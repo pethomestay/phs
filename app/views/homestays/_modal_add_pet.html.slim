@@ -1,66 +1,66 @@
-.modal-header
-  button type='button' class='close' data-dismiss='modal'
-    span aria-hidden='true' &times;
-    span.sr-only Close
-  h4.modal-title.request-label The Host needs your Pet Information
-
-.modal-body 
-  = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|
-    #flash_error_with_pet role='alert'
-    input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
-    .row
-      .col-xs-12 
-        = f.input :profile_photo, as: :attachinary, label: false, input_html: { class: 'hidden'} 
-      .col-xs-12
-        = f.input :name, label: 'Pet Name'
-        Button.btn.btn-mint.btn-block.btn-upload Add your Pet's Picture
-        br
-    .row
-      .col-xs-4
-        = f.input :pet_type_id, label: nil, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'  
-      .col-xs-8
-        = f.input :other_pet_type, label: 'Species Name', input_html: {id: 'other_pet_type_text_id', data: { placeholder: 'eg: Makaw or Iguana' }} 
-        = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
-        
-    = f.input :sex_id, label: 'Sex' , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
-    .hidden
-        .slider_con
-          label.hs_mhs_title style="margin-left:-15px"
-            | Pet Size  
-          = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-          label.hs_mhs_title style="margin-left:-15px"
-            | Pet Age
-          = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-          label.hs_mhs_title style="margin-left:-15px"
-            | Pet Energy Level
-          = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
-    = f.submit 'Add Your Pet', class: 'btn btn-primary btn-block submitEnquiry'
-
-javascript:
-  
-  $('#pet_pet_type_id_1').prop("checked");
-  $('chosen-select').show();
-  $('#other_pet_type_text_id').hide();
-  $('.pet_other_pet_type').hide();
-  
-  $('.btn-upload').click(function() {
-    $('.attachinary-input').click();  
-  });
-
-  $('#pet_pet_type_id_1').click(function() {
-    $('#pet_pet_type_id_1').prop("checked");  
-    $('.pet_breed').show();
-    $('#other_pet_type_text_id').hide();
-    $('.pet_other_pet_type').hide();
-  });
-  $('#pet_pet_type_id_2').click(function() {
-    $('#pet_pet_type_id_2').prop("checked");
-    $('.pet_breed').hide();
-    $('#other_pet_type_text_id').hide();
-    $('.pet_other_pet_type').hide();
-  });
-  $('#pet_pet_type_id_5').click(function() {
-    $('.pet_breed').hide();
-    $('#other_pet_type_text_id').show();
-    $('.pet_other_pet_type').show();
-  });
+= javascript_include_tag 'homestays/modal_add_pet'
+.modal-body.bg-info
+  .panel.panel-default.mar-all style='margin-bottom: 15px;'
+    #flash_error_sign_up role='alert'
+    .panel-body.pad-all  
+      = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
+        #flash_error_with_pet role='alert'
+        input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
+        .row.text-box-centered
+          .col-xs-12.hidden
+            .dropzone id="pet_modal_profile_photo_dropzone"
+              = hidden_field_tag "pet[profile_photo]"
+          .col-xs-12
+            = f.input :name, label: false, placeholder: 'Pet Name eg: Rover '
+        .row.text-box-centered
+          .col-xs-12
+            .hidden
+              = f.input :pet_type_id, label: nil, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
+            .col-xs-6
+              .row
+                Button.btn.btn-mint.btn-block#modal_dog_btn style="height:75px" 
+                  = image_tag 'homestay/dog56.png', height: 50, width:50, class: 'pull-left'
+                  .pad-all Dog
+            .col-xs-6  
+              .row
+                Button.btn.btn-mint.btn-block#modal_cat_btn style="margin-left:5px; width: 130px;" 
+                  = image_tag 'homestay/cat19.png', height: 21, width:21, class: 'pull-left'
+                  span Cat
+                Button.btn.btn-mint.btn-block#modal_other_btn style="margin-left:5px; width: 130px;"
+                  = image_tag 'homestay/mouse33.png', height: 21, width:21, class: 'pull-left'
+                  span Other
+          .col-xs-12
+            .mar-top.mar-btm
+            = f.input :other_pet_type, label: false, placeholder: 'eg: Makaw or Iguana', input_html: {id: 'other_pet_type_text_id'} 
+            = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
+        .row.text-box-centered
+          .col-xs-12
+            .pad-ver
+              .btn-group.btn-group-justified
+                a.btn.btn-mint#modal_male_desex Male Desexed
+                a.btn.btn-mint#modal_female_desex Female Desexed
+              label.form-checkbox.form-icon.form-text style="color:#3c3835"
+                input#modal_pet_normal_sex type="checkbox" checked="" Check if pet(s) not Desexed
+                .hidden
+                  = f.input :sex_id, label: 'Sex' , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
+          .slider_con.text-dark style="color:#3c3835"
+            .row.text-center
+              .col-xs-4
+                .text-bold Size 
+              .col-xs-4
+                .text-bold Age
+              .col-xs-4
+                .text-bold Energy 
+            hr style="margin-top:5px"
+            .row.text-center
+              .col-xs-4      
+                = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+              .col-xs-4
+                = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+              .col-xs-4
+                = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+        .row.text-box-centered
+          = f.submit 'Add Your Pet', class: 'btn btn-primary btn-block submitEnquiry'
+      button.pull-left style="margin-bottom: -20px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+        .sr-only Close
+        i.fa.fa-reply.text-xs 

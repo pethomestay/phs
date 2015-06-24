@@ -127,6 +127,9 @@ coffee:
       height = 350
       window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
 
+= javascript_include_tag 'dropzone'
+= stylesheet_link_tag 'dropzone'
+
 .container-fluid.homestay-show
   .row.hidden-md.hidden-lg id="navWrap"
     nav.bar_top
@@ -161,8 +164,8 @@ coffee:
                     span.text-xs 
                       |/24h 
         - else # ask user to sign up or sign in
-          = link_to new_user_registration_path(redirect_path: homestay_path(@homestay)),class: 'btn btn-lg btn-mint btn-block btn-book inquire'do
-            BOOK THIS HOST
+          button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+          / TODO: use a modal to prompt user to sign in so redirect_path can be set    
             - if @homestay.cost_per_night.present?
               .hidden-lg.hidden-md
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
@@ -181,7 +184,7 @@ coffee:
         - if @homestay.photos?
           - for photo in @homestay.photos
             div style="background-size:auto"
-              = cl_image_tag photo.public_id, height: 400
+              = cl_image_tag photo.public_id, height: 400, angle: :exif, crop: :fill
         - elsif @homestay.pictures.present?
           - for picture in @homestay.pictures
             div style="max-height:400px; background-size:auto"
@@ -196,7 +199,7 @@ coffee:
           = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
         - elsif @homestay.photos.present?
           - pict = @homestay.photos.first
-          = cl_image_tag pict.public_id, height: 400, class: 'panel-media-img img-circle img-border-light' 
+          = cl_image_tag pict.public_id, height: 400, class: 'panel-media-img img-circle img-border-light' , angle: :exif, crop: :fill
         - else
           = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'panel-media-img img-circle img-border-light'    
         .row
@@ -537,6 +540,7 @@ coffee:
       max_selected_options: 1
 
     $('.pet_size_id .slider').slider
+      orientation: 'vertical'
       formatter: (size_id) ->
         switch size_id
           when 1 then 'under 15kg'
@@ -545,15 +549,17 @@ coffee:
           when 4 then '46kg+'
           else 'invalid value'
     $('.pet_energy_level .slider').slider
+      orientation: 'vertical'
       formatter: (energy_id) ->
         switch energy_id
-          when 1 then 'low'
-          when 2 then 'low medium'
-          when 3 then 'medium'
-          when 4 then 'high medium'
-          when 5 then 'high'
+          when 1 then 'lazy'
+          when 2 then 'laid back'
+          when 3 then 'balanced'
+          when 4 then 'active'
+          when 5 then 'sugar rush'
           else 'invalid value'
     $('.pet_pet_age .slider').slider
+      orientation: 'vertical'
       formatter: (age) ->
         switch age
           when 1  then 'under 18 months'
@@ -565,7 +571,7 @@ coffee:
             <% if(files[i].resource_type == "raw") { %>
                 <div class="raw-file"></div>
             <% } else { %>
-                <div class="show-options" style="text-align: center; min-height: 120px;margin-bottom: -2.5em;">
+                <div class="show-options" style="text-align: left; min-height: 120px">
                   <img
                     src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 100, "height": 100, "radius": "max" }) %>"
                     alt="" width="100" height="100" />
@@ -595,7 +601,7 @@ javascript:
   })
 
   $('.slick_jag').slick({
-      slidesToShow: 3,
+      slidesToShow: 2,
       accessibility: false,
       autoplay: true,
       autoplaySpeed: 2000,
