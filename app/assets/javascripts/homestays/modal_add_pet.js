@@ -119,4 +119,52 @@
       }
     });
 
+  var profile_photo = [];
+  $("#pet_modal_profile_photo_dropzone").dropzone({
+    url: "/photo_uploads",
+    paramName: "photo",
+    acceptedFiles: 'image/*',
+    maxFilesize: 2,
+    maxFiles: 1,
+    addRemoveLinks: true,
+    maxfilesexceeded: function () {
+      $("#modal_image_ul").show();
+      alert('Max File updloaded');
+    },
+    sending: function (file, xhr, formData) {
+      $("#modal_image_ul").hide();
+      formData.append("authenticity_token", $('#auth_token').val());
+    },
+    success: function (file, response) {
+      profile_photo = [response]
+      $("#modal_image_ul").hide();
+      $('#pet_profile_photo').val(JSON.stringify(profile_photo));
+      file.previewElement.classList.add("dz-success");
+      file.previewElement.classList.add("public_id" + response.public_id);
+    },
+    removedfile: function(file) {
+      $("#modal_image_ul").show();
+      classes = file.previewElement.classList;
+      for(i = 0; i < classes.length; i++){
+        if( classes[i].match("public_id") == "public_id" ){
+          file_id = classes[i].replace("public_id", "");
+          $('#pet_profile_photo').val('');
+          $.ajax({
+            url: '/remove_uploads_with_public_id',
+            type: 'DELETE',
+            data: "public_id=" + file_id,
+            success: function(result) {}
+          });
+          var _ref;
+          if ((_ref = file.previewElement) != null) {
+            _ref.parentNode.removeChild(file.previewElement);
+          }
+          return this._updateMaxFilesReachedClass();
+          break;
+        }
+      }
+    }
+  });
+    
+
 });      

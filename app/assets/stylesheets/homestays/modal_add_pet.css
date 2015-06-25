@@ -1,0 +1,29 @@
+.modal_dropzone_container {
+	min-height: 200px;
+}
+
+.modal_dropzone_view {
+	margin: -10px;
+}
+
+.modal_pet_upload_photo {
+	color:#18af92;
+}
+.modal_pet_upload_photo:hover {
+	color:#ef7458;
+}
+
+.btn-two-tone {
+	  background-color: #16a085;
+	  border:none;
+	  color: #ffffff;
+}
+.btn-two-tone:hover,
+.btn-two-tone:active,
+.btn-two-tone:focus,
+.btn-two-tone.active {
+	background-color: #ef7458;
+  	border:none;
+  	color: #ffffff;	
+}
+
