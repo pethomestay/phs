@@ -5,6 +5,7 @@
   = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
     #flash_error_with_pet role='alert'
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
+    .text-center.pad-btm.text-lg.text-thin Tell Us a little about Your Pet  
     .row.text-box-centered style="max-width: 170px; margin-bottom:15px;"
       .col-xs-12
         .dropzone.modal_dropzone_container id="pet_modal_profile_photo_dropzone"
@@ -13,7 +14,7 @@
           = hidden_field_tag "auth_token", "#{form_authenticity_token}"
     .row.text-box-centered  
       .col-xs-12
-        = f.input :name, label: false, placeholder: 'Pet Name eg: Rover '
+        = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '
     .row.text-box-centered
       .col-xs-12
         .hidden
