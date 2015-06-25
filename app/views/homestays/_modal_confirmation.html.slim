@@ -1,32 +1,30 @@
-.modal-body.bg-info
-  .panel.panel-default.mar-all style='margin-bottom: 15px;'
-    #flash_error_sign_up role='alert'
-    .panel-body.pad-all
-      .modal-body.text-box-centered
-        p.text-center.text-lg style="color:#3c3835"
-          | We have notified this Host and they
-          |  have 24 hours to get back to you.
+.modal-body
+  #flash_error_sign_up role='alert'
+  .text-box-centered
+      p.text-center.text-lg style="color:#3c3835"
+        | We have notified this Host and they
+        |  have 24 hours to get back to you.
 
+      p.text-center.text-sm
+        | Go to My Account Page to see all responses
+        |  from Hosts.
+
+      p.text-center.text-sm
+        | Simply click 'Book this Homestay' when you are
+        |  ready to confirm and pay.
+      .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"
         p.text-center.text-sm
-          | Go to My Account Page to see all responses
-          |  from Hosts.
+          | Free $2500 Emergency Vet Cover,
 
-        p.text-center.text-sm
-          | Simply click 'Book this Homestay' when you are
-          |  ready to confirm and pay.
-        .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"
-          p.text-center.text-sm
-            | Free $2500 Emergency Vet Cover,
+          |  24x7 Support & Reviews.
 
-            |  24x7 Support & Reviews.
+      a.btn.btn-mint.btn-block href="http://www.pethomestay.com.au/homestays/?search[location]=#{@homestay.address_postcode}" 
+        | Message Another Host
 
-        a.btn.btn-primary.btn-block href="http://www.pethomestay.com.au/homestays/?search[location]=#{@homestay.address_postcode}" 
-          | Message Another Host
+      p.text-center.text-sm
+        | or
 
-        p.text-center.text-sm
-          | or
-
-        = link_to 'Go to My Account', guest_path, class: 'btn btn-primary btn-block'
-      button.pull-left style="margin-bottom: -20px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
-        .sr-only Close
-        i.fa.fa-reply.text-xs    
+      = link_to 'Go to My Account', guest_path, class: 'btn btn-mint btn-block'
+  button.pull-left style="margin-top: -25px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+    .sr-only Close
+    i.fa.fa-reply.text-xs    
