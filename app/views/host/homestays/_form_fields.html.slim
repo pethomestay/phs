@@ -456,7 +456,7 @@ javascript:
             for(j=0; j<photos.length; j++){
               if(file_id == photos[j].public_id){
                 photos.splice(j, 1);
-                #{{ "$('#homestay_photos_').val(JSON.stringify(photos));" if @pet.new_record? }}
+                #{{ "$('#homestay_photos_').val(JSON.stringify(photos));" if @homestay.new_record? }}
                 break;
               }
             }
