@@ -1,6 +1,7 @@
 .modal-body
-  #flash_error_sign_up role='alert'
-  .row.pad-top.text-box-centered
+  .row.pad-btm.text-box-centered
+    .col-xs-4
+      = image_tag 'home/three_steps/step_three.png', height: 80, width: 80
     .col-xs-8.pad-top
       .row
         i.fa.fa-check.fa-lg.text-mint
@@ -11,34 +12,32 @@
       .row
         i.fa.fa-check.fa-lg.text-mint
         span.pad-lft Pet Emergency Cover
-    .col-xs-4
-      = image_tag 'home/three_steps/step_three.png', height: 80, width: 80
-  .panel-body.pad-btm
-    = form_tag session_path(resource_name), :method => 'post', :id => "sign_in_user", :remote => true do
-      .form-group.text-box-centered
-        a.btn.btn-facebook-sign-up href=user_omniauth_authorize_path(:facebook)
-          i.fa.fa-facebook.fa-fw.fa-lg
-          'LOG IN VIA FACEBOOK
-      h6.text-divider style="margin-bottom: 20px;margin-top: 20px;"
-        span.text-divider-section or 
-      h6.text-center
-        span.text-lg style="color: #3c3835 !important" LOG IN VIA EMAIL
-      .form-group
-        .input-group.text-box-centered
-          span.input-group-addon
-            i.fa.fa-envelope.fa-fw
-          = email_field_tag 'user[email]', nil, class: 'form-control', placeholder: 'Email'
-      .form-group
-        .input-group.text-box-centered
-          span.input-group-addon
-            i.fa.fa-lock.fa-fw
-          = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
-      .form-group.text-box-centered
-        = submit_tag 'LOG IN', class: 'btn btn-mint form-control submit'
-        label.checkbox-inline
-          = check_box_tag 'user[remember_me]', 1, true
-          span.text-muted.text-sm Remember Me
-        = link_to 'Can\'t log in?', new_user_password_path, class: 'pull-right text-muted text-sm'
-    button.pull-left style="margin-bottom: -20px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
-      .sr-only Close
-      i.fa.fa-reply.text-xs       
+  = form_tag session_path(resource_name), :method => 'post', :id => "sign_in_user", :remote => true do
+    .form-group.text-box-centered
+      a.btn.btn-facebook-sign-up href=user_omniauth_authorize_path(:facebook)
+        i.fa.fa-facebook.fa-fw.fa-lg
+        'LOG IN VIA FACEBOOK
+    h6.text-divider style="margin-bottom: 20px;margin-top: 20px;"
+      span.text-divider-section or 
+    h6.text-center
+      span.text-lg style="color: #3c3835 !important" LOG IN VIA EMAIL
+    .form-group
+      .input-group.text-box-centered
+        span.input-group-addon
+          i.fa.fa-envelope.fa-fw
+        = email_field_tag 'user[email]', nil, class: 'form-control', placeholder: 'Email'
+    .form-group
+      .input-group.text-box-centered
+        span.input-group-addon
+          i.fa.fa-lock.fa-fw
+        = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
+      .text-box-centered#flash_error_sign_in
+    .form-group.text-box-centered
+      = submit_tag 'LOG IN', class: 'btn btn-mint form-control submit'
+      label.checkbox-inline
+        = check_box_tag 'user[remember_me]', 1, true
+        span.text-muted.text-sm Remember Me
+      = link_to 'Can\'t log in?', new_user_password_path, class: 'pull-right text-muted text-sm'
+  button.pull-left style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+    .sr-only Close
+    i.fa.fa-reply.text-xs       

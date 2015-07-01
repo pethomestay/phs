@@ -49,6 +49,19 @@ css:
     - else
       | All of your upcoming bookings are shown here
 
+- if current_user.homestay and controller_name == "host" and action_name == "index"
+  .panel-body style='background-color: #f2f2f2; color: #777; padding: 10px; margin-top: -35px; font-size: 15.6px;'
+    - if current_user.homestay.locked?
+      .text-center   
+        = check_box_tag "active", true, current_user.homestay.active, { id: 'hoemstay_active_check_box', disabled: true }
+        span.pad-lft
+        | This listing is currently waiting for admin approval.
+    - else
+      .text-center
+        = check_box_tag "active", true, current_user.homestay.active, { id: 'hoemstay_active_check_box' }
+        span.pad-lft
+        | Make your Listing Public
+
 .upcoming
   - if defined? @awaits_feedback
     - for booking in @awaits_feedback
@@ -60,3 +73,32 @@ css:
   - if defined? @upcoming
     - for event in @upcoming
       = render 'shared/right_panel/event', event: event, awaits_feedback: false
+
+javascript:
+  $(document).ready(function () {
+    $("#hoemstay_active_check_box").change(function(){
+      checkbox_value = $(this).is(":checked");
+      $(this).disabled = true;
+      if(confirm("Are you sure?")){
+        $.ajax({
+          url: "/host/homestay/activate",
+          type: 'PUT',
+          data: "active=" + (checkbox_value ? "true" : "false"),
+          success: function(result) {},
+          error: function(result) {
+            alert("Sorry something went wrong!");
+            $(this).disabled = false;
+          }
+        });
+      } else {
+        $(this).disabled = false;
+        $(this).checked = !checkbox_value;
+        if(checkbox_value){
+          $(this).removeClass( "active" );
+        }else{
+          $(this).addClass( "active" );
+        }
+        return false;
+      }
+    });
+  });

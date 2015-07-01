@@ -134,33 +134,20 @@ coffee:
       .col-md-12
         a href="/contacts/gmail" Gmail
         - if @contacts.try(:any?)
-          - @contacts.each do |c|
-            ul
-              li = c[:name]   
-              li = c[:email]
-      
-      .col-md-12.mar-top
-        .well.well-sm
-          input name="count" type="hidden" value="1" 
-          .input-appendable-wrapper
-            input#count type="hidden" value="1" 
-            #input-group-appendable1.input-group.input-group-appendable.mar-btm
-              input#field1.input.form-control autocomplete="off" name="field1" type="text" placeholder="Enter a valid email address" 
-              span.input-group-btn
-                button#btn1.btn.btn-primary.add-more style="padding:6px 12px" type="button"  +
-          .alert.alert-danger.media
-            i.fa.fa-ban style="padding-right: 10px; "
-            span Please enter a 
-            span.text-semibold strong valid email address.
-          
-          .text-thin.text-center Press + to add another email address
-    
-          = form_tag host_invite_emails_path, :html => { :method => "post" }
-          .hidden  
-            = text_field_tag :invite
-          .form-actions
-            = submit_tag 'Send Emails', class: 'btn btn-primary text-uppercase email-submit mar-top', style: 'width: 100%'  
-      
+          = form_tag host_send_invite_emails_path, :method => 'post', :id => "send_invite_form" do
+            - @contacts.each do |c|
+              - unless c[:email].blank?
+                .form-group
+                  .input-group
+                    = check_box_tag 'emails[]', c[:email], false, class: 'form-control'
+                    span.input-group-addon
+                      = c[:name].blank? ? c[:email] : c[:name]
+            .form-group
+              .input-group
+                = text_area_tag 'message', nil, class: 'put_class_name'
+
+            = submit_tag 'Send Email', class: 'btn btn-primary form-control submit'
+
       .text-thin.text-center Or use Social media and get people you know to leave you support!
       
       .text-center.mar-top
@@ -209,55 +196,3 @@ javascript:
       body.slideUp();
     }
   });
-  
-  $('.col-md-12').find('.alert').hide();  
-  $wrapper = $('.input-appendable-wrapper');
-  $count = $wrapper.find('#count').val();
-      
-
-  $('.input-group-appendable .add-more').click(function(){  
-    $lastItem = $wrapper.find('.input-group-appendable').last();
-    $lastField = $lastItem.find('.input')
-    // provided the last item is not empty
-    if ( isValidEmailAddress( $lastField.val().trim() )) {
-      $('.col-md-12').find('.alert').hide();
-      $newInput = $lastItem.clone(true);
-      // change attribute for new item
-      $count++;
-      // change text input and the button
-      $newInput.attr('id', 'input-group-appendable' + $count);
-      $newInput.find('input[type="text"]').attr({
-        id: "field" + $count,
-        name: "field" + $count
-      });
-
-      $newField = $newInput.find('.input');
-      $newField.val("");
-      $newInput.find('.btn').attr('id', 'btn' + $count);
-      $newInput.appendTo($wrapper);
-      //change the previous button to remove
-      $lastItem.find('.btn')
-      .removeClass('add-more')
-      .text('-')
-      .off()
-      .on('click', function(){
-        $(this).parents('.input-group-appendable').remove();
-      });
-
-      $wrapper.find('#count').val($count);
-    } else {
-        $('.col-md-12').find('.alert').show();
-    }
-    
-  });
-
-  $('.email-submit').click(function(){
-    for (i = 1; i <= $count; i++) { 
-       $('#invite').val($('#invite').val() + $( '#field' + i ).val() + ",");
-    }
-  });
-
-  function isValidEmailAddress(emailAddress) {
-      var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-      return pattern.test(emailAddress);
-  };

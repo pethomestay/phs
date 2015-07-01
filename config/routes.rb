@@ -101,8 +101,13 @@ PetHomestay::Application.routes.draw do
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
+    put "/homestay/activate", to: "homestays#activate"
     resources :feedbacks, except: [:destroy]
-    resource :homestay, only: [:new, :create, :edit, :update]
+    resource :homestay, only: [:new, :create, :edit, :update] do
+      collection do
+        put 'activate'
+      end
+    end
     resource :account, only: [:new, :create, :edit, :update, :show]
     get '/',         to: 'host#index'
   end
@@ -151,8 +156,6 @@ PetHomestay::Application.routes.draw do
   post '/photo_uploads',    to: 'dropzone#photo_uploads'
   delete '/remove_uploads', to: 'dropzone#remove_uploads'
   delete '/remove_uploads_with_public_id', to:"dropzone#remove_uploads_with_public_id"
-
-
 
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'

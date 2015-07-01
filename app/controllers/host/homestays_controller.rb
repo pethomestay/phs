@@ -1,5 +1,5 @@
 class Host::HomestaysController < Host::HostController
-  before_filter :authenticate_user!, only: [:new, :create]
+  before_filter :authenticate_user!, only: [:new, :create, :activate]
   before_filter :update_user_mobile_number, only: [:create, :update]
   skip_before_filter :host_filters,  only: [:new, :create]
 
@@ -48,6 +48,17 @@ class Host::HomestaysController < Host::HostController
     else
       render :edit
     end
+  end
+
+  def activate
+    js_response = ""
+    unless current_user.homestay.locked?
+      homestay = current_user.homestay
+      homestay.active = params["active"] == "true"
+      homestay.save
+      js_response = "$(this).disabled = false;alert('Your listing is #{"not " if params['active'] != 'true'}public')"
+    end
+    render js: js_response
   end
 
   private

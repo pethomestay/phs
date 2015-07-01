@@ -1,5 +1,5 @@
 .modal-body
-  #flash_error_sign_up role='alert'
+  #flash_error_confirmation
   .text-box-centered
       p.text-center.text-lg style="color:#3c3835"
         | We have notified this Host and they
@@ -25,6 +25,6 @@
         | or
 
       = link_to 'Go to My Account', guest_path, class: 'btn btn-mint btn-block'
-  button.pull-left style="margin-top: -25px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+  button.pull-left style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs    

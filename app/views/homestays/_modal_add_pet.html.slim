@@ -1,17 +1,16 @@
 = javascript_include_tag 'homestays/modal_add_pet'
 = stylesheet_link_tag 'homestays/modal_add_pet'
 .modal-body
-  #flash_error_sign_up role='alert'
   = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
-    #flash_error_with_pet role='alert'
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
     .text-center.pad-btm.text-lg.text-thin Tell Us a little about Your Pet  
     .row.text-box-centered style='max-width: 170px; margin-bottom:15px;'
       .col-xs-12
+        #flash_error_with_pet role='alert'
         .dropzone.modal_dropzone_container id='pet_modal_profile_photo_dropzone'
           i.fa.fa-cloud-upload.fa-3x.modal_pet_upload_photo#modal_image_ul style='margin: 50px 35px'
           = hidden_field_tag 'pet[profile_photo]'
-          = hidden_field_tag 'auth_token', '#{form_authenticity_token}'
+          = hidden_field_tag 'auth_token', "#{form_authenticity_token}"
     .row.text-box-centered  
       .col-xs-12
         = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '
@@ -65,7 +64,8 @@
           .col-xs-4
             = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
     .row.text-box-centered
+      #flash_error_with_pet role='alert'
       = f.submit 'Add Your Pet', class: 'btn btn-mint btn-block submitEnquiry'
-  button.pull-left style="margin-top: -25px; margin-left: -7px"type='button' class='close' data-dismiss='modal'
+  button.pull-left style="margin-top: -15px; margin-left: -7px"type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs 

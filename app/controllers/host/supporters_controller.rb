@@ -14,6 +14,3 @@ respond_to :html
     redirect_to host_supporters_path, :notice => "Invitaion mail sent successfully"  
   end  
 end
-
-
-

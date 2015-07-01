@@ -1,0 +1,17 @@
+<% if session[:check_for_coupon] %>
+  $('#flash_error_coupon').html("<%= @message %>");
+  $('#flash_error_coupon').addClass('text-warning')
+<% else %>
+  $('#coupon-modal').modal('hide');
+  if($("#request-modal-add-pet").length > 0 ) {
+    $('#flash_error_with_pet').html("<%= @message %>");
+    $('#flash_error_with_pet').addClass('text-info')
+    $('#request-modal-add-pet').modal('show');
+  } else if($("#request-modal").length > 0) {
+    $('#flash_error').html("<%= @message %>");
+    $('#flash_error').addClass('text-info')
+    $('#request-modal').modal('show');
+  } else {
+    $(location).attr('href', "<%= root_path %>");
+  }
+<% end %>

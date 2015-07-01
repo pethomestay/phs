@@ -1,0 +1,52 @@
+  .feedback-head {
+    cursor : pointer;
+  }
+  .feedback-body {
+    border: 1px solid #ddd;
+    border-top: none;
+  } 
+  .phs-tab-header {
+    border-bottom: 1px #ddd solid;  
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .phs-title {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #f2f2f2;
+    color: #434343;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-title-active {
+    font-size: 15px;
+    line-height: 20px !important;
+    background-color: #5cc1c0;
+    color: #ffffff;
+    padding: 20px;
+    transition: .3s;
+  }
+  .phs-panel-body {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 0 0 0 !important;
+  }
+  .phs-subtitle {
+    background-color: #f2f2f2;
+    color: #ababab;
+    margin: -10px 0 10px 0;
+    padding: 5px;
+    text-align: center;
+  }
+  .phs-rotate {
+    transform: rotate(-180deg);
+    transition: .3s;
+  }
+  .phs-reset {
+    transform: rotate(0deg);
+    transition: .3s;
+  }  
+  .phs_cb_cont_addon {
+    min-width: 200px;
+    display: inline-block;
+  }

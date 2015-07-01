@@ -7,5 +7,5 @@
     $( "#request-modal" ).remove();
     $('#request-modal-add-pet').modal('show')
 - else
-  $('#flash_error_sign_in').text('Invalid email or password. Please try again.')
-  $('#flash_error_sign_in').addClass('alert alert-#{ new_flash_class_for(:error) }')
+  $('#flash_error_sign_in').html('Invalid email or password. Please try again.')
+  $('#flash_error_sign_in').addClass('text-danger')

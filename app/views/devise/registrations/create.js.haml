@@ -1,6 +1,5 @@
 - if user_signed_in?
-  $('#sign-up-modal').modal('hide')
-  $('#request-modal-add-pet').modal('show')
+  $(location).attr('href', "#{@rpath}");
 - else
-  $('#flash_error_sign_up').text('Please fill require data and try again.')
-  $('#flash_error_sign_up').addClass('alert alert-#{ new_flash_class_for(:error) }')
+  $('#flash_error_sign_up').html("#{resource.errors.full_messages.join("<br>").html_safe}")
+  $('#flash_error_sign_up').addClass('text-danger')

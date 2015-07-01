@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.widget
 //= require jquery.iframe-transport
+//= require pace.min
 //= require jquery.fileupload
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
@@ -26,7 +27,7 @@
 //= require segmentio
 //= require input_check_radio
 //= require wizard_setup
-//= require owl.carousel
+//= require owl.carousel.min
 //= require popover
 //= require slick.min
 //= require moment
