@@ -119,32 +119,45 @@
       }
     });
 
-  var profile_photo = [];
-  $("#pet_modal_profile_photo_dropzone").dropzone({
-    url: "/photo_uploads",
+  var previewNode = document.querySelector("#template");
+  previewNode.id = "";
+  var previewTemplate = previewNode.parentNode.innerHTML;
+  previewNode.parentNode.removeChild(previewNode);  
+  var profile_photo = [];  
+  
+  var myDropzone = new Dropzone(".add_pet_image_button", { // Make the whole body a dropzone
+    url: "/photo_uploads", // Set the url
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    previewTemplate: previewTemplate,
+    autoProcessQueue: true, // Make sure the files aren't queued until manually added
+    previewsContainer: "#previews", // Define the container to display the previews
+    //clickable: "#add_pet_image_button",// Define the element that should be used as click trigger to select files.
     paramName: "photo",
     acceptedFiles: 'image/*',
-    maxFilesize: 2,
-    maxFiles: 1,
-    addRemoveLinks: true,
-    maxfilesexceeded: function () {
-      $("#modal_image_ul").show();
-      alert('Max File updloaded');
-    },
-    sending: function (file, xhr, formData) {
-      $("#modal_image_ul").hide();
-      formData.append("authenticity_token", $('#auth_token').val());
-    },
-    success: function (file, response) {
-      profile_photo = [response]
-      $("#modal_image_ul").hide();
-      $('#pet_profile_photo').val(JSON.stringify(profile_photo));
-      file.previewElement.classList.add("dz-success");
-      file.previewElement.classList.add("public_id" + response.public_id);
-    },
-    removedfile: function(file) {
-      $("#modal_image_ul").show();
-      classes = file.previewElement.classList;
+    // maxFilesize: 2,
+    maxFiles: 1
+  });  
+   
+  // Update the total progress bar
+  myDropzone.on("totaluploadprogress", function(progress) {
+    $(".progress-bar").width(progress + "%") ;
+  });
+   
+  myDropzone.on("sending", function(file, xhr, formData) {
+    formData.append("authenticity_token", $('#auth_token').val());
+    // Show the total progress bar when upload starts
+    $("#total-progress").fadeIn(100);
+  });
+   
+  myDropzone.on("success", function(file, response) {
+    profile_photo = [response]
+    $("#total-progress").fadeOut(100);
+    $('#pet_profile_photo').val(JSON.stringify(profile_photo));
+  });
+  
+  myDropzone.on("removedfile", function(file) {
+    classes = file.previewElement.classList;
       for(i = 0; i < classes.length; i++){
         if( classes[i].match("public_id") == "public_id" ){
           file_id = classes[i].replace("public_id", "");
@@ -163,8 +176,10 @@
           break;
         }
       }
-    }
+  });
+  // Hide the total progress bar when nothing's uploading anymore
+  myDropzone.on("queuecomplete", function(progress) {
+    $("#total-progress").fadeOut(100);
   });
     
-
 });      

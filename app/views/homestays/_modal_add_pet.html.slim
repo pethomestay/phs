@@ -1,20 +1,39 @@
 = javascript_include_tag 'homestays/modal_add_pet'
+= javascript_include_tag 'bootstrap-slider'
+= stylesheet_link_tag 'bootstrap-slider'
 = stylesheet_link_tag 'homestays/modal_add_pet'
-.modal-body
+.modal-body style="height:500px; min-width:330px"
   = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
     .text-center.pad-btm.text-lg.text-thin Tell Us a little about Your Pet  
-    .row.text-box-centered style='max-width: 170px; margin-bottom:15px;'
+    .row.text-box-centered
       .col-xs-12
         #flash_error_with_pet role='alert'
-        .row.text-center.pad-all
-          .dropzone.modal_dropzone_container id='pet_modal_profile_photo_dropzone'
-            i.fa.fa-cloud-upload.fa-3x.modal_pet_upload_photo#modal_image_ul style='margin: 50px 35px'
+        .row.text-center
+          .col-xs-12 style="height:95px"
+            a.btn.btn-default.add_pet_image_button style="height: 80px;width: 80px;float: left;border-radius: 45px;background-color: #f4f4f4;margin-top: 5px;margin-left: 10px;"
+              i.fa.fa-camera.fa-2x.add_pet_image_button style="margin-top:20px"
+            div style="max-width:150px; margin-top:25px; float:right"  
+              = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '   
+            #previews.files.table.table-striped
+              #template.file-row
+                /! This is used as the file preview template
+                div
+                  span.preview
+                    img.panel-media-img.img-circle.img-border-mint data-dz-thumbnail="" style="  width: 80px;height: 80px;margin-top: 53px;margin-left: 5px;"
+                .text-right style="max-width:150px"
+                  p.name.hidden data-dz-name="" 
+                  strong.error.text-danger data-dz-errormessage="" 
+                div style="max-width:150px"
+                  .hidden.size.text-xs.text-thin data-dz-size="" 
+                  a.btn.btn-danger.btn-xs.delete data-dz-remove="" style="  height: 25px;width: 25px;background-color: #ef7458;border-radius: 15px;margin-left: -25px;"
+                    i.fa.fa-trash-o.fa-lg
+                .text-center style="width: 100%; max-width: 150px; float: right;" 
+                  #total-progress.progress.active aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" 
+                    .progress-bar.progress-bar-info data-dz-uploadprogress="" style="width:0%;" 
+                .row style="max-width:150px"
             = hidden_field_tag 'pet[profile_photo]'
             = hidden_field_tag 'auth_token', "#{form_authenticity_token}"
-    .row.text-box-centered  
-      .col-xs-12
-        = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '
     .row.text-box-centered
       .col-xs-12
         .hidden
@@ -38,13 +57,13 @@
         = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
     .row.text-box-centered
       .col-xs-6 style='padding-right: 3px;'
-          a.btn.btn-mint.btn-block#modal_male_desex Male 
+          a.btn.btn-two-tone.btn-block#modal_male_desex Male 
       .col-xs-6 style=' padding-left: 2px;'
-          a.btn.btn-mint.btn-block#modal_female_desex Female 
+          a.btn.btn-two-tone.btn-block#modal_female_desex Female 
       .col-xs-12 
         .mar-top   
-          span.pull-left.col-xs-10.pad-no.text-sm style=' margin-top: -5px;'Check if Entire
-          label.pull-right.col-xs-2.pad-no.form-checkbox.form-icon.form-text style='color:#3c3835; margin-right: -25px;'
+          span.pad-no.text-sm style='margin-left: 165px;'Check if Entire
+          label.pull-right.col-xs-2.pad-no.form-checkbox.form-icon.form-text style='color:#3c3835; margin-right: -25px;margin-top: 5px;'
             input#modal_pet_normal_sex type="checkbox" checked="" 
             .hidden
               = f.input :sex_id, label: 'Sex' , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
@@ -58,7 +77,8 @@
             .text-thin Energy 
         hr style="margin-top:5px; margin-bottom: 5px;"
         .row.text-center
-          .col-xs-4      
+          .col-xs-4 
+            //#pet_size_nouislider.dotcom   
             = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
           .col-xs-4
             = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
@@ -67,6 +87,28 @@
     .row.text-box-centered
       #flash_error_with_pet role='alert'
       = f.submit 'Add Your Pet', class: 'btn btn-mint btn-block submitEnquiry'
-  button.pull-left style="margin-top: -15px; margin-left: -7px"type='button' class='close' data-dismiss='modal'
+  button.pull-left.hidden-xs style="margin-top: -15px; margin-left: -7px"type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs 
+/ javascript:
+/     console.log("hihihihi" + $('#pet_size_id').val());
+/     var sizeSlider = document.getElementById('pet_size_nouislider');
+/     noUiSlider.create(sizeSlider, {
+/       start: 1, // Handle start position
+/       step: 1, // Slider moves in increments of '10'
+/       margin: 20, // Handles must be more than '20' apart
+/       orientation: 'horizontal', // Orient the slider vertically
+/       behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+/       range: { // Slider can select '0' to '100'
+/         'min': 1,
+/         'max': 4
+/       }
+/     });
+
+/     sizeSlider.noUiSlider.on('update', function(){
+/         console.log("hihihihi");
+       
+/     });
+
+  
+

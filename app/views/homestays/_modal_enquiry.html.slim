@@ -1,4 +1,5 @@
-.modal-body
+.modal-body style="height:490px;min-width:330px"
+  .row.pad-btm.text-box-centered
   = simple_form_for @enquiry, wrapper: :bootstrap3, :remote => true do |f|
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
     .text-center.pad-btm.text-lg.text-thin 
@@ -15,7 +16,7 @@
           = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)  
     .row.text-box-centered
       .col-xs-12
-        = f.input :message, placeholder: "Ask any questions you may have & Request to Meet Up", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' }
+        = f.input :message, placeholder: "Ask any questions you may have & Request to Meet Up", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' , style:"height:160px"}
         .form-group
           .input-group
             span.input-group-addon style='background: #fff;'
@@ -25,9 +26,9 @@
             small
               | A mobile number is needed so the Host can get in touch! We don't share or use this for any other purpose.
         = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
-    .text-center.pad-btm#flash_error role='alert'
+    .text-box-centered.text-center#flash_error role='alert' style="margin-bottom: 10px; min-height:40px"
     .text-box-centered
       = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-mint btn-block' 
-    button.pull-left style='margin-top: -15px; margin-left: -7px' type='button' class='close' data-dismiss='modal'
+    button.pull-left.hidden-xs style='margin-top: -15px; margin-left: -7px' type='button' class='close' data-dismiss='modal'
       .sr-only Close
       i.fa.fa-reply.text-xs   

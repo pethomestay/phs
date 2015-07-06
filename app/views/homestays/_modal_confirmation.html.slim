@@ -1,22 +1,21 @@
-.modal-body
+.modal-body style="height:490px;min-width:330px"
   #flash_error_confirmation
-  .text-box-centered.text-center
-      .text-md style="color:#3c3835"
+  .row.pad-btm.text-box-centered
+    .col-xs-12.pad-no.text-center
+      = image_tag 'homestay/1PHS_Illustrations_04-04.png', height: 120, width: 120    
+  .text-box-centered.text-center style="margin-top:-20px"
+      .text-lg style="color:#3c3835"
         | So what happens next? 
-      .text-md  
-        | You will recieve an SMS from us when the Host responds.
-        | The Hostmay call you directly to discuss your booking.
-      .text-md Arrange to Meet Up if necessary
-      .text-sm Go to your My Account Page, and click
-      .text-sm Book this HomeStay to confirm and pay.  
-      .text-sm
-        | Simply click 'Book this Homestay' when you are
-        |  ready to confirm and pay.
-      .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"
-        .text-sm Remember - you must book 
-      .row.pad-btm.text-box-centered  
-        .coupon-title.text-center.text-lg.text-thin Promo Code
-        hr.mar-no
+  h6.text-divider style="margin-bottom: 10px;margin-top: 5 px;"  
+  .text-box-centered   
+      .text-sm You will recieve an SMS from us when the Host responds. The Host may call you directly to discuss your booking. Arrange to Meet Up if necessary
+      .text-sm Go to your My Account Page, and click 'Book this HomeStay' to confirm and pay.  
+      .text-sm Simply click 'Book this Homestay' when you are ready to confirm and pay.
+      .panel-body
+        .text-md.text-bold style="margin-top:-10px" Remember - you must book through PetHomeStay to get 24/7 support & $2500 off-Vet-Emergency Cover
+      / .row.pad-btm.text-box-centered  
+      /   .coupon-title.text-center.text-lg.text-thin Promo Code
+      /   hr.mar-no
       / = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3, remote: true do |f|
         / .row.text-box-centered  
         /   .col-xs-12
@@ -47,6 +46,6 @@
         | or
 
       = link_to 'Go to My Account', guest_path, class: 'btn btn-mint btn-block'
-  button.pull-left style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+  button.pull-left.hidden-xs style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs 

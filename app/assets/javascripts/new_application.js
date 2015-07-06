@@ -27,7 +27,6 @@
 //= require segmentio
 //= require input_check_radio
 //= require wizard_setup
-//= require owl.carousel.min
 //= require popover
 //= require slick.min
 //= require moment

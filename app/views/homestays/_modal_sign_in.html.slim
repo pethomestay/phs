@@ -1,17 +1,7 @@
-.modal-body
+.modal-body style="height:490px;min-width:330px"
   .row.pad-btm.text-box-centered
-    .col-xs-4
-      = image_tag 'home/three_steps/step_three.png', height: 80, width: 80
-    .col-xs-8.pad-top
-      .row
-        i.fa.fa-check.fa-lg.text-mint
-        span.pad-lft Free to Join
-      .row
-        i.fa.fa-check.fa-lg.text-mint
-        span.pad-lft 24x7 Support
-      .row
-        i.fa.fa-check.fa-lg.text-mint
-        span.pad-lft Pet Emergency Cover
+    .col-xs-12.pad-no.text-center
+      = image_tag 'homestay/logo_dog_person.jpg', height: 100, width: 100
   = form_tag session_path(resource_name), :method => 'post', :id => "sign_in_user", :remote => true do
     .form-group.text-box-centered
       a.btn.btn-facebook-sign-up href=user_omniauth_authorize_path(:facebook)
@@ -38,6 +28,6 @@
         = check_box_tag 'user[remember_me]', 1, true
         span.text-muted.text-sm Remember Me
       = link_to 'Can\'t log in?', new_user_password_path, class: 'pull-right text-muted text-sm'
-  button.pull-left style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
+  button.pull-left.hidden-xs style="margin-top: -55px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs       
