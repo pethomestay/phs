@@ -7,10 +7,11 @@
     .row.text-box-centered style='max-width: 170px; margin-bottom:15px;'
       .col-xs-12
         #flash_error_with_pet role='alert'
-        .dropzone.modal_dropzone_container id='pet_modal_profile_photo_dropzone'
-          i.fa.fa-cloud-upload.fa-3x.modal_pet_upload_photo#modal_image_ul style='margin: 50px 35px'
-          = hidden_field_tag 'pet[profile_photo]'
-          = hidden_field_tag 'auth_token', "#{form_authenticity_token}"
+        .row.text-center.pad-all
+          .dropzone.modal_dropzone_container id='pet_modal_profile_photo_dropzone'
+            i.fa.fa-cloud-upload.fa-3x.modal_pet_upload_photo#modal_image_ul style='margin: 50px 35px'
+            = hidden_field_tag 'pet[profile_photo]'
+            = hidden_field_tag 'auth_token', "#{form_authenticity_token}"
     .row.text-box-centered  
       .col-xs-12
         = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '
@@ -20,15 +21,15 @@
           = f.input :pet_type_id, label: nil, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
         .col-xs-6
           .row
-            Button.btn.btn-two-tone.btn-block#modal_dog_btn style='height:71px' 
+            a.btn.btn-two-tone.btn-block#modal_dog_btn style='height:71px' 
               = image_tag 'homestay/dog56.png', height: 50, width:50, class: 'pull-left'
               .pad-all Dog
         .col-xs-6  
           .row
-            Button.btn.btn-two-tone.btn-block#modal_cat_btn style='margin-left:5px; width: 130px;' 
+            a.btn.btn-two-tone.btn-block#modal_cat_btn style='margin-left:5px; width: 130px;' 
               = image_tag 'homestay/cat19.png', height: 21, width:21, class: 'pull-left'
               span Cat
-            Button.btn.btn-two-tone.btn-block#modal_other_btn style='margin-left:5px; width: 130px;'
+            a.btn.btn-two-tone.btn-block#modal_other_btn style='margin-left:5px; width: 130px;'
               = image_tag 'homestay/mouse33.png', height: 21, width:21, class: 'pull-left'
               span Other
       .col-xs-12
@@ -37,9 +38,9 @@
         = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
     .row.text-box-centered
       .col-xs-6 style='padding-right: 3px;'
-          Button.btn.btn-mint.btn-block#modal_male_desex Male 
+          a.btn.btn-mint.btn-block#modal_male_desex Male 
       .col-xs-6 style=' padding-left: 2px;'
-          Button.btn.btn-mint.btn-block#modal_female_desex Female 
+          a.btn.btn-mint.btn-block#modal_female_desex Female 
       .col-xs-12 
         .mar-top   
           span.pull-left.col-xs-10.pad-no.text-sm style=' margin-top: -5px;'Check if Entire

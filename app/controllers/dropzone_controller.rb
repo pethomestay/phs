@@ -56,11 +56,11 @@ class DropzoneController < ApplicationController
           when "photos"
             attachinariable.photos.where("id = ?", params[:id]).first
           when "profile_photo"
-             if attachinariable.profile_photo and attachinariable.profile_photo.id == params[:id].to_i
-                attachinariable.profile_photo
-              else
-                nil
-              end
+            if attachinariable.profile_photo and attachinariable.profile_photo.id == params[:id].to_i
+              attachinariable.profile_photo
+            else
+              nil
+            end
           when "extra_photos"
             attachinariable.extra_photos.where("id = ?", params[:id]).first
           else

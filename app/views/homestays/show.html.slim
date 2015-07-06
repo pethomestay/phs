@@ -465,13 +465,16 @@ coffee:
 
 coffee:
   $ ->
+    # Fire modal if #request-modal-add-pet is in URL
+    if window.location.hash == '#request-modal-add-pet'
+      $('#request-modal-add-pet').modal('show')
     # Fire modal if #request-modal is in URL
     if window.location.hash == '#request-modal'
-      $('#request-modal').modal('show')
+      $('#request-modal').modal('show')   
     # Fire modal if #confirm-modal is in URL
     if window.location.hash == '#confirm-modal'
-      $('#confirm-modal').modal('show')  
-
+      $('#confirm-modal').modal('show')    
+  
     # Map
     $map = $('#map')
     map = new GMaps

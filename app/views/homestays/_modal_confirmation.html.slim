@@ -1,22 +1,44 @@
 .modal-body
   #flash_error_confirmation
-  .text-box-centered
-      p.text-center.text-lg style="color:#3c3835"
-        | We have notified this Host and they
-        |  have 24 hours to get back to you.
-
-      p.text-center.text-sm
-        | Go to My Account Page to see all responses
-        |  from Hosts.
-
-      p.text-center.text-sm
+  .text-box-centered.text-center
+      .text-md style="color:#3c3835"
+        | So what happens next? 
+      .text-md  
+        | You will recieve an SMS from us when the Host responds.
+        | The Hostmay call you directly to discuss your booking.
+      .text-md Arrange to Meet Up if necessary
+      .text-sm Go to your My Account Page, and click
+      .text-sm Book this HomeStay to confirm and pay.  
+      .text-sm
         | Simply click 'Book this Homestay' when you are
         |  ready to confirm and pay.
       .panel-body style="border:1px solid #ddd; margin: 15px 0 25px 0;"
-        p.text-center.text-sm
-          | Free $2500 Emergency Vet Cover,
-
-          |  24x7 Support & Reviews.
+        .text-sm Remember - you must book 
+      .row.pad-btm.text-box-centered  
+        .coupon-title.text-center.text-lg.text-thin Promo Code
+        hr.mar-no
+      / = simple_form_for current_user, :url => set_coupon_users_path, :method => :post, wrapper: :bootstrap3, remote: true do |f|
+        / .row.text-box-centered  
+        /   .col-xs-12
+        /     #flash_error_coupon role='alert'
+        /     .text-md.text-center If you have a Promo Code, enter it here
+        /     .input-group.input-group-lg.left-merged.enquiry_check_in_date
+        /         span.input-group-addon.custom
+        /           i.fa.fa-share-alt
+        /         = f.input_field :coupon_code, value: "", placeholder: "ABC123", as: :string, :label => "Coupon code"
+        /     .text-sm.text-thin.text-center style="padding:10px 0 10px 0"
+        /       | -- or --
+        /     .text-md.text-center
+        /       button.btn.btn-facebook-sign-up.fb-share-btn
+        /         i.fa.fa-facebook.fa-fw
+        /         span
+        /           |  Get $5 off by sharing
+        / .row.pad-btm.text-box-centered.pad-top 
+        /   .col-xs-6
+        /     button.btn.btn-default.btn-block.cancel-coupon#cancel-code-prompt type='button'
+        /       | Skip Offer
+        /   .col-xs-6    
+        /     = f.submit 'Submit', class: 'btn btn-mint btn-block'
 
       a.btn.btn-mint.btn-block href="http://www.pethomestay.com.au/homestays/?search[location]=#{@homestay.address_postcode}" 
         | Message Another Host
@@ -27,4 +49,4 @@
       = link_to 'Go to My Account', guest_path, class: 'btn btn-mint btn-block'
   button.pull-left style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
     .sr-only Close
-    i.fa.fa-reply.text-xs    
+    i.fa.fa-reply.text-xs 

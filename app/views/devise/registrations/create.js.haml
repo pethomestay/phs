@@ -1,5 +1,9 @@
 - if user_signed_in?
   $(location).attr('href', "#{@rpath}");
+  console.log("im here");
+  console.log("im here");
+  location.reload();
+  console.log("im here");
 - else
   $('#flash_error_sign_up').html("#{resource.errors.full_messages.join("<br>").html_safe}")
   $('#flash_error_sign_up').addClass('text-danger')
