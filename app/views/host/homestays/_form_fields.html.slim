@@ -236,7 +236,7 @@ css:
                   = f.input :title, label: false  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
                       i.fa.fa-question-circle   
-                    = f.input_field :title, placeholder: 'Service Title', maxlength: 50, name: 'homestay_title', :required => true
+                    = f.input_field :title, placeholder: 'Service Title', maxlength: 50
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -251,7 +251,7 @@ css:
                   = f.input :description, label: false , input_html: { rows: 4}  do
                     button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
                       i.fa.fa-question-circle 
-                    = f.input_field :description, style:'height: 253px;', name: 'homestay_description', :required => true
+                    = f.input_field :description, style:'height: 253px;'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
