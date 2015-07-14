@@ -100,7 +100,7 @@ css:
                   = f.input :cost_per_night, label: false  do
                     .input-group
                       .input-group-addon.form_con_add_lg $
-                      = f.input_field :cost_per_night, placeholder: '$10 minimum', class: '_form_con_lg', name: 'homestay_cpn'  
+                      = f.input_field :cost_per_night, placeholder: '$10 minimum', class: '_form_con_lg'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs
                   .panel._item_con
                     .panel-body style="padding: 10px;"
@@ -118,7 +118,7 @@ css:
                   = f.input :remote_price, label: false do
                     .input-group
                       .input-group-addon.form_con_add_lg $
-                      = f.input_field :remote_price, placeholder: 'per 24 hours',  class: '_form_con_lg', name: 'homestay_psr'  
+                      = f.input_field :remote_price, placeholder: 'per 24 hours',  class: '_form_con_lg'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs
                   .panel._item_con
                     .panel-body style="padding: 10px;"      
@@ -134,7 +134,7 @@ css:
                   = f.input :pet_walking_price, label: false do
                     .input-group
                       .input-group-addon $
-                      = f.input_field :pet_walking_price, placeholder: 'per hour', name: 'homestay_pwr'  
+                      = f.input_field :pet_walking_price, placeholder: 'per hour'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"    
@@ -150,7 +150,7 @@ css:
                   = f.input :pet_grooming_price, label: false do
                     .input-group
                       .input-group-addon $
-                      = f.input_field :pet_grooming_price, placeholder: 'per hour', name: 'homestay_pgr'
+                      = f.input_field :pet_grooming_price, placeholder: 'per hour'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"    
@@ -167,7 +167,7 @@ css:
                   .form-group
                     .input-group
                       .input-group-addon $
-                      = f.input_field :visits_price, placeholder: 'per hour', class: 'span2', name: 'homestay_cv'
+                      = f.input_field :visits_price, placeholder: 'per hour', class: 'span2'
                       .input-group-addon up to
                       = f.input_field :visits_radius, class: 'span1', placeholder: 'km away'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -186,7 +186,7 @@ css:
                   .form-group
                     .input-group
                       .input-group-addon $
-                      = f.input_field :delivery_price, placeholder: 'per trip', class: 'span2', name: 'homestay_pick_drop'
+                      = f.input_field :delivery_price, placeholder: 'per trip', class: 'span2'
                       .input-group-addon up to
                       = f.input_field :delivery_radius, class: 'span1', placeholder: 'km away'
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -391,7 +391,22 @@ coffee:
     max_selected_options: 3
 
 
-/ javascript:
+javascript:
+  if($('#addressField').val() !="")
+  {
+      $('.address-preview').show();
+  } else {
+      $('.address-preview').hide();
+  }  
+  
+  $('#addressField').change(function(){
+    if($('#addressField').val() !="")
+    {
+      $('.address-preview').slideDown(100);
+    } else {
+      $('.address-preview').slideUp(100);
+    }  
+  });
 /   $(function () {
 /     $('[data-toggle="tooltip"]').tooltip()
 /   })

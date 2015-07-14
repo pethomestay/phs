@@ -6,6 +6,13 @@
       = render 'form_fields', f: f
       .form-actions id="demo-submit-wz"
         = f.submit 'CREATE MY LISTING', class: 'createMyListing btn btn-primary btn-block'
-
+  javascript:
+    $('form').on('submit', function(e){
+      if ($('#homestay_title').val() === "" || $('#homestay_description').val() == "" ) {
+        $("html, body").animate({ scrollTop: 0 }, 500);
+        return false;
+        e.preventDefault;
+      }
+    });
 
         
