@@ -5,7 +5,7 @@
     = simple_form_for [:host, @homestay], url: host_homestay_path, wrapper: :bootstrap3 do |f|
       = render 'form_fields', f: f
       .form-actions
-        = f.button :submit, class: 'btn btn-primary text-uppercase'
+        = f.button :submit, class: 'btn btn-primary text-uppercase btn-block'
   javascript:
     $('form').on('submit', function(e){
       if ($('#homestay_title').val() === "" || $('#homestay_description').val() == "" ) {

@@ -26,7 +26,6 @@
 //= require plugins
 //= require segmentio
 //= require input_check_radio
-//= require wizard_setup
 //= require popover
 //= require slick.min
 //= require moment
