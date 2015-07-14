@@ -132,7 +132,7 @@
     previewTemplate: previewTemplate,
     autoProcessQueue: true, // Make sure the files aren't queued until manually added
     previewsContainer: "#previews", // Define the container to display the previews
-    //clickable: "#add_pet_image_button",// Define the element that should be used as click trigger to select files.
+    clickable: ".add_pet_image_button",// Define the element that should be used as click trigger to select files.
     paramName: "photo",
     acceptedFiles: 'image/*',
     // maxFilesize: 2,

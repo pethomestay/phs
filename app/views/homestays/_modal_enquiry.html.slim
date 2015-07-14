@@ -1,4 +1,4 @@
-.modal-body style="height:490px;min-width:330px"
+.modal-body
   .row.pad-btm.text-box-centered
   = simple_form_for @enquiry, wrapper: :bootstrap3, :remote => true do |f|
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
@@ -23,8 +23,7 @@
               i.fa.fa-mobile.fa-fw.fa-lg
             input.form-control type='tel' name='mobile_number' placeholder='Mobile Number' value=(current_user ? current_user.mobile_number : nil)
           p.help-block.text-center.text-xs.text-thin
-            small
-              | A mobile number is needed so the Host can get in touch! We don't share or use this for any other purpose.
+            .text-xs.text-center A mobile number is needed so the Host can get in touch!
         = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
     .text-box-centered.text-center#flash_error role='alert' style="margin-bottom: 10px; min-height:40px"
     .text-box-centered
