@@ -2,7 +2,7 @@
 = javascript_include_tag 'bootstrap-slider'
 = stylesheet_link_tag 'bootstrap-slider'
 = stylesheet_link_tag 'homestays/modal_add_pet'
-.modal-body style="height:500px; min-width:330px"
+.modal-body
   = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
     .text-center.pad-btm.text-lg.text-thin Tell Us a little about Your Pet  
@@ -11,8 +11,8 @@
         #flash_error_with_pet role='alert'
         .row.text-center
           .col-xs-12 style="height:95px"
-            a.btn.btn-default.add_pet_image_button style="height: 80px;width: 80px;float: left;border-radius: 45px;background-color: #f4f4f4;margin-top: 5px;margin-left: 10px;"
-              .text-xs.add_pet_image_button style="margin-top:20px; " Upload a 
+            a.btn.btn-default.add_pet_image_button style="height: 70px;width: 70px;float: left;border-radius: 45px;background-color: #f4f4f4;margin-top: 5px;margin-left: 10px;"
+              .text-xs.add_pet_image_button style="margin-top:15px; " Upload a 
               .text-xs.add_pet_image_button photo
             div style="max-width:150px; margin-top:25px; float:right"  
               = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '   
@@ -21,7 +21,7 @@
                 /! This is used as the file preview template
                 div
                   span.preview
-                    img.panel-media-img.img-circle.img-border-mint data-dz-thumbnail="" style="  width: 80px;height: 80px;margin-top: 53px;margin-left: 5px;"
+                    img.panel-media-img.img-circle.img-border-mint data-dz-thumbnail="" style="  width: 70px;height: 70px;margin-top: 53px;margin-left: 5px;"
                 .text-right style="max-width:150px"
                   p.name.hidden data-dz-name="" 
                   strong.error.text-danger data-dz-errormessage="" 
@@ -46,10 +46,10 @@
               .pad-all Dog
         .col-xs-6  
           .row
-            a.btn.btn-two-tone.btn-block#modal_cat_btn style='margin-left:5px; width: 130px;' 
+            a.btn.btn-two-tone.btn-block#modal_cat_btn style='margin-left:5px; min-width: 100px;' 
               = image_tag 'homestay/cat19.png', height: 21, width:21, class: 'pull-left'
               span Cat
-            a.btn.btn-two-tone.btn-block#modal_other_btn style='margin-left:5px; width: 130px;'
+            a.btn.btn-two-tone.btn-block#modal_other_btn style='margin-left:5px; min-width: 100px;'
               = image_tag 'homestay/mouse33.png', height: 21, width:21, class: 'pull-left'
               span Other
       .col-xs-12
