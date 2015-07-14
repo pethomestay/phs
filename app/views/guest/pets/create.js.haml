@@ -1,11 +1,8 @@
 - if @pet.valid?
   $('#request-modal-add-pet').modal('hide')
   $('#request-modal').modal('show')
-  $('#flash_error').html('#{ @message[:msg] }')
-  $('#flash_error').addClass('text-info')
 - else
-  alert('wrong');
   $('#request-modal-add-pet').modal('show')
   $('#flash_error_with_pet').html('#{ @message[:msg] }')
   $('#flash_error_with_pet').addClass('text-danger')
-  alert('wrong over');
+  
