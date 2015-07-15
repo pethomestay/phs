@@ -304,7 +304,7 @@ css:
                     | Supervision
                   a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
                       i.fa.fa-question-circle            
-                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :radio_as
+                  = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :radio_buttons
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
