@@ -231,12 +231,10 @@ css:
             .tab-pane.fade id="demo-main-tab3"          
               .row
                 .col-lg-6
-                  label.hs_mhs_title style="margin-left:-15px;"
-                    | Service Title  
-                  = f.input :title, label: false  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
-                      i.fa.fa-question-circle   
-                    = f.input_field :title, placeholder: 'Service Title', maxlength: 50
+                  label.hs_mhs_title style="margin-left:-15px;" Service Title
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
+                      i.fa.fa-question-circle     
+                  = f.input_field :title, placeholder: 'Service Title', maxlength: 50, label: false
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -246,12 +244,10 @@ css:
                         .hs_mhs_50  50 character limit         
               .row  
                 .col-lg-6
-                  label.hs_mhs_title style="margin-left:-15px;" 
-                    | Service Detail 
-                  = f.input :description, label: false , input_html: { rows: 4}  do
-                    button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
-                      i.fa.fa-question-circle 
-                    = f.input_field :description, style:'height: 253px;'
+                  label.hs_mhs_title style="margin-left:-15px;" Service Detail 
+                  button.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
+                      i.fa.fa-question-circle   
+                  = f.input_field :description, style:'height: 253px;', label: false , input_html: { rows: 4}
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -343,7 +339,7 @@ css:
         i.fa.fa-arrow-circle-o-left style="padding-right:5px"
         span Previous
     .pull-right.pad-all style="margin-top:-15px; margin-right:-15px;"
-      button.next.btn.btn-primary style="margin-left:5px; min-width:200px; font-weight:bold; font-size:18px;" type="button"
+      button.next.btn.btn-primary style="margin-left:5px; min-width:100px; font-weight:bold; font-size:18px;" type="button"
         span NEXT
         i.fa.fa-arrow-circle-o-right style="padding-left:5px; font-size:20px"
   
@@ -407,10 +403,9 @@ javascript:
       $('.address-preview').slideUp(100);
     }  
   });
-/   $(function () {
-/     $('[data-toggle="tooltip"]').tooltip()
-/   })
-
+  
+  $('[data-toggle="tooltip"]').tooltip();
+  
 /   var photos = [];
 /   $(document).ready(function () {
 /     $("#homestay_dropzone").dropzone({
