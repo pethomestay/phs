@@ -81,14 +81,15 @@ css:
                             i.fa.fa-paw
                           .hs_mhs_50 If you want your homestay to display properly within the listings and map, you have to add a full address inclusive of AT LEAST 4 items - Exact Address, Suburb, City, State & Postcode. If your listing page does not have a working map, check the address you entered.  
                           .hs_mhs_50 Your exact address is not shown to anyone and is restricted to the suburb level.  
-              .address-preview.hidden-sm.hidden-xs
-                iframe#map-preview frameborder="0" style="border: 0; width:100%; height: 400px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=#{address}"}
-                p#address-preview style='padding-top: 10px'
-                = f.hidden_field :address_1, value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
-                = f.hidden_field :address_suburb, value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
-                = f.hidden_field :address_city, value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
-                = f.hidden_field :address_country, priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
-                = f.hidden_field :address_postcode, value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true      
+              .row              
+                .address-preview
+                  iframe#map-preview frameborder="0" style="border: 0; width:100%; height: 400px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=#{address}"}
+                  p#address-preview style='padding-top: 10px'
+                  = f.hidden_field :address_1, value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
+                  = f.hidden_field :address_suburb, value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
+                  = f.hidden_field :address_city, value: (f.object.address_city.present? ? f.object.address_city : current_user.address_city), readonly: true
+                  = f.hidden_field :address_country, priority: [(f.object.address_country.present? ? f.object.address_country : current_user.address_country)], disabled: true
+                  = f.hidden_field :address_postcode, value: (f.object.address_postcode.present? ? f.object.address_postcode : current_user.address_postcode), readonly: true      
         
             .tab-pane.fade id="demo-main-tab2"
   
@@ -395,6 +396,15 @@ javascript:
       $('.address-preview').hide();
   }  
   
+  $('#addressField').on({ 'touchend' : function(){ 
+      if($('#addressField').val() !="")
+      {
+        $('.address-preview').slideDown(100);
+      } else {
+        $('.address-preview').slideUp(100);
+      }  
+  } });
+
   $('#addressField').change(function(){
     if($('#addressField').val() !="")
     {
