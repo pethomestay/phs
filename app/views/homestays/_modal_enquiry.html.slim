@@ -8,12 +8,16 @@
       span when you need help 
     = f.input_field :duration_id, as: :hidden, value: 1
     .row.text-box-centered
-      .col-xs-12.mar-btm
+      .col-md-6.col-xs-12.mar-btm
         .input-group.left-merged.enquiry_check_in_date
-          = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
           span.input-group-addon
             i.fa.fa-calendar
-          = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)  
+          = f.input_field :check_in_date, as: :string, readonly: true, placeholder: 'Drop Off', value: (session[:check_in_date] if session[:check_in_date].present?)
+      .col-md-6.col-xs-12.mar-btm  
+        .input-group.left-merged.enquiry_check_out_date  
+          span.input-group-addon
+            i.fa.fa-calendar
+          = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)   
     .row.text-box-centered
       .col-xs-12
         = f.input :message, placeholder: "Ask any questions you may have & Request to Meet Up", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' , style:"height:160px"}
