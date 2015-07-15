@@ -2,10 +2,8 @@
   .row.pad-btm.text-box-centered
   = simple_form_for @enquiry, wrapper: :bootstrap3, :remote => true do |f|
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
-    .text-center.pad-btm.text-lg.text-thin 
-      span Now just tell 
-      span #{@homestay.user.first_name}   
-      span when you need help 
+    .text-center.pad-btm.text-lg.text-thin  
+      span When Do You Need Help? 
     = f.input_field :duration_id, as: :hidden, value: 1
     .row.text-box-centered
       .col-md-6.col-xs-12.mar-btm
@@ -20,7 +18,7 @@
           = f.input_field :check_out_date, as: :string, readonly: true, placeholder: 'Pick Up', value: (session[:check_out_date] if session[:check_out_date].present?)   
     .row.text-box-centered
       .col-xs-12
-        = f.input :message, placeholder: "Ask any questions you may have & Request to Meet Up", input_html: { rows: 5, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' , style:"height:160px"}
+        = f.input :message, placeholder: "Ask any questions you may have & Request to Meet Up", input_html: { rows: 3, value: @reusable_enquiries.present? ? @reusable_enquiries.first['message'] : '' , style:"height:110px"}
         .form-group
           .input-group
             span.input-group-addon style='background: #fff;'

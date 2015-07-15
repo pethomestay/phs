@@ -4,8 +4,8 @@
 - else
   - if @pet_present
     $('#flash_error_with_pet').html('#{ @message[:msg] }')
-    $('#flash_error_with_pet').addClass('text-danger')
+    $('#flash_error_with_pet').addClass('text-danger text-xs'')
   - else
     $('#flash_error').html('#{ @message[:msg] }')
-    $('#flash_error').addClass('text-danger')
+    $('#flash_error').addClass('text-danger text-xs')
 
