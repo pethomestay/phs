@@ -138,13 +138,13 @@ coffee:
           - if current_user.pets.present? # Display giant enquiry button
             button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" BOOK THIS HOST 
             - if @homestay.cost_per_night.present?
-              .hidden-lg.hidden-md
+              .visible-xs.visible-sm
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
                   span.text-lg $#{@homestay.cost_per_night.to_i}
                   span.text-xs 
                     |/24h
             - elsif @homestay.remote_price.present?     
-                .hidden-lg.hidden-md
+                .visible-xs.visible-sm
                   .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
                     span.text-lg $#{@homestay.remote_price.to_i}
                     span.text-xs 
@@ -152,32 +152,31 @@ coffee:
           - else # Ask current user to add a pet first 
             button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK THIS HOST
             - if @homestay.cost_per_night.present?
-              .hidden-lg.hidden-md
+              .visible-xs.visible-sm
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
                   span.text-lg $#{@homestay.cost_per_night.to_i}
                   span.text-xs 
                     |/24h
             - elsif @homestay.remote_price.present?     
-                .hidden-lg.hidden-md
+                .visible-xs.visible-sm
                   .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
                     span.text-lg $#{@homestay.remote_price.to_i}
                     span.text-xs 
                       |/24h 
         - else # ask user to sign up or sign in
           button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
-          / TODO: use a modal to prompt user to sign in so redirect_path can be set    
-            - if @homestay.cost_per_night.present?
-              .hidden-lg.hidden-md
-                .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
-                  span.text-lg $#{@homestay.cost_per_night.to_i}
-                  span.text-xs 
-                    |/24h
-            - elsif @homestay.remote_price.present?     
-                .hidden-lg.hidden-md
-                  .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
-                    span.text-lg $#{@homestay.remote_price.to_i}
-                    span.text-xs 
-                      |/24h   
+          - if @homestay.cost_per_night.present?
+            .visible-xs.visible-sm
+              .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                span.text-lg $#{@homestay.cost_per_night.to_i}
+                span.text-xs 
+                  |/24h
+          - elsif @homestay.remote_price.present?     
+            .visible-xs.visible-sm
+              .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
+                span.text-lg $#{@homestay.remote_price.to_i}
+                span.text-xs 
+                  |/24h   
   .row style="background-color:#e8ebf0"
     .panel
       .slick_jag style="margin-bottom:0"

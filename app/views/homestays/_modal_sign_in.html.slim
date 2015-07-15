@@ -1,7 +1,7 @@
-.modal-body style="height:490px;min-width:330px"
+.modal-body style="min-height:490px;"
   .row.pad-btm.text-box-centered
     .col-xs-12.pad-no.text-center
-      = image_tag 'homestay/logo_dog_person.jpg', height: 100, width: 100
+      = image_tag 'homestay/Dog_Person.png', height: 100, width: 100
   = form_tag session_path(resource_name), :method => 'post', :id => "sign_in_user", :remote => true do
     .form-group.text-box-centered
       a.btn.btn-facebook-sign-up href=user_omniauth_authorize_path(:facebook)
