@@ -83,7 +83,7 @@ css:
                           .hs_mhs_50 Your exact address is not shown to anyone and is restricted to the suburb level.  
               .row              
                 .address-preview
-                  iframe#map-preview frameborder="0" style="border: 0; width:100%; height: 400px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=#{address}"}
+                  iframe#map-preview frameborder="0" style="border: 0; width:100%; height: 400px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2prETJyrdHZ1aO_pw3Z_43bdnb7Ucrqo&q=#{address}"
                   p#address-preview style='padding-top: 10px'
                   = f.hidden_field :address_1, value: (f.object.address_1.present? ? f.object.address_1 : current_user.address_1), readonly: true
                   = f.hidden_field :address_suburb, value: (f.object.address_suburb.present? ? f.object.address_suburb : current_user.address_suburb), readonly: true
@@ -201,7 +201,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title  style="margin-left:-15px;"
                     | Charity Hosts
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - Click on the question icon"
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="PetHomeStay Supports PetRescue, Australia's largest animal rehousing organization. By checking this, we will donate 100% of your payments to charity. For more details - Click on the question icon"
                     i.fa.fa-question-circle
                   .row style="margin-left: -10px;margin-top: -10px;"
                     = f.input :for_charity, as: :boolean, inline_label: 'Please donate my payments to PetRescue', label: false
@@ -217,7 +217,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title  style="margin-left:-15px;"
                     | Emergency Hosts for Fire
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="PetHomeStay Supports Hosts that provide Bushfire Emergency pet care. Any money earned, we will donate 100% of it to charity."
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="PetHomeStay Supports Hosts that provide Bushfire Emergency pet care. Any money earned, we will donate 100% of it to charity."
                     i.fa.fa-question-circle
                   .row style="margin-left: -10px;margin-top: -10px;"
                     = f.input :wildfire_badge, as: :boolean, inline_label: 'I provide Emergency Petcare as a Host', label: false
@@ -233,7 +233,7 @@ css:
               .row
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" Service Title
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="50 character limit"
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="50 character limit"
                       i.fa.fa-question-circle     
                   = f.input_field :title, placeholder: 'Service Title', maxlength: 50, label: false
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -246,7 +246,7 @@ css:
               .row  
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" Service Detail 
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host! Make sure you add as much detail as possible!"
                       i.fa.fa-question-circle   
                   = f.input_field :description, style:'height: 253px;', label: false , input_html: { rows: 4}
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -258,11 +258,12 @@ css:
                         .hs_mhs_50  The description is very important aspect of your listing. Tell people a bit about yourself, your previous experience with pets, what kind of service you will provide, how you will communicate with the owner, and why you think you are a good Host!
                         br  
                         .hs_mhs_50  Make sure you add as much detail as possible!       
-              .row  
+              .row.pad-top  
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" 
                     | Favourite Dog Breeds 
-                  = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
+                  .pad-hor  
+                    = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -274,7 +275,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" 
                     | Pet Sizes
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="If you do not want to accept some sizes, please uncheck these boxes. Less flexibility does mean less enquiries though!"
                       i.fa.fa-question-circle
                   = f.input :pet_sizes, label: false, collection: ReferenceData::Size.all_titles, as: :check_boxes, input_html: { class: 'legacy_col_cb ' } 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -288,7 +289,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" 
                     | Energy Levels
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="A Low Energy pet is very calm and mellow. A High Energy pet is one that needs a lot of exercise (2+ walks a day). If you only want to look after some energy levels of pets, uncheck these boxes."
                       i.fa.fa-question-circle   
                   = f.input :energy_level_ids, label: false, collection: ReferenceData::EnergyLevel.all, as: :check_boxes, input_html: { class: 'legacy_col_cb ' } 
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -302,7 +303,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;"
                     | Supervision
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="24x7 - You will be at home the majority of the time. Evenings - You will be at home in the Evenings only. Weekends - You will be at home the weekends (Friday night - Sunday night)."
                       i.fa.fa-question-circle            
                   = f.input :supervision_id, label: false, collection: ReferenceData::Supervision.all, as: :radio_buttons
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
@@ -318,7 +319,7 @@ css:
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;"
                     | Other Benefits
-                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="right" title="If you are able to provide these additional benefits for your Guests, please indicate these here!"
+                  a.btn.btn-default.hs_mhs_s_btn-info.hidden-lg data-toggle="tooltip" data-placement="top" title="If you are able to provide these additional benefits for your Guests, please indicate these here!"
                     i.fa.fa-question-circle
                   br
                   .row style="margin-left: -10px;"
@@ -399,18 +400,18 @@ javascript:
   $('#addressField').on({ 'touchend' : function(){ 
       if($('#addressField').val() !="")
       {
-        $('.address-preview').slideDown(100);
+        $('.address-preview').slideDown(300);
       } else {
-        $('.address-preview').slideUp(100);
+        $('.address-preview').slideUp(300);
       }  
   } });
 
   $('#addressField').change(function(){
     if($('#addressField').val() !="")
     {
-      $('.address-preview').slideDown(100);
+      $('.address-preview').slideDown(300);
     } else {
-      $('.address-preview').slideUp(100);
+      $('.address-preview').slideUp(300);
     }  
   });
   
