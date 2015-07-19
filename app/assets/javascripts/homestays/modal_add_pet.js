@@ -125,6 +125,10 @@
   previewNode.parentNode.removeChild(previewNode);  
   var profile_photo = [];  
   
+  $(".add_pet_image_button").click( function(e){
+    e.preventDefault();
+  });
+
   var myDropzone = new Dropzone(".add_pet_image_button", { // Make the whole body a dropzone
     url: "/photo_uploads", // Set the url
     thumbnailWidth: 80,

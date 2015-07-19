@@ -16,58 +16,57 @@
       span.feedback-icon.pull-right 
           i.fa.fa-chevron-down         
   .panel-body.feedback-body 
-    = f.label :profile_photo
-    #guest_profile_photo_container
-      - if @pet.profile_photo?
-        .row.text-center.pad-all
-          .col-md-3.col-xs-6.bord-all.bg-info id="pet_profile_photo_box_#{@pet.profile_photo.id}"
-              .pad-ver
-                =cl_image_tag @pet.profile_photo.public_id, class:'img-lg img-border img-circle' 
-              hr.mar-no
-              .pad-ver
-                a.btn.btn-danger.remove_pet_profile_photo href="#Pet-Profile-Photo" data-id="#{@pet.profile_photo.id}" data-model-id="#{@pet.id}" data-model-type="Pet" data-scope="profile_photo"
-                  i.fa.fa-trash-o
-                  span.pad-lft Remove 
-      - else
-        .row.text-center.pad-all
-          .text-lg.text-thin No Profile Photo Added
-          .text-sm.text-thin Adding a profile photo helps hosts prepare for your pet better            
-    .btn.btn-primary.btn-block#pet_profile_photo_btn.mar-btm
-      span.text-lg.text-thin Add more Photos?
-    .pad-ver#pet_profile_photo_space
-      .dropzone.btn.btn-default.btn-block id="pet_profile_photo_dropzone"
-        .text-center#pet_dropzone_profile_photo_message style="margin-top:100px"
-          i.fa.fa-cloud.fa-5x
-          .text-md.text-thin Click Here to add Images
-          .text-md.text-thin or simply Drag and Drop them!
-    - if @pet.new_record?
-      = hidden_field_tag "pet[profile_photo]"
-    label.hs_mhs_title
-    | Pet Name
+    = f.input :profile_photo, as: :attachinary, label: 'Profile Photo'
+
+    / = f.label :profile_photo
+    / #guest_profile_photo_container
+    /   - if @pet.profile_photo?
+    /     .row.text-center.pad-all
+    /       .col-md-3.col-xs-6.bord-all.bg-info id="pet_profile_photo_box_#{@pet.profile_photo.id}"
+    /           .pad-ver
+    /             =cl_image_tag @pet.profile_photo.public_id, class:'img-lg img-border img-circle' 
+    /           hr.mar-no
+    /           .pad-ver
+    /             a.btn.btn-danger.remove_pet_profile_photo href="#Pet-Profile-Photo" data-id="#{@pet.profile_photo.id}" data-model-id="#{@pet.id}" data-model-type="Pet" data-scope="profile_photo"
+    /               i.fa.fa-trash-o
+    /               span.pad-lft Remove 
+    /   - else
+    /     .row.text-center.pad-all
+    /       .text-lg.text-thin No Profile Photo Added
+    /       .text-sm.text-thin Adding a profile photo helps hosts prepare for your pet better            
+    / .btn.btn-primary.btn-block#pet_profile_photo_btn.mar-btm
+    /   span.text-lg.text-thin Add more Photos?
+    / .pad-ver#pet_profile_photo_space
+    /   .dropzone.btn.btn-default.btn-block id="pet_profile_photo_dropzone"
+    /     .text-center#pet_dropzone_profile_photo_message style="margin-top:100px"
+    /       i.fa.fa-cloud.fa-5x
+    /       .text-md.text-thin Click Here to add Images
+    /       .text-md.text-thin or simply Drag and Drop them!
+    / - if @pet.new_record?
+    /   = hidden_field_tag "pet[profile_photo]"
+    .text-md.text-bold Pet Name
     = f.input :name, label: false
-    label.hs_mhs_title
-    | Please Type
-    = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons, input_html: { class: 'form-radio form-normal form-info collection_rb phs_rb_sp'}, :item_wrapper_class =>'phs_rb_cont'
-    label.hs_mhs_title
-    | Please specify pet type
-    = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id' }, label: false
+    .text-md.text-bold Please choose one
+    .col-xs-12
+      .pad-lft
+        = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
+    = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id', data: { placehoder: 'Please specify pet type' } }, label: false  
     = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
-    = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false, :item_wrapper_class =>'phs_rb_cont'
-    .slider_con
-      label.hs_mhs_title style="margin-left:-15px"
-        | Pet Size
-      = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-      label.hs_mhs_title style="margin-left:-15px"
-        | Pet Age
-      = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-      label.hs_mhs_title style="margin-left:-15px"
-        | Energy Level
-      = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
-    label.hs_mhs_title
-      | Personalities
-    .phs_help_section
-      span This will help the Host take better care of him/her. Please check at least three relevant personalities
-    = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes, input_html: { class: 'form-checkbox form-normal form-info collection_cb phs_cb_sp'}, :item_wrapper_class =>'phs_cb_cont phs_cb_cont_addon'
+    .text-md.text-bold Please select one
+    .col-xs-12
+      .pad-lft
+        = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
+    .text-md.text-bold Pet Size
+    = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+    .text-md.text-bold Pet Age
+    = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+    .text-md.text-bold Energy Level
+    = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
+    .text-md.text-bold Personalities
+    .text-sm This will help the Host take better care of him/her. Please check at least three relevant personalities
+    
+    .col-xs-6.col-md-4
+      = f.input :personalities, label: false, collection: PERSONALITIES, as: :check_boxes
 .parent.phs-tab-header
   .panel-heading.feedback-head
     .panel-title.phs-title 
@@ -80,33 +79,35 @@
       span.feedback-icon.pull-right
           i.fa.fa-chevron-down         
   .panel-body.feedback-body 
-    = f.label :extra_photos
-    #guest_extra_photos_container
-      - if @pet.extra_photos.try(:any?)
-        .row.text-center.pad-all
-          - for photo in @pet.extra_photos
-            .col-md-3.col-xs-6.bord-all.bg-info id="pet_extra_photos_box_#{photo.id}"
-              .pad-ver
-                = cl_image_tag photo.public_id, class:'img-lg img-border img-circle' 
-              hr.mar-no
-              .pad-ver
-                a.btn.btn-danger.remove_pet_extra_photos href="#Pet-Profile-Photo" data-id="#{photo.id}" data-model-id="#{@pet.id}" data-model-type="Pet" data-scope="extra_photos"
-                  i.fa.fa-trash-o
-                  span.pad-lft Remove 
-      - else
-        .row.text-center.pad-all
-          .text-lg.text-thin No Photos present in Gallery            
-    .btn.btn-primary.btn-block#pet_extra_photo_btn.mar-btm
-      span.text-lg.text-thin Add more Photos?
-    .pad-ver#pet_extra_photo_space
-      .dropzone.btn.btn-default.btn-block id="pet_extra_photos_dropzone"
-        .text-center#pet_dropzone_extra_photo_message style="margin-top:100px"
-          i.fa.fa-cloud.fa-5x
-          .text-md.text-thin Click Here to add Images
-          .text-md.text-thin or simply Drag and Drop them!
+    = f.input :extra_photos, as: :attachinary, label: 'Extra Photos', hint: 'Share the pet love!'
 
-      - if @pet.new_record?
-        = hidden_field_tag "pet[extra_photos][]"
+    / = f.label :extra_photos
+    / #guest_extra_photos_container
+    /   - if @pet.extra_photos.try(:any?)
+    /     .row.text-center.pad-all
+    /       - for photo in @pet.extra_photos
+    /         .col-md-3.col-xs-6.bord-all.bg-info id="pet_extra_photos_box_#{photo.id}"
+    /           .pad-ver
+    /             = cl_image_tag photo.public_id, class:'img-lg img-border img-circle' 
+    /           hr.mar-no
+    /           .pad-ver
+    /             a.btn.btn-danger.remove_pet_extra_photos href="#Pet-Profile-Photo" data-id="#{photo.id}" data-model-id="#{@pet.id}" data-model-type="Pet" data-scope="extra_photos"
+    /               i.fa.fa-trash-o
+    /               span.pad-lft Remove 
+    /   - else
+    /     .row.text-center.pad-all
+    /       .text-lg.text-thin No Photos present in Gallery            
+    / .btn.btn-primary.btn-block#pet_extra_photo_btn.mar-btm
+    /   span.text-lg.text-thin Add more Photos?
+    / .pad-ver#pet_extra_photo_space
+    /   .dropzone.btn.btn-default.btn-block id="pet_extra_photos_dropzone"
+    /     .text-center#pet_dropzone_extra_photo_message style="margin-top:100px"
+    /       i.fa.fa-cloud.fa-5x
+    /       .text-md.text-thin Click Here to add Images
+    /       .text-md.text-thin or simply Drag and Drop them!
+
+    /   - if @pet.new_record?
+    /     = hidden_field_tag "pet[extra_photos][]"
     
     = f.input :emergency_contact_name, label: 'Emergency Contact'
     = f.input :emergency_contact_phone, label: 'Emergency Contact Mobile'
@@ -115,171 +116,13 @@
     = f.input :council_number, label: 'Council Pet Tag'
     = f.input :microchip_number, label: 'Microchip #'
     = f.input :medication, input_html: { rows: 2 }
-    label My pet is:
-    .checkbox style="margin-left:15px;"
-      = f.input :house_trained, label: 'toilet trained', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-      = f.input :flea_treated, label: 'flea treated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-      = f.input :vaccinated, label: 'vaccinated', input_html: { class: 'form-checkbox form-normal form-info boolean_cb'}
-javascript:
-  
+    .text-md.text-bold My pet is:
+    .col-xs-12
+      .pad-lft
+        = f.input :house_trained, label: 'toilet trained'
+        = f.input :flea_treated, label: 'flea treated'
+        = f.input :vaccinated, label: 'vaccinated'
 
-  $("a.remove_pet_profile_photo").click(function(event) {
-    event.preventDefault();
-    if($(this).attr("data-id") != "" && $(this).attr("data-model-id") != "" && $(this).attr("data-model-type") != "" && confirm('Are you sure?')) {
-      photo_id = $(this).attr("data-id");
-      $.ajax({
-        url: '/remove_uploads',
-        type: 'DELETE',
-        data: "id=" + $(this).attr("data-id") +
-              "&model_type=" + $(this).attr("data-model-type") +
-              "&model_id=" + $(this).attr("data-model-id") +
-              "&scope=" + $(this).attr("data-scope"),
-        success: function(result) {
-          if(result.status == "success"){
-            $("div#pet_profile_photo_box_" + photo_id ).remove();
-          } else {
-            alert("Sorry Something went wrong!")
-          }
-        }
-      });
-    }
-  });
-
-  $("a.remove_pet_extra_photos").click(function(event) {
-    event.preventDefault();
-    if($(this).attr("data-id") != "" && $(this).attr("data-model-id") != "" && $(this).attr("data-model-type") != "" && confirm('Are you sure?')) {
-      photo_id = $(this).attr("data-id");
-      $.ajax({
-        url: '/remove_uploads',
-        type: 'DELETE',
-        data: "id=" + $(this).attr("data-id") +
-              "&model_type=" + $(this).attr("data-model-type") +
-              "&model_id=" + $(this).attr("data-model-id") +
-              "&scope=" + $(this).attr("data-scope"),
-        success: function(result) {
-          if(result.status == "success"){
-            $("div#pet_extra_photos_box_" + photo_id ).remove();
-          } else {
-            alert("Sorry Something went wrong!")
-          }
-        }
-      });
-    }
-  });
-
-  var profile_photo = [];
-  $(document).ready(function () {
-    $("#pet_profile_photo_dropzone").dropzone({
-      url: "/photo_uploads",
-      paramName: "photo",
-      acceptedFiles: 'image/*',
-      maxFilesize: 2,
-      maxFiles: 1,
-      addRemoveLinks: true,
-      maxfilesexceeded: function () {
-      $("#pet_dropzone_profile_photo_message").show();
-        alert('Max File updloaded');
-      },
-      sending: function (file, xhr, formData) {
-      $("#pet_dropzone_profile_photo_message").hide();
-        formData.append("authenticity_token", "#{form_authenticity_token}");
-        formData.append("attachinariable_type", "#{@pet.class.name}");
-        formData.append("attachinariable_id", "#{@pet.id}");
-        formData.append("attachinary_scope", "profile_photo");
-      },
-      success: function (file, response) {
-      $("#pet_dropzone_profile_photo_message").hide();
-        profile_photo = [response]
-        #{{ "$('#pet_profile_photo').val(JSON.stringify(profile_photo));" if @pet.new_record? }}
-        file.previewElement.classList.add("dz-success");
-        file.previewElement.classList.add("public_id" + response.public_id);
-      },
-      removedfile: function(file) {
-        classes = file.previewElement.classList;
-        for(i = 0; i < classes.length; i++){
-          if( classes[i].match("public_id") == "public_id" ){
-            file_id = classes[i].replace("public_id", "");
-            for(j=0; j<profile_photo.length; j++){
-              if(file_id == profile_photo[j].public_id){
-                profile_photo.splice(j, 1);
-                #{{ "$('#pet_profile_photo').val(JSON.stringify(profile_photo));" if @pet.new_record? }}
-                break;
-              }
-            }
-            $.ajax({
-              url: '/remove_uploads_with_public_id',
-              type: 'DELETE',
-              data: "public_id=" + file_id,
-              success: function(result) {}
-            });
-            var _ref;
-            if ((_ref = file.previewElement) != null) {
-              _ref.parentNode.removeChild(file.previewElement);
-            }
-            return this._updateMaxFilesReachedClass();
-            break;
-          }
-        }
-      }
-    });
-  });
-  
-  var extra_photos = [];
-  $(document).ready(function () {
-    $("#pet_extra_photos_dropzone").dropzone({
-      url: "/photo_uploads",
-      paramName: "photo",
-      acceptedFiles: 'image/*',
-      maxFilesize: 2,
-      maxFiles: 10,
-      addRemoveLinks: true,
-      maxfilesexceeded: function () {
-        $("#pet_dropzone_extra_photo_message").show();
-        alert('Max File updloaded');
-      },
-      sending: function (file, xhr, formData) {
-        $("#pet_dropzone_extra_photo_message").hide();
-        formData.append("authenticity_token", "#{form_authenticity_token}");
-        formData.append("attachinariable_type", "#{@pet.class.name}");
-        formData.append("attachinariable_id", "#{@pet.id}");
-        formData.append("attachinary_scope", "extra_photos");
-      },
-      success: function (file, response) {
-        $("#pet_dropzone_extra_photo_message").hide();
-        extra_photos.push(response)
-        #{{ "$('#pet_extra_photos_').val(JSON.stringify(extra_photos));" if @pet.new_record? }}
-        file.previewElement.classList.add("dz-success");
-        file.previewElement.classList.add("public_id" + response.public_id);
-      },
-      removedfile: function(file) {
-        classes = file.previewElement.classList;
-        for(i = 0; i < classes.length; i++){
-          if( classes[i].match("public_id") == "public_id" ){
-            file_id = classes[i].replace("public_id", "");
-            for(j=0; j<extra_photos.length; j++){
-              if(file_id == extra_photos[j].public_id){
-                extra_photos.splice(j, 1);
-                #{{ "$('#pet_extra_photos_').val(JSON.stringify(extra_photos));" if @pet.new_record? }}
-                break;
-              }
-            }
-            $.ajax({
-              url: '/remove_uploads_with_public_id',
-              type: 'DELETE',
-              data: "public_id=" + file_id,
-              success: function(result) {}
-            });
-            var _ref;
-            if ((_ref = file.previewElement) != null) {
-              _ref.parentNode.removeChild(file.previewElement);
-            }
-            return this._updateMaxFilesReachedClass();
-            break;
-          }
-        }
-      }
-    });
-  });
 coffee:
   $('.pet_size_id .slider').slider
     formatter: (size_id) ->
@@ -308,3 +151,66 @@ coffee:
     allow_single_deselect: true
     no_results_text: 'No results matched'
     width: '200px'
+
+  $('.pet_profile_photo .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Preview</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fill', "width": 50, "height": 50 }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 50, "height": 50, "radius": "max" }) %>"
+                alt="" width="50" height="50" />
+            </td>
+            <td>
+              <a href="#" ><i class="fa fa-trash-o pet-trash" data-remove="<%= files[i].public_id %>"></i></a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """
+  $('.pet_extra_photos .attachinary-input').attachinary
+    template: """
+      <table class="table table-hover">
+        <tr>
+          <th>Thumbnail</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i = 0; i < files.length; i++){ %>
+          <tr>
+          <% if(files[i].resource_type == "raw") { %>
+            <td colspan="3">
+              <div class="raw-file"></div>
+            </td>
+          <% } else { %>
+            <td>
+              <img
+                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'fit', "width": 75}) %>"
+                alt=""/>
+            </td>
+            <td>
+              <a href="#"><i class="fa fa-trash-o pet-trash" data-remove="<%= files[i].public_id %>"></i></a>
+            </td>
+          <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table class="table">
+    """  

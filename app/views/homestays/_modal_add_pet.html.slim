@@ -11,8 +11,8 @@
         #flash_error_with_pet role='alert'
         .row.text-center
           .col-xs-12 style="height:95px"
-            a.btn.btn-default.add_pet_image_button style="height: 70px;width: 70px;float: left;border-radius: 45px;background-color: #f4f4f4;margin-top: 5px;margin-left: 10px;"
-              .text-xs.add_pet_image_button style="margin-top:15px; " Upload a 
+            button.btn.btn-default.add_pet_image_button style="height: 70px;width: 70px;float: left;border-radius: 45px;background-color: #f4f4f4;margin-top: 5px;margin-left: 10px;"
+              .text-xs.add_pet_image_button style="margin-top:5px; " Upload a 
               .text-xs.add_pet_image_button photo
             div style="max-width:150px; margin-top:25px; float:right"  
               = f.input :name, label: false, placeholder: 'Pet Name eg: Fido '   
@@ -78,7 +78,7 @@
             .text-thin Energy 
         hr style="margin-top:5px; margin-bottom: 5px;"
         .row.text-center
-          .col-xs-4 
+          .col-xs-4
             //#pet_size_nouislider.dotcom   
             = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
           .col-xs-4
