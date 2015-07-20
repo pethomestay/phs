@@ -110,7 +110,6 @@
 
 .modal-overflow .modal-body {
 	overflow: auto;
-	-webkit-overflow-scrolling: touch;
 }
 
 /* Responsive */
