@@ -1,5 +1,6 @@
   $(document).ready(function () {
     
+    $("#pet_breed").select2();
     // Species radio buttons hidden
     var dogType = $('#pet_pet_type_id_1');
     var catType = $('#pet_pet_type_id_2');
