@@ -1,6 +1,6 @@
   $(document).ready(function () {
-    
-    $("#pet_breed").select2();
+    $('#pet_breed').attr('data-live-search', 'true');
+    $("#pet_breed").selectpicker();
     // Species radio buttons hidden
     var dogType = $('#pet_pet_type_id_1');
     var catType = $('#pet_pet_type_id_2');
