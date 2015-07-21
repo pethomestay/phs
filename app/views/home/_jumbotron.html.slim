@@ -55,15 +55,4 @@
     /       br
     /       | Guarantee
 
-
-javascript:
-  var BV = new $.BigVideo({useFlashForFirefox:false});
-  BV.init();
-  if (Modernizr.touch) {
-    $( ".jumbotron" ).addClass( "BV-cover");
-  } else {
-    BV.show('videos/doglow.mp4', {ambient:true, doLoop:true, altSource:'videos/doglow.mp4'});
-  }
-  var height = $(document).height();
-  $( ".jumbotron" ).css( "height", height);
   

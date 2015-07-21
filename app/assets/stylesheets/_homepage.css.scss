@@ -8,15 +8,6 @@
     width: 100%;
 }
 
-#big-video-wrap {
-    overflow:hidden;
-    position:absolute;
-    height:100%;
-    width:100%;
-    top:0;
-    left:0;
-    z-index:-1;
-}
 
 .splace {
     
@@ -35,8 +26,11 @@
 }
 
 .jumbotron {
-    margin-bottom: 0;
-    height: 498px; // Must be the height of bg minus the height of nav bar
+    background: image-url("doglow.jpg") no-repeat center center !important;
+    display:block !important;
+    background-size: cover !important;
+    width: 100%;
+    height: 100%; // Must be the height of bg minus the height of nav bar
     background: rgba(18, 18, 18, 0.2);
     // text
     color: #FFFFFF;
