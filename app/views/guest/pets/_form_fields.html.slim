@@ -123,7 +123,12 @@
         = f.input :house_trained, label: 'toilet trained'
         = f.input :flea_treated, label: 'flea treated'
         = f.input :vaccinated, label: 'vaccinated'
-
+javascript:
+    $("#pet_breed").multiselect({ 
+      maxHeight: 200, 
+      buttonWidth: '100%',
+      enableCaseInsensitiveFiltering: true
+    });   
 coffee:
   $('.pet_size_id .slider').slider
     formatter: (size_id) ->

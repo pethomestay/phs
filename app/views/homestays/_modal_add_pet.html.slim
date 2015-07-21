@@ -1,9 +1,9 @@
-= javascript_include_tag 'homestays/modal_add_pet'
-= javascript_include_tag 'bootstrap-slider'
 = stylesheet_link_tag 'bootstrap-slider'
-= stylesheet_link_tag 'homestays/modal_add_pet'
 = stylesheet_link_tag 'bootstrap-multiselect'
+= stylesheet_link_tag 'homestays/modal_add_pet'
+= javascript_include_tag 'bootstrap-slider'
 = javascript_include_tag 'bootstrap-multiselect'
+= javascript_include_tag 'homestays/modal_add_pet'
 .modal-body
   = simple_form_for [:guest, (current_user ? current_user.pets.build : Pet.new)], wrapper: :bootstrap3, :remote => true do |f|        
     input type='hidden' value=@homestay.id name='enquiry[homestay_id]'
@@ -57,14 +57,14 @@
       .col-xs-12
         .mar-top.mar-btm
         = f.input :other_pet_type, label: false, placeholder: 'eg: Makaw or Iguana', input_html: {id: 'other_pet_type_text_id'} 
-        = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', multiple:true, data: { placeholder: 'eg: Beagle' } } 
+        = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', data: { placeholder: 'eg: Beagle' } } 
     .row.text-box-centered
       .col-xs-6 style='padding-right: 3px;'
           a.btn.btn-two-tone.btn-block#modal_male_desex Male 
       .col-xs-6 style=' padding-left: 2px;'
           a.btn.btn-two-tone.btn-block#modal_female_desex Female 
       .col-xs-12 
-        .mar-top.text-right   
+        .mar-ver.text-right   
           span.pad-no.text-sm Check if Entire
           label.pull-right.col-xs-2.pad-no.form-checkbox.form-icon.form-text style='color:#3c3835; margin-right: -25px;margin-top: 5px;'
             input#modal_pet_normal_sex type="checkbox" checked="" 

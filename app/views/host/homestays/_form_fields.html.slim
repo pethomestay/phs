@@ -346,7 +346,7 @@ css:
       button.next.btn.btn-primary style="margin-left:5px; min-width:100px; font-weight:bold; font-size:18px;" type="button"
         span NEXT
         i.fa.fa-arrow-circle-o-right style="padding-left:5px; font-size:20px"
-  
+
   / New Fields
   / Make it only visible to admins at the moment
     /h3
@@ -355,7 +355,12 @@ css:
     /  small If you do, please complete a pet profile after creating your listing
     /.checkbox
     /  = f.input :pets_present, as: :boolean, label: 'My pets will be present at this address during PetHomeStay bookings', checked_value: 1, unchecked_value: 2
-
+javascript:
+  $("#homestay_favorite_breeds").multiselect({ 
+      maxHeight: 200, 
+      buttonWidth: '100%',
+      enableCaseInsensitiveFiltering: true
+    });
 coffee:
   $ ->
     $('.homestay_photos .attachinary-input').attachinary

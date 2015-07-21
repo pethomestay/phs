@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
   $('#pet_pet_type_id_1').prop("checked");
   $('#pet_icon_demo_1').css("color", "#ec5c3b");
   $('chosen-select').show();
@@ -73,7 +75,7 @@ $(document).ready(function () {
     }
   });
 
-  
+
   // $("a.remove_pet_profile_photo").click(function(event) {
   //   event.preventDefault();
   //   if($(this).attr("data-id") != "" && $(this).attr("data-model-id") != "" && $(this).attr("data-model-type") != "" && confirm('Are you sure?')) {
