@@ -20,7 +20,6 @@
 //= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min
-//= require bootstrap-slider
 //= require bootbox.min
 //= require plugins
 //= require segmentio

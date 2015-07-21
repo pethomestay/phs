@@ -538,29 +538,6 @@ coffee:
     $(".chosen-select").chosen
       max_selected_options: 1
 
-    $('.pet_size_id .slider').slider
-      formatter: (size_id) ->
-        switch size_id
-          when 1 then 'under 15kg'
-          when 2 then '16-30kg'
-          when 3 then '31-45kg'
-          when 4 then '46kg+'
-          else 'invalid value'
-    $('.pet_energy_level .slider').slider
-      formatter: (energy_id) ->
-        switch energy_id
-          when 1 then 'lazy'
-          when 2 then 'laid back'
-          when 3 then 'balanced'
-          when 4 then 'active'
-          when 5 then 'sugar rush'
-          else 'invalid value'
-    $('.pet_pet_age .slider').slider
-      formatter: (age) ->
-        switch age
-          when 1  then 'under 18 months'
-          when 15 then '15+ years'
-          else "#{age} years old"
     $('.pet_profile_photo .attachinary-input').attachinary
       template: """
           <% for(var i = 0; i < files.length; i++){ %>

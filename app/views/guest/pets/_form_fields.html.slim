@@ -1,8 +1,11 @@
+= stylesheet_link_tag 'bootstrap-slider'
+= javascript_include_tag 'bootstrap-slider'
 = stylesheet_link_tag 'bootstrap-multiselect'
 = javascript_include_tag 'bootstrap-multiselect'
 = javascript_include_tag 'guest/pet/pet'
-= javascript_include_tag 'dropzone'
 = stylesheet_link_tag 'dropzone'
+= javascript_include_tag 'dropzone'
+
 = stylesheet_link_tag 'guest/pet/pet'
 = hidden_field_tag 'redirect_path', params[:redirect_path]
 .parent.phs-tab-header
@@ -57,11 +60,11 @@
     .col-xs-12
       .pad-lft
         = f.input :sex_id, label: false , collection: ReferenceData::Sex.all, as: :radio_buttons,include_blank: false
-    .text-md.text-bold Pet Size
+    .text-md.text-bold.pet-size-text  Pet Size
     = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
-    .text-md.text-bold Pet Age
+    .text-md.text-bold.pet-age-text Pet Age
     = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
-    .text-md.text-bold Energy Level
+    .text-md.text-bold.pet-energy-text Energy Level
     = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
     .text-md.text-bold Personalities
     .text-sm This will help the Host take better care of him/her. Please check at least three relevant personalities
@@ -129,35 +132,75 @@ javascript:
       buttonWidth: '100%',
       enableCaseInsensitiveFiltering: true
     });   
+    var petSizeSliderChanged = function() {
+        $('#pet_size_id').attr('data-slider-value', petSizeSlider.getValue());
+        
+        if(petSizeSlider.getValue() == 1) {
+           $('.pet-size-text').text( '<15kg' );
+        } else if(petSizeSlider.getValue() == 2) {
+            $('.pet-size-text').text( '16-30kg' );
+        } else if(petSizeSlider.getValue() == 3) {
+            $('.pet-size-text').text( '31-45kg' );
+        } else {
+            $('.pet-size-text').text( '>46kg' );
+        }
+    }
+
+    var petSizeSlider = $('#pet_size_id')
+      .slider({
+        min: 1,
+        max: 4,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petSizeSliderChanged).data('slider');
+
+
+      var petAgeSliderChanged = function() {
+        $('#pet_pet_age').attr('data-slider-value', petAgeSlider.getValue());
+        
+        if(petAgeSlider.getValue() == 1) {
+           $('.pet-age-text').text( '< 18 months' );
+        } else if(petAgeSlider.getValue() == 15) {
+            $('.pet-age-text').text( '15+ years' );
+        } else {
+            $('.pet-age-text').text( petAgeSlider.getValue() + ' years' );
+        }
+    }
+
+    var petAgeSlider = $('#pet_pet_age')
+      .slider({
+        min: 1,
+        max: 15,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petAgeSliderChanged).data('slider');
+
+      var petEnergySliderChanged = function() {
+        $('#pet_energy_level').attr('data-slider-value', petEnergySlider.getValue());
+        
+        if(petEnergySlider.getValue() == 1) {
+           $('.pet-energy-text').text( 'low' );
+        } else if(petEnergySlider.getValue() == 2) {
+            $('.pet-energy-text').text( 'low-med' );
+        } else if(petEnergySlider.getValue() == 3) {
+            $('.pet-energy-text').text( 'medium' );
+        } else if(petEnergySlider.getValue() == 4) {
+            $('.pet-energy-text').text( 'med-high' );
+        } else {
+            $('.pet-energy-text').text( 'high' );
+        }
+    }
+
+    var petEnergySlider = $('#pet_energy_level')
+      .slider({
+        min: 1,
+        max: 5,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petEnergySliderChanged).data('slider');
+
 coffee:
-  $('.pet_size_id .slider').slider
-    formatter: (size_id) ->
-      switch size_id
-        when 1 then 'under 15kg'
-        when 2 then '16-30kg'
-        when 3 then '31-45kg'
-        when 4 then '46kg+'
-        else 'invalid value'
-  $('.pet_energy_level .slider').slider
-    formatter: (energy_id) ->
-      switch energy_id
-        when 1 then 'low'
-        when 2 then 'low medium'
-        when 3 then 'medium'
-        when 4 then 'high medium'
-        when 5 then 'high'
-        else 'invalid value'
-  $('.pet_pet_age .slider').slider
-    formatter: (age) ->
-      switch age
-        when 1  then 'under 18 months'
-        when 15 then '15+ years'
-        else "#{age} years old"
-  $(".basic-multiple").multiselect({ maxHeight: 200, buttonWidth: '100%' });
-  $('.chosen-select').chosen
-    allow_single_deselect: true
-    no_results_text: 'No results matched'
-    width: '200px'
+
 
   $('.pet_profile_photo .attachinary-input').attachinary
     template: """

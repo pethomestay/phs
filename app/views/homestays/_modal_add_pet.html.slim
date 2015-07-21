@@ -1,7 +1,10 @@
 = stylesheet_link_tag 'bootstrap-slider'
 = stylesheet_link_tag 'bootstrap-multiselect'
+= stylesheet_link_tag 'nouislider.pips'
 = stylesheet_link_tag 'homestays/modal_add_pet'
+
 = javascript_include_tag 'bootstrap-slider'
+= javascript_include_tag 'nouislider'
 = javascript_include_tag 'bootstrap-multiselect'
 = javascript_include_tag 'homestays/modal_add_pet'
 .modal-body
@@ -73,16 +76,17 @@
       .slider_con.text-dark style="color:#3c3835"
         .row.text-center
           .col-xs-4.mar-top
-            .text-thin Size 
+            .text-thin.text-xs.pet-size-text Size 
           .col-xs-4.mar-top
-            .text-thin Age
+            .text-thin.text-xs.pet-age-text Age
           .col-xs-4.mar-top
-            .text-thin Energy 
+            .text-thin.text-xs.pet-energy-text Energy 
         hr style="margin-top:5px; margin-bottom: 5px;"
         .row.text-center
           .col-xs-4
-            //#pet_size_nouislider.dotcom   
-            = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
+            //#pet_size_nouislider.dotcom 
+            = f.input :size_id, label: false, input_html: { class: 'bootstrap-slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }  
+            / = f.input :size_id, label: false, input_html: { class: 'bootstrap-slider'}
           .col-xs-4
             = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
           .col-xs-4
@@ -93,7 +97,74 @@
   button.pull-left.hidden-xs style="margin-top: -15px; margin-left: -7px"type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs 
-/ javascript:
+javascript:
+    var petSizeSliderChanged = function() {
+        $('#pet_size_id').attr('data-slider-value', petSizeSlider.getValue());
+        
+        if(petSizeSlider.getValue() == 1) {
+           $('.pet-size-text').text( '<15kg' );
+        } else if(petSizeSlider.getValue() == 2) {
+            $('.pet-size-text').text( '16-30kg' );
+        } else if(petSizeSlider.getValue() == 3) {
+            $('.pet-size-text').text( '31-45kg' );
+        } else {
+            $('.pet-size-text').text( '>46kg' );
+        }
+    }
+
+    var petSizeSlider = $('#pet_size_id')
+      .slider({
+        min: 1,
+        max: 4,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petSizeSliderChanged).data('slider');
+
+
+      var petAgeSliderChanged = function() {
+        $('#pet_pet_age').attr('data-slider-value', petAgeSlider.getValue());
+        
+        if(petAgeSlider.getValue() == 1) {
+           $('.pet-age-text').text( '< 18 months' );
+        } else if(petAgeSlider.getValue() == 15) {
+            $('.pet-age-text').text( '15+ years' );
+        } else {
+            $('.pet-age-text').text( petAgeSlider.getValue() + ' years' );
+        }
+    }
+
+    var petAgeSlider = $('#pet_pet_age')
+      .slider({
+        min: 1,
+        max: 15,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petAgeSliderChanged).data('slider');
+
+      var petEnergySliderChanged = function() {
+        $('#pet_energy_level').attr('data-slider-value', petEnergySlider.getValue());
+        
+        if(petEnergySlider.getValue() == 1) {
+           $('.pet-energy-text').text( 'low' );
+        } else if(petEnergySlider.getValue() == 2) {
+            $('.pet-energy-text').text( 'low-med' );
+        } else if(petEnergySlider.getValue() == 3) {
+            $('.pet-energy-text').text( 'medium' );
+        } else if(petEnergySlider.getValue() == 4) {
+            $('.pet-energy-text').text( 'med-high' );
+        } else {
+            $('.pet-energy-text').text( 'high' );
+        }
+    }
+
+    var petEnergySlider = $('#pet_energy_level')
+      .slider({
+        min: 1,
+        max: 5,
+        value: 1,
+        tooltip: 'hide',
+      }).on('slide', petEnergySliderChanged).data('slider');
+
 /     console.log("hihihihi" + $('#pet_size_id').val());
 /     var sizeSlider = document.getElementById('pet_size_nouislider');
 /     noUiSlider.create(sizeSlider, {
