@@ -94,3 +94,4 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'heroku-deflater'
 end
+gem 'mandrill-api', require:  "mandrill"

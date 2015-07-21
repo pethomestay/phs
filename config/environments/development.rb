@@ -40,14 +40,28 @@ PetHomestay::Application.configure do
 
   #config.serve_static_assets = true
   #ensure we don't send emails on dev
-  config.action_mailer.delivery_method = :mailgun
+  #config.action_mailer.delivery_method = :mailgun
 
-  config.action_mailer.mailgun_settings = {
-      api_key: ENV['MAILGUN_API_KEY'],
-      domain: ENV['MAILGUN_DOMAIN']
-  }
+  #config.action_mailer.mailgun_settings = {
+   #   api_key: ENV['MAILGUN_API_KEY'],
+    #  domain: ENV['MAILGUN_DOMAIN']
+  #}
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.default charset: "utf-8"
+
+    ActionMailer::Base.smtp_settings = {
+    :address => "smtp.mandrillapp.com",
+    :port => 587,
+    :user_name => "tom@pethomestay.com",
+    :password => ENV["MANDRILL_APIKEY"],
+    #:domain    => 'www.pethomestay.com',
+    :authentication => "login",
+    :enable_starttls_auto => true
+    }
 
   # Expands the lines which load the assets
+  #config.assets.raise_runtime_errors = true
+  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.assets.debug = false
   config.assets.prefix = "/assets_dev"
 

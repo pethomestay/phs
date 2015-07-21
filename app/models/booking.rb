@@ -295,7 +295,7 @@ class Booking < ActiveRecord::Base
         message = 'You have confirmed the booking'
         self.save!
         PetOwnerMailer.booking_confirmation(self).deliver
-        ProviderMailer.booking_confirmation(self).deliver
+        #ProviderMailer.booking_confirmation(self).deliver
         # self.mailbox.messages.create! user_id: booker_id,
         #   message_text: "[This is an auto-generated message for the Guest]\n\nGreat! This Host has confirmed your booking request!\nNow simply drop your pet off on the check-in date & don't forget to leave feedback once the stay has been completed! \nThanks for using PetHomestay!"
         # self.mailbox.messages.create! user_id: bookee_id,

@@ -45,7 +45,7 @@ class Host::HomestaysController < Host::HostController
     raise ActiveRecord::RecordNotFound if @homestay.blank?
     if @homestay.update_attributes(params[:homestay])
       redirect_to @homestay, alert: 'Your listing has been updated.'
-    else
+	  else
       render :edit
     end
   end

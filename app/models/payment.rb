@@ -10,7 +10,7 @@ class Payment < ActiveRecord::Base
 
   def notify_parties
     self.booking.host_accepted? ? ProviderMailer.booking_made(self.booking).deliver : ProviderMailer.owner_confirmed(self.booking).deliver
-    PetOwnerMailer.booking_receipt(self.booking).deliver
+    #PetOwnerMailer.booking_receipt(self.booking).deliver
     PetOwnerMailer.booking_confirmation(self.booking).deliver if self.booking.host_accepted
   end
 end
