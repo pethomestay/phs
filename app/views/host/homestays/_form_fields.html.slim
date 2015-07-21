@@ -5,6 +5,8 @@ css:
     border: 1px solid #ccc;
     width: 100%;
   }
+= stylesheet_link_tag 'bootstrap-multiselect'
+= javascript_include_tag 'bootstrap-multiselect'
 = javascript_include_tag 'address_autocomplete'
 = javascript_include_tag 'host/homestay_creator_wizard'
 = javascript_include_tag 'host/homestay_click_handlers'
@@ -263,7 +265,7 @@ css:
                   label.hs_mhs_title style="margin-left:-15px;" 
                     | Favourite Dog Breeds 
                   .pad-hor  
-                    = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
+                    = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'basic-multiple', multiple: true, data: { placeholder: 'Select 3' } }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -385,6 +387,7 @@ coffee:
         </table class="table">
       """
 
+  $(".basic-multiple").multiselect({ maxHeight: 200, buttonWidth: '100%' });
   $('.chosen-select').chosen
     max_selected_options: 3
 

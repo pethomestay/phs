@@ -437,30 +437,30 @@ coffee:
 .modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
   .modal-dialog
     .modal-content id="enquiry-modal-confirmation"      
-      = render 'modal_confirmation'
+      = render 'modal_confirmation', top: true
 
 - unless user_signed_in?
   .modal.fade#sign-in-modal tabindex='-1' role='dialog'
     .modal-dialog
       .modal-content
-        = render 'modal_sign_in'  
+        = render 'modal_sign_in', top: true  
 
   .modal.fade#sign-up-modal tabindex='-1' role='dialog'
     .modal-dialog
       .modal-content
-        = render 'modal_sign_up'
+        = render 'modal_sign_up', top: true
 
 / Send an Enquiry modal
 .modal.fade#request-modal tabindex='-1' role='dialog'
   .modal-dialog
     .modal-content
-      = render 'modal_enquiry'
+      = render 'modal_enquiry', top: true
 
 / Pet Information Modal
 .modal.fade#request-modal-add-pet tabindex='-1' role='dialog'
   .modal-dialog
     .modal-content
-      = render 'modal_add_pet'
+      = render 'modal_add_pet', top: true
 
 coffee:
   $ ->

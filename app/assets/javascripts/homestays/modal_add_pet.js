@@ -1,6 +1,6 @@
   $(document).ready(function () {
     $('#pet_breed').attr('data-live-search', 'true');
-    $("#pet_breed").selectpicker();
+    // $("#pet_breed").selectpicker();
     // Species radio buttons hidden
     var dogType = $('#pet_pet_type_id_1');
     var catType = $('#pet_pet_type_id_2');
@@ -31,6 +31,7 @@
     dogBtn.addClass('active');
     dogType.prop("checked");
     $('chosen-select').show();
+    $(".basic-multiple").multiselect({ maxHeight: 200, buttonWidth: '100%' });
     $('#other_pet_type_text_id').hide();
     $('.pet_other_pet_type').hide();
 

@@ -1,4 +1,5 @@
-
+= stylesheet_link_tag 'bootstrap-multiselect'
+= javascript_include_tag 'bootstrap-multiselect'
 = javascript_include_tag 'guest/pet/pet'
 = javascript_include_tag 'dropzone'
 = stylesheet_link_tag 'dropzone'
@@ -51,7 +52,7 @@
       .pad-lft
         = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
     = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id', data: { placehoder: 'Please specify pet type' } }, label: false  
-    = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'chosen-select', multiple:true, data: { placeholder: 'eg: Beagle' } } 
+    = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', multiple:true, data: { placeholder: 'eg: Beagle' } } 
     .text-md.text-bold Please select one
     .col-xs-12
       .pad-lft
@@ -147,6 +148,7 @@ coffee:
         when 1  then 'under 18 months'
         when 15 then '15+ years'
         else "#{age} years old"
+  $(".basic-multiple").multiselect({ maxHeight: 200, buttonWidth: '100%' });
   $('.chosen-select').chosen
     allow_single_deselect: true
     no_results_text: 'No results matched'
