@@ -82,6 +82,12 @@ class ProviderMailer < ActionMailer::Base
                         :name => "GuestFirstName",
                         :content => @guest.first_name.capitalize
                     },
+
+                    {
+                        :name => "GuestMobile",
+                        :content => @guest.mobile_number
+                    },
+
                     {
                         :name => "PetName",
                         :content => @guest.pet_names
@@ -110,10 +116,7 @@ class ProviderMailer < ActionMailer::Base
                         :name => "CostPerNight",
                         :content => @booking.actual_value_figure(:cost_per_night)
                     },
-                    {
-                        :name => "subtotal",
-                        :content => @booking.actual_value_figure(:subtotal)
-                    },
+                    
                     {
                         :name => "PhsServiceCharge",
                         :content => @booking.phs_service_charge
@@ -323,12 +326,16 @@ class ProviderMailer < ActionMailer::Base
                         :content => @booking.cost_per_night
                     },
                     {
-                        :name => "ServiceCharge",
-                        :content => @booking.phs_service_charge
-                    },
-                    {
                         :name => "insurance",
                         :content => @booking.public_liability_insurance
+                    },
+                    {
+                        :name => "subtotal",
+                        :content => @booking.actual_value_figure(:subtotal)
+                    },
+                    {
+                        :name => "ServiceCharge",
+                        :content => @booking.phs_service_charge
                     },
 
                     {
