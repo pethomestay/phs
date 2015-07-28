@@ -153,10 +153,7 @@ class PetOwnerMailer < ActionMailer::Base
                         :name => "HomeStayTitle" ,
                         :content => @homestay.title
                     },
-                    {
-                        :name => "HomeStayAddress" ,
-                        :content => @homestay.address_suburb
-                    },
+                    
                     {
                         :name => "HostName" ,
                         :content => @host.name
