@@ -24,7 +24,7 @@ class Pet < ActiveRecord::Base
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
   before_validation :strip_personalities
-  after_save :strip_pet_breed, on: :create
+  before_save :strip_pet_breed
 
   def pet_age
     if self.date_of_birth.present?
@@ -96,9 +96,9 @@ class Pet < ActiveRecord::Base
   def strip_personalities
     self.personalities.delete('') if self.personalities.present?
   end
-  
+
   def strip_pet_breed
-    self.breed = breed.gsub(/\W[^\w]/,'').chop
+    self.breed = breed.gsub(/\W[^\w]/,'')
   end
 
 end
