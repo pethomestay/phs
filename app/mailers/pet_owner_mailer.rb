@@ -105,10 +105,10 @@ class PetOwnerMailer < ActionMailer::Base
                         :content => @host.first_name.capitalize
                     },
 					
-					{
-                        :name => "HomeStayUrl",
-                        :content => homestay_url(@homestay)
-                    },
+					#{
+                        #:name => "HomeStayUrl",
+                        #:content => homestay_url(@homestay)
+                    #},
                     {
                         :name => "HouseRulesUrl",
                         :content => house_rules_url
