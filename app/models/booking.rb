@@ -65,7 +65,7 @@ class Booking < ActiveRecord::Base
   def trigger_host_no_activity_reject(inform = false)
     if inform
       self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "This Host has not replied within 24 hours so your enquiry to them has been closed.\nIf you have had no responses within 24 hours, please send more Enquiries to Hosts or ring us on 1300 660 945.")
-      UserMailer.automatically_declined(self).deliver
+      #UserMailer.automatically_declined(self).deliver
     end
     self.update_column(:state, "rejected")
   end
@@ -290,7 +290,7 @@ class Booking < ActiveRecord::Base
       results = self.complete_transaction(current_user)
       if results.class == String && Rails.env != "development"
         message = 'An error has occurred. Sorry for inconvenience. Please consult PetHomeStay Team'
-        UserMailer.error_report('host confirming transaction', results).deliver
+        #UserMailer.error_report('host confirming transaction', results).deliver
       else
         message = 'You have confirmed the booking'
         self.save!
@@ -312,13 +312,13 @@ class Booking < ActiveRecord::Base
       # self.mailbox.messages.create! user_id: bookee_id,
       #   message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
       self.mailbox.update_attributes host_read: false, guest_read: false
-      PetOwnerMailer.provider_not_available(self).deliver
+      #PetOwnerMailer.provider_not_available(self).deliver
     elsif self.response_id == 7
       message = 'Your question has been sent to guest'
       old_message = self.response_message
       self.response_message = nil
       self.save!
-      PetOwnerMailer.provider_has_question(self, old_message).deliver
+      #PetOwnerMailer.provider_has_question(self, old_message).deliver
     end
     if self.response_message.present?
       self.mailbox.messages.create! user_id: bookee_id, message_text: self.response_message
