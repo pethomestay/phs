@@ -106,8 +106,8 @@ class PetOwnerMailer < ActionMailer::Base
                     },
 					
 					#{
-                        #:name => "HomeStayUrl",
-                        #:content => homestay_url(@homestay)
+                     #   :name => "HomeStayUrl",
+                      #  :content => homestay_url(@homestay)
                     #},
                     {
                         :name => "HouseRulesUrl",
