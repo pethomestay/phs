@@ -58,7 +58,7 @@
       .col-xs-12
         .mar-top.mar-btm
         = f.input :other_pet_type, label: false, placeholder: 'eg: Makaw or Iguana', input_html: {id: 'other_pet_type_text_id'} 
-        = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', data: { placeholder: 'eg: Beagle' } } 
+        = f.input :breed, label: false , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', multiple: false, data: { placeholder: 'eg: Beagle' } } 
     .row.text-box-centered
       .col-xs-6 style='padding-right: 3px;'
           a.btn.btn-two-tone.btn-block#modal_male_desex Male 

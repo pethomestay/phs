@@ -55,7 +55,7 @@
       .pad-lft
         = f.input :pet_type_id, label: false, collection: ReferenceData::PetType.dog_cat_other, as: :radio_buttons
     = f.input :other_pet_type, input_html: { id: 'other_pet_type_text_id', data: { placehoder: 'Please specify pet type' } }, label: false  
-    = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', multiple:true, data: { placeholder: 'eg: Beagle' } } 
+    = f.input :breed, label: 'Breed' , collection: DOG_BREEDS, input_html: { class: 'basic-multiple', multiple: false, data: { placeholder: 'eg: Beagle' } } 
     .text-md.text-bold Please select one
     .col-xs-12
       .pad-lft
@@ -127,11 +127,13 @@
         = f.input :flea_treated, label: 'flea treated'
         = f.input :vaccinated, label: 'vaccinated'
 javascript:
-    $("#pet_breed").multiselect({ 
+    $("#pet_breed").multiselect({     
       maxHeight: 200, 
       buttonWidth: '100%',
       enableCaseInsensitiveFiltering: true
-    });   
+    }); 
+
+
     var petSizeSliderChanged = function() {
         $('#pet_size_id').attr('data-slider-value', petSizeSlider.getValue());
         
