@@ -14,8 +14,8 @@
 #end
 
 
-
-ActionMailer::Base.delivery_method = :smtp
+if Rails.env.development?
+    ActionMailer::Base.delivery_method = :smtp
 
 		ActionMailer::Base.smtp_settings = {
 		:address => "smtp.mandrillapp.com",
@@ -23,11 +23,12 @@ ActionMailer::Base.delivery_method = :smtp
 		:user_name => "tom@pethomestay.com",
 		:password => ENV["MANDRILL_APIKEY"],
 		#:domain    => 'www.pethomestay.com',
+		:domain => 'http://localhost:3000',
 		:authentication => "login",
 		:enable_starttls_auto => true
 		}
-	
-ActionMailer::Base.default_url_options[:host] = 'localhost:3000'
-ActionMailer::Base.default charset: "utf-8"
 
-	
+		ActionMailer::Base.default_url_options[:host] = 'localhost:3000'
+		ActionMailer::Base.default charset: "utf-8"
+		Mail.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?
+end

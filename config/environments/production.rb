@@ -82,15 +82,15 @@ PetHomestay::Application.configure do
     #  api_key: ENV['MAILGUN_API_KEY'],
      # domain: ENV['MAILGUN_DOMAIN']
   #}
-	
+
   config.action_mailer.delivery_method = :smtp
-	  	ActionMailer::Base.default charset: "utf-8"
+	ActionMailer::Base.default charset: "utf-8"
 	  	ActionMailer::Base.smtp_settings = {
 		:address => "smtp.mandrillapp.com",
 		:port => 587,
 		:user_name => "tom@pethomestay.com",
 		:password => ENV["MANDRILL_APIKEY"],
-		#:domain    => 'www.pethomestay.com',
+		:domain    => 'www.pethomestay.com',
 		:authentication => "login",
 		:enable_starttls_auto => true
     }
