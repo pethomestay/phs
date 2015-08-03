@@ -90,7 +90,7 @@ PetHomestay::Application.configure do
 		:port => 587,
 		:user_name => "tom@pethomestay.com",
 		:password => ENV["MANDRILL_APIKEY"],
-		:domain    => 'www.pethomestay.com',
+		:domain    => 'www.pethomestay.com.au',
 		:authentication => "login",
 		:enable_starttls_auto => true
     }
