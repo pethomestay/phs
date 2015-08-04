@@ -48,8 +48,7 @@ PetHomestay::Application.configure do
   #}
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.default charset: "utf-8"
-
-    ActionMailer::Base.smtp_settings = {
+  ActionMailer::Base.smtp_settings = {
     :address => "smtp.mandrillapp.com",
     :port => 587,
     :user_name => "tom@pethomestay.com",
@@ -57,11 +56,11 @@ PetHomestay::Application.configure do
     #:domain    => 'www.pethomestay.com',
     :authentication => "login",
     :enable_starttls_auto => true
-    }
+  }
 
   # Expands the lines which load the assets
   #config.assets.raise_runtime_errors = true
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.assets.debug = false
   config.assets.prefix = "/assets_dev"
 
