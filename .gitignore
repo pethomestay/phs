@@ -14,6 +14,9 @@
 # Ignore .env
 .env
 
+# Ignore vendored gems.
+vendor/ruby/
+
 # Ignore dragonfly images
 public/system/dragonfly
 
