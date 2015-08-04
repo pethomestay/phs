@@ -76,8 +76,8 @@ PetHomestay::Application.configure do
   #   :domain         => ENV['HOST'],
   #   :authentication => :plain,
   # }
-	
-	config.action_mailer.delivery_method = :smtp
+  
+  config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.default charset: "utf-8"
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.mandrillapp.com",
