@@ -1,4 +1,4 @@
 --color
+--format=doc
+--require rails_helper
 --require spec_helper
---format progress
---profile
