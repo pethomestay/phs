@@ -1,6 +1,7 @@
 
 PetHomestay::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
+  # Settings specified here will take precedence over
+  # those in config/application.rb
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -34,39 +35,24 @@ PetHomestay::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.log_level = :debug
-
-  # Do not compress assets
-  #config.assets.compress = false
-
-  #config.serve_static_assets = true
-  #ensure we don't send emails on dev
-  #config.action_mailer.delivery_method = :mailgun
-
-  #config.action_mailer.mailgun_settings = {
-   #   api_key: ENV['MAILGUN_API_KEY'],
-    #  domain: ENV['MAILGUN_DOMAIN']
-  #}
   ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.default charset: "utf-8"
-
-    ActionMailer::Base.smtp_settings = {
-    :address => "smtp.mandrillapp.com",
-    :port => 587,
-    :user_name => "tom@pethomestay.com",
-    :password => ENV["MANDRILL_APIKEY"],
+  ActionMailer::Base.default charset: 'utf-8'
+  ActionMailer::Base.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 587,
+    user_name: 'tom@pethomestay.com',
+    password: ENV['MANDRILL_APIKEY'],
     #:domain    => 'www.pethomestay.com',
-    :authentication => "login",
-    :enable_starttls_auto => true
-    }
+    authentication: 'login',
+    enable_starttls_auto: true
+  }
 
   # Expands the lines which load the assets
-  #config.assets.raise_runtime_errors = true
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # config.assets.raise_runtime_errors = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.assets.debug = false
-  config.assets.prefix = "/assets_dev"
+  config.assets.prefix = '/assets_dev'
 
   config.middleware.use('StubIp', '203.206.102.165')
-
 end
-
 EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

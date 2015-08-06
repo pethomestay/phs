@@ -67,7 +67,7 @@
       .form-group
         = f.hidden_field :accept_terms, value: 1
       .form-group.text-box-centered
-        = f.submit "JOIN US. IT'S FREE", class: 'btn btn-mint form-control submit' 
+        = f.submit "JOIN US. IT'S FREE", class: 'btn btn-mint form-control submit', disable_with: "Creating User..." 
     p.help-block.text-center.text-sm
       small
         | By joining PetHomeStay, you agree to our 

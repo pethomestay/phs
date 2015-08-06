@@ -29,7 +29,7 @@
         = f.input :reuse_message, as: :hidden, input_html: { value: 1 }
     .text-box-centered.text-center#flash_error role='alert' style="margin-bottom: 10px; min-height:40px"
     .text-box-centered
-      = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-mint btn-block' 
+      = f.submit 'SUBMIT ENQUIRY', class: 'btn btn-mint btn-block' , disable_with: "Submitting..." 
     button.pull-left.hidden-xs style='margin-top: -15px; margin-left: -7px' type='button' class='close' data-dismiss='modal'
       .sr-only Close
       i.fa.fa-reply.text-xs   

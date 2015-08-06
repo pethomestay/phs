@@ -23,7 +23,7 @@
         = password_field_tag 'user[password]', nil, class: 'form-control', placeholder: 'Password'
       .text-box-centered#flash_error_sign_in
     .form-group.text-box-centered
-      = submit_tag 'LOG IN', class: 'btn btn-mint form-control submit'
+      = submit_tag 'LOG IN', class: 'btn btn-mint form-control submit', disable_with: "Logging in..." 
       label.checkbox-inline
         = check_box_tag 'user[remember_me]', 1, true
         span.text-muted.text-sm Remember Me
