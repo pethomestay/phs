@@ -74,24 +74,4 @@ RSpec.configure do |config|
     # a real object. This is generally recommended.
     mocks.verify_partial_doubles = true
   end
-
-  #customized config
-  begin
-    config.raise_errors_for_deprecations!
-  end
-end
-
-# check test coverage
-MIN_COVERAGE = 80
-require 'simplecov'
-SimpleCov.start 'rails' do
-  # bug: changing the coverage_dir here breaks coverage recording.
-  add_filter "/app/uploaders"
-  at_exit do
-    SimpleCov.result.format!
-    if SimpleCov.result.covered_percent < MIN_COVERAGE
-      $stderr.puts "Coverage is less than #{MIN_COVERAGE}%, build failed."
-      exit 1
-    end
-  end
 end
