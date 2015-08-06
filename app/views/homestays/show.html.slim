@@ -19,81 +19,13 @@
   - if img_url.present?
     meta property='og:image' content=img_url
     meta name='twitter:image' content=img_url
-css:
-  
-  .link-options {
-    display:block;
-    visibility:hidden;
-    opacity:0;
-    transition:visibility 0s linear 0.5s,opacity 0.5s linear;
-    width: 110px;
-    height: 110px;
-    text-align: center;
-    margin: 0 auto;
-    border: 4px solid #ddd;
-    border-radius: 50%;
-    z-index: 4;
-    margin-top: -105px;
-    color: #c4c4c4;  
-  }
-  .link-options:hover {
-    color: #ec5c3b;
-    border: 4px solid #ec5c3b;
-    opacity: 0.8; 
-  }
-  .pet-trash-css {
-    font-size: 40pt;
-    padding-top: 25px;
-  }
-  .show-options:hover .link-options {
-    visibility:visible;
-    opacity:1;
-    transition-delay:0s;
-  }
-  .slick-prev {
-    display:none !important;
-  }
-  .slick-next {
-    display:none !important;
-  }
-  .title_p_t {
-    margin-top:10px;
-  }
-  .tooltip_p_t {
-    margin-top:5px
-  }
-  .title_blk {
-    display:block;
-  } 
-  .price_size {
-    font-size: 1.1em;
-  }
-  .price_sticky {
-    width: 100%;
-    text-align: center;
-    border-top: 1px solid #ddd;
-  }
-  .phs_icon_wrap {
-    border: 1px solid #ddd;
-    border-radius:4px;
-  }
-  .phs_badge_wrap {
-    margin: 0 15px 15px 15px;
-    width: 250px;
-    display: inline-block;
-  } 
-  .phs_cb_width {
-    width: 180px;
-    display: inline-block;
-  }
-  .phs_pet_icon_wrap {
-    text-align:center;
-  }
-  .phs_actionBtn {
-    margin-left:5px;  
-    font-weight:bold; 
-    font-size:18px;
-  }
+
+= stylesheet_link_tag 'dropzone'
+= stylesheet_link_tag 'homestays/show'
+
+= javascript_include_tag 'homestays/galleria-1.4.2.min'
+= javascript_include_tag 'dropzone'
+
 
 javascript:
   window.fbAsyncInit = function() {
@@ -127,8 +59,8 @@ coffee:
       height = 350
       window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
 
-= javascript_include_tag 'dropzone'
-= stylesheet_link_tag 'dropzone'
+
+
 
 .container-fluid.homestay-show
   .row.hidden-md.hidden-lg id="navWrap"
@@ -176,21 +108,10 @@ coffee:
               .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
                 span.text-lg $#{@homestay.remote_price.to_i}
                 span.text-xs 
-                  |/24h   
+                  |/24h                                   
   .row style="background-color:#e8ebf0"
     .panel
-      .slick_jag style="margin-bottom:0"
-        - if @homestay.photos?
-          - for photo in @homestay.photos
-            div style="background-size:auto"
-              = cl_image_tag photo.public_id, height: 400, angle: :exif, crop: :fill
-        - elsif @homestay.pictures.present?
-          - for picture in @homestay.pictures
-            div style="max-height:400px; background-size:auto"
-              = image_tag picture.file.thumb('x400').url
-        - else
-          div style="max-height:400px; background-size:auto"
-            = image_tag 'placeholder.png'                       
+      
       .panel-media
         - if @homestay.user.profile_photo?
           = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
@@ -316,16 +237,22 @@ coffee:
                     br
               
             .tab-pane.fade id="demo-stk-lft-tab-3"
-              .calendar-container style="margin:0px; background-color:#fff !important;"
-                = render 'pages/dashboard/calendar', host_id: @homestay.user.id
-                p.legends
-                  span.square.today
-                  '  Today
-                  span.square.available
-                  '  Available
-                  span.square.unavailable
-                  |  Unavailable  
-          
+              / .calendar-container style="margin:0px; background-color:#fff !important;"
+                / = render 'pages/dashboard/calendar', host_id: @homestay.user.id
+                / p.legends
+                /   span.square.today
+                /   '  Today
+                /   span.square.available
+                /   '  Available
+                /   span.square.unavailable
+                /   |  Unavailable  
+              .galleria
+                - if @homestay.photos?
+                  - for photo in @homestay.photos
+                      = cl_image_tag photo.public_id
+                - elsif @homestay.pictures.present?
+                  - for picture in @homestay.pictures
+                      = image_tag picture.file.thumb('x400').url   
             .tab-pane.fade id="demo-stk-lft-tab-4"
               - if @reviews.any?
                 .timeline
@@ -462,139 +389,9 @@ coffee:
     .modal-content
       = render 'modal_add_pet', top: true
 
-coffee:
-  $ ->
-    # Fire modal if #request-modal-add-pet is in URL
-    if window.location.hash == '#request-modal-add-pet'
-      $('#request-modal-add-pet').modal('show')
-    # Fire modal if #request-modal is in URL
-    if window.location.hash == '#request-modal'
-      $('#request-modal').modal('show')   
-    # Fire modal if #confirm-modal is in URL
-    if window.location.hash == '#confirm-modal'
-      $('#confirm-modal').modal('show')    
-  
-    # Map
-    $map = $('#map')
-    map = new GMaps
-      div: '#map'
-      lat: $map.data('lat')
-      lng: $map.data('lng')
-      minZoom: 10
-      maxZoom: 14
-      disableDefaultUI: true
-      scrollwheel: false
-      draggable: false
-    map.addMarker
-      lat: $map.data('lat')
-      lng: $map.data('lng')
-      icon: 'https://res.cloudinary.com/hxnfgf9c2/image/upload/v1414374978/map_marker.png'
-    $('#map').mouseenter (evt) ->
-      if !map.hover
-        map.hover = true
-        map.setOptions
-          panControl: true
-          zoomControl: true
-          zoomControlOptions:
-            style: google.maps.ZoomControlStyle.LARGE
-    $('body').mouseover (evt) ->
-      if map.hover
-        if $(evt.target).closest('#map').length == 0
-          map.hover = false
-          map.setOptions
-            panControl: false
-            zoomControl: false
+= javascript_include_tag 'homestays/show'
 
-    # Datepicker for check in and out date
-    $check_in = $('#enquiry_check_in_date')
-    check_in_picker = $check_in.datepicker(
-      format: 'dd/mm/yyyy'
-      startDate: '0d'
-      autoclose: true # False by default
-    ).on('changeDate', (evt) ->
-      # Set check out date no earlier than check in date
-      inDate = new Date(evt.date)
-      check_out_picker.setDate inDate
-      check_out_picker.startDate = inDate
-      check_out_picker.update()
-      $check_out.focus()
-    ).data('datepicker')
-    $check_out = $('#enquiry_check_out_date')
-    check_out_picker = $check_out.datepicker(
-      format: 'dd/mm/yyyy'
-      startDate: '0d'
-      autoclose: true
-    ).data('datepicker')
-    # Make calendar icons clickable
-    $('.enquiry_check_in_date .input-group-addon'). on 'click', (evt) ->
-      evt.preventDefault()
-      check_out_picker.hide()
-      check_in_picker.show()
-    $('.enquiry_check_out_date .input-group-addon'). on 'click', (evt) ->
-      evt.preventDefault()
-      check_in_picker.hide()
-      check_out_picker.show()
 
-    $(".chosen-select").chosen
-      max_selected_options: 1
 
-    $('.pet_profile_photo .attachinary-input').attachinary
-      template: """
-          <% for(var i = 0; i < files.length; i++){ %>
-            <% if(files[i].resource_type == "raw") { %>
-                <div class="raw-file"></div>
-            <% } else { %>
-                <div class="show-options" style="text-align: left; min-height: 120px">
-                  <img
-                    src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'png', "crop": 'thumb', "width": 100, "height": 100, "radius": "max" }) %>"
-                    alt="" width="100" height="100" />
-                  <a class="link-options" href="#" ><i class="fa fa-trash-o pet-trash-css" data-remove="<%= files[i].public_id %>"></i></a> 
-                </div>
-                <% } %>
-          <% } %>
-      """
-    $('.chosen-select').chosen
-      allow_single_deselect: true
-      no_results_text: 'No results matched'
-      width: '200px'
-javascript:
-  $(document).scroll(function () {
-    //stick nav to top of page
-    var y = $(this).scrollTop();
-    var navWrap = $('#navWrap').offset().top;
-    if (y > navWrap) {
-        $('nav').addClass('bar_top_sticky');
-    } else {
-        $('nav').removeClass('bar_top_sticky');
-    }
-  });
 
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-
-  $('.slick_jag').slick({
-      slidesToShow: 2,
-      accessibility: false,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      variableWidth: true,
-      adaptiveHeight: true,
-      responsive: [
-        {
-          breakpoint: 786,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ]
-  });
   
