@@ -58,21 +58,31 @@ gem 'analytics-ruby', '~> 2.0.0', require: 'segment/analytics' # Segment.io
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'phony_rails' # validate and normalize phone number
 
+# Documentation.
+gem 'yard'
+gem 'yard-restful'
+gem 'yardstick'
+
+# JSON.
+gem 'jbuilder', '~> 2.0'
+
 group :development, :test do
   gem 'capistrano'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'json-schema'
-  gem 'pry'
-  gem 'pry-debugger'
-  gem 'pry-rails'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
+  # gem 'pry'
+  # gem 'pry-debugger'
+  # gem 'pry-rails'
+  # gem 'pry-remote'
+  # gem 'pry-stack_explorer'
   gem 'rack-test', require: 'rack/test'
   gem 'rb-fsevent'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'thin'
 end
 
