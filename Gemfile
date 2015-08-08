@@ -62,6 +62,7 @@ group :development, :test do
   gem 'capistrano'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
+  gem 'guard-rubocop'
   gem 'json-schema'
   gem 'pry'
   gem 'pry-debugger'
@@ -71,6 +72,7 @@ group :development, :test do
   gem 'rack-test', require: 'rack/test'
   gem 'rb-fsevent'
   gem 'rspec-rails'
+  gem 'rubocop', require: false
   gem 'thin'
 end
 
