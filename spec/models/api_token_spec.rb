@@ -31,7 +31,7 @@ RSpec.describe ApiToken, type: :model do
 
       context 'code is absent' do
         it 'generates a new 36-character code' do
-          subject.save!
+          subject.save
           expect(subject.code.length).to eq(36)
         end
       end

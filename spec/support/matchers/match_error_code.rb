@@ -1,4 +1,4 @@
-RSpec::Matchers.define :match_response_code do |code|
+RSpec::Matchers.define :match_error_code do |code|
   match do |response|
     json = JSON.parse(response.body)
     expect(response.status).to eq(code)
