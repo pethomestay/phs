@@ -1,0 +1,278 @@
+= stylesheet_link_tag 'dropzone'
+= stylesheet_link_tag 'homestays/phs-gallery/lightGallery'
+= stylesheet_link_tag 'homestays/phs-gallery/lightslider'
+= stylesheet_link_tag 'homestays/show'
+
+= javascript_include_tag 'dropzone'
+= javascript_include_tag 'homestays/phs-gallery/lightGallery'
+= javascript_include_tag 'homestays/phs-gallery/lightslider'
+= javascript_include_tag 'homestays/show'
+
+#content-container
+  / Page content
+  / ===================================================
+  #page-content
+    .row
+      .container
+        .col-md-7.pad-no.col-sm-12.col-sm-12
+          .panel
+            .panel-body{:style => "padding: 0 0 15px 0"}
+              %ul.light-image-gallery#imageGallery
+                - if @homestay.photos?
+                  - for photo in @homestay.photos
+                    = cl_image_tag photo.public_id, :height => 400, :class => "light-image-center"
+                - if @homestay.pictures.present?
+                  - for picture in @homestay.pictures
+                    = cl_image_tag picture.public_id, :height => 400, :class => "light-image-center"
+        .col-md-5.pad-no.hidden-sm.hidden-xs 
+          .panel{:style => 'height:450px'}
+            .panel-body
+              .row
+                .col-md-3	
+                  - if @homestay.user.profile_photo?
+                    = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, class: 'img-circle img-md img-border'
+                  - elsif @homestay.user.uid.present?
+                    = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, class: 'img-circle img-md img-border'
+                  - elsif @homestay.photos.present?
+                    = cl_image_tag @homestay.photos.first.public_id, width: 95, height: 95, class: 'img-circle img-md img-border'
+                  - else
+                    = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'img-circle img-md img-border'    
+                  %br
+                  - if @reviews.any?
+                    %span.display_inline.rating{:style => 'margin-bottom: 0; color: #5cc1c0'}
+                    = render 'stars', rating: @homestay.average_rating
+                .col-md-9 
+                  .text-bold.text-2x{:style => 'top: -1.7em'}= @homestay.user.first_name.titleize
+                  %span.text-lg= @homestay.title
+                  %p.text-sm= @homestay.location
+              %br
+              .row  
+                .col-md-8
+                  - if @homestay.cost_per_night?
+                    .text-lg PetHomeStay Rate
+                    .text-md Dog Hosting 
+                    .text-sm.text-thin In the Sitter's Home
+                  - if @homestay.remote_price?
+                    .text-lg PetSitting Rate
+                    .text-md Dog Hosting 
+                    .text-sm.text-thin In the Owner's Home
+                .col-md-4
+                  .stay-costs.price_size.pull-right  
+                    - if @homestay.cost_per_night?
+                      %span.after-work $
+                      %span.after-work= @homestay.cost_per_night.to_i
+                      %span.lower /24hr
+                    %br  
+                    - if @homestay.remote_price?
+                      %span.after-work $
+                      %span.after-work= @homestay.remote_price.to_i
+                      %span.lower /24hr
+              %br
+              .row
+                .col-md-12
+                  %a{ 'href' => '#' }
+                    .text-center Click here for more services.
+
+              
+      .col-lg-6
+        / Status Form
+        / ===================================================
+        .panel
+          .panel-body
+            %textarea.form-control{:placeholder => "What are you thinking?", :rows => "2"}
+            .mar-top.clearfix
+              %button.btn.btn-sm.btn-primary.pull-right{:type => "submit"}
+                %i.fa.fa-pencil.fa-fw
+                Share
+              %a.btn.btn-trans.btn-icon.fa.fa-video-camera.add-tooltip{"data-original-title" => "Add Video", "data-toggle" => "tooltip", :href => "#"}
+              %a.btn.btn-trans.btn-icon.fa.fa-camera.add-tooltip{"data-original-title" => "Add Photo", "data-toggle" => "tooltip", :href => "#"}
+              %a.btn.btn-trans.btn-icon.fa.fa-file.add-tooltip{"data-original-title" => "Add File", "data-toggle" => "tooltip", :href => "#"}
+        / ===================================================
+        / End Status Form
+        .panel
+          .panel-body
+            / Newsfeed Content
+            / ===================================================
+            .media-block
+              %a.media-left{:href => "#"}
+                /%img.img-circle.img-sm{:alt => "Profile Picture", :src => "img/av4.png"}/
+              .media-body
+                .mar-btm
+                  %a.btn-link.text-semibold.media-heading.box-inline{:href => "#"} Lisa D.
+                  %p.text-muted.text-sm
+                    %i.fa.fa-mobile.fa-lg
+                    \- From Mobile - 11 min ago
+                %p consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                .pad-ver
+                  .btn-group
+                    %a.btn.btn-sm.btn-default.btn-hover-success{:href => "#"}
+                      %i.fa.fa-thumbs-up
+                    %a.btn.btn-sm.btn-default.btn-hover-danger{:href => "#"}
+                      %i.fa.fa-thumbs-down
+                  %a.btn.btn-sm.btn-default.btn-hover-primary{:href => "#"} Comment
+                %hr/
+                / Comments
+                %div
+                  .media-block
+                    %a.media-left{:href => "#"}
+                      /%img.img-circle.img-sm{:alt => "Profile Picture", :src => "img/av3.png"}/
+                    .media-body
+                      .mar-btm
+                        %a.btn-link.text-semibold.media-heading.box-inline{:href => "#"} Bobby Marz
+                        %p.text-muted.text-sm
+                          %i.fa.fa-mobile.fa-lg
+                          \- From Mobile - 7 min ago
+                      %p Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                      .pad-ver
+                        .btn-group
+                          %a.btn.btn-sm.btn-default.btn-hover-success.active{:href => "#"}
+                            %i.fa.fa-thumbs-up
+                            You Like it
+                          %a.btn.btn-sm.btn-default.btn-hover-danger{:href => "#"}
+                            %i.fa.fa-thumbs-down
+                        %a.btn.btn-sm.btn-default.btn-hover-primary{:href => "#"} Comment
+                      %hr/
+                  .media-block
+                    %a.media-left{:href => "#"}
+                      /%img.img-circle.img-sm{:alt => "Profile Picture", :src => "img/av6.png"}/
+                    .media-body
+                      .mar-btm
+                        %a.btn-link.text-semibold.media-heading.box-inline{:href => "#"} Lucy Moon
+                        %p.text-muted.text-sm
+                          %i.fa.fa-globe.fa-lg
+                          \- From Web - 2 min ago
+                      %p Duis autem vel eum iriure dolor in hendrerit in vulputate ?
+                      .pad-ver
+                        .btn-group
+                          %a.btn.btn-sm.btn-default.btn-hover-success{:href => "#"}
+                            %i.fa.fa-thumbs-up
+                          %a.btn.btn-sm.btn-default.btn-hover-danger{:href => "#"}
+                            %i.fa.fa-thumbs-down
+                        %a.btn.btn-sm.btn-default.btn-hover-primary{:href => "#"} Comment
+                      %hr/
+            / ===================================================
+            / End Newsfeed Content
+            / Newsfeed Content
+            / ===================================================
+            .media-block.pad-all
+              %a.media-left{:href => "#"}
+                /%img.img-circle.img-sm{:alt => "Profile Picture", :src => "img/av1.png"}/
+              .media-body
+                .mar-btm
+                  %a.btn-link.text-semibold.media-heading.box-inline{:href => "#"} John Doe
+                  %p.text-muted.text-sm
+                    %i.fa.fa-mobile.fa-lg
+                    \- From Mobile - 11 min ago
+                %p Lorem ipsum dolor sit amet.
+                /%img.img-responsive.thumbnail{:alt => "Image", :src => "img/thumbs/img1.jpg"}/
+                .pad-ver
+                  %span.tag.tag-sm
+                    %i.fa.fa-heart.text-danger
+                    250 Likes
+                  .btn-group
+                    %a.btn.btn-sm.btn-default.btn-hover-success{:href => "#"}
+                      %i.fa.fa-thumbs-up
+                    %a.btn.btn-sm.btn-default.btn-hover-danger{:href => "#"}
+                      %i.fa.fa-thumbs-down
+                  %a.btn.btn-sm.btn-default.btn-hover-primary{:href => "#"} Comment
+                %hr/
+                / Comments
+                %div
+                  .media-block.pad-all
+                    %a.media-left{:href => "#"}
+                      /%img.img-circle.img-sm{:alt => "Profile Picture", :src => "img/av5.png"}/
+                    .media-body
+                      .mar-btm
+                        %a.btn-link.text-semibold.media-heading.box-inline{:href => "#"} Maria Leanz
+                        %p.text-muted.text-sm
+                          %i.fa.fa-globe.fa-lg
+                          \- From Web - 2 min ago
+                      %p Duis autem vel eum iriure dolor in hendrerit in vulputate ?
+                      %div
+                        .btn-group
+                          %a.btn.btn-sm.btn-default.btn-hover-success{:href => "#"}
+                            %i.fa.fa-thumbs-up
+                          %a.btn.btn-sm.btn-default.btn-hover-danger{:href => "#"}
+                            %i.fa.fa-thumbs-down
+                        %a.btn.btn-sm.btn-default.btn-hover-primary{:href => "#"} Comment
+            / ===================================================
+            / End Newsfeed Content
+      .col-lg-6
+        .panel.panel-body
+          / Timeline
+          / ===================================================
+          .timeline
+            / Timeline header
+            .timeline-header
+              .timeline-header-title.bg-success Now
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon
+                  /%img{:alt => "Profile picture", :src => "img/av6.png"}/
+                .timeline-time 30 Min ago
+              .timeline-label
+                %p.mar-no.pad-btm
+                  %a.btn-link.text-semibold{:href => "#"} Maria J.
+                  shared an image
+                .img-holder
+                  /%img{:alt => "Image", :src => "img/thumbs/img2.jpg"}/
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon.bg-danger
+                  %i.fa.fa-building.fa-lg
+                .timeline-time 2 Hours ago
+              .timeline-label
+                %h4.mar-no.pad-btm
+                  %a.text-danger{:href => "#"} Job Meeting
+                %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon
+                  /%img{:alt => "Profile picture", :src => "img/av4.png"}/
+                .timeline-time 3 Hours ago
+              .timeline-label
+                %p.mar-no.pad-btm
+                  %a.btn-link.text-semibold{:href => "#"} Lisa D.
+                  commented on
+                  %a{:href => "#"} The Article
+                %blockquote.bq-sm.bq-open Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon.bg-purple
+                  %i.fa.fa-check.fa-lg
+                .timeline-time 5 Hours ago
+              .timeline-label
+                /%img.img-xs.img-circle{:alt => "Profile picture", :src => "img/av3.png"}/
+                %a.btn-link.text-semibold{:href => "#"} Bobby Marz
+                followed you.
+            / Timeline header
+            .timeline-header
+              .timeline-header-title.bg-dark Yesterday
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon.bg-info
+                  %i.fa.fa-envelope.fa-lg
+                .timeline-time 15:45
+              .timeline-label
+                %h4.text-info.mar-no.pad-btm Lorem ipsum dolor sit amet
+                %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon.bg-success
+                  %i.fa.fa-thumbs-up.fa-lg
+                .timeline-time 13:27
+              .timeline-label
+                /%img.img-xs.img-circle{:alt => "Profile picture", :src => "img/av2.png"}/
+                %a.btn-link.text-semibold{:href => "#"} Michael Both
+                Like
+                %a{:href => "#"} The Article
+            .timeline-entry
+              .timeline-stat
+                .timeline-icon
+                .timeline-time 11:27
+              .timeline-label
+                %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.
+          / ===================================================
+          / End Timeline
+  / ===================================================
+  / End page content
