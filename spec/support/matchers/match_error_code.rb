@@ -9,6 +9,6 @@ RSpec::Matchers.define :match_error_code do |code|
     when 403 then 'forbidden'
     when 404 then 'not-found'
     end
-    expect(json['error']).to eq(expected_error)
+    expect(json['error']['type']).to eq(expected_error)
   end
 end

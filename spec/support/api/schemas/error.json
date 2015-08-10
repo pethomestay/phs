@@ -1,9 +1,16 @@
 {
   "type": "object",
   "properties": {
-    "error": {"type": "string"},
-    "description": {"type": "string"},
-    "message": {"type": "string"}
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {"type": "number"},
+        "type": {"type": "string"},
+        "description": {"type": "string"},
+        "messages": {"type": "array"}
+      },
+      "required": ["code", "type", "description"]
+    }
   },
-  "required": ["error", "description"]
+  "required": ["error"]
 }
