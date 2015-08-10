@@ -1,4 +1,4 @@
-.timeline-entry
+.timeline-entry.hidden-xs
   .timeline-stat
     .timeline-icon style="margin-bottom: 5px;"
       - if review.user.profile_photo?
@@ -8,8 +8,12 @@
       - else
         = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture'
     .timeline-time style="color: #5cc1c0; margin-bottom: -3px;"
-      = render 'stars', rating: review.rating
-    .timeline-time style="margin-top: -3px;" #{review.created_at.strftime('%F')}      
+      = render 'stars', rating: review.rating   
   .timeline-label
-    p.mar-no Reviewed by #{review.user.first_name}
-    blockquote.bq-sm.bq-open #{review.review}
+    .pad-hor
+      .text-lg.text-bold.text-info Reviewed by #{review.user.first_name}
+      .text-sm.text-bold.pad-btm #{time_ago_in_words(review.created_at.strftime('%F'))} ago    
+      .text-lg #{review.review}
+
+// For mobile
+/ .hidden-sm.hidden-md.hidden-lg

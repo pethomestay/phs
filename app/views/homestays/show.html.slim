@@ -23,7 +23,6 @@
 = stylesheet_link_tag 'dropzone'
 = stylesheet_link_tag 'homestays/show'
 
-= javascript_include_tag 'homestays/galleria-1.4.2.min'
 = javascript_include_tag 'dropzone'
 
 
@@ -58,9 +57,6 @@ coffee:
       width  = 600
       height = 350
       window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
-
-
-
 
 .container-fluid.homestay-show
   .row.hidden-md.hidden-lg id="navWrap"
@@ -110,8 +106,19 @@ coffee:
                 span.text-xs 
                   |/24h                                   
   .row style="background-color:#e8ebf0"
-    .panel
-      
+    .col-sm-8  
+      .phs_image_slider.light-image-gallery.mar-top
+        - if @homestay.photos?
+          - for photo in @homestay.photos
+            .light-image-center
+              = cl_image_tag photo.public_id, height: 400, angle: :exif, crop: :fill, class: 'light-image-center'
+        - elsif @homestay.pictures.present?
+          - for picture in @homestay.pictures
+            .light-image-center
+              = image_tag picture.file.thumb('x400').url, height: 400, angle: :exif, crop: :fill, class: 'light-image-center'
+        - else
+          .light-image-center
+            = image_tag 'placeholder.png', height: 400, crop: :fill, class: 'light-image-center'
       .panel-media
         - if @homestay.user.profile_photo?
           = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
@@ -130,136 +137,98 @@ coffee:
               span.display_inline.rating style="margin-bottom: 0; color: #5cc1c0"
                 = render 'stars', rating: @homestay.average_rating
             p.text-sm #{@homestay.location}
-    .col-lg-8  
-      .panel.panel-danger 
-        .panel-heading style="background-color:#ec5c3b"
-          .panel-control
-            ul.nav.nav-tabs.hidden-xs
-              li.active
-                a data-toggle="tab" href="#demo-stk-lft-tab-1"
-                  span.text-lg style="padding-right:10px" Description
-                  i.fa.fa-keyboard-o
+    
+      .panel
+        .panel-body
+          - if @homestay.for_charity
+            .col-lg-6 style="margin-bottom: 25px;"
+              .text-bold style="display:inline-block" PetRescue Supporter
+              span.after-work.pull-right
+                = image_tag 'homestay/petrescue.png', style:"width:40px; margin-right: -5px"   
+          - if @homestay.wildfire_badge
+            .col-lg-6 style="margin-bottom: 25px;"
+              .text-bold style="display:inline-block" Emergency Host
+              span.after-work.pull-right
+                = image_tag 'homestay/wildfire_badge.png', style:"width:40px; margin-right: -5px" 
+          - if @homestay.professional_qualification
+            .col-lg-6.mar-btm
+              .text-bold style="display:inline-block" Professional Qualification
+              span.after-work.pull-right
+                i.fa.fa-graduation-cap.fa-lg.homestay_icons
+          - if @homestay.emergency_transport
+            .col-lg-6.mar-btm
+              .text-bold style="display:inline-block" Emergency transport
+              span.after-work.pull-right
+                i.fa.fa-ambulance.fa-lg.homestay_icons
+          - if @homestay.first_aid
+            .col-lg-6.mar-btm
+              .text-bold style="display:inline-block" First-aid Training 
+              span.after-work.pull-right
+                i.fa.fa-medkit.fa-lg.homestay_icons
+          - if @homestay.police_check
+            .col-lg-6.mar-btm
+              .text-bold style="display:inline-block" Police Check
+              span.after-work.pull-right
+                i.fa.fa-shield.fa-lg.homestay_icons 
+          - if @homestay.favorite_breeds.any?
+            .col-lg-6.mar-btm
+              .text-bold  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
+              - for breed in @homestay.favorite_breeds
+                span.after-work.pull-left #{ breed }
+                i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                br 
+          - if @homestay.pet_sizes.any?
+            .col-lg-6.mar-btm
+              .text-bold  Pet Sizes Accepted
+              - for size in @homestay.pet_sizes
+                span.after-work.pull-left #{ size }
+                i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                br
+          - if @homestay.energy_level_ids.any?
+            .col-lg-6.mar-btm
+              .text-bold  Pet Energy Levels Accepted
+              - for energy in @homestay.energy_level_ids
+                span.after-work.pull-left #{ ReferenceData::EnergyLevel.find(energy) } 
+                i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+                br
+          - if @homestay.supervision_id
+            .col-lg-6.mar-btm
+              .text-bold  Supervision
+              span.after-work.pull-left #{ ReferenceData::Supervision.find(@homestay.supervision_id) }
+              i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+          - if @reviews.any?
+            .text-2x.text-bold.text-info Reviews
+            hr
+            .timeline.hidden-xs
+              - @reviews.each do |review|
+                = render 'profile_review_row', review: review, top: false
+          hr      
+          .text-2x.text-bold.text-info Description
+          hr
+          .text-md.pad-no #{@homestay.description}
 
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-2"  
-                  span.text-lg style="padding-right:10px;" Profile
-                  i.fa.fa-user
-                     
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-3"
-                  span.text-lg style="padding-right:10px" Calendar
-                  i.fa.fa-calendar-o
-                  
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-4"
-                  span.text-lg style="padding-right:10px" Reviews
-                  i.fa.fa-bullhorn
-                   
-            ul.nav.nav-tabs.hidden-sm.hidden-md.hidden-lg
-              li.active
-                a data-toggle="tab" href="#demo-stk-lft-tab-1"
-                  i.fa.fa-keyboard-o.fa-2x
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-2"
-                  i.fa.fa-user.fa-2x 
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-3"
-                  i.fa.fa-calendar-o.fa-2x
-              li
-                a data-toggle="tab" href="#demo-stk-lft-tab-4"  
-                  i.fa.fa-bullhorn.fa-2x   
+
+
+    .col-sm-4
+                      
+  .row    
+    .col-lg-8  
+      .panel
         .panel-body
           .tab-content
-          
-            .tab-pane.fade.active.in  id="demo-stk-lft-tab-1"
-              .row style="margin: 0"     
-                p.text-muted.text-2x About my Homestay
-                pre.tx_sp.text-muted style="padding:0px" #{@homestay.description}
-            
             .tab-pane.fade id="demo-stk-lft-tab-2"
               .row style="margin: 0"
-                - if @homestay.for_charity
-                  .col-lg-6 style="margin-bottom: 25px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" PetRescue Supporter
-                    span.after-work.pull-right
-                      = image_tag 'homestay/petrescue.png', style:"width:40px; margin-right: -5px"   
-                - if @homestay.wildfire_badge
-                  .col-lg-6 style="margin-bottom: 25px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" Emergency Host
-                    span.after-work.pull-right
-                      = image_tag 'homestay/wildfire_badge.png', style:"width:40px; margin-right: -5px" 
-                - if @homestay.professional_qualification
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" Professional Qualification
-                    span.after-work.pull-right
-                      i.fa.fa-graduation-cap.fa-lg.homestay_icons
-                - if @homestay.emergency_transport
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" Emergency transport
-                    span.after-work.pull-right
-                      i.fa.fa-ambulance.fa-lg.homestay_icons
-                - if @homestay.first_aid
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" First-aid Training 
-                    span.after-work.pull-right
-                      i.fa.fa-medkit.fa-lg.homestay_icons
-                - if @homestay.police_check
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk style="display:inline-block" Police Check
-                    span.after-work.pull-right
-                      i.fa.fa-shield.fa-lg.homestay_icons 
-                - if @homestay.favorite_breeds.any?
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
-                    - for breed in @homestay.favorite_breeds
-                      span.after-work.pull-left #{ breed }
-                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                      br 
-                - if @homestay.pet_sizes.any?
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk  Pet Sizes Accepted
-                    - for size in @homestay.pet_sizes
-                      span.after-work.pull-left #{ size }
-                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                      br
-                - if @homestay.energy_level_ids.any?
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk  Pet Energy Levels Accepted
-                    - for energy in @homestay.energy_level_ids
-                      span.after-work.pull-left #{ ReferenceData::EnergyLevel.find(energy) } 
-                      i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                      br
-                - if @homestay.supervision_id
-                  .col-lg-6 style="margin-bottom: 15px;"
-                    label.hs_mhs_title.title_blk  Supervision
-                    span.after-work.pull-left #{ ReferenceData::Supervision.find(@homestay.supervision_id) }
-                    i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
-                    br
-              
             .tab-pane.fade id="demo-stk-lft-tab-3"
-              / .calendar-container style="margin:0px; background-color:#fff !important;"
-                / = render 'pages/dashboard/calendar', host_id: @homestay.user.id
-                / p.legends
-                /   span.square.today
-                /   '  Today
-                /   span.square.available
-                /   '  Available
-                /   span.square.unavailable
-                /   |  Unavailable  
-              .galleria
-                - if @homestay.photos?
-                  - for photo in @homestay.photos
-                      = cl_image_tag photo.public_id
-                - elsif @homestay.pictures.present?
-                  - for picture in @homestay.pictures
-                      = image_tag picture.file.thumb('x400').url   
+              .calendar-container style="margin:0px; background-color:#fff !important;"
+                = render 'pages/dashboard/calendar', host_id: @homestay.user.id
+                p.legends
+                  span.square.today
+                  '  Today
+                  span.square.available
+                  '  Available
+                  span.square.unavailable
+                  |  Unavailable  
             .tab-pane.fade id="demo-stk-lft-tab-4"
-              - if @reviews.any?
-                .timeline
-                  - @reviews.each do |review|
-                    = render 'profile_review_row', review: review, top: false
-              - else
-                span No reviews for this user at the moment
     .col-lg-4
       .panel.panel-body.text-lg.hidden-sm.hidden-xs
         - unless my_homestay?(@homestay)
