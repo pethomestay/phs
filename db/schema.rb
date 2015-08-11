@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150522050207) do
+ActiveRecord::Schema.define(:version => 20150808015753) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20150522050207) do
     t.string   "encrypted_name"
     t.string   "encrypted_bsb"
     t.string   "encrypted_account_number"
+  end
+
+  create_table "api_tokens", :force => true do |t|
+    t.string   "name",       :limit => 50
+    t.string   "code",       :limit => 36
+    t.boolean  "active",                   :default => true
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "attachinary_files", :force => true do |t|

@@ -21,6 +21,7 @@ gem 'gmaps4rails'
 gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
 gem 'legato'
 gem 'gon'
+gem 'mandrill-api', require:  'mandrill'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
@@ -53,33 +54,49 @@ gem 'braintree'
 
 gem 'intercom-rails' # Intercom.io integration
 gem 'intercom' # Intercom.io library for events
-gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics' # Segment.io
+gem 'analytics-ruby', '~> 2.0.0', require: 'segment/analytics' # Segment.io
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'phony_rails' # validate and normalize phone number
-group :test, :development do
+
+# Documentation.
+gem 'yard'
+gem 'yard-restful'
+gem 'yardstick'
+
+# JSON.
+gem 'jbuilder', '~> 2.0'
+
+group :development, :test do
   gem 'capistrano'
-  #gem 'ruby-debug-ide'
-
-  gem 'pry'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
-  gem 'pry-rails'
-
-  gem 'rspec-rails', '~>3.0.0'
-  gem 'shoulda-matchers', '~> 2.6.1'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
+  gem 'guard-rubocop'
+  gem 'json-schema'
+  # gem 'pry'
+  # gem 'pry-debugger'
+  # gem 'pry-rails'
+  # gem 'pry-remote'
+  # gem 'pry-stack_explorer'
+  gem 'rack-test', require: 'rack/test'
+  gem 'rb-fsevent'
+  gem 'rspec-rails'
+  gem 'rubocop', require: false
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'thin'
+end
 
-  # Support for stubbing model
-  gem 'rspec-activemodel-mocks'
+group :development do
+  gem 'bullet'
+  gem 'terminal-notifier-guard'
 end
 
 group :test do
-  gem 'ffaker'
-  gem 'timecop'
-  gem 'factory_girl_rails'
-  gem 'simplecov', :require => false
-  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'shoulda-matchers', require: false
+  gem 'shoulda-callback-matchers'
+  gem 'test_after_commit'
 end
 
 group :assets do
@@ -94,4 +111,3 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'heroku-deflater'
 end
-gem 'mandrill-api', require:  "mandrill"

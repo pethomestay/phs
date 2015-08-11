@@ -1,5 +1,13 @@
 PetHomestay::Application.routes.draw do
 
+  # API at https://api.pethomestay.com.
+  constraints subdomain: 'api' do
+    scope module: 'api', as: 'api', defaults: {format: 'json'} do
+      root to: 'base#index'
+      get '*path', to: 'base#page_not_found'
+    end
+  end
+
   resources :invitations
 
   devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
@@ -96,8 +104,8 @@ PetHomestay::Application.routes.draw do
 
   namespace :host do
     get '/supporters', to: 'supporters#index'
-    
-    
+
+
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
@@ -112,7 +120,7 @@ PetHomestay::Application.routes.draw do
     get '/',         to: 'host#index'
   end
   get '/invites/gmail/contact_callback', to: 'host/supporters#invite_emails', as: :host_invite_emails
-    
+
   get '/contacts/failure', to: 'host/supporters#index'
   match '/invites/send_invite_emails', to: 'host/supporters#send_invite_emails', as: :host_send_invite_emails
 
