@@ -106,102 +106,108 @@ coffee:
                 span.text-xs 
                   |/24h                                   
   .row style="background-color:#e8ebf0"
-    .col-sm-8  
-      .phs_image_slider.light-image-gallery.mar-top
-        - if @homestay.photos?
-          - for photo in @homestay.photos
-            .light-image-center
-              = cl_image_tag photo.public_id, height: 400, angle: :exif, crop: :fill, class: 'light-image-center'
-        - elsif @homestay.pictures.present?
-          - for picture in @homestay.pictures
-            .light-image-center
-              = image_tag picture.file.thumb('x400').url, height: 400, angle: :exif, crop: :fill, class: 'light-image-center'
-        - else
-          .light-image-center
-            = image_tag 'placeholder.png', height: 400, crop: :fill, class: 'light-image-center'
-      .panel-media
-        - if @homestay.user.profile_photo?
-          = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
-        - elsif @homestay.user.uid.present?
-          = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
-        - elsif @homestay.photos.present?
-          - pict = @homestay.photos.first
-          = cl_image_tag pict.public_id, height: 400, class: 'panel-media-img img-circle img-border-light' , angle: :exif, crop: :fill
-        - else
-          = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'panel-media-img img-circle img-border-light'    
-        .row
-          .col-lg-5.col-md-5
-            .panel-media-heading.text-bold.text-3x style="top: -1.7em;" #{ (@homestay.user.first_name).titleize }
-            span.text-lg #{ @homestay.title }  
-            - if @reviews.any?
-              span.display_inline.rating style="margin-bottom: 0; color: #5cc1c0"
-                = render 'stars', rating: @homestay.average_rating
-            p.text-sm #{@homestay.location}
-    
+    .col-sm-7
       .panel
+        .phs_image_slider.light-image-gallery.mar-top
+          - if @homestay.photos?
+            - for photo in @homestay.photos
+              div
+                = cl_image_tag photo.public_id, :crop => :fit, :gravity => :center, class: 'light-image-center'
+          - elsif @homestay.pictures.present?
+            - for picture in @homestay.pictures
+              div
+                = image_tag picture.file.thumb('x400').url, :crop => :fit, :gravity => :center, class: 'light-image-center'
+          - else
+            div
+              = image_tag 'placeholder.png', :crop => :fit, :gravity => :center, class: 'light-image-center'
+        .panel-media
+          - if @homestay.user.profile_photo?
+            = cl_image_tag @homestay.user.profile_photo.public_id, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
+          - elsif @homestay.user.uid.present?
+            = facebook_profile_image_tag @homestay.user.uid, width: 95, height: 95, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'panel-media-img img-circle img-border-light'
+          - elsif @homestay.photos.present?
+            - pict = @homestay.photos.first
+            = cl_image_tag pict.public_id, height: 400, class: 'panel-media-img img-circle img-border-light' , angle: :exif, crop: :fill
+          - else
+            = image_tag 'default_profile_photo.jpg', style: 'width: 95px;', class: 'panel-media-img img-circle img-border-light'    
+          - if @reviews.any?
+            
+            span.display_inline.rating style="margin-bottom: 0; color: #5cc1c0"
+              = render 'stars', rating: @homestay.average_rating
+          .row
+            .col-lg-5.col-md-5
+              .panel-media-heading.text-bold.text-3x style="top: -1.7em;" #{ (@homestay.user.first_name).titleize }
+              span.text-lg #{ @homestay.title }  
+              
+              p.text-sm #{@homestay.location}
+    
         .panel-body
           - if @homestay.for_charity
-            .col-lg-6 style="margin-bottom: 25px;"
+            .col-sm-6 style="margin-bottom: 25px;"
               .text-bold style="display:inline-block" PetRescue Supporter
               span.after-work.pull-right
                 = image_tag 'homestay/petrescue.png', style:"width:40px; margin-right: -5px"   
           - if @homestay.wildfire_badge
-            .col-lg-6 style="margin-bottom: 25px;"
+            .col-sm-6 style="margin-bottom: 25px;"
               .text-bold style="display:inline-block" Emergency Host
               span.after-work.pull-right
                 = image_tag 'homestay/wildfire_badge.png', style:"width:40px; margin-right: -5px" 
           - if @homestay.professional_qualification
-            .col-lg-6.mar-btm
-              .text-bold style="display:inline-block" Professional Qualification
+            .col-sm-6.mar-btm
+              .text-bold style="display:inline-block" Qualification
               span.after-work.pull-right
                 i.fa.fa-graduation-cap.fa-lg.homestay_icons
           - if @homestay.emergency_transport
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold style="display:inline-block" Emergency transport
               span.after-work.pull-right
-                i.fa.fa-ambulance.fa-lg.homestay_icons
+                i.fa.fa-car.fa-lg.homestay_icons
           - if @homestay.first_aid
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold style="display:inline-block" First-aid Training 
               span.after-work.pull-right
                 i.fa.fa-medkit.fa-lg.homestay_icons
           - if @homestay.police_check
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold style="display:inline-block" Police Check
               span.after-work.pull-right
                 i.fa.fa-shield.fa-lg.homestay_icons 
           - if @homestay.favorite_breeds.any?
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold  #{ (@homestay.user.first_name).titleize }'s Favorite Dog Breeds
               - for breed in @homestay.favorite_breeds
                 span.after-work.pull-left #{ breed }
                 i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
                 br 
           - if @homestay.pet_sizes.any?
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold  Pet Sizes Accepted
               - for size in @homestay.pet_sizes
                 span.after-work.pull-left #{ size }
                 i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
                 br
           - if @homestay.energy_level_ids.any?
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold  Pet Energy Levels Accepted
               - for energy in @homestay.energy_level_ids
                 span.after-work.pull-left #{ ReferenceData::EnergyLevel.find(energy) } 
                 i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
                 br
           - if @homestay.supervision_id
-            .col-lg-6.mar-btm
+            .col-sm-6.mar-btm
               .text-bold  Supervision
               span.after-work.pull-left #{ ReferenceData::Supervision.find(@homestay.supervision_id) }
               i.fa.fa-check-circle.fa-fw.fa-lg.homestay_icons.pull-right
+          br
+          hr
           - if @reviews.any?
-            .text-2x.text-bold.text-info Reviews
-            hr
-            .timeline.hidden-xs
-              - @reviews.each do |review|
-                = render 'profile_review_row', review: review, top: false
+            .row
+              .col-sm-12
+                .text-2x.text-bold.text-info Reviews
+                hr
+                .timeline.hidden-xs
+                  - @reviews.each do |review|
+                    = render 'profile_review_row', review: review, top: false
           hr      
           .text-2x.text-bold.text-info Description
           hr
@@ -209,17 +215,95 @@ coffee:
 
 
 
-    .col-sm-4
-                      
-  .row    
-    .col-lg-8  
+    .col-sm-5.mar-top.col-xs-12#sideScroll style="padding-left: 0px;"
+      .panel.hidden-sm.hidden-xs
+        .panel-body.text-lg
+          - unless my_homestay?(@homestay)
+            - if user_signed_in?
+              - if current_user.pets.present? # Display giant inquiry button
+                button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+              - else # Ask current user to add a pet first
+                button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+                / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
+            - else # ask user to sign up or sign in
+              button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+            / TODO: use a modal to prompt user to sign in so redirect_path can be set    
       .panel
         .panel-body
-          .tab-content
-            .tab-pane.fade id="demo-stk-lft-tab-2"
-              .row style="margin: 0"
-            .tab-pane.fade id="demo-stk-lft-tab-3"
-              .calendar-container style="margin:0px; background-color:#fff !important;"
+          - if @homestay.cost_per_night
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left PetHomeStay 
+                .stay-costs.price_size.pull-right  
+                  span.after-work $#{@homestay.cost_per_night.to_i}
+                  span.lower 
+                    |/24hr
+                br   
+                .text-sm A PetHomeStay is looking after pets in the Host's own home.          
+          - if @homestay.remote_price
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left Pet Sitting 
+                .stay-costs.price_size.pull-right  
+                  span.after-work $#{ (@homestay.remote_price).to_i }
+                  span.lower 
+                    |/24hr
+                br
+                .text-sm Pet Sitting - Looking after pets in your home (like house sitting).    
+          - if @homestay.pet_walking_price
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left Pet Walking 
+                .stay-costs.price_size.pull-right
+                  span.after-work $#{ (@homestay.pet_walking_price).to_i }
+                  span.lower 
+                    |/hour
+                br
+                .text-sm Pet Walking - Including Pickup & Drop off of the pet from your home. Our insurance covers animals in transit!           
+          - if @homestay.pet_grooming_price
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left Pet Grooming 
+                .stay-costs.price_size.pull-right
+                  span.after-work $#{ (@homestay.pet_grooming_price).to_i }
+                  span.lower 
+                    |/hour
+                br
+                .text-sm Pet Grooming - Includes clipping, baths and washes!        
+          - if @homestay.visits_price
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left Check up Visit 
+                .stay-costs.price_size.pull-right
+                  span.after-work $#{ (@homestay.visits_price).to_i }
+                  span.lower 
+                    |/hour
+                br
+                .text-sm Visits - Check up on your home, feed pets or fish, collect mail.          
+          - if @homestay.delivery_price
+            .row.mar-btm
+              .col-xs-12
+                .text-bold.pull-left Pick Up / Drop Off 
+                .stay-costs.price_size.pull-right
+                  span.after-work $#{ (@homestay.delivery_price).to_i }
+                  span.lower 
+                    |/trip 
+                br
+                .text-sm Pick-Ups & Drop-Offs - A Host may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!   
+          .row
+            .col-xs-6.text-center
+              .text-bold Last Signed In 
+              .text-md #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
+            .col-xs-6.text-center
+              - if @response_rate_in_percent
+                .text-bold Host Responsiveness
+                .text-md #{ @response_rate_in_percent }%
+                /.text-sm % of messages responded within 24 hours
+          br      
+            .map-container
+              #map data-lat=@homestay.latitude data-lng=@homestay.longitude
+          br
+            .calendar-container style="background-color:#fff !important;"
                 = render 'pages/dashboard/calendar', host_id: @homestay.user.id
                 p.legends
                   span.square.today
@@ -228,107 +312,19 @@ coffee:
                   '  Available
                   span.square.unavailable
                   |  Unavailable  
-            .tab-pane.fade id="demo-stk-lft-tab-4"
-    .col-lg-4
-      .panel.panel-body.text-lg.hidden-sm.hidden-xs
-        - unless my_homestay?(@homestay)
-          - if user_signed_in?
-            - if current_user.pets.present? # Display giant inquiry button
-              button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
-            - else # Ask current user to add a pet first
-              button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
-              / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
-          - else # ask user to sign up or sign in
-            button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
-          / TODO: use a modal to prompt user to sign in so redirect_path can be set    
-      .panel style="margin-bottom: 5px;"
-        .panel-body style="padding:12px 13px"
-          label.hs_mhs_title.title_p_t.pull-left PetHomeStay 
-          button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="A PetHomeStay is looking after pets in the Host's own home." 
-            i.fa.fa-question-circle
-          .stay-costs.price_size.pull-right  
-            span.after-work $#{@homestay.cost_per_night.to_i}
-            span.lower 
-              |/24hr  
-
-      - if @homestay.remote_price
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Pet Sitting 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Sitting - Looking after pets in your home (like house sitting)." 
-              i.fa.fa-question-circle
-            .stay-costs.price_size.pull-right  
-              span.after-work $#{ (@homestay.remote_price).to_i }
-              span.lower 
-                |/24hr            
-      - if @homestay.pet_walking_price
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Pet Walking 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Walking - Including Pickup & Drop off of the pet from your home. Our insurance covers animals in transit!" 
-              i.fa.fa-question-circle
-            .stay-costs.price_size.pull-right
-              span.after-work $#{ (@homestay.pet_walking_price).to_i }
-              span.lower 
-                |/hour    
-      - if @homestay.pet_grooming_price
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Pet Grooming 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pet Grooming - Includes clipping, baths and washes!" 
-              i.fa.fa-question-circle
-            .stay-costs.price_size.pull-right
-              span.after-work $#{ (@homestay.pet_grooming_price).to_i }
-              span.lower 
-                |/hour 
-      - if @homestay.visits_price
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Check up Visit 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Visits - Check up on your home, feed pets or fish, collect mail." 
-              i.fa.fa-question-circle
-            .stay-costs.price_size.pull-right
-              span.after-work $#{ (@homestay.visits_price).to_i }
-              span.lower 
-                |/hour 
-      - if @homestay.delivery_price
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Pick Up / Drop Off 
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" title="Pick-Ups & Drop-Offs - A Host may offer to collect and drop off your pet for an additional fee. Our insurance covers animals in transit!" 
-              i.fa.fa-question-circle
-            .stay-costs.price_size.pull-right
-              span.after-work $#{ (@homestay.delivery_price).to_i }
-              span.lower 
-                |/trip                                                     
-      .panel style="margin-bottom: 5px;"
-        .panel-body style="padding:12px 13px"
-          label.hs_mhs_title.title_p_t.pull-left Last sign in
-          span.pull-right style="margin-top:10px" #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
-      - if @response_rate_in_percent
-        .panel style="margin-bottom: 5px;"
-          .panel-body style="padding:12px 13px"
-            label.hs_mhs_title.title_p_t.pull-left Host Responsiveness
-            button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" data-container='body' data-trigger='hover click' title="% of messages responded within 24 hours"
-              i.fa.fa-question-circle
-            span.pull-right style="margin-top:10px;" #{ @response_rate_in_percent }%    
-      .panel style="margin-bottom: 5px;"
-        .panel-body style="padding:12px 15px"
-          .map-container style="margin: 0;"
-            #map data-lat=@homestay.latitude data-lng=@homestay.longitude
-      .panel style="margin-bottom: 5px;"
-        .panel-body style="text-align:center;padding:12px 13px"
-          .btn-group
-            button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
-              i.fa.fa-facebook 
-                |  SHARE
-            - twitter_url  = 'https://twitter.com/share'
-            - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
-            - twitter_url += '&via=PetHomeStay'
-            - twitter_url += '&hashtags=freecuddles'  
-            button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
-              i.fa.fa-twitter
-                |  TWEET  
+          br
+            .btn-group
+              button.btn.fb-share-btn style='background: #3B5998; color: #f7f7f7;'
+                i.fa.fa-facebook 
+                  |  SHARE
+              - twitter_url  = 'https://twitter.com/share'
+              - twitter_url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+              - twitter_url += '&via=PetHomeStay'
+              - twitter_url += '&hashtags=freecuddles'  
+              button.btn.twitter-share-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7; margin-left: 20px;'
+                i.fa.fa-twitter
+                  |  TWEET 
+       
 
 .modal.fade#confirm-modal tabindex='-1' role='dialog' aria-labelledby='request-label' aria-hidden='true'
   .modal-dialog
@@ -360,7 +356,18 @@ coffee:
 
 = javascript_include_tag 'homestays/show'
 
-
+javascript:
+  var el = $('#sideScroll');
+  var originalelpos = el.offset().top; // take it where it originally is on the page
+  var basepos = el.offset().top;  // Takes the base position on the page    
+  
+  //run on scroll
+  $(window).scroll(function () {
+      var el = $('#sideScroll');
+      var windowpos = $(window).scrollTop() - 67;
+      var finaldestination = windowpos + originalelpos - 67;
+      el.stop().animate({ 'top': finaldestination }, 200);
+  }); 
 
 
   

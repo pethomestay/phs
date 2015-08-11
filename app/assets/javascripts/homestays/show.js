@@ -16,8 +16,7 @@
   $('.phs_image_slider').slick({
       slidesToShow: 1,
       accessibility: false,
-      autoplay: true,
-      autoplaySpeed: 2000,
+      autoplay: false,
       variableWidth: false,
       adaptiveHeight: true
   });
