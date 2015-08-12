@@ -530,33 +530,3 @@ p.hs_rating {
   }      
 }
 
-.bar_top {
-  background-color: #fff; 
-  z-index:10;
-  top: 54px;
-  border: 0;
-  opacity: 1;
-  width:100%;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-
-}
-
-.bar_top_sticky {
-  position: fixed;
-  top:0;
-  background-color: #fff; 
-  z-index:10;
-  border: 0;
-  opacity: 1;
-  width:100%;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-}
-
-.btn-book {
-  height: 54px !important;
-  padding-top: 15px !important;
-}

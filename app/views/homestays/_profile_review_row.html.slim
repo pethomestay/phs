@@ -1,12 +1,12 @@
-.timeline-entry.hidden-xs
+.timeline-entry
   .timeline-stat
     .timeline-icon style="margin-bottom: 5px;"
       - if review.user.profile_photo?
-          = cl_image_tag review.user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+          = cl_image_tag review.user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle'
       - elsif review.user.uid.present?
-        = facebook_profile_image_tag review.user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+        = facebook_profile_image_tag review.user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle'
       - else
-        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture'
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle'
     .timeline-time style="color: #5cc1c0; margin-bottom: -3px;"
       = render 'stars', rating: review.rating   
   .timeline-label

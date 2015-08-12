@@ -1,13 +1,71 @@
-  $(document).scroll(function () {
-    //stick nav to top of page
-    var y = $(this).scrollTop();
-    var navWrap = $('#navWrap').offset().top;
-    if (y > navWrap) {
-        $('nav').addClass('bar_top_sticky');
-    } else {
-        $('nav').removeClass('bar_top_sticky');
-    }
+  $(".nav-test").hide();  
+  // fade in .navbar
+  $(function () {
+    $(window).scroll(function () {
+            // set distance user needs to scroll before we fadeIn navbar
+      if ($(this).scrollTop() > 150) {
+        $('.nav-test').fadeIn();
+      } else {
+        $('.nav-test').fadeOut();
+      }
+    });
   });
+
+  var sideBar = $('#sideScroll');
+  var leftSideBar = $('#leftSideBar');
+  var originalelpos = leftSideBar.offset().top; // take it where it originally is on the page
+  var leftSideBarHeight = leftSideBar.outerHeight() ; // shouldnt be more then this
+  var sideBarHeight = sideBar.outerHeight();
+  
+  //run on scroll
+  $(window).scroll(function () {
+      calcMovementForSideBar(true);  
+  }); 
+
+  $(window).on('resize', function(){
+        calcMovementForSideBar(false);
+  });
+
+  if($(window).width() < 768) {
+    sideBar.removeClass('sideScroll');
+  } else {
+    sideBar.addClass('sideScroll');
+  }
+
+  function calcMovementForSideBar(vertical){
+      leftSideBarHeight = leftSideBar.outerHeight() ; // shouldnt be more then this
+      sideBarHeight = sideBar.outerHeight();
+      var finaldestination;
+      if($(window).width() < 768) {
+        finaldestination = originalelpos - 117;
+        sideBar.removeClass('sideScroll');
+      } else {
+        sideBar.addClass('sideScroll');
+        var windowpos = $(window).scrollTop();
+        finaldestination = windowpos + originalelpos - 167;
+
+        if(finaldestination <= 0) {
+          finaldestination = 0;
+
+        } else if(finaldestination + sideBarHeight > leftSideBarHeight) {
+          finaldestination = leftSideBarHeight - sideBarHeight + 35;
+        }
+      }
+      
+      if(vertical){
+        moveSideBar(finaldestination, 200);
+      } else {
+        moveSideBar(finaldestination, 0);
+      }
+    
+  }
+
+  function moveSideBar(finaldestination, speed) {
+
+    sideBar.stop().animate({ 'top': finaldestination }, speed);
+
+  }  
+
 
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -82,6 +140,7 @@
       }
     }
   });
+  
   $check_in = $('#enquiry_check_in_date');
   check_in_picker = $check_in.datepicker({
     format: 'dd/mm/yyyy',
