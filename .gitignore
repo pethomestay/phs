@@ -17,6 +17,9 @@
 # Ignore vendored gems.
 vendor/ruby/
 
+# Ignore local Rubocop configuration.
+.rubocop.yml
+
 # Ignore dragonfly images
 public/system/dragonfly
 
