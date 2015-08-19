@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/alexreisner/geocoder.git
-  revision: ea6ec79688d3c7824509eb8ea0bfd0ca650baca6
-  specs:
-    geocoder (1.1.6)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -157,6 +151,7 @@ GEM
     fog-json (1.0.0)
       multi_json (~> 1.0)
     formatador (0.2.5)
+    geocoder (1.2.9)
     gmaps4rails (1.5.6)
     gon (5.2.3)
       actionpack (>= 2.3.0)
@@ -479,7 +474,7 @@ DEPENDENCIES
   figaro
   flight-for-rails (~> 1.2.0)
   fog (~> 1.2)
-  geocoder!
+  geocoder
   gmaps4rails
   gon
   guard-rspec

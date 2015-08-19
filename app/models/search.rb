@@ -57,7 +57,7 @@ class Search
 
     # Logging code to check how long a query takes
     start_time = Time.now
-    puts "#{start_time}"
+    Rails.logger.debug "#{start_time}"
 
     results_list = []
     search_radius = 2
@@ -69,11 +69,11 @@ class Search
       search_radius += 2
     end
     search_time = Time.now
-    puts "Time taken for search= #{(search_time - start_time).seconds}"
+    Rails.logger.debug "Time taken for search= #{(search_time - start_time).seconds}"
 
     results_list = Search.algorithm(results_list.uniq) unless @sort_by == "distance"
     sort_time = Time.now
-    puts "Time taken for sort= #{(sort_time - search_time).seconds}"
+    Rails.logger.debug "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list.uniq
   end
 
@@ -108,15 +108,15 @@ class Search
   def self.algorithm(results_list)
     return [] if results_list.empty?
     start_time = Time.now
-    puts "#{start_time}"
+    Rails.logger.debug "#{start_time}"
     no_photos, results_list         = results_list.partition {|h| h.photos.empty? && h.pictures.empty? }
-    puts "removed no_photos #{Time.now - start_time} (#{no_photos.count}/#{results_list.count} profiles)"
+    Rails.logger.debug "removed no_photos #{Time.now - start_time} (#{no_photos.count}/#{results_list.count} profiles)"
     # not_responsive, results_list_2    = results_list.partition {|h| h.user.responsiveness_score.nil? || h.user.responsiveness_score < 20 }
     # puts "removed not_responsive #{Time.now - start_time}"
     has_reviews, results_list        = results_list.partition {|h| h.user.average_rating.present? && h.user.average_rating > 0 }
-    puts "selected for reviews #{Time.now - start_time} (#{has_reviews.count}/#{results_list.count} profiles)"
+    Rails.logger.debug "selected for reviews #{Time.now - start_time} (#{has_reviews.count}/#{results_list.count} profiles)"
     recently_signed_up, results_list = results_list.partition {|h| h.user.created_at > Date.today - 30.days}
-    puts "removed old_sign_up #{Time.now - start_time} (#{recently_signed_up.count}/#{results_list.count} profiles)"
+    Rails.logger.debug "removed old_sign_up #{Time.now - start_time} (#{recently_signed_up.count}/#{results_list.count} profiles)"
     return Search.sort_reviewed(has_reviews) + recently_signed_up.sort_by! {|h| h.user.last_sign_in_at}.reverse! + results_list.sort_by! {|h| h.user.last_sign_in_at}.reverse! + no_photos
   end
 

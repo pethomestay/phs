@@ -1,4 +1,5 @@
 class Api::BaseController < ApplicationController
+
   protect_from_forgery with: :null_session
 
   skip_before_filter :verify_authenticity_token
@@ -72,4 +73,5 @@ class Api::BaseController < ApplicationController
     @msg = msg
     render 'api/base/not_found', status: 404
   end
+  
 end
