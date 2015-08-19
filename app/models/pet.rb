@@ -102,7 +102,7 @@ class Pet < ActiveRecord::Base
   # and sms's being sent out for cats and other animals. 
   # Sets breed to empty string instead of null. 
   def null_pet_to_empty_string
-    self.breed = "" if self.breed.nil?
+    self.breed = '' if breed.nil?
   end
 
 end
