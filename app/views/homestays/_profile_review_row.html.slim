@@ -2,18 +2,14 @@
   .timeline-stat
     .timeline-icon style="margin-bottom: 5px;"
       - if review.user.profile_photo?
-          = cl_image_tag review.user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle'
+          = cl_image_tag review.user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
       - elsif review.user.uid.present?
-        = facebook_profile_image_tag review.user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle'
+        = facebook_profile_image_tag review.user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
       - else
-        = image_tag 'default_profile_photo.jpg', class: 'img-circle'
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture'
     .timeline-time style="color: #5cc1c0; margin-bottom: -3px;"
-      = render 'stars', rating: review.rating   
+      = render 'stars', rating: review.rating
+    .timeline-time style="margin-top: -3px;" #{review.created_at.strftime('%F')}      
   .timeline-label
-    .pad-hor
-      .text-lg.text-bold.text-info Reviewed by #{review.user.first_name}
-      .text-sm.text-bold.pad-btm #{time_ago_in_words(review.created_at.strftime('%F'))} ago    
-      .text-lg #{review.review}
-
-// For mobile
-/ .hidden-sm.hidden-md.hidden-lg
+    p.mar-no Reviewed by #{review.user.first_name}
+    blockquote.bq-sm.bq-open #{review.review}
