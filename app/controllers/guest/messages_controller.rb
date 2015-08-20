@@ -34,7 +34,7 @@ class Guest::MessagesController < Guest::GuestController
     end
     if @message.save
       # TODO: Transform email notification into a SuckerPunch job
-      UserMailer.receive_message(@conversation.messages.last).deliver
+      # UserMailer.receive_message(@conversation.messages.last).deliver
       render json: nil # Returning nothing will result in jQuery ajax error
     else
       head :internal_server_error

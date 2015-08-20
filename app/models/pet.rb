@@ -24,8 +24,8 @@ class Pet < ActiveRecord::Base
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
   before_validation :strip_personalities
-  after_save :strip_pet_breed, on: :create
-
+  before_save :null_pet_to_empty_string, on: :create
+  
   def pet_age
     if self.date_of_birth.present?
       diff = Date.today.year - self.date_of_birth.year
@@ -97,8 +97,12 @@ class Pet < ActiveRecord::Base
     self.personalities.delete('') if self.personalities.present?
   end
   
-  def strip_pet_breed
-    self.breed = breed.gsub(/\W[^\w]/,'').chop
+  # Set the pet breed to nil if users select animals like cats or other.
+  # Need to improve this hotfix. This solves the problem of users entering cats
+  # and sms's being sent out for cats and other animals. 
+  # Sets breed to empty string instead of null. 
+  def null_pet_to_empty_string
+    self.breed = '' if breed.nil?
   end
 
 end
