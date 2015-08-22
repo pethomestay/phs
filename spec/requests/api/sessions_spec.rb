@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Sessions', type: :request do
+RSpec.describe 'API sessions', type: :request do
 
   let(:password) { 'password' }
   let!(:token) { create(:api_token, code: '12345678') }
