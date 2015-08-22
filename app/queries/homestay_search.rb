@@ -20,6 +20,8 @@ class HomestaySearch
     check_params
     check_location
     perform_search
+    augment_search
+    results.size
   end
 
   # Checks that the minimum required params are present.
@@ -48,9 +50,29 @@ class HomestaySearch
     end
   end
 
+  # Passes the actual searching through to legacy `Search`.
+  # @note Not nice.
+  # @api public
+  # @return [Search] The search object.
   def perform_search
     @search = Search.new(params)
     @search.country = 'Australia'
     self.results = @search.populate_list
+    self.results = Search.algorithm(results)
+    @search
+  end
+
+  # Adds position and distance calculations to the seartch results.
+  # @api public
+  # @return [Array[Homestay]] The augmented results.
+  def augment_search
+    results.each_with_index do |homestay, i|
+      homestay.position = i + 1
+      homestay.distance = Geocoder::Calculations.distance_between(
+        [params[:latitude], params[:longitude]],
+        [homestay.latitude, homestay.longitude],
+        units: :km
+      )
+    end
   end
 end

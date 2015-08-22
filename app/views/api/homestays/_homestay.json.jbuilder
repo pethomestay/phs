@@ -2,8 +2,8 @@ json.id homestay.id
 json.slug homestay.slug
 json.title homestay.title
 json.description homestay.description
-json.score -1
-json.distance -1
+json.position homestay.position
+json.distance homestay.distance
 json.image do
   json.partial! 'image', image: homestay.photos.first
 end
