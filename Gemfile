@@ -68,6 +68,7 @@ gem 'yardstick'
 
 # JSON.
 gem 'jbuilder', '~> 2.0'
+gem 'yajl-ruby'
 
 group :development, :test do
   gem 'capistrano'
