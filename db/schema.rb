@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150808015753) do
+ActiveRecord::Schema.define(:version => 20150815054400) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -314,6 +314,16 @@ ActiveRecord::Schema.define(:version => 20150808015753) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  create_table "postcodes", :force => true do |t|
+    t.string   "postcode",   :limit => 4
+    t.decimal  "latitude",                :precision => 10, :scale => 6
+    t.decimal  "longitude",               :precision => 10, :scale => 6
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+  end
+
+  add_index "postcodes", ["postcode"], :name => "index_postcodes_on_postcode"
 
   create_table "recommendations", :force => true do |t|
     t.integer  "user_id"

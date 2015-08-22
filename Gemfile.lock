@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/alexreisner/geocoder.git
-  revision: ea6ec79688d3c7824509eb8ea0bfd0ca650baca6
-  specs:
-    geocoder (1.1.6)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -55,6 +49,10 @@ GEM
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
     aws_cf_signer (0.1.3)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
@@ -81,6 +79,8 @@ GEM
       aws_cf_signer
       rest-client
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -95,6 +95,8 @@ GEM
     currencies (0.4.2)
     daemons (1.1.9)
     database_cleaner (1.4.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -108,6 +110,7 @@ GEM
       dragonfly (~> 1.0)
       fog
     encryptor (1.3.0)
+    equalizer (0.0.11)
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.37.0)
@@ -148,6 +151,7 @@ GEM
     fog-json (1.0.0)
       multi_json (~> 1.0)
     formatador (0.2.5)
+    geocoder (1.2.9)
     gmaps4rails (1.5.6)
     gon (5.2.3)
       actionpack (>= 2.3.0)
@@ -188,6 +192,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
+    ice_nine (0.11.1)
     inflecto (0.0.2)
     intercom (2.4.2)
       json
@@ -403,13 +408,14 @@ GEM
     test_after_commit (0.4.1)
       activerecord (>= 3.2)
     therubyracer (0.12.1)
-      libv8 (~> 3.16.14.3)
+      libv8 (~> 3.16.14.0)
       ref
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     thor (0.19.1)
+    thread_safe (0.3.5)
     tilt (1.4.1)
     timers (1.1.0)
     treetop (1.4.15)
@@ -424,11 +430,17 @@ GEM
       rack
       raindrops (~> 0.7)
     uniform_notifier (1.9.0)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.1)
       rack (>= 1.0)
     will_paginate (3.0.4)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
+    yajl-ruby (1.2.1)
     yard (0.8.7.6)
     yard-restful (1.2.3)
       yard (~> 0.8.3)
@@ -463,7 +475,7 @@ DEPENDENCIES
   figaro
   flight-for-rails (~> 1.2.0)
   fog (~> 1.2)
-  geocoder!
+  geocoder
   gmaps4rails
   gon
   guard-rspec
@@ -518,11 +530,10 @@ DEPENDENCIES
   thin
   uglifier (>= 1.0.3)
   unicorn
+  virtus
   will_paginate
   will_paginate-bootstrap
+  yajl-ruby
   yard
   yard-restful
   yardstick
-
-BUNDLED WITH
-   1.10.6

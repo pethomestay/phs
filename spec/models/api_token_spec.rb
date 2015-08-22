@@ -18,7 +18,6 @@ RSpec.describe ApiToken, type: :model do
 
   describe 'callbacks' do
     describe 'before save' do
-
       subject { build(:api_token) }
 
       context 'code is present' do

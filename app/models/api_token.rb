@@ -1,5 +1,4 @@
 class ApiToken < ActiveRecord::Base
-
   validates :code, uniqueness: true
   validates :name, presence: true, uniqueness: true
 
@@ -14,5 +13,4 @@ class ApiToken < ActiveRecord::Base
   def generate_code
     self.code = SecureRandom.uuid if code.blank?
   end
-
 end

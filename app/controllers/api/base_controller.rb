@@ -10,7 +10,7 @@ class Api::BaseController < ApplicationController
   # @url /
   # @action GET
   def index
-    render json: {hello: 'Woof, woof.'}
+    render json: { hello: 'Woof, woof.' }
   end
 
   # Catch-all endpoint for unknown requests.
@@ -73,5 +73,5 @@ class Api::BaseController < ApplicationController
     @msg = msg
     render 'api/base/not_found', status: 404
   end
-
+  
 end

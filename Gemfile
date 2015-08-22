@@ -18,10 +18,10 @@ gem 'chronic'
 gem 'omniauth-facebook'
 gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
-gem 'geocoder', git: 'git://github.com/alexreisner/geocoder.git'
+gem 'geocoder'
 gem 'legato'
 gem 'gon'
-gem 'mandrill-api', require:  'mandrill'
+gem 'mandrill-api', require: 'mandrill'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
@@ -31,7 +31,7 @@ gem 'owlcarousel-rails' # For carousel on Homestay listing page
 gem 'simple_form'
 gem 'awesome_nested_fields'
 gem 'nested_form' # To replace awesome_nested_fields in the future
-gem 'chosen-rails' #Integrates chosen checkbox stuff look into getting rid of this...
+gem 'chosen-rails' # Integrates chosen checkbox stuff look into getting rid of this...
 gem 'omnicontacts'
 
 gem 'cloudinary'
@@ -58,6 +58,9 @@ gem 'analytics-ruby', '~> 2.0.0', require: 'segment/analytics' # Segment.io
 gem 'jwt' # For Zendesk Single Sign-on
 gem 'phony_rails' # validate and normalize phone number
 
+# Attributes.
+gem 'virtus'
+
 # Documentation.
 gem 'yard'
 gem 'yard-restful'
@@ -65,6 +68,7 @@ gem 'yardstick'
 
 # JSON.
 gem 'jbuilder', '~> 2.0'
+gem 'yajl-ruby'
 
 group :development, :test do
   gem 'capistrano'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Authentication', type: :request do
+RSpec.describe 'API authentication', type: :request do
 
   context 'token as param' do
     let!(:token) { create(:api_token, code: '12345678') }

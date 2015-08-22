@@ -15,7 +15,7 @@ class Homestay < ActiveRecord::Base
   accepts_nested_attributes_for :pictures, reject_if: :all_blank,
     allow_destroy: true
 
-  attr_accessor :parental_consent, :accept_liability
+  attr_accessor :parental_consent, :accept_liability, :position, :distance
   attr_accessible :title, :description, :cost_per_night, :property_type_id,
                   :outdoor_area_id, :is_professional, :insurance, :first_aid,
                   :professional_qualification, :constant_supervision,
@@ -47,8 +47,8 @@ class Homestay < ActiveRecord::Base
 
   validates_length_of :title, maximum: 50
   validates :cost_per_night,
-  numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE 
-  }, if: 'cost_per_night.present?' 
+  numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE
+  }, if: 'cost_per_night.present?'
   validates :remote_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'remote_price.present?'
@@ -128,8 +128,8 @@ class Homestay < ActiveRecord::Base
     if address_suburb.nil?
       "#{address_1}, #{address_city}, #{address_country}"
     elsif address_1.nil?
-      "#{address_suburb}, #{address_city}, #{address_country}"  
-    elsif address_suburb.present? && address_1.present? 
+      "#{address_suburb}, #{address_city}, #{address_country}"
+    elsif address_suburb.present? && address_1.present?
       "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
     elsif address_suburb.nil? && address_1.nil?
       "#{address_city}, #{address_country}"
