@@ -1,12 +1,9 @@
 PetHomestay::Application.routes.draw do
-  # API at https://api.pethomestay.com.
-  constraints subdomain: 'api' do
-    scope module: 'api', as: 'api', defaults: { format: 'json' } do
-      root to: 'base#index'
-      post 'sessions', to: 'sessions#create'
-      resources :homestays
-      get '*path', to: 'base#page_not_found'
-    end
+  namespace :api, defaults: { format: 'json' } do
+    root to: 'base#index'
+    post 'sessions', to: 'sessions#create'
+    resources :homestays
+    get '*path', to: 'base#page_not_found'
   end
 
   resources :invitations
