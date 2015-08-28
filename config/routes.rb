@@ -1,4 +1,14 @@
 PetHomestay::Application.routes.draw do
+  constraints subdomain: 'api' do
+    scope module: 'api', as: 'api', defaults: { format: 'json' } do
+      root to: 'base#index'
+      post 'sessions', to: 'sessions#create'
+      resources :homestays
+      get '*path', to: 'base#page_not_found'
+    end
+  end
+
+  # Temporary fix for staging on Heroku.
   namespace :api, defaults: { format: 'json' } do
     root to: 'base#index'
     post 'sessions', to: 'sessions#create'
