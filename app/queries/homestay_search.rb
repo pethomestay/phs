@@ -19,19 +19,35 @@ class HomestaySearch
   def perform
     check_params
     check_location
+    prepare_search
     perform_search
     augment_search
     results.size
   end
 
   # Checks that the minimum required params are present.
-  # Only their presence is checked - the values are not.
   # @api public
   # @raise [ArgumentError] If the params are invalid.
   # @return [Boolean] Whether the params are OK.
   def check_params
     unless (params[:latitude] && params[:longitude]) || params[:postcode]
-      raise ArgumentError, 'Invalid params.'
+      raise ArgumentError, 'Invalid params: cannot determine location.'
+    end
+    if params[:type].present?
+      params[:type] = params[:type].downcase.split(',').collect(&:strip)
+      params[:type].each do |homestay_type|
+        unless ['local', 'remote'].include?(homestay_type)
+          raise ArgumentError, "Invalid params: valid types are 'local' and 'remote'."
+        end
+      end
+    end
+    if params[:start].present? || params[:end].present?
+      if params[:start].blank? || params[:end].blank?
+        raise ArgumentError, "Invalid params: both start and end are required if one is set."
+      end
+      unless valid_date?(params[:start]) && valid_date?(params[:end])
+        raise ArgumentError, "Invalid params: invalid date."
+      end
     end
   end
 
@@ -50,6 +66,24 @@ class HomestaySearch
     end
   end
 
+  # Prepares params for legacy search.
+  # @api public
+  # @return [Hash] The preapred params.
+  def prepare_search
+    if params[:type].present?
+      params[:homestay_types] = if params[:type].kind_of?(Array)
+        params[:type]
+      else
+        params[:type].downcase.split(',').collect(&:strip)
+      end
+    end
+    if params[:start].present? && params[:end].present?
+      params[:check_in_date] = params[:start]
+      params[:check_out_date] = params[:end]
+    end
+    params
+  end
+
   # Passes the actual searching through to legacy `Search`.
   # @note Not nice.
   # @api public
@@ -58,7 +92,6 @@ class HomestaySearch
     @search = Search.new(params)
     @search.country = 'Australia'
     self.results = @search.populate_list
-    self.results = Search.algorithm(results)
     @search
   end
 
@@ -73,6 +106,23 @@ class HomestaySearch
         [homestay.latitude, homestay.longitude],
         units: :km
       )
+    end
+  end
+
+  # Checks if the passed date is valid and in the expected format.
+  # @api public
+  # @param date [String] The date.
+  # @return [Boolean] Whether it's valid.
+  def valid_date?(date)
+    if date =~ /^\d{4}-\d{2}-\d{2}$/
+      begin
+        Date.parse(date)
+        true
+      rescue ArgumentError => e
+        false
+      end
+    else
+      false
     end
   end
 end

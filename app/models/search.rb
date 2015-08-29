@@ -9,7 +9,7 @@ class Search
   MAXIMUM_RADIUS    = 50
 
   attr_accessor :provider_types, :within, :sort_by, :country
-  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date
+  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -19,6 +19,10 @@ class Search
 
   def persisted?
     false
+  end
+
+  def homestay_types=(value)
+    @homestay_types = value unless value.blank?
   end
 
   def check_in_date=(value)
@@ -64,7 +68,16 @@ class Search
     # This searches for Homestays, expanding the radius of search by 5km until it reaches 30 results
     while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
       # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
-      results_list += Homestay.active.near([@latitude, @longitude], search_radius)
+      homestays = Homestay.active.near([@latitude, @longitude], search_radius)
+      if homestay_types.present?
+        if homestay_types.include?('local')
+          homestays = homestays.where('cost_per_night is not null')
+        end
+        if homestay_types.include?('remote')
+          homestays = homestays.where('remote_price is not null')
+        end
+      end
+      results_list += homestays.all
       results_list.reject! { |h| (h.unavailable_dates.collect(&:date) & (search_dates)).any? } if search_dates.any?
       search_radius += 2
     end
@@ -77,6 +90,7 @@ class Search
     return results_list.uniq
   end
 
+  # This is no longer used?
   def perform
     perform_geocode unless @latitude.present? && @longitude.present?
     if sort_by != 'average_rating'
