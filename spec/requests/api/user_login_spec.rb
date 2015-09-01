@@ -1,14 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'API sessions', type: :request do
-
+RSpec.describe 'API: user login', type: :request do
+  include_context 'api skeleton'
+  
   let(:password) { 'password' }
-  let!(:token) { create(:api_token, code: '12345678') }
   let!(:user) { create(:user, email: 'dave@zero51.com', password: password) }
-
-  before(:each) do
-    host! 'api.example.com'
-  end
 
   describe 'login' do
     context 'credentials are incomplete' do
@@ -34,5 +30,4 @@ RSpec.describe 'API sessions', type: :request do
       end
     end
   end
-
 end

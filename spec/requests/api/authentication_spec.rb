@@ -1,14 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'API authentication', type: :request do
+RSpec.describe 'API: authentication', type: :request do
+  include_context 'api skeleton'
 
   context 'token as param' do
-    let!(:token) { create(:api_token, code: '12345678') }
-
-    before(:each) do
-      host! 'api.example.com'
-    end
-
     context 'token present' do
       context 'code is correct' do
         it 'returns 200' do
@@ -41,5 +36,4 @@ RSpec.describe 'API authentication', type: :request do
       end
     end
   end
-
 end
