@@ -5,7 +5,7 @@ class Message < ActiveRecord::Base
   belongs_to :user
 
   # after_create :enquiry_response_message
-  after_create :mark_mailbox_unread
+  after_create :mark_mailbox_unread, :update_responsiveness_rate
   after_create :sms_guest_of_host_response, if: :first_host_response?
 
   # def enquiry_response_message
@@ -39,5 +39,9 @@ class Message < ActiveRecord::Base
       mailbox.guest_read = false
     end
     mailbox.save
+  end
+
+  def update_responsiveness_rate
+    user.store_responsiveness_rate
   end
 end

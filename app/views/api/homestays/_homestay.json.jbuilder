@@ -10,7 +10,7 @@ end
 json.host do
   json.partial! 'user', user: homestay.user
   json.average_rating homestay.average_rating
-  json.responsiveness_rate homestay.user.response_rate_in_percent
+  json.responsiveness_rate homestay.user.responsiveness_rate
   json.last_login_at homestay.user.current_sign_in_at.to_i
 end
 json.profile do

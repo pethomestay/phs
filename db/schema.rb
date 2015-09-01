@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150815054400) do
+ActiveRecord::Schema.define(:version => 20150901063938) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(:version => 20150815054400) do
     t.boolean  "opt_out_sms",            :default => false
     t.decimal  "responsiveness_score"
     t.string   "hex"
+    t.integer  "responsiveness_rate"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
