@@ -16,7 +16,7 @@ end
 json.profile do
   json.favourite_breeds homestay.favorite_breeds
   json.accepted_sizes extract_pet_sizes(homestay)
-  json.accespted_energy_levels extract_energy_levels(homestay)
+  json.accepted_energy_levels extract_energy_levels(homestay)
   json.emergency_transport homestay.emergency_transport?
   json.police_check homestay.police_check?
   json.constant_supervision homestay.constant_supervision?
