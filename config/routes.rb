@@ -4,6 +4,7 @@ PetHomestay::Application.routes.draw do
       root to: 'base#index'
       post 'sessions', to: 'sessions#create'
       post 'users', to: 'users#create'
+      resources :breeds, only: :index
       resources :homestays
       get '*path', to: 'base#page_not_found'
     end
@@ -14,6 +15,7 @@ PetHomestay::Application.routes.draw do
     root to: 'base#index'
     post 'sessions', to: 'sessions#create'
     post 'users', to: 'users#create'
+    resources :breeds, only: :index
     resources :homestays
     get '*path', to: 'base#page_not_found'
   end
