@@ -88,41 +88,41 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def notifications?
-    inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host? || booking_host_request_cancellation?
-  end
+  #def notifications?
+    #inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host? || booking_host_request_cancellation?
+  #end
 
-  def inactive_homestay?
-    if homestay.present?
-      return !homestay.active?
-    else
-      return false
-    end
-  end
+  #def inactive_homestay?
+    #if homestay.present?
+      #return !homestay.active?
+    #else
+      #return false
+    #end
+  #end
 
-  def booking_host_request_cancellation?
-    if self.admin?
-      @bookings = Booking.where(:state=>:host_requested_cancellation)
-      return @bookings.length > 0
-    end
-    return false
-  end
+  #def booking_host_request_cancellation?
+    #if self.admin?
+      #@bookings = Booking.where(:state=>:host_requested_cancellation)
+      #return @bookings.length > 0
+    #end
+    #return false
+  #end
 
-  def locked_homestay?
-    if homestay.present?
-      return homestay.locked?
-    else
-      return false
-    end
-  end
+  #def locked_homestay?
+    #if homestay.present?
+      #return homestay.locked?
+    #else
+      #return false
+    #end
+  #end
 
-  def booking_accepted_by_host?
-    booking_accepted_by_host.any?
-  end
+  #def booking_accepted_by_host?
+    #booking_accepted_by_host.any?
+  #end
 
-  def booking_accepted_by_host
-    self.bookers.accepted_by_host
-  end
+  #def booking_accepted_by_host
+    #self.bookers.accepted_by_host
+  #end
 
   def validate_code?(code)
     code.upcase!
@@ -137,63 +137,63 @@ class User < ActiveRecord::Base
     return true
   end
 
-  def booking_declined_by_host?
-    booking_declined_by_host.any?
-  end
+  #def booking_declined_by_host?
+    #booking_declined_by_host.any?
+  #end
 
-  def booking_declined_by_host
-    self.bookers.declined_by_host
-  end
+  #def booking_declined_by_host
+    #self.bookers.declined_by_host
+  #end
 
-  def booking_required_response?
-    booking_required_response.any?
-  end
+  #def booking_required_response?
+    #booking_required_response.any?
+  #end
 
-  def booking_required_response
-    self.bookers.required_response
-  end
+  #def booking_required_response
+    #self.bookers.required_response
+  #end
 
-  def unanswered_enquiries?
-    unanswered_enquiries.any?
-  end
+  #def unanswered_enquiries?
+    #unanswered_enquiries.any?
+  #end
 
-  def unanswered_enquiries
-    homestay.present? ? homestay.enquiries.unanswered : []
-  end
+  #def unanswered_enquiries
+    #homestay.present? ? homestay.enquiries.unanswered : []
+  #end
 
-  def enquiries_needing_confirmation?
-    enquiries_needing_confirmation.any?
-  end
+  #def enquiries_needing_confirmation?
+    #enquiries_needing_confirmation.any?
+  #end
 
-  def booking_needing_confirmation?
-    booking_needing_confirmation.any?
-  end
+  #def booking_needing_confirmation?
+    #booking_needing_confirmation.any?
+  #end
 
-  def booking_needing_confirmation
-    homestay.blank? ? [] : homestay.bookings.needing_host_confirmation
-  end
+  #def booking_needing_confirmation
+    #homestay.blank? ? [] : homestay.bookings.needing_host_confirmation
+  #end
 
-  def enquiries_needing_confirmation
-    enquiries.need_confirmation
-  end
+  #def enquiries_needing_confirmation
+    #enquiries.need_confirmation
+  #end
 
-  def owners_needing_feedback?
-    owners_needing_feedback.present?
-  end
+  #def owners_needing_feedback?
+    #owners_needing_feedback.present?
+  #end
 
-  def owners_needing_feedback
-    if homestay.present?
-      homestay.enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
-    end
-  end
+  #def owners_needing_feedback
+    #if homestay.present?
+      #homestay.enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
+    #end
+  #end
 
-  def homestays_needing_feedback?
-    homestays_needing_feedback.present?
-  end
+  #def homestays_needing_feedback?
+    #homestays_needing_feedback.present?
+  #end
 
-  def homestays_needing_feedback
-    enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
-  end
+  #def homestays_needing_feedback
+    #enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
+  #end
 
   def pet_name
     if pets.length == 1
@@ -372,13 +372,13 @@ class User < ActiveRecord::Base
     return self.admin || Rails.env == "staging" || Rails.env == "development"
   end
 
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
-    end
-  end
+  #def self.new_with_session(params, session)
+    #super.tap do |user|
+      #if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        #user.email = data["email"] if user.email.blank?
+      #end
+    #end
+  #end
 
   # Depreciated
   def booking_info_between(start_date, end_date)
@@ -460,9 +460,9 @@ class User < ActiveRecord::Base
   # True or False if Message in Mailbox is responded within 24 hrs
   # Ideally each mailbox has a score, then aggregate mailbox scores into User
   # For the time being, use existing response_rate_in_percent
-  def new_response_rate_in_percent
+  #def new_response_rate_in_percent
 
-  end
+  #end
 
   # Original response_rate
   def response_rate_in_percent(new_version = false)

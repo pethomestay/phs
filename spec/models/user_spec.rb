@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  
   describe 'validations' do
     subject { build :user }
 
@@ -86,4 +85,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#coupon_credits_earned" do
+    pending 
+  end
+
+  describe "#name" do
+    let(:user) { build :user }
+
+    it "returns first name and last name" do
+      expect(user.name).to eq "Tom LeGrice"
+    end
+  end
+
 end
