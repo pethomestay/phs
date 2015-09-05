@@ -28,7 +28,7 @@
               |/24hr
           p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
           p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
-          p
+          p.host-responsiveness
             - if homestay.user.response_rate_in_percent.present?  
               i.fa.fa-clock-o.mar-rgt
                 span  - 
@@ -36,8 +36,7 @@
             i.fa.fa-user
             span  - 
             span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
-            br  
-            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
-            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
-            p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
-            p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
+          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
+          p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
+          p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}

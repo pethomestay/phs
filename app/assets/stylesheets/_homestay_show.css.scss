@@ -6,6 +6,12 @@
     margin-top: 15px;
     margin-bottom: 5px;
   }
+
+  .panel.last-login,
+  .panel.host-responsiveness {
+    display: none;
+  }
+
   .readmore-js-toggle {
     color: $blue;
     &:hover {
