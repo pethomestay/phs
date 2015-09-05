@@ -66,4 +66,24 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#generate_hex" do
+    let(:user) { build :user, hex: nil }
+
+    context "without hex" do
+      it "creates hex" do
+        expect(user.hex).to eq nil
+        user.generate_hex
+        expect(user.hex).to_not eq nil
+      end
+    end
+
+    context "with hex" do
+      it "does not create hex" do
+        user.hex = "ABC"
+        user.generate_hex
+        expect(user.hex).to eq "ABC"
+      end
+    end
+  end
 end

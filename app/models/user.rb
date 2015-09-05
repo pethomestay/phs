@@ -46,10 +46,10 @@ class User < ActiveRecord::Base
   validates :accept_terms, :acceptance => true
   #validates_acceptance_of :accept_house_rules, on: :create
   #validates_acceptance_of :accept_terms, on: :create
-  validates_uniqueness_of :hex, :allow_blank => true
+  validates_uniqueness_of :hex#, :allow_blank => true
 
   after_create :generate_referral_code
-  after_save   :generate_hex
+  before_save  :generate_hex
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
@@ -64,14 +64,15 @@ class User < ActiveRecord::Base
 
   # Created a unique hex which will be used for matching recommendations
   def generate_hex
-    return unless self.hex.nil?
-    hex = SecureRandom.hex(10)
-    self.hex = hex
-    while !self.valid?
-      hex = SecureRandom.hex(10)
-      self.hex = hex
+    return if self.hex.present?
+
+    hex_value = SecureRandom.hex(10)
+    
+    while User.where(hex: hex_value).present?
+      hex_value = SecureRandom.hex(10)
     end
-    self.update_column(:hex, hex)
+
+    self.hex = hex_value
   end
 
   # Returns the dollar amount of money earned from owned coupons
