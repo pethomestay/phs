@@ -50,4 +50,20 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#generate_referral_code" do
+    let(:user) { create :user }
+
+    context "with forced creation" do
+      it "creates owned_coupons for user" do
+        expect{ user.generate_referral_code(true) }.to change(user.owned_coupons, :count).by 1
+      end
+    end
+
+    context "without forced creation" do
+      it "does not created owned coupons" do
+        expect{ user.generate_referral_code }.to_not change(user.owned_coupons, :count)
+      end
+    end
+  end
 end

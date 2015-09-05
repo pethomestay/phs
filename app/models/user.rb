@@ -57,20 +57,9 @@ class User < ActiveRecord::Base
   # Creates the coupon code that users can share with others: First four letters of first name + first letter of last name +
   # custom_discount = nil, custom_credit = nil
   def generate_referral_code(force = false, args = {})
-    return if !force && self.owned_coupons.any?
-    if args[:custom_code]
-      final_code = args[:custom_code].upcase
-    else
-      suggested_code = self.first_name.gsub(/[^a-z]/i, '').slice(0..3).to_s + self.last_name.gsub(/[^a-z]/i, '').slice(0).to_s
-      suggested_code += "X"*(5 - suggested_code.length) if suggested_code.length < 5
-      non_unique = Coupon.where("code LIKE ?", "%#{suggested_code.upcase}%").count
-      unique_num = non_unique > 0 ? non_unique.to_s : ""
-      final_code = unique_num + suggested_code + Coupon::DEFAULT_DISCOUNT_AMOUNT.to_s
-    end
-    discount_amount = args[:custom_discount] || Coupon::DEFAULT_DISCOUNT_AMOUNT
-    referrer_amount = args[:custom_credit] || Coupon::DEFAULT_CREDIT_REFERRER_AMOUNT
-    self.owned_coupons.create!(:code => final_code.upcase, :discount_amount => discount_amount, :credit_referrer_amount => referrer_amount, :valid_from => Date.today())
-    return true
+    return if !force && owned_coupons.any?
+
+    owned_coupons.create ReferralCodeGenerator.new(self, args).generate
   end
 
   # Created a unique hex which will be used for matching recommendations
