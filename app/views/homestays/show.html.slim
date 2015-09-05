@@ -405,12 +405,12 @@ coffee:
               span.after-work $#{ (@homestay.delivery_price).to_i }
               span.lower 
                 |/trip                                                     
-      .panel style="margin-bottom: 5px;"
+      .panel.last-login style="margin-bottom: 5px;"
         .panel-body style="padding:12px 13px"
           label.hs_mhs_title.title_p_t.pull-left Last sign in
           span.pull-right style="margin-top:10px" #{ translate_current_sign_in(@homestay.user.current_sign_in_at) }
       - if @response_rate_in_percent
-        .panel style="margin-bottom: 5px;"
+        .panel.host-responsiveness style="margin-bottom: 5px;"
           .panel-body style="padding:12px 13px"
             label.hs_mhs_title.title_p_t.pull-left Host Responsiveness
             button.btn.btn-default.hs_mhs_s_btn-info.tooltip_p_t data-toggle="tooltip" data-placement="right" data-container='body' data-trigger='hover click' title="% of messages responded within 24 hours"
