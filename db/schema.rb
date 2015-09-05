@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20150901063938) do
     t.datetime "updated_at",                                 :null => false
   end
 
+  add_index "api_tokens", ["code"], :name => "index_api_tokens_on_code"
+
   create_table "attachinary_files", :force => true do |t|
     t.integer  "attachinariable_id"
     t.string   "attachinariable_type"

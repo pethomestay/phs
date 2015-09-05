@@ -44,8 +44,8 @@ class User < ActiveRecord::Base
 
   validates :accept_house_rules, :acceptance => true
   validates :accept_terms, :acceptance => true
-  validates_acceptance_of :accept_house_rules, on: :create
-  validates_acceptance_of :accept_terms, on: :create
+  #validates_acceptance_of :accept_house_rules, on: :create
+  #validates_acceptance_of :accept_terms, on: :create
   validates_uniqueness_of :hex, :allow_blank => true
 
   after_create :generate_referral_code

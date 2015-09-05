@@ -53,3 +53,4 @@ coverage/
 *.key
 
 *.ca-bundle
+.ruby-gemset

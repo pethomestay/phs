@@ -52,6 +52,13 @@ RSpec.configure do |config|
   # Includes.
   config.include Requests::JsonHelpers, type: :request
 
+  # Randomize order
+  config.order = "random"
+
+  # Factory Girl
+  config.include FactoryGirl::Syntax::Methods
+
+
   # # customized Rspec config
   # begin
   #   config.include Devise::TestHelpers, :type => :controller
