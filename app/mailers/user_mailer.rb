@@ -230,7 +230,7 @@ class UserMailer < ActionMailer::Base
   def admin_cancelled_booking(booking)
     @booking = booking
     @homestay = booking.homestay
-    @user = booking.booker
+    @user = UserDecorator.new(booking.booker)
 
     #email_with_name = "#{@user.first_name} #{@user.last_name} <#{@user.email}>"
     #mail(to: email_with_name, subject: "Your booking has been cancelled by the host")

@@ -18,12 +18,12 @@
       %td
         Pet Name:
       %td
-        = "#{f.object.booker.pet.name}"
+        = "#{UserDecorator.new(f.object.booker).pet.name}"
     %tr
       %td
         Pet Breed:
       %td
-        = "#{f.object.booker.pet.breed}"
+        = "#{UserDecorator.new(f.object.booker).pet.breed}"
     %tr
       %td
         Start Date:

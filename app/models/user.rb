@@ -195,26 +195,6 @@ class User < ActiveRecord::Base
     #enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
   #end
 
-  #def pet_name
-    #if pets.length == 1
-      #pets.first.name
-    #else
-      #"your pets"
-    #end
-  #end
-
-  #def pet_names
-    #pets.map(&:name).to_sentence
-  #end
-
-  #def pet_breed
-    #pets.map(&:breed).to_sentence
-  #end
-
-  #def pet
-    #pets.first
-  #end
-
   def update_average_rating
     rating = received_feedbacks.count == 0 ? 0 : (received_feedbacks.sum('rating').to_f / received_feedbacks.count.to_f).round
     update_attribute :average_rating, rating

@@ -15,7 +15,7 @@
                 ' Guest:
               = guest.try(:name)
               br
-              - pet = guest.try(:pet)
+              - pet = UserDecorator.new(guest).try(:pet)
               - if pet.present?
                 strong
                   ' Pet:

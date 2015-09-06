@@ -8,7 +8,7 @@ class PetOwnerMailer < ActionMailer::Base
 
   def contact_details(enquiry)
     @enquiry = enquiry
-    @owner = @enquiry.user
+    @owner = UserDecorator.new(@enquiry.user)
     @homestay = @enquiry.homestay
     @provider = @homestay.user
     #email_with_name = "#{@owner.first_name} #{@owner.last_name} <#{@owner.email}>"

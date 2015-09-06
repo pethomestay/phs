@@ -11,7 +11,7 @@
     - host_view = @booking.host_view?(current_user)
     - owner_view = @booking.owner_view?(current_user)
     - user_name = owner_view ? current_user.name : @booking.booker.name
-    - pet = owner_view ? current_user.pet : @booking.booker.pet
+    - pet = owner_view ? UserDecorator.new(current_user).pet : UserDecorator.new(@booking.booker).pet
 
     = f.input :guest_name, input_html: { value: user_name }, readonly: true, label: host_view ? 'Guest name' : 'My name'
     = f.input :pet_name, input_html: { value: pet.name }, readonly: true
