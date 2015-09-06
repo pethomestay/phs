@@ -85,7 +85,7 @@ class PetOwnerMailer < ActionMailer::Base
 
   def booking_confirmation(booking)
     @booking = booking
-    @guest = @booking.booker
+    @guest = UserDecorator.new(@booking.booker)
     @homestay = @booking.homestay
     @host = @booking.bookee
     #email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
@@ -246,7 +246,7 @@ class PetOwnerMailer < ActionMailer::Base
   def host_enquiry_response(enquiry)
 	  
     @enquiry = enquiry
-    @guest = @enquiry.user
+    @guest = UserDecorator.new(@enquiry.user)
     @homestay = @enquiry.homestay
     @host = @homestay.user
     #email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
@@ -316,7 +316,7 @@ class PetOwnerMailer < ActionMailer::Base
 =begin
   def provider_not_available(booking)
     @booking = booking
-    @guest = booking.booker
+    @guest = UserDecorator.new(booking.booker)
     @homestay = booking.homestay
     @host = booking.bookee
     #email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"
@@ -396,7 +396,7 @@ class PetOwnerMailer < ActionMailer::Base
 =end
   def provider_has_question(booking, message)
     @booking = booking
-    @guest = booking.booker
+    @guest = UserDecorator.new(booking.booker)
     @homestay = booking.homestay
     @host = booking.bookee
     @message = message
@@ -457,7 +457,7 @@ class PetOwnerMailer < ActionMailer::Base
 =begin
   def booking_receipt(booking)
     @booking = booking
-    @guest = @booking.booker
+    @guest = UserDecorator.new(@booking.booker)
     @homestay = @booking.homestay
     @host = @homestay.user
     #email_with_name = "#{@guest.first_name} #{@guest.last_name} <#{@guest.email}>"

@@ -8,7 +8,7 @@ class ProviderMailer < ActionMailer::Base
 
   def enquiry(enquiry)
     @enquiry = enquiry
-    @guest = @enquiry.user
+    @guest = UserDecorator.new(@enquiry.user)
     @pets = @guest.pets
     @host = enquiry.homestay.user
     #email_with_name = "#{@host.first_name} #{@host.last_name} <#{@host.email}>"
@@ -66,7 +66,7 @@ class ProviderMailer < ActionMailer::Base
   def owner_confirmed(booking)
     @booking = booking
     @enquiry = @booking.enquiry
-    @guest = @booking.booker
+    @guest = UserDecorator.new(@booking.booker)
     @pets = @guest.pets
     @host = @booking.bookee
     template_name = "provider_mailer_owner_confirmed"
@@ -147,7 +147,7 @@ class ProviderMailer < ActionMailer::Base
 
   def owner_cancelled(enquiry)
     @enquiry = enquiry
-    @user = @enquiry.user
+    @user = UserDecorator.new(@enquiry.user)
     @pets = @user.pets
     @provider = enquiry.homestay.user
     template_name = "provider_mailer_owner_cancelled"
@@ -191,7 +191,7 @@ class ProviderMailer < ActionMailer::Base
 =begin
   def booking_confirmation(booking)
     @booking = booking
-    @guest = @booking.booker
+    @guest = UserDecorator.new(@booking.booker)
     @homestay = @booking.homestay
     @host = @homestay.user
     template_name = "basic"
@@ -263,7 +263,7 @@ class ProviderMailer < ActionMailer::Base
 =end
   def booking_made(booking)
     @booking = booking
-    @guest = @booking.booker
+    @guest = UserDecorator.new(@booking.booker)
     @homestay = @booking.homestay
     @host = @homestay.user
     template_name = "provider_mailer_booking_made"
