@@ -357,7 +357,7 @@ class UserMailer < ActionMailer::Base
   def guest_cancelled_booking_to_host(booking)
     @booking = booking
     @homestay = booking.homestay
-    @user = booking.bookee
+    @user = UserDecorator.new(booking.bookee)
     @guest = booking.booker
     @booking_fee_refunded = booking.calculate_refund
 
