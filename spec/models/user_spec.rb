@@ -102,4 +102,15 @@ RSpec.describe User, type: :model do
     pending
   end
 
+  describe '#update_average_rating' do
+    let(:user) { create :user }
+
+    it 'updates average rating' do
+      expect(user.average_rating).to eq nil
+      user.update_average_rating
+
+      expect(user.average_rating).to_not eq nil
+    end
+  end
+
 end

@@ -196,8 +196,7 @@ class User < ActiveRecord::Base
   #end
 
   def update_average_rating
-    rating = received_feedbacks.count == 0 ? 0 : (received_feedbacks.sum('rating').to_f / received_feedbacks.count.to_f).round
-    update_attribute :average_rating, rating
+    update_attribute :average_rating, received_feedbacks.average_rating
   end
 
   def find_or_create_booking_by(enquiry=nil, homestay=nil)

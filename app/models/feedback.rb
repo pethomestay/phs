@@ -11,7 +11,22 @@ class Feedback < ActiveRecord::Base
 
   scope :reviewed, where("review != ''")
 
+  # Get average rating from feedback collection
+  #
+  # @api public
+  # @return [Integer]
+  def self.average_rating
+    return 0 if all.blank?
+
+    (sum(:rating) / count.to_f).round
+  end
+
   private
+
+  # Update average rating of subject
+  #
+  # @api private
+  # @return [Boolean]
   def update_user_average_rating
     subject.update_average_rating
   end
