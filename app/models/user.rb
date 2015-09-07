@@ -284,24 +284,6 @@ class User < ActiveRecord::Base
     result
   end
 
-  def sanitise
-    clean_email = self.email
-    if clean_email.include? "<" #in the form of Joe Blogs <joe.blogs@company.com>
-      start_str = "<"
-      end_str = ">"
-      clean_email = clean_email[/#{start_str}(.*?)#{end_str}/m, 1] #extract out the email part
-    end
-    #new_email = "darmou+#{clean_email.split("@").first}_#{self.id.to_s}@tapmint.com" #
-    new_email = "xuebing@pethomestay.com"
-    self.email = new_email
-    self.password = "password"
-    self.password_confirmation = "password"
-    self.save!
-    self.confirm!
-    self.save!
-  end
-
-
   def self.find_for_facebook_oauth(auth, current_user)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
       graph = Koala::Facebook::API.new(auth.credentials.token)
