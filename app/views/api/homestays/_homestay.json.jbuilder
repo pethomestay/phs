@@ -29,7 +29,7 @@ json.location do
     json.postcode homestay.address_postcode
   end
   json.position do
-    json.latitide homestay.latitude
+    json.latitude homestay.latitude
     json.longitude homestay.longitude
   end
 end
