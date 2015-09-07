@@ -147,4 +147,66 @@ RSpec.describe User, type: :model do
     pending
   end
 
+  describe '.find_for_facebook_oauth' do
+    pending
+  end
+
+  describe '#admin?' do
+    pending
+  end
+
+  describe '#booking_info_between' do
+    pending
+  end
+
+  describe '#unavailable_dates_info' do
+    pending
+  end
+
+  describe '#booked_dates_between' do
+    pending
+  end
+
+  describe '#booked_dates_info' do
+    pending
+  end
+
+  describe '#unavailable_dates_between' do
+    pending
+  end
+
+  describe '#unavailable_dates_after' do
+    pending
+  end
+
+  describe '#is_available?' do
+    pending
+  end
+
+  describe '#response_rate_in_percent' do
+    pending
+  end
+
+  describe '#store_responsiveness_rate' do
+    let(:user) { create :user }
+
+    before :each do
+      allow(user).to receive(:response_rate_in_percent).and_return(10)
+    end
+
+    it "saves responsiveness_rate for user" do
+      expect(user.responsiveness_rate).to eq nil
+      user.store_responsiveness_rate
+      expect(user.responsiveness_rate).to eq 10
+    end
+
+    it "returns responsiveness_rate of user" do
+      expect(user.store_responsiveness_rate).to eq 10
+    end
+  end
+
+  describe '#mobile_num_legal?' do
+    pending
+  end
+
 end

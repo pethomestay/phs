@@ -450,7 +450,7 @@ class User < ActiveRecord::Base
   end
 
   def store_responsiveness_rate
-    update(:responsiveness_rate, response_rate_in_percent)
+    update_column(:responsiveness_rate, response_rate_in_percent)
     responsiveness_rate
   end
 

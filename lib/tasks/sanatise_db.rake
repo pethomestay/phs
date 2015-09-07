@@ -1,6 +1,7 @@
 desc "sanitise email addresses and passwords in local database"
 task :sanitise => :environment do
-  # moved back to rake task since it's only used here and not needed by user
+  # moved back to rake task to contain problem
+  # and since it's only used here and not needed in the user model
   sanitise_user = lambda do |user|
     clean_email = user.email
     if clean_email.include? "<" #in the form of Joe Blogs <joe.blogs@company.com>
