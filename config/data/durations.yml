@@ -1,0 +1,43 @@
+- id: 1
+  title: "Morning"
+  natural: "the morning"
+
+- id: 2
+  title: "Afternoon"
+  natural: "the afternoon"
+
+- id: 3
+  title: "Evening"
+  natural: "the evening"
+
+- id: 4
+  title: "Overnight"
+  natural: "an overnight visit"
+
+- id: 5
+  title: "2 nights"
+  natural: "2 nights"
+
+- id: 6
+  title: "3 nights"
+  natural: "3 nights"
+
+- id: 7
+  title: "4 nights"
+  natural: "4 nights"
+
+- id: 8
+  title: "5 nights"
+  natural: "5 nights"
+
+- id: 9
+  title: "6 nights"
+  natural: "6 nights"
+
+- id: 10
+  title: "7 nights"
+  natural: "7 nights"
+
+- id: 11
+  title: "Longer"
+  natural: "Longer than 7 nights"
