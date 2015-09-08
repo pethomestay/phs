@@ -70,6 +70,9 @@ gem 'yardstick'
 gem 'jbuilder', '~> 2.0'
 gem 'yajl-ruby'
 
+# Readonly Datasource
+gem 'active_hash', '~> 1.4.0'
+
 group :development, :test do
   gem 'capistrano'
   gem 'factory_girl_rails'

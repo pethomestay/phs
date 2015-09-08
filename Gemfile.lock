@@ -18,6 +18,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_hash (1.4.0)
+      activesupport (>= 2.2.2)
     activemodel (3.2.18)
       activesupport (= 3.2.18)
       builder (~> 3.0.0)
@@ -452,6 +454,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionmailer_inline_css
+  active_hash (~> 1.4.0)
   alphabetical_paginate
   analytics-ruby (~> 2.0.0)
   attachinary
@@ -537,3 +540,6 @@ DEPENDENCIES
   yard
   yard-restful
   yardstick
+
+BUNDLED WITH
+   1.10.6
