@@ -205,8 +205,4 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#mobile_num_legal?' do
-    pending
-  end
-
 end

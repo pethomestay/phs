@@ -453,19 +453,4 @@ class User < ActiveRecord::Base
     update_column(:responsiveness_rate, response_rate_in_percent)
     responsiveness_rate
   end
-
-  def mobile_num_legal?
-    return if self.mobile_number.blank?
-    m = self.mobile_number.gsub(/[^0-9]/, "")
-    case m.length
-    when 10 # 0416 123 456
-      true
-    when 11 # 61 416 291 496
-      true
-    when 13 # 0061 416 123 456
-      true
-    else
-      false
-    end
-  end
 end

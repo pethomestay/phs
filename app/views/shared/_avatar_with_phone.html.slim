@@ -1,16 +1,17 @@
 / Expect params
 /   user: a User object
 
+/ Move these back to the controller on refactor
 - photo_size = 60
-- number_legal = user.mobile_num_legal?
-a.profile href=("tel:#{user.mobile_number}" if number_legal)
+- mobile_number = MobileNumber.new(user.mobile_number)
+a.profile href=("tel:#{mobile_number}" if mobile_number.legal?)
   - if user.profile_photo?
     = cl_image_tag user.profile_photo.public_id, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
   - elsif user.uid.present?
     = facebook_profile_image_tag user.uid, width: photo_size, height: photo_size, crop: :thumb, gravity: :face, radius: :max, format: :png
   - else
     = image_tag 'default_profile_photo.jpg', class: 'img-circle'
-  - if number_legal
+  - if mobile_number.legal?
     .phone-icon
       span.fa-stack
         i.fa.fa-square.fa-stack-2x
