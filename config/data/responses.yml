@@ -1,0 +1,27 @@
+- id: 1
+  title: "None"
+  description: "No Response"
+
+- id: 2
+  title: "Accepted"
+  description: "I can do it"
+
+- id: 3
+  title: "Undecided"
+  description: "I might be able to do it"
+
+- id: 4
+  title: "Declined"
+  description: "I can't do it"
+
+- id: 5
+  title: "Available"
+  description: "Available"
+
+- id: 6
+  title: "Unavailable"
+  description: "Not available"
+
+- id: 7
+  title: "Question"
+  description: "Have questions"
