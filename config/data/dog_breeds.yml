@@ -1,0 +1,878 @@
+- id: 1
+  title: "Affenpinscher"
+- id: 2
+  title: "Afghan hound"
+- id: 3
+  title: "Airedale Terrier"
+- id: 4
+  title: "Akita"
+- id: 5
+  title: "Alaskan malamute"
+- id: 6
+  title: "Alsatian"
+- id: 7
+  title: "American cocker"
+- id: 8
+  title: "American Cocker Spaniel"
+- id: 9
+  title: "American eskimo dog"
+- id: 10
+  title: "American foxhound"
+- id: 11
+  title: "American Staffordshire Terrier"
+- id: 12
+  title: "Anatolian karabash"
+- id: 13
+  title: "Australian Bull Dog"
+- id: 14
+  title: "Australian Shepherd"
+- id: 15
+  title: "Australian Shepherd X"
+- id: 16
+  title: "Australian Terrier"
+- id: 17
+  title: "Australian Terrier X"
+- id: 18
+  title: "Basenji/Lab X"
+- id: 19
+  title: "Bassett Hound"
+- id: 20
+  title: "Beagle"
+- id: 21
+  title: "Beagle X"
+- id: 22
+  title: "Beagle/Cavi X"
+- id: 23
+  title: "Beaglier"
+- id: 24
+  title: "Bearded Collie"
+- id: 25
+  title: "Bedlington Terrier"
+- id: 26
+  title: "Belgian griffon"
+- id: 27
+  title: "Bergamasco"
+- id: 28
+  title: "Bernese Mountain Dog"
+- id: 29
+  title: "Bichon Frise"
+- id: 30
+  title: "Bichon Frise X"
+- id: 31
+  title: "Bichon Frise/Maltese X"
+- id: 32
+  title: "Bichon Frise/Mini Schnauzer"
+- id: 33
+  title: "Bichon Frise/Shih Tzu X"
+- id: 34
+  title: "Bichon/Cavi X"
+- id: 35
+  title: "Bichon/Poodle X"
+- id: 36
+  title: "Bloodhound"
+- id: 37
+  title: "Blue Heeler"
+- id: 38
+  title: "Blue Heeler/Border Collie X"
+- id: 39
+  title: "Blue Heeler/Jack Russell X"
+- id: 40
+  title: "Blue Heeler/Kelpie X"
+- id: 41
+  title: "Blue Heeler/Saffordshire X"
+- id: 42
+  title: "Bluetick Coonhound"
+- id: 43
+  title: "Bolognese"
+- id: 44
+  title: "Border Collie"
+- id: 45
+  title: "Border Collie X"
+- id: 46
+  title: "Border collie/Blue heeler X"
+- id: 47
+  title: "Border Collie/Kelpie X"
+- id: 48
+  title: "Border Collie/Sheltie X"
+- id: 49
+  title: "Border Collie/Spaniel X"
+- id: 50
+  title: "Border Terrier"
+- id: 51
+  title: "Borzoi"
+- id: 52
+  title: "Boston terrier"
+- id: 53
+  title: "Boxer"
+- id: 54
+  title: "Boxer Labrador X"
+- id: 55
+  title: "Boxer X"
+- id: 56
+  title: "Boxer/Ridgeback X"
+- id: 57
+  title: "Boxer/Staffy X"
+- id: 58
+  title: "Bracco"
+- id: 59
+  title: "Briard"
+- id: 60
+  title: "British Bulldog"
+- id: 61
+  title: "Brittany Spaniel"
+- id: 62
+  title: "Buhund"
+- id: 63
+  title: "Bull Arab"
+- id: 64
+  title: "Bull Arab/Collie X"
+- id: 65
+  title: "Bull Terrier"
+- id: 66
+  title: "Bull Terrier (miniature)"
+- id: 67
+  title: "Bull Terrier X"
+- id: 68
+  title: "Bull Terrier/Blue heeler X"
+- id: 69
+  title: "Bull Terrier/Mastiff X"
+- id: 70
+  title: "Bulldog"
+- id: 71
+  title: "Bullmastiff"
+- id: 72
+  title: "Cairn Terrier"
+- id: 73
+  title: "Canaan"
+- id: 74
+  title: "Cattle Dog/Pointer X"
+- id: 75
+  title: "Cavalier King Charles Spaniel"
+- id: 76
+  title: "Cavalier X"
+- id: 77
+  title: "Cavalier/Beagle X"
+- id: 78
+  title: "Cavalier/Maltese X"
+- id: 79
+  title: "Cavalier/Poodle X"
+- id: 80
+  title: "Cavalier/Shihtzu X"
+- id: 81
+  title: "Cavalier/Spaniel X"
+- id: 82
+  title: "Cavalier/Tibetan Terrier X"
+- id: 83
+  title: "Cavoodle"
+- id: 84
+  title: "Chesapeake bay retriever"
+- id: 85
+  title: "Chihauhau X"
+- id: 86
+  title: "Chihauhau/Cavalier X"
+- id: 87
+  title: "Chihauhau/FoxieX"
+- id: 88
+  title: "chihauhau/Jack Russell X"
+- id: 89
+  title: "Chihauhau/Silky Terrier X"
+- id: 90
+  title: "Chihauhau/Terrier X"
+- id: 91
+  title: "Chihauhua"
+- id: 92
+  title: "Chihuahau/Pomeranian X"
+- id: 93
+  title: "Chihuahua/Australian Terrier X"
+- id: 94
+  title: "Chin"
+- id: 95
+  title: "Chinese Chested"
+- id: 96
+  title: "Chow Chow"
+- id: 97
+  title: "Chow Retriever X"
+- id: 98
+  title: "Clumber spaniel"
+- id: 99
+  title: "Cocker Spaniel"
+- id: 100
+  title: "Cocker Spaniel (American)"
+- id: 101
+  title: "Cocker Spaniel (Black)"
+- id: 102
+  title: "Cocker Spaniel (Blue Roan)"
+- id: 103
+  title: "Cocker Spaniel (Golden)"
+- id: 104
+  title: "Cocker Spaniel (Red White)"
+- id: 105
+  title: "Cocker Spaniel Heeler X"
+- id: 106
+  title: "Cocker Spaniel X"
+- id: 107
+  title: "Cocker Spaniel/Cavalier X"
+- id: 108
+  title: "Cocker Spaniel/Jack Russell X"
+- id: 109
+  title: "Cocker Spaniel/Labrador X"
+- id: 110
+  title: "Cocker Spaniel/Mini Pinscher X"
+- id: 111
+  title: "Collie (Rough)"
+- id: 112
+  title: "Collie (Short Hair)"
+- id: 113
+  title: "Collie X"
+- id: 114
+  title: "Collie/Briard X"
+- id: 115
+  title: "Collie/Kelpie X"
+- id: 116
+  title: "Collie/Staffordshire X"
+- id: 117
+  title: "Corgi (cardigan)"
+- id: 118
+  title: "Corgi X"
+- id: 119
+  title: "Curly Coated Retriever"
+- id: 120
+  title: "Czesky terrier"
+- id: 121
+  title: "Dachshund (Long Haired)"
+- id: 122
+  title: "Dachshund (min long haired)"
+- id: 123
+  title: "Dachshund (min smooth haired)"
+- id: 124
+  title: "Dachshund (min Wire Haired)"
+- id: 125
+  title: "Dachshund (Smooth Haired)"
+- id: 126
+  title: "Dachshund (Wire Haired)"
+- id: 127
+  title: "Dalmation"
+- id: 128
+  title: "Dalmation/Blue Heeler X"
+- id: 129
+  title: "Dalmation/Pointer X"
+- id: 130
+  title: "Dandie dinmont"
+- id: 131
+  title: "Deerhound"
+- id: 132
+  title: "Dobermann"
+- id: 133
+  title: "Dobermann X"
+- id: 134
+  title: "Dogue De Bordeaux"
+- id: 135
+  title: "Elkhound"
+- id: 136
+  title: "English Cocker Spaniel"
+- id: 137
+  title: "English Pointer"
+- id: 138
+  title: "English setter"
+- id: 139
+  title: "English Springer Spaniel"
+- id: 140
+  title: "English Toy Terrier"
+- id: 141
+  title: "Eskimo dog"
+- id: 142
+  title: "Estrella mountain dog"
+- id: 143
+  title: "Field spaniel"
+- id: 144
+  title: "Finnish lapphund"
+- id: 145
+  title: "Finnish spitz"
+- id: 146
+  title: "Flat Coated Retriever"
+- id: 147
+  title: "Fox Hound"
+- id: 148
+  title: "Fox Terrier"
+- id: 149
+  title: "Fox Terrier (Miniature)"
+- id: 150
+  title: "Fox Terrier X"
+- id: 151
+  title: "Fox Terrier/Chihuahua X"
+- id: 152
+  title: "Fox Terrier/Jack Russell X"
+- id: 153
+  title: "Foxy/Border X"
+- id: 154
+  title: "French Bulldog"
+- id: 155
+  title: "French Bulldog (Black)"
+- id: 156
+  title: "German Shepard/Huntaway X"
+- id: 157
+  title: "German Shepherd"
+- id: 158
+  title: "German Shepherd (white)"
+- id: 159
+  title: "German Shepherd X"
+- id: 160
+  title: "German Shepherd?Dobermann X"
+- id: 161
+  title: "German Shorthaired Pointer"
+- id: 162
+  title: "German spitz"
+- id: 163
+  title: "German wire haired pointer"
+- id: 164
+  title: "Giant Schnauzer"
+- id: 165
+  title: "Glen of imaal terrier"
+- id: 166
+  title: "Golden Retriever"
+- id: 167
+  title: "Golden Retriever/Cocker X"
+- id: 168
+  title: "Golden Retriever/German Shepherd X"
+- id: 169
+  title: "Golden Retriever/Labrador X"
+- id: 170
+  title: "Golden Retriever/Poodle X"
+- id: 171
+  title: "Gordon setter"
+- id: 172
+  title: "Grand basset griffon"
+- id: 173
+  title: "Great Dane"
+- id: 174
+  title: "Great Dane/Gernman Shepherd X"
+- id: 175
+  title: "Great Dane/Mastiff X"
+- id: 176
+  title: "Greyhound"
+- id: 177
+  title: "Greyhound/Whippet X"
+- id: 178
+  title: "Griffon Bruxellois"
+- id: 179
+  title: "Groodle"
+- id: 180
+  title: "Hamilton stovare"
+- id: 181
+  title: "Harrier"
+- id: 182
+  title: "Havanese"
+- id: 183
+  title: "Heeler"
+- id: 184
+  title: "Heeler X"
+- id: 185
+  title: "Heeler/Cavi X"
+- id: 186
+  title: "Heeler/Dalmation X"
+- id: 187
+  title: "Heeler/Kelpie X"
+- id: 188
+  title: "Heeler/Retriever X"
+- id: 189
+  title: "Heeler/Spaniel X"
+- id: 190
+  title: "Heeler/Staffy X"
+- id: 191
+  title: "Hovawart"
+- id: 192
+  title: "Hungarian kuvasz"
+- id: 193
+  title: "Hungarian puli"
+- id: 194
+  title: "Hungarian Vizsla"
+- id: 195
+  title: "Husky/Lab X"
+- id: 196
+  title: "Ibizan"
+- id: 197
+  title: "Irish Red &amp; White Setter"
+- id: 198
+  title: "Irish red setter"
+- id: 199
+  title: "Irish Setter"
+- id: 200
+  title: "Irish terrier"
+- id: 201
+  title: "Irish water spaniel"
+- id: 202
+  title: "Irish Wolfhound"
+- id: 203
+  title: "Irish Wolfhound X"
+- id: 204
+  title: "Italian Greyhound"
+- id: 205
+  title: "Italian spinone"
+- id: 206
+  title: "Jack Russell"
+- id: 207
+  title: "Jack Russell (Long Haired)"
+- id: 208
+  title: "Jack Russell X"
+- id: 209
+  title: "Jack Russell/Border X"
+- id: 210
+  title: "Jack Russell/Chihuahua X"
+- id: 211
+  title: "Jack Russell/Fox Terrier X"
+- id: 212
+  title: "Jack Russell/Maltese X"
+- id: 213
+  title: "Jack Russell/Mini Fox Terrier X"
+- id: 214
+  title: "Jack Russell/Norfolk Terrier X"
+- id: 215
+  title: "Jack Russell/Pomeranian X"
+- id: 216
+  title: "Japanese Chin"
+- id: 217
+  title: "Japanese shiba inu"
+- id: 218
+  title: "Japanese spitz"
+- id: 219
+  title: "Keeshond"
+- id: 220
+  title: "Keeshond/Kelpie X"
+- id: 221
+  title: "Kelpie"
+- id: 222
+  title: "Kelpie X"
+- id: 223
+  title: "Kelpie/Border Collie X"
+- id: 224
+  title: "Kelpie/Collie X"
+- id: 225
+  title: "kelpie/German Shepherd X"
+- id: 226
+  title: "Kelpie/Heeler X"
+- id: 227
+  title: "kelpie/malamute X"
+- id: 228
+  title: "Kelpie/Pharoah HoundX"
+- id: 229
+  title: "Kelpie/Rottweiler X"
+- id: 230
+  title: "Kerry Blue Terrier"
+- id: 231
+  title: "King Charles Spaniel"
+- id: 232
+  title: "Kodi kerhondje"
+- id: 233
+  title: "Komondor"
+- id: 234
+  title: "Koolie"
+- id: 235
+  title: "Koolie/Border Collie X"
+- id: 236
+  title: "Labradoodle"
+- id: 237
+  title: "Labrador"
+- id: 238
+  title: "Labrador (Black)"
+- id: 239
+  title: "Labrador (Chocolate)"
+- id: 240
+  title: "Labrador (Golden)"
+- id: 241
+  title: "Labrador X"
+- id: 242
+  title: "Labrador X Wolfhound"
+- id: 243
+  title: "Labrador/Boarder X"
+- id: 244
+  title: "Labrador/Cocker Spaniel X"
+- id: 245
+  title: "Labrador/Curly Coated Retriever"
+- id: 246
+  title: "Labrador/Kelpie X"
+- id: 247
+  title: "Labrador/Pointer X"
+- id: 248
+  title: "Labrador/Retriever X"
+- id: 249
+  title: "Labrador/Ridgeback X"
+- id: 250
+  title: "Labrador/Shepherd X"
+- id: 251
+  title: "Labrador/Spaniel X"
+- id: 252
+  title: "Labrador/Staffordshire X"
+- id: 253
+  title: "Labraor/Blue Heeler X"
+- id: 254
+  title: "Laekondis"
+- id: 255
+  title: "Lagotto Romagnolo"
+- id: 256
+  title: "Lakeland Terrier"
+- id: 257
+  title: "Lapphund"
+- id: 258
+  title: "Large Munsterlander"
+- id: 259
+  title: "Leonberger"
+- id: 260
+  title: "Lhasa Apso"
+- id: 261
+  title: "Lhasa Apso X"
+- id: 262
+  title: "Lhasa Apso/Bichon X"
+- id: 263
+  title: "Lhasa Apso/Maltese X"
+- id: 264
+  title: "Lowchen"
+- id: 265
+  title: "Lurcher"
+- id: 266
+  title: "Malinois"
+- id: 267
+  title: "Maltese"
+- id: 268
+  title: "Maltese X"
+- id: 269
+  title: "Maltese/Bichon Frise X"
+- id: 270
+  title: "Maltese/Cavalier X"
+- id: 271
+  title: "Maltese/Cavalier/Shih Tzu X"
+- id: 272
+  title: "Maltese/Chihuahua X"
+- id: 273
+  title: "Maltese/Jack Russell X"
+- id: 274
+  title: "Maltese/Lhasa Apso X"
+- id: 275
+  title: "Maltese/Pekinese X"
+- id: 276
+  title: "Maltese/Pom X"
+- id: 277
+  title: "Maltese/Pomeranian/Shih Tzu X"
+- id: 278
+  title: "Maltese/Poodle X"
+- id: 279
+  title: "Maltese/Poodle/Westie X"
+- id: 280
+  title: "Maltese/Pug X"
+- id: 281
+  title: "Maltese/Shih Tzu X"
+- id: 282
+  title: "Maltese/Silky X"
+- id: 283
+  title: "Maltese/Terrier X"
+- id: 284
+  title: "Maltese/Westie X"
+- id: 285
+  title: "Maltese/Westie/Shih Tzu X"
+- id: 286
+  title: "Manchester Terrier"
+- id: 287
+  title: "Maremma"
+- id: 288
+  title: "Mastiff"
+- id: 289
+  title: "Mastiff X"
+- id: 290
+  title: "Mastiff/Corgi X"
+- id: 291
+  title: "Miniature Pinscher"
+- id: 292
+  title: "Miniature Pinscher (Red)"
+- id: 293
+  title: "Moodle"
+- id: 294
+  title: "Munsterlander"
+- id: 295
+  title: "Newfoundland"
+- id: 296
+  title: "Newfoundland X"
+- id: 297
+  title: "Norfolk terrier"
+- id: 298
+  title: "Norwegian buhund"
+- id: 299
+  title: "Norwegian Elkhound"
+- id: 300
+  title: "Norwegian lunderhund"
+- id: 301
+  title: "Norwich terrier"
+- id: 302
+  title: "Nova Scotia Duck Tolling Retriev"
+- id: 303
+  title: "Old English Sheepdog"
+- id: 304
+  title: "Otterhund"
+- id: 305
+  title: "PapillionxShiutzu"
+- id: 306
+  title: "Papillon"
+- id: 307
+  title: "Papillon/Yorkshire Terrier X"
+- id: 308
+  title: "Parson Russell Terrier"
+- id: 309
+  title: "Pekingese"
+- id: 310
+  title: "Pembroke corgi"
+- id: 311
+  title: "Petit Basset Griffon Vendeen"
+- id: 312
+  title: "Petit basson"
+- id: 313
+  title: "Pharaoh Hound"
+- id: 314
+  title: "Pointer"
+- id: 315
+  title: "Pointer X"
+- id: 316
+  title: "Pom X Fox Terrier"
+- id: 317
+  title: "Pomeranian"
+- id: 318
+  title: "Pomeranian X"
+- id: 319
+  title: "Pomeranian/Chihuahua X"
+- id: 320
+  title: "Poodle"
+- id: 321
+  title: "Poodle (Miniature Apricot)"
+- id: 322
+  title: "Poodle (Miniature Black)"
+- id: 323
+  title: "Poodle (Miniature)"
+- id: 324
+  title: "Poodle (Standard)"
+- id: 325
+  title: "Poodle (Standard) (Black)"
+- id: 326
+  title: "Poodle (Standard) (Brown)"
+- id: 327
+  title: "Poodle (Standard) (Chocolate)"
+- id: 328
+  title: "Poodle (Standard) (Silver)"
+- id: 329
+  title: "Poodle (Toy)"
+- id: 330
+  title: "Poodle X"
+- id: 331
+  title: "Poodle X (Toy Apricot)"
+- id: 332
+  title: "Poodle/Bichon X"
+- id: 333
+  title: "Poodle/Border X"
+- id: 334
+  title: "Poodle/Chihuahua X"
+- id: 335
+  title: "Poodle/Jack Russell X"
+- id: 336
+  title: "Poodle/Maltese X"
+- id: 337
+  title: "Poodle/Schnauzer X"
+- id: 338
+  title: "Poodle/Shihtzu X"
+- id: 339
+  title: "Poodle/Silky X"
+- id: 340
+  title: "Poodlier (poodle X cavalier)"
+- id: 341
+  title: "Portugese Water Dog"
+- id: 342
+  title: "Portuguese Podengo"
+- id: 343
+  title: "Pug"
+- id: 344
+  title: "Pug X"
+- id: 345
+  title: "Pug/Maltese/Shihtzu"
+- id: 346
+  title: "Pug/Sheltie X"
+- id: 347
+  title: "Pugalier (pug X cavalier)"
+- id: 348
+  title: "Pyrenean Mountain Dog"
+- id: 349
+  title: "Rhodesian Ridgeback"
+- id: 350
+  title: "Rhodesian Ridgeback X"
+- id: 351
+  title: "Rhodesian Ridgeback/Whippet X"
+- id: 352
+  title: "Ridgeback/Shepherd X"
+- id: 353
+  title: "Rottweiler"
+- id: 354
+  title: "Rottweiler X"
+- id: 355
+  title: "Rottweiler/Dobermann X"
+- id: 356
+  title: "Rottweiler/Old English X"
+- id: 357
+  title: "Saluki"
+- id: 358
+  title: "Samoyed"
+- id: 359
+  title: "Schipperke"
+- id: 360
+  title: "Schnauzer"
+- id: 361
+  title: "Schnauzer X (Miniature)"
+- id: 362
+  title: "Schnauzer (Giant)"
+- id: 363
+  title: "Schnauzer (Standard)"
+- id: 364
+  title: "Schnauzer/Bichon Frise"
+- id: 365
+  title: "Schnauzer/Shih Tzu X"
+- id: 366
+  title: "scottish terrier"
+- id: 367
+  title: "Scottish Terrier/Jack Russell X"
+- id: 368
+  title: "Sealyham terrier"
+- id: 369
+  title: "Segugio"
+- id: 370
+  title: "setter cross"
+- id: 371
+  title: "Sharpi"
+- id: 372
+  title: "Sharpi X"
+- id: 373
+  title: "Sheltie"
+- id: 374
+  title: "Shetland Sheepdog"
+- id: 375
+  title: "Shiba Inu"
+- id: 376
+  title: "Shih Tzu"
+- id: 377
+  title: "Shih Tzu X"
+- id: 378
+  title: "Shih Tzu/Bichon Frise X"
+- id: 379
+  title: "Shih Tzu/Maltese X"
+- id: 380
+  title: "Shih Tzu/Pekingese X"
+- id: 381
+  title: "Shih Tzu/Poodle X"
+- id: 382
+  title: "Shih Tzu/Schnauzer X"
+- id: 383
+  title: "shih Tzu/staffy X"
+- id: 384
+  title: "Shih Tzu/Terrier X"
+- id: 385
+  title: "Siberian Husky"
+- id: 386
+  title: "Silky Terrier"
+- id: 387
+  title: "Silky X"
+- id: 388
+  title: "Silky/Australian Terrier X"
+- id: 389
+  title: "Silky/Jack Russell X"
+- id: 390
+  title: "Silky/Maltese X"
+- id: 391
+  title: "Silky/Shihtzu X"
+- id: 392
+  title: "Silky/Yorkshire Terrier X"
+- id: 393
+  title: "Skye terrier"
+- id: 394
+  title: "Sloughi"
+- id: 395
+  title: "Snoodle"
+- id: 396
+  title: "Soft Coated Wheaten Terrier"
+- id: 397
+  title: "Spaniel/Bassett X"
+- id: 398
+  title: "Spaniel/Heeler X"
+- id: 399
+  title: "Spaniel/terrier X"
+- id: 400
+  title: "Spoodle"
+- id: 401
+  title: "Spoodle/Retriever X"
+- id: 402
+  title: "Springer Spaniel"
+- id: 403
+  title: "St. Bernard"
+- id: 404
+  title: "St. Bernard"
+- id: 405
+  title: "Staffordshire Bull Terrier"
+- id: 406
+  title: "Staffordshire Bull Terrier X"
+- id: 407
+  title: "Staffordshire/Labrador X"
+- id: 408
+  title: "Staffordshire/Pitbull X"
+- id: 409
+  title: "Staffordshire/Ridgeback X"
+- id: 410
+  title: "Staffy / German Shepherd"
+- id: 411
+  title: "Staffy X Foxy"
+- id: 412
+  title: "Staffy/Heeler X"
+- id: 413
+  title: "Staffy/Pointer X"
+- id: 414
+  title: "Staghound/Greyhound/Rigdeback X"
+- id: 415
+  title: "Sussex Spaniel"
+- id: 416
+  title: "Swedish valhund"
+- id: 417
+  title: "Tentefield Terrier"
+- id: 418
+  title: "Terrier X"
+- id: 419
+  title: "Terrier X Minature Pinscher"
+- id: 420
+  title: "Tervuren"
+- id: 421
+  title: "Tibetan Spaniel"
+- id: 422
+  title: "Tibetan Spaniel X"
+- id: 423
+  title: "Tibetan Terrier"
+- id: 424
+  title: "Tibetan X"
+- id: 425
+  title: "Weimaraner"
+- id: 426
+  title: "Welsh Springer Spaniel"
+- id: 427
+  title: "Welsh Springer Spaniel"
+- id: 428
+  title: "Welsh Terrier"
+- id: 429
+  title: "West Highland White Terrier"
+- id: 430
+  title: "West Highland X"
+- id: 431
+  title: "West Highland/Poodle X"
+- id: 432
+  title: "Westie/Cairn Terrier"
+- id: 433
+  title: "Wheaten Terrier (Soft Coated)"
+- id: 434
+  title: "Whippet"
+- id: 435
+  title: "whippet X"
+- id: 436
+  title: "White Swiss Shepherd Dog"
+- id: 437
+  title: "Wippet/Kelpie X"
+- id: 438
+  title: "Wolfhound/Mastiff X"
+- id: 439
+  title: "Yorkshire Terrier"
