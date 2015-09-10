@@ -1,0 +1,11 @@
+- id: 1
+  title: "Small (0-15kg)"
+
+- id: 2
+  title: "Medium (16-30kg)"
+
+- id: 3
+  title: "Large (31-45kg)"
+
+- id: 4
+  title: "Giant (46kg+)"
