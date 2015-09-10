@@ -13,11 +13,17 @@ class Coupon < ActiveRecord::Base
   DEFAULT_CREDIT_REFERRER_AMOUNT = 5
 
   def used?
-    return self.bookings.any?
+    bookings.any?
   end
 
-  def unused?
-    return self.booking.nil?
+  def valid_for? user
+    return false if user.nil?
+    return false if user.used_coupons.any?
+    return false if coupon_limit.present? && (users_count >= coupon_limit)
+    return false if valid_to.present? && Time.now > valid_to
+    return false if admin_mass_code
+
+    true
   end
 
   def within_coupon_limit
