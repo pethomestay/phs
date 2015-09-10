@@ -1,0 +1,14 @@
+- id: 1
+  title: "Dog"
+
+- id: 2
+  title: "Cat"
+
+- id: 3
+  title: "Bird"
+
+- id: 4
+  title: "Fish"
+
+- id: 5
+  title: "Other"
