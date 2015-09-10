@@ -1,0 +1,14 @@
+- id: 1
+  title: "House"
+
+- id: 2
+  title: "Apartment"
+
+- id: 3
+  title: "Farm"
+
+- id: 4
+  title: "Townhouse"
+
+- id: 5
+  title: "Unit"
