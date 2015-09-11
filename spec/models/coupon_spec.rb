@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Coupon do
+RSpec.describe Coupon, type: :model do
   let(:user) { create :user }
   let(:coupon) { build :coupon }
 
