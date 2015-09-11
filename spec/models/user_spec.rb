@@ -202,7 +202,28 @@ RSpec.describe User, type: :model do
   end
 
   describe '#is_available?' do
-    pending
+    before :each do
+      user.save
+    end
+
+    context 'with empty options' do
+      it 'returns false' do
+        expect(user.is_available?).to eq false
+      end
+    end
+
+    context 'with unavailable dates' do
+      it 'returns false' do
+        user.unavailable_dates.create(date: DateTime.now)
+        expect(user.is_available?(from: DateTime.now, to: DateTime.now)).to eq false
+      end
+    end
+
+    context 'with available dates' do
+      it 'returns true' do
+        expect(user.is_available?(from: DateTime.now, to: DateTime.now)).to eq true
+      end
+    end
   end
 
   describe '#response_rate_in_percent' do

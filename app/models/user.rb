@@ -389,13 +389,10 @@ class User < ActiveRecord::Base
   end
 
   # Expect two params, from & to, both of which are Date objects
-  def is_available?(opts)
-    if self.unavailable_dates.select(:date)
-       .where('date >= ? AND date <= ?', opts[:from], opts[:to]).any?
-      false # Unavailable
-    else
-      true  # Available
-    end
+  def is_available?(opts = {})
+    return false if opts.blank?
+
+    unavailable_dates.where('date >= ? AND date <= ?', opts[:from], opts[:to]).blank?
   end
 
   # New response_rate
