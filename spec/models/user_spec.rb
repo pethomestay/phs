@@ -169,7 +169,12 @@ RSpec.describe User, type: :model do
   end
 
   describe '#admin?' do
-    pending
+    context 'when user is admin' do
+      it "returns true" do
+        user.admin = true
+        expect(user.admin?).to eq true
+      end
+    end
   end
 
   describe '#booking_info_between' do

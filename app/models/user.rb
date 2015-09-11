@@ -311,7 +311,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    return self.admin || Rails.env == "staging" || Rails.env == "development"
+    admin || Rails.env.staging? || Rails.env.production?
   end
 
   #def self.new_with_session(params, session)
