@@ -77,11 +77,9 @@ class User < ActiveRecord::Base
 
   # Returns the dollar amount of money earned from owned coupons
   def coupon_credits_earned
-    total = 0
-    self.owned_coupons.each do |coupon|
-      total += coupon.credit_referrer_amount.to_f * coupon.bookings.count
+    owned_coupons.includes(:bookings).inject(0) do |total, coupon|
+      total += coupon.credit_referrer_amount.to_f * coupon.bookings.length
     end
-    total
   end
 
   def name

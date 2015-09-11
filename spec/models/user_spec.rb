@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user) { build :user }
+
   describe 'validations' do
     subject { build :user }
 
@@ -51,7 +53,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#generate_referral_code' do
-    let(:user) { create :user }
+    before :each do
+      user.save
+    end
 
     context 'with forced creation' do
       it 'creates owned_coupons for user' do
@@ -67,7 +71,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#generate_hex' do
-    let(:user) { build :user, hex: nil }
+    before :each do
+      user.hex = nil
+    end
 
     context 'without hex' do
       it 'creates hex' do
@@ -87,21 +93,37 @@ RSpec.describe User, type: :model do
   end
 
   describe '#coupon_credits_earned' do
-    pending 
+    before :each do
+      user.save
+    end
+
+    context 'with owned coupons' do
+      let(:coupon) { create :coupon, credit_referrer_amount: 10 }
+      let!(:booking) { create :booking, coupon: coupon, bookee: user, booker: user }
+
+      it 'returns sum of earnings from owned coupons' do
+        user.owned_coupons << coupon
+
+        expect(user.coupon_credits_earned).to eq 10
+      end
+    end
+
+    context 'without owned coupons' do
+      it 'returns 0' do
+        expect(user.coupon_credits_earned).to eq 0
+      end
+    end
   end
 
   describe '#name' do
-    let(:user) { build :user }
-
     it 'returns first name and last name' do
       expect(user.name).to eq 'Tom LeGrice'
     end
   end
 
   describe '#update_average_rating' do
-    let(:user) { create :user }
-
     it 'updates average rating' do
+      user.save
       expect(user.average_rating).to eq nil
       user.update_average_rating
 
@@ -122,19 +144,18 @@ RSpec.describe User, type: :model do
   end
 
   describe '#unlink_from_facebook' do
-    let(:user) { create :user, uid: '123', provider: 'facebook' }
+    let(:facebook_user) { create :user, uid: '123', provider: 'facebook' }
 
     it 'removes uid and provider from user' do
-      user.unlink_from_facebook
-      expect(user.uid).to eq nil
-      expect(user.provider).to eq nil
+      facebook_user.unlink_from_facebook
+      expect(facebook_user.uid).to eq nil
+      expect(facebook_user.provider).to eq nil
     end
   end
 
   describe '#needs_password?' do
-    let(:user) { create :user, provider: nil }
-
     it 'returns true if provider is blank' do
+      user.save
       expect(user.needs_password?).to eq true
     end
   end
@@ -184,9 +205,8 @@ RSpec.describe User, type: :model do
   end
 
   describe '#store_responsiveness_rate' do
-    let(:user) { create :user }
-
     before :each do
+      user.save
       allow(user).to receive(:response_rate_in_percent).and_return(10)
     end
 
