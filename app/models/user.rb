@@ -255,20 +255,6 @@ class User < ActiveRecord::Base
     provider.blank?
   end
 
-  def update_without_password(params, *options)
-    #current_password = params.delete(:current_password)
-
-    if params[:password].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    result = update_attributes(params, *options)
-
-    clean_up_passwords
-    result
-  end
-
   def self.find_for_facebook_oauth(auth, current_user)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
       graph = Koala::Facebook::API.new(auth.credentials.token)

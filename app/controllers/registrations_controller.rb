@@ -52,7 +52,16 @@ class RegistrationsController < Devise::RegistrationsController
                              # remove the virtual current_password attribute update_without_password
                              # doesn't know how to ignore it
                              params[:user].delete(:current_password)
-                             @user.update_without_password(params[:user])
+
+                             # Placing this back to controller to isolate in one place
+                             # This whole if statement will be placed inside a form object
+                             if params[:password].blank?
+                               params.delete(:password)
+                               params.delete(:password_confirmation) if params[:password_confirmation].blank?
+                             end
+                            
+                             @user.update_attributes(params, *options)
+                             @user.clean_up_passwords
                              @user.homestay.update_attributes(params[:homestay])
                            end
 

@@ -160,10 +160,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#update_without_password' do
-    pending
-  end
-
   describe '.find_for_facebook_oauth' do
     pending
   end
