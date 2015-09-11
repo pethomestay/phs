@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :booking do
-    subtotal 10.0
+    cost_per_night 100.0
     check_in_date DateTime.now
     check_out_date DateTime.now
   end

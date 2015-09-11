@@ -19,17 +19,23 @@ class Coupon < ActiveRecord::Base
   def valid_for? user
     return false if user.nil?
     return false if user.used_coupons.any?
-    return false if coupon_limit.present? && (users_count >= coupon_limit)
+    return false if exceeded_coupon_limit?
     return false if valid_to.present? && Time.now > valid_to
     return false if admin_mass_code
 
     true
   end
 
+  private
+
   def within_coupon_limit
-    if self.coupon_limit.present? && self.users_count >= self.coupon_limit
+    if exceeded_coupon_limit?
       errors.add(:coupon_limit, "The coupon has already been used")
     end
+  end
+
+  def exceeded_coupon_limit?
+    coupon_limit.present? && (users_count >= coupon_limit)
   end
 
 end
