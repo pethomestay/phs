@@ -5,7 +5,10 @@ class UsersController < ApplicationController
     if current_user.used_coupons.any?
       @message = "You have already applied a previous coupon"
     else
-      if current_user.validate_code?(params[:user][:coupon_code])
+      coupon = Coupon.valid.find_by_code params[:user][:coupon_code].to_s.upcase
+
+      if coupon && coupon.valid_for? current_user
+        CouponUsage.create(user: current_user, coupon: coupon)
         @message = "Thanks, the coupon has been accepted, it will be applied the first time you make a booking"
         flash[:notice] = @message
         cookies[:code] = nil
