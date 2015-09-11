@@ -98,10 +98,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#validate_code' do
-    pending
-  end
-
   describe '#update_average_rating' do
     let(:user) { create :user }
 
