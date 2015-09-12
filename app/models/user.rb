@@ -297,7 +297,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    admin || Rails.env.staging? || Rails.env.production?
+    admin || Rails.env.staging? || Rails.env.development?
   end
 
   #def self.new_with_session(params, session)

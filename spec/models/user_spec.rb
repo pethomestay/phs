@@ -166,8 +166,26 @@ RSpec.describe User, type: :model do
 
   describe '#admin?' do
     context 'when user is admin' do
-      it "returns true" do
+      it 'returns true' do
         user.admin = true
+        expect(user.admin?).to eq true
+      end
+    end
+
+    context 'when user is on staging' do
+      let(:env) { double(staging?: true) }
+
+      it 'returns true' do
+        allow(Rails).to receive(:env).and_return env
+        expect(user.admin?).to eq true
+      end
+    end
+
+    context 'when user is on development' do
+      let(:env) { double(staging?: false, development?: true) }
+
+      it 'returns true' do
+        allow(Rails).to receive(:env).and_return env
         expect(user.admin?).to eq true
       end
     end
