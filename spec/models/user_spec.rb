@@ -139,10 +139,6 @@ RSpec.describe User, type: :model do
     pending
   end
 
-  describe '#find_stored_card_id' do
-    pending
-  end
-
   describe '#unlink_from_facebook' do
     let(:facebook_user) { create :user, uid: '123', provider: 'facebook' }
 

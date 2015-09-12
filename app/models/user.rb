@@ -136,18 +136,6 @@ class User < ActiveRecord::Base
     transaction
   end
 
-  def find_stored_card_id(selected_stored_card=nil, use_stored_card=nil)
-    if selected_stored_card.blank?
-      if use_stored_card.blank?
-        return nil
-      elsif use_stored_card.to_s == '1' && self.cards.size >= 1
-        return self.cards.first.id
-      end
-    else
-      return selected_stored_card
-    end
-  end
-
   def unlink_from_facebook
     update_attributes(uid: nil, provider: nil)
   end
