@@ -31,7 +31,9 @@ class BookingsController < ApplicationController
       @client_token = current_user.braintree_customer_id.present? ? Braintree::ClientToken.generate(:customer_id => current_user.braintree_customer_id ) : Braintree::ClientToken.generate()
     end
     render :edit, :layout => 'new_application'
-    # @transaction = current_user.find_or_create_transaction_by(@booking)
+    # processor = TransactionProcessor.new(@booking)
+    # processor.process
+    # @transaction = processor.transaction
     # @unavailable_dates = @booking.bookee.unavailable_dates_after(Date.today)
     # if @booking.state?(:payment_authorisation_pending) #we have tried to pay for this booking before display the ring admin screen
     #   PaymentFailedJob.new.async.perform(@booking, @transaction)
@@ -233,7 +235,7 @@ class BookingsController < ApplicationController
           redirect_to action: :edit and return
         end
       else
-        current_user.find_or_create_transaction_by(@booking)
+        TransactionProcessor.new(@booking).process
       end
     end
   end

@@ -119,23 +119,6 @@ class User < ActiveRecord::Base
     booking
   end
 
-  def find_or_create_transaction_by(booking)
-    transaction = booking.transaction.blank? ? Transaction.find_or_create_by_booking_id(booking.id) : booking.transaction
-
-    transaction.reference = "transaction_id=#{transaction.id}"
-    transaction.type_code = 1 # preauth type is 1, simple transaction type is 0
-    transaction.amount = booking.amount
-    transaction.time_stamp = Time.now.gmtime.strftime("%Y%m%d%H%M%S")
-
-    fingerprint_string = "#{ENV['MERCHANT_ID']}|#{ENV['TRANSACTION_PASSWORD']}|#{transaction.type_code}|#{transaction.
-        reference}|#{transaction.actual_amount}|#{transaction.time_stamp}"
-
-    transaction.merchant_fingerprint = Digest::SHA1.hexdigest(fingerprint_string)
-
-    transaction.save!
-    transaction
-  end
-
   def unlink_from_facebook
     update_attributes(uid: nil, provider: nil)
   end

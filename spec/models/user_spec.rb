@@ -135,10 +135,6 @@ RSpec.describe User, type: :model do
     pending
   end
 
-  describe '#find_or_create_transaction_by' do
-    pending
-  end
-
   describe '#unlink_from_facebook' do
     let(:facebook_user) { create :user, uid: '123', provider: 'facebook' }
 
