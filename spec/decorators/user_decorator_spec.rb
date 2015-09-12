@@ -52,4 +52,27 @@ RSpec.describe UserDecorator do
       expect(decorator.complete_address).to eq "#{user.address_1} Suburb, Melbourne, Australia."
     end
   end
+
+  describe '#stored_card' do
+    let(:card) { build :card }
+
+    context 'with selected_stored_card' do
+      it 'returns selected stored card' do
+        card.save
+        expect(decorator.stored_card(card.id, nil)).to eq card
+      end
+    end
+
+    context 'without selected_stored_card' do
+      it 'returns nil without use_stored_card' do
+        expect(decorator.stored_card(nil, nil)).to eq nil
+      end
+
+      it 'returns first card with use_stored_card' do
+        card.user = user
+        card.save
+        expect(decorator.stored_card(nil, 1)).to eq card
+      end
+    end
+  end
 end

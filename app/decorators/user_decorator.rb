@@ -44,4 +44,16 @@ class UserDecorator < SimpleDelegator
     "#{self.address_1} #{self.address_suburb}, #{self.address_city}, #{self.address_country}."
   end
 
+  # Find stored card to be used
+  #
+  # @api public
+  # @return [Card]
+  def stored_card(selected_card_id=nil, use_card=nil)
+    if selected_card_id.present?
+      Card.where(id: selected_card_id).first 
+    elsif use_card.to_s == '1'
+      cards.first
+    end
+  end
+
 end
