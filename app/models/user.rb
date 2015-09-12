@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     :accept_house_rules, :accept_terms, :date_of_birth, :address_1, :address_2,
     :address_suburb, :address_city, :address_postcode, :address_country,
     :password_confirmation, :braintree_customer_id, :coupon_code, :opt_out_sms,
-    :responsiveness_score, :active, :hex
+    :responsiveness_score, :active, :hex, :provider, :uid, :age_range_min, :age_range_max
 
   has_one :homestay
   has_many :pets
@@ -247,8 +247,7 @@ class User < ActiveRecord::Base
   end
 
   def unlink_from_facebook
-    update_column(:uid, nil)
-    update_column(:provider, nil)
+    update_attributes(uid: nil, provider: nil)
   end
 
   def needs_password?
