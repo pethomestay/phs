@@ -15,21 +15,21 @@ RSpec.describe 'API: user signup', type: :request do
   describe 'signup' do
     context 'credentials are incorrect' do
       it 'returns 400' do
-        post '/users?token=12345678', user_params
+        post tokenised_path('/users'), user_params
         expect(response).to match_error_code(400)
       end
     end
 
     context 'credentials are incomplete' do
       it 'returns 400' do
-        post '/users?token=12345678', {user: user_params.except(:first_name)}
+        post tokenised_path('/users'), {user: user_params.except(:first_name)}
         expect(response).to match_error_code(400)
       end
     end
 
     context 'credentials are complete' do
       it 'returns the user' do
-        post '/users?token=12345678', {user: user_params}
+        post tokenised_path('/users'), {user: user_params}
         expect(response).to be_success
         expect(response).to match_response_schema('user')
         expect(json['user']['email']).to eq(user_params[:email])

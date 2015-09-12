@@ -5,7 +5,8 @@ PetHomestay::Application.routes.draw do
       post 'sessions', to: 'sessions#create'
       post 'users', to: 'users#create'
       resources :breeds, only: :index
-      resources :homestays
+      resources :homestays, only: [:index, :show]
+      resources :pets, only: [:index, :create, :update]
       get '*path', to: 'base#page_not_found'
     end
   end
@@ -16,7 +17,8 @@ PetHomestay::Application.routes.draw do
     post 'sessions', to: 'sessions#create'
     post 'users', to: 'users#create'
     resources :breeds, only: :index
-    resources :homestays
+    resources :homestays, only: [:index, :show]
+    resources :pets, only: [:index, :create, :update]
     get '*path', to: 'base#page_not_found'
   end
 

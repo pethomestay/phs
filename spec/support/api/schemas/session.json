@@ -5,7 +5,8 @@
       "type": "object",
       "properties": {
         "id": {"type": "number"},
-        "faecbook_id": {"type": "number"},
+        "token": {"type": "string"},
+        "facebook_id": {"type": ["number", "null"]},
         "first_name": {"type": "string"},
         "last_name": {"type": "string"},
         "image": {
@@ -16,7 +17,7 @@
           }
         }
       },
-      "required": ["id", "first_name", "last_name"]
+      "required": ["id", "token", "first_name", "last_name"]
     }
   },
   "required": ["user"]

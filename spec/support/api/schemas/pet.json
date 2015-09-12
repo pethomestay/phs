@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "pet": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "type": {"type": "number"},
+        "breed": {"type": "string"},
+        "age": {"type": "number"},
+        "sex": {"type": "number"},
+        "size": {"type": "number"},
+        "energy_level": {"type": "number"},
+        "personality": {"type": ["array", "null"]}
+      },
+      "required": ["name", "type"]
+    }
+  }
+}
