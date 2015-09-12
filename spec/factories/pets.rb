@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :pet do
-    sequence(:name) {|n| "Pet ##{n}"}
+    sequence(:name) { |n| "Pet ##{n}" }
     pet_type_id 1
     size_id 1
     pet_age 1

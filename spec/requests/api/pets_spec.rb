@@ -22,9 +22,9 @@ RSpec.describe 'API: pets', type: :request do
 
     it "returns the user's pets" do
       stranger = create(:user)
-      henry = create(:pet, name: 'Henry', user: user)
-      charlie = create(:pet, name: 'Charlie', user: user)
-      fido = create(:pet, name: 'Fideo', user: stranger)
+      create(:pet, name: 'Henry', user: user)
+      create(:pet, name: 'Charlie', user: user)
+      create(:pet, name: 'Fideo', user: stranger)
       get tokenised_path('/pets', user)
       expect(response).to be_success
       expect(response).to match_response_schema('pets')
@@ -38,7 +38,7 @@ RSpec.describe 'API: pets', type: :request do
 
     context 'with valid params' do
       it 'succeeds' do
-        post tokenised_path('/pets', user), {pet: pet_params}
+        post tokenised_path('/pets', user), { pet: pet_params }
         expect(response).to be_success
         expect(response).to match_response_schema('pet')
         expect(json['pet']['name']).to eq(pet_params[:name])
@@ -47,7 +47,7 @@ RSpec.describe 'API: pets', type: :request do
 
     context 'with invalid params' do
       it 'returns 400' do
-        post tokenised_path('/pets', user), {pet: pet_params.except(:name)}
+        post tokenised_path('/pets', user), { pet: pet_params.except(:name) }
         expect(response).to match_error_code(400)
       end
     end

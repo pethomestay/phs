@@ -8,9 +8,7 @@ class Api::PetsController < Api::BaseController
 
   def create
     @pet = @user.pets.build(parsed_params)
-    unless @pet.save
-      render_400 @pet.errors.full_messages
-    end
+    render_400 @pet.errors.full_messages unless @pet.save
   end
 
   private

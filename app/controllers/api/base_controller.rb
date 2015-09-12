@@ -6,13 +6,6 @@ class Api::BaseController < ApplicationController
 
   before_filter :expose_token, :authenticate_token, :expose_user
 
-  # Hello!
-  # @url /
-  # @action GET
-  def index
-    render json: { hello: 'Woof, woof.' }
-  end
-
   # Catch-all endpoint for unknown requests.
   def page_not_found
     render_404

@@ -9,7 +9,6 @@ RSpec.describe 'API: authentication', type: :request do
         it 'returns 200' do
           get '/?token=12345678'
           expect(response).to be_success
-          expect(json['hello']).to eq('Woof, woof.')
         end
       end
 
