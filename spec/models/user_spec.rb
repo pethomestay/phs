@@ -160,10 +160,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.find_for_facebook_oauth' do
-    pending
-  end
-
   describe '#admin?' do
     context 'when user is admin' do
       it 'returns true' do

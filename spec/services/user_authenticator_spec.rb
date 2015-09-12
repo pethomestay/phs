@@ -96,11 +96,11 @@ RSpec.describe UserAuthenticator do
         authenticator.authenticate
         expect(authenticator.user.uid).to_not eq nil
       end
-    end
 
-    it 'persists user' do
-      authenticator.authenticate
-      expect(authenticator.user).to be_persisted
+      it 'persists user' do
+        authenticator.authenticate
+        expect(authenticator.user).to be_persisted
+      end
     end
 
     it 'returns user' do

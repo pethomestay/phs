@@ -15,12 +15,8 @@ class UserAuthenticator
       set_user_age if age_info
     end
 
-    if user.provider.nil?
-      set_provider_details
-    end
+    persist_user if user.provider.nil?
 
-    user.skip_confirmation! # don't need to confirm if this is a Facebook user
-    user.save
     user
   end
 
@@ -69,9 +65,10 @@ class UserAuthenticator
     }
   end
 
-  def set_provider_details
-    user.provider = auth.provider
-    user.uid = auth.uid
+  def persist_user
+    user.skip_confirmation! # don't need to confirm if this is a Facebook user
+    user.update_attributes(provider: auth.provider, uid: auth.uid)
+    user.save
   end
 
   def provider_user

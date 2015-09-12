@@ -3,7 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     # You need to implement the method below in your model (e.g. app/models/user.rb)
 
-    @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
+    @user = UserAuthenticator.new(current_user,request.env["omniauth.auth"]).authenticate
     # The next line eliminates nil mobile numbers
     @user.update_attribute :mobile_number, 'n/a' if @user.mobile_number.blank?
     if @user.persisted?

@@ -254,47 +254,6 @@ class User < ActiveRecord::Base
     provider.blank?
   end
 
-  def self.find_for_facebook_oauth(auth, current_user)
-    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
-      graph = Koala::Facebook::API.new(auth.credentials.token)
-      me = graph.get_object("me")
-      if current_user  #if we have a current user save
-        user = current_user
-      else
-        user = where(email: me["email"]).first_or_initialize
-      end
-      if user.mobile_number.blank?
-        user.mobile_number = "n/a"
-      end
-      if not user.persisted? #must be a new user fill in the details
-        user.email = me["email"]
-        user.password = Devise.friendly_token[0,20]
-        user.first_name = me["first_name"]
-        user.last_name = me["last_name"]
-        user.mobile_number = "n/a"
-        permissions = graph.get_connections('me','permissions')
-        if permissions[0]['user_location'] == 1
-          location_info =  me["location"]
-          if location_info
-            user.facebook_location = location_info['name']
-          end
-        end
-        age_info = graph.get_object("me", :fields=>"age_range")
-        if age_info
-          user.age_range_min = age_info['age_range']['min']
-          user.age_range_max = age_info['age_range']['max']
-        end
-      end
-      if user.provider.nil?
-        user.skip_confirmation! # dont' need to confirm if this is a Facebook user
-        user.provider = auth.provider
-        user.uid = auth.uid
-        user.save!
-      end
-      return user
-    end
-  end
-
   def admin?
     admin || Rails.env.staging? || Rails.env.development?
   end
