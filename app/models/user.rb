@@ -38,14 +38,10 @@ class User < ActiveRecord::Base
   has_attachment :profile_photo, accept: [:jpg, :png, :bmp, :gif]
 
   validates_presence_of :first_name, :last_name, :email
-  # validates :mobile_number, presence: true, if: 'provider.nil?'
   phony_normalize :mobile_number, :default_country_code => 'AU'
-  # validates_plausible_phone :mobile_number
 
   validates :accept_house_rules, :acceptance => true
   validates :accept_terms, :acceptance => true
-  #validates_acceptance_of :accept_house_rules, on: :create
-  #validates_acceptance_of :accept_terms, on: :create
   validates_uniqueness_of :hex#, :allow_blank => true
 
   after_create :generate_referral_code
@@ -85,100 +81,6 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
-
-  #def notifications?
-    #inactive_homestay? || unanswered_enquiries? || enquiries_needing_confirmation? || owners_needing_feedback? || homestays_needing_feedback? || booking_needing_confirmation? || booking_required_response? || booking_declined_by_host? || booking_accepted_by_host? || booking_host_request_cancellation?
-  #end
-
-  #def inactive_homestay?
-    #if homestay.present?
-      #return !homestay.active?
-    #else
-      #return false
-    #end
-  #end
-
-  #def booking_host_request_cancellation?
-    #if self.admin?
-      #@bookings = Booking.where(:state=>:host_requested_cancellation)
-      #return @bookings.length > 0
-    #end
-    #return false
-  #end
-
-  #def locked_homestay?
-    #if homestay.present?
-      #return homestay.locked?
-    #else
-      #return false
-    #end
-  #end
-
-  #def booking_accepted_by_host?
-    #booking_accepted_by_host.any?
-  #end
-
-  #def booking_accepted_by_host
-    #self.bookers.accepted_by_host
-  #end
-
-  #def booking_declined_by_host?
-    #booking_declined_by_host.any?
-  #end
-
-  #def booking_declined_by_host
-    #self.bookers.declined_by_host
-  #end
-
-  #def booking_required_response?
-    #booking_required_response.any?
-  #end
-
-  #def booking_required_response
-    #self.bookers.required_response
-  #end
-
-  #def unanswered_enquiries?
-    #unanswered_enquiries.any?
-  #end
-
-  #def unanswered_enquiries
-    #homestay.present? ? homestay.enquiries.unanswered : []
-  #end
-
-  #def enquiries_needing_confirmation?
-    #enquiries_needing_confirmation.any?
-  #end
-
-  #def booking_needing_confirmation?
-    #booking_needing_confirmation.any?
-  #end
-
-  #def booking_needing_confirmation
-    #homestay.blank? ? [] : homestay.bookings.needing_host_confirmation
-  #end
-
-  #def enquiries_needing_confirmation
-    #enquiries.need_confirmation
-  #end
-
-  #def owners_needing_feedback?
-    #owners_needing_feedback.present?
-  #end
-
-  #def owners_needing_feedback
-    #if homestay.present?
-      #homestay.enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_owner.present? }
-    #end
-  #end
-
-  #def homestays_needing_feedback?
-    #homestays_needing_feedback.present?
-  #end
-
-  #def homestays_needing_feedback
-    #enquiries.owner_accepted.need_feedback.delete_if {|e| e.feedback_for_homestay.present? }
-  #end
 
   def update_average_rating
     update_attribute :average_rating, received_feedbacks.average_rating
@@ -258,14 +160,6 @@ class User < ActiveRecord::Base
     admin || Rails.env.staging? || Rails.env.development?
   end
 
-  #def self.new_with_session(params, session)
-    #super.tap do |user|
-      #if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        #user.email = data["email"] if user.email.blank?
-      #end
-    #end
-  #end
-
   # Depreciated
   def booking_info_between(start_date, end_date)
     booking_info = self.unavailable_dates_info(start_date, end_date)
@@ -338,14 +232,6 @@ class User < ActiveRecord::Base
 
     unavailable_dates.where('date >= ? AND date <= ?', opts[:from], opts[:to]).blank?
   end
-
-  # New response_rate
-  # True or False if Message in Mailbox is responded within 24 hrs
-  # Ideally each mailbox has a score, then aggregate mailbox scores into User
-  # For the time being, use existing response_rate_in_percent
-  #def new_response_rate_in_percent
-
-  #end
 
   # Original response_rate
   def response_rate_in_percent(new_version = false)
