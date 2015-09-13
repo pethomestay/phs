@@ -8,7 +8,6 @@ class Scheduler
   end
 
   def unavailable_dates_info
-    unavailable_dates = schedulable.unavailable_dates.between(start_date, end_date)
     unavailable_dates.collect do |unavailable_date|
       {
         id: unavailable_date.id,
@@ -36,10 +35,44 @@ class Scheduler
     end.flatten.compact.uniq
   end
 
+  def booking_info_between
+    unavailable_dates_info + booked_dates_info + available_dates_info
+  end
+
+  def available_dates_info
+    available_date_values.collect do |date|
+      { title: "Available", start: date.strftime("%Y-%m-%d") }
+    end
+  end
+
+  def unavailable_dates_between
+    unavailable_or_booked_values
+  end
+
   private
 
   def bookings
     schedulable.bookees.finished_or_host_accepted.between(start_date, end_date)
+  end
+
+  def date_range
+    (start_date..end_date).to_a 
+  end
+
+  def unavailable_date_values
+    unavailable_dates.map(&:date)
+  end
+
+  def unavailable_dates
+    @unavailable_dates ||= schedulable.unavailable_dates.between(start_date, end_date)
+  end
+
+  def available_date_values
+    date_range - unavailable_or_booked_values
+  end
+
+  def unavailable_or_booked_values
+    (unavailable_date_values + booked_dates_between).uniq
   end
 
 end
