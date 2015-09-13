@@ -107,6 +107,6 @@ class HomestaysController < ApplicationController
     start_date = Time.at(params[:start].to_i).to_date
     end_date  = Time.at(params[:end].to_i).to_date
     schedule = Scheduler.new(homestay.user, start_date: start_date, end_date: end_date)
-    render json: schedule.booking_info_between.to_json, status: 200
+    render json: schedule.booking_info.to_json, status: 200
   end
 end

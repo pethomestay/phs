@@ -18,12 +18,22 @@ class Scheduler
   end
 
   def booked_dates_info
-    booked_dates_between.collect do|date|
+    booked_date_values.collect do|date|
       { title: "Booked", start: date.strftime("%Y-%m-%d") }
     end
   end
 
-  def booked_dates_between
+  def available_dates_info
+    available_date_values.collect do |date|
+      { title: "Available", start: date.strftime("%Y-%m-%d") }
+    end
+  end
+
+  def booking_info
+    unavailable_dates_info + booked_dates_info + available_dates_info
+  end
+
+  def booked_date_values
     bookings.collect do |booking|
       if booking.check_out_date == booking.check_in_date
         [booking.check_in_date]
@@ -35,18 +45,8 @@ class Scheduler
     end.flatten.compact.uniq
   end
 
-  def booking_info_between
-    unavailable_dates_info + booked_dates_info + available_dates_info
-  end
-
-  def available_dates_info
-    available_date_values.collect do |date|
-      { title: "Available", start: date.strftime("%Y-%m-%d") }
-    end
-  end
-
-  def unavailable_dates_between
-    unavailable_or_booked_values
+  def blocked_date_values
+    (unavailable_date_values + booked_date_values).uniq
   end
 
   private
@@ -68,11 +68,7 @@ class Scheduler
   end
 
   def available_date_values
-    date_range - unavailable_or_booked_values
-  end
-
-  def unavailable_or_booked_values
-    (unavailable_date_values + booked_dates_between).uniq
+    date_range - blocked_date_values
   end
 
 end

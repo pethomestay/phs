@@ -38,14 +38,14 @@ RSpec.describe Scheduler do
     end
   end
 
-  describe '#booked_dates_between' do
+  describe '#booked_date_values' do
     context 'with booked dates' do
       let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.now.to_date }
 
       context 'with check in and check out date in the same day' do
         it 'returns array of check in date' do
           booking.update_column(:state, "finished_host_accepted")
-          expect(scheduler.booked_dates_between).to eq [booking.check_in_date]
+          expect(scheduler.booked_date_values).to eq [booking.check_in_date]
         end
       end
 
@@ -54,14 +54,14 @@ RSpec.describe Scheduler do
         it 'returns array of booked dates' do
           booking.update_attributes!(check_in_date: DateTime.now.to_date - 3.days)
           booking.update_column(:state, "finished_host_accepted")
-          expect(scheduler.booked_dates_between).to eq expected_dates.to_a
+          expect(scheduler.booked_date_values).to eq expected_dates.to_a
         end
       end
     end
 
     context 'without booked_dates' do
       it 'returns empty array' do
-        expect(scheduler.booked_dates_between).to eq []
+        expect(scheduler.booked_date_values).to eq []
       end
     end
   end
@@ -78,19 +78,19 @@ RSpec.describe Scheduler do
     end
   end
 
-  describe '#booking_info_between' do
+  describe '#booking_info' do
     let!(:unavailable_date) { create :unavailable_date, user: user }
     let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.now.to_date }
 
     it 'includes available dates' do
-      expect(scheduler.booking_info_between).to include({
+      expect(scheduler.booking_info).to include({
         title: 'Available',
         start: be_present
       })
     end
 
     it 'includes unavailable dates' do
-      expect(scheduler.booking_info_between).to include({
+      expect(scheduler.booking_info).to include({
         id: be_present,
         title: 'Unavailable',
         start: be_present
@@ -99,7 +99,7 @@ RSpec.describe Scheduler do
 
     it 'includes booked dates' do
       booking.update_column(:state, "finished_host_accepted")
-      expect(scheduler.booking_info_between).to include({
+      expect(scheduler.booking_info).to include({
         title: "Booked",
         start: be_present
       })
@@ -115,17 +115,17 @@ RSpec.describe Scheduler do
     end
   end
 
-  describe '#unavailable_dates_between' do
+  describe '#blocked_date_values' do
     let!(:unavailable_date) { create :unavailable_date, user: user }
     let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.now.to_date }
 
     it 'includes unavailable dates' do
-      expect(scheduler.unavailable_dates_between).to include(unavailable_date.date)
+      expect(scheduler.blocked_date_values).to include(unavailable_date.date)
     end
 
     it 'includes booked dates' do
       booking.update_column(:state, "finished_host_accepted")
-      expect(scheduler.unavailable_dates_between).to include(booking.check_in_date)
+      expect(scheduler.blocked_date_values).to include(booking.check_in_date)
     end
   end
 end
