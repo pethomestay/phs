@@ -5,5 +5,6 @@ FactoryGirl.define do
     sequence(:email) {|n| "tom_#{n}@pethomestay.com"}
     password 'password'
     active true
+    mobile_number "0927000000"
   end
 end
