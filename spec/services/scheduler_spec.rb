@@ -38,6 +38,34 @@ RSpec.describe Scheduler do
     end
   end
 
+  describe '#booked_dates_between' do
+    context 'with booked dates' do
+      let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.now.to_date }
+
+      context 'with check in and check out date in the same day' do
+        it 'returns array of check in date' do
+          booking.update_column(:state, "finished_host_accepted")
+          expect(scheduler.booked_dates_between).to eq [booking.check_in_date]
+        end
+      end
+
+      context 'with different check in and check out dates' do
+        let(:expected_dates) { (DateTime.now.to_date - 3.days)..(DateTime.now.to_date - 1.day) }
+        it 'returns array of booked dates' do
+          booking.update_attributes!(check_in_date: DateTime.now.to_date - 3.days)
+          booking.update_column(:state, "finished_host_accepted")
+          expect(scheduler.booked_dates_between).to eq expected_dates.to_a
+        end
+      end
+    end
+
+    context 'without booked_dates' do
+      it 'returns empty array' do
+        expect(scheduler.booked_dates_between).to eq []
+      end
+    end
+  end
+
   describe '#booking_info_between'
   describe '#booked_dates_info'
   describe '#unavailable_dates_after'
