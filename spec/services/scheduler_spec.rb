@@ -66,8 +66,19 @@ RSpec.describe Scheduler do
     end
   end
 
+  describe '#booked_dates_info' do
+    let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.now.to_date }
+
+    it 'returns booked dates in hash format' do
+      booking.update_column(:state, "finished_host_accepted")
+      expect(scheduler.booked_dates_info).to include({
+        title: "Booked",
+        start: booking.check_in_date.strftime("%Y-%m-%d")
+      })
+    end
+  end
+
   describe '#booking_info_between'
-  describe '#booked_dates_info'
   describe '#unavailable_dates_after'
   describe '#unavailable_dates_between'
 end

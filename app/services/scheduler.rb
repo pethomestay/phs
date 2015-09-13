@@ -18,6 +18,12 @@ class Scheduler
     end
   end
 
+  def booked_dates_info
+    booked_dates_between.collect do|date|
+      { title: "Booked", start: date.strftime("%Y-%m-%d") }
+    end
+  end
+
   def booked_dates_between
     bookings.collect do |booking|
       if booking.check_out_date == booking.check_in_date
