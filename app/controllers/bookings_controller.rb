@@ -290,8 +290,8 @@ class BookingsController < ApplicationController
 
   def update_transaction
     booking = Booking.find(params[:booking_id])
-    unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date].to_date, params[:check_out_date].to_date)
-    if unavailable_dates.blank?
+    schedule = Scheduler.new(booking.bookee, start_date: params[:check_in_date].to_date, end_date:params[:check_out_date].to_date)
+    if schedule.unavailable_dates_between.blank?
       transaction_payload = booking.update_transaction_by(params[:number_of_nights], params[:check_in_date], params[:check_out_date])
       return render json: transaction_payload
     else
@@ -304,8 +304,8 @@ class BookingsController < ApplicationController
     booking = Booking.find(params[:booking_id])
     booking.check_in_time = params[:check_in_time]
     booking.check_out_time = params[:check_out_time]
-    unavailable_dates = booking.bookee.unavailable_dates_between(params[:check_in_date].to_date, params[:check_out_date].to_date)
-    if unavailable_dates.blank?
+    schedule = Scheduler.new(booking.bookee, start_date: params[:check_in_date].to_date, end_date:params[:check_out_date].to_date)
+    if schedule.unavailable_dates_between.blank?
       booking.message_update(params[:message])
       render nothing: true
     else
