@@ -179,30 +179,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#booking_info_between' do
-    pending
-  end
-
-  describe '#unavailable_dates_info' do
-    pending
-  end
-
-  describe '#booked_dates_between' do
-    pending
-  end
-
-  describe '#booked_dates_info' do
-    pending
-  end
-
-  describe '#unavailable_dates_between' do
-    pending
-  end
-
-  describe '#unavailable_dates_after' do
-    pending
-  end
-
   describe '#is_available?' do
     before :each do
       user.save

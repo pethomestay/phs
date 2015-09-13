@@ -131,57 +131,6 @@ class User < ActiveRecord::Base
     admin || Rails.env.staging? || Rails.env.development?
   end
 
-  # Depreciated
-  def booking_info_between(start_date, end_date)
-    booking_info = self.unavailable_dates_info(start_date, end_date)
-    booking_info += self.booked_dates_info(start_date, end_date)
-    available_dates = (start_date..end_date).to_a - (booking_info.map{ |info| info[:start].to_date }).uniq
-    booking_info += available_dates.collect do |date|
-      { title: "Available", start: date.strftime("%Y-%m-%d") }
-    end
-    booking_info
-  end
-
-  # Depreciated
-  def unavailable_dates_info(start_date, end_date)
-    unavailable_dates = self.unavailable_dates.between(start_date, end_date)
-    unavailable_dates.collect do |unavailable_date|
-      {
-        id: unavailable_date.id,
-        title: "Unavailable",
-        start: unavailable_date.date.strftime("%Y-%m-%d")
-      }
-    end
-  end
-
-  def booked_dates_between(start_date, end_date)
-    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date)
-    bookings.collect do |booking|
-      if booking.check_out_date == booking.check_in_date
-        [booking.check_in_date]
-      else
-        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
-        booking_end = booking.check_out_date > end_date ? end_date : booking.check_out_date - 1.day
-        (booking_start..booking_end).to_a
-      end
-    end.flatten.compact.uniq
-  end
-
-  # Depreciated
-  def booked_dates_info(start_date, end_date)
-    self.booked_dates_between(start_date, end_date).collect do|date|
-      { title: "Booked", start: date.strftime("%Y-%m-%d") }
-    end
-  end
-
-  #returns user's booked, unavailable dates
-  def unavailable_dates_between(checkin_date, checkout_date)
-    end_date = checkin_date == checkout_date ? checkout_date : checkout_date - 1.day
-    booked_dates = self.booked_dates_between(checkin_date, end_date)
-    unavailable_dates = self.unavailable_dates.between(checkin_date, end_date).map(&:date)
-    (booked_dates + unavailable_dates).uniq
-  end
-
   # Expect two params, from & to, both of which are Date objects
   def is_available?(opts = {})
     return false if opts.blank?
