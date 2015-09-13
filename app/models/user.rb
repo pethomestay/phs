@@ -182,21 +182,6 @@ class User < ActiveRecord::Base
     (booked_dates + unavailable_dates).uniq
   end
 
-  def unavailable_dates_after(start_date)
-    bookings = self.bookees.with_state(:finished_host_accepted).where("check_in_date >= ? or (check_in_date < ? and check_out_date > ?)", start_date, start_date, start_date)
-    unavailable_dates = bookings.collect do |booking|
-      if booking.check_out_date == booking.check_in_date
-        [booking.check_in_date]
-      else
-        booking_start = booking.check_in_date < start_date ? start_date : booking.check_in_date
-        booking_end = booking.check_out_date - 1.day
-        (booking_start..booking_end).to_a
-      end
-    end.flatten.compact.uniq
-    unavailable_dates += self.unavailable_dates.where("date >= ?", start_date).map(&:date)
-    unavailable_dates.uniq
-  end
-
   # Expect two params, from & to, both of which are Date objects
   def is_available?(opts = {})
     return false if opts.blank?
