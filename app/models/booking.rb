@@ -50,6 +50,8 @@ class Booking < ActiveRecord::Base
 
   scope :finished_or_host_accepted, where('state IN (?)', [:finished, :finished_host_accepted, :host_paid]).order('created_at DESC')
 
+  scope :between, ->(start_date, end_date) { where("check_in_date between ? and ? or (check_in_date < ? and check_out_date > ?)", start_date, end_date, start_date, start_date) }
+
   after_create :create_mailbox
   after_save   :trigger_host_accept, if: proc {|booking| booking.owner_accepted && booking.try(:payment) && booking.host_accepted == true}
   before_save  :update_state
