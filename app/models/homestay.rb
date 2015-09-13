@@ -12,6 +12,7 @@ class Homestay < ActiveRecord::Base
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
   has_many :unavailable_dates, through: :user
+
   accepts_nested_attributes_for :pictures, reject_if: :all_blank,
     allow_destroy: true
 
@@ -34,43 +35,53 @@ class Homestay < ActiveRecord::Base
   serialize :favorite_breeds,  Array
   serialize :energy_level_ids, Array
 
-  validates_presence_of :address_city,
-    :address_country, :title, :description
+  validates_presence_of :address_city, :address_country, :title, :description,
+    :visits_price, :visits_radius, :delivery_price, :delivery_radius
 
   validates_acceptance_of :accept_liability, on: :create
   validates_acceptance_of :parental_consent, if: :need_parental_consent?
 
-  validates :supervision_id, numericality: {
-    in: ReferenceData::Supervision.all.map(&:id)
-    }, if: 'supervision_id.present?'
   validates_uniqueness_of :slug
 
   validates_length_of :title, maximum: 50
+
+  validates :supervision_id, numericality: {
+    in: ReferenceData::Supervision.all.map(&:id)
+  }, if: 'supervision_id.present?'
+
   validates :cost_per_night,
   numericality: { greater_than_or_equal_to: MINIMUM_HOMESTAY_PRICE
   }, if: 'cost_per_night.present?'
+
   validates :remote_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'remote_price.present?'
+
   validates :pet_walking_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'pet_walking_price.present?'
+
   validates :pet_grooming_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'pet_grooming_price.present?'
-  validates :visits_price, presence: true, numericality: {
+
+  validates :visits_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'visits_radius.present?'
-  validates :visits_radius, presence: true, numericality: {
+
+  validates :visits_radius, numericality: {
     greater_than_or_equal_to: 0, only_integer: true
   }, if: 'visits_price.present?'
-  validates :delivery_price, presence: true, numericality: {
+
+  validates :delivery_price, numericality: {
     greater_than_or_equal_to: 0
   }, if: 'delivery_radius.present?'
-  validates :delivery_radius, presence: true, numericality: {
+
+  validates :delivery_radius, numericality: {
     greater_than_or_equal_to: 0, only_integer: true
   }, if: 'delivery_price.present?'
-  validate :host_must_have_a_mobile_number
+
+  validate :require_user_mobile_number
 
   scope :active, where(active: true)
   # scope :available_for_enquiry, ->(start_date, end_date) {Homestay.active.joins(:unavailable_dates).where("unavailable_dates.date NOT BETWEEN ? and ?", start_date.to_date, end_date.to_date)}
@@ -89,6 +100,13 @@ class Homestay < ActiveRecord::Base
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 
+  delegate :location,
+           :geocoding_address,
+           :auto_decline_sms_text,
+           :auto_interest_sms_text,
+           :pretty_supervision,
+           :pretty_emergency_preparedness, to: :decorator
+
   def notify_intercom
     Intercom::Event.create(:event_name => "homestay-created", :email => self.user.email, :created_at => self.created_at.to_i, :metadata => {
       :suburb          => self.address_suburb,
@@ -97,7 +115,7 @@ class Homestay < ActiveRecord::Base
       :has_cover_photo => self.photos.present?,
       :price_per_night => self.cost_per_night,
       :title_is_unique => Homestay.where(:title => self.title).count == 1
-      })
+    })
   end
 
   def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
@@ -108,32 +126,12 @@ class Homestay < ActiveRecord::Base
     end
   end
 
-  def auto_interest_sms_text
-    self.auto_interest_sms || "Hi, I would love to help look after your pet. Let's arrange a time to meet. My contact is #{self.user.mobile_number.present? ? self.user.mobile_number : self.user.email}"
-  end
-
-  def auto_decline_sms_text
-    self.auto_decline_sms || "Sorry - I can't help this time, but please ask again in the future!"
-  end
-
   def to_param
     self.slug
   end
 
   def create_slug
     self.slug = title.parameterize if title
-  end
-
-  def geocoding_address
-    if address_suburb.nil?
-      "#{address_1}, #{address_city}, #{address_country}"
-    elsif address_1.nil?
-      "#{address_suburb}, #{address_city}, #{address_country}"
-    elsif address_suburb.present? && address_1.present?
-      "#{address_1}, #{address_suburb}, #{address_city}, #{address_country}"
-    elsif address_suburb.nil? && address_1.nil?
-      "#{address_city}, #{address_country}"
-    end
   end
 
   def need_parental_consent?
@@ -151,25 +149,6 @@ class Homestay < ActiveRecord::Base
   # Depreciated
   def supervision?
     supervision_outside_work_hours || constant_supervision
-  end
-
-  # Depreciated but may be used in other parts of the program, especially emails
-  def pretty_supervision
-    if constant_supervision
-      'I can provide 24/7 supervision for your pets'
-    elsif supervision_outside_work_hours
-      'I can provide supervision for your pets outside work hours (8am - 6pm)'
-    end
-  end
-
-  def pretty_emergency_preparedness
-    if first_aid && emergency_transport
-      'I know pet first-aid and can provide emergency transport'
-    elsif first_aid
-      'I know pet first-aid'
-    elsif emergency_transport
-      'I can provide emergency transport'
-    end
   end
 
   def self.homestay_ids_unavailable_between(start_date, end_date)
@@ -221,14 +200,6 @@ class Homestay < ActiveRecord::Base
     levels
   end
 
-  def location
-    if self.address_suburb != self.address_city # Avoid "Melbourne, Melbourne"
-      "#{address_suburb}, #{address_city}"
-    else
-      "#{address_suburb}"
-    end
-  end
-
   def average_rating
     user.average_rating || 0
   end
@@ -250,10 +221,14 @@ class Homestay < ActiveRecord::Base
     !Favourite.where(user_id: current_user, homestay_id: self).blank?
   end
 
+  def decorator
+    HomestayDecorator.new(self)
+  end
+
   private
 
-  def host_must_have_a_mobile_number
-    unless self.user.mobile_number.present?
+  def require_user_mobile_number
+    unless self.user.try(:mobile_number).present?
       errors[:base] << 'A mobile number is needed so the Guest can contact you!'
     end
   end
@@ -284,4 +259,5 @@ class Homestay < ActiveRecord::Base
   def set_country_Australia
     self.address_country = 'Australia'
   end
+
 end
