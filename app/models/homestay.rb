@@ -90,7 +90,7 @@ class Homestay < ActiveRecord::Base
   geocoded_by :geocoding_address
   after_validation :geocode
 
-  before_validation :create_slug
+  before_validation :set_slug
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
@@ -118,6 +118,7 @@ class Homestay < ActiveRecord::Base
     })
   end
 
+  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
   def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
     if start_date && end_date
       Homestay.active.reject {|h| ((start_date.to_date..end_date.to_date).to_a - h.unavailable_dates.collect(&:date)).any? }
@@ -130,16 +131,16 @@ class Homestay < ActiveRecord::Base
     self.slug
   end
 
-  def create_slug
+  def set_slug
     self.slug = title.parameterize if title
   end
 
   def need_parental_consent?
-    user && user.date_of_birth.present? && user.date_of_birth > 18.years.ago.to_date
+    user.present? && user.date_of_birth.present? && user.date_of_birth > 18.years.ago.to_date
   end
 
   def emergency_preparedness?
-    first_aid || emergency_transport
+    first_aid? || emergency_transport?
   end
 
   def supervision
@@ -147,8 +148,9 @@ class Homestay < ActiveRecord::Base
   end
 
   # Depreciated
+  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
   def supervision?
-    supervision_outside_work_hours || constant_supervision
+    supervision_outside_work_hours? || constant_supervision?
   end
 
   def self.homestay_ids_unavailable_between(start_date, end_date)
@@ -205,7 +207,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def has_services?
-    pet_feeding || pet_grooming || pet_training || pet_walking
+    pet_feeding? || pet_grooming? || pet_training? || pet_walking?
   end
 
   def pretty_services
