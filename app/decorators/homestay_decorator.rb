@@ -32,9 +32,9 @@ class HomestayDecorator < SimpleDelegator
 
   # Depreciated but may be used in other parts of the program, especially emails
   def pretty_supervision
-    if constant_supervision
+    if constant_supervision?
       "I can provide 24/7 supervision for your pets"
-    elsif supervision_outside_work_hours
+    elsif supervision_outside_work_hours?
       "I can provide supervision for your pets outside work hours (8am - 6pm)"
     end
   end
