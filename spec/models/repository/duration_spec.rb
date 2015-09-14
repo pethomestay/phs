@@ -35,7 +35,7 @@ RSpec.describe Repository::Duration do
         "5 nights",
         "6 nights",
         "7 nights",
-        "Longer than 7 nights"
+        "longer than 7 nights"
       ]
 
       expect(subject.all.map(&:natural)).to match_array expected_naturals
