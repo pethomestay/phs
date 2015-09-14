@@ -182,4 +182,172 @@ RSpec.describe Homestay, type: :model do
     it { is_expected.to delegate_method(:pretty_emergency_preparedness).to(:decorator) }
   end
 
+  describe "scopes" do
+    describe ".active" do
+      let!(:active)   { create_list :homestay, 5, active: true }
+      let!(:inactive) { create :homestay, active: false }
+
+      it "returns active homestays" do
+        expect(Homestay.active).to eq active
+      end
+
+      it "does not include inactive homestays" do
+        expect(Homestay.active).to_not include inactive
+      end
+    end
+
+    describe ".last_five" do
+      let!(:first_five) { create_list :homestay, 5 }
+      let!(:last_five)  { create_list :homestay, 5 }
+
+      it "returns last 5 homestays in descending order" do
+        expect(Homestay.last_five).to eq last_five.reverse
+      end
+    end
+  end
+
+  describe "instance methods" do
+    describe "#to_param" do
+      it { expect(subject.to_param).to eq subject.slug }
+    end
+
+    describe "#emergency_preparedness?" do
+      context "first_aid is true" do
+        before { subject.first_aid = true }
+
+        it { expect(subject.emergency_preparedness?).to eq true }
+      end
+
+      context "emergency_transport is true" do
+        before { subject.emergency_transport = true }
+
+        it { expect(subject.emergency_preparedness?).to eq true }
+      end
+
+      context "both first_aid and emergency_transport are false" do
+        before do
+          subject.emergency_transport = false
+          subject.first_aid = false
+        end
+
+        it { expect(subject.emergency_preparedness?).to eq false }
+      end
+    end
+
+    describe "#need_parental_constent?" do
+      context "user is present" do
+        before { subject.user = create :user }
+
+        context "user has date of birth" do
+          before { subject.user.date_of_birth = DateTime.now }
+
+          context "date of birth is greater than 18 years" do
+            before { subject.user.date_of_birth = DateTime.now - 18.years }
+
+            it { expect(subject.need_parental_consent?).to eq false }
+          end
+
+          context "date of birth is not greater than 18 years" do
+            before { subject.user.date_of_birth = DateTime.now - 17.years }
+
+            it { expect(subject.need_parental_consent?).to eq true }
+          end
+        end
+
+        context "user does not have date of birth" do
+          before { subject.user.date_of_birth = nil }
+
+          it { expect(subject.need_parental_consent?).to eq false }
+        end
+      end
+
+      context "user is blank" do
+        before { subject.user = nil }
+
+        it { expect(subject.need_parental_consent?).to eq false }
+      end
+    end
+
+    describe "#set_slug" do
+      context "title is present" do
+        before do
+          subject.title = "test title"
+          subject.slug  = nil
+        end
+
+        it "sets the slug with parameterized title" do
+          expect { subject.set_slug }.to change { subject.slug }.from(nil).to("test-title")
+        end
+      end
+
+      context "title is blank" do
+        before do
+          subject.title = nil
+          subject.slug  = nil
+        end
+
+        it "does not set the slug" do
+          expect { subject.set_slug }.to_not change { subject.slug }
+        end
+      end
+    end
+
+    describe "#average_rating" do
+      context "user average_rating is 0" do
+        before { subject.user.average_rating = 0 }
+
+        it { expect(subject.average_rating).to eq 0 }
+      end
+
+      context "user average_rating is not zero" do
+        before { subject.user.average_rating = 1 }
+
+        it { expect(subject.average_rating).to eq 1 }
+      end
+
+      context "user average_rating is nil" do
+        before { subject.user.average_rating = nil }
+
+        it { expect(subject.average_rating).to eq 0 }
+      end
+    end
+
+    describe "#has_services?" do
+      context "pet_feeding is true" do
+        before { subject.pet_feeding = true }
+
+        it { expect(subject.has_services?).to eq true }
+      end
+
+      context "pet_grooming is true" do
+        before { subject.pet_grooming = true }
+
+        it { expect(subject.has_services?).to eq true }
+      end
+
+      context "pet_training is true" do
+        before { subject.pet_training = true }
+
+        it { expect(subject.has_services?).to eq true }
+      end
+
+      context "pet_walking is true" do
+        before { subject.pet_walking = true }
+
+        it { expect(subject.has_services?).to eq true }
+      end
+
+      context "pet_feeding, pet_grooming, pet_training, and pet_walking are false" do
+        before do
+          subject.pet_feeding  = false
+          subject.pet_grooming = false
+          subject.pet_training = false
+          subject.pet_walking  = false
+        end
+
+        it { expect(subject.has_services?).to eq false }
+      end
+    end
+  end
+
 end
