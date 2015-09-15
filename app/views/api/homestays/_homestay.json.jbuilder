@@ -12,6 +12,14 @@ json.host do
   json.average_rating homestay.average_rating
   json.responsiveness_rate homestay.user.responsiveness_rate
   json.last_login_at homestay.user.current_sign_in_at.to_i
+  json.pets(homestay.user.pets) do |pet|
+    json.id pet.id
+    json.name pet.name
+    json.type pet.pet_type_id
+    json.image do
+      json.partial! 'image', image: pet.profile_photo
+    end
+  end
 end
 json.profile do
   json.favourite_breeds homestay.favorite_breeds
