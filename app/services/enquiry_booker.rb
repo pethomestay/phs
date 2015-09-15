@@ -1,12 +1,23 @@
 class EnquiryBooker
   attr_reader :enquiry, :homestay, :booking
 
+  # Initialize EnquiryBooker
+  #
+  # @params
+  #   enquiry [Enquiry]
+  #   homestay [Homestay]
+  # @api public
+  # @return [EnquiryBooker]
   def initialize(enquiry, homestay=nil)
     @enquiry = enquiry
     @homestay = homestay || enquiry.homestay
     @booking = enquiry.booking || enquiry.build_booking
   end
 
+  # Find or Create a booking
+  #
+  # @api public
+  # @return [Booking]
   def book
     booking.attributes = booking_details
     booking.amount = booking.calculate_amount #should be calculated through booking after refactor
@@ -17,6 +28,10 @@ class EnquiryBooker
 
   private
 
+  # Booking details
+  #
+  # @api private
+  # @return [Hash]
   def booking_details
     {
       enquiry: enquiry,
@@ -35,14 +50,26 @@ class EnquiryBooker
     }
   end
 
+  # Helper method for check in date
+  #
+  # @api private
+  # @return [DateTime]
   def check_in_date
     enquiry.check_in_date || DateTime.now
   end
 
+  # Helper method for checkout date
+  #
+  # @api private
+  # @return [DateTime]
   def check_out_date
     enquiry.check_out_date || DateTime.now
   end
 
+  # Helper method for number of nights
+  #
+  # @api private
+  # @return [Integer]
   def number_of_nights
     nights = (check_out_date - check_in_date).to_i
     nights <= 0 ? 1 : nights
