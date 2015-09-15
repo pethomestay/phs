@@ -60,7 +60,7 @@ class Enquiry < ActiveRecord::Base
   end
 
   def create_or_modify_booking
-    self.user.find_or_create_booking_by(self, self.homestay)
+    EnquiryBooker.new(self, self.homestay).book
   end
 
   def response

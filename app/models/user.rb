@@ -86,39 +86,6 @@ class User < ActiveRecord::Base
     update_attribute :average_rating, received_feedbacks.average_rating
   end
 
-  def find_or_create_booking_by(enquiry=nil, homestay=nil)
-    homestay = enquiry.homestay if homestay.nil?
-    booking = enquiry.booking || Booking.new
-    # unfinished_bookings = self.bookers.unfinished.where(:homestay_id=>homestay_id).all()
-    # booking = unfinished_bookings.blank? ? self.bookers.build : unfinished_bookings.first
-
-    booking.enquiry = enquiry
-    booking.homestay = homestay
-    booking.bookee = homestay.user
-    booking.cost_per_night = homestay.cost_per_night
-    booking.booker = enquiry.user
-
-    date_time_now = DateTime.now
-    time_now = Time.now
-    if booking.check_in_date.blank? or booking.check_in_time.blank? or booking.check_out_time.blank? or booking.check_out_date.blank? #set the date/time  if not already set
-      booking.check_in_date = enquiry.blank? ? date_time_now : (enquiry.check_in_date.blank? ? date_time_now : enquiry.check_in_date)
-      booking.check_in_time = enquiry.blank? ? time_now : (enquiry.check_in_time.blank? ? time_now : enquiry.check_in_time)
-      booking.check_out_date = enquiry.blank? ? date_time_now : (enquiry.check_out_date.blank? ? date_time_now : enquiry.check_out_date)
-      booking.check_out_time = enquiry.blank? ? time_now : (enquiry.check_out_time.blank? ? time_now : enquiry.check_out_time)
-    end
-    number_of_nights = (booking.check_out_date - booking.check_in_date).to_i
-    booking.number_of_nights = number_of_nights <= 0 ? 1 : number_of_nights
-
-    booking.subtotal = booking.cost_per_night * booking.number_of_nights
-    booking.amount = booking.calculate_amount
-    booking.host_accepted = nil
-    booking.owner_accepted = nil
-    booking.for_charity = homestay.for_charity
-    booking.save!
-    booking.mailbox.update_attribute(:booking_id, booking.id)
-    booking
-  end
-
   def unlink_from_facebook
     update_attributes(uid: nil, provider: nil)
   end

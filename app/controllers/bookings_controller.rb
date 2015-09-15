@@ -9,7 +9,7 @@ class BookingsController < ApplicationController
   end
 
   def new
-    @booking = current_user.find_or_create_booking_by(@enquiry, @homestay)
+    @booking = EnquiryBooker.new(@enquiry, @homestay).book
     redirect_to edit_booking_path(@booking)
   end
 

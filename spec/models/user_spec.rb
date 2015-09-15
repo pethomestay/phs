@@ -131,10 +131,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#find_or_create_booking_by' do
-    pending
-  end
-
   describe '#unlink_from_facebook' do
     let(:facebook_user) { create :user, uid: '123', provider: 'facebook' }
 
