@@ -5,6 +5,7 @@ FactoryGirl.define do
     sequence(:email) {|n| "tom_#{n}@pethomestay.com"}
     password 'password'
     active true
+    mobile_number '123456789'
 
     trait :with_address do
       sequence(:address_1) {|n| "Unit #{n}"}
