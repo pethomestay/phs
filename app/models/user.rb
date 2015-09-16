@@ -52,6 +52,15 @@ class User < ActiveRecord::Base
 
   # Creates the coupon code that users can share with others: First four letters of first name + first letter of last name +
   # custom_discount = nil, custom_credit = nil
+  #
+  # @params
+  #   force [Boolean]
+  #   args [Hash]
+  #    custom_discount [Integer]
+  #    custom_credit [Integer]
+  #    custom_code [String]
+  # @api public
+  # @return [Coupon]
   def generate_referral_code(force = false, args = {})
     return if !force && owned_coupons.any?
 
@@ -59,6 +68,9 @@ class User < ActiveRecord::Base
   end
 
   # Created a unique hex which will be used for matching recommendations
+  #
+  # @api public
+  # @return [String]
   def generate_hex
     return if self.hex.present?
 
@@ -72,40 +84,72 @@ class User < ActiveRecord::Base
   end
 
   # Returns the dollar amount of money earned from owned coupons
+  #
+  # @api public
+  # @return [Float]
   def coupon_credits_earned
     owned_coupons.includes(:bookings).inject(0) do |total, coupon|
       total += coupon.credit_referrer_amount.to_f * coupon.bookings.length
     end
   end
 
+  # Return user name
+  #
+  # @api public
+  # @return [String]
   def name
     "#{first_name} #{last_name}"
   end
 
+  # Update Average rating for user
+  #
+  # @api public
+  # @return [Boolean]
   def update_average_rating
     update_attribute :average_rating, received_feedbacks.average_rating
   end
 
+  # Unlink account from facebook
+  #
+  # @api public
+  # @return [Boolean]
   def unlink_from_facebook
     update_attributes(uid: nil, provider: nil)
   end
 
+  # Check if user needs password
+  #
+  # @api public
+  # @return [Boolean]
   def needs_password?
     provider.blank?
   end
 
+  # Check if user is admin
+  #
+  # @api public
+  # @return [Boolean]
   def admin?
     admin || Rails.env.staging? || Rails.env.development?
   end
 
   # Expect two params, from & to, both of which are Date objects
+  # Check if user is available
+  #
+  # @api public
+  # @return [Boolean]
   def is_available?(opts = {})
     return false if opts.blank?
 
-    unavailable_dates.where('date >= ? AND date <= ?', opts[:from], opts[:to]).blank?
+    Scheduler.new(self, start_date: opts[:from], end_date: opts[:to]).unavailable_dates_info.blank?
   end
 
   # Original response_rate
+  # 
+  # @params
+  #   new_version [Boolean]
+  # @api public
+  # @return [Float]
   def response_rate_in_percent(new_version = false)
     if self.admin? && new_version
       #self.new_response_rate_in_percent
@@ -116,6 +160,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Store responsiveness_rate
+  #
+  # @api public
+  # @return [Float]
   def store_responsiveness_rate
     update_column(:responsiveness_rate, response_rate_in_percent)
     responsiveness_rate
@@ -123,16 +171,28 @@ class User < ActiveRecord::Base
 
   private
 
+  # Helper method to calculate score
+  #
+  # @api private
+  # @return [Float]
   def calculate_score(count, total)
     return nil if count == 0
 
     (count * 100.0 / total).round 0
   end
 
+  # Return monitored mailboxes
+  #
+  # @api private
+  # @return [Mailbox]
   def monitored_mailboxes
     @monitored_mailboxes ||= host_mailboxes.where(created_at: 10000.days.ago..24.hours.ago).includes(:messages)
   end
 
+  # Return response count
+  #
+  # @api private
+  # @return [Integer]
   def monitored_response_count
     monitored_mailboxes.includes(:messages).select do |mailbox|
       host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
