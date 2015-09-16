@@ -108,28 +108,11 @@ class User < ActiveRecord::Base
   # Original response_rate
   def response_rate_in_percent(new_version = false)
     if self.admin? && new_version
-      self.new_response_rate_in_percent
+      #self.new_response_rate_in_percent
     else
-      # Fetch all host_mailboxes created from 30 days ago to 24 hours ago. Return nil if none found.
-      # Write down total count of fetched host mailboxes.
-      # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
-      # mailbox if none found.
-      # Check if response time is less than 24 hours. Count if it is.
-      mailboxes = self.host_mailboxes.where(created_at: 10000.days.ago..24.hours.ago)
-      return nil if mailboxes.blank? # Current user (as a Host) has not received any message
-      total = mailboxes.count
-      count = 0
-      mailboxes.each do |mailbox|
-        host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
-        if host_response.present? # If there exists a response from current user (as a Host)
-          time_diff = host_response.created_at - mailbox.created_at
-          count += 1 if time_diff <= 24.hours
-        end
-      end
-      # calculate response rate in PERCENTAGE
-      score = (count * 100.0 / total).round 0
-      return nil if score == 0 # Hide host responsiveness if the score is 0
-      score
+      return nil if monitored_mailboxes.blank?
+
+      calculate_score(monitored_response_count, monitored_mailboxes.count)
     end
   end
 
@@ -137,4 +120,25 @@ class User < ActiveRecord::Base
     update_column(:responsiveness_rate, response_rate_in_percent)
     responsiveness_rate
   end
+
+  private
+
+  def calculate_score(count, total)
+    return nil if count == 0
+
+    (count * 100.0 / total).round 0
+  end
+
+  def monitored_mailboxes
+    @monitored_mailboxes ||= host_mailboxes.where(created_at: 10000.days.ago..24.hours.ago).includes(:messages)
+  end
+
+  def monitored_response_count
+    monitored_mailboxes.includes(:messages).select do |mailbox|
+      host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
+
+      host_response && (host_response.created_at - mailbox.created_at) <= 24.hours
+    end.length
+  end
+
 end

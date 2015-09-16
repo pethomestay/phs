@@ -201,7 +201,22 @@ RSpec.describe User, type: :model do
   end
 
   describe '#response_rate_in_percent' do
-    pending
+    let(:guest_user) { create :user }
+    let!(:homestay) { create :homestay, user: guest_user, for_charity: true }
+    let(:mailbox) { create :mailbox, :past, guest_mailbox: guest_user, host_mailbox: guest_user}
+    let!(:message) { create :message, :past, user: guest_user, mailbox: mailbox }
+
+    context 'with score' do
+      it 'returns score' do
+        expect(guest_user.response_rate_in_percent).to eq 100
+      end
+    end
+
+    context 'without score' do
+      it 'returns nil' do
+        expect(guest_user.response_rate_in_percent).to eq nil
+      end
+    end
   end
 
   describe '#store_responsiveness_rate' do
