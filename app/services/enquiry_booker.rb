@@ -40,8 +40,8 @@ class EnquiryBooker
       booker: enquiry.user,
       check_in_date: check_in_date,
       check_out_date: check_out_date,
-      check_in_time: enquiry.check_in_time || DateTime.now,
-      check_out_time: enquiry.check_out_time || DateTime.now,
+      check_in_time: enquiry.check_in_time || DateTime.current,
+      check_out_time: enquiry.check_out_time || DateTime.current,
       number_of_nights: number_of_nights,
       subtotal: homestay.cost_per_night.to_f * number_of_nights,
       host_accepted: nil,
@@ -55,7 +55,7 @@ class EnquiryBooker
   # @api private
   # @return [DateTime]
   def check_in_date
-    enquiry.check_in_date || DateTime.now
+    enquiry.check_in_date || DateTime.current
   end
 
   # Helper method for checkout date
@@ -63,7 +63,7 @@ class EnquiryBooker
   # @api private
   # @return [DateTime]
   def check_out_date
-    enquiry.check_out_date || DateTime.now
+    enquiry.check_out_date || DateTime.current
   end
 
   # Helper method for number of nights

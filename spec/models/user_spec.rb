@@ -6,29 +6,17 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     subject { build :user }
 
-    it 'checks presence of first_name' do
-      expect(subject).to validate_presence_of(:first_name)
-    end
+    it { is_expected.to validate_presence_of(:first_name) }
 
-    it 'checks presence of last_name' do
-      expect(subject).to validate_presence_of(:last_name)
-    end
+    it { is_expected.to validate_presence_of(:last_name) }
 
-    it 'checks presence of email' do
-      expect(subject).to validate_presence_of(:email)
-    end
+    it { is_expected.to validate_presence_of(:email) }
 
-    it 'confirms acceptance for accept_house_rules' do
-      expect(subject).to validate_acceptance_of(:accept_house_rules)
-    end
+    it { is_expected.to validate_acceptance_of(:accept_house_rules) }
 
-    it 'confirms acceptance for accept_terms' do
-      expect(subject).to validate_acceptance_of(:accept_terms)
-    end
+    it { expect(subject).to validate_acceptance_of(:accept_terms) }
 
-    it 'checks uniqueness of hex' do
-      expect(subject).to validate_uniqueness_of(:hex).allow_blank
-    end
+    it { expect(subject).to validate_uniqueness_of(:hex).allow_blank }
   end
 
   describe 'scopes' do
@@ -188,25 +176,26 @@ RSpec.describe User, type: :model do
 
     context 'with unavailable dates' do
       it 'returns false' do
-        user.unavailable_dates.create(date: DateTime.now)
-        expect(user.is_available?(from: DateTime.now, to: DateTime.now)).to eq false
+        user.unavailable_dates.create(date: DateTime.current)
+        expect(user.is_available?(from: DateTime.current, to: DateTime.current)).to eq false
       end
     end
 
     context 'with available dates' do
       it 'returns true' do
-        expect(user.is_available?(from: DateTime.now, to: DateTime.now)).to eq true
+        expect(user.is_available?(from: DateTime.current, to: DateTime.current)).to eq true
       end
     end
   end
 
   describe '#response_rate_in_percent' do
     let(:guest_user) { create :user }
-    let!(:homestay) { create :homestay, user: guest_user, for_charity: true }
-    let(:mailbox) { create :mailbox, :past, guest_mailbox: guest_user, host_mailbox: guest_user}
-    let!(:message) { create :message, :past, user: guest_user, mailbox: mailbox }
 
     context 'with score' do
+      let!(:homestay) { create :homestay, user: guest_user, for_charity: true }
+      let(:mailbox) { create :mailbox, :past, guest_mailbox: guest_user, host_mailbox: guest_user}
+      let!(:message) { create :message, :past, user: guest_user, mailbox: mailbox }
+
       it 'returns score' do
         expect(guest_user.response_rate_in_percent).to eq 100
       end

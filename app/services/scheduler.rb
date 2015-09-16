@@ -12,8 +12,8 @@ class Scheduler
   # @return [Scheduler]
   def initialize(schedulable, options ={})
     @schedulable = schedulable
-    @start_date = options[:start_date] || DateTime.now - 7.days
-    @end_date = options[:end_date] || DateTime.now
+    @start_date = options[:start_date] || DateTime.current - 7.days
+    @end_date = options[:end_date] || DateTime.current
   end
 
   # Unavailable dates hash

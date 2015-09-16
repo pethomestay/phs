@@ -7,8 +7,8 @@ class Coupon < ActiveRecord::Base
   validates :code, :uniqueness => { :allow_blank => false, :allow_nil => false, :case_sensitive => false }
   validates :discount_amount, numericality: {only_integer: true, greater_than: 0, less_than_or_equal_to: 100}
   validate :within_coupon_limit, on: :create
-  scope :valid, -> {where("valid_to IS NULL or valid_to > ?", Time.now).where("coupon_limit >= users_count or coupon_limit IS NULL")}
-  scope :invalid, -> {where("valid_to <= ? or coupon_limit < users_count", Time.now)}
+  scope :valid, -> {where("valid_to IS NULL or valid_to > ?", Time.current).where("coupon_limit >= users_count or coupon_limit IS NULL")}
+  scope :invalid, -> {where("valid_to <= ? or coupon_limit < users_count", Time.current)}
   DEFAULT_DISCOUNT_AMOUNT = 10
   DEFAULT_CREDIT_REFERRER_AMOUNT = 5
 
@@ -30,7 +30,7 @@ class Coupon < ActiveRecord::Base
     return false if user.nil?
     return false if user.used_coupons.any?
     return false if exceeded_coupon_limit?
-    return false if valid_to.present? && Time.now > valid_to
+    return false if valid_to.present? && Time.current > valid_to
     return false if admin_mass_code
 
     true

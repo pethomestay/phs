@@ -21,8 +21,8 @@ RSpec.describe Coupon, type: :model do
   end
 
   describe 'scopes' do
-    let(:valid_coupon) { create :coupon, valid_to: DateTime.now + 2.days, coupon_limit: 5 }
-    let(:invalid_coupon) { create :coupon, valid_to: DateTime.now - 2.days }
+    let(:valid_coupon) { create :coupon, valid_to: DateTime.current + 2.days, coupon_limit: 5 }
+    let(:invalid_coupon) { create :coupon, valid_to: DateTime.current - 2.days }
 
     describe '.valid' do
       it 'returns coupons non-expired coupons within limit' do
@@ -66,7 +66,7 @@ RSpec.describe Coupon, type: :model do
       end
 
       it 'returns false when expired' do
-        coupon.valid_to = DateTime.now - 2.days
+        coupon.valid_to = DateTime.current - 2.days
         expect(coupon.valid_for?(user)).to eq false
       end
 
