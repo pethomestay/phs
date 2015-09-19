@@ -6,6 +6,7 @@ PetHomestay::Application.routes.draw do
       post 'users', to: 'users#create'
       resources :breeds, only: :index
       resources :homestays, only: [:index, :show]
+      resources :images, only: [:create]
       resources :pets, only: [:index, :create, :update]
       get '*path', to: 'base#page_not_found'
     end
