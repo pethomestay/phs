@@ -5,7 +5,7 @@ json.description homestay.description
 json.position homestay.position
 json.distance homestay.distance
 json.image do
-  json.partial! 'image', image: homestay.photos.first
+  json.partial! 'api/images/image', image: homestay.photos.first
 end
 json.host do
   json.partial! 'user', user: homestay.user
@@ -17,7 +17,7 @@ json.host do
     json.name pet.name
     json.type pet.pet_type_id
     json.image do
-      json.partial! 'image', image: pet.profile_photo
+      json.partial! 'api/images/image', image: pet.profile_photo
     end
   end
 end
@@ -42,7 +42,7 @@ json.location do
   end
 end
 json.images(homestay.photos) do |image|
-  json.partial! 'image', image: image
+  json.partial! 'api/images/image', image: image
 end
 json.prices(['local', 'remote', 'walking', 'grooming', 'delivery']) do |service|
   json.service service
