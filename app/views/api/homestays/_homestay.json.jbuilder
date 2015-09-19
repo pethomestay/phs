@@ -11,7 +11,7 @@ json.host do
   json.partial! 'user', user: homestay.user
   json.average_rating homestay.average_rating
   json.responsiveness_rate homestay.user.responsiveness_rate
-  json.last_login_at homestay.user.current_sign_in_at.to_i
+  json.last_login_at homestay.user.current_sign_in_at.try(:to_i)
   json.pets(homestay.user.pets) do |pet|
     json.id pet.id
     json.name pet.name
@@ -23,8 +23,8 @@ json.host do
 end
 json.profile do
   json.favourite_breeds homestay.favorite_breeds
-  json.accepted_sizes extract_pet_sizes(homestay)
-  json.accepted_energy_levels extract_energy_levels(homestay)
+  json.accepted_sizes extract_pet_size_ids(homestay)
+  json.accepted_energy_levels extract_energy_level_ids(homestay)
   json.emergency_transport homestay.emergency_transport?
   json.police_check homestay.police_check?
   json.constant_supervision homestay.constant_supervision?
