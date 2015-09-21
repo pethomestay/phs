@@ -99,11 +99,11 @@ class Homestay < ActiveRecord::Base
   before_save :strip_energy_level_ids
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
-
   delegate :location,
            :geocoding_address,
            :auto_decline_sms_text,
            :auto_interest_sms_text,
+           :pretty_services,
            :pretty_supervision,
            :pretty_emergency_preparedness, to: :decorator
 
@@ -208,15 +208,6 @@ class Homestay < ActiveRecord::Base
 
   def has_services?
     pet_feeding? || pet_grooming? || pet_training? || pet_walking?
-  end
-
-  def pretty_services
-    services = []
-    services << 'Pet feeding' if pet_feeding
-    services << 'Pet grooming' if pet_grooming
-    services << 'Pet training' if pet_training
-    services << 'Pet walking' if pet_walking
-    services.to_sentence.downcase.capitalize
   end
 
   def favourite?(current_user)

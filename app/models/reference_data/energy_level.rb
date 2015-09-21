@@ -15,6 +15,8 @@ class ReferenceData::EnergyLevel
 
   def self.find(id)
     @@all.each do |energy_level|
+      # FIXME:
+      # This should be returning the energy_level object, not the title attribute.
       return energy_level.title if energy_level.id == id
     end
     raise ActiveRecord::RecordNotFound.new
