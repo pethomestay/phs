@@ -39,3 +39,21 @@ en:
           payment_check_succeed: 'payment check succeed'
           payment_check_fail: 'payment check fail'
           admin_cancel_booking: 'admin cancel booking'
+
+  decorator:
+    homestay:
+      services:
+        pet_feeding: "Pet feeding"
+        pet_grooming: "Pet grooming"
+        pet_training: "Pet training"
+        pet_walking: "Pet walking"
+
+      auto_interest_sms: "Hi, I would love to help look after your pet. Let's arrange a time to meet. My contact is %{user_contact}"
+      auto_decline_sms: "Sorry - I can't help this time, but please ask again in the future!"
+      emergency_preparedness:
+        transport_only: "I can provide emergency transport"
+        first_aid_only: "I know pet first-aid"
+        both: "I know pet first-aid and can provide emergency transport"
+      supervision:
+        constant: "I can provide 24/7 supervision for your pets"
+        outside_work_hours: "I can provide supervision for your pets outside work hours (8am - 6pm)"
