@@ -199,4 +199,41 @@ RSpec.describe HomestayDecorator do
     end
   end
 
+  describe "#pretty_services" do
+    context "pet_feeding is true" do
+      before { homestay.pet_feeding = true }
+
+      it { expect(decorator.pretty_services).to include "Pet feeding" }
+    end
+
+    context "pet_grooming is true" do
+      before { homestay.pet_grooming = true }
+
+      it { expect(decorator.pretty_services).to include "Pet grooming" }
+    end
+
+    context "pet_training is true" do
+      before { homestay.pet_training = true }
+
+      it { expect(decorator.pretty_services).to include "Pet training" }
+    end
+
+    context "pet_walking is true" do
+      before { homestay.pet_walking = true }
+
+      it { expect(decorator.pretty_services).to include "Pet walking" }
+    end
+
+    context "pet_feeding, pet_grooming, pet_training, and pet_walking are true" do
+      before do
+        homestay.pet_feeding  = true
+        homestay.pet_grooming = true
+        homestay.pet_walking  = true
+        homestay.pet_training = true
+      end
+
+      it { expect(decorator.pretty_services).to eq "Pet feeding, pet grooming, pet training, and pet walking" }
+    end
+  end
+
 end

@@ -236,19 +236,21 @@ RSpec.describe Homestay, type: :model do
 
     describe "#need_parental_constent?" do
       context "user is present" do
-        before { subject.user = create :user }
+        before do
+          subject.user = create :user
+        end
 
         context "user has date of birth" do
-          before { subject.user.date_of_birth = DateTime.now }
+          before { subject.user.date_of_birth = DateTime.current }
 
           context "date of birth is greater than 18 years" do
-            before { subject.user.date_of_birth = DateTime.now - 18.years }
+            before { subject.user.date_of_birth = DateTime.current - 19.years }
 
             it { expect(subject.need_parental_consent?).to eq false }
           end
 
-          context "date of birth is not greater than 18 years" do
-            before { subject.user.date_of_birth = DateTime.now - 17.years }
+          context "date of birth is less than 18 years" do
+            before { subject.user.date_of_birth = DateTime.current - 17.years }
 
             it { expect(subject.need_parental_consent?).to eq true }
           end
@@ -346,6 +348,21 @@ RSpec.describe Homestay, type: :model do
         end
 
         it { expect(subject.has_services?).to eq false }
+      end
+    end
+
+    describe "#energy_levels" do
+      let(:energy_level_1) { ReferenceData::EnergyLevel.new(id: '1', title: "Low") }
+      let(:energy_level_2) { ReferenceData::EnergyLevel.new(id: '2', title: "Low Medium") }
+
+      before do
+        subject.energy_level_ids = [energy_level_1.id, energy_level_2.id]
+      end
+
+      it 'returns energy_levels associated with homestay' do
+        # FIXME:
+        # This should be returning the energy_level object, not the title attribute.
+        expect(subject.energy_levels).to eq [energy_level_1.title, energy_level_2.title]
       end
     end
   end
