@@ -206,6 +206,32 @@ RSpec.describe Homestay, type: :model do
     end
   end
 
+  describe "callbacks" do
+    context "before_save" do
+      it { is_expected.to callback(:sanitize_description).before(:save) }
+      it { is_expected.to callback(:strip_pet_sizes).before(:save) }
+      it { is_expected.to callback(:strip_favorite_breeds).before(:save) }
+      it { is_expected.to callback(:strip_energy_level_ids).before(:save) }
+    end
+
+    context "after_create" do
+      it { is_expected.to callback(:notify_intercom).after(:create) }
+    end
+
+    context "after_initialize" do
+      it { is_expected.to callback(:set_country_Australia).after(:initialize) }
+    end
+
+    context "before_validation" do
+      it { is_expected.to callback(:set_slug).before(:validation) }
+    end
+
+    context "after_validation" do
+      it { is_expected.to callback(:geocode).after(:validation) }
+      it { is_expected.to callback(:copy_slug_errors_to_title).after(:validation) }
+    end
+  end
+
   describe "instance methods" do
     describe "#to_param" do
       it { expect(subject.to_param).to eq subject.slug }
@@ -359,11 +385,88 @@ RSpec.describe Homestay, type: :model do
         subject.energy_level_ids = [energy_level_1.id, energy_level_2.id]
       end
 
-      it 'returns energy_levels associated with homestay' do
+      it "returns energy_levels associated with homestay" do
         # FIXME:
         # This should be returning the energy_level object, not the title attribute.
         expect(subject.energy_levels).to eq [energy_level_1.title, energy_level_2.title]
       end
+    end
+
+    describe "#sanitize_description" do
+      before do
+        subject.description = "Strippable tags <strong> description </strong> &nbsp;"
+      end
+
+      it "removes tags and nbsp of the description" do
+        expect { subject.send(:sanitize_description) }.to change { subject.description }
+          .from("Strippable tags <strong> description </strong> &nbsp;")
+          .to("Strippable tags description")
+      end
+    end
+
+    describe "#strip_pet_sizes" do
+      before do
+        subject.pet_sizes = ["test", ""]
+      end
+
+      it "removes blank entries" do
+        expect { subject.send(:strip_pet_sizes) }.to change { subject.pet_sizes }
+          .from(["test", ""])
+          .to(["test"])
+      end
+    end
+
+    describe "#strip_favorite_breeds" do
+      before do
+        subject.favorite_breeds = ["test", ""]
+      end
+
+      it "removes blank entries" do
+        expect { subject.send(:strip_favorite_breeds) }.to change { subject.favorite_breeds }
+          .from(["test", ""])
+          .to(["test"])
+      end
+    end
+
+    describe "#strip_energy_level_ids" do
+      before do
+        subject.energy_level_ids = ["test", ""]
+      end
+
+      it "removes blank entries" do
+        expect { subject.send(:strip_energy_level_ids) }.to change { subject.energy_level_ids }
+          .from(["test", ""])
+          .to(["test"])
+      end
+    end
+
+    describe "#set_country_Australia" do
+      before do
+        subject.address_country = ""
+      end
+
+      it "removes blank entries" do
+        expect { subject.send(:set_country_Australia) }.to change { subject.address_country }
+          .from("")
+          .to("Australia")
+      end
+    end
+
+    # TODO: Needs accuracy for this spec.
+    describe "#notify_intercom" do
+      after { subject.notify_intercom }
+
+      it { expect(Intercom::Event).to receive(:create) }
+    end
+
+    describe "#copy_slug_errors_to_title" do
+      before do
+        create :homestay, slug: "test"
+
+        subject.slug = "test"
+      end
+
+      it { expect { subject.send(:copy_slug_errors_to_title) }.to change { subject.errors } }
     end
   end
 

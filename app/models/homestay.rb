@@ -88,17 +88,21 @@ class Homestay < ActiveRecord::Base
   scope :last_five, order('created_at DESC').limit(5)
 
   geocoded_by :geocoding_address
-  after_validation :geocode
 
   before_validation :set_slug
+
+  after_validation :geocode
   after_validation :copy_slug_errors_to_title
 
   before_save :sanitize_description
   before_save :strip_pet_sizes
   before_save :strip_favorite_breeds
   before_save :strip_energy_level_ids
+
   after_create :notify_intercom, if: 'Rails.env.production?'
+
   after_initialize :set_country_Australia # set country as Australia no matter what
+
   delegate :location,
            :geocoding_address,
            :auto_decline_sms_text,
@@ -153,18 +157,25 @@ class Homestay < ActiveRecord::Base
     supervision_outside_work_hours? || constant_supervision?
   end
 
+  # Depreciated
+  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
   def self.homestay_ids_unavailable_between(start_date, end_date)
     self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id")
       .where("unavailable_dates.date between ? and ?", start_date, end_date)
       .group("homestays.id").map(&:id)
   end
 
+  # Depreciated
+  # [Ack: Not used] Marking this as safe to delete. -RM
+  # See: app/models/search.rb:L94
   def self.available_between(start_date, end_date)
     unavailable_homestay_ids = self.homestay_ids_unavailable_between(start_date, end_date)
     return self.scoped if unavailable_homestay_ids.blank?
     self.where('homestays.id NOT IN (?)', unavailable_homestay_ids)
   end
 
+  # Depreciated
+  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
   def self.homestay_ids_booked_between(start_date, end_date)
     booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"
     self.joins("inner join bookings on bookings.bookee_id = homestays.user_id")
@@ -172,6 +183,8 @@ class Homestay < ActiveRecord::Base
       .group("homestays.id").map(&:id)
   end
 
+  # Depreciated
+  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
   def self.not_booked_between(start_date, end_date)
     booked_homestay_ids = self.homestay_ids_booked_between(start_date, end_date)
     return self.scoped if booked_homestay_ids.blank?
@@ -234,6 +247,7 @@ class Homestay < ActiveRecord::Base
     if self.description.present?
       self.description = strip_tags(self.description)
       self.description = strip_nbsp(self.description)
+      self.description = self.description.squish
     end
   end
 
