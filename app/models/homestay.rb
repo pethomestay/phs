@@ -122,15 +122,6 @@ class Homestay < ActiveRecord::Base
     })
   end
 
-  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
-  def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
-    if start_date && end_date
-      Homestay.active.reject {|h| ((start_date.to_date..end_date.to_date).to_a - h.unavailable_dates.collect(&:date)).any? }
-    else
-      Homestay.active
-    end
-  end
-
   def to_param
     self.slug
   end
@@ -149,46 +140,6 @@ class Homestay < ActiveRecord::Base
 
   def supervision
     ReferenceData::Supervision.find(supervision_id) if supervision_id.present?
-  end
-
-  # Depreciated
-  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
-  def supervision?
-    supervision_outside_work_hours? || constant_supervision?
-  end
-
-  # Depreciated
-  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
-  def self.homestay_ids_unavailable_between(start_date, end_date)
-    self.joins("inner join unavailable_dates on unavailable_dates.user_id = homestays.user_id")
-      .where("unavailable_dates.date between ? and ?", start_date, end_date)
-      .group("homestays.id").map(&:id)
-  end
-
-  # Depreciated
-  # [Ack: Not used] Marking this as safe to delete. -RM
-  # See: app/models/search.rb:L94
-  def self.available_between(start_date, end_date)
-    unavailable_homestay_ids = self.homestay_ids_unavailable_between(start_date, end_date)
-    return self.scoped if unavailable_homestay_ids.blank?
-    self.where('homestays.id NOT IN (?)', unavailable_homestay_ids)
-  end
-
-  # Depreciated
-  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
-  def self.homestay_ids_booked_between(start_date, end_date)
-    booked_condition = "bookings.check_in_date between ? and ? or (bookings.check_in_date < ? and bookings.check_out_date > ?)"
-    self.joins("inner join bookings on bookings.bookee_id = homestays.user_id")
-      .where("state = ? and (#{booked_condition})", :finished_host_accepted, start_date, end_date, start_date, start_date)
-      .group("homestays.id").map(&:id)
-  end
-
-  # Depreciated
-  # [Ack: Not found in the codebase] Marking this as safe to delete since unused. -RM
-  def self.not_booked_between(start_date, end_date)
-    booked_homestay_ids = self.homestay_ids_booked_between(start_date, end_date)
-    return self.scoped if booked_homestay_ids.blank?
-    self.where("homestays.id not in (?)", booked_homestay_ids)
   end
 
   def property_type

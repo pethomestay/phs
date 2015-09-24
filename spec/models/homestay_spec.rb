@@ -452,7 +452,6 @@ RSpec.describe Homestay, type: :model do
       end
     end
 
-    # TODO: Needs accuracy for this spec.
     describe "#notify_intercom" do
       after { subject.notify_intercom }
 
