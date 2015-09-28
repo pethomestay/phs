@@ -1,72 +1,13 @@
-css:
-  .feedback-head {
-    cursor : pointer;
-  }
-  .feedback-body {
-    background-color: #f7f7f7;
-    border: 1px solid #ddd;
-    border-top: none;
-  }
-  .btn-fb {
-    margin-right:5px;
-    background: #3B5998;
-    color: #f7f7f7;
-  }
-  .btn-tw {
-    background: #55acee;
-    color: #f7f7f7;
-  }
-  .phs-tab-header {
-    margin-left: -20px;
-    margin-right: -20px;
-    height: 75px;
-  }
-  .phs-title {
-    font-size: 15px;
-    line-height: 20px !important;
-    background-color: #f2f2f2;
-    color: #434343;
-    padding: 20px;
-    transition: .3s;
-  }
-  .phs-title-active {
-    font-size: 15px;
-    line-height: 20px !important;
-    background-color: #5cc1c0;
-    color: #ffffff;
-    padding: 20px;
-    transition: .3s;
-  }
-  .phs-tab-header-picture {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
-  .phs-tab-header-picture2x {
-    width: 60px;
-    height: 60px;
-    margin-right: 10px;
-  }
-  .phs-panel-body {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding: 10px 0 0 0 !important;
-  }
-  .phs-subtitle {
-    background-color: #f2f2f2;
-    color: #ababab;
-    margin: -10px 0 10px 0;
-    padding: 5px;
-    text-align: center;
-  }
-  .phs-rotate {
-    transform: rotate(-180deg);
-    transition: .3s;
-  }
-  .phs-reset {
-    transform: rotate(0deg);
-    transition: .3s;
-  }
+- support_url = "www.pethomestay.com.au/support/" + current_user.hex
+
+- twitter_url  = 'https://twitter.com/share'
+- twitter_url += "?text=I could use a helping hand from friends."
+- twitter_url += "&url=https://www.pethomestay.com.au/" + current_user.hex
+- twitter_url += '&hashtags=freecuddles'
+
+= stylesheet_link_tag 'bootstrap-multiselect'
+= javascript_include_tag 'bootstrap-multiselect'
+
 javascript:
   window.fbAsyncInit = function() {
     FB.init({
@@ -111,72 +52,77 @@ javascript:
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 #fb-root
-coffee:
-  $ ->
-    $('.twitter-share-btn').on 'click', ->
-      width  = 600
-      height = 350
-      window.open $('.twitter-share-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"
-    $('.twitter-support-btn').on 'click', ->
-      width  = 600
-      height = 350
-      window.open $('.twitter-support-btn').data('href'), 'Tweet', "width=#{width}, height=#{height}"  
 
 = render layout: 'layouts/user' do
-  .panel.panel-default style="box-shadow: none;"          
-    .panel-body.phs-panel-body
-      = image_tag 'dogs-together.jpg', class: 'img-responsive center-block', style: 'margin-bottom: 5px; padding:15px;'
-
-      .col-md-12
-        .text-thin.text-center  Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
-        .text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
-        .text-thin.text-center Or send an invite to their emails
-      .col-md-12
-        a href="/contacts/gmail" Gmail
-        - if @contacts.try(:any?)
-          = form_tag host_send_invite_emails_path, :method => 'post', :id => "send_invite_form" do
-            - @contacts.each do |c|
-              - unless c[:email].blank?
-                .form-group
-                  .input-group
-                    = check_box_tag 'emails[]', c[:email], false, class: 'form-control'
-                    span.input-group-addon
-                      = c[:name].blank? ? c[:email] : c[:name]
-            .form-group
-              .input-group
-                = text_area_tag 'message', nil, class: 'put_class_name'
-
-            = submit_tag 'Send Email', class: 'btn btn-primary form-control submit'
-
-      .text-thin.text-center Or use Social media and get people you know to leave you support!
-      
-      .text-center.mar-top
-        = render 'support_sharing' 
+  .row
+    .panel.panel-default         
+      .panel-body
+        .pad-all.bg-gray
+          span Hosts can now invite their friends to support a specific Homestay!
+          br
+          span This means potential pet owning clients haveanother way to assess
+          span how trustworthy you are or how good a pet sitter you are. It's especially useful if you are just 
+          span starting out as a Host and don't have any reviews yet :)
+          br 
+          span It's important as it will effect how you appear in the Search Results page, when people
+          span look in their postcode area. Hosts with friends will rank higher than Hosts without
+          span Friends, but Reviews will always be the most important aspect. 
+        .col-md-12
+          .text-thin.text-center  Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
+          .text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
+          .text-thin.text-center Or send an invite to their emails
         
-    .phs-panel-body                    
-      - if @recommendations.any?
-        - @recommendations.each do |recommendation|
-          - user = User.find(recommendation.user_id)
-          .parent style="border-bottom: 1px solid #ddd;"
-            .panel-heading.feedback-head style="margin-bottom: 20px;"
-              .panel-title.phs-title
-                .pull-left
-                  = "#{recommendation.email}"
-                  br
-                  | Reviewed:
-                  = "#{time_ago_in_words(recommendation.created_at)} ago"
-                .pull-right
-                  .feedback-icon
-                    i.fa.fa-chevron-down   
-            .panel-body.feedback-body style="margin-top: 20px;"
-              .row
-                .col-md-12      
-                  span "
-                  strong 
-                    = recommendation.review
-                  span "  
+        .col-sm-12
+          button.btn.btn-block.fb-share-btn.fb-user-support data-url=support_url style='background: #3B5998; color: #f7f7f7;'
+            i.fa.fa-facebook 
+            span SHARE
+          button.btn.btn-block.twitter-support-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7;'
+            i.fa.fa-twitter
+            span TWEET  
+
+
+
+        .col-md-12
+          - if @emails.nil?
+            a href="/contacts/gmail" Gmail
+          - else 
+            select.basic-multiple#emailsSelect multiple="true"
+              - @emails.each do |email|
+                  option value="#{email}" ="#{email}" 
+                  
+          
+      .phs-panel-body                    
+        - if @recommendations.any?
+          - @recommendations.each do |recommendation|
+            - user = User.find(recommendation.user_id)
+            .parent style="border-bottom: 1px solid #ddd;"
+              .panel-heading.feedback-head style="margin-bottom: 20px;"
+                .panel-title.phs-title
+                  .pull-left
+                    = "#{recommendation.email}"
+                    br
+                    | Reviewed:
+                    = "#{time_ago_in_words(recommendation.created_at)} ago"
+                  .pull-right
+                    .feedback-icon
+                      i.fa.fa-chevron-down   
+              .panel-body.feedback-body style="margin-top: 20px;"
+                .row
+                  .col-md-12      
+                    span "
+                    strong 
+                      = recommendation.review
+                    span "  
 
 javascript:
+  
+  $('.twitter-share-btn').click( function() {
+    var height, width;
+    width = 600;
+    height = 350;
+    return window.open( $('.twitter-share-btn').data('href'), 'Tweet', 'width=' + width , 'height=' + height );
+  });
+
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function(event) {
     var head = $(this).children();
@@ -196,3 +142,7 @@ javascript:
       body.slideUp();
     }
   });
+
+  $('#emailsSelect').multiselect({     
+        enableCaseInsensitiveFiltering: true
+    }); 
