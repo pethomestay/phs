@@ -10,6 +10,8 @@ class Guest::PetsController < Guest::GuestController
   # GET /guest/pets/new
   def new
     @pet = current_user.pets.build
+    @pet.size_id ||= 1
+    @pet.energy_level ||= 3
     respond_with @pet
   end
 
