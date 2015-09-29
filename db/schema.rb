@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150522050207) do
+ActiveRecord::Schema.define(:version => 20150901063938) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20150522050207) do
     t.string   "encrypted_name"
     t.string   "encrypted_bsb"
     t.string   "encrypted_account_number"
+  end
+
+  create_table "api_tokens", :force => true do |t|
+    t.string   "name",       :limit => 50
+    t.string   "code",       :limit => 36
+    t.boolean  "active",                   :default => true
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "attachinary_files", :force => true do |t|
@@ -307,6 +315,16 @@ ActiveRecord::Schema.define(:version => 20150522050207) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "postcodes", :force => true do |t|
+    t.string   "postcode",   :limit => 4
+    t.decimal  "latitude",                :precision => 10, :scale => 6
+    t.decimal  "longitude",               :precision => 10, :scale => 6
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+  end
+
+  add_index "postcodes", ["postcode"], :name => "index_postcodes_on_postcode"
+
   create_table "recommendations", :force => true do |t|
     t.integer  "user_id"
     t.string   "email"
@@ -383,6 +401,7 @@ ActiveRecord::Schema.define(:version => 20150522050207) do
     t.boolean  "opt_out_sms",            :default => false
     t.decimal  "responsiveness_score"
     t.string   "hex"
+    t.integer  "responsiveness_rate"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"

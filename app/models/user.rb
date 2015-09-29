@@ -502,6 +502,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def store_responsiveness_rate
+    update(:responsiveness_rate, response_rate_in_percent)
+    responsiveness_rate
+  end
+
   def mobile_num_legal?
     return if self.mobile_number.blank?
     m = self.mobile_number.gsub(/[^0-9]/, "")

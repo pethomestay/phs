@@ -1,8 +1,35 @@
 PetHomestay::Application.routes.draw do
+  constraints subdomain: 'api' do
+    scope module: 'api', as: 'api', defaults: { format: 'json' } do
+      root to: 'base#index'
+      post 'sessions', to: 'sessions#create'
+      post 'users', to: 'users#create'
+      resources :breeds, only: :index
+      resources :homestays, only: [:index, :show]
+      resources :images, only: [:create]
+      resources :pets, only: [:index, :create, :update]
+      get '*path', to: 'base#page_not_found'
+    end
+  end
+
+  # Temporary fix for staging on Heroku.
+  namespace :api, defaults: { format: 'json' } do
+    root to: 'base#index'
+    post 'sessions', to: 'sessions#create'
+    post 'users', to: 'users#create'
+    resources :breeds, only: :index
+    resources :homestays, only: [:index, :show]
+    resources :pets, only: [:index, :create, :update]
+    get '*path', to: 'base#page_not_found'
+  end
 
   resources :invitations
 
-  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations',  :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_for :users, controllers: {
+    sessions: 'sessions',
+    registrations: 'registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   resources :users do
     collection do
@@ -24,7 +51,7 @@ PetHomestay::Application.routes.draw do
   resources :enquiries, only: [:create, :show, :update] do
     resource :confirmation, only: [:show, :update]
     resource :feedbacks, only: [:new, :edit, :create]
-    get "show_for_guest"
+    get 'show_for_guest'
   end
 
   resources :homestays do
@@ -71,7 +98,7 @@ PetHomestay::Application.routes.draw do
     end
   end
 
-  resources :unavailable_dates, :only => [:create, :destroy]
+  resources :unavailable_dates, only: [:create, :destroy]
 
   resources :accounts do
     collection do
@@ -87,7 +114,7 @@ PetHomestay::Application.routes.draw do
     resources :favorites, only: [:index]
     resources :pets, except: [:show]
     resource :account, only: [:new, :create, :edit, :update, :show]
-    get '/',         to: 'guest#index'
+    get '/', to: 'guest#index'
   end
   devise_scope :user do
     get '/guest/edit', to: 'registrations#edit'
@@ -96,12 +123,10 @@ PetHomestay::Application.routes.draw do
 
   namespace :host do
     get '/supporters', to: 'supporters#index'
-    
-    
     get '/messages', to: 'messages#index'
     get '/calendar/availability', to: 'calendar#availability'
     get '/bookings', to: 'bookings#index'
-    put "/homestay/activate", to: "homestays#activate"
+    put '/homestay/activate', to: 'homestays#activate'
     resources :feedbacks, except: [:destroy]
     resource :homestay, only: [:new, :create, :edit, :update] do
       collection do
@@ -109,10 +134,10 @@ PetHomestay::Application.routes.draw do
       end
     end
     resource :account, only: [:new, :create, :edit, :update, :show]
-    get '/',         to: 'host#index'
+    get '/', to: 'host#index'
   end
   get '/invites/gmail/contact_callback', to: 'host/supporters#invite_emails', as: :host_invite_emails
-    
+
   get '/contacts/failure', to: 'host/supporters#index'
   match '/invites/send_invite_emails', to: 'host/supporters#send_invite_emails', as: :host_send_invite_emails
 
@@ -129,7 +154,7 @@ PetHomestay::Application.routes.draw do
     end
     resources :transactions
     resources :feedbacks
-    resources :homestays, except:[:new, :create] do
+    resources :homestays, except: [:new, :create] do
       collection do
         get :by_date_created
       end
@@ -141,21 +166,20 @@ PetHomestay::Application.routes.draw do
     end
     resources :accounts, only: [:new, :create, :edit, :update, :destroy]
     resources :coupons, only: [:index] do
-      post :create_coupon, :on => :collection
-      post :expire_coupon, :on => :collection
-      get  :mass_assign_coupon_code, :on => :collection
-      post :do_mass_assign_coupon_code,  :on => :collection
+      post :create_coupon, on: :collection
+      post :expire_coupon, on: :collection
+      get :mass_assign_coupon_code, on: :collection
+      post :do_mass_assign_coupon_code, on: :collection
     end
   end
 
   # Zendesk Single Sign-on
   get 'zendesk_session/:action', to: 'zendesk_session'
 
-
-  mount Attachinary::Engine => "/attachinary"
-  post '/photo_uploads',    to: 'dropzone#photo_uploads'
+  mount Attachinary::Engine => '/attachinary'
+  post '/photo_uploads', to: 'dropzone#photo_uploads'
   delete '/remove_uploads', to: 'dropzone#remove_uploads'
-  delete '/remove_uploads_with_public_id', to:"dropzone#remove_uploads_with_public_id"
+  delete '/remove_uploads_with_public_id', to: 'dropzone#remove_uploads_with_public_id'
 
   get '/guest-faq'            => redirect('http://support.pethomestay.com/hc/en-us/sections/200198489-Guest-FAQ'), as: 'guest_faq'
   get '/host-faq'             => redirect('http://support.pethomestay.com/hc/en-us/sections/200198479-Host-FAQ'), as: 'host_faq'
@@ -187,11 +211,11 @@ PetHomestay::Application.routes.draw do
   get '/newcastle'  => redirect('/homestays/?search[location]=2300')
 
   # For legacy URLs
-  get '/my-account/(*something)',   to: redirect('/guest')
-  get '/mailboxes/(*something)',    to: redirect('/guest')
+  get '/my-account/(*something)', to: redirect('/guest')
+  get '/mailboxes/(*something)', to: redirect('/guest')
   get '/availability/(*something)', to: redirect('/host')
 
   # For SMSBroadcast inbound SMS requests
-  get '/sms_receiver', :controller => :pages, :action => :receive_sms
+  get '/sms_receiver', controller: :pages, action: :receive_sms
   root to: 'pages#home'
 end
