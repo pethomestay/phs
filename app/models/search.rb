@@ -90,21 +90,6 @@ class Search
     return results_list.uniq
   end
 
-  # This is no longer used?
-  def perform
-    perform_geocode unless @latitude.present? && @longitude.present?
-    if sort_by != 'average_rating'
-      homestays = Homestay.active.near([@latitude, @longitude], within, order: sort_by)
-    else
-      homestays = Homestay.active.near([@latitude, @longitude], within, order: 'users.average_rating DESC')
-    end
-    if self.check_in_date.present?
-      check_out_date = self.check_out_date || self.check_in_date + 1.day
-      homestays = homestays.available_between(check_in_date, check_out_date)
-    end
-    homestays.includes(:user)
-  end
-
   def perform_geocode
     coords = @country && @country != 'Reserved' ? Geocoder.coordinates("#{@location}, #{@country}") :
                                                   Geocoder.coordinates(@location)
