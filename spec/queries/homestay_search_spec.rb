@@ -182,6 +182,13 @@ RSpec.describe HomestaySearch do
       subject.perform_search
       expect(subject.results).to eq(results)
     end
+
+    it 'exposes search' do
+      search = double('search').as_null_object
+      allow(Search).to receive(:new).and_return(search)
+      expect(subject).to respond_to(:search)
+      expect { subject.perform_search }.to change { subject.search }.from(nil).to(search)
+    end
   end
 
   describe '#augment_search' do

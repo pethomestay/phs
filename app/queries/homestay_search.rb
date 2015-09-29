@@ -4,6 +4,8 @@ class HomestaySearch
   attribute :params, Hash[Symbol => Object]
   attribute :results, Array[Homestay]
 
+  attr_accessor :search
+
   # Setup search.
   # @api public
   # @param params [Hash]
