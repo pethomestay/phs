@@ -9,20 +9,16 @@ class EnquiriesController < ApplicationController
       current_user.update_attribute(:mobile_number, params[:mobile_number])
     end
     if params[:enquiry][:reuse_message] == '1'
-      @old_reused_enquiry = current_user.enquiries.where(reuse_message: true)
-      if @old_reused_enquiry.present?
-        old_reused_enquiry = @old_reused_enquiry.first
-        old_reused_enquiry.reuse_message = false
-        old_reused_enquiry.save
-      end
+      old_reused_enquiry = current_user.enquiries.where(reuse_message: true).last
+      old_reused_enquiry.update_column(:reuse_message, false) unless old_reused_enquiry.blank?
     end
     # To get pet form exist or not
     @pet_present = (params[:pet] ? true : false)
-    
+
     if current_user.pets.empty?
       @pet = current_user.pets.build(params[:pet])
       @pet.save
-    end  
+    end
     @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
     if @enquiry.valid?
       @message = { :type => :alert, :msg => 'Your enquiry has been sent to the Host, and there is a record in your My Account Inbox. Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using PetHomeStay!' }
@@ -73,8 +69,8 @@ class EnquiriesController < ApplicationController
   private
   def find_enquiry
     @enquiry = Enquiry.find_by_homestay_id_and_id!(current_user.homestay.id, params[:id])
-  end 
-    
+  end
+
   def verify_guest
     @enquiry = current_user.enquiries.find(params[:enquiry_id])
     redirect_to guest_path, notice: "No access" and return unless @enquiry
