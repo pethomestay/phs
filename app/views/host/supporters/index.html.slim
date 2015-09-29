@@ -7,142 +7,128 @@
 
 = stylesheet_link_tag 'bootstrap-multiselect'
 = javascript_include_tag 'bootstrap-multiselect'
+= javascript_include_tag 'host/supporters/supporters.js'
 
-javascript:
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : "#{ENV['APP_ID'] || '382802968555135' }",
-      cookie     : true,
-      status     : true,
-      xfbml      : true,
-      version    : 'v2.1'
-    });
-
-    $('.fb-share-btn.fb-host-to-guest-review').on('click', function() {
-      var data = $(this).data();
-      var fb_description = "Review: " + data.review
-      FB.ui(
-      {
-        method: 'feed',
-        link: "https://www.pethomestay.com.au",
-        name: data.title,
-        caption: "Australia's no. 1 pet sitting community",
-        description: fb_description
-      }, function(response){});
-    });
-
-    $('.fb-share-btn.fb-user-support').on('click', function() {
-      var data = $(this).data();
-      FB.ui(
-      {
-        method: 'feed',
-        link: data.url,
-        name: "Please give me your support",
-        caption: "Australia's no. 1 pet sitting community",
-        description: "I could use a helping hand from friends. Please give me your support by clicking on this post and telling the community that I love pets!"
-      }, function(response){});
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
 #fb-root
-
 = render layout: 'layouts/user' do
   .row
-    .panel.panel-default         
-      .panel-body
-        .pad-all.bg-gray
-          span Hosts can now invite their friends to support a specific Homestay!
-          br
-          span This means potential pet owning clients haveanother way to assess
-          span how trustworthy you are or how good a pet sitter you are. It's especially useful if you are just 
-          span starting out as a Host and don't have any reviews yet :)
-          br 
-          span It's important as it will effect how you appear in the Search Results page, when people
-          span look in their postcode area. Hosts with friends will rank higher than Hosts without
-          span Friends, but Reviews will always be the most important aspect. 
-        .col-md-12
-          .text-thin.text-center  Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
-          .text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
-          .text-thin.text-center Or send an invite to their emails
-        
-        .col-sm-12
-          button.btn.btn-block.fb-share-btn.fb-user-support data-url=support_url style='background: #3B5998; color: #f7f7f7;'
-            i.fa.fa-facebook 
-            span SHARE
-          button.btn.btn-block.twitter-support-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7;'
-            i.fa.fa-twitter
-            span TWEET  
-
-
-
-        .col-md-12
-          - if @emails.nil?
-            a href="/contacts/gmail" Gmail
-          - else 
-            select.basic-multiple#emailsSelect multiple="true"
-              - @emails.each do |email|
-                  option value="#{email}" ="#{email}" 
-                  
-          
-      .phs-panel-body                    
-        - if @recommendations.any?
-          - @recommendations.each do |recommendation|
-            - user = User.find(recommendation.user_id)
-            .parent style="border-bottom: 1px solid #ddd;"
-              .panel-heading.feedback-head style="margin-bottom: 20px;"
-                .panel-title.phs-title
-                  .pull-left
-                    = "#{recommendation.email}"
-                    br
-                    | Reviewed:
-                    = "#{time_ago_in_words(recommendation.created_at)} ago"
-                  .pull-right
-                    .feedback-icon
-                      i.fa.fa-chevron-down   
-              .panel-body.feedback-body style="margin-top: 20px;"
-                .row
-                  .col-md-12      
-                    span "
-                    strong 
-                      = recommendation.review
-                    span "  
-
+    .pad-all.bg-gray
+      .text-md Hosts can now invite their friends to support a specific Homestay! This means potential pet owning clients have another way to assess how trustworthy you are or how good a pet sitter you are. It's especially useful if you are just starting out as a Host and don't have any reviews yet :) 
+      br
+      .text-md It's important as it will effect how you appear in the Search Results page, when people look in their postcode area. Hosts with friends will rank higher than Hosts without Friends, but Reviews will always be the most important aspect. 
+    
+    .pad-all.text-bold.text-danger.text-center = "www.pethomestay.com.au/support/#{current_user.hex}"
+    
+    a.btn.btn-block.fb-share-btn.fb-user-support data-url=support_url style='background: #3B5998; color: #f7f7f7;'
+      i.fa.fa-facebook 
+      span SHARE
+    a.btn.btn-block.twitter-support-btn data-href=twitter_url style='background: #55acee; color: #f7f7f7;'
+      i.fa.fa-twitter
+      span TWEET  
+    - if @emails.nil?
+      a.btn.btn-default.btn-block href="/contacts/gmail" Gmail
+    - else
+      .mar-top style="margin-top:5px;"
+        a.btn.btn-default.basic-multiple#emailsSelect multiple="true"
+          - @emails.each do |email|
+              option value="#{email}" ="#{email}" 
+      .mar-top style="margin-top:5px;"  
+        a.btn.btn-default#invite_users_button Invite these users.     
+      
+  - if @recommendations.any?
+    - @recommendations.each do |recommendation|
+      - user = User.find(recommendation.user_id)
+      .parent style="border-bottom: 1px solid #ddd;"
+        .panel-heading.feedback-head style="margin-bottom: 20px;"
+          .panel-title.phs-title
+            .pull-left
+              = "#{recommendation.email}"
+              br
+              | Reviewed:
+              = "#{time_ago_in_words(recommendation.created_at)} ago"
+            .pull-right
+              .feedback-icon
+                i.fa.fa-chevron-down   
+        .panel-body.feedback-body style="margin-top: 20px;"
+          .row
+            .col-md-12      
+              span "
+              strong 
+                = recommendation.review
+              span "  
 javascript:
-  
-  $('.twitter-share-btn').click( function() {
-    var height, width;
-    width = 600;
-    height = 350;
-    return window.open( $('.twitter-share-btn').data('href'), 'Tweet', 'width=' + width , 'height=' + height );
-  });
+   $(".feedback-body").hide();
+    $(".feedback-head").click(function(event) {
+        var head = $(this).children();
+        var icon = $(this).find(".feedback-icon").children();
+        var body = $(this).parent().find(".feedback-body");
+        if (body.is(":hidden")) {
+            icon.addClass("phs-rotate");
+            icon.removeClass("phs-reset");
+            head.removeClass("phs-title");
+            head.addClass("phs-title-active");
+            body.slideDown();
+        } else {
+            icon.removeClass("phs-rotate");
+            icon.addClass("phs-reset");
+            head.removeClass("phs-title-active");
+            head.addClass("phs-title");
+            body.slideUp();
+        }
+    });
 
-  $( ".feedback-body" ).hide();
-  $( ".feedback-head" ).click(function(event) {
-    var head = $(this).children();
-    var icon = $(this).find(".feedback-icon").children();
-    var body = $(this).parent().find(".feedback-body");
-    if( body.is(":hidden") ) {
-      icon.addClass("phs-rotate");
-      icon.removeClass("phs-reset");
-      head.removeClass("phs-title"); 
-      head.addClass("phs-title-active");
-      body.slideDown();
-    } else {
-      icon.removeClass("phs-rotate"); 
-      icon.addClass("phs-reset");
-      head.removeClass("phs-title-active"); 
-      head.addClass("phs-title");
-      body.slideUp();
-    }
-  });
+    $("#invite_users_button").click(function(event) {
+        if (selectedEmailArray.length > 0) {
+            $.ajax({
+                url: "#{host_send_invite_emails_path}",
+                type: 'POST',
+                data: {
+                    emails: selectedEmailArray
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Accept", "text/json")
+                }
+            }).done(function(response) {
+                alert("Data Saved: " + response.message);
+            });
+        } else {
+            alert('Please select contacts from list');
+        }
+    });
 
-  $('#emailsSelect').multiselect({     
-        enableCaseInsensitiveFiltering: true
-    }); 
+    $("#invite_users_button").hide();
+    var selectedEmailArray = [];
+
+    $('#emailsSelect').multiselect({
+        buttonWidth: '100%',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        enableClickableOptGroups: true,
+        maxHeight: 200,
+        onChange: function(option, checked, select) {
+
+            var found = $.inArray(option[0].value, selectedEmailArray);
+
+            // if not found inside the filtered array
+            if (found == -1 && checked) {
+
+                selectedEmailArray.push(option[0].value);
+
+            } else if (found > -1) {
+
+                selectedEmailArray.splice(found, 1);
+
+            }
+
+            if(selectedEmailArray.length > 0) {
+               
+               $("#invite_users_button").show();
+
+            } else {
+
+              $("#invite_users_button").hide();
+
+            }
+        }
+    });
+    $('#emailsSelect').multiselect('deselectAll', true);

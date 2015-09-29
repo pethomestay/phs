@@ -60,8 +60,6 @@ class UserMailer < ActionMailer::Base
     mandrill_client.messages.send_template template_name,template_content, message
   end
 
-
-
   def leave_feedback(to, subject, enquiry)
     @user = to
     @subject = subject
