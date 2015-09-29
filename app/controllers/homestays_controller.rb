@@ -1,28 +1,31 @@
 class HomestaysController < ApplicationController
   require 'will_paginate/array'
   respond_to :html
-  before_filter :authenticate_user!, except: [:show, :index, :availability]
+  before_filter :authenticate_user!, only: [:activate, :favourte, :non_favourite]
   skip_before_filter :track_session_variables, only: [:update, :create, :availability, :show]
 
-  SEARCH_RADIUS = 20
+  layout 'new_application'
 
-  #This is the action that results from a search
+  # Performs search.
+  # GET /homestays
   def index
-    redirect_to root_path and return unless params[:search]
-    session[:check_in_date]  = params[:search][:check_in_date]
-    session[:check_out_date] = params[:search][:check_out_date]
-    @search = Search.new(params[:search])
-    #We are only doing australia, not sure why we are doing the country detect
-    @search.country =  'Australia' #request.location.country_code if request.location
-    @homestays = @search.populate_list
-    @homestays = @homestays.paginate(page: params[:page], per_page: 10)
-    # @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
-    @title = "Pet care for #{@search.location}"
-    gon.push({
-      search: @search,
-      homestays: @homestays,
-    })
-    respond_with @homestays, layout: 'new_application'
+    if search?
+      session[:check_in_date]  = params[:search][:check_in_date]
+      session[:check_out_date] = params[:search][:check_out_date]
+
+      @hs = HomestaySearch.new(params[:search])
+      @hs.perform_search
+
+      @search    = @hs.search
+      @homestays = @hs.results
+      @homestays = @homestays.paginate(page: params[:page], per_page: 10)
+
+      gon.push({ search: @search, homestays: @homestays })
+
+      respond_with @homestays
+    else
+      redirect_to root_path
+    end
   end
 
   def show
@@ -109,4 +112,11 @@ class HomestaysController < ApplicationController
     info = homestay.user.booking_info_between(start_date, end_date)
     render json: info.to_json, status: 200
   end
+
+  private
+
+    def search?
+      params[:search].present?
+    end
+
 end
