@@ -1,7 +1,7 @@
 class HomestaysController < ApplicationController
   require 'will_paginate/array'
   respond_to :html
-  before_filter :authenticate_user!, only: [:activate, :favourte, :non_favourite]
+  before_filter :authenticate_user!, only: [:activate, :favourite, :non_favourite]
   skip_before_filter :track_session_variables, only: [:update, :create, :availability, :show]
 
   layout 'new_application'
@@ -29,94 +29,85 @@ class HomestaysController < ApplicationController
   end
 
   def show
-    @homestay = Homestay.find_by_slug(params[:id])
-    raise ActiveRecord::RecordNotFound unless @homestay
-    notice = 'This listing is not active.'
-    if @homestay.locked?
-      notice = nil #we will change this to a message later
-    end
-
-    flash.now[:notice] = notice if notice && !@homestay.active?
-    @title = @homestay.title
-    @reviews = @homestay.user.received_feedbacks.reviewed
+    @homestay = find_homestay_by_slug!
+    @reviews  = @homestay.user.received_feedbacks.reviewed
     @response_rate_in_percent = @homestay.user.response_rate_in_percent
-    if current_user
-      @reusable_enquiries = current_user.enquiries.where(reuse_message: true)
-      @enquiry = Enquiry.new({
-        user: current_user,
-        pets: current_user.pets,
-        check_in_date: Date.today,
-        check_out_date: Date.today
-      })
-    elsif cookies[:segment_anonymous_id].nil?
-      cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
-      anonymous_id = cookies[:segment_anonymous_id]
+    @reusable_enquiries = current_user.enquiries.reusable if user_signed_in?
+    @enquiry = build_enquiry
+
+    gon.push fb_app_id: ENV.fetch('APP_ID', '363405197161579')
+
+    if @homestay.inactive_listing?
+      flash.now[:notice] = I18n.t('controller.homestay.show.notice.inactive')
     end
-    unless current_user
-      @enquiry = Enquiry.new({
-        check_in_date: Date.today,
-        check_out_date: Date.today
-      })
-    end
-    Analytics.track(
-      user_id:          current_user.try(:id) || cookies[:segment_anonymous_id],
-      event:            "Viewed Product",
-      properties: {
-        id:       @homestay.id,
-        name:     @homestay.title,
-        price:    @homestay.cost_per_night,
-        category: @homestay.address_city
-      },
-      timestamp:        Time.now,
-      context:          segment_io_context,
-      integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
-    )
-    gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
-    render layout: 'new_application'
   end
 
   def activate
-    @homestay = Homestay.find_by_slug!(params[:homestay_id])
-    if @homestay.active
-      @homestay.active = false
-    else
-      @homestay.active = true
-    end
-    @homestay.save
-    respond_to do | format|
+    @homestay = find_homestay_by_slug!
+    @homestay.toggle!(:active)
+
+    respond_to do |format|
       format.js
     end
   end
 
   def favourite
-    @homestay = Homestay.find params[:id]
-    Favourite.create! homestay_id: @homestay.id, user_id: current_user.id
+    @homestay = find_homestay_by_id
+    @homestay.favourites.create!(user_id: current_user.id)
+
     render nothing: true
   end
 
   def non_favourite
-    @homestay = Homestay.find params[:id]
-    @fav = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
-    if @fav
-      @fav.destroy
+    @homestay = find_homestay_by_id
+
+    if @favourite = Favourite.where(homestay_id: @homestay.id, user_id: current_user.id).first
+      @favourite.destroy
       render nothing: true
     else
       render nothing: true, status: 302
     end
   end
 
+  # Pending specs
   def availability
-    homestay = Homestay.find(params[:id])
-    start_date = Time.at(params[:start].to_i).to_date
-    end_date  = Time.at(params[:end].to_i).to_date
+    homestay   = find_homestay_by_id
+    start_date = parse_date(params[:start])
+    end_date   = parse_date(params[:end])
+
     info = homestay.user.booking_info_between(start_date, end_date)
+
     render json: info.to_json, status: 200
   end
 
   private
 
+    def build_enquiry
+      Enquiry.new.tap do |e|
+        if user_signed_in?
+          e.user = current_user
+          e.pets = current_user.pets
+        end
+
+        e.check_in_date  = Date.today
+        e.check_out_date = Date.today
+      end
+    end
+
     def search?
       params[:search].present?
+    end
+
+    def find_homestay_by_slug!
+      Homestay.find_by_slug!(params[:id])
+    end
+
+    def find_homestay_by_id
+      Homestay.find(params[:id])
+    end
+
+    def parse_date(date)
+      Time.at(date.to_i).to_date if date.present?
     end
 
 end
