@@ -16,6 +16,7 @@ class Enquiry < ActiveRecord::Base
   scope :need_confirmation, where("response_id IN (?) AND confirmed = false", [ReferenceData::Response::ACCEPTED.id,
     ReferenceData::Response::UNDECIDED.id, ReferenceData::Response::DECLINED.id])
   scope :owner_accepted, where(owner_accepted: true)
+  scope :reusable, where(reuse_message: true)
   scope :need_feedback, lambda { where("owner_accepted IS NOT FALSE AND (check_in_date < ? AND (duration_id = 1 OR duration_id = 2 OR duration_id = 3 OR duration_id = 4)) OR \
                                         (check_in_date < ? AND (duration_id = 5)) OR \
                                         (check_in_date < ? AND (duration_id = 6)) OR \
