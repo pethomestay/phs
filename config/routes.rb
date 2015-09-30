@@ -70,6 +70,7 @@ PetHomestay::Application.routes.draw do
       get 'favourite'
       get 'non_favourite'
       get 'availability'
+      post 'activate'
     end
 
     collection do
@@ -80,7 +81,6 @@ PetHomestay::Application.routes.draw do
   resources :transactions
   get '/welcome' => 'pages#welcome'
   post '/users/:id/unlink' => 'unlink#create', as: 'unlink'
-  post '/homestays/:homestay_id/activate' => 'homestays#activate', as: 'homestay_activate'
   post '/admin/homestays/:homestay_id/locking' => 'admin/homestays#locking', as: 'admin_homestay_locking'
   post '/admin/bookings/:booking_id/host_cancel' => 'admin/bookings#host_cancel', as: 'admin_host_cancel_booking'
   post '/admin/bookings/:booking_id/guest_cancel' => 'admin/bookings#guest_cancel', as: 'admin_guest_cancel_booking'
