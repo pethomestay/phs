@@ -335,10 +335,9 @@ RSpec.describe HomestaysController, type: :controller do
   describe "#parse_date" do
     let!(:date) { DateTime.current }
 
-    it "calls Time.at" do
-      expect(Time).to receive(:at).with(date.to_i)
-
-      controller.send(:parse_date, date)
+    it "works" do
+      expected = Time.at(date.to_i).to_date
+      expect(controller.send(:parse_date, date)).to eq expected
     end
   end
 
