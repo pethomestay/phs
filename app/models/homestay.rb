@@ -134,6 +134,10 @@ class Homestay < ActiveRecord::Base
     user.present? && user.date_of_birth.present? && user.date_of_birth > 18.years.ago.to_date
   end
 
+  def inactive_listing?
+    !locked? && !active?
+  end
+
   def emergency_preparedness?
     first_aid? || emergency_transport?
   end
@@ -159,11 +163,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def energy_levels
-    levels = []
-    energy_level_ids.each do |id|
-      levels << ReferenceData::EnergyLevel.find(id)
-    end
-    levels
+    energy_level_ids.map { |id| ReferenceData::EnergyLevel.find(id) }
   end
 
   def average_rating
@@ -175,7 +175,7 @@ class Homestay < ActiveRecord::Base
   end
 
   def favourite?(current_user)
-    !Favourite.where(user_id: current_user, homestay_id: self).blank?
+    Favourite.exists?(user_id: current_user, homestay_id: self)
   end
 
   def decorator

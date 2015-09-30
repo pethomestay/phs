@@ -340,6 +340,33 @@ RSpec.describe Homestay, type: :model do
       end
     end
 
+    describe "#inactive_listing?" do
+      before do
+        subject.active = false
+        subject.locked = false
+      end
+
+      it "returns true when active and locked are false" do
+        expect(subject.inactive_listing?).to eq true
+      end
+    end
+
+    describe "#favourite?" do
+      let!(:user)      { create :user }
+      let!(:homestay)  { create :homestay }
+      let(:favourite)  { create :favourite, user: user, homestay: homestay }
+
+      context "with associated user_id and homestay_id" do
+        before { favourite }
+
+        it { expect(homestay.favourite?(user)).to eq true }
+      end
+
+      context "without associated user_id and homestay_id" do
+        it { expect(homestay.favourite?(user)).to eq false }
+      end
+    end
+
     describe "#has_services?" do
       context "pet_feeding is true" do
         before { subject.pet_feeding = true }
