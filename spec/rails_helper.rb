@@ -54,7 +54,7 @@ RSpec.configure do |config|
 
   # # customized Rspec config
   # begin
-  #   config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::TestHelpers, :type => :controller
   #   config.extend ControllerMacros, :type => :controller
   #
   #   Geocoder.configure(:lookup => :test)
