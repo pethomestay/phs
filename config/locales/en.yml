@@ -23,6 +23,9 @@ en:
     homestay:
       index:
         title: "Pet care for %{location}"
+      show:
+        notice:
+          inactive: "This listing is not active."
 
   activerecord:
     state_machines:
