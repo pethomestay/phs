@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       user_id:       current_user.id,
       event:         "Signed in",
       timestamp:     Time.now,
-      
+
       context:       {
         'Google Analytics' => {
           clientId: google_analytics_client_id
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
         'UserAgent' => request.user_agent,
         'ip' => request.ip,
       },
-      integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
+      integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
     )
     if params[:redirect_path].present?
       params[:redirect_path]
@@ -70,9 +70,9 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  # Gets 
+  # Gets
   def track_session_variables
-    if current_user.present?
+    if user_signed_in?
       Analytics.track(
         user_id:       current_user.id,
         event:         get_useable_name_of_action(params),
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
           'UserAgent' => request.user_agent,
           'ip' => request.ip,
         },
-        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
+        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
       )
 
     else
