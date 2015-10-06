@@ -4,5 +4,6 @@ FactoryGirl.define do
     last_name 'LeGrice'
     sequence(:email) {|n| "tom_#{n}@pethomestay.com"}
     password 'password'
+    active true
   end
 end

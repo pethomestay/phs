@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151004053415) do
+ActiveRecord::Schema.define(:version => 20151006050458) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -121,6 +121,18 @@ ActiveRecord::Schema.define(:version => 20151004053415) do
     t.boolean  "discount_is_percentage", :default => false
     t.boolean  "admin_mass_code",        :default => false
   end
+
+  create_table "devices", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name",       :limit => 100
+    t.string   "token",      :limit => 64
+    t.boolean  "active",                    :default => true
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "devices", ["token"], :name => "index_devices_on_token"
+  add_index "devices", ["user_id"], :name => "index_devices_on_user_id"
 
   create_table "enquiries", :force => true do |t|
     t.integer  "user_id"

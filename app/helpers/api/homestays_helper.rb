@@ -12,12 +12,12 @@ module Api::HomestaysHelper
     nil
   end
 
-  def extract_pet_sizes(homestay)
-    homestay.pet_sizes.collect{|size| size.split.first.downcase}
+  def extract_pet_size_ids(homestay)
+    homestay.pet_sizes.collect{|size| ReferenceData::Size.all_titles.index(size) + 1}
   end
 
-  def extract_energy_levels(homestay)
-    homestay.energy_levels.collect{|level| level.downcase.sub(/\s+/, '-')}
+  def extract_energy_level_ids(homestay)
+    homestay.energy_level_ids.collect(&:to_i)
   end
 
   def service_cost(homestay, service)
