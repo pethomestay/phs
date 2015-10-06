@@ -6,7 +6,8 @@ class Api::UsersController < Api::BaseController
   def create
     @user = User.new(params[:user])
     if @user.save
-      # Login?
+      @user.record_device(params[:device])
+      @user.record_oauth(params[:oauth])
     else
       render_400 @user.errors.full_messages
     end

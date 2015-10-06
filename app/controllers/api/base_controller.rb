@@ -4,14 +4,7 @@ class Api::BaseController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter :expose_token, :authenticate
-
-  # Hello!
-  # @url /
-  # @action GET
-  def index
-    render json: { hello: 'Woof, woof.' }
-  end
+  before_filter :expose_token, :authenticate_token, :expose_user
 
   # Catch-all endpoint for unknown requests.
   def page_not_found
@@ -30,8 +23,22 @@ class Api::BaseController < ApplicationController
 
   # Authenticates the exposed token.
   # @api private
-  def authenticate
+  def authenticate_token
     render_401 if @token.blank? || !@token.active?
+  end
+
+  # Exposes the current user, if present.
+  # @api private
+  def expose_user
+    unless params[:user_token].blank?
+      @user = User.where(hex: params[:user_token]).first
+    end
+  end
+
+  # Authenticates the current user, if present.
+  # @api private
+  def authenticate_user
+    render_403 'Invalid user.' if @user.blank? || !@user.active?
   end
 
   # Everything's OK.
@@ -73,5 +80,5 @@ class Api::BaseController < ApplicationController
     @msg = msg
     render 'api/base/not_found', status: 404
   end
-  
+
 end

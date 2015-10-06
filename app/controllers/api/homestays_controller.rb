@@ -1,6 +1,8 @@
 class Api::HomestaysController < Api::BaseController
 
-  #
+  # Search Homestays.
+  # @url /homestays
+  # @action GET
   def index
     @search = HomestaySearch.new(params)
     begin
@@ -10,7 +12,9 @@ class Api::HomestaysController < Api::BaseController
     end
   end
 
-  #
+  # View Homestay.
+  # @url /homestays/:id
+  # @action GET
   def show
     @homestay = Homestay.where(id: params[:id]).first
     if @homestay.blank?

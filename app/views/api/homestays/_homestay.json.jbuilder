@@ -5,18 +5,26 @@ json.description homestay.description
 json.position homestay.position
 json.distance homestay.distance
 json.image do
-  json.partial! 'image', image: homestay.photos.first
+  json.partial! 'api/images/image', image: homestay.photos.first
 end
 json.host do
   json.partial! 'user', user: homestay.user
   json.average_rating homestay.average_rating
-  json.responsiveness_rate homestay.user.response_rate_in_percent
-  json.last_login_at homestay.user.current_sign_in_at.to_i
+  json.responsiveness_rate homestay.user.responsiveness_rate
+  json.last_login_at homestay.user.current_sign_in_at.try(:to_i)
+  json.pets(homestay.user.pets) do |pet|
+    json.id pet.id
+    json.name pet.name
+    json.type pet.pet_type_id
+    json.image do
+      json.partial! 'api/images/image', image: pet.profile_photo
+    end
+  end
 end
 json.profile do
   json.favourite_breeds homestay.favorite_breeds
-  json.accepted_sizes extract_pet_sizes(homestay)
-  json.accespted_energy_levels extract_energy_levels(homestay)
+  json.accepted_sizes extract_pet_size_ids(homestay)
+  json.accepted_energy_levels extract_energy_level_ids(homestay)
   json.emergency_transport homestay.emergency_transport?
   json.police_check homestay.police_check?
   json.constant_supervision homestay.constant_supervision?
@@ -29,12 +37,12 @@ json.location do
     json.postcode homestay.address_postcode
   end
   json.position do
-    json.latitide homestay.latitude
+    json.latitude homestay.latitude
     json.longitude homestay.longitude
   end
 end
 json.images(homestay.photos) do |image|
-  json.partial! 'image', image: image
+  json.partial! 'api/images/image', image: image
 end
 json.prices(['local', 'remote', 'walking', 'grooming', 'delivery']) do |service|
   json.service service

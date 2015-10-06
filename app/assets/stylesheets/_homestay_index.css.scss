@@ -259,6 +259,10 @@ p.ta {
       width: 100%;
       padding-left: 5px;
 
+      p.host-responsiveness {
+        display: none;
+      }
+
       .first_name {
         display: inline-block;
         padding-right:10px;
