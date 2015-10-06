@@ -10,7 +10,7 @@ class Pet < ActiveRecord::Base
   validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5} # when pet type is 'other'
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
-  validates :energy_level, inclusion: { in: %w(1 2 3 4 5) } # Low, low medium, medium, high medium, and high
+  validates :energy_level, inclusion: { in: 1..5 } # Low, low medium, medium, high medium, and high
   validates_inclusion_of :size_id, :in => ReferenceData::Size.all.map(&:id), if: Proc.new {|pet| pet.pet_type_id == 1}
   validates_inclusion_of :sex_id, :in => ReferenceData::Sex.all.map(&:id), if: Proc.new {|pet| [1,2].include?(pet.pet_type_id)}
   validates :pet_age, inclusion: { in: 1..15 }
