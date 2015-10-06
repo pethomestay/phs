@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150815054400) do
+ActiveRecord::Schema.define(:version => 20151004053415) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20150815054400) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end
+
+  add_index "api_tokens", ["code"], :name => "index_api_tokens_on_code"
 
   create_table "attachinary_files", :force => true do |t|
     t.integer  "attachinariable_id"
@@ -286,7 +288,7 @@ ActiveRecord::Schema.define(:version => 20150815054400) do
     t.boolean  "flea_treated",            :default => true
     t.boolean  "vaccinated",              :default => true
     t.boolean  "house_trained",           :default => true
-    t.string   "age"
+    t.string   "age",                     :default => "5"
     t.string   "microchip_number"
     t.string   "council_number"
     t.text     "explain_dislikes"
@@ -299,8 +301,8 @@ ActiveRecord::Schema.define(:version => 20150815054400) do
     t.date     "date_of_birth"
     t.integer  "pet_type_id",             :default => 1
     t.integer  "sex_id"
-    t.integer  "size_id"
-    t.integer  "energy_level"
+    t.integer  "size_id",                 :default => 1
+    t.string   "energy_level",            :default => "3"
     t.text     "personalities",           :default => "--- []\n"
   end
 
@@ -401,6 +403,7 @@ ActiveRecord::Schema.define(:version => 20150815054400) do
     t.boolean  "opt_out_sms",            :default => false
     t.decimal  "responsiveness_score"
     t.string   "hex"
+    t.integer  "responsiveness_rate"
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
