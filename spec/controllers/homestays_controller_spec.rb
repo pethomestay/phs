@@ -239,10 +239,6 @@ RSpec.describe HomestaysController, type: :controller do
     end
   end
 
-  describe 'GET #availability' do
-    pending
-  end
-
   describe "#search?" do
     context "with search params" do
       before do

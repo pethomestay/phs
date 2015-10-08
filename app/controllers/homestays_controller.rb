@@ -69,17 +69,6 @@ class HomestaysController < ApplicationController
     end
   end
 
-  # Pending specs
-  def availability
-    homestay   = find_homestay_by_id
-    start_date = parse_date(params[:start])
-    end_date   = parse_date(params[:end])
-
-    info = homestay.user.booking_info_between(start_date, end_date)
-
-    render json: info.to_json, status: 200
-  end
-
   private
 
     def build_enquiry
