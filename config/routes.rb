@@ -1,4 +1,13 @@
+require 'sidekiq/web'
+require 'sidekiq/failures'
+
 PetHomestay::Application.routes.draw do
+  # Sidekiq.
+  authenticate :user, lambda { |u| u.admin? && u.active? } do
+    mount Sidekiq::Web, at: '/sidekiq'
+  end
+
+  # API.
   constraints subdomain: 'api' do
     scope module: 'api', as: 'api', defaults: { format: 'json' } do
       root to: 'base#index'
