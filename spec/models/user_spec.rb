@@ -177,7 +177,7 @@ RSpec.describe User, type: :model do
     context 'with unavailable dates' do
       it 'returns false' do
         user.unavailable_dates.create(date: DateTime.current)
-        expect(user.is_available?(from: DateTime.current, to: DateTime.current)).to eq false
+        expect(user.is_available?(from: (DateTime.current - 1.day), to: DateTime.current)).to eq false
       end
     end
 

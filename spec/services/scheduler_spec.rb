@@ -116,8 +116,8 @@ RSpec.describe Scheduler do
   end
 
   describe '#blocked_date_values' do
-    let!(:unavailable_date) { create :unavailable_date, user: user }
-    let!(:booking) { create :booking, bookee: user, booker: user, check_in_date: DateTime.current.to_date }
+    let!(:unavailable_date) { create :unavailable_date, :without_validation, user: user }
+    let!(:booking) { create :booking, bookee: user, booker: user }
 
     it 'includes unavailable dates' do
       expect(scheduler.blocked_date_values).to include(unavailable_date.date)

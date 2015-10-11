@@ -9,6 +9,6 @@ class UnavailableDate < ActiveRecord::Base
 
   private
   def date_should_not_be_a_past_date
-    errors.add(:date, I18n.t("unavailable_date.invalid_date")) if self.date < Date.today
+    errors.add(:date, I18n.t("unavailable_date.invalid_date")) if self.date < Date.current
   end
 end
