@@ -136,18 +136,12 @@ coffee:
           li.hidden-sm.hidden-xs
             a href="#reviews-received-tab" data-toggle="tab"
               span Reviews Received
-          li.hidden-sm.hidden-xs
-            a href="#recommendation-tab" data-toggle="tab"
-              span Supporters
           li.active.hidden-md.hidden-lg
             a href="#reviews-given-tab" data-toggle="tab"
               i.fa.fa-share
           li.hidden-md.hidden-lg
             a href="#reviews-received-tab" data-toggle="tab"
               i.fa.fa-reply
-          li.hidden-md.hidden-lg
-            a href="#recommendation-tab" data-toggle="tab"
-              i.fa.fa-heart
     .panel-body.phs-panel-body
       .tab-content
         .tab-pane.fade.in.active id="reviews-given-tab"
@@ -269,36 +263,6 @@ coffee:
                         .text-thin style="margin: 5px 0 15px 15px;"
                           = "#{rec_feedback.private_review}"
 
-
-        .tab-pane.fade.in id="recommendation-tab"
-          .phs-subtitle
-            ' Support that you have received from friends and family will appear here. To get more support, tell friends and family to go to the following URL 
-            p = "www.pethomestay.com.au/support/#{current_user.hex}"
-            ' Or use Social media 
-            br
-            br
-            = render 'support_sharing' 
-            '  and get people you know to leave you support!
-          - if @recommendations.any?
-            - @recommendations.each do |recommendation|
-              .parent style="border-bottom: 1px solid #ddd;"
-                .panel-heading.feedback-head style="margin-bottom: 20px;"
-                  .panel-title.phs-title
-                    .pull-left
-                      = "#{recommendation.email}"
-                      br
-                      | Reviewed:
-                      = " (#{time_ago_in_words(recommendation.created_at)}) ago"
-                    .pull-right
-                      .feedback-icon
-                        i.fa.fa-chevron-down  
-                .panel-body.feedback-body style="margin-top: 20px;"
-                  .row
-                    .col-md-12
-                      span "
-                      strong
-                        = recommendation.review
-                      span "
 javascript:
   $( ".feedback-body" ).hide();
   $( ".feedback-head" ).click(function(event) {

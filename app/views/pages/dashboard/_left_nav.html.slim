@@ -1,9 +1,10 @@
 ul.nav.nav-pills.nav-stacked
   - if params[:controller].include?('host') or request.url.include?("/host")
-    li class=('active' if params[:controller] == 'host/supporters' )
-      a href=host_supporters_path
-        i.fa.fa-smile-o.fa-lg.fa-fw
-        | GET SUPPORTERS!
+    - if current_user.admin? 
+      li.hidden class=('active' if params[:controller] == 'host/supporters' )
+        a href=host_supporters_path
+          i.fa.fa-smile-o.fa-lg.fa-fw
+          | GET SUPPORTERS!
     li class=('active' if params[:controller] == 'host/messages'or params[:controller] == 'host/host')
       a href=host_messages_path
         i.fa.fa-inbox.fa-lg.fa-fw

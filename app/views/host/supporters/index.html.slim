@@ -153,7 +153,7 @@ coffee:
       .text-center.mar-top
         = render 'support_sharing' 
         
-    .phs-panel-body                    
+    .phs-panel-body.hidden                    
       - if @recommendations.any?
         - @recommendations.each do |recommendation|
           - user = User.find(recommendation.user_id)
