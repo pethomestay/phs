@@ -97,6 +97,12 @@ RSpec.describe HomestaysController, type: :controller do
         expect(subject).to render_template(:show)
       end
 
+      it "tracks user" do
+        expect(Analytics).to receive(:track)
+
+        subject
+      end
+
       context "when authenticated" do
         let!(:user) { create :user }
         let!(:pets) { create_list :pet, 5, user_id: user.id }
@@ -122,6 +128,12 @@ RSpec.describe HomestaysController, type: :controller do
             expect(assigns(:reusable_enquiries)).to_not be_nil
           end
         end
+
+        describe "cookies[:segment_anonymous_id]" do
+          it "is has no value" do
+            expect(cookies[:segment_anonymous_id]).to be_nil
+          end
+        end
       end
 
       context "when unauthenticated" do
@@ -139,6 +151,12 @@ RSpec.describe HomestaysController, type: :controller do
         describe "@reusable_enquiries" do
           it "returns nil" do
             expect(assigns(:reusable_enquiries)).to be_nil
+          end
+        end
+
+        describe "cookies[:segment_anonymous_id]" do
+          it "has value" do
+            expect(cookies[:segment_anonymous_id]).to be_present
           end
         end
       end

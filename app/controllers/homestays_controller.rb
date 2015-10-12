@@ -35,6 +35,23 @@ class HomestaysController < ApplicationController
     @reusable_enquiries = current_user.enquiries.reusable if user_signed_in?
     @enquiry = build_enquiry
 
+    if current_user.blank? && cookies[:segment_anonymous_id].nil?
+      cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
+    end
+
+    Analytics.track(
+      user_id:    current_user.try(:id) || cookies[:segment_anonymous_id],
+      event:      "Viewed Product",
+      properties: {
+        id:       @homestay.id,
+        name:     @homestay.title,
+        price:    @homestay.cost_per_night,
+        category: @homestay.address_city
+      },
+      timestamp: Time.now,
+      context:   segment_io_context
+    )
+
     gon.push fb_app_id: ENV.fetch('APP_ID', '363405197161579')
 
     if @homestay.inactive_listing?
