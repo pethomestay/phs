@@ -405,7 +405,7 @@ class BookingsController < ApplicationController
     if params[:enquiry_id].blank? && params[:homestay_id].blank?
       return redirect_to guest_path, alert: 'You are not authorised to make this request!'
     end
-    @enquiry = current_user.enquiries.find(params[:enquiry_id]) unless params[:enquiry_id].blank?
-    @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.find(params[:homestay_id])
+    @enquiry = current_user.enquiries.where(id: params[:enquiry_id]).first unless params[:enquiry_id].blank?
+    @homestay = params[:homestay_id].blank? ? @enquiry.homestay : Homestay.where(id: params[:homestay_id]).first
   end
 end

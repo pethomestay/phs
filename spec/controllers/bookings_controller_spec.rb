@@ -1,16 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe BookingsController, type: :controller do
+  let(:user) { create :user }
+  before :each do
+    sign_in user
+  end
+
   describe 'GET index' do
-    before :each do
-      get :index
+    context 'with enquiry_id and homestay_id' do
+      before :each do
+        get :index, enquiry_id: 1, homestay_id: 1
+      end
+
+      # skipped since theres no template
+      #it { is_expected.to respond_with 200 }
+    end
+    
+    context 'without enquiry_id and homestay_id' do
+      before :each do
+        get :index
+      end
+
+      it { is_expected.to respond_with 302 }
     end
 
-    #it { is_expected.to respond_with 200 }
   end
 
   describe '#new'
-  describe '#update_dates'
+  describe '#update_dates' do
+    before :each do
+      post :update_dates
+    end
+    it { is_expected.to respond_with 200}
+  end
   describe '#edit'
   describe '#owner_receipt'
   describe '#host_receipt'
