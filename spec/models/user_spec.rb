@@ -43,59 +43,63 @@ RSpec.describe User, type: :model do
     describe '.last_five' do
       let!(:users) { create_list :user, 6 }
 
-      it "returns last 5 created users" do
+      it 'returns last 5 created users' do
         expect(User.last_five.count).to eq 5
         expect(User.last_five).to_not include users.first
       end
     end
   end
 
-  describe "#generate_referral_code" do
+  describe '#generate_referral_code' do
     let(:user) { create :user }
 
-    context "with forced creation" do
-      it "creates owned_coupons for user" do
+    context 'with forced creation' do
+      it 'creates owned_coupons for user' do
         expect{ user.generate_referral_code(true) }.to change(user.owned_coupons, :count).by 1
       end
     end
 
-    context "without forced creation" do
-      it "does not created owned coupons" do
+    context 'without forced creation' do
+      it 'does not created owned coupons' do
         expect{ user.generate_referral_code }.to_not change(user.owned_coupons, :count)
       end
     end
   end
 
-  describe "#generate_hex" do
+  describe '#generate_hex' do
     let(:user) { build :user, hex: nil }
 
-    context "without hex" do
-      it "creates hex" do
+    context 'without hex' do
+      it 'creates hex' do
         expect(user.hex).to eq nil
         user.generate_hex
         expect(user.hex).to_not eq nil
       end
     end
 
-    context "with hex" do
-      it "does not create hex" do
-        user.hex = "ABC"
+    context 'with hex' do
+      it 'does not create hex' do
+        user.hex = 'ABC'
         user.generate_hex
-        expect(user.hex).to eq "ABC"
+        expect(user.hex).to eq 'ABC'
       end
     end
   end
 
-  describe "#coupon_credits_earned" do
+  describe '#coupon_credits_earned' do
     pending 
   end
 
-  describe "#name" do
+  describe '#name' do
     let(:user) { build :user }
 
-    it "returns first name and last name" do
-      expect(user.name).to eq "Tom LeGrice"
+    it 'returns first name and last name' do
+      expect(user.name).to eq 'Tom LeGrice'
     end
+  end
+
+  describe '#validate_code' do
+    pending
   end
 
 end

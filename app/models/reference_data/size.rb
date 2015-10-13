@@ -15,7 +15,7 @@ class ReferenceData::Size
   end
 
   def self.find(id)
-    raise ActiveRecord::RecordNotFound.new unless id <=  all.length
+    raise ActiveRecord::RecordNotFound.new unless id <= all.length
     all[id - 1]
   end
 

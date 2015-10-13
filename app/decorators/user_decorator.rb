@@ -1,0 +1,3 @@
+class UserDecorator < SimpleDelegator
+
+end
