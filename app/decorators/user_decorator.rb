@@ -36,4 +36,12 @@ class UserDecorator < SimpleDelegator
     pets.first
   end
 
+  # Return complete address
+  #
+  # @api public
+  # @return [String]
+  def complete_address
+    "#{self.address_1} #{self.address_suburb}, #{self.address_city}, #{self.address_country}."
+  end
+
 end

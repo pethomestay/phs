@@ -148,7 +148,7 @@ class Booking < ActiveRecord::Base
         booking_reference = booking.transaction.present? ? booking.transaction.reference.to_s : booking.payment.braintree_transaction_id
         booking_payment_amount = booking.transaction.present? ? "$#{booking.transaction.amount}" : "$#{booking.payment.amount.to_s}"
         csv << [
-          booking.try(:booker).try(:name), booking.booker.try(:complete_address), booking.booker.try(:pet).try(:name), booking.booker.try(:pet).try(:breed), booking.booker.try(:pet).try(:age),
+          booking.try(:booker).try(:name), UserDecorator.new(booking.booker).try(:complete_address), booking.booker.try(:pet).try(:name), booking.booker.try(:pet).try(:breed), booking.booker.try(:pet).try(:age),
           booking.check_in_date.to_formatted_s(:year_month_day), booking.check_in_time.strftime("%H:%M"),
           booking.check_out_date.to_formatted_s(:year_month_day), booking.check_out_time.strftime("%H:%M"),
           booking.try(:bookee).try(:name), booking.homestay.nil? ? "" : booking.homestay.title, booking.bookee.homestay.try(:geocoding_address), booking.number_of_nights,

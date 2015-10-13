@@ -113,4 +113,38 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#find_or_create_booking_by' do
+    pending
+  end
+
+  describe '#find_or_create_transaction_by' do
+    pending
+  end
+
+  describe '#find_stored_card_id' do
+    pending
+  end
+
+  describe '#unlink_from_facebook' do
+    let(:user) { create :user, uid: '123', provider: 'facebook' }
+
+    it 'removes uid and provider from user' do
+      user.unlink_from_facebook
+      expect(user.uid).to eq nil
+      expect(user.provider).to eq nil
+    end
+  end
+
+  describe '#needs_password?' do
+    let(:user) { create :user, provider: nil }
+
+    it 'returns true if provider is blank' do
+      expect(user.needs_password?).to eq true
+    end
+  end
+
+  describe '#update_without_password' do
+    pending
+  end
+
 end

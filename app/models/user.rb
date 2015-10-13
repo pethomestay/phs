@@ -284,10 +284,6 @@ class User < ActiveRecord::Base
     result
   end
 
-  def complete_address
-    "#{self.address_1} #{self.address_suburb}, #{self.address_city}, #{self.address_country}."
-  end
-
   def sanitise
     clean_email = self.email
     if clean_email.include? "<" #in the form of Joe Blogs <joe.blogs@company.com>

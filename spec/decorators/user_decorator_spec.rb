@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
-  let(:user) { create :user }
+  let(:user) { create :user, :with_address }
   let(:decorator) { UserDecorator.new user }
 
   describe '#pet_name' do
@@ -44,6 +44,12 @@ RSpec.describe UserDecorator do
 
     it 'returns first pet' do
       expect(decorator.pet).to eq pet
+    end
+  end
+
+  describe '#complete_address' do
+    it "returns arraged address" do
+      expect(decorator.complete_address).to eq "#{user.address_1} Suburb, Melbourne, Australia."
     end
   end
 end

@@ -5,5 +5,12 @@ FactoryGirl.define do
     sequence(:email) {|n| "tom_#{n}@pethomestay.com"}
     password 'password'
     active true
+
+    trait :with_address do
+      sequence(:address_1) {|n| "Unit #{n}"}
+      address_suburb 'Suburb'
+      address_city 'Melbourne'
+      address_country 'Australia'
+    end
   end
 end
