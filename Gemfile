@@ -46,7 +46,6 @@ gem 'net-scp', '1.2.1'
 gem 'unicorn'
 gem 'attr_encrypted'
 gem 'rest-client'
-gem 'sucker_punch'
 gem 'mailgun_rails'
 gem 'figaro'
 gem 'state_machine'
@@ -60,6 +59,12 @@ gem 'phony_rails' # validate and normalize phone number
 
 # Attributes.
 gem 'virtus'
+
+# Background processing.
+gem 'sidekiq', '3.1.4'
+gem 'sidekiq-failures'
+gem 'sinatra', require: false
+gem 'sucker_punch'
 
 # Documentation.
 gem 'yard'

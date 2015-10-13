@@ -7,7 +7,7 @@ class Pet < ActiveRecord::Base
 
   accepts_nested_attributes_for :pictures, reject_if: :all_blank, allow_destroy: true
 
-  validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id, :energy_level
+  validates_presence_of :name, :pet_type_id, :size_id, :pet_age, :sex_id
   validates_presence_of :other_pet_type, if: proc {|pet| pet.pet_type_id == 5} # when pet type is 'other'
   validates_inclusion_of :pet_type_id, :in => ReferenceData::PetType.all.map(&:id)
   validates :energy_level, inclusion: { in: 1..5 } # Low, low medium, medium, high medium, and high
@@ -23,9 +23,17 @@ class Pet < ActiveRecord::Base
     :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
-  before_validation :strip_personalities
+  before_validation :strip_personalities, :set_energy_level_and_size_id
   before_save :null_pet_to_empty_string, on: :create
   
+
+  # Sets the default values of energy_levels and size_ids from nil to a default number 
+  # Users can now submit pet forms without touching the sliders to set those values. 
+  def set_energy_level_and_size_id
+    self.energy_level = 3 if self.energy_level.to_i <= 0 or self.energy_level.to_i > 5
+    self.size_id = 1 if self.size_id.to_i <= 0 or self.energy_level.to_i > 4
+  end
+
   def pet_age
     if self.date_of_birth.present?
       diff = Date.today.year - self.date_of_birth.year

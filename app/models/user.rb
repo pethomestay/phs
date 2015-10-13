@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :owned_coupons, class_name: "Coupon", foreign_key: :user_id
   has_many :coupon_payouts, dependent: :destroy
   has_many :recommendations, dependent: :destroy
+  has_many :devices, dependent: :destroy
 
   has_many :given_feedbacks, class_name: 'Feedback'
   has_many :received_feedbacks, class_name: 'Feedback', foreign_key: 'subject_id'
@@ -49,6 +50,44 @@ class User < ActiveRecord::Base
 
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
+
+  # Finds a matching device for the user, or creates a new one.
+  # @api public
+  # @param device_params [Hash] The device params.
+  # @option device_params [String] :name The device name.
+  # @option device_params [String] :token The device token.
+  # @return [Device] The matching device.
+  def record_device(device_params)
+    return if device_params.blank?
+    device_params.to_options!
+    device = devices.where(token: device_params[:token]).first
+    if device.present?
+      device.update_attribute(:active, true) if !device.active?
+      device
+    else
+      devices.create(
+        name: device_params[:name],
+        token: device_params[:token]
+      )
+    end
+  end
+
+  # Updates the user's OAuth details.
+  # @api public
+  # @note The current schema only allows one OAuth provider per user.
+  # @param oauth_params [Hash] The OAuth params.
+  # @option oauth_params [String] :provider The OAuth provider.
+  # @option oauth_params [String] :token The OAuth token.
+  # @return [User] The user.
+  def record_oauth(oauth_params)
+    return if oauth_params.blank?
+    oauth_params.to_options!
+    update_attributes(
+      provider: oauth_params[:provider],
+      uid: oauth_params[:token]
+    )
+    self
+  end
 
   # Creates the coupon code that users can share with others: First four letters of first name + first letter of last name +
   # custom_discount = nil, custom_credit = nil

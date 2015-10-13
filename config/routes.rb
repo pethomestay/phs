@@ -1,4 +1,13 @@
+require 'sidekiq/web'
+require 'sidekiq/failures'
+
 PetHomestay::Application.routes.draw do
+  # Sidekiq.
+  authenticate :user, lambda { |u| u.admin? && u.active? } do
+    mount Sidekiq::Web, at: '/sidekiq'
+  end
+
+  # API.
   constraints subdomain: 'api' do
     scope module: 'api', as: 'api', defaults: { format: 'json' } do
       root to: 'base#index'
@@ -6,6 +15,8 @@ PetHomestay::Application.routes.draw do
       post 'users', to: 'users#create'
       resources :breeds, only: :index
       resources :homestays, only: [:index, :show]
+      resources :images, only: [:create]
+      get 'pets/:user_token', to: 'pets#index'
       resources :pets, only: [:index, :create, :update]
       get '*path', to: 'base#page_not_found'
     end
@@ -18,6 +29,7 @@ PetHomestay::Application.routes.draw do
     post 'users', to: 'users#create'
     resources :breeds, only: :index
     resources :homestays, only: [:index, :show]
+    get 'pets/:user_token', to: 'pets#index'
     resources :pets, only: [:index, :create, :update]
     get '*path', to: 'base#page_not_found'
   end

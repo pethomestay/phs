@@ -83,12 +83,12 @@
         .row.text-center
           .col-xs-4
             //#pet_size_nouislider.dotcom 
-            = f.input :size_id, label: false, input_html: { class: 'bootstrap-slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }  
+            = f.input :size_id, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'size', 'slider-min' => 1, 'slider-max' => 4, 'slider-step' => 1, 'slider-value' => f.object.size_id.present? ? f.object.size_id : 1 } }
             / = f.input :size_id, label: false, input_html: { class: 'bootstrap-slider'}
           .col-xs-4
-            = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.try(:pet_age) } }
+            = f.input :pet_age, label: false, input_html: { class: 'slider', data: { 'slider-id' => 'date_of_birth', 'slider-min' => 1, 'slider-max' => 15, 'slider-value' => f.object.pet_age.present? ? f.object.pet_age : 1 } }
           .col-xs-4
-            = f.input :energy_level, label: false , input_html: { class: 'slider hidden', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } } 
+            = f.input :energy_level, label: false , input_html: { class: 'slider', data: { 'slider-id' => 'energy_level', 'slider-min' => 1, 'slider-max' => 5, 'slider-step' => 1, 'slider-value' => f.object.energy_level.present? ? f.object.energy_level : 3 } }
     .row.text-box-centered
       #flash_error_with_pet role='alert'
       = f.submit 'Add Your Pet', class: 'btn btn-mint btn-block submitEnquiry', disable_with: "Adding Pet to Enquiry..."
