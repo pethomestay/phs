@@ -34,6 +34,9 @@ PetHomestay::Application.routes.draw do
     get '*path', to: 'base#page_not_found'
   end
 
+  # Mobile web-view launch.
+  get 'launch/:user_token', to: 'pages#launch'
+
   resources :invitations
 
   devise_for :users, controllers: {
