@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe BookingsController, type: :controller do
   let(:user) { create :user }
+  let(:booking) { build :booking, bookee: user, booker: user }
+
   before :each do
     sign_in user
   end
@@ -12,8 +14,7 @@ RSpec.describe BookingsController, type: :controller do
         get :index, enquiry_id: 1, homestay_id: 1
       end
 
-      # skipped since theres no template
-      #it { is_expected.to respond_with 200 }
+      pending "No template found for index"
     end
     
     context 'without enquiry_id and homestay_id' do
@@ -26,13 +27,25 @@ RSpec.describe BookingsController, type: :controller do
 
   end
 
-  describe '#new'
+  describe '#new' do
+    pending "No template found for new"
+  end
+
   describe '#update_dates' do
     before :each do
-      post :update_dates
+      booking.save
+      post :update_dates, booking_id: booking.id
     end
+
     it { is_expected.to respond_with 200}
+    it "responds with json" do
+      expect(response).to eq({
+        nights: booking.number_of_nights,
+        total_cost: booking.amount.to_s
+      })
+    end
   end
+
   describe '#edit'
   describe '#owner_receipt'
   describe '#host_receipt'
