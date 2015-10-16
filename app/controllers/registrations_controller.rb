@@ -53,7 +53,7 @@ class RegistrationsController < Devise::RegistrationsController
                              # doesn't know how to ignore it
                              params[:user].delete(:current_password)
                              @user.update_without_password(params[:user])
-                             @user.homestay.update_attributes(params[:homestay])
+                             @user.homestay.update_attributes(params[:homestay]) if @user.homestay.present?
                            end
 
     if successfully_updated
