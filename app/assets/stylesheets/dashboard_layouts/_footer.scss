@@ -1,0 +1,38 @@
+
+
+.foot-container{
+	@include outer-container;
+	>nav{
+		@include span-columns(3);
+	}
+
+}
+
+nav{
+
+	>h3{
+		font-family: Ubuntu-Bold;
+		font-size: 10px;
+		color: #FFFFFF;
+		line-height: 13px;
+	}
+
+	.item{
+		@extend .pad-hor;
+
+	}
+}
+
+.item,.item>a{
+		/* © 2015 PetHomeStay P: */
+	font-family: Gotham-Book;
+	font-size: 14px;
+	color: rgba(255,255,255,0.75);
+	line-height: 17px;
+	text-decoration: none;
+}
+
+.item>a:link{
+	text-decoration: none;
+}
+

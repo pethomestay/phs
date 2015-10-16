@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   before_filter :track_session_variables
   protect_from_forgery
 
+  def test_new_layout
+    render layout: "dashboard_application"
+  end
+
   def admin_login_required
     authenticate_user!
     require_admin!

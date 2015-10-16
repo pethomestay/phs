@@ -2,8 +2,7 @@
 %html
   %head
     = favicon_link_tag 'favicon.ico'
-    %title
-      = formatted_title(@title)
+    %title= formatted_title(@title)
     = stylesheet_link_tag 'application'
     = javascript_include_tag google_maps_source_url
     = javascript_include_tag "application"

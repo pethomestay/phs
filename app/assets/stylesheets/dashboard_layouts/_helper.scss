@@ -1,0 +1,27 @@
+
+
+
+.text-left   { text-align: left; }
+.text-right  { text-align: right; }
+.text-center { text-align: center; }
+
+
+$base-space-unit: 1em;
+
+// Top margin
+.margin-top-none    { margin-top: 0; }
+.margin-top-quarter { margin-top: $base-space-unit / 4; }
+.margin-top-half    { margin-top: $base-space-unit / 2; }
+.margin-top-one     { margin-top: $base-space-unit; }
+.margin-top-two     { margin-top: $base-space-unit * 2; }
+
+.pad-all{}
+.pad-no{ padding:0;}
+.pad-lft{}
+.pad-rgt{}
+.pad-top{}
+.pad-btm{}
+.pad-hor{padding-top:10px;padding-bottom:10px;}
+.pad-ver{}
+
+

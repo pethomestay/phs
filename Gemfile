@@ -23,6 +23,10 @@ gem 'legato'
 gem 'gon'
 gem 'mandrill-api', require: 'mandrill'
 
+# replace bootstrap with bourbon and neat
+gem 'bourbon'
+gem 'neat', '~> 1.7.2'
+
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'alphabetical_paginate'

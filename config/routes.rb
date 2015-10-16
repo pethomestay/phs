@@ -229,4 +229,7 @@ PetHomestay::Application.routes.draw do
   # For SMSBroadcast inbound SMS requests
   get '/sms_receiver', controller: :pages, action: :receive_sms
   root to: 'pages#home'
+
+  # test only for new dashboard layout
+  get '/my_dashboard', to: "application#test_new_layout"
 end
