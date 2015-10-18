@@ -6,10 +6,22 @@
     = stylesheet_link_tag 'dashboard_layouts/layout'
     = csrf_meta_tags
   %body
+
     .primary-nav
-      = image_tag 'favicon.ico', height: "80%"
-      = image_tag '/phs-logo.svg'
-      <span class="iconic iconic-sm" data-glyph="magnifying-glass" title="magnifying glass" aria-hidden="true"></span>
+      .phs-title
+        = image_tag 'favicon.ico'
+        = image_tag '/phs-logo.svg'
+      .search-form
+        %i.icon.ion-android-search
+        .field= text_field "address",nil, class: "field-input", placeholder: "search address"
+
+      %nav
+        %h1.-coupon  Give $10, Get $10
+        %h1
+          %i.icon.ion-home
+        .profile
+        %h1.-username
+
     .second-nav this is second nav
     .welcome-bar this is welcome bar
     = yield

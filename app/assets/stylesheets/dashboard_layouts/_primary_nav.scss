@@ -1,0 +1,76 @@
+@mixin vertical-middle($height){
+	vertical-align: middle;		
+	display: inline-block;
+	line-height: $height;
+}
+
+/* layout first nav bar */
+.primary-nav{
+	height:$first_nav_height;
+	background-color: $darkgrey;
+
+	>.phs-title{
+		float:left;
+		margin-right:20px;
+		@include vertical-middle($first_nav_height);
+	}
+
+	>.search-form{
+		@include vertical-middle($first_nav_height);
+	}
+	> nav{
+		float:right;
+	}
+
+}
+
+.phs-title > img{
+	height:25px;
+	vertical-align: middle;
+}
+
+
+.search-form{
+	i{
+		float: left;
+		margin-right:10px;
+		font-family: Ionicons;
+		font-size: 16px;
+		color: #FFFFFF;
+	}
+	>.field{
+		float: left;
+		height:40px;
+		color: #FFFFFF;
+		
+	}
+
+}
+
+.field-input{
+	font-family: Gotham-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	border: 2px solid $darkgrey;
+	border-bottom: 2px solid #FFFFFF;
+	background-color: $darkgrey;
+}
+
+.field-input:focus{
+	outline: 0;
+}
+
+
+/* right nav bar*/
+
+.primary-nav > nav > h1{
+	/* Give $10, Get $10: */
+	float:left;
+	font-family: Ubuntu;
+	font-size: 18px;
+	color: #FFFFFF;
+	&.-coupon{border-bottom: 1px solid #FFFFFF;};
+	&.-username{};
+}
+
+

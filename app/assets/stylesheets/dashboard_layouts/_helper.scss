@@ -8,13 +8,6 @@
 
 $base-space-unit: 1em;
 
-// Top margin
-.margin-top-none    { margin-top: 0; }
-.margin-top-quarter { margin-top: $base-space-unit / 4; }
-.margin-top-half    { margin-top: $base-space-unit / 2; }
-.margin-top-one     { margin-top: $base-space-unit; }
-.margin-top-two     { margin-top: $base-space-unit * 2; }
-
 .pad-all{}
 .pad-no{ padding:0;}
 .pad-lft{}
@@ -23,5 +16,18 @@ $base-space-unit: 1em;
 .pad-btm{}
 .pad-hor{padding-top:10px;padding-bottom:10px;}
 .pad-ver{}
+
+.margin-all{}
+.margin-no{ padding:0;}
+.margin-lft{}
+.margin-rgt{}
+.margin-top{}
+.margin-btm{}
+.margin-hor{margin-top:10px;margin-bottom:10px;}
+.margin-ver{margin-left:10px;margin-right:10px;}
+
+@mixin border-all($color, $weight){border:solid $weight $color;}
+@mixin border-bottom($color, $weight){border-bottom:solid $weight $color;}
+
 
 

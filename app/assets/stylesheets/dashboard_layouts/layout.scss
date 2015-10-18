@@ -1,17 +1,26 @@
 // layout css with bourbon and neat
 
+$darkgrey:   			#3C383F;
+$lightgrey:  			#F1F1F1;
+$orange:     			#F18168;
+$first_nav_height:		56px;
+$second_nav_height:		40px;
+$welcome_bar_height:	140px;
+
 @import "bourbon";
 @import "neat";
 @import "helper";
+@import "primary_nav";
 @import "footer";
+@import "ionicons/ionicons-variables";
+@import "ionicons/ionicons-font";
+@import "ionicons/ionicons-icons";
 
-$darkgrey:   #3C383F;
-$lightgrey:  #F1F1F1;
-$orange:     #F18168;
+
 
 
 body > *{
-	padding:10px 10% 10px 10%;
+	padding:0 10% 0 10%;
 	width:100%;
 }
 
@@ -20,15 +29,13 @@ body{
 	min-height:100vh;
 	background-color: $lightgrey;
 
-	>.primary-nav{
-		height:60px;
-		background-color: $darkgrey;
-	}
+	/*will remove to seperate file*/
+
 	>.second-nav{
-		height:40px;
+		height: $second_nav_height;
 	}
 	>.welcome-bar{
-		height:140px;
+		height: $welcome_bar_height;
 		background-color: $orange;
 	}
 	>.body-container{
