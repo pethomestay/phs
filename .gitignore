@@ -49,8 +49,6 @@ coverage/
 
 *.cer
 
-*.pem
-
 *.csr
 
 *.key
