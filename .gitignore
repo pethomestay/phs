@@ -21,7 +21,7 @@ vendor/ruby/
 .rubocop.yml
 
 # Ignore APNs supporting documents.
-config/certs
+#config/certs
 
 # Ignore dragonfly images
 public/system/dragonfly
