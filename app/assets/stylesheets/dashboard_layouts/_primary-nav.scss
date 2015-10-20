@@ -1,0 +1,55 @@
+
+
+@mixin vertical-middle($height){
+	vertical-align: middle;		
+	display: inline-block;
+	line-height: $height;
+}
+
+
+@import "primary-nav/search-form";
+@import "primary-nav/customer-center";
+
+/* layout primary nav bar */
+.primary-nav{
+	min-height:$first_nav_height;
+	background-color: $darkgrey;
+}
+.primary-nav>.container{
+	@include outer-container;
+	>.phs-title{
+		@include span-columns(3);
+		margin-right:20px;
+		@include vertical-middle($first_nav_height);
+		@include media($mobile){
+			@include span-columns(12);
+		}
+	}
+
+	>.search-form{
+		@include span-columns(4);
+		@include vertical-middle($first_nav_height);
+		@include media($mobile){
+			@include span-columns(12);
+		}
+	}
+
+	>.customer-center{
+		min-width:150px;
+		@include span-columns(5);
+		height: 56px;
+		@include media($mobile){
+			@include span-columns(12);
+		}
+	}
+
+}
+
+//part1
+.phs-title > img{
+	height:25px;
+	vertical-align: middle;
+}
+
+
+

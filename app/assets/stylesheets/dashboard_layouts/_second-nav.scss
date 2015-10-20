@@ -1,0 +1,36 @@
+.second-nav{
+	height: $second_nav_height;
+	@include vertical-middle($second_nav_height);
+}
+
+.main-tab{
+	display: inline;
+	font-family: Gotham-Book;
+	font-size: 14px;
+	margin-right:20px;
+	&.active{
+		padding-bottom: 8px;
+		font-weight: bold;
+		border-bottom: 3px solid #F6B1A3;
+	}
+	&.pull-right{
+		margin:0;
+		height:100%;
+		@include vertical-middle($second_nav_height);
+	}
+
+}
+// calendar icons
+.main-tab i{
+	color: #EC5D3C;
+	&.ion-ios7-calendar-outline{
+		font-size: 33px;
+		margin-right:5px;
+		vertical-align: middle;
+	}
+	&.ion-arrow-down-b{
+		font-size: 20px; 
+		margin-left:10px;
+		vertical-align: middle;
+	}
+}

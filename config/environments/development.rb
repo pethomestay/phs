@@ -50,7 +50,7 @@ PetHomestay::Application.configure do
   # Expands the lines which load the assets
   # config.assets.raise_runtime_errors = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.assets.debug = false
+  config.assets.debug = true
   config.assets.prefix = '/assets_dev'
 
   config.middleware.use('StubIp', '203.206.102.165')

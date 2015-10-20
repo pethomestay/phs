@@ -1,21 +1,19 @@
 // layout css with bourbon and neat
-
-$darkgrey:   			#3C383F;
-$lightgrey:  			#F1F1F1;
-$orange:     			#F18168;
-$first_nav_height:		56px;
-$second_nav_height:		40px;
-$welcome_bar_height:	140px;
-
 @import "bourbon";
 @import "neat";
-@import "helper";
-@import "primary_nav";
+
+//variables must after neat and bourbon(new-breakpoint)
+@import "my_variables";
+@import "myhelper";
+@import "primary-nav";
+@import "dropdown";
+@import "second-nav";
 @import "footer";
+/* ionicons 1.5.2*/
 @import "ionicons/ionicons-variables";
 @import "ionicons/ionicons-font";
+@import "ionicons/ionicons-animation";
 @import "ionicons/ionicons-icons";
-
 
 
 
@@ -30,10 +28,6 @@ body{
 	background-color: $lightgrey;
 
 	/*will remove to seperate file*/
-
-	>.second-nav{
-		height: $second_nav_height;
-	}
 	>.welcome-bar{
 		height: $welcome_bar_height;
 		background-color: $orange;
@@ -50,4 +44,17 @@ body{
 }
 
 
+//test responsive
+.body-container{
+	@include outer-container;
+	.col-3{
+		@include span-columns(3);
+		background-color: #FFFFFF;
+		@include media($mobile){
+			@include span-columns(12);
+			background-color: #34CA6C;
+		}
+
+	}
+}
 

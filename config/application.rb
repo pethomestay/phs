@@ -59,6 +59,8 @@ module PetHomestay
     config.assets.enabled = true
 
     config.assets.initialize_on_precompile = false
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
@@ -77,5 +79,6 @@ module PetHomestay
         Devise::RegistrationsController.layout 'new_application'
         Devise::PasswordsController.layout 'new_application'
     end
+
   end
 end

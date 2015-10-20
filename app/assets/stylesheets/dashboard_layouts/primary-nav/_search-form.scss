@@ -1,0 +1,31 @@
+
+
+.search-form{
+	i{
+		float: left;
+		margin-right:10px;
+		font-family: Ionicons;
+		font-size: 16px;
+		color: #FFFFFF;
+	}
+	>.field{
+		float: left;
+		height:40px;
+		color: #FFFFFF;		
+	}
+}
+
+/* field-form of address */
+.field-input{
+	font-family: Gotham-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	border: 2px solid $darkgrey;
+	border-bottom: 2px solid #FFFFFF;
+	background-color: $darkgrey;
+}
+.field-input:focus{
+	outline: 0;
+}
+
+

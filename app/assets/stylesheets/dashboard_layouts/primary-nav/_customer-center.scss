@@ -1,0 +1,50 @@
+/* right area of primary nav bar*/
+
+.customer-center > h1{
+	/* Give $10, Get $10: */
+	float:right;
+	font-family: Ubuntu;
+	font-size: 18px;
+	color: #FFFFFF;
+	&.-coupon{
+		border-bottom: 1px solid #FFFFFF;
+		margin-left:20px;
+		margin-right:20px;
+	};
+	&.-notification{
+		margin:0;
+		padding:14px;
+		font-size: 26px;
+	}
+	&.-profile{
+		margin:0;
+		height:100%;
+		@include vertical-middle($first_nav_height);
+	}
+}
+
+
+h1.-profile > .dropdown-button >  * {float:left;}
+h1.-profile {
+	 .avatar {margin:11px;}
+	 .username{margin-right:10px;}
+}
+
+
+.-notification li{
+	line-height: 90px;
+	text-align: center;
+}
+
+
+.-profile .dropdown-menu{
+	width:150px;
+	li{
+		line-height: 40px;
+		text-align: right;
+	}	
+}
+
+
+
+

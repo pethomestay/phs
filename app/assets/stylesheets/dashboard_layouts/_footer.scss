@@ -2,14 +2,11 @@
 
 .foot-container{
 	@include outer-container;
-	>nav{
-		@include span-columns(3);
-	}
-
 }
 
 nav{
-
+	@include span-columns(3);
+	
 	>h3{
 		font-family: Ubuntu-Bold;
 		font-size: 10px;
@@ -17,9 +14,11 @@ nav{
 		line-height: 13px;
 	}
 
-	.item{
-		@extend .pad-hor;
+	&.hide{
+		@include media($mobile){
+			display: none;
 
+		}
 	}
 }
 

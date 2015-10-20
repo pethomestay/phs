@@ -52,6 +52,12 @@ PetHomestay::Application.configure do
   config.assets.precompile += %w( new_application.css )
   config.assets.precompile += %w( address_autocomplete.js )
   config.assets.precompile += %w( datepicker.js )
+  
+  config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
+  config.assets.precompile << '*.js'
+  config.assets.enabled = true
+
+  # Precompile additional assets
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
