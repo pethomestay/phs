@@ -1,5 +1,5 @@
 APN.root = "#{Rails.root}/config/certs"
-APN.certificate_name = 'rmit-development.pem'
+APN.certificate_name = 'phs-development.pem'
 #APN.host = 'apple host (on development sandbox url is used by default)'
 #APN.password = 'certificate_password'
 APN.pool_size = 1

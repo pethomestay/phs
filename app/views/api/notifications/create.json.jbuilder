@@ -1,3 +1,1 @@
-json.device do
-  json.partial! 'device', device: @device
-end
+json.device_token @device_token
