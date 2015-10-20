@@ -35,6 +35,10 @@ GEM
     addressable (2.3.3)
     alphabetical_paginate (2.2.3)
     analytics-ruby (2.0.12)
+    apn_sender (2.0.2)
+      activesupport (>= 3.1, < 4.1.0)
+      connection_pool
+      daemons
     arel (3.0.3)
     ast (2.1.0)
     astrolabe (1.3.1)
@@ -472,6 +476,7 @@ DEPENDENCIES
   actionmailer_inline_css
   alphabetical_paginate
   analytics-ruby (~> 2.0.0)
+  apn_sender
   attachinary
   attr_encrypted
   auto_strip_attributes (~> 2.0)

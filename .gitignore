@@ -1,6 +1,6 @@
 # Ignore bundler config
 /.bundle
-/.DS_Store
+.DS_Store
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
@@ -19,6 +19,12 @@ vendor/ruby/
 
 # Ignore local Rubocop configuration.
 .rubocop.yml
+
+# Ignore APNs supporting documents.
+config/certs/*.p12
+config/certs/*.cer
+config/certs/*.certSigningRequest
+config/certs/*.mobileprovision
 
 # Ignore dragonfly images
 public/system/dragonfly

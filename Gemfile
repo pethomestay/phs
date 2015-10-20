@@ -60,6 +60,9 @@ gem 'phony_rails' # validate and normalize phone number
 # Attributes.
 gem 'virtus'
 
+# Notifications.
+gem 'apn_sender', require: 'apn'
+
 # Background processing.
 gem 'sidekiq', '3.1.4'
 gem 'sidekiq-failures'

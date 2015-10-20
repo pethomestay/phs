@@ -11,11 +11,13 @@ PetHomestay::Application.routes.draw do
   constraints subdomain: 'api' do
     scope module: 'api', as: 'api', defaults: { format: 'json' } do
       root to: 'base#index'
+      put 'notifications/register', to: 'notifications#register'
       post 'sessions', to: 'sessions#create'
       post 'users', to: 'users#create'
       resources :breeds, only: :index
       resources :homestays, only: [:index, :show]
       resources :images, only: [:create]
+      resources :notifications, only: [:create]
       get 'pets/:user_token', to: 'pets#index'
       resources :pets, only: [:index, :create, :update]
       get '*path', to: 'base#page_not_found'
@@ -25,10 +27,12 @@ PetHomestay::Application.routes.draw do
   # Temporary fix for staging on Heroku.
   namespace :api, defaults: { format: 'json' } do
     root to: 'base#index'
+    put 'notifications/register', to: 'notifications#register'
     post 'sessions', to: 'sessions#create'
     post 'users', to: 'users#create'
     resources :breeds, only: :index
     resources :homestays, only: [:index, :show]
+    resources :notifications, only: [:create]
     get 'pets/:user_token', to: 'pets#index'
     resources :pets, only: [:index, :create, :update]
     get '*path', to: 'base#page_not_found'
