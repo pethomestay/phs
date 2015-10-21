@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Concerns::Analyzable
+  include Analyzable
 
   before_filter :track_session_variables
   protect_from_forgery
@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
 
   def track_session_variables
     if current_user.present?
-      track(current_user.id, user_action, params.except(:action, :controller))
+      track_user(current_user.id, user_action, params.except(:action, :controller))
     else
-      visitor = Visitor.find_or_initialize_by(cookies[:segment_anonymous_id])
-      track(visitor.id, user_action, params.except(:action, :controller))
+      visitor = Visitor.find_or_initialize_by_id(cookies[:segment_anonymous_id])
+      track_user(visitor.id, user_action, params.except(:action, :controller))
     end
   end
 

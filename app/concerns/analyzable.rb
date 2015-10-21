@@ -1,4 +1,4 @@
-module Concerns::Analyzable
+module Analyzable
 
   private
 
@@ -10,7 +10,7 @@ module Concerns::Analyzable
       Analytics.identify(user_id: user_id, traits: traits)
     end
 
-    def track(distinct_id, event, properties = {})
+    def track_user(distinct_id, event, properties = {})
       Analytics.track(distinct_id, event, properties)
     end
 
