@@ -5,9 +5,11 @@
 //variables must after neat and bourbon(new-breakpoint)
 @import "my_variables";
 @import "myhelper";
-@import "primary-nav";
-@import "dropdown";
+@import "primary-nav/primary-nav";
 @import "second-nav";
+@import "welcome-bar/welcome-bar";
+@import "dropdown";
+@import "calendar";
 @import "footer";
 /* ionicons 1.5.2*/
 @import "ionicons/ionicons-variables";
@@ -29,8 +31,7 @@ body{
 
 	/*will remove to seperate file*/
 	>.welcome-bar{
-		height: $welcome_bar_height;
-		background-color: $orange;
+
 	}
 	>.body-container{
 		min-height:40vh;

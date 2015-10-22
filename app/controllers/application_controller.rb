@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def test_new_layout
-    render layout: "dashboard_application"
+    render layout: "dashboard"
   end
 
   def admin_login_required

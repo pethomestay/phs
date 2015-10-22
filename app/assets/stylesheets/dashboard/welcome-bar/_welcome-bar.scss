@@ -1,0 +1,48 @@
+
+@import 'welcome_text';
+@import 'slider';
+
+.welcome-bar {
+  height: $welcome_bar_height;
+  background-color: $orange;
+}
+
+.welcome-bar > .container{
+  >.avatar-container{
+    float:left;
+    height:$welcome_bar_height;
+    width: $welcome_bar_height;
+
+  }
+
+  >.text-container{
+    float:left;
+    height:$welcome_bar_height;
+  }
+
+  >.slider-container{
+    float:right;
+    padding:15px 0 15px 0;
+    width:  $welcome_bar_height;
+    height: $welcome_bar_height;
+  }
+}
+
+
+//center the welcome avatar
+.avatar-container{
+  position:relative;
+  >.avatar{
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0;right:15px;
+    height:80px;
+    width:80px;
+    border-radius: 50%;
+  }
+}
+
+
+
+
+

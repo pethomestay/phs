@@ -1,6 +1,6 @@
 .second-nav{
 	height: $second_nav_height;
-	@include vertical-middle($second_nav_height);
+	@include fit-parent($second_nav_height);
 }
 
 .main-tab{
@@ -8,6 +8,7 @@
 	font-family: Gotham-Book;
 	font-size: 14px;
 	margin-right:20px;
+	color: #000000;
 	&.active{
 		padding-bottom: 8px;
 		font-weight: bold;
@@ -16,7 +17,7 @@
 	&.pull-right{
 		margin:0;
 		height:100%;
-		@include vertical-middle($second_nav_height);
+		@include fit-parent($second_nav_height);
 	}
 
 }
@@ -33,4 +34,24 @@
 		margin-left:10px;
 		vertical-align: middle;
 	}
+}
+
+a.main-tab:link{
+	text-decoration: none;
+}
+
+a.main-tab:active, :visited{
+	padding-bottom: 8px;
+	font-weight: bold;
+	border-bottom: 3px solid #F6B1A3;
+}
+
+.main-tab.dropdown >.dropdown-menu{
+	//override the css in dropdown.scss
+	min-width:300px;
+	top: $second_nav_height;
+	li{
+		line-height: 40px;
+		text-align: right;
+	}	
 }

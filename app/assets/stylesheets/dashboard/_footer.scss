@@ -4,7 +4,7 @@
 	@include outer-container;
 }
 
-nav{
+.foot-container > nav{
 	@include span-columns(3);
 	
 	>h3{

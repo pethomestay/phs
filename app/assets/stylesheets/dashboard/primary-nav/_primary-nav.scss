@@ -1,0 +1,53 @@
+// for one line only
+@mixin fit-parent($height){
+  vertical-align: middle;   
+  display: inline-block;
+  line-height: $height;
+}
+
+
+@import "search-form";
+@import "customer-center";
+
+/* layout primary nav bar */
+.primary-nav{
+  min-height:$first_nav_height;
+  background-color: $darkgrey;
+}
+.primary-nav>.container{
+  >.phs-title{
+    float:left;
+    margin-right:20px;
+    @include fit-parent($first_nav_height);
+    @include media($mobile){
+      @include span-columns(12);
+    }
+  }
+
+  >.search-form{
+    float:left;
+    @include fit-parent($first_nav_height);
+    @include media($mobile){
+      @include span-columns(12);
+    }
+  }
+
+  >.customer-center{
+    min-width:150px;
+    float:right;
+    height: 56px;
+    @include media($mobile){
+      @include span-columns(12);
+    }
+  }
+
+}
+
+//part1
+.phs-title > img{
+  height:25px;
+  vertical-align: middle;
+}
+
+
+

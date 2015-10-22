@@ -1,0 +1,43 @@
+.slider >.slide-content{
+	padding:15px 0 15px 0;
+	height:100%;
+}
+
+.slide-content>.bar{
+
+	height:80px;
+	margin-right:30px;
+	float:left;
+	>.top{
+		height:50%;
+		width:15px;
+		background-color: #F6B1A3;
+	}
+	>.bottom{
+		height:50%;
+		width:15px;
+		background-color: #FFFFFF;
+	}
+}
+
+.slide-content>.text>.head{
+	font-family: Gotham-Medium;
+	color: #FFFFFF;
+	h1{
+		display: inline;
+		font-size: 40px;
+		line-height: 48px;
+	}
+	h2{
+		display: inline;
+		font-size: 20px;
+		line-height: 24px;
+	}
+
+}
+.slide-content>.text>.body{
+	color: #FFFFFF;
+	font-family: Gotham-Book;
+	font-size: 14px;
+
+}

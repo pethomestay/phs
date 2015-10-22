@@ -6,11 +6,13 @@
 	font-family: Ubuntu;
 	font-size: 18px;
 	color: #FFFFFF;
+
+	
 	&.-coupon{
 		border-bottom: 1px solid #FFFFFF;
-		margin-left:20px;
-		margin-right:20px;
-	};
+		margin-left:15px;
+		margin-right:15px;
+	}
 	&.-notification{
 		margin:0;
 		padding:14px;
@@ -19,7 +21,7 @@
 	&.-profile{
 		margin:0;
 		height:100%;
-		@include vertical-middle($first_nav_height);
+		@include fit-parent($first_nav_height);
 	}
 }
 
@@ -31,19 +33,23 @@ h1.-profile {
 }
 
 
-.-notification li{
-	line-height: 90px;
-	text-align: center;
+.-notification .dropdown-menu{
+	width:300px;
+	li{
+		line-height: 90px;
+		text-align: center;
+	}	
 }
 
-
 .-profile .dropdown-menu{
-	width:150px;
+	width:130px;
 	li{
 		line-height: 40px;
 		text-align: right;
 	}	
 }
+
+
 
 
 
