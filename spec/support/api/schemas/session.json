@@ -6,7 +6,7 @@
       "properties": {
         "id": {"type": "number"},
         "token": {"type": "string"},
-        "facebook_id": {"type": ["number", "null"]},
+        "facebook_id": {"type": ["string", "null"]},
         "first_name": {"type": "string"},
         "last_name": {"type": "string"},
         "image": {

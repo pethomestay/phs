@@ -58,6 +58,19 @@ RSpec.describe 'API: user login', type: :request do
       end
 
       context 'with OAuth params' do
+        it 'allows a blank password' do
+          post tokenised_path('/sessions'), {
+            email: user.email,
+            oauth: {
+              provider: 'facebook',
+              token: '12345678'
+            }
+          }
+          expect(response).to be_success
+          expect(response).to match_response_schema('session')
+          expect(json['user']['id']).to eq(user.id)
+        end
+
         it 'updates the user OAuth details' do
           post tokenised_path('/sessions'), {
             email: user.email,
