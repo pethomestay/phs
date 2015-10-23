@@ -22,7 +22,7 @@
             .dropdown-button
               = image_tag 'favicon.ico', size: '34x34', class: 'avatar'
               .username Alba
-              %i.icon.ion-arrow-up-b
+              %i.icon.ion-arrow-up-b.rotate
             %ul.dropdown-menu.dropdown-select
               %li profile
               %li notifications
@@ -32,6 +32,7 @@
           %h1.-notification.dropdown
             .dropdown-button
               %i.icon.ion-ios7-bell
+              .number 5
             %ul.dropdown-menu.dropdown-select
               %li Dropdown Menu Item
               %li Another Item
@@ -47,9 +48,21 @@
       .main-tab.pull-right.dropdown
         .dropdown-button
           %i.icon.ion-ios7-calendar-outline
-          %i.icon.ion-arrow-up-b
+          %i.icon.ion-arrow-up-b.rotate
         .dropdown-menu
           .datepicker
+          .calendar-footer
+            .item.today
+              .circle.solidblue
+              .text Today
+            .item
+              .circle.black
+              .text Available
+            .item
+              .circle.borderblue
+              .text Booking
+
+          
 
 
     .welcome-bar 
@@ -63,8 +76,8 @@
         .slider-container
           .slider
             =render 'shared/dashboard/slide_content', booked_days: 2
-            -render 'shared/dashboard/slide_content', booked_days: 12
-            -render 'shared/dashboard/slide_content', booked_days: 22
+            =render 'shared/dashboard/slide_content', booked_days: 12
+            =render 'shared/dashboard/slide_content', booked_days: 22
 
     = yield
     .footer 

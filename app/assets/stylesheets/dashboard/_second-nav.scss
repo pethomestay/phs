@@ -23,6 +23,7 @@
 }
 // calendar icons
 .main-tab i{
+	@include fit-parent($second_nav_height);
 	color: #EC5D3C;
 	&.ion-ios7-calendar-outline{
 		font-size: 33px;
@@ -39,6 +40,7 @@
 a.main-tab:link{
 	text-decoration: none;
 }
+
 
 a.main-tab:active, :visited{
 	padding-bottom: 8px;

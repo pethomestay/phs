@@ -1,6 +1,11 @@
+// include font
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
 // layout css with bourbon and neat
 @import "bourbon";
+@import "css3/animation";
 @import "neat";
+
 
 //variables must after neat and bourbon(new-breakpoint)
 @import "my_variables";
@@ -9,8 +14,10 @@
 @import "second-nav";
 @import "welcome-bar/welcome-bar";
 @import "dropdown";
-@import "calendar";
+@import "calendar/calendar";
 @import "footer";
+@import "slick";
+@import "slick-theme";
 /* ionicons 1.5.2*/
 @import "ionicons/ionicons-variables";
 @import "ionicons/ionicons-font";
@@ -57,5 +64,25 @@ body{
 		}
 
 	}
+}
+
+
+
+
+// chrome issue with bouron animation issue:
+// https://github.com/thoughtbot/bourbon/issues/336
+
+
+.rotate{
+    -moz-transition: all 1s linear;
+    -webkit-transition: all 1s linear;
+    transition: all 1s linear;
+}
+
+.rotate.down{
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
 }
 

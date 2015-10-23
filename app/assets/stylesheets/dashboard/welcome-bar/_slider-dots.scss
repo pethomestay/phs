@@ -1,0 +1,15 @@
+.slider.slick-initialized.slick-slider> ul.slider-dots {
+	margin-top:15px;
+
+
+}
+
+ul.slick-dots li>button:before{
+	color:#FFFFFF;
+	font-size: 20px;
+}
+
+ul.slick-dots li.slick-active >button:before{
+	color:#FFFFFF;
+	font-size: 20px;
+}

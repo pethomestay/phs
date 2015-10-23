@@ -1,0 +1,26 @@
+.ui-datepicker table{
+  width:100%;
+
+  //weekday name css
+  th{
+      /* T: */
+    font-family: Gotham-Bold;
+    font-size: 10px;
+    color: #C7C7CC;
+    line-height: 12px;
+  }
+
+  td{
+    font-size:10px;
+    font-family: Gotham-Medium;
+    text-align: center;
+    &.ui-datepicker-week-end{font-family: Gotham-Book;}
+  }
+
+  td a{
+    text-decoration: none;
+    font-size: 14px;
+    color: #000000;
+    line-height: 17px;
+  }
+}

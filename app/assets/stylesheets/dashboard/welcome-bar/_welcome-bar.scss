@@ -22,8 +22,8 @@
 
   >.slider-container{
     float:right;
-    padding:15px 0 15px 0;
-    width:  $welcome_bar_height;
+    padding:15px 0 15px 15px;
+    width:  $welcome_bar_height+30;
     height: $welcome_bar_height;
   }
 }
