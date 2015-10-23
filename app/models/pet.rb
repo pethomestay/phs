@@ -23,16 +23,9 @@ class Pet < ActiveRecord::Base
     :microchip_number, :medication, :house_trained, :flea_treated, :vaccinated,
     :dislike_children, :dislike_animals, :dislike_loneliness, :dislike_people
 
-  before_validation :strip_personalities, :set_energy_level_and_size_id
+  after_initialize :set_defaults
+  before_validation :strip_personalities
   before_save :null_pet_to_empty_string, on: :create
-  
-
-  # Sets the default values of energy_levels and size_ids from nil to a default number 
-  # Users can now submit pet forms without touching the sliders to set those values. 
-  def set_energy_level_and_size_id
-    self.energy_level = 3 if self.energy_level.to_i <= 0 or self.energy_level.to_i > 5
-    self.size_id = 1 if self.size_id.to_i <= 0 or self.energy_level.to_i > 4
-  end
 
   def pet_age
     if self.date_of_birth.present?
@@ -104,13 +97,23 @@ class Pet < ActiveRecord::Base
   def strip_personalities
     self.personalities.delete('') if self.personalities.present?
   end
-  
+
+  # Let the era of nasty hacks commence!
+  # Ensure that a pet has its mandatory fields set to inoffensive defaults.
+  # @api private
+  # @return [Pet]
+  def set_defaults
+    self.pet_age = 5 if pet_age.blank?
+    self.energy_level = 3 if energy_level.to_i <= 0 || energy_level.to_i > 5
+    self.size_id = 1 if size_id.to_i <= 0 || energy_level.to_i > 4
+    self
+  end
+
   # Set the pet breed to nil if users select animals like cats or other.
   # Need to improve this hotfix. This solves the problem of users entering cats
-  # and sms's being sent out for cats and other animals. 
-  # Sets breed to empty string instead of null. 
+  # and sms's being sent out for cats and other animals.
+  # Sets breed to empty string instead of null.
   def null_pet_to_empty_string
     self.breed = '' if breed.nil?
   end
-
 end
