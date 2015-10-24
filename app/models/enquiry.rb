@@ -11,6 +11,8 @@ class Enquiry < ActiveRecord::Base
   has_one :booking, dependent: :destroy
   has_one :mailbox, dependent: :destroy
 
+  attr_accessor :mobile_number
+
   scope :unanswered, where(response_id: ReferenceData::Response::NONE.id)
   scope :unsent_feedback_email, where(sent_feedback_email: false)
   scope :need_confirmation, where("response_id IN (?) AND confirmed = false", [ReferenceData::Response::ACCEPTED.id,
@@ -24,7 +26,7 @@ class Enquiry < ActiveRecord::Base
                                         (check_in_date < ? AND (duration_id = 9)) OR \
                                         (check_in_date < ? AND (duration_id = 11))", 2.days.ago, 3.days.ago, 4.days.ago, 5.days.ago, 6.days.ago, 7.days.ago, 8.days.ago ) }
 
-  validates_presence_of :check_in_date, :check_out_date
+  validates_presence_of :check_in_date, :check_out_date, :homestay
   validates_presence_of :response_message, if: :require_respsonse_message
   validates_inclusion_of :duration_id, :in => (1..ReferenceData::Duration.all.length)
   validate :guest_must_have_a_mobile_number
@@ -36,9 +38,14 @@ class Enquiry < ActiveRecord::Base
   after_create :send_new_enquiry_notification_SMS
 
   before_save :set_response, on: :create
-  after_save :create_or_modify_booking
+  after_save :create_or_modify_booking, :update_user
 
   scope :last_five, order('created_at DESC').limit(5)
+
+  def mobile_number=(number)
+    @mobile_number = number
+    user.mobile_number = number if user.present? && number.present?
+  end
 
   def create_mailbox
     mailbox_attributes = { enquiry_id: self.id, guest_mailbox_id: self.user_id, host_mailbox_id: self.homestay.user.id }
@@ -96,8 +103,14 @@ class Enquiry < ActiveRecord::Base
 
   private
 
+  def update_user
+    if @mobile_number != user.mobile_number
+      user.update_column(:mobile_number, @mobile_number)
+    end
+  end
+
   def guest_must_have_a_mobile_number
-    unless self.user.mobile_number.present?
+    if @mobile_number.blank? && user.mobile_number.blank?
       errors[:base] << 'A mobile number is needed so the Host can contact you!'
     end
   end
@@ -120,25 +133,29 @@ class Enquiry < ActiveRecord::Base
   end
 
   def host_is_available
-    host = self.homestay.user
-    unless host.is_available? from: self.check_in_date, to: self.check_out_date
-      errors[:base] << "#{host.first_name} is not available during this period. Please refer to the calendar for availability info."
+    unless homestay.blank?
+      host = homestay.user
+      unless host.is_available? from: check_in_date, to: check_out_date
+        errors[:base] << "#{host.first_name} is not available during this period. Please refer to the calendar for availability info."
+      end
     end
   end
 
   def send_new_enquiry_notifications
-    ProviderMailer.enquiry(self).deliver
+    ProviderMailer.enquiry(self).deliver if Rails.env.production?
   end
 
   def send_new_enquiry_notification_SMS
-    # if self.homestay.user.admin?
-    message_content = "New PHS Enquiry!\n#{self.check_in_date.strftime("%-d/%-m")} - #{self.check_out_date.strftime("%-d/%-m")}\nPet:#{self.user.pet.name[0..10]}, #{self.user.pet.try(:breed)[0..20]}, #{self.user.pet.age}\nReply YES to Express Interest or NO to Decline.\nwww.phs.host/account"
-    # else
-      # message_content = "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
-    # end
-    send_sms to: self.homestay.user,
-      text: message_content,
-      ref: self.id
+    if Rails.env.production?
+      # if self.homestay.user.admin?
+      message_content = "New PHS Enquiry!\n#{self.check_in_date.strftime("%-d/%-m")} - #{self.check_out_date.strftime("%-d/%-m")}\nPet:#{self.user.pet.name[0..10]}, #{self.user.pet.try(:breed)[0..20]}, #{self.user.pet.age}\nReply YES to Express Interest or NO to Decline.\nwww.phs.host/account"
+      # else
+        # message_content = "You have a new PetHomeStay Host Enquiry! Please reply within 24 hours. Log in via mobile & ring direct from your Inbox!"
+      # end
+      send_sms to: self.homestay.user,
+        text: message_content,
+        ref: self.id
+    end
   end
 
   def require_respsonse_message

@@ -15,6 +15,7 @@ PetHomestay::Application.routes.draw do
       post 'sessions', to: 'sessions#create'
       post 'users', to: 'users#create'
       resources :breeds, only: :index
+      resources :enquiries, only: :create
       resources :homestays, only: [:index, :show]
       resources :images, only: [:create]
       resources :notifications, only: [:create]
@@ -31,6 +32,7 @@ PetHomestay::Application.routes.draw do
     post 'sessions', to: 'sessions#create'
     post 'users', to: 'users#create'
     resources :breeds, only: :index
+    resources :enquiries, only: :create
     resources :homestays, only: [:index, :show]
     resources :notifications, only: [:create]
     get 'pets/:user_token', to: 'pets#index'
