@@ -2,7 +2,17 @@
 $(document).ready(function(){
 
 
-  $(".dropdown-button").click(function() {
+
+
+  $(".dropdown-button").click(function(e) {
+
+    //initialise close all dropdown
+
+    $others = $(".dropdown-button").not(this);
+    $others.siblings(".dropdown-menu").removeClass("show-menu");
+    $others.find(".rotate").removeClass("down");
+
+    e.stopPropagation();
     var $button, $menu, $arrow;
     $button = $(this);
     $menu = $button.siblings(".dropdown-menu");
@@ -13,7 +23,14 @@ $(document).ready(function(){
       $menu.removeClass("show-menu");
     });
 
+    $(document).click(function() {
+      $(".dropdown-menu").removeClass("show-menu");
+      $(".rotate").removeClass("down");
+    });
   });
+
+
+
 
 
   $(".datepicker").datepicker({
