@@ -19,7 +19,7 @@ class EnquiriesController < ApplicationController
       @pet = current_user.pets.build(params[:pet])
       @pet.save
     end
-    @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user))
+    @enquiry = Enquiry.create(params[:enquiry].merge(user: current_user, mobile_number: params[:mobile_number]))
     if @enquiry.valid?
       @message = { :type => :alert, :msg => 'Your enquiry has been sent to the Host, and there is a record in your My Account Inbox. Please enquire with at least 3 Hosts to have the best chance of availability. Thank you for using PetHomeStay!' }
       respond_to do |format|
