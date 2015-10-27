@@ -1,5 +1,5 @@
 class ImageSyncer
-  PERMITTED_RESOURCE_TYPES = ['Homestay', 'Pet', 'User']
+  PERMITTED_RESOURCE_TYPES = ['Booking', 'Homestay', 'Pet', 'User']
 
   attr_reader :image_params, :resource_params, :image, :resource, :errors
 
@@ -85,6 +85,7 @@ class ImageSyncer
   # @return [String] The Attachinary scope.
   def attachinary_scope
     mappings = {
+      booking: {gallery: 'photos'},
       homestay: {gallery: 'photos'},
       pet: {avatar: 'profile_photo', gallery: 'extra_photos'},
       user: {gallery: 'profile_photo'}

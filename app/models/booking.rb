@@ -18,6 +18,8 @@ class Booking < ActiveRecord::Base
   has_one :payment
   has_one :mailbox, dependent: :destroy
 
+  has_attachments :photos
+
   validates_presence_of :bookee_id, :booker_id, :check_in_date, :check_out_date
   validate :check_out_date_is_not_less_than_check_in_date, if: "check_in_date && check_out_date"
   validate :is_above_minimum_daily_rate
