@@ -2,17 +2,27 @@
   #flash_error_confirmation
   .row.pad-btm.text-box-centered
     .col-xs-12.pad-no.text-center
-      = image_tag 'homestay/Dog_Asleep.png', height: 120    
+      = image_tag 'homestay/dog_and_person.svg', height: 120    
   .text-box-centered.text-center style="margin-top:-20px"
       .text-lg style="color:#3c3835"
         | Enquiry Sent!
   h6.text-divider style="margin-bottom: 10px;margin-top: 5 px;"  
   .text-box-centered   
-      .text-xs.text-center You will get an SMS when the Host responds, and they may call you to discuss your booking or to arrange to Meet Up.
-      .text-xs.text-center This Enquiry has also been saved into your My Account page, and you can send further messages or view Host contact details there.
-      .text-xs.text-center PetHomeStay doesn't charge anything until you have found a Host you like, and want to Book them :)
-      .text-xs.text-bold.text-center.pad-ver To CONFIRM & PAY,  go to your My Account page, & click 'Book this HomeStay'
-      .text-md.text-bold.pad-btm.text-center  Only Bookings via PetHomeStay get 24/7 Support & $2500 Vet Cover
+      
+      .text-sm.text-center.pad-ver You will get an SMS when the Host responds.
+      .text-xs.text-bold.text-center.pad-btm To CONFIRM & PAY,  go to your My Account page, & click 'Book this HomeStay'
+      .text-md.text-center
+        button.btn.btn-facebook-sign-up.fb-share-btn
+          i.fa.fa-facebook.fa-fw
+          span
+            |  Get $5 off by sharing us on facebook
+
+
+      / .text-xs.text-center You will get an SMS when the Host responds, and they may call you to discuss your booking or to arrange to Meet Up.
+      / .text-xs.text-center This Enquiry has also been saved into your My Account page, and you can send further messages or view Host contact details there.
+      / .text-xs.text-center PetHomeStay doesn't charge anything until you have found a Host you like, and want to Book them :)
+      / .text-xs.text-bold.text-center.pad-ver To CONFIRM & PAY,  go to your My Account page, & click 'Book this HomeStay'
+      .text-md.text-bold.pad-ver.text-center  Only Bookings via PetHomeStay get 24/7 Support & $2500 Vet Cover
       / .row.pad-btm.text-box-centered  
       /   .coupon-title.text-center.text-lg.text-thin Promo Code
       /   hr.mar-no
@@ -42,10 +52,10 @@
       a.btn.btn-mint.btn-block href="http://www.pethomestay.com.au/homestays/?search[location]=#{@homestay.address_postcode}" 
         | Message Another Host
 
-      p.text-center.text-sm
-        | or
+      / p.text-center.text-sm
+      /   | or
 
-      = link_to 'Go to My Account', guest_path, class: 'btn btn-mint btn-block'
+      = link_to 'View Current Enquiries', guest_path, class: 'btn btn-mint btn-block'
   button.pull-left.hidden-xs style="margin-top: -15px; margin-left: -7px;" type='button' class='close' data-dismiss='modal'
     .sr-only Close
     i.fa.fa-reply.text-xs 

@@ -34,7 +34,7 @@ ul.nav.nav-pills.nav-stacked
     li class=('active' if params[:controller] == 'host/accounts')
       a href=(current_user.account.blank? ? new_host_account_path : host_account_path)
         i.fa.fa-dollar.fa-lg.fa-fw
-        | PAYOUT DETAILS
+        | PROMO CODE
     li
       a href=host_faq_path target='_blank'
         i.fa.fa-question-circle.fa-lg.fa-fw

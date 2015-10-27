@@ -6,6 +6,9 @@
       ' Your Promo Code:
       b= current_user.owned_coupons.collect(&:code).join(", ")
       = render 'social_sharing'
+
+      button.btn Add Promo Code from Host
+      =text_field_tag "host_code", nil, :class=> "mar-hor"
   - if current_user.coupon_credits_earned > 0
     p
       ' Credit earned:
