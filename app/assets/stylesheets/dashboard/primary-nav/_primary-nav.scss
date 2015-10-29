@@ -1,11 +1,3 @@
-// for one line only
-@mixin fit-parent($height){
-  vertical-align: middle;   
-  display: inline-block;
-  line-height: $height;
-}
-
-
 @import "search-form";
 @import "customer-center";
 

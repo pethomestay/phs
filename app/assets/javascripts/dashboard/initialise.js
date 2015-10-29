@@ -1,28 +1,28 @@
 
 $(document).ready(function(){
 
-
-
-
   $(".dropdown-button").click(function(e) {
 
-    //initialise close all dropdown
-
+    //initialise close all dropdown(not current dropdown if click one)
     $others = $(".dropdown-button").not(this);
     $others.siblings(".dropdown-menu").removeClass("show-menu");
     $others.find(".rotate").removeClass("down");
 
     e.stopPropagation();
+
     var $button, $menu, $arrow;
     $button = $(this);
     $menu = $button.siblings(".dropdown-menu");
     $menu.toggleClass("show-menu");
     $arrow = $button.find(".rotate")
     $arrow.toggleClass("down");
+
+    // click the panel of dropdown colse menu... something else
     $menu.children("li").click(function() {
       $menu.removeClass("show-menu");
     });
 
+    // body close all
     $(document).click(function() {
       $(".dropdown-menu").removeClass("show-menu");
       $(".rotate").removeClass("down");
