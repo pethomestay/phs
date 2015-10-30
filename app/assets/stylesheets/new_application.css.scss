@@ -5,6 +5,11 @@
 @import "bootstrap-datepicker";
 @import "chosen"; // jQuery chosen
 @import "definations";
+
+// add toggle in the search filter
+@import "new-features-addon/search";
+@import "new-features-addon/toggle-btn";
+
 @import "my_account/calendar";
 @import "nav_bar";
 @import "slick";
@@ -24,7 +29,6 @@
 // Guest View
 @import "my_account/guest/pet_panel";
 @import "my_account/guest/favorites_panel";
-
 
 // Font
 body {

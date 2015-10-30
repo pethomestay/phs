@@ -164,6 +164,7 @@ p.ta {
 .homestay-index {
   .search-box {
     margin: 0 -15px;
+    padding:20px !important;
     background: $blue-light;
     border-top: none;
     border-top-left-radius: 0;
@@ -177,7 +178,7 @@ p.ta {
 
     .search_location_container {
       @media (min-width: $screen-sm-min) {
-        width: 200px;
+        width: 150px;
       }
 
       #search_location {
@@ -188,7 +189,7 @@ p.ta {
     .search_check_in_date_container,
     .search_check_out_date_container {
       @media (min-width: $screen-sm-min) {
-        width: 140px;
+        width: 120px;
       }
     }
     #search_check_in_date,
@@ -207,17 +208,56 @@ p.ta {
         width: 100%;
       }
     }
-    .sort-order {
-      margin-top: 20px;
-      color: white;
 
-      span.sort-by {
-        margin-right: 15px;
-        font-size: 15px;
-        color: white;
-      }
+  }
+  .second-bar {
+    padding:10px;
+    background-color: #e8ebf0;
+    color: black;
+    width:100%;
+    overflow: hidden;
+
+    >.number{
+      padding-top:5px;
+    }
+    >.number >span{
+      padding:5px;
+    }
+    >.refine-search-btn{
+      float: left;
+    }
+
+    >.sort-order{
+      float: right;
+    }
+
+  }
+
+  .second-bar, .sort-order{
+    label{
+      border: 2px solid #5cc1c0;;
+      border-radius: 2px;
+      padding: 5px;
+    }
+    input{display:none;}
+    label>i{
+      color:#5cc1c0;
+      padding-right:5px;
     }
   }
+
+  .sort-order{
+    display: inline-block;
+    text-align: right;
+    .pre-text{
+      padding:5px;
+      float: left;
+    }
+    //input{display:none;}
+
+  }
+
+
 
   .toggler {
     display: none;

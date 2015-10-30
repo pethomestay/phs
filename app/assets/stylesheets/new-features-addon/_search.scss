@@ -1,0 +1,36 @@
+.form-group .title{
+	max-width: 100px;
+	color:#FFFFFF;
+}
+
+.toggle-group {
+  text-shadow: none;
+  color:#FFFFFF;
+
+  .switch{
+    height:40px;
+    position:relative;
+    margin-right:5px;
+    margin-left:5px;
+  }
+
+  input {
+    display: none;
+  }
+
+   >.option{
+    text-align: center;
+    max-width:50px;
+    line-height: 18px;
+    font-size:14px;
+  }
+}
+
+.toggle-group > *{float:left;}
+
+
+
+
+
+
+

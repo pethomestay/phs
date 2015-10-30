@@ -1,6 +1,16 @@
 .well.search-box
   = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|
     .form-group
+      .title find the perfect pet sitter
+    .form-group
+      .input-group.toggle-group
+        .option.mar-lft Host House
+        .switch
+          = f.check_box :homestay_types, class: "cmn-toggle cmn-toggle-round", id: "cmn-toggle-1"
+          label for="cmn-toggle-1"
+        .option.mar-rgt At my House
+
+    .form-group
       .input-group.input-group-flat-left.search_location_container
         span.input-group-addon
           i.fa.fa-map-marker.fa-lg
@@ -16,13 +26,9 @@
         span.input-group-addon
           i.fa.fa-calendar.fa-lg
     = f.button :submit, 'SEARCH', class: 'btn btn-primary search'
-    .sort-order
-      label.radio-inline
-        = radio_button :search, :sort_by, 'recommended', input_html: { checked: 'checked' }
-        | Recommended
-      label.radio-inline
-        = radio_button :search, :sort_by, 'distance'
-        | Distance
+    
+
+
       / Remove this when you are ready to turn search live for all users
       / label.radio-inline
       /   = radio_button :search, :sort_by, 'cost_per_night'
@@ -35,6 +41,29 @@
     / #   = controls.check_box :is_sitter, 'To stay at home with a sitter'
     / # = f.label 'Grooming, walking, training, feeding' do |controls|
     / #   = controls.check_box :is_services, 'Show additional pet services listings'
+#expended-search-bar.search-box
+ 
+
+.second-bar
+  .number.pull-left
+    span 
+      = @result_number 
+    span results found
+  
+  label#refine-search-btn
+    i.fa.fa-filter
+    | Refine Search
+
+  .sort-order
+    .pre-text Order results by
+    label.radio-inline
+      = radio_button :search, :sort_by, 'recommended', input_html: { checked: 'checked' }
+      i.fa.fa-star
+      | Recommended
+    label.radio-inline
+      = radio_button :search, :sort_by, 'distance'
+      i.fa.fa-map-marker
+      | Distance
 
 div.alert.alert-warning.alert-dismissible.fade.in.search-alert role="alert"
   button.close data-dismiss="alert"
@@ -43,6 +72,7 @@ div.alert.alert-warning.alert-dismissible.fade.in.search-alert role="alert"
   span.strong Please add dates to filter by Holiday Availability
 .toggler.hidden-sm.hidden-md.hidden-lg.text-center
   i.fa.fa-caret-down.fa-2x
+
 
 coffee:
   $ ->
@@ -78,3 +108,11 @@ coffee:
       check_in_picker.hide()
       check_out_picker.show()
       show_notification()
+
+javascript:
+
+  $("#refine-search-btn").click(function(){
+    $("#expended-search-bar").css('display','block');
+    $(this).toggleClass("active");
+  })
+

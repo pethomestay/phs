@@ -15,6 +15,7 @@ class HomestaysController < ApplicationController
     #We are only doing australia, not sure why we are doing the country detect
     @search.country =  'Australia' #request.location.country_code if request.location
     @homestays = @search.populate_list
+    @result_number = @homestays.length
     @homestays = @homestays.paginate(page: params[:page], per_page: 10)
     # @homestays = @search.perform.paginate(page: params[:page], per_page: 10)
     @title = "Pet care for #{@search.location}"
