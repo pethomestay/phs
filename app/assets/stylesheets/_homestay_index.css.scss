@@ -164,7 +164,7 @@ p.ta {
 .homestay-index {
   .search-box {
     margin: 0 -15px;
-    padding:20px !important;
+    padding:15px 30px !important;
     background: $blue-light;
     border-top: none;
     border-top-left-radius: 0;
@@ -244,6 +244,17 @@ p.ta {
       color:#5cc1c0;
       padding-right:5px;
     }
+    label.active{
+      border: 2px solid #FFFFFF;
+      border-radius: 2px;
+      color:#FFFFFF;
+      background-color: #5cc1c0;
+    }
+    label.active>i{
+      color:#FFFFFF;
+      padding-right:5px;
+    }
+
   }
 
   .sort-order{

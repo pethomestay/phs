@@ -1,0 +1,25 @@
+@import 'search-row';
+#expand-search-bar{
+	position:relative;
+}
+.advanced-search{
+  padding-top:0;
+  padding-bottom: 0; 
+	display: none;
+}
+
+
+.advanced-search.active{
+	display: block;
+}
+
+.advanced-search:after {
+  position:absolute;
+  left:150px;
+  color: #5cc1c0;
+  content: "\25bc";
+  font-size: 1.4em;
+  pointer-events: none;
+  bottom: -0.9em;
+}
+

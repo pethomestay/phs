@@ -41,7 +41,7 @@
     / #   = controls.check_box :is_sitter, 'To stay at home with a sitter'
     / # = f.label 'Grooming, walking, training, feeding' do |controls|
     / #   = controls.check_box :is_services, 'Show additional pet services listings'
-#expended-search-bar.search-box
+=render "expand-search-bar"
  
 
 .second-bar
@@ -56,11 +56,11 @@
 
   .sort-order
     .pre-text Order results by
-    label.radio-inline
+    label.recommended.radio-inline.active
       = radio_button :search, :sort_by, 'recommended', input_html: { checked: 'checked' }
       i.fa.fa-star
       | Recommended
-    label.radio-inline
+    label.distance.radio-inline
       = radio_button :search, :sort_by, 'distance'
       i.fa.fa-map-marker
       | Distance
@@ -110,9 +110,24 @@ coffee:
       show_notification()
 
 javascript:
+  $("label.radio-inline").click(function(e){
+    $radios = $("label.radio-inline").not($(this));
+    if(!$(this).hasClass("active")){
+      $(this).addClass("active");
+      $(this).find("input").prop("checked", true)
+    }
+    for (var i=0; i<$radios.length; i++){
+        $($radios[i]).removeClass("active");
+    }
+    return false;
+  })
+
 
   $("#refine-search-btn").click(function(){
-    $("#expended-search-bar").css('display','block');
+    $(".advanced-search").toggleClass("active");
     $(this).toggleClass("active");
-  })
+  });
+
+
+
 
