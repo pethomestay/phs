@@ -19,24 +19,48 @@
               == rating_stars_awesome homestay.average_rating
             p.text-sm.text-center.text-thin #{ homestay.user.received_feedbacks.count } review(s) 
         
-        .media-body  
-          span.text-2x.hidden-xs.hidden-sm #{ homestay.title }
-          span.text-lg.hidden-md.hidden-lg #{ homestay.title }
-          .stay-costs-2x.display_inline.pull-right.hidden-xs.hidden-sm.hidden-md
-            span $#{(homestay.cost_per_night).to_i}
-            span.lower
-              |/24hr
-          p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
-          p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
-          p.host-responsiveness
-            - if homestay.user.response_rate_in_percent.present?  
-              i.fa.fa-clock-o.mar-rgt
-                span  - 
-                span Host Responsiveness Rate: #{homestay.user.response_rate_in_percent}%
-            i.fa.fa-user
-            span  - 
-            span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
-          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
-          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
-          p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
-          p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+        .media-body 
+          .left-box 
+            span.text-2x.hidden-xs.hidden-sm #{ homestay.title }
+            span.text-lg.hidden-md.hidden-lg #{ homestay.title }
+            p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
+            p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
+            p.host-responsiveness
+              - if homestay.user.response_rate_in_percent.present?  
+                i.fa.fa-clock-o.mar-rgt
+                  span  - 
+                  span Host Responsiveness Rate: #{homestay.user.response_rate_in_percent}%
+              i.fa.fa-user
+              span  - 
+              span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
+            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
+            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
+            p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
+            p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+          .right-box.hidden-xs.hidden-sm.hidden-md
+            -inactive = "grey_ABABAB/grey_ABABAB_"
+            -active = "aqua_00A89D/aqua_00A89D_"
+            .stay-costs-2x.display_inline
+              span $#{(homestay.cost_per_night).to_i}
+              span.lower
+                |/24hr
+            .homestay-feature
+              -profix = if homestay.pet_walking then active else inactive end
+              =image_tag(profix+"walk.png",class: "icon")
+              .text Walk
+            .homestay-feature
+              -profix = if homestay.pet_feeding then active else inactive end
+              =image_tag(profix+"visit.png", class: "icon")
+              .text Visit
+            .homestay-feature
+              -profix = if homestay.pet_grooming then active else inactive end
+              =image_tag(profix+"groom.png", class: "icon")
+              .text Groom
+            .homestay-feature
+              -profix = if homestay.pet_training then active else inactive end
+              =image_tag(profix+"training.png", class: "icon")
+              .text Train
+            .homestay-feature
+              -profix = if homestay.is_professional then active else inactive end
+              =image_tag(profix+"pickupdropoff.png", class: "icon")
+              .text Pickup/dropoff

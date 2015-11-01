@@ -1,5 +1,6 @@
 $secondary-text-color: #50a19e;
 $search-field-height: 40px;
+@import "new-features-addon/result-row";
 
 .search-alert {
   margin: 0 -15px 0 -15px;
@@ -349,7 +350,7 @@ p.ta {
         margin-top: 2px;
       }
 
-    .cost-per-night-2x {
+      .cost-per-night-2x {
         strong {
           background: $orange;
           color: $grey-lighter;

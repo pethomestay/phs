@@ -1,0 +1,107 @@
+.media-block .media-body{
+	>.left-box{
+		float:left;
+		width:70%;
+	}
+	>.right-box{
+		float:left;
+		padding-left:15px;
+		border-left:2px solid #ababab;
+		min-width:133px;
+
+	}
+	>.right-box>.stay-costs-2x{
+		margin-bottom:15px !important;
+	}
+}
+
+.homestay-feature{
+	clear:both;
+	color: #000;
+	.icon{
+		height:20px;
+		width:20px;
+	}
+
+	.text{
+		margin-left:15px;
+		font-size:1em;
+	}
+}
+.homestay-feature>*{float:left;}
+
+
+
+
+
+
+/*copy from the original homestay_index.scss*/
+.media-body {
+  width: 100%;
+  padding-left: 5px;
+
+  p.host-responsiveness {
+    display: none;
+  }
+
+  .first_name {
+    display: inline-block;
+    padding-right:10px;
+    padding-top: 5px;
+    margin-top: 0;
+    margin: 0;
+  }
+
+  .display_inline {
+    display: inline-block;
+    padding-top: 5px;
+    margin-top: 0;
+    margin: 0;
+  }
+
+  .display_inline.section_group {
+    padding: 0 0 0 15px;
+    vertical-align: middle;
+    min-width: 52px;
+  }
+
+  .for_charity {
+    width: 50px;
+  }
+
+  .for_charity_sm {
+    width: 26px;
+  }
+
+  .title {
+    color: $grey-dark;
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  .cost-per-night-2x {
+    strong {
+      background: $orange;
+      color: $grey-lighter;
+      padding: 7px;
+      font-size:21px;
+      @media (max-width: $screen-sm-max) {
+        float: right;
+      }
+    }
+
+  }
+
+  .cost-per-night {
+    strong {
+      background: $orange;
+      color: $grey-lighter;
+      padding: 7px;
+      font-size:16px;
+      @media (max-width: $screen-xs-max) {
+        float: right;
+      }
+    }
+
+  }
+}
