@@ -23,3 +23,19 @@
   bottom: -0.9em;
 }
 
+.filter-btn.popup {
+  position: relative;
+  overflow: visible !important;
+}
+.filter-btn.popup .popup-content {
+  display: none;
+  position: absolute;
+  top:5%;
+  width:100px;
+  background-color: #fff;
+  padding: .5em;
+
+}
+.filter-btn.popup:hover .popup-content {
+  display: block;
+}

@@ -1,19 +1,59 @@
-.media-block .media-body{
-	>.left-box{
+.media-block
+{
+  position: relative;
+  .pet-rescue{
+    position: absolute;
+    top:-20px;
+    left:-10px;
+    width: 50px;
+    border-radius: 25px;
+  }
+}
+
+
+.homestay-card{
+  width:100%;
+  .media-body{
+    width:100% !important;
+    margin-left:110px;
+  }
+	.left-box{
 		float:left;
 		width:70%;
+    @media (max-width: $screen-sm-max) {
+      width:100%;
+    }
 	}
-	>.right-box{
+  .left-box .text-thin{
+    padding-top:15px;
+    clear:both;
+  }
+
+	.right-box{
 		float:left;
 		padding-left:15px;
 		border-left:2px solid #ababab;
 		min-width:133px;
 
 	}
-	>.right-box>.stay-costs-2x{
+	.right-box>.stay-costs-2x{
 		margin-bottom:15px !important;
 	}
 }
+
+.homestay-info{
+  color: #00A89D;
+  padding-right:15px;
+  float:left;
+  img{
+    height:18px;
+    width:auto;
+  }
+  @media (max-width: $screen-sm-max) {
+    display:none;
+  }
+}
+
 
 .homestay-feature{
 	clear:both;
@@ -35,7 +75,7 @@
 
 
 
-/*copy from the original homestay_index.scss*/
+/*copy from the original homestay_index.scss for future reorganise*/
 .media-body {
   width: 100%;
   padding-left: 5px;

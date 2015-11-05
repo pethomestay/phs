@@ -1,7 +1,10 @@
 .panel.panel-default style="border:1px solid #ddd"data-listing=homestay.id
   .panel-body
     .media-block
-      a href=homestay_path(homestay)     
+      -if homestay.for_charity
+        =image_tag("PetRescue.jpg", class: "pet-rescue")
+      / a href=homestay_path(homestay) class="homestay-card"
+      .homestay-card
         .media-left
           - if homestay.user.profile_photo?
             = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
@@ -20,23 +23,47 @@
             p.text-sm.text-center.text-thin #{ homestay.user.received_feedbacks.count } review(s) 
         
         .media-body 
+          
           .left-box 
+            .cost-mobile
+              .stay-costs-2x.hidden-lg.hidden-md.text-sm
+                span $#{(homestay.cost_per_night).to_i}
             span.text-2x.hidden-xs.hidden-sm #{ homestay.title }
             span.text-lg.hidden-md.hidden-lg #{ homestay.title }
             p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
             p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
+            p.text-md.info-row.
+              .homestay-info.hidden-sm
+                i.fa.fa-map-marker
+                | 20 km away
+              -if homestay.user.response_rate_in_percent.present?
+                .homestay-info.hidden-sm
+                  i.fa.fa-clock-o 
+                  | #{homestay.user.response_rate_in_percent}% response rate
+              .homestay-info.hidden-sm
+                =image_tag("aqua_00A89D/aqua_00A89D_lastlogin.png", class: "icon")
+                | last activity: #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
+
             p.host-responsiveness
-              - if homestay.user.response_rate_in_percent.present?  
+              - if homestay.user.response_rate_in_percent.present? or true
                 i.fa.fa-clock-o.mar-rgt
                   span  - 
                   span Host Responsiveness Rate: #{homestay.user.response_rate_in_percent}%
               i.fa.fa-user
               span  - 
               span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
-            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
-            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
-            p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
-            p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+            / p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
+            / p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
+            / p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
+            / p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+            -reviews = homestay.user.received_feedbacks.reviewed
+            .reviews-slider-container
+              - if reviews.any?
+                .reviews-slider
+                  - reviews.each do |review|
+                    = render 'profile_review_row', review: review, top: false
+              - else
+                span No reviews for this user at the moment
           .right-box.hidden-xs.hidden-sm.hidden-md
             -inactive = "grey_ABABAB/grey_ABABAB_"
             -active = "aqua_00A89D/aqua_00A89D_"
@@ -45,22 +72,30 @@
               span.lower
                 |/24hr
             .homestay-feature
-              -profix = if homestay.pet_walking then active else inactive end
-              =image_tag(profix+"walk.png",class: "icon")
-              .text Walk
+              -if homestay.pet_walking
+                -profix = if homestay.pet_walking then active else inactive end
+                =image_tag(profix+"walk.png",class: "icon")
+                .text Walk
             .homestay-feature
-              -profix = if homestay.pet_feeding then active else inactive end
-              =image_tag(profix+"visit.png", class: "icon")
-              .text Visit
+              -if homestay.visits_price
+                -profix = if homestay.visits_price then active else inactive end
+                =image_tag(profix+"visit.png", class: "icon")
+                .text Visit
             .homestay-feature
-              -profix = if homestay.pet_grooming then active else inactive end
-              =image_tag(profix+"groom.png", class: "icon")
-              .text Groom
+              -if homestay.pet_grooming
+                -profix = if homestay.pet_grooming then active else inactive end
+                =image_tag(profix+"groom.png", class: "icon")
+                .text Groom
             .homestay-feature
-              -profix = if homestay.pet_training then active else inactive end
-              =image_tag(profix+"training.png", class: "icon")
-              .text Train
+              -if  homestay.pet_training
+                -profix = if homestay.pet_training then active else inactive end
+                =image_tag(profix+"training.png", class: "icon")
+                .text Train
             .homestay-feature
-              -profix = if homestay.is_professional then active else inactive end
-              =image_tag(profix+"pickupdropoff.png", class: "icon")
-              .text Pickup/dropoff
+              -if homestay.delivery_price
+                -profix = if homestay.delivery_price then active else inactive end
+                =image_tag(profix+"pickupdropoff.png", class: "icon")
+                .text Pickup/dropoff
+
+javascript:
+  $('.reviews-slider').slick();

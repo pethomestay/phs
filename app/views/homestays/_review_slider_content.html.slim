@@ -1,0 +1,15 @@
+.slick-content
+  .review-body
+    .-icon style="margin-bottom: 5px;"
+      - if review.user.profile_photo?
+          = cl_image_tag review.user.profile_photo.public_id, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+      - elsif review.user.uid.present?
+        = facebook_profile_image_tag review.user.uid, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
+      - else
+        = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture'
+    .rating style="color: #5cc1c0; margin-bottom: -3px;"
+      = render 'stars', rating: review.rating
+    .time style="margin-top: -3px;" #{review.created_at.strftime('%F')}      
+  .review-content
+    p.mar-no Reviewed by #{review.user.first_name}
+    blockquote.bq-sm.bq-open #{review.review}

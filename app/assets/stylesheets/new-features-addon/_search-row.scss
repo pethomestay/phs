@@ -36,14 +36,17 @@
 		margin-left:10px;
 		font-size:1em;
 	}
+	&.active{
+		color: #00A89D;
+		background-color: #F1F1F1;
+	}
 }
 
 .filter-btn>*{float:left;}
 
 .filter-btn:hover{
 	cursor: pointer;
-	background-color: #F1F1F1;
-	color: #00A89D;
+	opacity: 0.8;
 ;
 
 }

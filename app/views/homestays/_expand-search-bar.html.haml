@@ -2,7 +2,19 @@
 #expand-search-bar
   .search-box.advanced-search
     .search-row.mar-btm
-      .title find someone who can ...
+      .title.hidden-xs.hidden-sm find someone expertise in ...
+      .filter-btn.active
+        =image_tag(profix+"lowenergy.png",class: "icon")
+        .text Dog
+      .filter-btn
+        =image_tag(profix+"medium.png", class: "icon")
+        .text Cat
+      .filter-btn
+        =image_tag(profix+"small.png", class: "icon")
+        .text Other
+
+    .search-row.mar-btm
+      .title.hidden-xs.hidden-sm find someone who can ...
       .filter-btn
         =image_tag(profix+"walk.png",class: "icon")
         .text Walk
@@ -19,17 +31,19 @@
         =image_tag(profix+"pickupdropoff.png", class: "icon")
         .text Pick up drop off
     .search-row
-      .title who love pets that are ...
+      .title.hidden-xs.hidden-sm who love pets that are ...
       .filter-btn
         =image_tag(profix+"highenergy.png",class: "icon")
         .text High energy
       .filter-btn
         =image_tag(profix+"lowenergy.png", class: "icon")
         .text Low energy
-      .filter-btn
+      .filter-btn.popup
         =image_tag(profix+"small.png", class: "icon")
         .text Small
-      .filter-btn
+        %p.popup-content
+          up to 10kg
+      .filter-btn.popup
         =image_tag(profix+"medium.png", class: "icon")
         .text Medium
       .filter-btn

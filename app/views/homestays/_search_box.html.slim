@@ -1,8 +1,6 @@
 .well.search-box
   = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|
     .form-group
-      .title find the perfect pet sitter
-    .form-group
       .input-group.toggle-group
         .option.mar-lft Host House
         .switch
@@ -55,7 +53,7 @@
     | Refine Search
 
   .sort-order
-    .pre-text Order results by
+    .pre-text Sort by
     label.recommended.radio-inline.active
       = radio_button :search, :sort_by, 'recommended', input_html: { checked: 'checked' }
       i.fa.fa-star
@@ -127,6 +125,11 @@ javascript:
     $(".advanced-search").toggleClass("active");
     $(this).toggleClass("active");
   });
+
+  $(".filter-btn").click(function(){
+    $(this).toggleClass("active");
+  });
+
 
 
 
