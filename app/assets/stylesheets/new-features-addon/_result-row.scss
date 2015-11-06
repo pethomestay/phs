@@ -11,13 +11,8 @@
 }
 
 
-.homestay-card{
-  width:100%;
-  .media-body{
-    width:100% !important;
-    margin-left:110px;
-  }
-	.left-box{
+.media-block .media-body{
+	>.left-box{
 		float:left;
 		width:70%;
     @media (max-width: $screen-sm-max) {
@@ -29,7 +24,7 @@
     clear:both;
   }
 
-	.right-box{
+	>.right-box{
 		float:left;
 		padding-left:15px;
 		border-left:2px solid #ababab;

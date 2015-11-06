@@ -1,11 +1,20 @@
 .reviews-slider-container{
-	clear:both;
+	clear:left;
+	width:100%;
 
-	.reviews-slider{
-		width:100%;
+	.timeline:after, .timeline:before{
+		display:none;
 	}
 
-	.timeline-entry{
-		width:100%;
+
+}
+
+.timeline-entry.slick-cloned{
+	display:none !important;
+}
+
+.timeline-label.nomargin-xs{
+	@media (max-width: $screen-xs-max){
+		margin-left:0;
 	}
 }

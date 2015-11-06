@@ -12,4 +12,4 @@
     .timeline-time style="margin-top: -3px;" #{review.created_at.strftime('%F')}      
   .timeline-label
     p.mar-no Reviewed by #{review.user.first_name}
-    blockquote.bq-sm.bq-open #{review.review}
+    blockquote.bq-sm.bq-open #{review.review.truncate(100)}
