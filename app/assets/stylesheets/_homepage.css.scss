@@ -15,15 +15,10 @@
 
 .splace {
     
-    @media (max-width: $screen-md-max) {
-      padding-top:175px;
-    }
-    @media (max-width: $screen-md-max) {
-      padding-top:135px;
-    }
-    @media (max-width: $screen-sm-max) {
+    @media (min-width: $screen-md-min) {
       padding-top:75px;
     }
+
     @media (max-width: $screen-xs-max) {
       padding-top:100px;
     }
@@ -38,7 +33,7 @@
     display:block;
     background-size: cover;
     width: 100%;
-    height: 70vh;
+    height: 95vh;
     // text
     color: #FFFFFF;
     text-shadow: black 0.03em 0.03em 0.03em;
@@ -53,6 +48,11 @@
     #line-breaker {
         display: none;
     }
+}
+
+
+.jumbotron h3,.jumbotron h4{
+    margin-top:100px;
 }
 // Host search bar
 .search-form {
@@ -164,14 +164,40 @@ section.bottom-search {
 }
 
 // Responsive
-@media (max-width: $screen-md-max) {
-    #postcode {
-        width: 330px;
-    }
-    .press-coverage  img {
-        margin: 0 2%;
+
+#postcode{
+    width: 370px;
+}
+#email-field{
+    width:300px;
+}
+#email-field {
+    input{
+        border-radius: 5px;
+        font-size: 15px;
+        padding:5px;
+        height:30px;
     }
 }
+.mailer{
+    .search-form{
+        padding:5px;
+    }
+    button#search-btn{
+        width:auto;
+        height:30px;
+        padding: 5px;
+    }
+}
+
+#postcode .input-group, #email-field .input-group {
+    width: 100%;
+}
+
+.press-coverage  img {
+    margin: 0 2%;
+}
+
 @media (max-width: $screen-sm-max) {
     .jumbotron h1 {
         font-size: 48px;
@@ -179,7 +205,7 @@ section.bottom-search {
     }
     #postcode {
         display: block;
-        width: 100%;
+        min-width: 350px;
     }
     #postcode .input-group {
         width: 100%;
