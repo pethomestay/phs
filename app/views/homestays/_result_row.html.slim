@@ -58,9 +58,10 @@
             -reviews = homestay.user.received_feedbacks.reviewed
             .reviews-slider-container
               - if reviews.any?
-                .timeline
+                ul.slideshow
                   - reviews.each do |review|
-                    = render 'review_slider_content', review: review
+                    li
+                      = render 'review_slider_content', review: review
               - else
                 span No reviews for this user at the moment
           .right-box.hidden-xs.hidden-sm.hidden-md
@@ -97,14 +98,43 @@
                 .text Pickup/dropoff
 
 javascript:
-  $(document).ready(function(){
-    var length= $(".timeline").length;
-    for(var i=0; i<length; i++){
-      console.log($($(".timeline")[i]).children().length)
-      $($(".timeline")[i]).children().hide();
-      $($(".timeline")[i]).children().first().show();
-    }
-  })
+  (function($) {
+      
+      var Slideshow = function($elem) {
+          var interval;
+          
+          function next() {
+              $elem.find("li").first().appendTo($elem);
+              $elem.find("li").first().remove();
+              $elem.find("li").first().show();
+          }
+          
+          function play(event) {
+              if (!interval) {
+                  interval = setInterval(next, 3000);
+              }
+          }
+          
+          function pause(event) {
+              if (interval) {
+                  clearInterval(interval);
+                  interval = null;
+              }
+          }
+          
+          // listeners
+          play();
+      }
+      
+      $.fn.slideshow = function() {
+          return this.each(function(idx, elem) {
+              new Slideshow($(elem));
+          });
+      };
+  })(jQuery);
+
+  $(".slideshow").slideshow();
+
 
 
 

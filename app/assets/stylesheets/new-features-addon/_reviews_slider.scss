@@ -9,12 +9,22 @@
 
 }
 
-.timeline-entry.slick-cloned{
-	display:none !important;
-}
-
 .timeline-label.nomargin-xs{
 	@media (max-width: $screen-xs-max){
 		margin-left:0;
 	}
+}
+
+
+.slideshow {
+    list-style-type: none;
+    padding: 0;
+}
+
+.slideshow li {
+    display: none;
+}
+
+.slideshow li:first-child {
+    display: block;
 }

@@ -38,3 +38,4 @@
 //= require_directory ./components_ui
 //= require bootstrap-datepicker-core
 //= require hide_intercom_bubble_on_mobile
+
