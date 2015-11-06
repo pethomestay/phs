@@ -80,7 +80,7 @@ class BookingsController < ApplicationController
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
-          AdminMailer.host_rejected_paid_booking(@booking).deliver
+#          AdminMailer.host_rejected_paid_booking(@booking).deliver
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           Analytics.track(
             user_id:          current_user.id,
