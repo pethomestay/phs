@@ -38,3 +38,7 @@ namespace :deploy do
     end
   end
 end
+
+# reload nginx, restart unicorn
+
+require 'appsignal/capistrano'

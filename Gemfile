@@ -62,6 +62,9 @@ gem 'virtus'
 # Notifications.
 gem 'apn_sender', require: 'apn'
 
+# Exceptions.
+gem 'appsignal', '~> 0.12.rc'
+
 # Background processing.
 gem 'sidekiq', '3.1.4'
 gem 'sidekiq-failures'
