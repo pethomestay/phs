@@ -108,6 +108,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rbenv'
+  gem 'capistrano-unicorn-nginx', '3.4.0'
   gem 'terminal-notifier-guard'
 end
 
