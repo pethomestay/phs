@@ -43,7 +43,6 @@ gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'raygun4ruby'
 gem 'net-scp', '1.2.1'
-gem 'unicorn'
 gem 'attr_encrypted'
 gem 'rest-client'
 gem 'mailgun_rails'
@@ -78,8 +77,10 @@ gem 'yardstick'
 gem 'jbuilder', '~> 2.0'
 gem 'yajl-ruby'
 
+# Use Unicorn as the app server.
+gem 'unicorn'
+
 group :development, :test do
-  gem 'capistrano'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
@@ -100,6 +101,10 @@ end
 
 group :development do
   gem 'bullet'
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-bundler', '~> 1.1.2', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv'
   gem 'terminal-notifier-guard'
 end
 
