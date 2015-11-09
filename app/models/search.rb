@@ -9,7 +9,8 @@ class Search
   MAXIMUM_RADIUS    = 50
 
   attr_accessor :provider_types, :within, :sort_by, :country
-  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types
+  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types,
+    :pet_feeding, :pet_grooming, :pet_training, :pet_walking
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -53,6 +54,19 @@ class Search
     @within ||= DEFAULT_RADIUS
   end
 
+  def refined_filters
+    available_filters.select { |_, value| value.present? }
+  end
+
+  def available_filters
+    {
+      pet_feeding: @pet_feeding,
+      pet_grooming: @pet_grooming,
+      pet_training: @pet_training,
+      pet_walking: @pet_walking
+    }
+  end
+
   def populate_list
     perform_geocode unless @latitude.present? && @longitude.present?
     start_date = @check_in_date
@@ -69,6 +83,12 @@ class Search
     while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
       # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
       homestays = Homestay.includes(:user).active.near([@latitude, @longitude], search_radius)
+
+      # Additional filters
+      if refined_filters.present?
+        homestays.where(refined_filters)
+      end
+
       if homestay_types.present?
         if homestay_types.include?('local')
           homestays = homestays.where('cost_per_night is not null')
