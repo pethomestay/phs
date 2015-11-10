@@ -176,7 +176,6 @@ class BookingsController < ApplicationController
                 :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
             )
-            # raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
           end
         else
           result = Braintree::Transaction.sale(

@@ -206,9 +206,6 @@ GEM
       rack (>= 1.4.5)
     hike (1.2.3)
     htmlentities (4.3.1)
-    httparty (0.13.1)
-      json (~> 1.8)
-      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     ice_nine (0.11.1)
     inflecto (0.0.2)
@@ -267,7 +264,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     netrc (0.8.0)
-    newrelic_rpm (3.5.8.72)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     notiffany (0.0.7)
@@ -344,10 +340,6 @@ GEM
     rainbow (2.0.0)
     raindrops (0.12.0)
     rake (10.3.2)
-    raygun4ruby (1.1.4)
-      httparty (~> 0.11)
-      json
-      rack
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -538,7 +530,6 @@ DEPENDENCIES
   momentjs-rails
   nested_form
   net-scp (= 1.2.1)
-  newrelic_rpm
   oauth2
   omniauth-facebook
   omnicontacts
@@ -549,7 +540,6 @@ DEPENDENCIES
   rack-test
   rails (= 3.2.18)
   rails_12factor
-  raygun4ruby
   rb-fsevent
   redcarpet
   rest-client
