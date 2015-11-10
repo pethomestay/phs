@@ -1,14 +1,14 @@
 .well.search-box
   = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|
-    .form-group
+    .form-group.toggle
       .input-group.toggle-group
-        .option.mar-lft Host House
+        .option Host House
         .switch
           = f.check_box :homestay_types, class: "cmn-toggle cmn-toggle-round", id: "cmn-toggle-1"
           label for="cmn-toggle-1"
         .option.mar-rgt At my House
 
-    .form-group
+    .form-group.location
       .input-group.input-group-flat-left.search_location_container
         span.input-group-addon
           i.fa.fa-map-marker.fa-lg

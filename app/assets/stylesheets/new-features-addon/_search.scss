@@ -31,6 +31,23 @@
 
 
 
+//collapseive
+@media (min-width: $screen-sm-min) {
+  .form-group{
+    &.toggle{
+      width:22%;
+      min-width: 195px;
+    }
+    &.location{
+      width:21%;
+    }
+    &.search_check_in_date, &.search_check_out_date{
+      width:18%;
+    }
+
+  }
+}
+
 
 
 

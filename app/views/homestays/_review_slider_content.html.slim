@@ -8,5 +8,5 @@
       - else
         = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture'
     .timeline-time style="margin-top: -3px;" #{review.user.first_name}      
-  .timeline-label.nomargin-xs
+  span.nomargin-xs
     blockquote.bq-sm.bq-open #{review.review.truncate(100)}

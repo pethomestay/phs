@@ -111,14 +111,14 @@ $search-field-height: 40px;
 
 .cost-mobile{
   width:100%;
-  text-align: right;
+  text-align: center;
 }
 .stay-costs-2x {
     background: $orange;
     color: white;
     padding: 7px;
     font-size:2em;
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: $screen-xs-max) {
       float: right;
     }
 }
@@ -172,6 +172,7 @@ p.ta {
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    border-bottom: 3px solid #ABABAB;
 
     @media (min-width: $screen-sm-min) {
       padding-top: 50px;
@@ -181,7 +182,7 @@ p.ta {
 
     .search_location_container {
       @media (min-width: $screen-sm-min) {
-        width: 150px;
+        width: 95%;
       }
 
       #search_location {
@@ -192,7 +193,7 @@ p.ta {
     .search_check_in_date_container,
     .search_check_out_date_container {
       @media (min-width: $screen-sm-min) {
-        width: 120px;
+        width: 95%;
       }
     }
     #search_check_in_date,
@@ -203,7 +204,7 @@ p.ta {
       cursor: pointer;
     }
     .search.btn {
-      width: 105px;
+      width:15%;
       height: $search-field-height;
       margin-left: 2px;
 
@@ -214,7 +215,7 @@ p.ta {
 
   }
   .second-bar {
-    padding:10px;
+    padding:15px;
     background-color: #e8ebf0;
     color: black;
     width:100%;
@@ -222,6 +223,7 @@ p.ta {
 
     >.number{
       padding-top:5px;
+
     }
     >.number >span{
       padding:5px;
@@ -232,8 +234,33 @@ p.ta {
 
     >.sort-order{
       float: right;
-      @media (max-width: $screen-xs-max) {
-            float: left;
+
+    }
+    @media (max-width: $screen-xs-max) {
+      .number,
+      .pre-text{
+        display:none;
+      }
+      #refine-search-btn{
+        width:100%;
+        text-align: center;
+        height:40px;
+        font-size: 1.2em;
+      }
+
+      >.sort-order{
+        width: 100%;
+        float: left;
+        >.recommended, >.distance{
+          height:40px;
+          width:48%;
+          text-align: center;
+          font-size: 1.2em;
+        }
+        >.distance{
+          margin-left:0;
+          float:left;
+        }
       }
     }
 
@@ -296,7 +323,7 @@ p.ta {
       }
     }
 
-    p.rating {
+    span.rating {
       color: $blue-light;
       @media (max-width: $screen-xs-max) {
             padding-left: 0;

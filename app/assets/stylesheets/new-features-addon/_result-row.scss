@@ -1,3 +1,4 @@
+
 .media-block
 {
   position: relative;
@@ -13,9 +14,10 @@
 
 .media-block .media-body{
 	>.left-box{
+    @extend .noselect;
 		float:left;
-		width:70%;
-    @media (max-width: $screen-sm-max) {
+		width:75%;
+    @media (max-width: $screen-xs-max) {
       width:100%;
     }
 	}
@@ -24,15 +26,18 @@
     clear:both;
   }
 
-	>.right-box{
-		float:left;
+	.right-box{
+		float:right;
 		padding-left:15px;
 		border-left:2px solid #ababab;
 		min-width:133px;
+    min-height: 180px;
+    width:25%;
+    max-width:150px;
 
 	}
-	.right-box>.stay-costs-2x{
-		margin-bottom:15px !important;
+	.right-box .stay-costs-2x{
+		margin-bottom:30px !important;
 	}
 }
 
@@ -40,12 +45,16 @@
   color: #00A89D;
   padding-right:15px;
   float:left;
+  i{
+    padding-right: 5px;
+  }
   img{
     height:18px;
+    padding-right: 5px;
     width:auto;
   }
-  @media (max-width: $screen-sm-max) {
-    display:none;
+  @media (max-width: $screen-xs-max) {
+    clear:both;
   }
 }
 
@@ -59,13 +68,22 @@
 	}
 
 	.text{
-		margin-left:15px;
+		margin-left:5px;
 		font-size:1em;
 	}
 }
 .homestay-feature>*{float:left;}
 
+.address-row{
+  overflow: hidden;
+  .suburb{
+    float:left;
+  }
 
+  .distance{
+    float:right;
+  }
+}
 
 
 

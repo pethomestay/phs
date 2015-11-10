@@ -3,8 +3,8 @@
     .media-block
       -if homestay.for_charity
         =image_tag("PetRescue.jpg", class: "pet-rescue")
-      a href=homestay_path(homestay) class="homestay-card"
-        .media-left
+      .media-left
+        a href=homestay_path(homestay)
           - if homestay.user.profile_photo?
             = cl_image_tag homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face, radius: :max, format: :png, class: 'img-circle search_item_profile_picture'
           - elsif homestay.user.uid.present?
@@ -17,59 +17,61 @@
             = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: 'width: 100px;'
           p.text-md.text-center.text-2x  style="margin-bottom: 0; color: #5cc1c0" #{homestay.user.first_name}
           - if homestay.user.received_feedbacks.present?
-            p.display_inline.rating.text-center style="margin-bottom: 0"
-              == rating_stars_awesome homestay.average_rating
-            p.text-sm.text-center.text-thin #{ homestay.user.received_feedbacks.count } review(s) 
+            p.text-center
+              span.display_inline.rating style="margin-bottom: 0"
+                == rating_stars_awesome homestay.average_rating
+              span.text-sm.rating.text-center.text-thin = "("+ homestay.user.received_feedbacks.count.to_s+")"
+      
+      .media-body 
         
-        .media-body 
-          
-          .left-box 
-            .cost-mobile
-              .stay-costs-2x.hidden-lg.text-sm
-                span $#{(homestay.cost_per_night).to_i}
+        .left-box 
+          .cost-mobile
+            .stay-costs-2x.hidden-lg.hidden-md.hidden-sm.text-sm
+              span $#{(homestay.cost_per_night).to_i}
+          a href=homestay_path(homestay)
             span.text-2x.hidden-xs.hidden-sm #{ homestay.title }
             span.text-lg.hidden-md.hidden-lg #{ homestay.title }
-            p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
-            p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
-            p.text-md.info-row.
-              .homestay-info.hidden-sm.hidden-md.hidden-xs
-                i.fa.fa-map-marker
-                | 20 km away
-              -if homestay.user.response_rate_in_percent.present?
-                .homestay-info.hidden-sm.hidden-md.hidden-xs
-                  i.fa.fa-clock-o 
-                  | #{homestay.user.response_rate_in_percent}% response rate
-              .homestay-info.hidden-sm.hidden-md.hidden-xs
-                =image_tag("aqua_00A89D/aqua_00A89D_lastlogin.png", class: "icon")
-                | last activity: #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
+          .address-row
+            .suburb
+              p.text-lg.hidden-xs.hidden-sm #{ homestay.address_suburb }
+              p.text-sm.hidden-md.hidden-lg #{ homestay.address_suburb }
+            .distance
+              .text-md.homestay-info.hidden-xs
+                  i.fa.fa-map-marker 
+                  | ? km away
 
-            p.host-responsiveness
-              - if homestay.user.response_rate_in_percent.present? or true
-                i.fa.fa-clock-o.mar-rgt
-                  span  - 
-                  span Host Responsiveness Rate: #{homestay.user.response_rate_in_percent}%
-              i.fa.fa-user
-              span  - 
-              span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
-            p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
-            / p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
-            / p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
-            / p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
-            -reviews = homestay.user.received_feedbacks.reviewed
-            .reviews-slider-container
-              - if reviews.any?
-                ul.slideshow
-                  - reviews.each do |review|
-                    li
-                      = render 'review_slider_content', review: review
-              - else
-                span No reviews for this user at the moment
-          .right-box.hidden-xs.hidden-sm.hidden-md
+          p.host-responsiveness
+            - if homestay.user.response_rate_in_percent.present? or true
+              i.fa.fa-clock-o.mar-rgt
+                span  - 
+                span Host Responsiveness Rate: #{homestay.user.response_rate_in_percent}%
+            i.fa.fa-user
+            span  - 
+            span Host last signed in #{ translate_current_sign_in(homestay.user.current_sign_in_at) }
+          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-md #{(homestay.description).truncate(200)}
+          p.text-thin.text-sm.hidden-xs.hidden-sm.hidden-lg #{(homestay.description).truncate(150)}
+          p.text-thin.text-sm.hidden-xs.hidden-md.hidden-lg #{(homestay.description).truncate(100)}
+          p.text-thin.text-sm.hidden-sm.hidden-md.hidden-lg #{(homestay.description).truncate(75)}
+          -reviews = homestay.user.received_feedbacks.reviewed
+          .reviews-slider-container
+
+            - if reviews.any?
+              .prev-arrow
+                i.fa.fa-chevron-left
+              ul.slideshow
+                - reviews.each do |review|
+                  li
+                    = render 'review_slider_content', review: review
+              .next-arrow
+                i.fa.fa-chevron-right
+
+        .right-box.hidden-xs
+          a href=homestay_path(homestay)
             -inactive = "grey_ABABAB/grey_ABABAB_"
             -active = "aqua_00A89D/aqua_00A89D_"
             .stay-costs-2x.display_inline
               span $#{(homestay.cost_per_night).to_i}
-              span.lower
+              span.lower style="color:white"
                 |/24hr
             .homestay-feature
               -if homestay.pet_walking
@@ -98,42 +100,18 @@
                 .text Pickup/dropoff
 
 javascript:
-  (function($) {
-      
-      var Slideshow = function($elem) {
-          var interval;
-          
-          function next() {
-              $elem.find("li").first().appendTo($elem);
-              $elem.find("li").first().remove();
-              $elem.find("li").first().show();
-          }
-          
-          function play(event) {
-              if (!interval) {
-                  interval = setInterval(next, 3000);
-              }
-          }
-          
-          function pause(event) {
-              if (interval) {
-                  clearInterval(interval);
-                  interval = null;
-              }
-          }
-          
-          // listeners
-          play();
-      }
-      
-      $.fn.slideshow = function() {
-          return this.each(function(idx, elem) {
-              new Slideshow($(elem));
-          });
-      };
-  })(jQuery);
+  $(".next-arrow").unbind().click(function(){
+    $elem = $(this).parent().find("ul.slideshow");
+    $elem.find("li").first().hide().appendTo($elem);
+    $elem.find("li").first().show();
+  })
 
-  $(".slideshow").slideshow();
+  $(".prev-arrow").unbind().click(function(){
+    $elem = $(this).parent().find("ul.slideshow");
+    $elem.find("li").first().hide();
+    $elem.prepend($elem.find("li").last())
+    $elem.find("li").first().show();
+  })
 
 
 

@@ -1,24 +1,49 @@
 .reviews-slider-container{
-	clear:left;
-	width:100%;
-
-	.timeline:after, .timeline:before{
-		display:none;
-	}
-
-
+  @extend .noselect;
+  clear:left;
+  width:100%;
+  overflow: hidden;
+  border-left:5px solid #eee;
+  
+  .prev-arrow, .next-arrow{
+    width:10%;
+    color:#ABABAB;
+    padding:30px 15px 15px 15px;
+  }
+  .timeline:after, .timeline:before{
+    display:none;
+  }
 }
 
-.timeline-label.nomargin-xs{
-	@media (max-width: $screen-xs-max){
-		margin-left:0;
-	}
+.reviews-slider-container >* {
+  float: left;
+}
+
+ul.slideshow > li> .timeline-entry{
+  margin-bottom: 15px;
+  blockquote{
+    border-left: none;
+  }
 }
 
 
+@media (max-width: $screen-xs-max){
+  .timeline-label.nomargin-xs{
+    margin-left:0;
+  }
+}
+
+
+
+
+/********** slider of review in result row ***********/
 .slideshow {
-    list-style-type: none;
-    padding: 0;
+  width:80%;
+  list-style-type: none;
+  padding: 0;
+  @media (max-width: $screen-xs-max){
+    width:70%;
+  }
 }
 
 .slideshow li {
@@ -26,5 +51,6 @@
 }
 
 .slideshow li:first-child {
-    display: block;
+    display: list-item;
 }
+/************ end of css for hiding the rest *********/

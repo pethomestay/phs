@@ -1,3 +1,5 @@
+
+//  http://jsfiddle.net/yeLRw/2/
 (function($) {
     
     var Slideshow = function($elem) {
@@ -6,24 +8,18 @@
         function next() {
             $elem.find("li").first().hide().appendTo($elem);
             $elem.find("li").first().show();
-
         }
         
         function play(event) {
             if (!interval) {
-                interval = setInterval(next, 3000);
+                clearInterval
+                interval = setInterval(next, 1000);
             }
         }
         
-        // function pause(event) {
-        //     if (interval) {
-        //         clearInterval(interval);
-        //         interval = null;
-        //     }
-        // }
         
         // listeners
-        play();
+    play();
     }
     
     $.fn.slideshow = function() {
@@ -32,4 +28,3 @@
         });
     };
 })(jQuery);
-$(".timeline").slideshow();
