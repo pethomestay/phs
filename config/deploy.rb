@@ -20,7 +20,7 @@ set :scm, :git
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:stage)}/#{fetch(:application)}"
 
 # Links.
-set :linked_files, %w{config/database.yml config/local_env.yml config/unicorn.rb}
+set :linked_files, %w{.rbenv-vars config/database.yml config/unicorn.rb}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets public/assets vendor/bundle}
 
 # Ruby.
