@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :track_session_variables
+  before_filter :tag_errors, :track_session_variables
   protect_from_forgery
 
   def admin_login_required
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       user_id:       current_user.id,
       event:         "Signed in",
       timestamp:     Time.now,
-      
+
       context:       {
         'Google Analytics' => {
           clientId: google_analytics_client_id
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
         'UserAgent' => request.user_agent,
         'ip' => request.ip,
       },
-      integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
+      integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
     )
     if params[:redirect_path].present?
       params[:redirect_path]
@@ -70,7 +70,19 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  # Gets 
+
+  # Tags AppSignal error notifications so that they include basic user info.
+  def tag_errors
+    if user_signed_in?
+      Appsignal.tag_request(
+        'User ID' => current_user.id,
+        'User name' => "#{current_user.first_name} #{current_user.last_name}",
+        'User email' => current_user.email
+      )
+    end
+  end
+
+  # Gets
   def track_session_variables
     if current_user.present?
       Analytics.track(
@@ -85,7 +97,7 @@ class ApplicationController < ActionController::Base
           'UserAgent' => request.user_agent,
           'ip' => request.ip,
         },
-        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true } 
+        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
       )
 
     else
