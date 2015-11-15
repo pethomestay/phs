@@ -1,300 +1,311 @@
 @import 'home/meet_community';
 
-// Jumbotron
-.BV-cover {
-    background: linear-gradient(
-      rgba(45, 45, 45, 0.37), 
-      rgba(45, 45, 45, 0.37)
-    ),
-    image-url("doglow.jpg") no-repeat center center;
-    display:block !important;
-    background-size: cover !important;
-    width: 100%;
+.nav-custom {
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
+.BV-cover {
+  background: linear-gradient(
+    rgba(45, 45, 45, 0.37),
+    rgba(45, 45, 45, 0.37)
+  ),
+  image-url("doglow.jpg") no-repeat center center;
+  background-size: cover !important;
+  display: block !important;
+  width: 100%;
+}
 
 .splace {
-    
-    @media (min-width: $screen-md-min) {
-      padding-top:75px;
-    }
+  @media (min-width: $screen-md-min) {
+    padding-top:75px;
+  }
 
-    @media (max-width: $screen-xs-max) {
-      padding-top:100px;
-    }
+  @media (max-width: $screen-xs-max) {
+    padding-top:100px;
+  }
 }
 
 .jumbotron {
-    background: linear-gradient(
-      rgba(45, 45, 45, 0.37), 
-      rgba(45, 45, 45, 0.37)
-    ),
-    image-url("doglow.jpg") no-repeat center center;
-    display:block;
-    background-size: cover;
-    width: 100%;
-    height: 95vh;
-    // text
-    color: #FFFFFF;
-    text-shadow: black 0.03em 0.03em 0.03em;
-    text-align: center;
-    margin-bottom:0px
+  background: linear-gradient(
+    rgba(45, 45, 45, 0.37),
+    rgba(45, 45, 45, 0.37)
+  ),
+  image-url("doglow.jpg") no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  display: block;
+  height: 100vh;
+  margin-bottom: 0px;
+  min-height: 700px;
+  text-align: center;
+  text-shadow: black 0.03em 0.03em 0.03em;
+  width: 100%;
 }
 
-// Greeting
 .jumbotron h1 {
-    margin: 50px 0 0.7em 0;
+  margin: 50px 0 0.7em 0;
 
-    #line-breaker {
-        display: none;
-    }
+  #line-breaker {
+    display: none;
+  }
 }
-
 
 .jumbotron h3,.jumbotron h4{
-    margin-top:100px;
+  margin-top: 100px;
 }
-// Host search bar
+
 .search-form {
-    display: inline-block; // reduce the width to only what is necessary
-    margin: 0px auto;
-    background-color: rgba(57,60,61,0.5);
-    padding: 13px;
+  background-color: rgba(57,60,61,0.5);
+  display: inline-block;
+  margin: 0px auto;
+  padding: 13px;
 }
-// Input field
+
 #drop-off input,
 #pick-up input {
-    width: 155px;
+  width: 155px;
 }
+
 #search-btn {
-    width: 7em;
-    height: 46px;
-    border-radius: 4px;
+  border-radius: 4px;
+  height: 46px;
+  width: 7em;
 }
 
-// Highlights
 .highlights {
-    margin-top: 7em;
-    text-shadow: none;
-    .highlight {
-        display: inline-block;
-        margin-left: 5%;
+  margin-top: 7em;
+  text-shadow: none;
+
+  .highlight {
+    display: inline-block;
+    margin-left: 5%;
+  }
+
+  span {
+    display: block;
+    &.cover {}
+  }
+
+  img, .icon {
+    margin-bottom: 0.5em;
+  }
+
+  .icon {
+    &.peace strong {
+      font-size: 37px;
     }
-    span {
-        display: block;
-        &.cover {
-            // padd
-        }
+
+    &.percent {
+      margin-bottom: -0.1em;
+      font-size: 50px;
     }
-    img,
-    .icon {
-        margin-bottom: 0.5em;
-    }
-    .icon {
-        &.peace strong {
-            font-size: 37px;
-        }
-        &.percent {
-            margin-bottom: -0.1em;
-            font-size: 50px;
-        }
-    }
+  }
 }
 
-// Press coverage
 .press-coverage {
-    height: 110px;
-    padding-top: 20px;
-    background: $grey-dark;
-    img {
-       margin: 0 3%;
-    }
+  background: $grey-dark;
+  height: 110px;
+  padding-top: 20px;
+
+  img {
+    margin: 0 3%;
+  }
 }
 
-// Sections shared
 #why-phs h2,
 .three-steps h2,
 .meet-community h2 {
-    font-size: 35px;
-    margin-top: 35px;
+  font-size: 35px;
+  margin-top: 35px;
 }
 
-// Three steps
 .three-steps {
-    background-color:white;
-    .row {
-        padding-bottom: 25px;
-    }
+  background-color: #fff;
 
-    img {
-        width: 130px;
-        // center graphics
-        display: block;
-        margin: 15px auto;
-    }
+  .row {
+    padding-bottom: 25px;
+  }
 
-    .steps {
-        padding-left:  3em;
-        padding-right: 3em;
-    }
+  img {
+    display: block;
+    margin: 15px auto;
+    width: 130px;
+  }
+
+  .steps {
+    padding-left: 3em;
+    padding-right: 3em;
+  }
 }
 
-// Three features
 #why-phs {
-    background-color: rgb(247, 247, 247);
+  background-color: rgb(247, 247, 247);
 }
+
 #why-phs h3 {
-    margin-top: 55px;
+  margin-top: 55px;
 }
+
 #first-row {
-    margin-top: 70px;
+  margin-top: 70px;
 }
+
 #last-row {
-    margin-bottom: 70px;
+  margin-bottom: 70px;
 }
 
-// Bottome search
 section.bottom-search {
-    background-color: rgb(93, 193, 191);
-    padding-bottom: 60px;
-}
-.bottom-search h3 {
-    color: #FFFFFF;
-    margin-top: 45px;
+  background-color: rgb(93, 193, 191);
+  padding-bottom: 60px;
 }
 
-// Responsive
+.bottom-search h3 {
+  color: #fff;
+  margin-top: 45px;
+}
 
 #postcode{
-    width: 370px;
+  width: 370px;
 }
+
 #email-field{
-    width:300px;
+  width: 300px;
 }
+
 #email-field {
-    input{
-        border-radius: 5px;
-        font-size: 15px;
-        padding:5px;
-        height:30px;
-    }
+  input {
+    border-radius: 5px;
+    font-size: 15px;
+    height: 30px;
+    padding: 5px;
+  }
 }
-.mailer{
-    .search-form{
-        padding:5px;
-    }
-    button#search-btn{
-        width:auto;
-        height:30px;
-        padding: 5px;
-    }
+
+.mailer {
+  .search-form {
+    padding: 5px;
+  }
+
+  button#search-btn {
+    height: 30px;
+    padding: 5px;
+    width: auto;
+  }
 }
 
 #postcode .input-group, #email-field .input-group {
-    width: 100%;
+  width: 100%;
 }
 
-.press-coverage  img {
-    margin: 0 2%;
+.press-coverage img {
+  margin: 0 2%;
 }
 
 @media (max-width: $screen-sm-max) {
-    .jumbotron h1 {
-        font-size: 48px;
-        margin-top: 20px;
-    }
-    #postcode {
-        display: block;
-        min-width: 350px;
-    }
-    #postcode .input-group {
-        width: 100%;
-    }
-    #search-btn {
-        display: block;
-        width: 100%;
-    }
-    #postcode,
-    #drop-off,
-    #pick-up {
-        margin-bottom: 5px;
-    }
-    .highlights {
-        margin-top: 4.5em;
-    }
+  .jumbotron h1 {
+    font-size: 48px;
+    margin-top: 20px;
+  }
+
+  #postcode {
+    display: block;
+    min-width: 350px;
+  }
+
+  #postcode .input-group {
+    width: 100%;
+  }
+
+  #search-btn {
+    display: block;
+    width: 100%;
+  }
+
+  #postcode, #drop-off, #pick-up {
+    margin-bottom: 5px;
+  }
+
+  .highlights {
+    margin-top: 4.5em;
+  }
 }
+
 @media (max-width: $screen-xs-max) {
-    // Jumbotron
-    .jumbotron h1 {
-        font-size: 36px;
+  .jumbotron h1 {
+    font-size: 36px;
+  }
+
+  #drop-off input, #pick-up input {
+    display: block;
+    width: 100%;
+  }
+
+  #why-phs {
+    h3 {
+      margin-top: 10px;
     }
-    #drop-off input,
-    #pick-up input {
-        display: block;
-        width: 100%;
+
+    img {
+      width: 180px;
     }
-    // Why PHS
-    #why-phs {
-        h3 {
-            margin-top: 10px;
-        }
-        img {
-            width: 180px;
-        }
-    }
+  }
 }
+
 @media (max-width: 500px) {
-    // Jumbotron
-    .bg {
-        background-size: 1000px 100%;
-    }
-    .jumbotron {
-        padding-left:  0;
-        padding-right: 0;
-        .highlights {
-            margin-top: 15px;
-        }
-    }
-    // Three features
-    #why-phs{
+  .bg {
+    background-size: 1000px 100%;
+  }
 
-        img {
-            width: 100px;
-        }
+  .jumbotron {
+    padding-left:  0;
+    padding-right: 0;
 
-        #first-row {
-            margin-top: 30px;
-        }
-        #last-row {
-            margin-bottom: 30px;
-        }
+    .highlights {
+      margin-top: 15px;
     }
-    // Three stories
-    .meet-community .story .caption {
-        left: 25%;
+  }
+
+  #why-phs{
+    img {
+      width: 100px;
     }
+
+    #first-row {
+      margin-top: 30px;
+    }
+
+    #last-row {
+      margin-bottom: 30px;
+    }
+  }
+
+  .meet-community .story .caption {
+    left: 25%;
+  }
 }
+
 // iPhone horizontal
 @media only screen and (min-width: 480px) and (max-width: 766px) {
-    .jumbotron{
-        h1 {
-            font-size: 30px;
-            margin-top: 5px;
-        }
-        #drop-off,
-        {
-            display: inline-block;
-            width: 50%;
-            float: left;
-        }
+  .jumbotron{
+    h1 {
+      font-size: 30px;
+      margin-top: 5px;
     }
+
+    #drop-off {
+      display: inline-block;
+      float: left;
+      width: 50%;
+    }
+  }
 }
+
 // iPad horizontal
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : portrait) {
-    .jumbotron h1 #line-breaker {
-        display: inline;
-    }
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+  .jumbotron h1 #line-breaker {
+    display: inline;
+  }
 }
