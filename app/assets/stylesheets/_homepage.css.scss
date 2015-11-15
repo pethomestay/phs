@@ -110,8 +110,13 @@
   height: 110px;
   padding-top: 20px;
 
-  img {
-    margin: 0 3%;
+  .row {
+    text-align: center;
+
+    img {
+      display: inline-block;
+      margin: 0 3%;
+    }
   }
 }
 
