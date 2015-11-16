@@ -59,7 +59,7 @@ gem 'virtus'
 
 # Notifications.
 gem 'apn_sender', require: 'apn'
-gem 'mail_interceptor', group: [:development, :staging]
+gem 'mail_interceptor'
 
 # Exceptions.
 gem 'appsignal', '~> 0.12.rc'
