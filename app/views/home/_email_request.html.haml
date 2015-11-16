@@ -1,12 +1,7 @@
-/ Expected params
-/   autofocus: boolean
-
-
-%form.center-block.form-inline.search-form{role: "form", action: "#", method: "get"}
-    .form-group#email-field
-        .input-group.input-group-lg.input-group-flat-left
-            - if autofocus
-                %input.form-control{autofocus: true, type: "text", name: "search[location]", placeholder: "Enter Your Email for Offers, Tips & Events", 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'manual', 'data-container' => 'body', 'data-content' => 'Please tell us where to search :)'}
-            - else
-                %input.form-control{type: "text", name: "search[location]", placeholder: "Enter Your Email for Offers, Tips & Events",  'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'manual', 'data-container' => 'body', 'data-content' => 'Please tell us where to search :)'}
-    %button#search-btn.btn.btn-lg.btn-primary{type: "submit"} ADD
+%form.center-block.form-inline.search-form{role: 'form', action: '#', method: 'get'}
+  .form-group#email-field
+    .input-group.input-group-flat-left
+      %span.input-group-addon
+        %i.fa.fa-envelope
+      %input.form-control{type: 'email', name: 'newsletter_email', placeholder: 'Enter Your Email for Offers, Tips & Events'}
+  %button#search-btn.btn.btn-lg.btn-primary{type: 'submit'} ADD
