@@ -115,7 +115,7 @@
 
     img {
       display: inline-block;
-      margin: 0 3%;
+      margin: 0 2%;
     }
   }
 }
@@ -124,7 +124,7 @@
 .three-steps h2,
 .meet-community h2 {
   font-size: 35px;
-  margin-top: 35px;
+  margin-top: 50px;
 }
 
 .three-steps {
@@ -164,69 +164,71 @@
 
 section.bottom-search {
   background-color: rgb(93, 193, 191);
-  padding-bottom: 60px;
+  padding: 50px 0;
+
+  h3 {
+    color: #fff;
+    margin: 0 0 16px;
+  }
 }
 
-.bottom-search h3 {
-  color: #fff;
-  margin-top: 45px;
-}
-
-#postcode{
+#postcode, #join-our-amazing-community .form-group {
   width: 370px;
 }
 
-#email-field{
-  width: 300px;
-}
-
-#email-field {
-  input {
-    border-radius: 5px;
-    font-size: 15px;
-    height: 30px;
-    padding: 5px;
-  }
-}
-
-.mailer {
-  .search-form {
-    padding: 5px;
-  }
-
-  button#search-btn {
-    height: 30px;
-    padding: 5px;
-    width: auto;
-  }
-}
-
-#postcode .input-group, #email-field .input-group {
+#postcode .input-group, #join-our-amazing-community .form-group .input-group {
   width: 100%;
 }
 
-.press-coverage img {
-  margin: 0 2%;
+section#map {
+  padding: 50px 0;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  img {
+    display: block;
+    height: 300px;
+    padding: 0;
+  }
 }
 
 @media (max-width: $screen-sm-max) {
-  .jumbotron h1 {
-    font-size: 48px;
-    margin-top: 20px;
+  .jumbotron {
+    height: auto;
+    min-height: 600px;
+
+    h1 {
+      font-size: 48px;
+      margin: 70px 0 50px;
+    }
+
+    h4 {
+      margin-top: 50px;
+    }
   }
 
-  #postcode {
+  #postcode, section#join-our-amazing-community .form-group {
     display: block;
     min-width: 350px;
   }
 
-  #postcode .input-group {
+  section#join-our-amazing-community .form-group {
+    margin-bottom: 0;
+  }
+
+  #postcode .input-group, section#join-our-amazing-community .form-group .input-group {
     width: 100%;
   }
 
-  #search-btn {
+  #search-btn, section#join-our-amazing-community form.search-form button {
     display: block;
     width: 100%;
+  }
+
+  section#join-our-amazing-community form.search-form button {
+    margin-top: 5px;
   }
 
   #postcode, #drop-off, #pick-up {
@@ -239,8 +241,22 @@ section.bottom-search {
 }
 
 @media (max-width: $screen-xs-max) {
-  .jumbotron h1 {
-    font-size: 36px;
+  .jumbotron {
+    min-height: 500px;
+
+    h1 {
+      font-size: 36px;
+    }
+  }
+
+  section.meet-community {
+    .carousel-caption {
+      bottom: 20%;
+    }
+
+    .carousel-indicators {
+      bottom: 40px;
+    }
   }
 
   #drop-off input, #pick-up input {
@@ -268,12 +284,16 @@ section.bottom-search {
     padding-left:  0;
     padding-right: 0;
 
+    h1 {
+      font-size: 30px;
+    }
+
     .highlights {
       margin-top: 15px;
     }
   }
 
-  #why-phs{
+  #why-phs {
     img {
       width: 100px;
     }
@@ -289,6 +309,10 @@ section.bottom-search {
 
   .meet-community .story .caption {
     left: 25%;
+  }
+
+  section#join-our-amazing-community h5 {
+    display: none;
   }
 }
 
