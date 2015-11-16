@@ -59,3 +59,18 @@ section#join-our-amazing-community {
     }
   }
 }
+
+
+section.mailer{
+    background-color: #f7f7f7;
+    color: #777;
+    padding-top: 20px;
+    padding-bottom: 30px;
+
+    a {
+        color: #FFFFFF;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
