@@ -31,6 +31,11 @@ section#join-our-amazing-community {
     margin: 4px 0 0;
   }
 
+  h5.failed, h5.subscribed {
+    color: #ec5c3b;
+    display: none;
+  }
+
   form.search-form {
     margin-bottom: 14px;
     padding: 10px;
@@ -55,22 +60,23 @@ section#join-our-amazing-community {
       font-size: 14px;
       height: 30px;
       padding: 5px;
-      width: auto;
+      text-align: center;
+      width: 60px;
     }
   }
 }
 
+section.mailer {
+  background-color: #f7f7f7;
+  color: #777;
+  padding-top: 20px;
+  padding-bottom: 30px;
 
-section.mailer{
-    background-color: #f7f7f7;
-    color: #777;
-    padding-top: 20px;
-    padding-bottom: 30px;
+  a {
+    color: #fff;
 
-    a {
-        color: #FFFFFF;
-        &:hover {
-            text-decoration: none;
-        }
+    &:hover {
+      text-decoration: none;
     }
+  }
 }

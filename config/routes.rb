@@ -60,6 +60,8 @@ PetHomestay::Application.routes.draw do
 
   resources :recommendations, except: [:show, :edit, :update]
 
+  resources :subscribers, only: :create
+
   resources :supporters, only: [:edit, :update]
 
   resources :contacts, only: [:new, :create] do
