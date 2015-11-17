@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :tag_errors, :track_session_variables
+  before_filter :track_session_variables
   protect_from_forgery
 
   def admin_login_required
