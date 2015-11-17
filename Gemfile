@@ -63,7 +63,7 @@ gem 'gibbon'
 gem 'mail_interceptor'
 
 # Exceptions.
-gem 'appsignal', '~> 0.12.rc'
+#gem 'appsignal', '~> 0.12.rc'
 
 # Background processing.
 gem 'sidekiq', '3.1.4'
