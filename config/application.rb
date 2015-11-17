@@ -65,8 +65,7 @@ module PetHomestay
     # Add fonts dir to asset pipeline.
     config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
 
-    # Precompile additional assets (application.js,
-    # application.css, and all non-JS/CSS are already added)
+    # Precompile additional assets.
     config.assets.precompile += %w( address_autocomplete.js datepicker.js new_application.css new_application.js )
 
     # Configure layout for devise pages

@@ -20,11 +20,7 @@ PetHomestay::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
-
-  # DEBUG
-  config.assets.debug = true
-  config.assets.raise_runtime_errors = true
-
+  
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
 
