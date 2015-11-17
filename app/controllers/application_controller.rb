@@ -74,11 +74,11 @@ class ApplicationController < ActionController::Base
   # Tags AppSignal error notifications so that they include basic user info.
   def tag_errors
     if user_signed_in?
-      Appsignal.tag_request(
-        'User ID' => current_user.id,
-        'User name' => "#{current_user.first_name} #{current_user.last_name}",
-        'User email' => current_user.email
-      )
+      # Appsignal.tag_request(
+      #   'User ID' => current_user.id,
+      #   'User name' => "#{current_user.first_name} #{current_user.last_name}",
+      #   'User email' => current_user.email
+      # )
     end
   end
 
