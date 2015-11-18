@@ -13,6 +13,7 @@
 
 # Ignore .env
 .env
+.rbenv-vars
 
 # Ignore vendored gems.
 vendor/ruby/
