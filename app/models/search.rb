@@ -10,7 +10,7 @@ class Search
 
   attr_accessor :provider_types, :within, :sort_by, :country
   attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types,
-    :pet_feeding, :pet_grooming, :pet_training, :pet_walking
+    :pet_feeding, :pet_grooming, :pet_training, :pet_walking, :pet_sizes, :energy_levels
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -63,7 +63,9 @@ class Search
       pet_feeding: @pet_feeding,
       pet_grooming: @pet_grooming,
       pet_training: @pet_training,
-      pet_walking: @pet_walking
+      pet_walking: @pet_walking,
+      pet_sizes: @pet_sizes,
+      energy_level_ids: @energy_level_ids
     }
   end
 
@@ -86,7 +88,7 @@ class Search
 
       # Additional filters
       if refined_filters.present?
-        homestays.where(refined_filters)
+        homestays = homestays.where(refined_filters)
       end
 
       if homestay_types.present?
