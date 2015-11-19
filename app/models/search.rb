@@ -8,9 +8,9 @@ class Search
   NUMBER_OF_RESULTS = 30
   MAXIMUM_RADIUS    = 50
 
-  attr_accessor :provider_types, :within, :sort_by, :country
-  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types,
+  attr_accessor :provider_types, :within, :sort_by, :country, 
     :pet_feeding, :pet_grooming, :pet_training, :pet_walking, :pet_sizes, :energy_levels
+  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -58,14 +58,18 @@ class Search
     available_filters.select { |_, value| value.present? }
   end
 
+  def energy_levels
+    @energy_levels ||= []
+  end
+
   def available_filters
     {
-      pet_feeding: @pet_feeding,
-      pet_grooming: @pet_grooming,
-      pet_training: @pet_training,
-      pet_walking: @pet_walking,
-      pet_sizes: @pet_sizes,
-      energy_level_ids: @energy_level_ids
+      pet_feeding: pet_feeding,
+      pet_grooming: pet_grooming,
+      pet_training: pet_training,
+      pet_walking: pet_walking,
+      pet_sizes: pet_sizes,
+      energy_level_ids: energy_level_ids
     }
   end
 
@@ -164,4 +168,23 @@ class Search
     results_list.keys.sort.reverse.each {|k| final_list += results_list[k].sort_by {|h| h.user.received_feedbacks.count}.reverse!}
     return final_list
   end
+
+  private
+
+  def energy_level_mapping
+    {
+      'Low' => [ReferenceData::EnergyLevel::LOW.id],
+      'Medium' => [
+        ReferenceData::EnergyLevel::LOW_MEDIUM.id, 
+        ReferenceData::EnergyLevel::MEDIUM.id,
+        ReferenceData::EnergyLevel::HIGH_MEDIUM.id
+      ],
+      'High' => [ReferenceData::EnergyLevel::HIGH.id]
+    }
+  end
+
+  def energy_level_ids
+    energy_levels.map{ |energy_level| energy_level_mapping[energy_level] }.compact.flatten
+  end
+
 end
