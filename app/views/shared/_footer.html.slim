@@ -1,3 +1,14 @@
+- if current_page?(root_path)
+  section#join-our-amazing-community
+    .container.text-center
+      h3 Join Our Amazing Community!
+      = render 'home/email_request', autofocus: false
+      h5.info You will get one email a month and can unsubscribe at any time.
+      h5.info We never sell our members details to third parties.
+      h5.subscribed Thanks for subscribing to the PetHomeStay mailing list!
+      h5.subscribed To complete the process, check your inbox for a welcome email.
+      h5.failed Oops! Looks like something went wrong.
+      h5.failed
 section.footer
   .container
     .col-sm-5

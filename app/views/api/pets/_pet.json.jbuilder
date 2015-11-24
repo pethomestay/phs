@@ -7,3 +7,6 @@ json.sex pet.sex_id
 json.size pet.size_id
 json.energy_level pet.energy_level
 json.personality pet.personalities
+json.image do
+  json.partial! 'api/images/image', image: pet.profile_photo
+end

@@ -52,13 +52,13 @@ class RegistrationsController < Devise::RegistrationsController
                              # remove the virtual current_password attribute update_without_password
                              # doesn't know how to ignore it
                              params[:user].delete(:current_password)
+                             @user.homestay.update_attributes(params[:homestay]) if @user.homestay.present?
                              @user.update_without_password(params[:user])
-                             @user.homestay.update_attributes(params[:homestay])
                            end
 
     if successfully_updated
       set_flash_message :notice, :updated
-      UserMailer.update_account(current_user).deliver
+#      UserMailer.update_account(current_user).deliver
       # Sign in the user bypassing validation in case his password changed
       sign_in @user, :bypass => true
       redirect_to after_update_path_for(@user)

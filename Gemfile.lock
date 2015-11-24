@@ -35,6 +35,10 @@ GEM
     addressable (2.3.3)
     alphabetical_paginate (2.2.3)
     analytics-ruby (2.0.12)
+    apn_sender (2.0.2)
+      activesupport (>= 3.1, < 4.1.0)
+      connection_pool
+      daemons
     arel (3.0.3)
     ast (2.1.0)
     astrolabe (1.3.1)
@@ -62,12 +66,22 @@ GEM
     bullet (4.14.7)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.9.0)
-    capistrano (2.14.2)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
+    capistrano (3.4.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-bundler (1.1.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-rails (1.1.5)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rbenv (2.0.3)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+    capistrano-unicorn-nginx (3.4.0)
+      capistrano (>= 3.1)
+      sshkit (>= 1.2.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chosen-rails (0.9.12)
@@ -88,6 +102,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.1)
+    colorize (0.7.7)
+    connection_pool (2.2.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
     css_parser (1.3.4)
@@ -152,6 +168,9 @@ GEM
       multi_json (~> 1.0)
     formatador (0.2.5)
     geocoder (1.2.9)
+    gibbon (1.2.1)
+      httparty
+      multi_json (>= 1.9.0)
     gmaps4rails (1.5.6)
     gon (5.2.3)
       actionpack (>= 2.3.0)
@@ -185,10 +204,9 @@ GEM
     hashie (2.0.5)
     heroku-deflater (0.5.3)
       rack (>= 1.4.5)
-    highline (1.6.16)
     hike (1.2.3)
     htmlentities (4.3.1)
-    httparty (0.13.1)
+    httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
@@ -229,6 +247,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_interceptor (0.0.6)
+      activesupport
     mailgun_rails (0.6.2)
       rails (>= 3.2.13)
       rest-client (>= 1.6.7)
@@ -247,13 +267,8 @@ GEM
     nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-sftp (2.1.1)
-      net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     netrc (0.8.0)
-    newrelic_rpm (3.5.8.72)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     notiffany (0.0.7)
@@ -301,6 +316,8 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-protection (1.5.3)
+      rack
     rack-ssl (1.3.4)
       rack
     rack-test (0.6.2)
@@ -328,16 +345,15 @@ GEM
     rainbow (2.0.0)
     raindrops (0.12.0)
     rake (10.3.2)
-    raygun4ruby (1.1.4)
-      httparty (~> 0.11)
-      json
-      rack
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
     redcarpet (3.0.0)
+    redis (3.2.1)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     ref (1.0.2)
     request_store (1.1.0)
     rest-client (1.7.2)
@@ -380,9 +396,21 @@ GEM
       activesupport (>= 3)
     shoulda-matchers (2.6.1)
       activesupport (>= 3.0.0)
+    sidekiq (3.1.4)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
+    sidekiq-failures (0.4.5)
+      sidekiq (>= 2.16.0)
     simple_form (2.1.1)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
     slim (2.0.3)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
@@ -395,6 +423,10 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sshkit (1.7.1)
+      colorize (>= 0.7.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     state_machine (1.2.0)
     strong_parameters (0.2.3)
       actionpack (~> 3.0)
@@ -454,6 +486,7 @@ DEPENDENCIES
   actionmailer_inline_css
   alphabetical_paginate
   analytics-ruby (~> 2.0.0)
+  apn_sender
   attachinary
   attr_encrypted
   auto_strip_attributes (~> 2.0)
@@ -461,7 +494,11 @@ DEPENDENCIES
   bootstrap-sass
   braintree
   bullet
-  capistrano
+  capistrano (~> 3.1)
+  capistrano-bundler (~> 1.1.2)
+  capistrano-rails
+  capistrano-rbenv
+  capistrano-unicorn-nginx (= 3.4.0)
   chosen-rails
   chronic
   cloudinary
@@ -476,6 +513,7 @@ DEPENDENCIES
   flight-for-rails (~> 1.2.0)
   fog (~> 1.2)
   geocoder
+  gibbon
   gmaps4rails
   gon
   guard-rspec
@@ -492,12 +530,12 @@ DEPENDENCIES
   koala (~> 1.8.0rc1)
   legato
   libv8 (~> 3.16.14)
+  mail_interceptor
   mailgun_rails
   mandrill-api
   momentjs-rails
   nested_form
   net-scp (= 1.2.1)
-  newrelic_rpm
   oauth2
   omniauth-facebook
   omnicontacts
@@ -508,7 +546,6 @@ DEPENDENCIES
   rack-test
   rails (= 3.2.18)
   rails_12factor
-  raygun4ruby
   rb-fsevent
   redcarpet
   rest-client
@@ -517,7 +554,10 @@ DEPENDENCIES
   sass-rails
   shoulda-callback-matchers
   shoulda-matchers
+  sidekiq (= 3.1.4)
+  sidekiq-failures
   simple_form
+  sinatra
   slim
   spring
   spring-commands-rspec

@@ -12,6 +12,17 @@ class PagesController < ApplicationController
     end
   end
 
+  # Launch point for iOS web views.
+  def launch
+    user = User.find_by_hex(params[:user_token])
+    if user.blank?
+      redirect_to root_path, notice: 'Authentication failed.'
+    else
+      sign_in(:user, user)
+      redirect_to params[:path]
+    end
+  end
+
   def partners
     @contact = Contact.new
   end

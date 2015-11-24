@@ -1,0 +1,9 @@
+APN.root = "#{Rails.root}/config/certs"
+APN.certificate_name = 'phs-development.pem'
+#APN.host = 'apple host (on development sandbox url is used by default)'
+#APN.password = 'certificate_password'
+APN.pool_size = 1
+APN.pool_timeout = 5
+APN.logger = Logger.new("#{Rails.root}/log/apns.log")
+APN.truncate_alert = true
+APN.backend = :sidekiq

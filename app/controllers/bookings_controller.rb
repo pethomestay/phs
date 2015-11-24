@@ -80,7 +80,7 @@ class BookingsController < ApplicationController
       if @booking.owner_accepted
         @booking.update_attributes!(params[:booking])
         if params[:booking][:host_accepted] == "false"
-          AdminMailer.host_rejected_paid_booking(@booking).deliver
+#          AdminMailer.host_rejected_paid_booking(@booking).deliver
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           Analytics.track(
             user_id:          current_user.id,
@@ -108,8 +108,8 @@ class BookingsController < ApplicationController
           return redirect_to host_messages_path, alert: message
         end
       else
-        if @booking.update_attributes!(params[:booking])
-          @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
+        # This is updating a custom rate
+        if @booking.update_transaction_by_daily_price(params[:booking][:cost_per_night])
           @booking.mailbox.update_attributes host_read: false, guest_read: false
           @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => params[:booking][:message]) unless params[:booking][:message].blank?
           @booking.update_attribute(:host_accepted, true)
@@ -176,7 +176,6 @@ class BookingsController < ApplicationController
                 :host      => "#{@booking.bookee.name} (#{@booking.bookee.mobile_number})"
               }
             )
-            # raise Raygun.track_exception(custom_data: {time: Time.now, user: current_user.id, reason: "BrainTree customer creation failed"})
           end
         else
           result = Braintree::Transaction.sale(

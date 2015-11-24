@@ -55,20 +55,18 @@ module PetHomestay
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = false
 
-    # Enable the asset pipeline
+    # Enable the asset pipeline.
     config.assets.enabled = true
-
     config.assets.initialize_on_precompile = false
 
-    # Version of your assets, change this if you want to expire all your assets
+    # Version of your assets, change this if you want to expire all your assets.
     config.assets.version = '1.0'
 
-    config.before_configuration do
-	    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-	    YAML.load(File.open(env_file)).each do |key, value|
-		    ENV[key.to_s] = value
-	    end if File.exists?(env_file)
-    end
+    # Add fonts dir to asset pipeline.
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
+
+    # Precompile additional assets.
+    config.assets.precompile += %w( address_autocomplete.js datepicker.js new_application.css new_application.js )
 
     # Configure layout for devise pages
     config.to_prepare do

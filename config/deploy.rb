@@ -1,79 +1,32 @@
-set :stages, %w(production staging)
-require "bundler/capistrano"
-load "deploy/assets"
+lock '3.4.0'
 
-set :application, "pet_homestay"
-set :deploy_to, "/var/www/#{application}"
-set :use_sudo, false
-set :user, 'ubuntu'
+# App.
+set :application, 'pethomestay'
+set :unicorn_service, "unicorn_#{fetch(:application)}"
+set :user, 'deploy'
 
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
+# SSH.
+set :pty, true
+set :ssh_options, {
+  config: false
+}
 
+# Repo.
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :repo_url, 'git@github.com:pethomestay/phs.git'
 set :scm, :git
-set :repository,  "git@github.com:tapmint/pet_homestay.git"
-set :deploy_via, :remote_cache
-set :git_shallow_clone, 1
 
-task :repo do
-  set :deploy_via, :copy
-  set :copy_strategy, :export
-  set :branch do
-    ENV["TAG"] || 'master'
-  end
-end
+# Target.
+set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:stage)}/#{fetch(:application)}"
 
-task :local_repo do
-  set :repository,  File.expand_path("../../.git", __FILE__)
-end
+# Links.
+set :linked_files, %w{.rbenv-vars config/database.yml config/unicorn.rb}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets public/assets vendor/bundle}
 
+# Ruby.
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_ruby, '1.9.3-p547'
+set :rbenv_type, :user
 
-################################### production #####################################################
-
-task :production do
-  set :stage, 'production'
-  set :rails_env, 'production'
-  server '54.253.121.55', :app, :db, :web, :primary => true
-  set :server_name, 'pet_homestay'
-end
-
-####################################################################################################
-
-
-after "deploy:cold", "deploy:seed"
-after "deploy", "deploy:cleanup"
-
-namespace :deploy do
-  # namespace :assets do
-  #   task :precompile, :roles => :web, :except => { :no_release => true } do
-  #     from = source.next_revision(current_revision)
-  #     if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-  #       run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
-  #     else
-  #       logger.info "Skipping asset pre-compilation because there were no asset changes"
-  #     end
-  #   end
-  # end
-
-  task :restart, :roles => :app, :except => {:no_release => true} do
-    run "#{try_sudo} touch #{File.join(current_path, 'tmp', 'restart.txt')}"
-  end
-
-  task :seed do
-    run_rake "db:seed"
-  end
-end
-
-namespace :tail do
-
-  desc "Tail carepod log"
-  task :pet_homestay do
-    run "tail -f #{shared_path}/log/#{rails_env}.log"
-  end
-
-end
-
-def run_rake(cmd, options={}, &block)
-  command = "cd #{latest_release} && /usr/bin/env bundle exec rake #{cmd} RAILS_ENV=#{rails_env}"
-  run(command, options, &block)
-end
+require 'appsignal/capistrano'

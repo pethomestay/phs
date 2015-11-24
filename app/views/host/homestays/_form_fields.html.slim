@@ -264,8 +264,8 @@ css:
                 .col-lg-6
                   label.hs_mhs_title style="margin-left:-15px;" 
                     | Favourite Dog Breeds 
-                  .pad-hor  
-                    = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'basic-multiple', multiple: true, data: { placeholder: 'Select 3' } }
+                  .pad-hor
+                    = f.input :favorite_breeds, collection: DOG_BREEDS, label: false, input_html: { class: 'chosen-select', multiple: true, data: { placeholder: 'Select 3' } }
                 .col-lg-6.hidden-md.hidden-sm.hidden-xs          
                   .panel._item_con
                     .panel-body style="padding: 10px;"          
@@ -314,7 +314,7 @@ css:
                       .phs_help_section 
                         span.icon-wrap.icon-wrap-sm.icon-circle.bg-info._inline_icons_left 
                           i.fa.fa-paw
-                        .hs_mhs_50 24x7 - You will be at home the majority of the time.
+                        .hs_mhs_50 24&times;7 - You will be at home the majority of the time.
                         .hs_mhs_50 Evenings - You will be at home in the Evenings only.          
                         .hs_mhs_50 Weekends - You will be at home the weekends (Friday night - Sunday night).
               .row
@@ -355,12 +355,6 @@ css:
     /  small If you do, please complete a pet profile after creating your listing
     /.checkbox
     /  = f.input :pets_present, as: :boolean, label: 'My pets will be present at this address during PetHomeStay bookings', checked_value: 1, unchecked_value: 2
-javascript:
-  $("#homestay_favorite_breeds").multiselect({ 
-      maxHeight: 200, 
-      buttonWidth: '100%',
-      enableCaseInsensitiveFiltering: true
-    });
 coffee:
   $ ->
     $('.homestay_photos .attachinary-input').attachinary
@@ -392,7 +386,6 @@ coffee:
         </table class="table">
       """
 
-  $(".basic-multiple").multiselect({ maxHeight: 200, buttonWidth: '100%' });
   $('.chosen-select').chosen
     max_selected_options: 3
 

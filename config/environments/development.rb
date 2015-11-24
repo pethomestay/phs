@@ -18,8 +18,12 @@ PetHomestay::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  # Don't deliver emails in development
+  config.action_mailer.perform_deliveries = false
+
   # Add default mailer URL
   config.action_mailer.asset_host = 'http://localhost:3000'
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -35,21 +39,10 @@ PetHomestay::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.log_level = :debug
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.default charset: 'utf-8'
-  ActionMailer::Base.smtp_settings = {
-    address: 'smtp.mandrillapp.com',
-    port: 587,
-    user_name: 'tom@pethomestay.com',
-    password: ENV['MANDRILL_APIKEY'],
-    #:domain    => 'www.pethomestay.com',
-    authentication: 'login',
-    enable_starttls_auto: true
-  }
 
   # Expands the lines which load the assets
   # config.assets.raise_runtime_errors = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   config.assets.debug = false
   config.assets.prefix = '/assets_dev'
 

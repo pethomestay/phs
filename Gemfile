@@ -40,13 +40,9 @@ gem 'dragonfly', '~>1.0.5'
 gem 'dragonfly-s3_data_store'
 gem 'rack-cache'
 gem 'actionmailer_inline_css'
-gem 'newrelic_rpm'
-gem 'raygun4ruby'
 gem 'net-scp', '1.2.1'
-gem 'unicorn'
 gem 'attr_encrypted'
 gem 'rest-client'
-gem 'sucker_punch'
 gem 'mailgun_rails'
 gem 'figaro'
 gem 'state_machine'
@@ -61,6 +57,20 @@ gem 'phony_rails' # validate and normalize phone number
 # Attributes.
 gem 'virtus'
 
+# Notifications.
+gem 'apn_sender', require: 'apn'
+gem 'gibbon'
+gem 'mail_interceptor'
+
+# Exceptions.
+#gem 'appsignal', '~> 0.12.rc'
+
+# Background processing.
+gem 'sidekiq', '3.1.4'
+gem 'sidekiq-failures'
+gem 'sinatra', require: false
+gem 'sucker_punch'
+
 # Documentation.
 gem 'yard'
 gem 'yard-restful'
@@ -70,8 +80,10 @@ gem 'yardstick'
 gem 'jbuilder', '~> 2.0'
 gem 'yajl-ruby'
 
+# Use Unicorn as the app server.
+gem 'unicorn'
+
 group :development, :test do
-  gem 'capistrano'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
@@ -92,6 +104,11 @@ end
 
 group :development do
   gem 'bullet'
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-bundler', '~> 1.1.2', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv'
+  gem 'capistrano-unicorn-nginx', '3.4.0'
   gem 'terminal-notifier-guard'
 end
 

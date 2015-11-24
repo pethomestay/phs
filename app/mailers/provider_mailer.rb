@@ -5,7 +5,6 @@ class ProviderMailer < ActionMailer::Base
     @mandrill_client = Mandrill::API.new
   end
 
-
   def enquiry(enquiry)
     @enquiry = enquiry
     @guest = @enquiry.user
@@ -116,7 +115,7 @@ class ProviderMailer < ActionMailer::Base
                         :name => "CostPerNight",
                         :content => @booking.actual_value_figure(:cost_per_night)
                     },
-                    
+
                     {
                         :name => "PhsServiceCharge",
                         :content => @booking.phs_service_charge
