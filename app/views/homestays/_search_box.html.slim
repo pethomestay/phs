@@ -4,7 +4,7 @@
       - if @referer == :nabo
         h3 
           |
-            #{link_to('Nabo', 'https://www.nabo.com.au', class: 'external')} has partnered with PetHomeStay to 
+            Nabo has partnered with PetHomeStay to 
             <br class="desktop">
             help you find a pet minder in your local area
   = simple_form_for @search,  method: :GET, url: homestays_path, wrapper: :bootstrap3, html: { class: 'form-inline' } do |f|

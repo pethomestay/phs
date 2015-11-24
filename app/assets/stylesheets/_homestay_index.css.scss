@@ -166,13 +166,14 @@ p.ta {
     background: $blue-light;
     border: none;
     border-bottom: 2px solid #fff;
-    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    border-radius: 0;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
     margin: 0 -15px 20px;
 
     .referer {
       align-items: center;
       background: transparent image-url('nabo.png') no-repeat left center;
-      cursor: pointer;
+      cursor: default;
       display: flex;
       margin-bottom: 30px;
       min-height: 53px;
@@ -264,7 +265,9 @@ p.ta {
     background-color: #e8ebf0;
 
     .panel {
-      margin-bottom: 20px;
+      border-radius: none;
+      box-shadow: none;
+      margin-bottom: 15px;
     }
 
     a {
