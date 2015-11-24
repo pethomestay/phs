@@ -3,6 +3,14 @@ module ApplicationHelper
     title.present? ? "#{title} - PetHomeStay" : 'PetHomeStay'
   end
 
+  def bordered_nav?
+    controller_name == 'homestays' && ['index'].include?(action_name)
+  end
+
+  def fluid_nav?
+    controller_name == 'homestays' && ['index', 'show'].include?(action_name)
+  end
+
   def flash_class_for(type)
     case type
     when :alert
@@ -114,11 +122,11 @@ module ApplicationHelper
   def resource_name
     :user
   end
- 
+
   def resource
     @resource ||= User.new
   end
- 
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end

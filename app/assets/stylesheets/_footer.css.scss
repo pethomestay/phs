@@ -4,6 +4,10 @@ section.footer {
   padding-bottom: 30px;
   padding-top: 50px;
 
+  &.bordered {
+    border-top: 2px solid #fff;
+  }
+
   a {
     color: #fff;
 
