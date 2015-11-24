@@ -5,7 +5,7 @@ if Rails.env.production?
   Braintree::Configuration.private_key = 'e43d290912e89f58a32cda916af1100b'
 else
   Braintree::Configuration.environment = :sandbox
-  Braintree::Configuration.merchant_id = "nfss7wx3fk4dzkrg"
-  Braintree::Configuration.public_key = "9mbnqmrx5js2dvm7"
-  Braintree::Configuration.private_key = "043a7de25e089ba5befc4e74ae91dad3"
+  Braintree::Configuration.merchant_id = ENV['BRAINTREE_MERCHANT_ID']
+  Braintree::Configuration.public_key = ENV['BRAINTREE_PUBLIC_KEY']
+  Braintree::Configuration.private_key = ENV['BRAINTREE_PRIVATE_KEY']
 end
