@@ -43,6 +43,9 @@ PetHomestay::Application.routes.draw do
   # Mobile web-view launch.
   get 'launch/:user_token', to: 'pages#launch'
 
+  # Nabo promo.
+  get 'nabo(/:postcode)', to: 'homestays#index', defaults: { referer: 'nabo' }
+
   resources :invitations
 
   devise_for :users, controllers: {

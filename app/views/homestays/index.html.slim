@@ -3,7 +3,6 @@
     - if @homestays.any?
       .col-sm-8.results
         = render 'search_box'
-
         ul.media-list
           - @homestays.each do |homestay|
             = render 'result_row', homestay: homestay
@@ -41,7 +40,6 @@
         = render 'search_box'
       .col-sm-8.col-sm-offset-2
         = render 'no_results'
-
 coffee:
   $ ->
     return if $('#xs-indicator').is ':hidden'

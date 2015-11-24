@@ -12,6 +12,7 @@ class Search
   attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types
 
   def initialize(attributes = {})
+    self.country = 'Australia'
     attributes.each do |key, value|
       send("#{key}=", value) if respond_to? "#{key}="
     end
