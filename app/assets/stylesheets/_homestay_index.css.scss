@@ -1,5 +1,5 @@
 $secondary-text-color: #50a19e;
-$search-field-height: 40px;
+$search-field-height: 36px;
 
 .search-alert {
   margin: 0 -15px 0 -15px;
@@ -169,6 +169,7 @@ p.ta {
     border-radius: 0;
     box-shadow: 0 2px 3px rgba(0,0,0,0.2);
     margin: 0 -15px 20px;
+    padding: 18px 12px;
 
     .referer {
       align-items: center;
@@ -202,52 +203,237 @@ p.ta {
       }
     }
 
-    @media (min-width: $screen-sm-min) {
-      padding-top: 50px;
-      padding-left: 40px;
-      padding-bottom: 30px;
+    // @media (min-width: $screen-sm-min) {
+    //   padding-top: 50px;
+    //   padding-left: 40px;
+    //   padding-bottom: 30px;
+    // }
+
+    form {
+      border-collapse: collapse;
+      border-spacing: 5px 0;
+      display: table;
+    }
+
+    .form-group, input[type="submit"] {
+      display: table-cell;
+      white-space: nowrap;
+
+      &.location-container {
+        width: 50%;
+      }
+    }
+
+    .toggle-switch {
+      background-color: rgba(255,255,255,0.8);
+      border-radius: 32px;
+      display: inline-block;
+      height: 36px;
+      position: relative;
+      width: 50px;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+
+      .toggle-switch-checkbox {
+        display: none;
+      }
+
+      label.toggle-switch-label {
+        border: 2px solid #fff;
+        border-radius: 32px;
+        cursor: pointer;
+        display: block;
+        overflow: hidden;
+      }
+
+      .toggle-switch-inner {
+        display: block;
+        margin-left: -100%;
+        width: 200%;
+      }
+
+      .toggle-switch-inner:before,
+      .toggle-switch-inner:after {
+        display: block;
+        float: left;
+        width: 50%;
+        height: 32px;
+        padding: 0;
+        line-height: 32px;
+        font-size: 16px;
+        color: white;
+        font-family: Trebuchet, Arial, sans-serif;
+        font-weight: bold;
+        box-sizing: border-box;
+      }
+
+      .toggle-switch-inner:before {
+        color: #fff;
+        content: "";
+        padding-left: 10px;
+      }
+
+      .toggle-switch-inner:after {
+        color: #666;
+        content: "";
+        padding-right: 10px;
+        text-align: right;
+      }
+
+      .toggle-switch-switch {
+        background: #fff;
+        background-color: #5cc1c0;
+        background-color: #ade0e0;
+        border: 2px solid #fff;
+        border-radius: 32px;
+        bottom: 0;
+        color: #555;
+        display: block;
+        font-size: 12px;
+        margin: 0px;
+        position: absolute;
+        right: 14px;
+        top: 0;
+        transition: right 0.2s;
+        width: 36px;
+
+        i.fa {
+          color: #fff;
+        }
+      }
+
+      .toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-inner {
+        margin-left: 0;
+      }
+
+      .toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-switch {
+        right: 0px;
+      }
+    }
+
+    .home-or-away {
+      line-height: 36px;
+
+      .off {
+        color: #fff;
+        display: inline-block;
+        line-height: normal;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+
+      .toggle-switch {
+        vertical-align: middle;
+      }
+
+      .on {
+        color: #fff;
+        display: inline-block;
+        line-height: normal;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+    }
+
+    .input-group {
+      width: 100%;
+
+      input[type="text"] {
+        background-color: rgba(255,255,255,1);
+        border: 2px solid #fff;
+        border-radius: 18px;
+        font-size: 14px;
+        height: $search-field-height;
+        padding-left: 16px;
+        padding-right: 16px;
+        text-align: right;
+        transition: background-color .5s;
+      }
+
+      i.fa {
+        color: #ccc;
+        left: 21px;
+        font-size: 18px;
+        position: absolute;
+        top: 10px;
+        transition: color .5s;
+        z-index: 3;
+      }
+
+      input[type="text"]:focus + i.fa,
+      input[type="text"]:hover + i.fa {
+        color: #5cc1c0;
+      }
+
+      input[type="text"]:focus {
+        background-color: rgba(255,255,255,0.8);
+      }
+
+      &.active {
+        input[type="text"] {
+          background-color: rgba(255,255,255,0.8) !important;
+        }
+
+        i.fa {
+          color: #5cc1c0;
+        }
+      }
     }
 
     .search_location_container {
-      @media (min-width: $screen-sm-min) {
-        width: 200px;
-      }
+      padding-right: 0 !important;
+      position: relative;
 
-      #search_location {
-        height: $search-field-height;
-      }
+      // @media (min-width: $screen-sm-min) {
+      //   width: 200px;
+      // }
     }
 
     .search_check_in_date_container,
     .search_check_out_date_container {
       @media (min-width: $screen-sm-min) {
-        width: 140px;
+        min-width: 130px;
       }
     }
+
     #search_check_in_date,
     #search_check_out_date {
-      margin-left: 2px;
-      height: $search-field-height;
       background-color: #fff;
       cursor: pointer;
-    }
-    .search.btn {
-      width: 105px;
       height: $search-field-height;
-      margin-left: 2px;
+    }
+
+    .search.btn {
+      background-color: #ec5d3c;
+      border: 2px solid #ec5d3c;
+      border-radius: 18px;
+      box-shadow: none;
+      font-size: 14px;
+      height: $search-field-height;
+      outline: none;
+      padding: 6px 16px;
+      text-align: center;
+      text-transform: uppercase;
+      -webkit-appearance: none;
+
+      &:active {
+        border-color: #fff;
+      }
 
       @media (max-width: $screen-xs-max) {
         width: 100%;
       }
     }
+
     .sort-order {
+      color: #fff;
       margin-top: 20px;
-      color: white;
 
       span.sort-by {
-        margin-right: 15px;
+        color: #fff;
         font-size: 15px;
-        color: white;
+        margin-right: 15px;
       }
     }
   }
@@ -261,8 +447,8 @@ p.ta {
   }
 
   .results {
-    padding: 0 15px;
     background-color: #e8ebf0;
+    padding: 0 15px;
 
     .panel {
       border-radius: none;
@@ -281,7 +467,7 @@ p.ta {
     p.rating {
       color: $blue-light;
       @media (max-width: $screen-xs-max) {
-            padding-left: 0;
+        padding-left: 0;
       }
     }
 
