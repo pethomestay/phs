@@ -40,13 +40,3 @@
         = render 'search_box'
       .col-sm-8.col-sm-offset-2
         = render 'no_results'
-coffee:
-  $ ->
-    return if $('#xs-indicator').is ':hidden'
-    $search_box = $('.search-box')
-    $toggler = $('.toggler')
-    $search_box.delay(1000).slideUp ->
-      $toggler.show()
-    $toggler.on 'click', ->
-      $toggler.hide()
-      $search_box.slideDown()

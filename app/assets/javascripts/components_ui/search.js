@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-  console.info('here');
-
   var checkIn = $('#search_check_in_date');
   var checkOut = $('#search_check_out_date');
 

@@ -1,8 +1,7 @@
 %nav.navbar.nav-custom{role: "navigation", class: "#{'bordered' if bordered_nav?}", style: unless @homepage then 'background-color: #3c3835' else '' end}
   %div{class: "#{fluid_nav? ? 'container-fluid' : 'container'}"}
     .navbar-header.pull-left
-      %a.navbar-brand.hidden-sm.hidden-xs#brand{href: "#{root_path}"} pet<span style="color:#ec5d3c;">home</span>stay
-      %a.navbar-brand.hidden-md.hidden-lg.text-sm#brand{href: "#{root_path}"} pet<span style="color:ec5d3c;">home</span>stay
+      %a.navbar-brand#brand{href: "#{root_path}"} pet<span style="color:#ec5d3c;">home</span>stay
     .navbar-header.pull-right
       - if user_signed_in?
         - if session[:check_for_coupon] && current_user.try(:used_coupons).try(:empty?)

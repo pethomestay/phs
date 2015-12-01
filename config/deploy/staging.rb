@@ -2,7 +2,7 @@ set :branch, :develop
 set :rails_env, :staging
 set :stage, :staging
 
-server '159.203.248.178', user: 'deploy', roles: %w{app db web}, port: 2022
+server '104.131.148.69', user: 'deploy', roles: %w{app db web}, port: 2022
 
 set :ssh_options, {
   auth_methods: ['publickey'],

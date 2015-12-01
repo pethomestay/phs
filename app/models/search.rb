@@ -67,6 +67,8 @@ class Search
     end_date = @check_out_date
     search_dates = start_date && end_date ? (start_date..end_date).to_a : []
 
+    Rails.logger.debug search_dates.inspect
+
     # Logging code to check how long a query takes
     start_time = Time.now
     Rails.logger.debug "#{start_time}"

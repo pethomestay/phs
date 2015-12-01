@@ -28,6 +28,6 @@
       .input-group.search_check_out_date_container
         = f.input_field :check_out_date, placeholder: 'Pick up', readonly: true, value: @search.check_out_date.blank? ? nil : @search.check_out_date.strftime('%d.%m.%y')
         %i.fa.fa-calendar
-    .form-group
+    .form-group.go
       .input-group
         = f.button :submit, 'Search', class: 'btn btn-primary search'

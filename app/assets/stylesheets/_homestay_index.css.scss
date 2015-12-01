@@ -173,11 +173,12 @@ p.ta {
 
     .referer {
       align-items: center;
-      background: transparent image-url('nabo.png') no-repeat left center;
+      background: transparent image-url('nabo.png') no-repeat 5px center;
       cursor: default;
       display: flex;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       min-height: 53px;
+      padding-bottom: 10px;
 
       h3 {
         color: #fff;
@@ -185,7 +186,7 @@ p.ta {
         font-weight: normal;
         line-height: 24px;
         margin: 0;
-        padding-left: 210px;
+        padding-left: 215px;
 
         a {
           color: #fff;
@@ -215,12 +216,19 @@ p.ta {
       display: table;
     }
 
-    .form-group, input[type="submit"] {
+    .form-group {
       display: table-cell;
+      margin: 0;
       white-space: nowrap;
 
       &.location-container {
         width: 50%;
+      }
+
+      .input-group {
+        .form-control {
+          float: none;
+        }
       }
     }
 
@@ -361,6 +369,12 @@ p.ta {
         z-index: 3;
       }
 
+      @media (min-width: 992px) and (max-width: 1200px) {
+        i.fa.fa-calendar {
+          display: none;
+        }
+      }
+
       input[type="text"]:focus + i.fa,
       input[type="text"]:hover + i.fa {
         color: #5cc1c0;
@@ -392,8 +406,12 @@ p.ta {
 
     .search_check_in_date_container,
     .search_check_out_date_container {
-      @media (min-width: $screen-sm-min) {
-        min-width: 130px;
+      @media (min-width: 768px) {
+        min-width: 110px;
+      }
+
+      @media (min-width: 992px) {
+        min-width: 110px;
       }
 
       @media (min-width: 1200px) {
@@ -438,6 +456,54 @@ p.ta {
         color: #fff;
         font-size: 15px;
         margin-right: 15px;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    .search-box {
+      padding: 19px 17px;
+
+      form {
+        width: 100%;
+      }
+
+      .form-group {
+        display: block;
+
+        .input-group {
+          display: block;
+
+          .form-control {
+            display: block;
+          }
+        }
+
+        &.home-or-away {
+          width: 100%;
+        }
+
+        &.location-container {
+          margin: 10px 0;
+          width: 100%;
+        }
+
+        &.search_check_in_date {
+          margin-right: 10px;
+        }
+
+        &.search_check_in_date, &.search_check_out_date {
+          float: left;
+          width: 35%;
+
+          .input-group {
+            width: 100%;
+          }
+        }
+
+        &.go {
+          float: right;
+        }
       }
     }
   }
@@ -701,6 +767,7 @@ p.ta {
 .phs_rb_sp {
   margin-left: -30px !important;
 }
+
 .form-group.boolean {
   margin-bottom:0px;
   margin-left:-5px;
