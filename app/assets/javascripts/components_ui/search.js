@@ -35,4 +35,19 @@ $(document).ready(function() {
     checkOut.closest('.input-group').removeClass('active');
   }).data('datepicker');
 
+  $('ul.homestays li.homestay').on('click', function(e) {
+    var el = $(this);
+    var target = $(e.target);
+    if(target.hasClass('fa-chevron-left') || target.hasClass('fa-chevron-right') || target.hasClass('nav')) {
+      // Do nothing.
+     } else {
+       document.location = el.data('path');
+     }
+  });
+
+  $('.reviews .public-reviews').slick({
+    prevArrow: '<span class="nav prev"><i class="fa fa-chevron-left"></i></span>',
+    nextArrow: '<span class="nav next"><i class="fa fa-chevron-right"></i></span>'
+  });
+
 });

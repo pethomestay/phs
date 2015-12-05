@@ -67,8 +67,6 @@ class Search
     end_date = @check_out_date
     search_dates = start_date && end_date ? (start_date..end_date).to_a : []
 
-    Rails.logger.debug search_dates.inspect
-
     # Logging code to check how long a query takes
     start_time = Time.now
     Rails.logger.debug "#{start_time}"
@@ -100,6 +98,16 @@ class Search
     Rails.logger.debug "Time taken for search= #{(search_time - start_time).seconds}"
 
     results_list = Search.algorithm(results_list.uniq) unless @sort_by == "distance"
+
+    # Add distnace info.
+    results_list.each_with_index do |homestay, i|
+      homestay.position = i + 1
+      homestay.distance = Geocoder::Calculations.distance_between(
+        [@latitude, @longitude],
+        [homestay.latitude, homestay.longitude],
+        units: :km
+      )
+    end
     sort_time = Time.now
     Rails.logger.debug "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list.uniq
