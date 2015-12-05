@@ -8,6 +8,6 @@
   - elsif homestay.pictures.any?
     = image_tag homestay.pictures.first.file.thumb("#{width}x#{width}#").url, alt: homestay.title, class: 'img-circle search_item_profile_picture'
   - else
-    = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: "width:#{width}px;"
+    = image_tag 'woof.png', class: 'img-circle search_item_profile_picture', style: "width:#{width}px;"
 - else
-  = image_tag 'default_profile_photo.jpg', class: 'img-circle search_item_profile_picture', style: "width:#{width}px;"
+  = image_tag 'woof.png', class: 'img-circle search_item_profile_picture', style: "width:#{width}px;"
