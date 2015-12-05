@@ -1,0 +1,34 @@
+.well.search-box
+  - if @referer
+    .referer{class: "refered-by-#{@referer}"}
+      - if @referer == :nabo
+        %h3
+          Nabo has partnered with PetHomeStay to
+          %br.desktop
+          help you find a pet minder in your local area
+  = simple_form_for @search, method: :get, url: homestays_path, wrapper: :bootstrap3, html: { class: 'clearfix form-inline' } do |f|
+    .form-group.home-or-away
+      .input-group
+        %span.off< At yours
+        .toggle-switch>
+          = f.check_box :host_homestay, class: 'toggle-switch-checkbox'
+          %label.toggle-switch-label{for: :search_host_homestay}
+            %span.toggle-switch-inner
+            %span.toggle-switch-switch
+              %i.fa.fa-home
+        %span.on< At host's&nbsp;
+    .form-group.location-container
+      .input-group.search_location_container
+        = f.input_field :location, placeholder: 'Postcode or city'
+        %i.fa.fa-map-marker
+    .form-group.search_check_in_date
+      .input-group.search_check_in_date_container
+        = f.input_field :check_in_date, placeholder: 'Drop off', readonly: true, value: @search.check_in_date.blank? ? nil : @search.check_in_date.strftime('%d.%m.%y')
+        %i.fa.fa-calendar
+    .form-group.search_check_out_date
+      .input-group.search_check_out_date_container
+        = f.input_field :check_out_date, placeholder: 'Pick up', readonly: true, value: @search.check_out_date.blank? ? nil : @search.check_out_date.strftime('%d.%m.%y')
+        %i.fa.fa-calendar
+    .form-group.go
+      .input-group
+        = f.button :submit, 'Search', class: 'btn btn-primary search'

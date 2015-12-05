@@ -8,10 +8,12 @@ class Search
   NUMBER_OF_RESULTS = 30
   MAXIMUM_RADIUS    = 50
 
-  attr_accessor :provider_types, :within, :sort_by, :country
-  attr_reader :location, :latitude, :longitude, :check_in_date, :check_out_date, :homestay_types
+  attr_accessor :provider_types, :within, :sort_by, :country, :host_homestay
+  attr_reader :check_in_date, :check_out_date, :homestay_types, :location, :latitude, :longitude
 
   def initialize(attributes = {})
+    self.country = 'Australia'
+    self.host_homestay = 1
     attributes.each do |key, value|
       send("#{key}=", value) if respond_to? "#{key}="
     end
@@ -26,11 +28,17 @@ class Search
   end
 
   def check_in_date=(value)
-    @check_in_date = value.to_date if value.respond_to?(:to_date)
+    unless value.blank?
+      components = value.split('.')
+      @check_in_date = Date.new("20#{components[2]}".to_i, components[1].to_i, components[0].to_i)
+    end
   end
 
   def check_out_date=(value)
-    @check_out_date = value.to_date if value.respond_to?(:to_date)
+    unless value.blank?
+      components = value.split('.')
+      @check_out_date = Date.new("20#{components[2]}".to_i, components[1].to_i, components[0].to_i)
+    end
   end
 
   def location=(value)
@@ -56,7 +64,7 @@ class Search
   def populate_list
     perform_geocode unless @latitude.present? && @longitude.present?
     start_date = @check_in_date
-    end_date   = @check_out_date
+    end_date = @check_out_date
     search_dates = start_date && end_date ? (start_date..end_date).to_a : []
 
     # Logging code to check how long a query takes
@@ -69,6 +77,11 @@ class Search
     while results_list.count < NUMBER_OF_RESULTS  && search_radius <= MAXIMUM_RADIUS do
       # results_list += Homestay.available_for_enquiry(start_date, end_date).near([@latitude, @longitude], search_radius)
       homestays = Homestay.includes(:user).active.near([@latitude, @longitude], search_radius)
+      if host_homestay.to_i.zero?
+        homestays = homestays.where('remote_price is not null')
+      else
+        homestays = homestays.where('cost_per_night is not null')
+      end
       if homestay_types.present?
         if homestay_types.include?('local')
           homestays = homestays.where('cost_per_night is not null')
@@ -85,6 +98,16 @@ class Search
     Rails.logger.debug "Time taken for search= #{(search_time - start_time).seconds}"
 
     results_list = Search.algorithm(results_list.uniq) unless @sort_by == "distance"
+
+    # Add distnace info.
+    results_list.each_with_index do |homestay, i|
+      homestay.position = i + 1
+      homestay.distance = Geocoder::Calculations.distance_between(
+        [@latitude, @longitude],
+        [homestay.latitude, homestay.longitude],
+        units: :km
+      )
+    end
     sort_time = Time.now
     Rails.logger.debug "Time taken for sort= #{(sort_time - search_time).seconds}"
     return results_list.uniq

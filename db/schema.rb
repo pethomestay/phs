@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151006050458) do
+ActiveRecord::Schema.define(:version => 20151201042638) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20151006050458) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end
+
+  add_index "api_tokens", ["code"], :name => "index_api_tokens_on_code"
 
   create_table "attachinary_files", :force => true do |t|
     t.integer  "attachinariable_id"
@@ -199,32 +201,32 @@ ActiveRecord::Schema.define(:version => 20151006050458) do
     t.string   "address_country"
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.boolean  "constant_supervision",              :default => false
-    t.boolean  "emergency_transport",               :default => false
-    t.boolean  "first_aid",                         :default => false
-    t.boolean  "insurance",                         :default => false
-    t.boolean  "professional_qualification",        :default => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
+    t.boolean  "constant_supervision",                             :default => false
+    t.boolean  "emergency_transport",                              :default => false
+    t.boolean  "first_aid",                                        :default => false
+    t.boolean  "insurance",                                        :default => false
+    t.boolean  "professional_qualification",                       :default => false
     t.string   "professional_qualification_detail"
     t.string   "years_looking_after_pets"
     t.string   "website"
-    t.boolean  "pets_present",                      :default => false
-    t.boolean  "fenced",                            :default => false
-    t.boolean  "supervision_outside_work_hours",    :default => false
-    t.boolean  "police_check",                      :default => false
-    t.boolean  "children_present",                  :default => false
-    t.boolean  "pet_feeding",                       :default => false
-    t.boolean  "pet_grooming",                      :default => false
-    t.boolean  "pet_training",                      :default => false
-    t.boolean  "pet_walking",                       :default => false
-    t.boolean  "is_professional",                   :default => false
-    t.boolean  "active",                            :default => false
+    t.boolean  "pets_present",                                     :default => false
+    t.boolean  "fenced",                                           :default => false
+    t.boolean  "supervision_outside_work_hours",                   :default => false
+    t.boolean  "police_check",                                     :default => false
+    t.boolean  "children_present",                                 :default => false
+    t.boolean  "pet_feeding",                                      :default => false
+    t.boolean  "pet_grooming",                                     :default => false
+    t.boolean  "pet_training",                                     :default => false
+    t.boolean  "pet_walking",                                      :default => false
+    t.boolean  "is_professional",                                  :default => false
+    t.boolean  "active",                                           :default => false
     t.string   "slug"
     t.integer  "property_type_id"
     t.integer  "outdoor_area_id"
-    t.boolean  "locked",                            :default => true
-    t.boolean  "for_charity",                       :default => false
+    t.boolean  "locked",                                           :default => true
+    t.boolean  "for_charity",                                      :default => false
     t.text     "pet_sizes"
     t.text     "favorite_breeds"
     t.boolean  "emergency_sits"
@@ -240,6 +242,7 @@ ActiveRecord::Schema.define(:version => 20151006050458) do
     t.boolean  "wildfire_badge"
     t.text     "auto_interest_sms"
     t.text     "auto_decline_sms"
+    t.string   "display_address",                   :limit => 100
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"

@@ -1,0 +1,69 @@
+%li.homestay.panel.panel-default.clearfix{data: {listing: homestay.id, path: homestay_path(homestay)}}
+  .avatar
+    = render partial: 'avatar', locals: {user: homestay.user, homestay: homestay, width: 100}
+  .details.clearfix
+    .homestay
+      %h2.host.clearfix
+        = link_to homestay_path(homestay) do
+          %span.position= "#{homestay.position}."
+          = homestay.user.first_name
+        - unless homestay.user.responsiveness_rate.blank?
+          %span.response-rate
+            %i.fa.fa-clock-o
+            = "#{homestay.user.responsiveness_rate}% response rate"
+      %h3.title
+        %span= homestay.title
+      %h5.location.clearfix
+        %span.address= homestay.display_address
+        - unless homestay.distance.blank?
+          %span.distance
+            %i.fa.fa-map-marker
+            = "#{homestay.distance.to_i}km away"
+      - unless homestay.user.received_feedbacks.empty?
+        .review-summary
+          %span.rating
+            - homestay.average_rating.times do |i|
+              %i.fa.fa-star
+          %span.count= "from #{pluralize(homestay.user.received_feedbacks.size, 'review')}"
+        .reviews{class: "#{'multiple-reviews' if homestay.user.received_feedbacks.size > 1}"}
+          .public-reviews
+            - homestay.user.received_feedbacks.each do |feedback|
+              .public-review
+                .reviewer-avatar
+                  = render partial: 'avatar', locals: {user: feedback.user, homestay: nil, width: 40}
+                .review-details
+                  .review
+                    %span
+                      - if feedback.review.blank?
+                        = "<em>&quot;</em>No review left by #{feedback.user.first_name}...".html_safe
+                      - else
+                        = "&quot;#{feedback.review}&quot;".html_safe
+                  .meta.clearfix
+                    .reviewer
+                      = "<em>&quot;</em><span class='name'>#{feedback.user.name}<span><span class='date'>, #{feedback.created_at.strftime('%B %Y')}</span>".html_safe
+                    .rating{class: "stars-#{feedback.rating}"}
+                      - feedback.rating.times do |i|
+                        %i.fa.fa-star
+    .service
+      .cost
+        - if homestay.sitting_costs.size > 1
+          %span.from from
+        %span.amount
+          = "$#{homestay.cheapest_sitting_cost.to_i}#{'<span class="plus">+</span>' if homestay.sitting_costs.size > 1}".html_safe
+      %ul.services
+        %li{class: "#{'active' if homestay.pet_grooming?}"}
+          Grooming
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.pet_training?}"}
+          Training
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.visits_price.present? && !homestay.visits_price.zero?}"}
+          Visits
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.pet_walking?}"}
+          Walks
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no

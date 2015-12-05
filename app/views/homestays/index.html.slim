@@ -3,12 +3,11 @@
     - if @homestays.any?
       .col-sm-8.results
         = render 'search_box'
-
-        ul.media-list
+        ul.media-list.homestays
           - @homestays.each do |homestay|
-            = render 'result_row', homestay: homestay
+            = render 'homestay', homestay: homestay
         = will_paginate @homestays, renderer: BootstrapPagination::Rails, previous_label: 'Prev', next_label: 'Next'
-      .col-sm-4.sidebar-search
+      .col-sm-4.sidebar-search.sidebar-map
         - if @search.latitude.present? && @search.longitude.present?
           .search-map-container
             .search-map-wrapper
@@ -41,14 +40,3 @@
         = render 'search_box'
       .col-sm-8.col-sm-offset-2
         = render 'no_results'
-
-coffee:
-  $ ->
-    return if $('#xs-indicator').is ':hidden'
-    $search_box = $('.search-box')
-    $toggler = $('.toggler')
-    $search_box.delay(1000).slideUp ->
-      $toggler.show()
-    $toggler.on 'click', ->
-      $toggler.hide()
-      $search_box.slideDown()

@@ -100,6 +100,24 @@ class Homestay < ActiveRecord::Base
       })
   end
 
+  def sitting_costs
+    [cost_per_night, remote_price].compact
+  end
+
+  def cheapest_sitting_cost
+    sitting_costs.sort.first
+  end
+
+  def generate_display_address
+    if display_address.blank?
+      result = Geocoder.search(geocoding_address)
+      unless result.empty?
+        address = "#{result.first.city}, #{result.first.state_code} #{result.first.postal_code}"
+        update_attribute(:display_address, address)
+      end
+    end
+  end
+
   def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
     if start_date && end_date
       Homestay.active.reject {|h| ((start_date.to_date..end_date.to_date).to_a - h.unavailable_dates.collect(&:date)).any? }

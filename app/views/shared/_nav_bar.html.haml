@@ -1,36 +1,34 @@
-%nav.navbar.nav-custom{role: "navigation", style: unless @homepage then 'background-color: #3c3835' else '' end}
-    .container
-        .navbar-header.pull-left
-            %a.navbar-brand.hidden-sm.hidden-xs#brand{href: "#{root_path}"} pet<span style="color: #ea7a28;">home</span>stay
-            %a.navbar-brand.hidden-md.hidden-lg.text-sm#brand{href: "#{root_path}"} pet<span style="color: #ea7a28;">home</span>stay
-        .navbar-header.pull-right
-            - if user_signed_in?
-                - if session[:check_for_coupon] && current_user.try(:used_coupons).try(:empty?)
-                    = render partial: 'home/coupon'
-                    :javascript
-                        $(document).ready(function(){
-                            $('#coupon-modal').modal('show');
-                        });
-                - if current_user.admin?
-                    = link_to 'ADMIN CONSOLE', admin_dashboard_path, class: 'buttons btn navbar-btn hidden-xs'
-                %a.buttons.btn.navbar-btn#find-a-host{ href: root_path } FIND A HOST
-                = link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn hidden-sm hidden-xs'
-                - if current_user.homestay.present?
-                    %a.buttons.btn.navbar-btn.primary{ href: host_path }
-                        %i.fa.fa-home
-                        %span#my
-                            HOST VIEW
-                - else
-                    %a.buttons.btn.navbar-btn.primary{ href: guest_path }
-                        %span#my
-                            %i.fa.fa-user
-                            MY
-                        ACCOUNT
-            - else
-                %a.buttons.btn.navbar-btn#become-a-host{ href: why_join_path } BECOME A HOST
-                %a.buttons.btn.navbar-btn{href: new_user_session_path } SIGN IN
-                %a.buttons.btn.navbar-btn.primary{href: new_user_registration_path } SIGN UP
+%nav.navbar.nav-custom{role: "navigation", class: "#{'bordered' if bordered_nav?}", style: unless @homepage then 'background-color: #3c3835' else '' end}
+  %div{class: "#{fluid_nav? ? 'container-fluid' : 'container'}"}
+    .navbar-header.pull-left
+      %a.navbar-brand#brand{href: "#{root_path}"} pet<span style="color:#ec5d3c;">home</span>stay
+    .navbar-header.pull-right
+      - if user_signed_in?
+        - if session[:check_for_coupon] && current_user.try(:used_coupons).try(:empty?)
+          = render partial: 'home/coupon'
+          :javascript
+            $(document).ready(function() {
+              $('#coupon-modal').modal('show');
+            });
+        - if current_user.admin?
+          = link_to 'ADMIN CONSOLE', admin_dashboard_path, class: 'buttons btn navbar-btn hidden-xs'
+        %a.buttons.btn.navbar-btn#find-a-host{ href: root_path } FIND A HOST
+        = link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'buttons btn navbar-btn hidden-sm hidden-xs'
+        - if current_user.homestay.present?
+          %a.buttons.btn.navbar-btn.primary{ href: host_path }
+            %i.fa.fa-home
+            %span#my
+              HOST VIEW
+        - else
+          %a.buttons.btn.navbar-btn.primary{ href: guest_path }
+            %span#my
+              %i.fa.fa-user
+              MY ACCOUNT
+      - else
+        %a.buttons.btn.navbar-btn#become-a-host{ href: why_join_path } BECOME A HOST
+        %a.buttons.btn.navbar-btn{href: new_user_session_path } SIGN IN
+        %a.buttons.btn.navbar-btn.primary{href: new_user_registration_path } SIGN UP
 :css
-    h4.modal-title.request-label {
-        color: black;
-    }
+  h4.modal-title.request-label {
+    color: black;
+  }
