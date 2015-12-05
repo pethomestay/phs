@@ -548,10 +548,12 @@ p.ta {
 
         @media (max-width: 600px) {
           .avatar {
-            display: none;
+            img {
+              height: 50px;
+              width: 50px;
+            }
           }
         }
-
 
         .details {
           margin-left: 120px;
@@ -686,7 +688,7 @@ p.ta {
                   }
 
                   .review-details {
-                    margin-left: 52px;
+                    margin-left: 50px;
 
                     .review {
                       display: table;
@@ -788,7 +790,21 @@ p.ta {
               }
 
               .from {
-                color: #999;                
+                color: #999;
+              }
+
+              .plus {
+                display: none;
+              }
+
+              @media (max-width: 992px) {
+                .from {
+                  display: none;
+                }
+
+                .plus {
+                  display: inline;
+                }
               }
 
               .amount {
@@ -798,24 +814,73 @@ p.ta {
                 padding-left: 4px;
               }
             }
+
+            @media (max-width: 600px) {
+              .cost {
+                margin-right: 8px;
+              }
+            }
+
+            ul.services {
+              list-style: none;
+              margin: 10px 0 0;
+              padding: 0;
+
+              li {
+                color: #999;
+                font-size: 12px;
+                text-align: right;
+
+                i.fa {
+                  margin-left: 2px;
+                }
+
+                i.yes {
+                  display: none;
+                }
+
+                &.active {
+                  color: #5cc1c0;
+
+                  i.no {
+                    display: none;
+                  }
+
+                  i.yes {
+                    display: inline-block;
+                  }
+                }
+              }
+            }
+          }
+
+          @media (max-width: 600px) {
+            .service {
+              border: none;
+            }
           }
 
           @media (max-width: 992px) {
             .service {
               width: 100px;
-            }
-          }
-        }
 
-        @media (max-width: 600px) {
-          .details {
-            margin-left: 0;
+              .services {
+                display: none;
+              }
+            }
           }
         }
 
         @media (max-width: 992px) {
           .details {
             padding-right: 100px;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .details {
+            margin-left: 65px;
+            padding-right: 0;
           }
         }
       }

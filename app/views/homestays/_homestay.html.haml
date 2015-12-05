@@ -37,7 +37,7 @@
                       - if feedback.review.blank?
                         = "<em>&quot;</em>No review left by #{feedback.user.first_name}...".html_safe
                       - else
-                        = "&quot;#{feedback.review}".html_safe
+                        = "&quot;#{feedback.review}&quot;".html_safe
                   .meta.clearfix
                     .reviewer
                       = "<em>&quot;</em><span class='name'>#{feedback.user.name}<span><span class='date'>, #{feedback.created_at.strftime('%B %Y')}</span>".html_safe
@@ -48,4 +48,22 @@
       .cost
         - if homestay.sitting_costs.size > 1
           %span.from from
-        %span.amount= "$#{homestay.cheapest_sitting_cost.to_i}"
+        %span.amount
+          = "$#{homestay.cheapest_sitting_cost.to_i}#{'<span class="plus">+</span>' if homestay.sitting_costs.size > 1}".html_safe
+      %ul.services
+        %li{class: "#{'active' if homestay.pet_grooming?}"}
+          Grooming
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.pet_training?}"}
+          Training
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.visits_price.present? && !homestay.visits_price.zero?}"}
+          Visits
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no
+        %li{class: "#{'active' if homestay.pet_walking?}"}
+          Walks
+          %i.fa.fa-check-circle-o.yes
+          %i.fa.fa-circle-o.no

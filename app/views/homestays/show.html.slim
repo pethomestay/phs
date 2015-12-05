@@ -136,7 +136,7 @@ coffee:
       - unless my_homestay?(@homestay)
         - if user_signed_in?
           - if current_user.pets.present? # Display giant enquiry button
-            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" BOOK THIS HOST 
+            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" CONTACT THIS HOST 
             - if @homestay.cost_per_night.present?
               .visible-xs.visible-sm
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
@@ -150,7 +150,7 @@ coffee:
                     span.text-xs 
                       |/24h 
           - else # Ask current user to add a pet first 
-            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" BOOK THIS HOST
+            button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" CONTACT THIS HOST
             - if @homestay.cost_per_night.present?
               .visible-xs.visible-sm
                 .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
@@ -164,7 +164,7 @@ coffee:
                     span.text-xs 
                       |/24h 
         - else # ask user to sign up or sign in
-          button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+          button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" CONTACT THIS HOST
           - if @homestay.cost_per_night.present?
             .visible-xs.visible-sm
               .stay-costs.price_sticky style="background-color: #18af92; border-color: #17a98d"
@@ -338,12 +338,12 @@ coffee:
         - unless my_homestay?(@homestay)
           - if user_signed_in?
             - if current_user.pets.present? # Display giant inquiry button
-              button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+              button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal" style="width:100%; padding: 12px 12px;" CONTACT THIS HOST
             - else # Ask current user to add a pet first
-              button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
-              / = link_to 'BOOK THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
+              button.btn.btn-mint.btn-lg.btn-block.btn-book.inquire type='button' data-toggle="modal" data-target="#request-modal-add-pet" style="width:100%; padding: 12px 12px;" CONTACT THIS HOST
+              / = link_to 'CONTACT THIS HOST', new_guest_pet_path(redirect_path: homestay_path(@homestay)), class: 'btn btn-lg btn-mint btn-book inquire', style: 'width:100%'
           - else # ask user to sign up or sign in
-            button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" BOOK THIS HOST
+            button.btn.btn-mint.btn-lg.btn-book.inquire type='button' data-toggle="modal" data-target="#sign-up-modal" style="width:100%; padding: 12px 12px;" CONTACT THIS HOST
           / TODO: use a modal to prompt user to sign in so redirect_path can be set    
       .panel style="margin-bottom: 5px;"
         .panel-body style="padding:12px 13px"
