@@ -1,0 +1,59 @@
+#why_join_phs {
+  .page-content {
+    margin-bottom: 50px;
+    width: 100%;
+
+    .dog {
+      background: #eee image-url('why_join_square.png') no-repeat center center;
+      border-radius: 150px;
+      float: right;
+      height: 300px;
+      margin: 0 0 20px 40px;
+      text-align: center;
+      width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .dog {
+        display: none;
+      }
+    }
+
+    a.jumbo {
+      background-color: #5cc1c0;
+      box-shadow: 0 0 0px 2px rgba(92,193,192,0);
+      border-radius: 18px;
+      color: #fff;
+      display: inline-block;
+      font-size: 16px;
+      line-height: 16px;
+      margin-bottom: 20px;
+      padding: 10px 16px;
+      text-transform: uppercase;
+      transition: box-shadow 0.2s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 0px 2px rgba(92,193,192,0.4);
+      }
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 20px;
+      margin: 0 0 8px 0;
+    }
+
+    ul.reasons {
+      list-style: none;
+      margin: 20px 0 20px 0;
+      padding: 0;
+
+      li {
+        p.title {
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+      }
+    }
+  }
+}

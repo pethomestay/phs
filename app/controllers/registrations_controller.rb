@@ -85,11 +85,13 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     if params[:model_after_sign_up]
       session[:check_for_book_coupon] = true
-    else
+    elsif params[:intention].blank?
       session[:check_for_coupon] = true
     end
-    if params[:redirect_path].present?
-            (params[:model_after_sign_up] ? "#{params[:redirect_path]}##{params[:model_after_sign_up]}" : "#{params[:redirect_path]}?sign_up=true")
+    if params[:intention] == 'host'
+      new_host_homestay_path
+    elsif params[:redirect_path].present?
+      (params[:model_after_sign_up] ? "#{params[:redirect_path]}##{params[:model_after_sign_up]}" : "#{params[:redirect_path]}?sign_up=true")
     else
       root_path(sign_up: true)
     end
