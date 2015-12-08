@@ -86,6 +86,7 @@ class Homestay < ActiveRecord::Base
   before_save :strip_pet_sizes
   before_save :strip_favorite_breeds
   before_save :strip_energy_level_ids
+  after_save :generate_display_address
   after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
 

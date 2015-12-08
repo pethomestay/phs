@@ -45,10 +45,22 @@ class BookingsController < ApplicationController
     render :owner_receipt, :layout => 'new_application'
   end
 
+  def guest_receipt
+    @booking = current_user.bookers.find_by_id(params[:booking_id])
+    if @booking.nil?
+      redirect_to guest_messages_path, notice: 'Sorry no receipt found'
+    else
+      render :guest_receipt, layout: 'new_application'
+    end
+  end
+
   def host_receipt
     @booking = current_user.bookees.find_by_id(params[:booking_id])
-    redirect_to host_messages_path, :notice => "Sorry no receipt found" if @booking.nil?
-    render :host_receipt, :layout => 'new_application'
+    if @booking.nil?
+      redirect_to host_messages_path, notice: 'Sorry no receipt found'
+    else
+      render :host_receipt, layout: 'new_application'
+    end
   end
 
   def update

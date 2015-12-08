@@ -109,6 +109,7 @@ PetHomestay::Application.routes.draw do
       get 'update_message'
     end
     post 'update_dates'
+    get 'guest_receipt'
     get 'host_receipt'
     member do
       get 'host_confirm'
