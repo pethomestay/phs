@@ -133,9 +133,10 @@ span.no-break {
 
 .three-steps {
   background-color: #fff;
+  padding-bottom: 10px;
 
   .row {
-    padding-bottom: 25px;
+    padding-bottom: 30px;
   }
 
   img {
@@ -152,10 +153,10 @@ span.no-break {
 
 #why-phs {
   background-color: rgb(247, 247, 247);
-}
 
-#why-phs h3 {
-  margin-top: 55px;
+  h3 {
+    margin-top: 55px;
+  }
 }
 
 #first-row {
@@ -323,7 +324,7 @@ section#map {
     }
 
     #last-row {
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
     }
   }
 
