@@ -17,6 +17,8 @@
 //= require jquery.fileupload
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
+//= require StackBlur
+//= require parallax
 //= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min

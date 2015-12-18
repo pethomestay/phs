@@ -1,0 +1,712 @@
+body.host-profile {
+  nav.navbar.nav-custom {
+    border-bottom: 2px solid #fff;
+  }
+
+  .parallax-window {
+    background: linear-gradient(0, rgba(0,0,0,0.3), transparent);
+    height: 200px;
+  }
+
+  section#profile {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    border-top: 2px solid #fff;
+    height: 96px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    z-index: 10;
+
+    .hero {
+      height: 100%;
+    }
+
+    .host {
+      position: relative;
+
+      .avatar {
+        background-color: #fff;
+        border: 2px solid #fff;
+        border-radius: 50px;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        top: -60px;
+        transition: top 0.2s ease-in-out;
+        z-index: 1;
+
+        img {
+          display: block;
+          height: 100px;
+          width: 100px;
+        }
+      }
+
+      .name {
+        color: #fff;
+        font-size: 24px;
+        font-weight: normal;
+        left: 120px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: -40px;
+      }
+
+      .rating {
+        color: #fff;
+        font-size: 18px;
+        line-height: 26px;
+        position: absolute;
+        right: 0;
+        top: -40px;
+      }
+    }
+
+    .homestay {
+      height: 100%;
+      padding: 12px 0 0 120px;
+      position: relative;
+
+      .details {
+        float: left;
+
+        .title {
+          font-size: 18px;
+          font-weight: normal;
+          line-height: 20px;
+          margin: 0;
+          padding: 0;
+        }
+
+        .location {
+          color: #999;
+          font-size: 14px;
+          line-height: 16px;
+          margin-top: 5px;
+        }
+      }
+
+      .cost {
+        float: right;
+
+        .price {
+          margin-top: -2px;
+          position: relative;
+
+          .currency {
+            color: #999;
+            left: -12px;
+            font-size: 20px;
+            font-weight: 300;
+            position: absolute;
+            top: -5px;
+          }
+
+          .amount {
+            color: #ec5d3c;
+            display: inline-block;
+            font-size: 40px;
+            letter-spacing: -3px;
+            line-height: 40px;
+            position: relative;
+          }
+
+          .per {
+            color: #999;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            margin-left: 4px;
+          }
+        }
+
+        .duration {
+          color: #999;
+        }
+      }
+
+      .responsiveness {
+        bottom: -4px;
+        left: 116px;
+        position: absolute;
+        transition: opacity 0.2s ease-in-out;
+        width: 20vw;
+
+        h5 {
+          box-sizing: border-box;
+          color: #999;
+          font-size: 12px;
+          font-weight: 400;
+          left: 0;
+          line-height: 12px;
+          margin: 0;
+          padding: 0 4px;
+          position: absolute;
+          text-transform: uppercase;
+          top: -16px;
+          width: 100%;
+
+          span {
+            position: absolute;
+            right: 4px;
+          }
+        }
+
+        .bar {
+          background-color: #ddd;
+          border-radius: 4px;
+          height: 8px;
+          position: relative;
+          width: 100%;
+
+          span {
+            background-color: #5cc1c0;
+            border-radius: 4px;
+            height: 8px;
+            left: 0;
+            position: absolute;
+            top: 0;
+          }
+        }
+      }
+
+      .contact {
+        bottom: -18px;
+        position: absolute;
+        right: 0;
+
+        a:hover {
+          box-shadow: 0 0 3px 1px rgba(100,100,100,0.2);
+        }
+
+        a.social {
+          background-color: #fff;
+          border: 2px solid #ddd;
+          border-radius: 18px;
+          box-sizing: content-box;
+          display: inline-block;
+          font-size: 14px;
+          line-height: 32px;
+          height: 32px;
+          margin-right: 4px;
+          text-align: center;
+          transition: border-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+          width: 32px;
+
+          &.facebook {
+            color: #3b5998;
+
+            &:hover {
+              border-color: #3b5998;
+            }
+          }
+
+          &.twitter {
+            color: #00aced;
+
+            &:hover {
+              border-color: #00aced;
+            }
+          }
+        }
+
+        a:last-of-type {
+          background-color: #fff;
+          border: 2px solid #5cc1c0;
+          border-radius: 18px;
+          box-sizing: content-box;
+          color: #5cc1c0;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 32px;
+          height: 32px;
+          margin-left: 10px;
+          padding: 0 12px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  section#homestay {
+    background-color: rgba(210,210,210,0.1);
+    border-bottom: 1px solid #ddd;
+    padding: 30px 0 0;
+
+    h3 {
+      color: #5cc1c0;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 22px;
+      margin: 0 0 12px;
+      position: relative;
+    }
+
+    .primary-details {
+      padding-right: 30px;
+      position: relative;
+
+      .details-container {
+        margin-bottom: 30px;
+        position: relative;
+
+        .gutter {
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100px;
+        }
+
+        .content {
+          margin-left: 120px;
+        }
+      }
+
+      .photos-container {
+        .gallery {
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          box-sizing: content-box;
+          height: 100px;
+          overflow: hidden;
+          padding: 2px;
+
+          ul {
+            list-style: none;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 9999px;
+
+            li {
+              float: left;
+              margin-right: 1px;
+
+              img {
+                display: block;
+              }
+
+              &.more {
+                color: #999;
+                font-size: 12px;
+                padding: 0 8px;
+
+                span {
+                  line-height: 100px;
+                }
+              }
+
+              &:first-of-type img {
+                border-bottom-left-radius: 2px;
+                border-top-left-radius: 2px;
+              }
+
+              &:last-of-type img {
+                border-bottom-right-radius: 2px;
+                border-top-right-radius: 2px;
+              }
+            }
+          }
+        }
+      }
+
+      .gutter {
+        .rating {
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          color: #999;
+          font-size: 14px;
+          padding: 6px;
+          text-align: center;
+          width: 100%;
+
+          .stars {
+            .fa {
+              font-size: 14px;
+              margin-right: -2px;
+            }
+          }
+
+          .count {
+            font-size: 12px;
+            line-height: 14px;
+            text-align: center;
+          }
+        }
+      }
+
+      .content {
+        ul.reviews {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li.review {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            position: relative;
+
+            .user {
+              .avatar {
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                left: 0;
+                position: absolute;
+                top: 0;
+
+                img {
+                  border-radius: 30px;
+                  display: block;
+                  height: 60px;
+                  padding: 2px;
+                  width: 60px;
+                }
+              }
+
+              .details {
+                font-size :14px;
+                line-height: 16px;
+                margin-left: 70px;
+
+                .name {
+                  margin-top: 4px;
+                }
+
+                .date {
+                  color: #999;
+                  margin: 1px 0 6px;
+                }
+
+                .stars {
+                  color: #5cc1c0;
+                  position: absolute;
+                  right: 2px;
+                  top: 5px;
+
+                  .fa {
+                    margin-right: -2px;
+                  }
+                }
+              }
+            }
+
+            .review {
+              font-size: 14px;
+              line-height: 18px;
+              margin-left: 70px;
+            }
+
+            &:last-of-type {
+              border-bottom: 0;
+              margin-bottom: 0;
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .secondary-details {
+      .details-container {
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      ul.services {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li.service {
+          border-bottom: 1px solid #eee;
+          margin-top: 12px;
+          padding-bottom: 12px;
+
+          .details {
+            float: left;
+
+            h5 {
+              font-size: 18px;
+              font-weight: 300;
+              line-height: 20px;
+              margin: 0 0 4px;
+            }
+
+            p {
+              color: #999;
+              font-size: 14px;
+              line-height: 16px;
+              margin: 0;
+            }
+          }
+
+          .cost {
+            float: right;
+
+            .price {
+              position: relative;
+
+              .amount {
+                color: #ec5d3c;
+                display: block;
+                font-size: 18px;
+                line-height: 20px;
+                margin: 0 0 4px;
+                position: relative;
+                text-align: right;
+
+                .currency {
+                  color: #ec5d3c;
+                  color: #999;
+                  display: inline-block;
+                  display: none;
+                  font-weight: 300;
+                  margin-right: 2px;
+                }
+
+                .dollars {
+                  display: inline-block;
+                  font-weight: 500;
+                  letter-spacing: -1px;
+                }
+
+                .cents {
+                  display: inline-block;
+                  font-weight: 300;
+                  letter-spacing: -1px;
+                }
+              }
+
+              .per {
+                color: #999;
+                display: block;
+                font-size: 14px;
+                font-weight: 300;
+                line-height: 16px;
+                text-align: right;
+              }
+            }
+
+            .duration {
+              color: #999;
+            }
+          }
+        }
+      }
+
+      .preferences-container {
+        h5 {
+          font-size: 18px;
+          font-weight: 300;
+          line-height: 20px;
+          margin: 0 0 4px;
+        }
+
+        p {
+          color: #999;
+          font-size: 14px;
+          line-height: 16px;
+          margin: 0;
+        }
+
+        ul.sizes {
+          list-style: none;
+          margin: -24px 0 0;
+          padding: 0;
+
+          li {
+            display: inline-block;
+            font-size: 0;
+            height: 100%;
+
+            img {
+              display: block;
+              width: 100%;
+            }
+
+            &.small {
+              width: 21%;
+            }
+
+            &.medium {
+              width: 23%;
+            }
+
+            &.large {
+              width: 22%;
+            }
+
+            &.giant {
+              width: 34%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  section#about {
+    padding: 30px 0 60px;
+
+    h3 {
+      color: #5cc1c0;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 22px;
+      margin: 0 0 12px;
+      position: relative;
+    }
+
+    .primary-details {
+      padding-right: 30px;
+      position: relative;
+
+      .details-container {
+        margin-bottom: 30px;
+        position: relative;
+
+        .gutter {
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100px;
+        }
+
+        .content {
+          margin-left: 120px;
+        }
+      }
+
+      .about-container {
+        h5.title {
+          font-size: 18px;
+          font-weight: 300;
+          line-height: 20px;
+          margin: 0 0 4px;
+        }
+
+        .since {
+          color: #999;
+        }
+
+        .description {
+          margin-top: 10px;
+        }
+      }
+
+      .pets-container {
+        ul.residents {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          position: relative;
+
+          li.resident {
+            float: left;
+            margin: 0 20px 0 0;
+            position: relative;
+
+            .avatar {
+              border: 1px solid #ddd;
+              border-radius: 30px;
+              left: 0;
+              position: absolute;
+              top: 0;
+
+              img {
+                border-radius: 30px;
+                display: block;
+                height: 60px;
+                padding: 2px;
+                width: 60px;
+              }
+            }
+
+            .details {
+              font-size: 14px;
+              line-height: 16px;
+              margin-left: 70px;
+              padding-top: 10px;
+
+              .name {
+                margin-top: 4px;
+              }
+
+              .description {
+                color: #999;
+                margin: 1px 0 6px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .secondary-details {
+      .location-container {
+        .map-container {
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          height: 400px;
+          padding: 2px;
+          width: 100%;
+
+          #map {
+            height: 100%;
+            width: 100%;
+
+            .mapbox-logo {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+body.host-profile.sticky {
+  section#profile {
+    background-color: rgba(255,255,255,0.96);
+    border-bottom-color: #5cc1c0;
+    box-shadow: 0 0 3px 1px rgba(100, 100, 100, 0.2);
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    .host {
+      .avatar {
+        box-shadow: 0 0 0 1px #ddd;
+        left: 20px;
+        top: 8px;
+
+        img {
+          height: 60px;
+          width: 60px;
+        }
+      }
+    }
+
+    .homestay {
+      .responsiveness {
+        opacity: 0;
+      }
+
+      .contact {
+        a.social {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  section#homestay {
+    margin-top: 96px;
+  }
+}

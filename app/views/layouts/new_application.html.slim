@@ -7,6 +7,7 @@ html lang='en'
     = favicon_link_tag 'favicon.ico'
     title = content_for?(:title) ? yield(:title) : 'PetHomeStay'
     = stylesheet_link_tag 'new_application'
+    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Ubuntu:400,300,500,700'
     = yield :head_stylesheet
     /! HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     /! WARNING: Respond.js doesn't work if you view the page via file://
@@ -20,7 +21,7 @@ html lang='en'
     = yield :head_javascript
     = csrf_meta_tags
     = yield :meta_tags
-  body class= ('home' if current_page?(root_path))
+  body class= body_class
     - if Rails.env.production?
       = render 'shared/tag_manager'
     - if defined? resource
