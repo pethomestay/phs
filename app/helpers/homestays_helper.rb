@@ -1,4 +1,17 @@
 module HomestaysHelper
+  def homestay_banner_image(homestay)
+    public_id = homestay.photos.empty? ? 'doglow_y44iyi' : homestay.photos.first.public_id
+    cl_image_path(
+      public_id,
+      angle: :exif,
+      crop: :fill,
+      effect: 'blur:5000',
+      height: 400,
+      quality: 80,
+      width: 1200
+    )
+  end
+
   def accepted_pet_size_description(homestay)
     sizes = homestay.pet_sizes
     unless sizes.empty?
@@ -24,8 +37,9 @@ module HomestaysHelper
 
   def pet_description(pet)
     breed = pet.breed.sub(/\s+\(.*\)/, '')
-    breed = pet.pet_type.title.downcase if breed.blank?      
-    "A #{pet.age.sub(' years old', '-year-old')} #{breed}"
+    breed = pet.pet_type.title.downcase if breed.blank?
+    a_or_an = [8,11,18].include?(pet.pet_age) ? 'An' : 'A'
+    "#{a_or_an} #{pet.age.sub(' years old', '-year-old')} #{breed}"
   end
 
   def my_homestay?(homestay)

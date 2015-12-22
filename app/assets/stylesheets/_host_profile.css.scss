@@ -1,4 +1,12 @@
 body.host-profile {
+  .fluidbox__overlay {
+    background-color: rgba(255,255,255,0.8);
+  }
+
+  .fluidbox__ghost {
+    box-shadow: 0 0 2px 0px rgba(0,0,0,0.2);
+  }
+
   nav.navbar.nav-custom {
     border-bottom: 2px solid #fff;
   }
@@ -14,7 +22,7 @@ body.host-profile {
     border-top: 2px solid #fff;
     height: 96px;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    z-index: 10;
+    z-index: 1000;
 
     .hero {
       height: 100%;
@@ -171,6 +179,28 @@ body.host-profile {
         }
       }
 
+      .notice {
+        bottom: -18px;
+        position: absolute;
+        right: 0;
+
+        .msg {
+          background-color: #fff;
+          border: 2px solid #999;
+          border-radius: 18px;
+          box-sizing: content-box;
+          color: #999;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 32px;
+          height: 32px;
+          margin-left: 10px;
+          padding: 0 12px;
+          text-transform: uppercase;
+        }
+      }
+
       .contact {
         bottom: -18px;
         position: absolute;
@@ -266,47 +296,28 @@ body.host-profile {
 
       .photos-container {
         .gallery {
-          background-color: #fff;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          box-sizing: content-box;
-          height: 100px;
-          overflow: hidden;
-          padding: 2px;
-
           ul {
             list-style: none;
             margin: 0;
-            overflow: hidden;
             padding: 0;
-            width: 9999px;
 
             li {
               float: left;
-              margin-right: 1px;
+              margin: 4px 4px 0 0;
 
-              img {
+              a {
+                background-color: #fff;
+                border: 1px solid #ddd;
                 display: block;
-              }
+                padding: 2px;
 
-              &.more {
-                color: #999;
-                font-size: 12px;
-                padding: 0 8px;
-
-                span {
-                  line-height: 100px;
+                &:hover {
+                  border-color: #5cc1c0;
                 }
               }
 
-              &:first-of-type img {
-                border-bottom-left-radius: 2px;
-                border-top-left-radius: 2px;
-              }
-
-              &:last-of-type img {
-                border-bottom-right-radius: 2px;
-                border-top-right-radius: 2px;
+              img {
+                display: block;
               }
             }
           }
@@ -340,6 +351,12 @@ body.host-profile {
       }
 
       .content {
+        p.empty {
+          color: #404040;
+          font-size: 14px;
+          line-height: 18px;
+        }
+
         ul.reviews {
           list-style: none;
           margin: 0;
@@ -595,7 +612,15 @@ body.host-profile {
         }
 
         .description {
+          font-size: 14px;
           margin-top: 10px;
+
+          p {
+            color: #404040;
+            font-size: 14px;
+            line-height: 18px;
+            margin: 0 0 10px;
+          }
         }
       }
 
@@ -649,6 +674,8 @@ body.host-profile {
 
     .secondary-details {
       .location-container {
+        margin-top: 38px;
+
         .map-container {
           border: 1px solid #ddd;
           border-radius: 4px;
@@ -660,7 +687,17 @@ body.host-profile {
             height: 100%;
             width: 100%;
 
-            .mapbox-logo {
+            .fa-icon {
+              text-align: center;
+
+              i.fa {
+                color: #ec5d3c;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+              }
+            }
+
+            .mapbox-logo,
+            .leaflet-control-attribution {
               display: none;
             }
           }

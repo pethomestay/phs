@@ -2,7 +2,7 @@
   = stylesheet_link_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.css'
 - content_for :head_javascript do
   = javascript_include_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'
-.parallax-window{data: {bleed: 10, image: {src: cl_image_path(@homestay.photos.first.public_id, angle: :exif, crop: :fill, effect: 'blur:5000', height: 400, quality: 80, width: 1200)}, parallax: 'scroll'}}
+.parallax-window{data: {bleed: 10, image: {src: homestay_banner_image(@homestay)}, parallax: 'scroll'}}
 %section#profile
   .container.hero
     .host
@@ -13,13 +13,13 @@
           = facebook_profile_image_tag @homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face
         - else
           = image_tag 'woof.png'
-      %h1.name= @homestay.user.name
+      %h1.name= @homestay.user.name.titleize
       .rating
         - @homestay.average_rating.times do
           %i.fa.fa-star
     .homestay.clearfix
       .details
-        %h2.title= @homestay.title
+        %h2.title= @homestay.title.titleize
         .location= @homestay.display_address
       .cost
         .price
@@ -27,19 +27,23 @@
             .currency $
             .dollars= @homestay.cheapest_sitting_cost.to_i
           .per per day
-      - unless @homestay.user.responsiveness_rate.blank?
-        .responsiveness
-          %h5
-            Response rate
-            %span= "#{@homestay.user.responsiveness_rate}%"
-          .bar
-            %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
+      - if @homestay.active?
+        - unless @homestay.user.responsiveness_rate.blank?
+          .responsiveness
+            %h5
+              Response rate
+              %span= "#{@homestay.user.responsiveness_rate}%"
+            .bar
+              %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
         .contact
           = link_to '#', class: 'social facebook' do
             %i.fa.fa-facebook
           = link_to '#', class: 'social twitter' do
             %i.fa.fa-twitter
           = link_to "Get in touch with #{@homestay.user.first_name}", '#'
+      - else
+        .notice
+          .msg This homestay is no longer active
 %section#homestay
   .container
     .row
@@ -49,11 +53,10 @@
             .content
               .gallery
                 %ul.clearfix
-                  - @homestay.photos.first(5).each do |photo|
-                    %li= cl_image_tag photo.public_id, angle: :exif, crop: :fill, height: 100, width: 100
-                  -# - if @homestay.photos.size > 5
-                  -#   %li.more
-                  -#     %span= "+ #{@homestay.photos.size - 5} more"
+                  - @homestay.photos.each do |photo|
+                    %li
+                      = link_to cl_image_path(photo.public_id, angle: :exif, crop: :fill, height: 800) do
+                        = cl_image_tag(photo.public_id, angle: :exif, crop: :fill, height: 100)
         .details-container.reviews-container
           .gutter
             - unless @reviews.empty?
@@ -79,7 +82,7 @@
                         - else
                           = image_tag 'woof.png'
                       .details
-                        .name= review.user.name
+                        .name= review.user.name.titleize
                         .date= review.created_at.strftime('%d %B %Y')
                         .stars
                           - review.rating.times do
@@ -153,10 +156,10 @@
       .col-md-8.primary-details
         .details-container.about-container
           .content
-            %h3= "About #{@homestay.user.first_name}'s homestay"
+            %h3= "About #{@homestay.user.first_name.titleize}'s homestay"
             %h5.title= @homestay.title
             .since= "Active since #{@homestay.created_at.strftime('%B %Y')}"
-            .description= @homestay.description
+            .description= @renderer.render(@homestay.description).html_safe
         - unless @homestay.user.pets.empty?
           .details-container.pets-container
             .content
@@ -170,10 +173,10 @@
                       - else
                         = image_tag 'woof.png'
                     .details
-                      .name= pet.name
+                      .name= pet.name.titleize
                       .description= pet_description(pet)
       .col-md-4.secondary-details
         .details-container.location-container
           .content
             .map-container
-              #map{data: {lat: @homestay.latitude, lon: @homestay.longitude}}
+              #map{data: {lat: @homestay.latitude, lon: @homestay.longitude, delivery: @homestay.delivery_radius, visit: @homestay.visits_radius}}
