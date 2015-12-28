@@ -40,7 +40,10 @@
             %i.fa.fa-facebook
           = link_to '#', class: 'social twitter' do
             %i.fa.fa-twitter
-          = link_to "Get in touch with #{@homestay.user.first_name}", '#'
+          = link_to '#' do
+            %span.short Contact
+            %span.long Get in touch with
+            = @homestay.user.first_name
       - else
         .notice
           .msg This homestay is no longer active
@@ -89,7 +92,7 @@
                             %i.fa.fa-star-o
                     .review
                       .text= review.review
-      .col-md-4.secondary-details
+      .col-md-4.secondary-details.clearfix
         .details-container.services-container
           %h3 Services
           %ul.services
@@ -176,6 +179,12 @@
                       .name= pet.name.titleize
                       .description= pet_description(pet)
       .col-md-4.secondary-details
+        .details-container.badges-container
+          .content
+            .homestay-badges
+              %i.icon.icon-policecar{class: "#{'active' if @homestay.emergency_transport?}"}
+              %i.icon.icon-medicalbag{class: "#{'active' if @homestay.first_aid?}"}
+              %i.icon.icon-badge{class: "#{'active' if @homestay.police_check?}"}
         .details-container.location-container
           .content
             .map-container

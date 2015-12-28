@@ -255,6 +255,20 @@ body.host-profile {
           margin-left: 10px;
           padding: 0 12px;
           text-transform: uppercase;
+
+          span.short {
+            display: none;
+          }
+
+          @media (max-width: 992px) {
+            span.short {
+              display: inline;
+            }
+
+            span.long {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -277,6 +291,10 @@ body.host-profile {
     .primary-details {
       padding-right: 30px;
       position: relative;
+
+      @media (max-width: 992px) {
+        padding-right: 15px;
+      }
 
       .details-container {
         margin-bottom: 30px;
@@ -388,7 +406,7 @@ body.host-profile {
               .details {
                 font-size :14px;
                 line-height: 16px;
-                margin-left: 70px;
+                margin-left: 74px;
 
                 .name {
                   margin-top: 4px;
@@ -415,7 +433,7 @@ body.host-profile {
             .review {
               font-size: 14px;
               line-height: 18px;
-              margin-left: 70px;
+              margin-left: 74px;
             }
 
             &:last-of-type {
@@ -564,6 +582,22 @@ body.host-profile {
           }
         }
       }
+
+      @media (max-width: 992px) {
+        margin-top: 40px;
+
+        .services-container {
+          float: right;
+          width: 40%;
+        }
+
+        .preferences-container {
+          box-sizing: border-box;
+          float: left;
+          padding-right: 40px;
+          width: 60%;
+        }
+      }
     }
   }
 
@@ -673,8 +707,70 @@ body.host-profile {
     }
 
     .secondary-details {
+      .badges-container {
+        .homestay-badges {
+          position: relative;
+          text-align: right;
+
+          .icon {
+            color: #bbb;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 20px;
+            margin-left: 10px;
+            text-align: center;
+
+            &.active {
+              color: #5cc1c0;
+            }
+
+            &:after {
+              bottom: -22px;
+              color: #bbb;
+              display: none;
+              font-family: 'Ubuntu';
+              font-size: 12px;
+              position: absolute;
+              right: 0;
+            }
+
+            &.icon-policecar:after {
+              content: 'Emergency transport: no'
+            }
+
+            &.icon-policecar.active:after {
+              content: 'Emergency transport: yes'
+            }
+
+            &.icon-medicalbag:after {
+              content: 'First aid: no'
+            }
+
+            &.icon-medicalbag.active:after {
+              content: 'First aid: yes'
+            }
+
+            &.icon-badge:after {
+              content: 'Police check: no'
+            }
+
+            &.icon-badge.active:after {
+              content: 'Police check: yes'
+            }
+
+            &.active:after {
+              color: #5cc1c0;
+            }
+
+            &:hover:after {
+              display: block;
+            }
+          }
+        }
+      }
+
       .location-container {
-        margin-top: 38px;
+        margin-top: 30px;
 
         .map-container {
           border: 1px solid #ddd;
@@ -700,6 +796,16 @@ body.host-profile {
             .leaflet-control-attribution {
               display: none;
             }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 992px) {
+      .primary-details {
+        .details-container {
+          .content {
+            margin-left: 0;
           }
         }
       }
