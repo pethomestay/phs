@@ -19,7 +19,8 @@
           %i.fa.fa-star
     .homestay.clearfix
       .details
-        %h2.title= @homestay.title.titleize
+        %h2.title
+          %span= @homestay.title.titleize
         .location= @homestay.display_address
       .cost
         .price

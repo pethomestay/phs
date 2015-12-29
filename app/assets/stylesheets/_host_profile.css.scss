@@ -78,13 +78,24 @@ body.host-profile {
 
       .details {
         float: left;
+        width: 75%;
 
         .title {
+          display: table;
           font-size: 18px;
           font-weight: normal;
           line-height: 20px;
           margin: 0;
           padding: 0;
+          table-layout: fixed;
+          white-space: nowrap;
+          width: 100%;
+
+          span {
+            display: table-cell;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
 
         .location {
@@ -269,6 +280,57 @@ body.host-profile {
               display: none;
             }
           }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .host {
+        .avatar {
+          top: -187px;
+        }
+
+        .name {
+          left: 0;
+        }
+      }
+
+      .homestay {
+        padding-left: 0;
+
+        .responsiveness {
+          left: 0;
+
+          h5 {
+            span {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 568px) {
+      .host {
+        .avatar {
+          img {
+            height: 70px;
+            width: 70px;
+          }
+        }
+      }
+
+      .homestay {
+        .cost {
+          .price {
+            .per {
+              display: none;
+            }
+          }
+        }
+
+        .responsiveness {
+          display: none;
         }
       }
     }
@@ -599,6 +661,35 @@ body.host-profile {
         }
       }
     }
+
+    @media (max-width: 768px) {
+      .primary-details {
+        .details-container {
+          .gutter {
+            display: none;
+          }
+
+          .content {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 568px) {
+      .secondary-details {
+        .services-container {
+          float: none;
+          width: 100%;
+        }
+
+        .preferences-container {
+          float: none;
+          padding-right: 0;
+          width: 100%;
+        }
+      }
+    }
   }
 
   section#about {
@@ -844,6 +935,14 @@ body.host-profile.sticky {
       .contact {
         a.social {
           opacity: 0;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .host {
+        .avatar {
+          display: none;
         }
       }
     }
