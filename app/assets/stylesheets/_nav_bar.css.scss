@@ -1,9 +1,9 @@
 .nav-custom {
   background-color: rgba(57,60,61,0.5);
-  margin-bottom: 0;
+  color: #FFFFFF;
   border-radius: 0;
   border: none;
-  color: #FFFFFF;
+  margin-bottom: 0;
 
   &.bordered {
     border-bottom: 2px solid #fff;
@@ -11,17 +11,28 @@
 
   #brand {
     color: inherit;
-    text-shadow: none;
     font-size: 24px;
     font-weight: 500;
+    text-shadow: none;
+  }
+
+  .btns {
+    padding: 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    .btns {
+      margin-right: -15px;
+    }
   }
 
   .buttons {
     font-weight: 500;
     background: none;
-    margin-left: 7px;
-    margin-right: 7px;
     color: inherit;
+    margin-left: 15px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .buttons:hover {
@@ -31,6 +42,8 @@
   .buttons.primary {
     border: 2px solid #fff;
     border-radius: 18px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .buttons.primary:hover {
@@ -44,7 +57,7 @@
   }
 
   .nav-custom #brand {
-    font-size: 18px;
+    // font-size: 18px;
   }
 }
 

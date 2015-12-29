@@ -7,10 +7,6 @@
         = link_to homestay_path(homestay) do
           %span.position= "#{homestay.position}."
           = homestay.user.first_name
-        - unless homestay.user.responsiveness_rate.blank?
-          %span.response-rate
-            %i.fa.fa-clock-o
-            = "#{homestay.user.responsiveness_rate}% response rate"
       %h3.title
         %span= homestay.title
       %h5.location.clearfix

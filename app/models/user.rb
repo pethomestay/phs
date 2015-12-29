@@ -523,12 +523,12 @@ class User < ActiveRecord::Base
       # For each mailbox, try to find the oldest response from current user (as a Host). Ignore this
       # mailbox if none found.
       # Check if response time is less than 24 hours. Count if it is.
-      mailboxes = self.host_mailboxes.where(created_at: 10000.days.ago..24.hours.ago)
+      mailboxes = self.host_mailboxes.where(created_at: 12.months.ago..24.hours.ago)
       return nil if mailboxes.blank? # Current user (as a Host) has not received any message
       total = mailboxes.count
       count = 0
       mailboxes.each do |mailbox|
-        host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').limit(1)[0]
+        host_response = mailbox.messages.where(user_id: self.id).order('created_at ASC').first
         if host_response.present? # If there exists a response from current user (as a Host)
           time_diff = host_response.created_at - mailbox.created_at
           count += 1 if time_diff <= 24.hours
@@ -542,7 +542,7 @@ class User < ActiveRecord::Base
   end
 
   def store_responsiveness_rate
-    update(:responsiveness_rate, response_rate_in_percent)
+    update_attribute(:responsiveness_rate, response_rate_in_percent)
     responsiveness_rate
   end
 

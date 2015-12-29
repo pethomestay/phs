@@ -1,0 +1,233 @@
+- content_for :meta_tags do
+  %meta{property: 'og:title', content: @homestay.title}
+  %meta{property: 'og:site_name', content: 'PetHomeStay'}
+  %meta{property: 'og:url', content: request.original_url}
+  %meta{property: 'og:description', content: "Find a great pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"}
+  %meta{name: 'twitter:card', content: 'summary'}
+  %meta{name: 'twitter:site', content: '@PetHomeStay'}
+  %meta{name: 'twitter:title', content: @homestay.title}
+  %meta{name: 'twitter:description', content: truncate(@homestay.description, length: 200)}
+  %meta{name: 'twitter:url', content: request.original_url}
+  - if @homestay.photos?
+    %meta{property: 'og:image', content: cloudinary_url(@homestay.photos.first.public_id)}
+    %meta{name: 'twitter:image', content: cloudinary_url(@homestay.photos.first.public_id)}
+- content_for :head_stylesheet do
+  = stylesheet_link_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.css'
+  = stylesheet_link_tag 'dropzone'
+- content_for :head_javascript do
+  = javascript_include_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'
+  = javascript_include_tag 'dropzone'
+.parallax-window{data: {bleed: 10, image: {src: homestay_banner_image(@homestay)}, parallax: 'scroll'}}
+#fb-root
+%section#profile
+  .container.hero
+    .host
+      .avatar
+        - if @homestay.user.profile_photo?
+          = cl_image_tag @homestay.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face
+        - elsif @homestay.user.uid.present?
+          = facebook_profile_image_tag @homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face
+        - else
+          = image_tag 'woof.png'
+      %h1.name= @homestay.user.name.titleize
+      .rating
+        - @homestay.average_rating.times do
+          %i.fa.fa-star
+    .homestay.clearfix
+      .details
+        %h2.title
+          %span= @homestay.title.titleize
+        .location= @homestay.display_address
+      .cost
+        .price
+          .amount
+            .currency $
+            .dollars= @homestay.cheapest_sitting_cost.to_i
+          .per per day
+      - if @homestay.active?
+        - if my_homestay?(@homestay)
+          .notice
+            .msg This is your homestay!
+        - else
+          - unless @homestay.user.responsiveness_rate.blank?
+            .responsiveness
+              %h5
+                Response rate
+                %span= "#{@homestay.user.responsiveness_rate}%"
+              .bar
+                %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
+          .contact
+            = link_to '#', class: 'social facebook' do
+              %i.fa.fa-facebook
+            = link_to twitter_url(@homestay), class: 'social twitter' do
+              %i.fa.fa-twitter
+            = link_to '#', data: contact_host_data(@homestay) do
+              %span.short Contact
+              %span.long Get in touch with
+              = @homestay.user.first_name
+      - else
+        .notice
+          .msg This homestay is no longer active
+%section#homestay
+  .container
+    .row
+      .col-md-8.primary-details
+        - if @homestay.photos?
+          .details-container.photos-container
+            .content
+              .gallery
+                %ul.clearfix
+                  - @homestay.photos.each do |photo|
+                    %li
+                      = link_to cl_image_path(photo.public_id, angle: :exif, crop: :fill, height: 800) do
+                        = cl_image_tag(photo.public_id, angle: :exif, crop: :fill, height: 100)
+        .details-container.reviews-container
+          .gutter
+            - unless @reviews.empty?
+              .rating
+                .stars
+                  - @homestay.average_rating.times do
+                    %i.fa.fa-star-o
+                .count= pluralize(@reviews.count, 'review')
+          .content
+            %h3 Reviews
+            - if @reviews.empty?
+              %p.empty= "#{@homestay.user.first_name} hasn't received any reviews yet. Why not be the first one?"
+            - else
+              %ul.reviews
+                - @reviews.each do |review|
+                  %li.review
+                    .user.clearfix
+                      .avatar
+                        - if review.user.profile_photo?
+                          = cl_image_tag review.user.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face
+                        - elsif review.user.uid.present?
+                          = facebook_profile_image_tag review.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face
+                        - else
+                          = image_tag 'woof.png'
+                      .details
+                        .name= review.user.name.titleize
+                        .date= review.created_at.strftime('%d %B %Y')
+                        .stars
+                          - review.rating.times do
+                            %i.fa.fa-star-o
+                    .review
+                      .text= review.review
+      .col-md-4.secondary-details.clearfix
+        .details-container.services-container
+          %h3 Services
+          %ul.services
+            - if @homestay.cost_per_night.present?
+              %li.service.clearfix
+                .details
+                  %h5 Pet boarding
+                  %p In the sitter's home
+                .cost
+                  .price
+                    .amount.clearfix
+                      .currency $
+                      .dollars>= @homestay.cost_per_night.to_i
+                      .cents .00
+                    .per per day
+            - if @homestay.remote_price.present?
+              %li.service.clearfix
+                .details
+                  %h5 House sitting
+                  %p In your home
+                .cost
+                  .price
+                    .amount.clearfix
+                      .currency $
+                      .dollars>= @homestay.remote_price.to_i
+                      .cents .00
+                    .per per day
+            - if @homestay.visits_price.present?
+              %li.service.clearfix
+                .details
+                  %h5 Drop-in visits
+                  %p= "Within #{@homestay.visits_radius}&thinsp;km".html_safe
+                .cost
+                  .price
+                    .amount.clearfix
+                      .currency $
+                      .dollars>= @homestay.visits_price.to_i
+                      .cents .00
+                    .per per visit
+            - if @homestay.pet_walking_price.present?
+              %li.service.clearfix
+                .details
+                  %h5 Dog walking
+                  %p 30-minute walk
+                .cost
+                  .price
+                    .amount.clearfix
+                      .currency $
+                      .dollars>= @homestay.pet_walking_price.to_i
+                      .cents .00
+                    .per per walk
+        .details-container.preferences-container
+          %h3 Preferences
+          %h5 Pet size
+          %p= accepted_pet_size_description(@homestay)
+          %ul.sizes.clearfix
+            %li.small= image_tag "sizes/small#{'-inactive' unless @accepted_pet_sizes.include?('small')}.png"
+            %li.medium>= image_tag "sizes/medium#{'-inactive' unless @accepted_pet_sizes.include?('medium')}.png"
+            %li.large>= image_tag "sizes/large#{'-inactive' unless @accepted_pet_sizes.include?('large')}.png"
+            %li.giant= image_tag "sizes/giant#{'-inactive' unless @accepted_pet_sizes.include?('giant')}.png"
+%section#about
+  .container
+    .row
+      .col-md-8.primary-details
+        .details-container.about-container
+          .content
+            %h3= "About #{@homestay.user.first_name.titleize}'s homestay"
+            %h5.title= @homestay.title
+            .since= "Active since #{@homestay.created_at.strftime('%B %Y')}"
+            .description= @renderer.render(@homestay.description).html_safe
+        - unless @homestay.user.pets.empty?
+          .details-container.pets-container
+            .content
+              %h3 Residents
+              %ul.residents.clearfix
+                - @homestay.user.pets.order(:name).each do |pet|
+                  %li.resident
+                    .avatar
+                      - if pet.profile_photo.present?
+                        = cl_image_tag pet.profile_photo.public_id, width: 100, height: 100, crop: :thumb, gravity: :face
+                      - else
+                        = image_tag 'woof.png'
+                    .details
+                      .name= pet.name.titleize
+                      .description= pet_description(pet)
+      .col-md-4.secondary-details
+        .details-container.badges-container
+          .content
+            .homestay-badges
+              %i.icon.icon-policecar{class: "#{'active' if @homestay.emergency_transport?}"}
+              %i.icon.icon-medicalbag{class: "#{'active' if @homestay.first_aid?}"}
+              %i.icon.icon-badge{class: "#{'active' if @homestay.police_check?}"}
+        .details-container.location-container
+          .content
+            .map-container
+              #map{data: {lat: @homestay.latitude, lon: @homestay.longitude, delivery: @homestay.delivery_radius, visit: @homestay.visits_radius}}
+.modal.fade#confirm-modal{tabindex: '-1', role: 'dialog', aria_labelledby: 'request-label', aria_hidden: 'true'}
+  .modal-dialog
+    .modal-content#enquiry-modal-confirmation
+      = render 'modal_confirmation', top: true
+- unless user_signed_in?
+  .modal.fade#sign-in-modal{tabindex: '-1', role: 'dialog'}
+    .modal-dialog
+      .modal-content
+        = render 'modal_sign_in', top: true
+  .modal.fade#sign-up-modal{tabindex: '-1', role: 'dialog'}
+    .modal-dialog
+      .modal-content
+        = render 'modal_sign_up', top: true
+.modal.fade#request-modal{tabindex: '-1', role: 'dialog'}
+  .modal-dialog
+    .modal-content
+      = render 'modal_enquiry', top: true
+.modal.fade#request-modal-add-pet{tabindex: '-1', role: 'dialog'}
+  .modal-dialog
+    .modal-content
+      = render 'modal_add_pet', top: true
