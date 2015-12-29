@@ -65,7 +65,7 @@ $(document).ready(function() {
         version: 'v2.1'
       });
 
-      $('a.social.facebook').on('click', function() {
+      $('a.social.facebook').on('click', function(e) {
         e.preventDefault();
         FB.ui({
           href: document.URL,
