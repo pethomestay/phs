@@ -29,6 +29,7 @@
 //= require popover
 //= require slick.min
 //= require moment
+//= require jquery.ba-throttle-debounce
 //= require jquery.fluidbox.min
 //= require jquery.slimscroll.min
 //= require jquery_nested_form

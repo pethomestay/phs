@@ -79,6 +79,59 @@ $(document).ready(function() {
       window.open($(this).attr('href'), 'Tweet', "width=600,height=500");
     });
 
+    if(window.location.hash == '#request-modal-add-pet') {
+      $('#request-modal-add-pet').modal('show');
+    }
+    if(window.location.hash == '#request-modal') {
+      $('#request-modal').modal('show');
+    }
+    if(window.location.hash == '#confirm-modal') {
+      $('#confirm-modal').modal('show');
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    var check_in = $('#enquiry_check_in_date');
+    var check_in_picker = check_in.datepicker({
+      format: 'dd/mm/yyyy',
+      startDate: '0d',
+      autoclose: true
+    }).on('changeDate', function(e) {
+      var inDate = new Date(e.date);
+      check_out_picker.setDate(inDate);
+      check_out_picker.startDate = inDate;
+      check_out_picker.update();
+      check_out.focus();
+    }).data('datepicker');
+
+    var check_out = $('#enquiry_check_out_date');
+    var check_out_picker = check_out.datepicker({
+      format: 'dd/mm/yyyy',
+      startDate: '0d',
+      autoclose: true
+    }).data('datepicker');
+
+    $('.enquiry_check_in_date .input-group-addon').on('click', function(e) {
+      e.preventDefault();
+      check_out_picker.hide();
+      check_in_picker.show();
+    });
+    $('.enquiry_check_out_date .input-group-addon'). on('click', function(e) {
+      e.preventDefault();
+      check_in_picker.hide();
+      check_out_picker.show();
+    });
+
+    $('.chosen-select').chosen({
+      max_selected_options: 1
+    });
+
+    $('.chosen-select').chosen({
+      allow_single_deselect: true,
+      no_results_text: 'No results matched',
+      width: '200px'
+    });
+
     goSticky();
   }
 });

@@ -4,7 +4,7 @@ module ApplicationHelper
       'home'
     elsif current_page?(homestays_path)
       'homestay-search'
-    elsif current_page?(homestay_path)
+    elsif controller_name == 'homestays' && action_name == 'show'
       'host-profile'
     end
   end

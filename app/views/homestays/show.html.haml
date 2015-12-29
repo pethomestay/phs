@@ -13,8 +13,10 @@
     %meta{name: 'twitter:image', content: cloudinary_url(@homestay.photos.first.public_id)}
 - content_for :head_stylesheet do
   = stylesheet_link_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.css'
+  = stylesheet_link_tag 'dropzone'
 - content_for :head_javascript do
   = javascript_include_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'
+  = javascript_include_tag 'dropzone'
 .parallax-window{data: {bleed: 10, image: {src: homestay_banner_image(@homestay)}, parallax: 'scroll'}}
 #fb-root
 %section#profile
@@ -43,22 +45,26 @@
             .dollars= @homestay.cheapest_sitting_cost.to_i
           .per per day
       - if @homestay.active?
-        - unless @homestay.user.responsiveness_rate.blank?
-          .responsiveness
-            %h5
-              Response rate
-              %span= "#{@homestay.user.responsiveness_rate}%"
-            .bar
-              %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
-        .contact
-          = link_to '#', class: 'social facebook' do
-            %i.fa.fa-facebook
-          = link_to twitter_url(@homestay), class: 'social twitter' do
-            %i.fa.fa-twitter
-          = link_to '#' do
-            %span.short Contact
-            %span.long Get in touch with
-            = @homestay.user.first_name
+        - if my_homestay?(@homestay)
+          .notice
+            .msg This is your homestay!
+        - else
+          - unless @homestay.user.responsiveness_rate.blank?
+            .responsiveness
+              %h5
+                Response rate
+                %span= "#{@homestay.user.responsiveness_rate}%"
+              .bar
+                %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
+          .contact
+            = link_to '#', class: 'social facebook' do
+              %i.fa.fa-facebook
+            = link_to twitter_url(@homestay), class: 'social twitter' do
+              %i.fa.fa-twitter
+            = link_to '#', data: contact_host_data(@homestay) do
+              %span.short Contact
+              %span.long Get in touch with
+              = @homestay.user.first_name
       - else
         .notice
           .msg This homestay is no longer active
@@ -204,3 +210,24 @@
           .content
             .map-container
               #map{data: {lat: @homestay.latitude, lon: @homestay.longitude, delivery: @homestay.delivery_radius, visit: @homestay.visits_radius}}
+.modal.fade#confirm-modal{tabindex: '-1', role: 'dialog', aria_labelledby: 'request-label', aria_hidden: 'true'}
+  .modal-dialog
+    .modal-content#enquiry-modal-confirmation
+      = render 'modal_confirmation', top: true
+- unless user_signed_in?
+  .modal.fade#sign-in-modal{tabindex: '-1', role: 'dialog'}
+    .modal-dialog
+      .modal-content
+        = render 'modal_sign_in', top: true
+  .modal.fade#sign-up-modal{tabindex: '-1', role: 'dialog'}
+    .modal-dialog
+      .modal-content
+        = render 'modal_sign_up', top: true
+.modal.fade#request-modal{tabindex: '-1', role: 'dialog'}
+  .modal-dialog
+    .modal-content
+      = render 'modal_enquiry', top: true
+.modal.fade#request-modal-add-pet{tabindex: '-1', role: 'dialog'}
+  .modal-dialog
+    .modal-content
+      = render 'modal_add_pet', top: true

@@ -1,4 +1,16 @@
 module HomestaysHelper
+  def contact_host_data(homestay)
+    if user_signed_in?
+      if current_user.pets.present?
+        {toggle: 'modal', target: '#request-modal'}
+      else
+        {toggle: 'modal', target: '#request-modal-add-pet'}
+      end
+    else
+      {toggle: 'modal', target: '#sign-up-modal'}
+    end
+  end
+
   def twitter_url(homestay)
     url = 'https://twitter.com/share'
     url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
