@@ -1,8 +1,22 @@
+- content_for :meta_tags do
+  %meta{property: 'og:title', content: @homestay.title}
+  %meta{property: 'og:site_name', content: 'PetHomeStay'}
+  %meta{property: 'og:url', content: request.original_url}
+  %meta{property: 'og:description', content: "Find a great pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"}
+  %meta{name: 'twitter:card', content: 'summary'}
+  %meta{name: 'twitter:site', content: '@PetHomeStay'}
+  %meta{name: 'twitter:title', content: @homestay.title}
+  %meta{name: 'twitter:description', content: truncate(@homestay.description, length: 200)}
+  %meta{name: 'twitter:url', content: request.original_url}
+  - if @homestay.photos?
+    %meta{property: 'og:image', content: cloudinary_url(@homestay.photos.first.public_id)}
+    %meta{name: 'twitter:image', content: cloudinary_url(@homestay.photos.first.public_id)}
 - content_for :head_stylesheet do
   = stylesheet_link_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.css'
 - content_for :head_javascript do
   = javascript_include_tag '//api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'
 .parallax-window{data: {bleed: 10, image: {src: homestay_banner_image(@homestay)}, parallax: 'scroll'}}
+#fb-root
 %section#profile
   .container.hero
     .host
@@ -39,7 +53,7 @@
         .contact
           = link_to '#', class: 'social facebook' do
             %i.fa.fa-facebook
-          = link_to '#', class: 'social twitter' do
+          = link_to twitter_url(@homestay), class: 'social twitter' do
             %i.fa.fa-twitter
           = link_to '#' do
             %span.short Contact

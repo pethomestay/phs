@@ -1,4 +1,12 @@
 module HomestaysHelper
+  def twitter_url(homestay)
+    url = 'https://twitter.com/share'
+    url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"
+    url += '&via=PetHomeStay'
+    url += '&hashtags=freecuddles'
+    url
+  end
+
   def homestay_banner_image(homestay)
     public_id = homestay.photos.empty? ? 'doglow_y44iyi' : homestay.photos.first.public_id
     cl_image_path(

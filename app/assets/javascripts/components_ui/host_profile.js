@@ -19,7 +19,7 @@ $(document).ready(function() {
     loader: true
   });
 
-  if($('.parallax-window').length > 0) {
+  if($('body.host-profile').length > 0) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiemVybzUxIiwiYSI6IkhUTmRWV0EifQ.Jlkqv_Yr3oK_g8Fp96s1oQ';
     var radii = [];
     var radius = null;
@@ -49,6 +49,35 @@ $(document).ready(function() {
         iconSize: [40, 40]
       })
     }).addTo(map);
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = '//connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: gon.fb_app_id,
+        xfbml: false,
+        version: 'v2.1'
+      });
+
+      $('a.social.facebook').on('click', function() {
+        e.preventDefault();
+        FB.ui({
+          href: document.URL,
+          method: 'share'
+        }, function(response){});
+      });
+    };
+
+    $('a.social.twitter').on('click', function(e) {
+      e.preventDefault();
+      window.open($(this).attr('href'), 'Tweet', "width=600,height=500");
+    });
 
     goSticky();
   }
