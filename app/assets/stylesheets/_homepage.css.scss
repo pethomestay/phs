@@ -7,6 +7,10 @@ body.home .nav-custom {
   top: 0;
 }
 
+span.no-break {
+  white-space: nowrap;
+}
+
 .BV-cover {
   background: linear-gradient(
     rgba(45, 45, 45, 0.37),
@@ -129,9 +133,10 @@ body.home .nav-custom {
 
 .three-steps {
   background-color: #fff;
+  padding-bottom: 10px;
 
   .row {
-    padding-bottom: 25px;
+    padding-bottom: 30px;
   }
 
   img {
@@ -148,10 +153,10 @@ body.home .nav-custom {
 
 #why-phs {
   background-color: rgb(247, 247, 247);
-}
 
-#why-phs h3 {
-  margin-top: 55px;
+  h3 {
+    margin-top: 55px;
+  }
 }
 
 #first-row {
@@ -209,7 +214,8 @@ section#map {
     }
   }
 
-  #postcode, section#join-our-amazing-community .form-group {
+  #postcode,
+  section#join-our-amazing-community .form-group {
     display: block;
     min-width: 350px;
   }
@@ -218,11 +224,13 @@ section#map {
     margin-bottom: 0;
   }
 
-  #postcode .input-group, section#join-our-amazing-community .form-group .input-group {
+  #postcode .input-group,
+  section#join-our-amazing-community .form-group .input-group {
     width: 100%;
   }
 
-  #search-btn, section#join-our-amazing-community form.search-form button {
+  #search-btn,
+  section#join-our-amazing-community form.search-form button {
     display: block;
     width: 100%;
   }
@@ -247,6 +255,13 @@ section#map {
     h1 {
       font-size: 36px;
     }
+  }
+
+  #postcode,
+  section#join-our-amazing-community .form-group {
+    max-width: 370px;
+    min-width: initial;
+    width: 80vw;
   }
 
   section.meet-community {
@@ -293,6 +308,12 @@ section#map {
     }
   }
 
+  #postcode,
+  section#join-our-amazing-community .form-group {
+    min-width: auto;
+    width: 80vw;
+  }
+
   #why-phs {
     img {
       width: 100px;
@@ -303,7 +324,7 @@ section#map {
     }
 
     #last-row {
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
     }
   }
 

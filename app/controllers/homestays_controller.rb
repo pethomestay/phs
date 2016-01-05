@@ -27,16 +27,12 @@ class HomestaysController < ApplicationController
   end
 
   def show
+    @renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new)
     @homestay = Homestay.find_by_slug(params[:id])
     raise ActiveRecord::RecordNotFound unless @homestay
-    notice = 'This listing is not active.'
-    if @homestay.locked?
-      notice = nil #we will change this to a message later
-    end
-
-    flash.now[:notice] = notice if notice && !@homestay.active?
     @title = @homestay.title
-    @reviews = @homestay.user.received_feedbacks.reviewed
+    @reviews = @homestay.user.received_feedbacks.reviewed.order('created_at desc')
+    @accepted_pet_sizes = @homestay.pet_sizes.collect{|size| size.sub(/(\w+).*/, '\1').downcase}
     @response_rate_in_percent = @homestay.user.response_rate_in_percent
     if current_user
       @reusable_enquiries = current_user.enquiries.where(reuse_message: true)

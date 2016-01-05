@@ -1,4 +1,14 @@
 module ApplicationHelper
+  def body_class
+    if current_page?(root_path)
+      'home'
+    elsif current_page?(homestays_path)
+      'homestay-search'
+    elsif controller_name == 'homestays' && action_name == 'show'
+      'host-profile'
+    end
+  end
+
   def formatted_title(title)
     title.present? ? "#{title} - PetHomeStay" : 'PetHomeStay'
   end
@@ -8,7 +18,7 @@ module ApplicationHelper
   end
 
   def fluid_nav?
-    controller_name == 'homestays' && ['index', 'show'].include?(action_name)
+    controller_name == 'homestays' && ['index'].include?(action_name)
   end
 
   def flash_class_for(type)

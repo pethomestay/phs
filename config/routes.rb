@@ -109,6 +109,7 @@ PetHomestay::Application.routes.draw do
       get 'update_message'
     end
     post 'update_dates'
+    get 'guest_receipt'
     get 'host_receipt'
     member do
       get 'host_confirm'
@@ -144,6 +145,7 @@ PetHomestay::Application.routes.draw do
   devise_scope :user do
     get '/guest/edit', to: 'registrations#edit'
     get '/host/edit', to: 'registrations#edit'
+    get 'become-a-host', to: 'registrations#new', as: :become_a_host, defaults: { intention: :host }
   end
 
   namespace :host do

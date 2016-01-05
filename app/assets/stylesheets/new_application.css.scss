@@ -1,20 +1,22 @@
-@import url('//fonts.googleapis.com/css?family=Ubuntu:400,500,700');
 @import "bootstrap_3_3_0.min";
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 @import "nifty";
 @import "bootstrap-datepicker";
 @import "chosen"; // jQuery chosen
+@import "fluidbox.min.css";
 @import "definations";
 @import "my_account/calendar";
 @import "nav_bar";
 @import "slick";
 @import "footer";
 @import "homepage";
+@import "public_pages";
 @import "sign_in";
 @import "sign_up";
 @import "welcome";
 @import "homestay_index";
 @import "homestay_show";
+@import "host_profile";
 // Guest View and Host View
 @import "my_account/sub_nav";
 @import "my_account/left_nav";
@@ -181,7 +183,7 @@ a.profile {
 }
 
 .chzn-container .chzn-results li {
-  color: #000;   
+  color: #000;
 }
 .chzn-container .chzn-drop, .chzn-container-single .chzn-single {
   background-color: #fff;
@@ -202,16 +204,16 @@ a.profile {
   border-radius:2px !important;
 }
 .chzn-container .chzn-drop {
-  border: 1px solid #dcdcdc;     
+  border: 1px solid #dcdcdc;
 }
 .chzn-container-single .chzn-single div {
-  background-image: -webkit-gradient(linear, left bottom, left top, 
+  background-image: -webkit-gradient(linear, left bottom, left top,
     color-stop(0, #fff), color-stop(0.6, #fff));
   background-image: -webkit-linear-gradient(center bottom, #fff 0%, #fff 60%);
   background-image: -moz-linear-gradient(center bottom, #fff 0%, #fff 60%);
   background-image: -o-linear-gradient(bottom, #fff 0%, #fff 60%);
   background-image: -ms-linear-gradient(top, #fff 0%,#fff 60%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff',
     endColorstr='#fff',GradientType=0 );
   background-image: linear-gradient(top, #fff 0%,#fff 60%);
   border-left: 1px solid #dcdcdc;
@@ -273,7 +275,7 @@ a.profile {
   cursor: default;
 }
 .chzn-container-active .chzn-single-with-drop {
-  box-shadow: none; 
+  box-shadow: none;
 }
 .chzn-container .chzn-results .highlighted {
   background: #149bdf;

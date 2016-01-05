@@ -15,8 +15,10 @@
 //= require jquery.ui.widget
 //= require jquery.iframe-transport
 //= require jquery.fileupload
+//= require //cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
+//= require parallax
 //= require flight-for-rails
 //= require bootstrap.min
 //= require bootstrap-growl.min
@@ -27,6 +29,8 @@
 //= require popover
 //= require slick.min
 //= require moment
+//= require jquery.ba-throttle-debounce
+//= require jquery.fluidbox.min
 //= require jquery.slimscroll.min
 //= require jquery_nested_form
 //= require chosen-jquery
