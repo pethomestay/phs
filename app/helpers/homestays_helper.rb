@@ -60,8 +60,11 @@ module HomestaysHelper
   end
 
   def pet_description(pet)
-    breed = pet.breed.sub(/\s+\(.*\)/, '')
-    breed = pet.pet_type.title.downcase if breed.blank?
+    breed = if pet.breed.blank?
+      pet.pet_type.title.downcase
+    else
+      pet.breed.sub(/\s+\(.*\)/, '')
+    end
     a_or_an = [8,11,18].include?(pet.pet_age) ? 'An' : 'A'
     "#{a_or_an} #{pet.age.sub(' years old', '-year-old')} #{breed}"
   end
