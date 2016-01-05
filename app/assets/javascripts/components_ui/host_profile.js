@@ -65,7 +65,7 @@ $(document).ready(function() {
         version: 'v2.1'
       });
 
-      $('a.social.facebook').on('click', function(e) {
+      $('.social a.facebook').on('click', function(e) {
         e.preventDefault();
         FB.ui({
           href: document.URL,
@@ -74,7 +74,7 @@ $(document).ready(function() {
       });
     };
 
-    $('a.social.twitter').on('click', function(e) {
+    $('.social a.twitter').on('click', function(e) {
       e.preventDefault();
       window.open($(this).attr('href'), 'Tweet', "width=600,height=500");
     });

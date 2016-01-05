@@ -11,6 +11,10 @@ module HomestaysHelper
     end
   end
 
+  def host_has_badges?(homestay)
+    homestay.emergency_transport? || homestay.first_aid? || homestay.professional_qualification? || homestay.police_check?
+  end
+
   def twitter_url(homestay)
     url = 'https://twitter.com/share'
     url += "?text=Check out this awesome pet sitter in #{@homestay.address_suburb} for only #{number_to_currency(@homestay.cost_per_night)} per night!"

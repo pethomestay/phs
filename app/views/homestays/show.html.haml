@@ -57,10 +57,6 @@
               .bar
                 %span.percent{style: "width:#{@homestay.user.responsiveness_rate}%"}
           .contact
-            = link_to '#', class: 'social facebook' do
-              %i.fa.fa-facebook
-            = link_to twitter_url(@homestay), class: 'social twitter' do
-              %i.fa.fa-twitter
             = link_to '#', data: contact_host_data(@homestay) do
               %span.short Contact
               %span.long Get in touch with
@@ -87,7 +83,7 @@
               .rating
                 .stars
                   - @homestay.average_rating.times do
-                    %i.fa.fa-star-o
+                    %i.fa.fa-star
                 .count= pluralize(@reviews.count, 'review')
           .content
             %h3 Reviews
@@ -110,7 +106,7 @@
                         .date= review.created_at.strftime('%d %B %Y')
                         .stars
                           - review.rating.times do
-                            %i.fa.fa-star-o
+                            %i.fa.fa-star
                     .review
                       .text= review.review
       .col-md-4.secondary-details.clearfix
@@ -127,7 +123,6 @@
                     .amount.clearfix
                       .currency $
                       .dollars>= @homestay.cost_per_night.to_i
-                      .cents .00
                     .per per day
             - if @homestay.remote_price.present?
               %li.service.clearfix
@@ -139,7 +134,6 @@
                     .amount.clearfix
                       .currency $
                       .dollars>= @homestay.remote_price.to_i
-                      .cents .00
                     .per per day
             - if @homestay.visits_price.present?
               %li.service.clearfix
@@ -151,7 +145,6 @@
                     .amount.clearfix
                       .currency $
                       .dollars>= @homestay.visits_price.to_i
-                      .cents .00
                     .per per visit
             - if @homestay.pet_walking_price.present?
               %li.service.clearfix
@@ -163,7 +156,6 @@
                     .amount.clearfix
                       .currency $
                       .dollars>= @homestay.pet_walking_price.to_i
-                      .cents .00
                     .per per walk
         .details-container.preferences-container
           %h3 Preferences
@@ -174,9 +166,38 @@
             %li.medium>= image_tag "sizes/medium#{'-inactive' unless @accepted_pet_sizes.include?('medium')}.png"
             %li.large>= image_tag "sizes/large#{'-inactive' unless @accepted_pet_sizes.include?('large')}.png"
             %li.giant= image_tag "sizes/giant#{'-inactive' unless @accepted_pet_sizes.include?('giant')}.png"
+        - if host_has_badges?(@homestay)
+          .details-container.badges-container
+            %h3 Badges
+            %ul.badges
+              - if @homestay.emergency_transport?
+                %li.phs-badge.clearfix
+                  .details
+                    %h5 Emergency transport
+                  %i.icon.icon-policecar
+              - if @homestay.first_aid?
+                %li.phs-badge.clearfix
+                  .details
+                    %h5 First aid
+                  %i.icon.icon-medicalbag
+              - if @homestay.professional_qualification?
+                %li.phs-badge.clearfix
+                  .details
+                    %h5 Pet qualification
+                  %i.icon.icon-award
+              - if @homestay.police_check?
+                %li.phs-badge.clearfix
+                  .details
+                    %h5 Police check
+                  %i.icon.icon-badge
 %section#about
   .container
     .row
+      .social
+        = link_to '#', class: 'facebook' do
+          %i.fa.fa-facebook
+        = link_to twitter_url(@homestay), class: 'twitter' do
+          %i.fa.fa-twitter
       .col-md-8.primary-details
         .details-container.about-container
           .content
@@ -200,12 +221,6 @@
                       .name= pet.name.titleize
                       .description= pet_description(pet)
       .col-md-4.secondary-details
-        .details-container.badges-container
-          .content
-            .homestay-badges
-              %i.icon.icon-policecar{class: "#{'active' if @homestay.emergency_transport?}"}
-              %i.icon.icon-medicalbag{class: "#{'active' if @homestay.first_aid?}"}
-              %i.icon.icon-badge{class: "#{'active' if @homestay.police_check?}"}
         .details-container.location-container
           .content
             .map-container
