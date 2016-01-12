@@ -8,7 +8,7 @@ class Homestay < ActiveRecord::Base
   has_many :enquiries
   has_many :bookings
   has_many :pictures, as: 'picturable', :class_name => "UserPicture"
-  has_attachments :photos, maximum: 10
+  has_attachments :photos, maximum: 10, accept: [:jpg, :png, :gif]
   has_many :favourites
   has_many :users, through: :favourites, dependent: :destroy
   has_many :unavailable_dates, through: :user
