@@ -28,17 +28,11 @@ class Search
   end
 
   def check_in_date=(value)
-    unless value.blank?
-      components = value.split('.')
-      @check_in_date = Date.new("20#{components[2]}".to_i, components[1].to_i, components[0].to_i)
-    end
+    @check_in_date = Date.parse(value) unless value.blank?
   end
 
   def check_out_date=(value)
-    unless value.blank?
-      components = value.split('.')
-      @check_out_date = Date.new("20#{components[2]}".to_i, components[1].to_i, components[0].to_i)
-    end
+    @check_out_date = Date.parse(value) unless value.blank?
   end
 
   def location=(value)

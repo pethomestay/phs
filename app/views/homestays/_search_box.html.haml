@@ -23,11 +23,11 @@
         %i.fa.fa-map-marker
     .form-group.search_check_in_date
       .input-group.search_check_in_date_container
-        = f.input_field :check_in_date, placeholder: 'Drop off', readonly: true, value: @search.check_in_date.blank? ? nil : @search.check_in_date.strftime('%d.%m.%y')
+        = f.input_field :check_in_date, placeholder: 'Drop off', readonly: true, value: @search.check_in_date.blank? ? nil : @search.check_in_date.strftime('%d/%m/%Y')
         %i.fa.fa-calendar
     .form-group.search_check_out_date
       .input-group.search_check_out_date_container
-        = f.input_field :check_out_date, placeholder: 'Pick up', readonly: true, value: @search.check_out_date.blank? ? nil : @search.check_out_date.strftime('%d.%m.%y')
+        = f.input_field :check_out_date, placeholder: 'Pick up', readonly: true, value: @search.check_out_date.blank? ? nil : @search.check_out_date.strftime('%d/%m/%Y')
         %i.fa.fa-calendar
     .form-group.go
       .input-group

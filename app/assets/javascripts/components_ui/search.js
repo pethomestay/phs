@@ -5,7 +5,7 @@ $(document).ready(function() {
 
   var checkInPicker = checkIn.datepicker({
     autoclose: true,
-    format: 'dd.mm.yy',
+    format: 'dd/mm/yyyy',
     maxViewMode: 'days',
     minViewMode: 'days',
     orientation: 'bottom right',
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
   var checkOutPicker = checkOut.datepicker({
     autoclose: true,
-    format: 'dd.mm.yy',
+    format: 'dd/mm/yyyy',
     orientation: 'bottom right',
     startDate: '0d',
     todayHighlight: true

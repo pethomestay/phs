@@ -278,7 +278,7 @@ class User < ActiveRecord::Base
     booking.enquiry = enquiry
     booking.homestay = homestay
     booking.bookee = homestay.user
-    booking.cost_per_night = homestay.cost_per_night
+    booking.cost_per_night = homestay.cost_per_night || homestay.remote_price
     booking.booker = enquiry.user
 
     date_time_now = DateTime.now
