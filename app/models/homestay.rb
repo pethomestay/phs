@@ -272,7 +272,7 @@ class Homestay < ActiveRecord::Base
   private
 
   def host_must_have_a_mobile_number
-    unless self.user.mobile_number.present?
+    if self.user.blank? || self.user.mobile_number.blank?
       errors[:base] << 'A mobile number is needed so the Guest can contact you!'
     end
   end
