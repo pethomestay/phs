@@ -19,28 +19,30 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    Analytics.alias(previous_id: session[:session_id], user_id: current_user.id)
-    Analytics.identify(
-      user_id: current_user.id,
-      traits: {
-        name: resource.name,
-        email: resource.email
-      }
-    )
-    Analytics.track(
-      user_id:       current_user.id,
-      event:         "Signed in",
-      timestamp:     Time.now,
+    unless session[:session_id].blank?
+      Analytics.alias(previous_id: session[:session_id], user_id: current_user.id)
+      Analytics.identify(
+        user_id: current_user.id,
+        traits: {
+          name: resource.name,
+          email: resource.email
+        }
+      )
+      Analytics.track(
+        user_id:       current_user.id,
+        event:         "Signed in",
+        timestamp:     Time.now,
 
-      context:       {
-        'Google Analytics' => {
-          clientId: google_analytics_client_id
-          },
-        'UserAgent' => request.user_agent,
-        'ip' => request.ip,
-      },
-      integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
-    )
+        context:       {
+          'Google Analytics' => {
+            clientId: google_analytics_client_id
+            },
+          'UserAgent' => request.user_agent,
+          'ip' => request.ip,
+        },
+        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
+      )
+    end
     if params[:redirect_path].present?
       params[:redirect_path]
     elsif request.env['omniauth.origin']
