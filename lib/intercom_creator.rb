@@ -13,6 +13,13 @@ class IntercomCreator
     end
   end
 
+  def self.create_note(options = {})
+    begin
+      Intercom::Note.create(options)
+    rescue Intercom::MultipleMatchingUsersError, Intercom::ResourceNotFound
+    end
+  end
+
   def self.create_user(options = {})
     begin
       Intercom::User.create(options)

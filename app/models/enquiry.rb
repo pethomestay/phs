@@ -123,11 +123,11 @@ class Enquiry < ActiveRecord::Base
     if today_count > MAX_ENQUIRIES_PER_DAY
       errors[:base] << "Sorry! We only allow #{MAX_ENQUIRIES_PER_DAY} enquiries per day to minimise the risk of spam."
       if Rails.env.production?
-        Intercom::Event.create(
+        IntercomCreator::create_event({
           event_name: 'enquiry-limit-reached',
           created_at: Time.now.to_i,
-          email: self.user.email,
-        )
+          email: self.user.email
+        })
       end
     end
   end
