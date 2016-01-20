@@ -1,3 +1,8 @@
-%h1.text-center= "Give Support for #{@user.name}!"
-= render 'form'
-= link_to 'Back', recommendations_path
+- if @user.blank?
+  %div{style: 'min-height:400px'}
+    %h1.text-center Sorry, we can't find a matching user
+    %p.text-center Please contact the host who sent you the link
+- else
+  %h1.text-center= "Give Support for #{@user.name}!"
+  = render 'form'
+  = link_to 'Back', recommendations_path

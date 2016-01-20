@@ -85,6 +85,7 @@ class Search
         end
       end
       results_list += homestays.all
+      results_list = results_list.uniq
       results_list.reject! { |h| (h.unavailable_dates.collect(&:date) & (search_dates)).any? } if search_dates.any?
       search_radius += 2
     end
@@ -93,7 +94,7 @@ class Search
 
     results_list = Search.algorithm(results_list.uniq) unless @sort_by == "distance"
 
-    # Add distnace info.
+    # Add distance info.
     results_list.each_with_index do |homestay, i|
       homestay.position = i + 1
       homestay.distance = Geocoder::Calculations.distance_between(

@@ -91,14 +91,19 @@ class Homestay < ActiveRecord::Base
   after_initialize :set_country_Australia # set country as Australia no matter what
 
   def notify_intercom
-    Intercom::Event.create(:event_name => "homestay-created", :email => self.user.email, :created_at => self.created_at.to_i, :metadata => {
-      :suburb          => self.address_suburb,
-      :postcode        => self.address_postcode,
-      :has_pictures    => self.pictures.present?,
-      :has_cover_photo => self.photos.present?,
-      :price_per_night => self.cost_per_night,
-      :title_is_unique => Homestay.where(:title => self.title).count == 1
-      })
+    IntercomCreator::create_event({
+      event_name: 'homestay-created',
+      email: self.user.email,
+      created_at: self.created_at.to_i,
+      metadata: {
+        suburb: self.address_suburb,
+        postcode: self.address_postcode,
+        has_pictures: self.pictures.present?,
+        has_cover_photo: self.photos.present?,
+        price_per_night: self.cost_per_night,
+        title_is_unique: Homestay.where(title: self.title).count == 1
+      }
+    })
   end
 
   def sitting_costs
@@ -272,7 +277,7 @@ class Homestay < ActiveRecord::Base
   private
 
   def host_must_have_a_mobile_number
-    unless self.user.mobile_number.present?
+    if self.user.blank? || self.user.mobile_number.blank?
       errors[:base] << 'A mobile number is needed so the Guest can contact you!'
     end
   end
