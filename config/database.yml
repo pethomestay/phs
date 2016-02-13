@@ -12,7 +12,7 @@ local: &local
 
 development:
   <<: *default
-  database: pet_homestay_production
+  database: pet_homestay_development
   <<: *local
 
 test:

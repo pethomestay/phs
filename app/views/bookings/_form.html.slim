@@ -22,7 +22,7 @@
           td = truncate host.homestay.title
         tr
           td = host.homestay.address_suburb
-        - if !@booking.host_accepted # Dates can be edited
+        - if !(@booking.host_accepted && @booking.owner_accepted?) # Dates can be edited
           tr
             td Check in
             td.booking_check_in_date

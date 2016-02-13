@@ -141,12 +141,19 @@
       .row
         .col-xs-12
           = f.submit 'Accept Booking', class: 'btn btn-primary btn-lg btn-block submit-button'
-      br
-      .row.booking-details-container
-        .col-xs-12
-          p.text-center= "- OR -"
-        .col-xs-12
-          .btn.btn-secondary.btn-block.btn-lg#modify-price-button Offer a Custom Rate
+      - if @booking.owner_accepted?
+        br
+        .row.booking-details-container
+          .col-xs-12
+            p.text-center
+              | Since the guest has already accepted the booking, custom rates are disabled. Please contact us if you would like to alter the offered rate.
+      - else
+        br
+        .row.booking-details-container
+          .col-xs-12
+            p.text-center= "- OR -"
+          .col-xs-12
+            .btn.btn-secondary.btn-block.btn-lg#modify-price-button Offer a Custom Rate
       br
       br
       br

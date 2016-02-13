@@ -28,6 +28,7 @@ class Booking < ActiveRecord::Base
 
   attr_accessor :fees, :public_liability_insurance, :phs_service_charge, :host_payout, :pet_breed, :pet_age,
                 :pet_date_of_birth
+  attr_accessible :cost_per_night, :message
 
   scope :booked, where(owner_accepted: true, host_accepted: true)
 
