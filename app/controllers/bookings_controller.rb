@@ -16,6 +16,7 @@ class BookingsController < ApplicationController
   def update_dates
     @booking = current_user.bookers.find_by_id(params[:booking_id])
     @booking.update_transaction_by(nil, params[:new_check_in], params[:new_check_out])
+    @booking.update_attribute(:host_accepted, nil)
     render json: {:nights => @booking.number_of_nights, :total_cost => sprintf('%.2f', @booking.amount.to_s)}
   end
 
@@ -67,8 +68,9 @@ class BookingsController < ApplicationController
     @booking = current_user.bookees.find_by_id(params[:id]) || current_user.bookers.find_by_id(params[:id])
     if @booking.bookee == current_user # Host booking modifications
       if params[:commit] == "Decline Booking" # Host has rejected the booking
-        message_content = params[:booking][:message] || "Sorry, the host has declined the booking"
+        message_content = (params[:booking][:message].blank? ? "Sorry, the host has declined the booking" : params[:booking][:message])
         @booking.mailbox.messages.create(:user_id => current_user.id, :message_text => message_content)
+        @booking.update_column(:host_accepted, false)
         @booking.update_column(:state, "rejected")
         Analytics.track(
           user_id:          current_user.id,
