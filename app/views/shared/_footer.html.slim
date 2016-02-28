@@ -16,7 +16,6 @@ section.footer class = "#{'bordered' if bordered_nav?}"
         = render 'shared/footer/list_item', text: 'Guest FAQ', url: guest_faq_path
         = render 'shared/footer/list_item', text: 'Host FAQ', url: host_faq_path
         = render 'shared/footer/list_item', text: 'Support Centre', url: 'http://support.pethomestay.com'
-        = render 'shared/footer/list_item', text: 'Call 1300 660 945', url: 'tel:+61-1300-660-945'
         h4.connect Connect with Us
         / Google Plus
         a href="https://plus.google.com/+PetHomeStay/" target="_blank"
@@ -52,14 +51,6 @@ section.footer class = "#{'bordered' if bordered_nav?}"
         = render 'shared/footer/list_item', text: 'Find a Sitter', url: root_path
         = render 'shared/footer/list_item', text: 'Charity Hosts', url: charity_hosts_path
         = render 'shared/footer/list_item', text: 'Contact Us', url: new_contact_path
-        / MixPanel Badge
-        br 
-        a href="https://mixpanel.com/f/partner"
-            img src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
-        br
-        br
-        .pull-left id="DigiCertClickID_zCiuq2TN" data-language="en_US"
-            a href="https://www.digicert.com/ssl-certificate.htm"
       .col-sm-4
         h4 About
         = render 'shared/footer/list_item', text: 'Our Company', url: our_company_path

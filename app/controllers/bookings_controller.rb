@@ -143,7 +143,7 @@ class BookingsController < ApplicationController
           )
           return redirect_to host_messages_path, alert: "Custom rate has been sent to #{@booking.booker.first_name}"
         else
-          return redirect_to host_messages_path, error: 'Sorry, your custom rate did not go through for some reason. Please try again or contact us at 1300 660 945.'
+          return redirect_to host_messages_path, error: 'Sorry, your custom rate did not go through for some reason. Please try again or contact us at info@pethomestay.com.'
         end
       end
     else # Guest booking modifications (or payment)

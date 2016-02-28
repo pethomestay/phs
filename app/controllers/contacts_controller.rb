@@ -9,13 +9,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(params[:contact])
     if @contact.valid?
       if user_signed_in?
-        IntercomCreator::create_message({
-          from: {
-            type: 'user',
-            user_id: current_user.id,
-          },
-          body: params[:contact][:message]
-        })
+        # Do nothing.
       else
         user = User.find_by_email(params[:contact][:email])
         user = IntercomCreator::create_user({

@@ -19,6 +19,9 @@ html lang='en'
     = javascript_include_tag '//use.fonticons.com/afd727fe.js'
     = javascript_include_tag 'new_application'
     = cloudinary_js_config
+    javascript:
+      var _elev = window._elev || {};(function() {var i,e;i=document.createElement("script"),i.type='text/javascript';i.async=1,i.src="https://static.elev.io/js/v3.js",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(i,e);})();
+      _elev.account_id = '56cd02af083d4';
     = yield :head_javascript
     = csrf_meta_tags
     = yield :meta_tags

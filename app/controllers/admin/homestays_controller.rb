@@ -30,26 +30,6 @@ class Admin::HomestaysController < Admin::AdminController
       #need to send out message to user to let them know it's approved!
       #### DELETE THIS ONCE YOU START USING INTERCOM
       HomestayApprovedJob.new.async.perform(@homestay)
-      if Rails.env.production?
-        IntercomCreator::create_event({
-          event_name: 'homestay-approved',
-          email: @homestay.user.email,
-          created_at: Time.now.to_i,
-          metadata: {
-            approved_by: current_user.name,
-            link: "https://www.pethomestay.com.au/homestays/#{@homestay.slug}"
-          }
-        })
-      end
-    else
-      if Rails.env.production?
-        IntercomCreator::create_event({
-          event_name: 'homestay-locked',
-          email: @homestay.user.email,
-          created_at: Time.now.to_i,
-          metadata: { locked_by: current_user.name }
-        })
-      end
     end
     @homestay.locked = !@homestay.locked #toggle locked state
     @homestay.active = !@homestay.locked #active is going to be the reverse of locked ie locked true then active false
