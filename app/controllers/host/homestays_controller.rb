@@ -6,11 +6,6 @@ class Host::HomestaysController < Host::HostController
   # GET /host/homestay/new
   def new
     redirect_to edit_host_homestay_path and return if current_user.homestay.present?
-    IntercomCreator::create_event({
-      event_name: 'Viewed My Homestay box',
-      email: current_user.email,
-      created_at: Time.now.to_i
-    }) if Rails.env.production?
     @homestay = current_user.build_homestay
   end
 
@@ -20,15 +15,9 @@ class Host::HomestaysController < Host::HostController
     if @homestay.save
       flash[:notice] = 'Thank you for applying to join the PetHomeStay Host Community! We will contact you within two business days to introduce PetHomeStay and approve your listing!'
       #Send email to let them know that their homestay has been created and is ready for approval
-      #### DELETE THIS ONCE YOU START USING INTERCOM
       HomestayCreatedJob.new.async.perform(@homestay)
       #Send email to admin to let them know currently not needed but can be activated later
       #AdminMailer.delay.homestay_created_admin(@homestay.id)
-      IntercomCreator::create_event({
-        event_name: 'Created a Homestay',
-        email: current_user.email,
-        created_at: Time.now.to_i
-      }) if Rails.env.production?
       redirect_to @homestay
     else
       flash[:notice] = 'That title is not unique' if @homestay.errors[:slug].present?

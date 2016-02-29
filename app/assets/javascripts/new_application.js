@@ -24,7 +24,6 @@
 //= require bootstrap-growl.min
 //= require bootbox.min
 //= require plugins
-//= require segmentio
 //= require input_check_radio
 //= require popover
 //= require slick.min
@@ -42,4 +41,3 @@
 //= require_directory ./components_data
 //= require_directory ./components_ui
 //= require bootstrap-datepicker
-//= require hide_intercom_bubble_on_mobile

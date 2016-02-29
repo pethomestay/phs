@@ -2,7 +2,6 @@ class FeedbacksController < ApplicationController
   respond_to :html
   before_filter :authenticate_user!
   # before_filter :set_enquiry, except: [:index, :edit]
-  # skip_before_filter :track_session_variables, only: [:create, :index]
 
 
   def index

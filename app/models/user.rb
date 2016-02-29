@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   scope :active, where(active: true)
   scope :last_five, order('created_at DESC').limit(5)
 
+
   # Finds a matching device for the user, or creates a new one.
   # @api public
   # @param device_params [Hash] The device params.
@@ -374,7 +375,6 @@ class User < ActiveRecord::Base
     self.confirm!
     self.save!
   end
-
 
   def self.find_for_facebook_oauth(auth, current_user)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|

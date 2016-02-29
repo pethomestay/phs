@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151201042638) do
+ActiveRecord::Schema.define(:version => 20160229015658) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20151201042638) do
     t.text     "auto_interest_sms"
     t.text     "auto_decline_sms"
     t.string   "display_address",                   :limit => 100
+    t.datetime "approved_at"
   end
 
   add_index "homestays", ["outdoor_area_id"], :name => "index_homestays_on_outdoor_area_id"

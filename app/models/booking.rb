@@ -67,7 +67,7 @@ class Booking < ActiveRecord::Base
   # Pass in argument true if want no messages to go out. Typically when this method is used for the first time
   def trigger_host_no_activity_reject(inform = false)
     if inform
-      self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "This Host has not replied within 24 hours so your enquiry to them has been closed.\nIf you have had no responses within 24 hours, please send more Enquiries to Hosts or ring us on 1300 660 945.")
+      self.mailbox.messages.create(:user_id => self.bookee.id, :message_text => "This Host has not replied within 24 hours so your enquiry to them has been closed.\nIf you have had no responses within 24 hours, please send more Enquiries to Hosts or contact us at info@pethomestay.com.")
       #UserMailer.automatically_declined(self).deliver
     end
     self.update_column(:state, "rejected")
@@ -311,7 +311,7 @@ class Booking < ActiveRecord::Base
       self.host_rejects_booking
       self.save!
       # self.mailbox.messages.create! user_id: booker_id,
-      #   message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease ring us on 1300 660 945 if you need help."
+      #   message_text: "[This is an auto-generated message for the Guest]\n\nUnfortunately this Host is unavailable for this Homestay.\nYour credit card has not been charged. Please choose another Host in your area.\nPlease contact us at info@pethomestay.com if you need help."
       # self.mailbox.messages.create! user_id: bookee_id,
       #   message_text: "[This is an auto-generated message for the Host]\n\nYou have declined this booking."
       self.mailbox.update_attributes host_read: false, guest_read: false

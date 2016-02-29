@@ -87,24 +87,7 @@ class Homestay < ActiveRecord::Base
   before_save :strip_favorite_breeds
   before_save :strip_energy_level_ids
   after_save :generate_display_address
-  after_create :notify_intercom, if: 'Rails.env.production?'
   after_initialize :set_country_Australia # set country as Australia no matter what
-
-  def notify_intercom
-    IntercomCreator::create_event({
-      event_name: 'homestay-created',
-      email: self.user.email,
-      created_at: self.created_at.to_i,
-      metadata: {
-        suburb: self.address_suburb,
-        postcode: self.address_postcode,
-        has_pictures: self.pictures.present?,
-        has_cover_photo: self.photos.present?,
-        price_per_night: self.cost_per_night,
-        title_is_unique: Homestay.where(title: self.title).count == 1
-      }
-    })
-  end
 
   def sitting_costs
     [cost_per_night, remote_price].compact
@@ -121,6 +104,14 @@ class Homestay < ActiveRecord::Base
         address = "#{result.first.city}, #{result.first.state_code} #{result.first.postal_code}"
         update_attribute(:display_address, address)
       end
+    end
+  end
+
+  def self.onboard
+    max_steps = 5
+    max_steps.downto(1) do |offset|
+      day = Time.current - offset.days
+      # Homestay.where(created_at: )
     end
   end
 

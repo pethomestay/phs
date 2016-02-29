@@ -1,7 +1,6 @@
 class Host::FeedbacksController < Host::HostController
   respond_to :html
   before_filter :set_enquiry, except: [:index, :edit, :create, :update]
-  # skip_before_filter :track_session_variables, only: [:create, :index]
 
   def index
     @feedbacks = current_user.given_feedbacks.order('created_at DESC').paginate(page: params[:page], per_page: 10)

@@ -1,5 +1,4 @@
 class RecommendationsController < ApplicationController
-  skip_before_filter :track_session_variables
   before_filter :authenticate_user!, :only => [:index]
   before_filter :set_user_params, :only => [:create]
   layout "new_application"

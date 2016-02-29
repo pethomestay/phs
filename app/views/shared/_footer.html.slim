@@ -13,10 +13,9 @@ section.footer class = "#{'bordered' if bordered_nav?}"
   .container
     .col-sm-5
         h4 Support
-        = render 'shared/footer/list_item', text: 'Guest FAQ', url: guest_faq_path
-        = render 'shared/footer/list_item', text: 'Host FAQ', url: host_faq_path
-        = render 'shared/footer/list_item', text: 'Support Centre', url: 'http://support.pethomestay.com'
-        = render 'shared/footer/list_item', text: 'Call 1300 660 945', url: 'tel:+61-1300-660-945'
+        h4
+          a data-elevio-module='articles' href='#'
+            small Help articles
         h4.connect Connect with Us
         / Google Plus
         a href="https://plus.google.com/+PetHomeStay/" target="_blank"
@@ -51,15 +50,6 @@ section.footer class = "#{'bordered' if bordered_nav?}"
         = render 'shared/footer/list_item', text: 'Become a Sitter', url: why_join_path
         = render 'shared/footer/list_item', text: 'Find a Sitter', url: root_path
         = render 'shared/footer/list_item', text: 'Charity Hosts', url: charity_hosts_path
-        = render 'shared/footer/list_item', text: 'Contact Us', url: new_contact_path
-        / MixPanel Badge
-        br 
-        a href="https://mixpanel.com/f/partner"
-            img src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
-        br
-        br
-        .pull-left id="DigiCertClickID_zCiuq2TN" data-language="en_US"
-            a href="https://www.digicert.com/ssl-certificate.htm"
       .col-sm-4
         h4 About
         = render 'shared/footer/list_item', text: 'Our Company', url: our_company_path
@@ -67,7 +57,6 @@ section.footer class = "#{'bordered' if bordered_nav?}"
         = render 'shared/footer/list_item', text: 'In the Press', url: press_path
         = render 'shared/footer/list_item', text: 'Jobs', url: jobs_path
         = render 'shared/footer/list_item', text: 'Investors', url: investors_path
-        = render 'shared/footer/list_item', text: 'Partners', url: partners_path
         = render 'shared/footer/list_item', text: 'Terms of Service', url: terms_and_conditions_path
         = render 'shared/footer/list_item', text: 'Privacy Policy', url: privacy_policy_path
         a href='https://www.pethomestay.com.au/robots.txt' hidden='' Sitemap
