@@ -24,7 +24,6 @@
 //= require bootstrap-growl.min
 //= require bootbox.min
 //= require plugins
-//= require segmentio
 //= require input_check_radio
 //= require popover
 //= require slick.min

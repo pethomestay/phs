@@ -28,7 +28,6 @@ class Admin::HomestaysController < Admin::AdminController
     @homestay = Homestay.find_by_slug!(params[:homestay_id])
     if @homestay.locked
       #need to send out message to user to let them know it's approved!
-      #### DELETE THIS ONCE YOU START USING INTERCOM
       HomestayApprovedJob.new.async.perform(@homestay)
     end
     @homestay.locked = !@homestay.locked #toggle locked state

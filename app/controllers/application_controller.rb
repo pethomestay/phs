@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_filter :track_session_variables
   protect_from_forgery
 
   def admin_login_required
@@ -19,30 +18,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    unless session[:session_id].blank?
-      Analytics.alias(previous_id: session[:session_id], user_id: current_user.id)
-      Analytics.identify(
-        user_id: current_user.id,
-        traits: {
-          name: resource.name,
-          email: resource.email
-        }
-      )
-      Analytics.track(
-        user_id:       current_user.id,
-        event:         "Signed in",
-        timestamp:     Time.now,
-
-        context:       {
-          'Google Analytics' => {
-            clientId: google_analytics_client_id
-            },
-          'UserAgent' => request.user_agent,
-          'ip' => request.ip,
-        },
-        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
-      )
-    end
     if params[:redirect_path].present?
       params[:redirect_path]
     elsif request.env['omniauth.origin']
@@ -57,7 +32,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(resource)
-    cookies.delete :segment_anonymous_id
     root_path
   end
 
@@ -81,49 +55,6 @@ class ApplicationController < ActionController::Base
       #   'User name' => "#{current_user.first_name} #{current_user.last_name}",
       #   'User email' => current_user.email
       # )
-    end
-  end
-
-  # Gets
-  def track_session_variables
-    if current_user.present?
-      Analytics.track(
-        user_id:       current_user.id,
-        event:         get_useable_name_of_action(params),
-        properties:    params.except(:action, :controller),
-        timestamp:     Time.now,
-        context:       {
-          'Google Analytics' => {
-            clientId: google_analytics_client_id
-            },
-          'UserAgent' => request.user_agent,
-          'ip' => request.ip,
-        },
-        integrations:  { 'Google Analytics' => false, 'KISSmetrics' => true }
-      )
-
-    else
-      # Sets cookie if not yet set, otherwise, gets the cookie
-      if cookies[:segment_anonymous_id].present?
-        anonymous_id = cookies[:segment_anonymous_id]
-      else
-        cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
-        anonymous_id = cookies[:segment_anonymous_id]
-      end
-      Analytics.track(
-        user_id:          anonymous_id,
-        event:            get_useable_name_of_action(params),
-        properties:       params.except(:action, :controller),
-        timestamp:        Time.now,
-        context:       {
-          'Google Analytics' => {
-            clientId: google_analytics_client_id
-            },
-          'UserAgent' => request.user_agent,
-          'ip' => request.ip,
-        },
-        integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
-      )
     end
   end
 

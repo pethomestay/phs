@@ -2,7 +2,6 @@ class HomestaysController < ApplicationController
   require 'will_paginate/array'
   respond_to :html
   before_filter :authenticate_user!, except: [:show, :index, :availability]
-  skip_before_filter :track_session_variables, only: [:update, :create, :availability, :show]
 
   SEARCH_RADIUS = 20
 
@@ -42,9 +41,6 @@ class HomestaysController < ApplicationController
         check_in_date: Date.today,
         check_out_date: Date.today
       })
-    elsif cookies[:segment_anonymous_id].nil?
-      cookies.permanent[:segment_anonymous_id] = SecureRandom.hex(25)
-      anonymous_id = cookies[:segment_anonymous_id]
     end
     unless current_user
       @enquiry = Enquiry.new({
@@ -52,19 +48,6 @@ class HomestaysController < ApplicationController
         check_out_date: Date.today
       })
     end
-    Analytics.track(
-      user_id:          current_user.try(:id) || cookies[:segment_anonymous_id],
-      event:            "Viewed Product",
-      properties: {
-        id:       @homestay.id,
-        name:     @homestay.title,
-        price:    @homestay.cost_per_night,
-        category: @homestay.address_city
-      },
-      timestamp:        Time.now,
-      context:          segment_io_context,
-      integrations:     { 'Google Analytics' => false, 'KISSmetrics' => true }
-    )
     gon.push fb_app_id: ( ENV['APP_ID'] || '363405197161579' )
     render layout: 'new_application'
   end

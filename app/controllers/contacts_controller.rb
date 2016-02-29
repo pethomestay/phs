@@ -12,17 +12,6 @@ class ContactsController < ApplicationController
         # Do nothing.
       else
         user = User.find_by_email(params[:contact][:email])
-        user = IntercomCreator::create_user({
-          email: params[:contact][:email],
-          name: params[:contact][:name]
-        }) unless user.present?
-        IntercomCreator::create_message({
-          from: {
-            type: 'user',
-            email: user.email,
-          },
-          body: params[:contact][:message]
-        })
       end
       flash[:notice] = 'Your message has been sent. We usually respond within an hour or so during AEST business hours!'
       redirect_to new_contact_path
@@ -34,15 +23,8 @@ class ContactsController < ApplicationController
   def add_note
     @contact = Contact.new(params[:contact])
     if @contact.valid?
-      # Create user in case user does not exist in intercom
-      IntercomCreator::create_user({
-        email: @contact.email,
-        name: @contact.name
-      })
-      IntercomCreator::create_note({
-        email: @contact.email,
-        body: "Need Homestay in #{params[:location]}"
-      })
+      gibbon = Gibbon::API.new(ENV['MAILCHIMP_API_KEY'])
+      gibbon.lists.subscribe({id: 29e7683876, email: {email: params[:contact][:email]}})
       flash[:success] = 'Success! We will keep you informed!'
     else
       flash[:error] = 'There is an error in your input. Please double check and try again.'
