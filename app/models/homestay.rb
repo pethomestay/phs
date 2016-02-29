@@ -107,6 +107,14 @@ class Homestay < ActiveRecord::Base
     end
   end
 
+  def self.onboard
+    max_steps = 5
+    max_steps.downto(1) do |offset|
+      day = Time.current - offset.days
+      # Homestay.where(created_at: )
+    end
+  end
+
   def self.reject_unavailable_homestays(start_date = nil, end_date = nil)
     if start_date && end_date
       Homestay.active.reject {|h| ((start_date.to_date..end_date.to_date).to_a - h.unavailable_dates.collect(&:date)).any? }
