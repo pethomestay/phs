@@ -24,7 +24,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(params[:contact])
     if @contact.valid?
       gibbon = Gibbon::API.new(ENV['MAILCHIMP_API_KEY'])
-      gibbon.lists.subscribe({id: 29e7683876, email: {email: params[:contact][:email]}})
+      gibbon.lists.subscribe({id: '29e7683876', email: {email: params[:contact][:email]}})
       flash[:success] = 'Success! We will keep you informed!'
     else
       flash[:error] = 'There is an error in your input. Please double check and try again.'
