@@ -2,9 +2,9 @@
     .container
         .span3
             %h4 Support
-            = render 'shared/footer/list_item', text: 'Guest FAQ', url: guest_faq_path
-            = render 'shared/footer/list_item', text: 'Host FAQ', url: host_faq_path
-            = render 'shared/footer/list_item', text: 'Support Centre', url: 'http://support.pethomestay.com'
+            %h4
+              %a{data: {'elevio-module': 'articles'}, href: '#'}
+                %small Help articles
             %h4.connect Connect with Us
             -# Google Plus
             %a{href: "https://plus.google.com/+PetHomeStay/", target: "_blank"}

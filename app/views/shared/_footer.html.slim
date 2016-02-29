@@ -13,9 +13,9 @@ section.footer class = "#{'bordered' if bordered_nav?}"
   .container
     .col-sm-5
         h4 Support
-        = render 'shared/footer/list_item', text: 'Guest FAQ', url: guest_faq_path
-        = render 'shared/footer/list_item', text: 'Host FAQ', url: host_faq_path
-        = render 'shared/footer/list_item', text: 'Support Centre', url: 'http://support.pethomestay.com'
+        h4
+          a data-elevio-module='articles' href='#'
+            small Help articles
         h4.connect Connect with Us
         / Google Plus
         a href="https://plus.google.com/+PetHomeStay/" target="_blank"
@@ -50,7 +50,6 @@ section.footer class = "#{'bordered' if bordered_nav?}"
         = render 'shared/footer/list_item', text: 'Become a Sitter', url: why_join_path
         = render 'shared/footer/list_item', text: 'Find a Sitter', url: root_path
         = render 'shared/footer/list_item', text: 'Charity Hosts', url: charity_hosts_path
-        = render 'shared/footer/list_item', text: 'Contact Us', url: new_contact_path
       .col-sm-4
         h4 About
         = render 'shared/footer/list_item', text: 'Our Company', url: our_company_path
