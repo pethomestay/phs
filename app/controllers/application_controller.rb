@@ -35,16 +35,6 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
-  def segment_io_context
-    {
-      'Google Analytics' => {
-        clientId: google_analytics_client_id
-        },
-      'UserAgent' => request.user_agent,
-      'ip' => request.ip,
-    }
-  end
-
   private
 
   # Tags AppSignal error notifications so that they include basic user info.
