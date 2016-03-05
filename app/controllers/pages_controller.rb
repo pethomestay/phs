@@ -74,6 +74,7 @@ class PagesController < ApplicationController
     else
       @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => params[:message])
     end
-    render nothing: true
+
+    render xml: Twilio::TwiML::Response.new.text
   end
 end
