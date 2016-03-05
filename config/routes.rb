@@ -243,6 +243,6 @@ PetHomestay::Application.routes.draw do
   get '/availability/(*something)', to: redirect('/host')
 
   # For SMSBroadcast inbound SMS requests
-  get '/sms_receiver', controller: :pages, action: :receive_sms
+  post '/sms_receiver', controller: :pages, action: :receive_sms
   root to: 'pages#home'
 end
