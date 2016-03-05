@@ -48,9 +48,12 @@ class PagesController < ApplicationController
   def receive_sms
     body = params[:Body]
     enquiry_id = $1.to_i if body =~ /\[PHS:(\d+)\]$/
+    Rails.logger.info body
+    Rails.logger.info enquiry_id
+    Rails.logger.info params[:From].split(//).last(5).join
     @enquiry = Enquiry.find(enquiry_id)
     render nothing: true and return unless @enquiry
-    @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:from].split(//).last(5).join
+    @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:From].split(//).last(5).join
     render nothing: true and return unless @host #&& @host.admin? Remove @host.admin? to enable for all users
     @guest = @enquiry.booking.booker
 
