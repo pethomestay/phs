@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include ShortMessagesHelper
   layout 'new_application'
   before_filter :authenticate_user!, only: [:welcome]
-  skip_before_action :verify_authenticity_token, only: [:receive_sms]
+  skip_before_filter :verify_authenticity_token, only: [:receive_sms]
 
   def home
     @check_for_coupon = params[:check_for_coupon].present? && current_user.try(:admin)
