@@ -59,9 +59,6 @@ gem 'apn_sender', require: 'apn'
 gem 'gibbon'
 gem 'mail_interceptor'
 
-# SMS.
-gem 'twilio-ruby'
-
 # Exceptions.
 gem 'raygun4ruby'
 
