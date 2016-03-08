@@ -1,3 +1,5 @@
+require 'rest_client'
+
 module ShortMessagesHelper
   SMSBROADCAST_URL = 'https://api.smsbroadcast.com.au/api-adv.php'
 
