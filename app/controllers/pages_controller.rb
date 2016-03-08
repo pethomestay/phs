@@ -2,7 +2,6 @@ class PagesController < ApplicationController
   include ShortMessagesHelper
   layout 'new_application'
   before_filter :authenticate_user!, only: [:welcome]
-  skip_before_filter :verify_authenticity_token, only: [:receive_sms]
 
   def home
     @check_for_coupon = params[:check_for_coupon].present? && current_user.try(:admin)
@@ -46,35 +45,30 @@ class PagesController < ApplicationController
 
   # Receives the reply SMS from Hosts via SMSBroadcast
   def receive_sms
-    body = params[:Body]
-    enquiry_id = $1.to_i if body =~ /\[PHS:(\d+)\]$/
-    Rails.logger.info body
-    Rails.logger.info enquiry_id
-    Rails.logger.info params[:From]
-    # @enquiry = Enquiry.find(enquiry_id)
-    # render nothing: true and return unless @enquiry
-    # @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:From].split(//).last(5).join
-    # render nothing: true and return unless @host #&& @host.admin? Remove @host.admin? to enable for all users
-    # @guest = @enquiry.booking.booker
-    #
-    # # Check that this is the first response from the host
-    # render nothing: true and return unless @enquiry.mailbox.messages.where(:user_id => @enquiry.mailbox.host_mailbox_id).count == 0
-    #
-    # # Handle message
-    # if (params[:message] =~ /^yes/i).present? # Sends interested SMS content to guest
-    #   message = "PHS HOST RESPONSE from #{@host.first_name}, #{@host.homestay.address_postcode}: "
-    #   message += @host.homestay.auto_interest_sms_text
-    #   send_sms(to: @guest, text: message, ref: @enquiry.id)
-    #   @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => message)
-    # elsif (params[:message] =~ /^no/i).present? # Sends declined SMS content to guest
-    #   # Reject the booking
-    #   @enquiry.booking.update_column(:state, "rejected")
-    #   message_content = @host.homestay.auto_decline_sms_text
-    #   @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => message_content )
-    # else
-    #   @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => params[:message])
-    # end
+    @enquiry = Enquiry.find(enquiry_id)
+    render nothing: true and return unless @enquiry
+    @host = @enquiry.booking.bookee if @enquiry.booking.bookee.mobile_number.gsub(/\s+/,"").split(//).last(5).join == params[:from].split(//).last(5).join
+    render nothing: true and return unless @host #&& @host.admin? Remove @host.admin? to enable for all users
+    @guest = @enquiry.booking.booker
 
-    render xml: Twilio::TwiML::Response.new.text
+    # Check that this is the first response from the host
+    render nothing: true and return unless @enquiry.mailbox.messages.where(:user_id => @enquiry.mailbox.host_mailbox_id).count == 0
+
+    # Handle message
+    if (params[:message] =~ /^yes/i).present? # Sends interested SMS content to guest
+      message = "PHS HOST RESPONSE from #{@host.first_name}, #{@host.homestay.address_postcode}: "
+      message += @host.homestay.auto_interest_sms_text
+      send_sms(to: @guest, text: message, ref: @enquiry.id)
+      @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => message)
+    elsif (params[:message] =~ /^no/i).present? # Sends declined SMS content to guest
+      # Reject the booking
+      @enquiry.booking.update_column(:state, "rejected")
+      message_content = @host.homestay.auto_decline_sms_text
+      @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => message_content )
+    else
+      @enquiry.booking.mailbox.messages.create(:user_id => @host.id, :message_text => params[:message])
+    end
+
+    render nothing: true
   end
 end
