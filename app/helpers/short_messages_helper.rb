@@ -13,11 +13,12 @@ module ShortMessagesHelper
     else
       default_number
     end
+
     unless user.opt_out_sms
       params = {
         username: ENV['SMSBROADCAST_USERNAME'],
         password: ENV['SMSBROADCAST_PASSWORD'],
-        from: '0481070660',
+        from: '0481072550',
         to: recipient_number,
         message: opts[:text],
         ref: opts[:ref]
