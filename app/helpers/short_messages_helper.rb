@@ -1,5 +1,4 @@
 module ShortMessagesHelper
-  def send_sms(options = {})
   SMSBROADCAST_URL = 'https://api.smsbroadcast.com.au/api-adv.php'
 
   def send_sms(opts)
