@@ -29,7 +29,7 @@
           = facebook_profile_image_tag @homestay.user.uid, width: 100, height: 100, crop: :thumb, gravity: :face
         - else
           = image_tag 'woof.png'
-      %h1.name= @homestay.user.name.titleize
+      %h1.name= @homestay.user.first_name.titleize
       .rating
         - @homestay.average_rating.times do
           %i.fa.fa-star
