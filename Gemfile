@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'strong_parameters'
 gem 'auto_strip_attributes', '~> 2.0'
-gem 'oauth2'
+gem 'oauth2', '~> 1.0'
 gem 'redcarpet'
 gem 'fog', '~>1.2'
 gem 'rails', '3.2.18'
@@ -15,7 +15,7 @@ gem 'haml-rails'
 gem 'slim'
 gem 'devise'
 gem 'chronic'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '4.0.0'
 gem 'koala', '~> 1.8.0rc1'
 gem 'gmaps4rails'
 gem 'geocoder'
@@ -48,7 +48,7 @@ gem 'figaro'
 gem 'state_machine'
 gem 'braintree'
 
-gem 'jwt' # For Zendesk Single Sign-on
+gem 'jwt', '~> 1.0' # For Zendesk Single Sign-on
 gem 'phony_rails' # validate and normalize phone number
 
 # Attributes.
