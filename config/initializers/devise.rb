@@ -16,7 +16,13 @@ Devise.setup do |config|
   require 'devise/orm/active_record'
   require 'omniauth-facebook'
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
-  config.omniauth :facebook, ENV['APP_ID'],ENV['APP_SECRET'], {:info_fields => 'age_range',:scope => 'user_location,email,offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}}
+  config.omniauth :facebook, ENV['APP_ID'], ENV['APP_SECRET'], {
+    :info_fields => 'age_range',
+    :scope => 'user_location,email',
+    :client_options => {
+      :ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}
+    }
+  }
   #config.secret_key = ENV['DEVISE_SECRET']
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
